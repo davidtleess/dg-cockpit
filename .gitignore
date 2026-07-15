@@ -1,0 +1,7 @@
+# NEVER commit secrets — sanitizer strips them, this is the backstop
+*.pem
+*.key
+*token*
+*secret*
+.env
+settings.live.json

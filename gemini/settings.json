@@ -1,0 +1,15 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    }
+  },
+  "ui": {
+    "theme": "Default",
+    "errorVerbosity": "full"
+  },
+  "ide": {
+    "hasSeenNudge": true,
+    "enabled": true
+  }
+}

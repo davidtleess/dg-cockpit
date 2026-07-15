@@ -1,0 +1,85 @@
+model = "gpt-5.6-terra"
+model_reasoning_effort = "high"
+notify = ["bash", "-lc", "osascript -e 'display notification \"Codex needs your attention\" with title \"Codex — engineering window\"' >/dev/null 2>&1 || true"]
+
+[marketplaces.openai-bundled]
+last_updated = "2026-06-06T23:30:55Z"
+source_type = "local"
+source = "/Users/davidleess/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-05-05T23:42:04Z"
+source_type = "local"
+source = "/Users/davidleess/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[marketplaces.21st-local]
+last_updated = "2026-07-05T14:11:16Z"
+source_type = "local"
+source = "/Users/davidleess/.codex/.tmp/marketplaces/21st-local"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+
+[plugins."google-drive@openai-curated"]
+enabled = true
+
+[plugins."21st@21st-local"]
+enabled = true
+
+[plugins."build-web-data-visualization@openai-curated"]
+enabled = true
+
+[plugins."linear@openai-curated"]
+enabled = true
+
+[plugins."codex-security@openai-curated"]
+enabled = true
+
+[plugins."plugin-eval@openai-curated"]
+enabled = true
+
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[projects."/Users/davidleess/Documents/New project"]
+trust_level = "trusted"
+
+[projects."/Users/davidleess/dynasty-genius"]
+trust_level = "trusted"
+
+[projects."/Users/davidleess"]
+trust_level = "trusted"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_create_pull_request]
+approval_mode = "approve"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_update_ref]
+approval_mode = "approve"
+
+[apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_merge_pull_request]
+approval_mode = "approve"
+
+[tui]
+theme = "gruvbox-dark"
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 3
+
+[notice.model_migrations]
+"gpt-5.4" = "gpt-5.5"

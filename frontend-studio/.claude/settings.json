@@ -1,0 +1,43 @@
+{
+  "statusLine": {
+    "type": "command",
+    "command": "printf '\\033[1;38;5;214m🎨 STUDIO\\033[0m \\033[38;5;180m· independent front-end practice · outsider lane — repo is read-only\\033[0m'"
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "/Users/davidleess/dynasty-genius-product"
+    ],
+    "allow": [
+      "WebSearch",
+      "WebFetch",
+      "Bash(curl *)",
+      "Bash(ls *)",
+      "Bash(open http://127.0.0.1:8000*)",
+      "Bash(open /Users/davidleess/frontend-studio/*)"
+    ],
+    "deny": [
+      "Edit(//Users/davidleess/dynasty-genius-product/**)",
+      "Write(//Users/davidleess/dynasty-genius-product/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/docs/governance/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/docs/superpowers/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/docs/strategies/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/docs/agent-ledger/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/Strategy/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/.claude/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/.agents/**)",
+      "Read(//Users/davidleess/dynasty-genius-product/AGENT_SYNC.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/AGENT_BRIEFING.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/AGENTS.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/GEMINI.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/CLAUDE.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/PRODUCT.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/DESIGN.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/AI_CONTEXT.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/SESSION_STARTER.md)",
+      "Read(//Users/davidleess/dynasty-genius-product/*SESSION STARTER*)",
+      "Bash(git commit*)",
+      "Bash(git push*)"
+    ]
+  }
+}
