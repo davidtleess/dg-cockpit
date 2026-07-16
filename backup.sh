@@ -2,6 +2,8 @@
 # dg-cockpit backup: snapshot the cockpit layer into this repo and push.
 # Run manually or via the nightly launchd job. Secrets are stripped, never stored.
 set -euo pipefail
+# launchd jobs get a bare PATH (/usr/bin:/bin:...) — add Homebrew/local so jq and git helpers resolve
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 REPO="$HOME/dg-cockpit"
 cd "$REPO"
 

@@ -1,0 +1,11 @@
+import { chromium } from '/Users/davidleess/dynasty-genius-product/frontend/node_modules/playwright/index.mjs';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+page.on('pageerror', e => console.log('PAGE ERR:', e.message.slice(0, 250)));
+await page.goto('file:///Users/davidleess/frontend-studio/proposals/001-morning-tape/prototype.html', { waitUntil: 'networkidle' });
+await page.waitForTimeout(900);
+await page.locator('#league-h').scrollIntoViewIfNeeded();
+await page.waitForTimeout(300);
+await page.screenshot({ path: '/Users/davidleess/frontend-studio/proposals/assets/001-proto/p14-universe.png' });
+console.log('done');
+await browser.close();

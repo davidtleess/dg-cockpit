@@ -100,6 +100,17 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .model-strip p { margin: 0; color: var(--text); font-size: 0.875rem; }
 .model-strip p .sub { color: var(--muted); }
 
+/* ---------- Position summary strip (the "shape of my team" answer) ---------- */
+.pos-strip { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 10px; }
+.pos-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 12px; text-align: left; transition: border-color 120ms ease; }
+.pos-card:hover { border-color: var(--border-strong); }
+.pos-card.on { border-color: var(--market); }
+.pos-card .p { font-family: var(--font-mono); font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.06em; }
+.pos-card .tv { font-family: var(--font-mono); font-weight: 600; font-size: 1rem; margin-top: 2px; }
+.pos-card .m { color: var(--muted); font-size: 0.6875rem; margin-top: 1px; }
+@media (max-width: 760px) { .pos-strip { grid-template-columns: repeat(2, 1fr); } }
+
 /* ---------- Tape sections ---------- */
 .tape-section { margin-top: 30px; }
 .tape-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
@@ -296,9 +307,10 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 
   <section class="tape-section" aria-labelledby="roster-h">
     <div class="tape-head">
-      <h2 id="roster-h">Your roster <span class="lane-tag">Market lane</span></h2>
+      <h2 id="roster-h">Your roster, ranked <span class="lane-tag">Market lane</span></h2>
       <span class="sub" id="roster-sub"></span>
     </div>
+    <div class="pos-strip" id="pos-strip" role="group" aria-label="Position group summary — click to filter"></div>
     <div class="tape" id="roster-tape"></div>
   </section>
 
@@ -307,6 +319,7 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
       <h2 id="league-h">Around the league <span class="lane-tag">Market lane</span></h2>
       <span class="sub" id="league-sub"></span>
     </div>
+    <div class="pos-strip" id="uni-filters" style="grid-template-columns:repeat(4,auto);justify-content:start;gap:6px" role="group" aria-label="Availability filter"></div>
     <div class="tape" id="league-tape"></div>
   </section>
 
@@ -426,42 +439,160 @@ const faceEl = (row, cls = 'face') => {
   return `<span class="${cls}"><img src="${HEADSHOT(row.id)}" alt="" loading="lazy"
     onerror="this.replaceWith('${initials}')"></span>`;
 };
-function rowEl(row, i) {
+function rowEl(row) {
+  const g = TAPE.grounding[row.id] ?? {};
   const dirWord = row.delta === 0 ? 'unchanged' : (row.delta > 0 ? `rose ${fmt.format(row.delta)}` : `fell ${fmt.format(-row.delta)}`);
   return `<button class="row" data-key="${row.id}" aria-label="${row.name}, ${row.pos} ${row.team ?? ''},
-    value ${fmt.format(row.value)}, ${dirWord} since yesterday. Open detail.">
-    <span class="idx">${i + 1}</span>
+    ranked ${g.overallRank ?? 'unranked'} overall, value ${fmt.format(row.value)}, ${dirWord} since yesterday. Open detail.">
+    <span class="rankcell">#${g.overallRank ?? '—'}${chg(row.rankDelta)}</span>
     ${faceEl(row)}
     <span class="who"><span class="nm">${row.name}</span><span class="pos ${row.pos}">${row.pos}</span><span class="tm">${row.team ?? ''}</span></span>
     <span class="spark">${sparkline(row)}</span>
     ${deltaCell(row)}
     <span class="val">${fmt.format(row.value)}</span>
-    ${rankCell(row)}
+    <span class="posrank">${g.posRank ? `${row.pos}${g.posRank}` : '—'}${chg(row.posRankDelta)}</span>
   </button>`;
 }
-const COLS = `<div class="col-head"><span></span><span></span><span>Player</span>
-  <span>Trend · ${seriesDays} days</span><span class="r">Δ 1 day</span><span class="r">Value</span><span class="r">Rank move</span></div>`;
-
-function renderTape(elId, rows, visible) {
+const SORTS = {
+  rank: (a, b) => (TAPE.grounding[a.id]?.overallRank ?? 1e9) - (TAPE.grounding[b.id]?.overallRank ?? 1e9),
+  move: (a, b) => Math.abs(b.delta ?? 0) - Math.abs(a.delta ?? 0),
+  value: (a, b) => (b.value ?? 0) - (a.value ?? 0),
+  pos: (a, b) => (TAPE.grounding[a.id]?.posRank ?? 1e9) - (TAPE.grounding[b.id]?.posRank ?? 1e9),
+};
+function colsFor(state) {
+  const cls = (k, right) => `${right ? 'r ' : ''}${state.key === k ? 'on' : ''}${state.key === k && state.dir < 0 ? ' asc' : ''}`;
+  return `<div class="col-head">
+    <span class="${cls('rank')}" data-sort="rank" role="button" tabindex="0">Rank</span>
+    <span></span><span>Player</span>
+    <span>Trend · ${seriesDays} days</span>
+    <span class="${cls('move', true)}" data-sort="move" role="button" tabindex="0">Δ 1 day</span>
+    <span class="${cls('value', true)}" data-sort="value" role="button" tabindex="0">Value</span>
+    <span class="${cls('pos', true)}" data-sort="pos" role="button" tabindex="0">Pos rank</span>
+  </div>`;
+}
+function renderTape(elId, rows, visible, defaultKey = 'rank') {
   const el = $(elId);
-  const byMagnitude = [...rows].sort((a, b) => Math.abs(b.delta ?? 0) - Math.abs(a.delta ?? 0));
+  const state = { key: defaultKey, dir: 1 };   // client-ruled default: rank, best first
   let shown = visible;
   const draw = () => {
-    el.innerHTML = COLS + byMagnitude.slice(0, shown).map(rowEl).join('') +
-      (shown < rows.length
-        ? `<button class="show-more">Show all ${rows.length} <span aria-hidden="true">↓</span></button>`
-        : (rows.length > visible ? `<button class="show-more">Show fewer</button>` : ''));
+    const pool = el.id === 'roster-tape' && POS_FILTER ? rows.filter(r => r.pos === POS_FILTER) : rows;
+    const sorted = [...pool].sort(SORTS[state.key]);
+    if (state.dir < 0) sorted.reverse();
+    el.innerHTML = colsFor(state) + sorted.slice(0, shown).map(rowEl).join('') +
+      (shown < pool.length
+        ? `<button class="show-more">Show all ${pool.length} <span aria-hidden="true">↓</span></button>`
+        : (pool.length > visible ? `<button class="show-more">Show fewer</button>` : ''));
     el.querySelectorAll('.row').forEach(r =>
       r.addEventListener('click', () => toggleRow(rows.find(x => x.id === r.dataset.key), r)));
+    el.querySelectorAll('[data-sort]').forEach(hd => hd.addEventListener('click', () => {
+      const k = hd.dataset.sort;
+      if (state.key === k) state.dir = -state.dir; else { state.key = k; state.dir = 1; }
+      draw();
+    }));
     const more = el.querySelector('.show-more');
-    if (more) more.addEventListener('click', () => { shown = shown < rows.length ? rows.length : visible; draw(); });
+    if (more) more.addEventListener('click', () => { shown = shown < pool.length ? pool.length : visible; draw(); });
   };
   draw();
+  return draw;
 }
-renderTape('#roster-tape', TAPE.roster, 10);
-renderTape('#league-tape', TAPE.league, 10);
-$('#roster-sub').textContent = `${rosterMoved} of ${TAPE.roster.length} repriced · sorted by size of move`;
-$('#league-sub').textContent = `top ${TAPE.league.length} of ${fmt.format(TAPE.totalMoversLeagueWide)} movers league-wide · sorted by size of move`;
+let POS_FILTER = null;
+const redrawRoster = renderTape('#roster-tape', TAPE.roster, 26);          // state view: full roster, by rank
+$('#roster-sub').textContent = `all ${TAPE.roster.length} by overall rank · movement annotated · click headers to sort`;
+
+/* ---- Around the league: ONE list over the full valued universe; views are filters + sorts ---- */
+const AVAIL_LABEL = { fa: 'available', rostered: 'rostered', mine: 'yours' };
+let UNI = { avail: 'fa', key: 'rank', dir: 1, shown: 12 };
+const UNI_SORTS = {
+  rank: (a, b) => a.rank - b.rank,
+  trend: (a, b) => Math.abs(b.trend30) - Math.abs(a.trend30),
+  value: (a, b) => b.value - a.value,
+  pos: (a, b) => a.posRank - b.posRank,
+  model: (a, b) => ((b.modelPosRank ? b.posRank - b.modelPosRank : -1e9) - (a.modelPosRank ? a.posRank - a.modelPosRank : -1e9)),
+};
+function drawUniverse() {
+  const pool = TAPE.universe.filter(r =>
+    (UNI.avail === 'all' || r.avail === UNI.avail) && (!UNI.pos || r.pos === UNI.pos));
+  const sorted = [...pool].sort(UNI_SORTS[UNI.key]);
+  if (UNI.dir < 0) sorted.reverse();
+  const cls = (k) => `${UNI.key === k ? 'on' : ''}${UNI.key === k && UNI.dir < 0 ? ' asc' : ''}`;
+  const chips = [['fa', `Available (${TAPE.universe.filter(r => r.avail === 'fa').length})`],
+    ['rostered', 'Rostered'], ['all', `Whole universe (${TAPE.universe.length})`]];
+  $('#uni-filters').innerHTML = chips.map(([k, l]) =>
+    `<button class="pos-card ${UNI.avail === k ? 'on' : ''}" data-avail="${k}" style="padding:6px 12px"><div class="p">${l}</div></button>`).join('') +
+    ['QB','RB','WR','TE'].map(p =>
+      `<button class="pos-card ${UNI.pos === p ? 'on' : ''}" data-upos="${p}" style="padding:6px 12px"><div class="p" style="color:var(--pos-${p.toLowerCase()})">${p}</div></button>`).join('');
+  $('#uni-filters').querySelectorAll('[data-avail]').forEach(c =>
+    c.addEventListener('click', () => { UNI.avail = c.dataset.avail; UNI.shown = 12; drawUniverse(); }));
+  $('#uni-filters').querySelectorAll('[data-upos]').forEach(c =>
+    c.addEventListener('click', () => { UNI.pos = UNI.pos === c.dataset.upos ? null : c.dataset.upos; UNI.shown = 12; drawUniverse(); }));
+  const el = $('#league-tape');
+  el.innerHTML = `<div class="col-head">
+      <span class="${cls('rank')}" data-usort="rank" role="button" tabindex="0">Rank</span>
+      <span></span><span>Player · pos · age</span>
+      <span class="r ${cls('trend')}" data-usort="trend" role="button" tabindex="0">30-day trend</span>
+      <span class="r ${cls('value')}" data-usort="value" role="button" tabindex="0">Value</span>
+      <span class="r ${cls('pos')}" data-usort="pos" role="button" tabindex="0">Pos rank</span>
+      <span class="r ${cls('model')}" data-usort="model" role="button" tabindex="0" style="color:var(--model)">Model rank</span></div>` +
+    sorted.slice(0, UNI.shown).map(r => {
+      const known = TAPE.grounding[r.id] ? ' data-known="1"' : '';
+      const t = r.trend30;
+      const diff = r.modelPosRank ? r.posRank - r.modelPosRank : null;   // + = model likes him more
+      const modelCell = r.modelPosRank
+        ? `<span class="posrank" style="${Math.abs(diff) >= 12 ? 'color:var(--model);font-weight:600' : ''}">${r.pos}${r.modelPosRank}${
+            Math.abs(diff) >= 12 ? ` <span style="font-size:0.6875rem">${diff > 0 ? '+' : '−'}${Math.abs(diff)}</span>` : ''}</span>`
+        : '<span class="posrank" style="color:var(--muted)">—</span>';
+      return `<button class="row"${known} data-key="${r.id}">
+        <span class="rankcell">#${r.rank}</span>
+        ${faceEl(r)}
+        <span class="who"><span class="nm">${r.name}</span><span class="pos ${r.pos}">${r.pos}</span><span class="tm">${r.team ?? ''}${r.age ? ' · ' + r.age.toFixed(1) : ''}</span>${
+          r.avail === 'fa' ? '<span class="pos" style="color:var(--market-bright);background:color-mix(in srgb,var(--market) 14%,transparent)">FA</span>' : ''}</span>
+        <span class="delta ${t > 0 ? 'rose' : t < 0 ? 'fell' : 'flat'}">${t === 0 ? '—' : (t > 0 ? '▲ +' : '▼ −') + fmt.format(Math.abs(t))}</span>
+        <span class="val">${fmt.format(r.value)}</span>
+        <span class="posrank">${r.pos}${r.posRank}</span>
+        ${modelCell}</button>`;
+    }).join('') +
+    (UNI.shown < sorted.length ? `<button class="show-more">Show all ${sorted.length} ↓</button>` : '');
+  el.querySelectorAll('[data-usort]').forEach(hd => hd.addEventListener('click', () => {
+    const k = hd.dataset.usort;
+    if (UNI.key === k) UNI.dir = -UNI.dir; else { UNI.key = k; UNI.dir = 1; }
+    drawUniverse();
+  }));
+  el.querySelectorAll('.row[data-known]').forEach(r => r.addEventListener('click', () => {
+    const full = TAPE.league.find(x => x.id === r.dataset.key) || TAPE.roster.find(x => x.id === r.dataset.key);
+    if (full) toggleRow(full, r);
+  }));
+  el.querySelector('.show-more')?.addEventListener('click', () => { UNI.shown = sorted.length; drawUniverse(); });
+  $('#league-sub').textContent = `${fmt.format(TAPE.universe.length)} valued players · ownership read Jun 23 (stale — live fix itemized for engineering) · filters + sortable headers`;
+}
+drawUniverse();
+
+/* position summary strip: the team's shape, one card per group, click to filter */
+function drawPosStrip() {
+  const groups = {};
+  for (const r of TAPE.roster) {
+    const gr = groups[r.pos] ??= { n: 0, val: 0, ages: [] };
+    gr.n++; gr.val += r.value ?? 0;
+    const a = TAPE.evidence[r.id]?.age; if (a) gr.ages.push(a);
+  }
+  const order = ['QB', 'RB', 'WR', 'TE'];
+  $('#pos-strip').innerHTML =
+    `<button class="pos-card ${!POS_FILTER ? 'on' : ''}" data-pos="">
+       <div class="p">ALL</div><div class="tv">${fmt.format(TAPE.roster.reduce((s, r) => s + (r.value ?? 0), 0))}</div>
+       <div class="m">${TAPE.roster.length} players</div></button>` +
+    order.map(pos => {
+      const gr = groups[pos]; if (!gr) return '';
+      const avgAge = gr.ages.length ? (gr.ages.reduce((s, a) => s + a, 0) / gr.ages.length).toFixed(1) : '—';
+      return `<button class="pos-card ${POS_FILTER === pos ? 'on' : ''}" data-pos="${pos}">
+        <div class="p" style="color:var(--pos-${pos.toLowerCase()})">${pos}</div>
+        <div class="tv">${fmt.format(gr.val)}</div>
+        <div class="m">${gr.n} players · avg age ${avgAge}</div></button>`;
+    }).join('');
+  $('#pos-strip').querySelectorAll('.pos-card').forEach(c => c.addEventListener('click', () => {
+    POS_FILTER = c.dataset.pos || null;
+    drawPosStrip(); redrawRoster();
+  }));
+}
+drawPosStrip();
 
 /* ---------- entered / exited ---------- */
 $('#entered-h').textContent = `Entered the valued universe (${TAPE.entered.length})`;
@@ -607,12 +738,16 @@ function todayPanel(row) {
 
   const groundBlock = g ? `
     <div class="ground-head">
-      <span class="rank">#${g.overallRank} overall · ${row.pos}${g.posRank} <span class="dim">of ${g.posCount}</span></span>
+      <span class="rank">${row.pos}${g.posRank} <span class="dim">market</span> · ${
+        g.modelPosRank ? `${row.pos}${g.modelPosRank} <span class="dim">model</span>` : '<span class="dim">model unranked</span>'}</span>
       <span class="tier-chip market"><span class="src">market</span> ${proseTier(row.pos, g.posRank) ?? '—'}</span>
-      <span class="tier-chip model"><span class="src">model</span> ${
-        g.modelPosRank ? `${proseTier(row.pos, g.modelPosRank)} <span class="src">(${row.pos}${g.modelPosRank})</span>` : 'not ranked'}</span>
+      ${g.modelPosRank ? `<span class="tier-chip model"><span class="src">model</span> ${proseTier(row.pos, g.modelPosRank)}</span>` : ''}
     </div>
-    ${g.mates?.length ? `<div class="self-line" style="margin:-4px 0 2px"><span class="dim">priced next to</span> ${g.mates.join(' · ')}</div>` : ''}
+    ${g.modelPosRank ? `<div class="self-line" style="margin:-6px 0 10px">${
+      g.modelPosRank === g.posRank ? 'Model and market rank him identically.'
+      : `The model has him <strong>${Math.abs(g.modelPosRank - g.posRank)} spots ${g.modelPosRank > g.posRank ? 'lower' : 'higher'}</strong> than the market.`
+    } <span class="dim">#${g.overallRank} overall · of ${g.posCount} valued ${row.pos}s</span></div>` : ''}
+    ${g.mates?.length ? `<div class="self-line" style="margin:0 0 2px"><span class="dim">priced next to</span> ${g.mates.join(' · ')}</div>` : ''}
     <div class="self-line" style="margin:0 0 10px"><span class="dim">${valueStructure(row, g)}</span></div>
     ${pctlBar(`Value among ${row.pos}s`, g.valuePctl, fmt.format(row.value))}
     ${g.prodPctl != null
@@ -621,14 +756,12 @@ function todayPanel(row) {
           g.gp25 > 0 ? `${g.ppg25} PPG in ${g.gp25} games — sample too small to rank` : 'no NFL production yet — 2026 rookie class'
         }</span><span></span></div>`}
     ${pctlBar('30-day trend', g.trendPctl, `${g.trend30 > 0 ? '+' : ''}${fmt.format(g.trend30)}`)}
-    ${ev.dvs != null
-      ? pctlBar('DVS (its own 0–100 scale)', ev.dvs, ev.dvs.toFixed(1), true)
-      : '<div class="pctl model"><span class="lbl">DVS</span><span class="lbl">not yet modeled</span><span></span></div>'}
     <div class="self-line">${dirTxt} today — <span class="dim">${ctx.sig} · ${
       ctx.net === 0 ? 'flat' : `${ctx.net > 0 ? '+' : '−'}${fmt.format(Math.abs(ctx.net))} (${ctx.netPct > 0 ? '+' : ''}${ctx.netPct}%)`
     } since ${short(row.dates[0])}</span></div>
-    ${ev.divStatus ? `<div class="self-line" style="color:var(--model)">${DIVERGENCE[ev.divStatus] ?? ''}${ev.xvar != null ? ` <span class="dim">· xVAR ${ev.xvar > 0 ? '+' : ''}${ev.xvar.toFixed(1)}</span>` : ''}</div>` : ''}
-    <div class="ground-cap">Percentile bars vs. the ${g.posCount} valued ${row.pos}s in the market universe (${g.universe} players) · bar length = percentile · model-lane bar in blue</div>`
+    ${ev.divStatus ? `<div class="self-line" style="color:var(--model)">${DIVERGENCE[ev.divStatus] ?? ''}<span class="dim">${
+        ev.dvs != null ? ` · DVS ${ev.dvs.toFixed(1)}` : ''}${ev.xvar != null ? ` · xVAR ${ev.xvar > 0 ? '+' : ''}${ev.xvar.toFixed(1)}` : ''} — model detail</span></div>` : ''}
+    <div class="ground-cap">Percentile bars vs. the ${g.posCount} valued ${row.pos}s in the market universe (${g.universe} players) · all bars are market-lane percentiles — model facts appear as ranks and prose</div>`
     : '<div class="ground-cap">Not in the current market universe.</div>';
 
   return `

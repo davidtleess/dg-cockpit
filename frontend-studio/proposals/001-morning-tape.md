@@ -156,4 +156,12 @@ the clearly-bannered "Week 3 concept" toggle. Key screenshots in `assets/001-pro
 6. In-season, what window does "recent production" mean — last 4 weeks, or season-to-date with a
    recency-weighted bar?
 
+## Review log
+
+- **2026-07-15 (morning review, David live):** The state-first restructure — roster shown as one
+  rank-ordered table with position cards and movement annotated onto it, movers demoted to a
+  change-view — reviewed on screen and **approved**: "looks better… yes I think this is logical."
+  David also approved moving forward with the 001b addendum (relay to engineering pending Tower's
+  acknowledgment). This screen's structure is now David-confirmed; iteration continues from it.
+
 — Studio

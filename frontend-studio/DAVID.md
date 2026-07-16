@@ -140,7 +140,92 @@ earlier one, mark the old one superseded and link them.
   engineers to normalize model outputs into market-comparable space (rank-space first) so our work
   reads in the hobby's units. DVS and xVAR are detail-line facts, not headline scales.
 
+- **2026-07-15 — Design from the question ladder, not the data.** The structure must mirror how the
+  mind's eye works: what questions would David ask, in what order — "what's the overall rank of all
+  my players → what's the rank by position → for a player I want to analyze, what data can I study
+  and what trends need visualizing" — and every UI/UX decision must be the answer to a specific
+  question in that ladder. Iterating visuals without the journey map produces "directionally
+  correct" but structurally scrambled screens. **How to apply:** before any surface design, write
+  the question ladder; map each module to the question it answers; study how the reference sites'
+  page architecture answers the same ladder. State (rankings) comes before change (movement) —
+  fantasy sites lead with ranked state and annotate change onto it.
+
+- **2026-07-15 — The ladder's order is a dynasty-strategy question, not a UX preference.** Which
+  questions get answered first and most frequently must be decided by what matters most in dynasty
+  fantasy football — and that differs between rebuild and contend phases (and off-season vs.
+  in-season). Deep research into dynasty strategy comes before the IA decision. David's team is
+  currently REBUILDING — the default experience should serve that phase first but the architecture
+  must accommodate the phase shifting.
+
+- **2026-07-15 — Session close (night of Jul 14→15).** Parked by David via Tower: **tomorrow's
+  first design review = the state-first restructured default screen** (roster-ranked with position
+  strip, already built in the 001 prototype; open it in his browser, pitch, one question). The
+  architecture research verdict to carry: every reference product leads with ranked STATE and
+  annotates change; analytics products group rosters by position. Dynasty-strategy deep research
+  (rebuild-vs-contend priority ladder) left running overnight — synthesize into the question-ladder
+  document before the review; module order is not final until it lands.
+
+- **2026-07-15 — Filters and sort, not tabs.** Views are filter + sort states over one queryable
+  list, not separate tabs/widgets. "Available free agents" = an availability filter; "top movers" =
+  a sort by move. **How to apply:** default to a single list with filter chips and sortable columns
+  wherever multiple "views" of the same population are wanted.
+
+- **2026-07-15 — Copy the category's structure; our data is the juxtaposition.** Don't invent
+  structure where a category convention exists. Build surfaces the way KTC/FantasyCalc/Sleeper
+  users already know them (rank | player | pos·age | tier | trend | value; overview→graph→neighbors
+  player anatomy; risers rail beside rankings), then overlay DG's model as the visible second lane —
+  model rank beside market rank, expectation line on the standard graph, divergence as the
+  highlight. Familiarity is the substrate that makes our insight legible; originality budget is
+  spent ONLY on the juxtaposition itself. (Studio conceded a craft bias here — decorrelation from
+  the in-house team's doctrine must not become decorrelation from the market's conventions.)
+
+- **2026-07-15 — Ration David's attention.** One design question per review ritual, never a stream.
+  NEVER ask him to sequence Studio's own work (apply-now-or-later, which-draft-first): make the
+  call, note it in one line, present the result — he redirects if he disagrees. When Tower opens
+  the cockpit board, park all pending asks with Tower and send David nothing until Tower announces
+  the board is clear.
+
+- **2026-07-15 — Session close (midday).** Morning's rulings all recorded above (rank-first default
+  confirmed on screen; filters/sorts over tabs; copy-the-category/juxtaposition doctrine; ration
+  David's attention — one question per review, never sequencing asks; board discipline via Tower).
+  One boundary lesson: Studio attempted to read the app server's process environment to extract the
+  Sleeper league id for a live free-agent verification — correctly blocked; the live-ownership
+  check belongs to engineering (001b N7) or to David's own ten-second Sleeper glance. Open threads
+  parked for tomorrow's brief: (1) combined design review — universe list w/ model-rank column +
+  question ladder (S1 on Tower's board); (2) 001b relay approval (S2, decision-ready); (3)
+  engineering verdicts on 000/001 still outbound; (4) Bo Nix live verification (market QB12 /
+  model QB4 / FA as of Jun 23 data).
+
+- **2026-07-15 — Plain English in the pane, always.** Studio's language drifts toward internal
+  codenames one session after reset. In messages to David, no internal shorthand ("ladder doc",
+  "001b addendum", "rank-led rebuild") without an immediate five-word translation. David should
+  never need a glossary for his own designer. **How to apply:** every codename in pane text carries
+  its plain meaning in the same sentence, every session, no exceptions.
+- **2026-07-15 — Never use decided language about undecided work.** Studio wrote "module order is
+  final" before David had reacted — false. Nothing is final until David reacts; Studio's documents
+  are proposals, and his review is where finality comes from. **How to apply:** pre-review status
+  vocabulary is "drafted / proposed / ready for review"; "final / confirmed / decided" is reserved
+  for what David has explicitly ruled on.
+
+- **2026-07-15 — APPROVED: the state-first default screen (morning review).** The rebuilt default
+  screen — the roster as one rank-ordered table (best player first, rank far-left with change
+  arrows), position summary cards above it, big movers demoted to a secondary view — reviewed live
+  and approved: "looks better… yes I think this is logical." David also greenlit sending the 001b
+  engineering brief (rank-first defaults + the ask that the model publish rankings comparable to
+  market rankings); relay goes through Tower, unconfirmed until Tower's acknowledgment.
+
+- **2026-07-15 — League data must refresh frequently (client requirement).** David, on learning the
+  app's Sleeper league snapshot (rosters, ownership, team postures) was 22 days old: "we have to
+  have frequent refreshes of our league data." Stale league artifacts are defects, not caveats.
+  **How to apply:** treat artifact age as a first-class critique dimension on every surface Studio
+  reviews; any proposal built on league data states the data's age; relayed to engineering as 003
+  (F1–F4: schedule the snapshot capture, refresh the derivation chain, show age on-surface).
+
 ## Rulings on escalations
 
-(none yet — when David rules on a proposal-vs-governance conflict, record the ruling and what it
-implies for future proposals)
+- **2026-07-15 — Green/red vs. the color rules (N3, first escalation): David ruled for the idiom,
+  scoped.** Green ▲ / red ▼ is legal for **rank-movement arrows only** — never for value, gap,
+  margin, or tier hues; the moment green/red reads as worth or quality rather than pure positional
+  movement, it is outside the ruling. (Ruling delivered via the engineering side; boundary is
+  hard.) **Implication:** Studio designs rank chips in the idiom freely and keeps every other
+  encoding in the neutral palette.

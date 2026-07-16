@@ -13,8 +13,7 @@
       "WebFetch",
       "Bash(curl *)",
       "Bash(ls *)",
-      "Bash(open http://127.0.0.1:8000*)",
-      "Bash(open /Users/davidleess/frontend-studio/*)"
+      "Bash(open *)"
     ],
     "deny": [
       "Edit(//Users/davidleess/dynasty-genius-product/**)",
