@@ -9,6 +9,8 @@
 #   2. Pane is NOT the focused pane (David may be composing there)
 #   3. Identical non-empty input across two samples 20s apart
 # (bash 3.2 compatible — macOS has no associative arrays)
+# launchd jobs get a bare PATH — add Homebrew/local so tmux resolves
+export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 SESSION="dynasty"
 PANES="1.1 1.2 1.3 2.1 2.2"
 LOG="/tmp/dg-mail-carrier.log"
