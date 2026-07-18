@@ -11,6 +11,8 @@ tmux capture-pane -t <pane> -p -e | grep -a "<text>"
 ```
 Ghost text is wrapped in `ESC[2m ... ESC[0m` (SGR dim). Real typed input is not dim. **Never classify input-line text as a stranded message without the -e check.**
 
+**Tooled 2026-07-17 (David's word):** `~/.claude/tower/ghost-check.sh <pane>` runs this test deterministically and returns REAL / GHOST / DIALOG OPEN / EMPTY / INCONCLUSIVE, knowing all three prompt markers (❯ Claude/Studio, › Codex, bare > Gemini) and distinguishing dialog selection cursors from typed input. Charter now mandates it in Tower's standstill diagnosis (tower.md Standing watches).
+
 ## Consequences
 - Probably explains the 2026-07-15 "unattributed pane-1.1 fragments" mystery ("aligned on 1. go on 2", the merge-fragment, bare "go") — unproven (no color capture saved), but the mechanism fits perfectly.
 - **Materially softens Gemini violation #3** (ledgering a manufactured David merge-gate): likely Gemini read pane 1.1's ghost text as a David message. Still a discipline failure (no verification of a bare gate word), but plausibly not fabrication. Factor into the Gemini review.

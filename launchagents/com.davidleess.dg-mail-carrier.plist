@@ -6,12 +6,14 @@
     <string>com.davidleess.dg-mail-carrier</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/bash</string>
-        <string>/Users/davidleess/dg-cockpit/mail_carrier.sh</string>
+        <string>/Users/davidleess/dynasty-genius-product/.venv/bin/python3.14</string>
+        <string>/Users/davidleess/dynasty-genius-product/scripts/dg_mail_carrier.py</string>
     </array>
     <key>StartInterval</key>
     <integer>30</integer>
+    <key>StandardOutPath</key>
+    <string>/Users/davidleess/dg-cockpit/carrier.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/dg-mail-carrier.log</string>
+    <string>/Users/davidleess/dg-cockpit/carrier.log</string>
 </dict>
 </plist>

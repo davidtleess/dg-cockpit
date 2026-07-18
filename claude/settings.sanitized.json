@@ -28,14 +28,14 @@
   "theme": "dark",
   "preferredNotifChannel": "terminal_bell",
   "hooks": {
-    "Notification": [
+    "PermissionRequest": [
       {
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.message // \"Claude needs your input\"' | tr -d '\"\\\\' | { read -r m; osascript -e \"display notification \\\"$m\\\" with title \\\"Claude — $(basename \\\"$PWD\\\")\\\"\"; } 2>/dev/null || true",
-            "async": true,
-            "statusMessage": "Posting notification"
+            "command": "/Users/davidleess/.claude/hooks/notify-permission.sh",
+            "timeout": 10,
+            "statusMessage": "Alerting David"
           }
         ]
       }
