@@ -85,3 +85,8 @@ theme = "gruvbox-dark"
 
 [notice.model_migrations]
 "gpt-5.4" = "gpt-5.5"
+
+[hooks.state]
+
+[hooks.state."/Users/davidleess/.codex/hooks.json:permission_request:0:0"]
+trusted_hash = "sha256:b3f49212896322dc2e435a18cc1c154b663a8b01edb3a53541decb0d55448fc3"

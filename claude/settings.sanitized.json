@@ -1,5 +1,19 @@
 {
   "model": "claude-fable-5[1m]",
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/davidleess/.claude/hooks/notify-permission.sh",
+            "timeout": 10,
+            "statusMessage": "Alerting David"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
     "superpowers@claude-plugins-official": true,
     "learning-output-style@claude-plugins-official": false,
@@ -23,22 +37,9 @@
       }
     }
   },
+  "effortLevel": "high",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
-  "preferredNotifChannel": "terminal_bell",
-  "hooks": {
-    "PermissionRequest": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/davidleess/.claude/hooks/notify-permission.sh",
-            "timeout": 10,
-            "statusMessage": "Alerting David"
-          }
-        ]
-      }
-    ]
-  }
+  "preferredNotifChannel": "terminal_bell"
 }
