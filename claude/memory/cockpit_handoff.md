@@ -4,49 +4,41 @@ description: "Tower's parked board — durable snapshot of what every lane has p
 metadata: 
   node_type: memory
   type: handoff
-  originSessionId: 26aba777-012d-484d-bfb6-4a1c6d835b62
-  modified: 2026-07-18T17:48:33.440Z
+  originSessionId: d99ebbab-00f0-4911-9930-7ac9cc8130ea
+  modified: 2026-07-20T01:49:20.435Z
 ---
 
-# Cockpit handoff — closed clean, 2026-07-18 (~14:00) — the QB-1 slice-2 SHIP day
+# Cockpit handoff — closed clean, 2026-07-19 (~22:00) — slice-3 SHIP + wire proportionality-close day
 
-**Headline:** QB-1 GREEN slice 2 went from David's go-word to fully published with green CI in one overnight+morning session: build → 10-round adversarial review (findings 7→4→4→2→1→2→2→1→1→CLEAR, ~22 accepted, zero regressions) → David-ratified spec Amendment A → three-word execution → push → CI-red root-caused → Option-2 strict-xfail remedy → **CI GREEN (run 29654084239), origin==local==`3bbce57`, Tower-verified**.
+**Headline:** QB-1 slice 3 (D2 label table) went go-word → 11-round adversarial arc (5→2→2→2→3→5→3→1→2→1→GREEN CLEAR) → committed `ae04a9e` → CI GREEN (run 29700989372) → state docs `aad356c`, all Tower-verified. Then David redirected: the wire-health thread (7 rounds, ~20 findings, non-converging on esoterica) was closed by PROPORTIONALITY, not CLEAR — committed `d18e3e1` (5 files, round-7 pins exact, 2B+2H residuals honestly ledgered, Codex-executed under David's typed word, Tower-verified incl. live ls-remote). **Governing lesson David set, adopted by the crew: rigor calibrates to stakes — product contracts get full rounds; tooling stops sooner.**
 
-**Infra (unchanged from 07-17, still the law):** carrier = hardened dialog-aware build (launchd `com.davidleess.dg-mail-carrier`, 30s, `scripts/dg_mail_carrier.py`→`dg_delivery.py`, log `~/dg-cockpit/carrier.log`, store `~/dg-cockpit/delivery.db`, marker `~/dg-cockpit/carrier.enabled`). Only helper-stamped `[w#…]` sends auto-deliver; everything else HELD — **Tower is the wire** (profile-registry gap: it held every crew send this session, all classes: pane_busy / unattributed_strand / pane_state_unknown / pane_dialog / held_dialog_shape — all correct, zero keys). exit 1 = held-attention, not error. 22:00 cockpit backup + league capture standing; backup sha256-verified 07-17.
+## THE FRONTIER-DOC STANDING ORDER (David's typed word 2026-07-19 — execute at NEXT BOOT)
+Deliver `docs/strategies/2026-07-17-frontier-edge-brainstorm.md` to the spokesperson TOGETHER WITH the wake/morning-brief message, as a disposition-read per the DISPOSITION INSTRUCTIONS at the doc head (read+disposition only; crew returns synthesis + ticket sequencing; David gates every ticket; unredacted to all three crew panes incl. the Gemini-lane audit; NEVER to Studio — governance-saturated). Registered as row 4 in david_research_register.md.
 
-## Commits published this session (all David-worded, Codex-CLEARed, Tower-verified)
-- `8e6b209` — slice-2 implementation + authored RED + 137-row reinforcement + spec v8 (Amendment A: `missing_identity_keys` 5th F34 TRIAGE reason, v8 SHA `8fa244c1…`, delta byte-proven; David ratified by typed word)
-- `71ec5d7` — state docs (07-17/07-18 ledgers, AGENT_SYNC ship banner)
-- `3bbce57` — 22 parked slice-3+ RED rows strict-xfail with named flipping deliverables (xpass-alarm proven by injection) — made CI green honestly
-- stash@{0} DROPPED (David-worded). Spec is now v8; v7 `144696ef…` is history. CI green run 29654084239.
+## David's board — NEXT session, in order
+1. **Fresh session for Claude's lane FIRST** (it closed at ~700k+ tokens with two fatigue-class verification lapses today — David-endorsed; run before any product work).
+2. **QB-1 slice 4 go-word** (D2a study matrix) — David's stated next product step; resume via AGENT_SYNC QB banner + spec v8 + PARKED_SEAMS map.
+3. **Frontier-doc disposition returns** → David gates tickets (H3 Examiner rides the ~07-24 Gemini review; H3/H4 sequencing was "behind wire trust" — note the wire is now CLOSED-not-trusted; resequencing is part of the disposition).
+4. **/login both Claude panes** — expires ~07-21, NOW URGENT (1-2 days).
+5. Riders: pre-commit-hook mitigation ticket (FIVE incidents now, incl. the 07-18 index-corruption root cause — healed by Option A 07-19); provenance-authenticity question (registration gate); ack-clear on Codex's stale pane claim + carrier-trust (both moot while carrier paused and wire closed — surface only if David reopens the wire); D5 residue: Codex CLI 0.144.5 has NO suggestion-disable (officially verified) — ghost defense stays procedural.
 
-## Lane status at close
-- Claude 1.1 closed-parked (postflight 13:50 ledgered; CI-watch shell terminated). Codex 1.2 closed (CLEAR entries ledgered; only its standing ghost placeholder in the box). Gemini 1.3 closed (pre+postflight ledgered for its telemetry task — on-role, clean). Studio 2.1 **never woken this session** — zero conversation state; disk current from its prior close.
-- Wire sweep clean all panes at close. Login warning on BOTH Claude panes: expires ~07-21/22.
+## Wire/carrier state (critical context)
+- **Carrier: PAUSED by David's word 2026-07-19** — Tower removed `~/dg-cockpit/carrier.enabled`, verified `held: carrier_disabled`. Re-enable ONLY on David's carrier-trust word. The wire code is committed (`d18e3e1`) but NOT trusted for autonomous delivery — 2B+2H residuals ledgered open (round-7 verdict, 2026-07-19 ledger).
+- **Tower is the wire** for all inter-agent traffic. Verify EVERY delivery; long pastes collapse to "[Pasted text #N]" in scrollback — literal-text grep FAILS on them; verify via spinner/paste-marker/short-prefix instead (lesson in feedback_ghost_text.md).
+- **GHOSTS: EIGHT specimens** (feedback_ghost_text.md), five fabricated David go-words/grants, targeting BOTH crew panes AND Tower's own input box, always the exact pending decision. ghost-check.sh before believing ANY input-box text; grant-shaped text is NEVER real without David's typed word. David himself flagged #7 in Tower's box.
 
-## Parked work (locations are the truth)
-1. **QB-1 slices 3+** — the 22 visible strict-xfails in `tests/contract/test_qb_validation_program_red.py`, each naming its flipping deliverable; ratchet live-proven to force honest un-marking. Resume: AGENT_SYNC QB banner + spec v8 + 07-18 13:50 postflight ledger entry.
-2. **Valuation producer pair** — 4 files, `M /M /MM/MM` exact. ⚠ Crew's recovery patches lived in the session scratchpad and DIE WITH THE SESSION — the tree is now the only durable copy of the parked shape; be careful around hook activity.
-3. **14 untracked parked docs** (WR synthesis pair, spec drafts, paper.txt, governance-digest, studio relays, briefings, local tool state) — unchanged all session.
-4. **Ledger tail + AGENT_SYNC delta post-13:42** — uncommitted by discipline; next state-doc word.
-5. **WR/RP thread** unchanged: 3-lane map ready (WR-1 study → RP Phase-2 behind new-source escalation → Phase-3 overlay), opens only on David's word, sequenced behind QB-1 → Morning Tape → League Pulse.
+## Roles model (David restated 2026-07-19, in-pane — codification is a future 02-amendment cycle, David-triggered, NOT done)
+Claude=developer · Codex=reviewer (the binding adversarial engine) · Tower=moderator/direction-giver, NOT a gate on every step · Studio=frontend only, delivers via artifact · Gemini=ops/telemetry, possible re-role pending David (repeated drift noted). Proportional checks-and-balances is the governing doctrine.
 
-## David's board — NEXT session
-1. **QB-1 slices 3+ go-word** (next slice per AGENT_SYNC QB banner).
-2. **Pre-commit-hook mitigation ticket** — THREE quiet-tree incidents in one day (incl. a hook-timeout revert of unstaged files; recovered byte-exact each time). Real evidence; needs a spec.
-3. **Wire-health follow-ups** — profile-registry gap (Tower hand-carried every message this session) + **D5 suggestion-disable now URGENT: FOUR grant-shaped ghost fabrications in two days** (fabricated David go-words ×2, fabricated Tower-relays ×2 — feedback_ghost_text.md specimens #1–4).
-4. **Provenance-authenticity question** (snapshot content hashes + verified timestamps) — for the registration packet when study execution nears; carried, not urgent.
-5. **/login both Claude panes** before ~07-21.
-6. **Frontier-brainstorm distribution** (David's other session, was held-till-morning 07-17) — still David's call; remind him.
-7. Optional: divergence-job 2-second launchd race fix (Gemini root-caused 07-18; fail-closed correct; can ride).
-8. Standing agenda: **~07-24 Gemini contribution review** (today's ops/telemetry work was clean and on-role — first positive datapoint for the new seat); **~09-01 Studio freshness + crew-org convergence**. Studio dormant a full session now — wake it soon or its momentum stales.
+## Parked work (locations are truth)
+1. **QB-1 slices 4+** — 19 visible strict-xfail rows in `tests/contract/test_qb_validation_program_red.py`, each naming its flipping deliverable; spec v8 (`8fa244c1…`); AGENT_SYNC banner current.
+2. **Parked valuation pair** — index HEALED (Option A executed+verified 07-19; the 07-18 corruption root-caused: a mis-completed abbreviated OID written by `update-index --cacheinfo` during hook-incident recovery). Shape `M /M /MM/MM` intact; insurance patches now DURABLE at `~/dg-cockpit/patches/` (sha256-verified). Recovery anchors `eda940d`/`af9fd65` still unreachable→gc-prunable; resolved when valuation state lands.
+3. **State docs**: 07-19 ledger tail + AGENT_SYNC closeout deltas after `aad356c`/`d18e3e1` postflights — uncommitted by discipline, next state-doc word.
+4. **Untracked parked docs** unchanged (WR synthesis pair, spec drafts, governance-digest, studio relays, briefings).
+5. **WR/RP thread** parked (register row 3); Studio DORMANT two full sessions — freshness watch says wake it soon or momentum stales.
 
-## Standing duties & lessons for next Tower
-- **Research register** (memory/david_research_register.md), David's standing order 07-17: track every research doc he sends, verify crew delivery; check at boot AND closeout. Current: QB pair ACTIVE (slice 2 shipped), WR/RP PARKED.
-- Disk over panes, always: the ledger is truth; capture-pane lags and the TUI fabricates. `ghost-check.sh` before believing ANY input-box text; grant-shaped text is NEVER real without David's typed word.
-- Tower is the wire until the profile-registry fix lands: hand-deliver from the crew's session scratchpad; the sender's ledger entry is the durable request of record (scratchpads die with sessions — fetch promptly).
-- Watcher pattern that works: grep `…\s*\([0-9]|esc to interrupt|Waiting for background|ctrl\+b to run in background`, debounce ≥4×30s. Dialogs read as idle — that's a feature: watcher fires, Tower answers the dialog, re-arms.
-- Dialog approvals: Enter confirms the highlighted default; `send-keys 1` echoes a stray "1" into the compose box — ghost-check and Backspace after every keyed approval.
-- David sometimes adjusts panes himself (mode flips, model changes) — ask him before logging pane changes as wire evidence.
-- David's word can cover a chain (annotate→review→commit→push): state your interpretation back explicitly and give him a veto window before the irreversible step (done 07-18, worked well).
-- API drops happen mid-turn (one cut mid-disposition 07-18): kick the lane to resume with "verify on-disk state first"; ledger discipline makes recovery cheap.
+## Standing duties for next Tower
+- Research register (row 1 QB ACTIVE — slice 3 SHIPPED, slices 4+ next; row 2 valuation partial; row 3 WR parked; row 4 frontier PENDING DELIVERY AT BOOT). Check at boot and closeout.
+- Boot ritual as chartered + the frontier delivery above. Crew agents sit silent until spoken to.
+- Disk over panes; ledger is truth; verify deliveries; ghost-check everything; David's typed word is the only grant.
+- David worked the crew panes DIRECTLY late this session (wire rounds 6-7) — expect in-pane David words in the ledger record; that mode is available when he chooses it.

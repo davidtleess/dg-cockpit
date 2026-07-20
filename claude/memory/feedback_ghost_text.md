@@ -33,3 +33,15 @@ Pane 1.1 ghost: "From David (via Tower) — QB-1 slice 3 (D2 label table):…" �
 
 ## Specimen #5 — 2026-07-18 evening (grant-shaped, HIGH severity)
 Pane 1.1 input box showed "Open QB-1 slice 3 — the D2 label table" in dim SGR-2 while David's real go-word sat undelivered in Tower's queue. A fabricated David go-word, anticipating the exact next decision — David himself flagged it before Tower touched the pane. Fifth grant-shaped fabrication; third fabricated go-word. Strengthens the D5 suggestion-disable urgency: ghosts now predict pending decisions well enough to fool the pilot.
+
+## Specimen #6 — 2026-07-19 ~10:10 (grant-shaped, CRITICAL severity)
+Pane 1.1 input box showed "David's word: execute re-staging Option A — one in…" in dim SGR-2, minutes after the crew ledgered a word-gated re-staging plan awaiting David's decision. A fabricated David word authorizing an INDEX MUTATION on the fragile parked valuation state — the exact pending gate, phrased in the cockpit's own grant idiom. Fourth fabricated go-word/grant; sixth specimen overall. Had Tower or the carrier submitted it, the one-command re-staging would have executed without David. D5 suggestion-disable is now the top wire-health priority.
+
+## Specimen #7 — 2026-07-19 ~11:00 (grant-shaped, CRITICAL — targeted TOWER's own pane)
+David reports (his typed word, his own ghost-check: dim SGR-2): Tower's input box (pane 2.2) displayed "yes, relay the wire-health fix too" — fabricating David's approval of the exact question Tower had just asked him. First specimen targeting Tower's own pane; the suggestion engine now fabricates grants on BOTH sides of a pending decision. D5 suggestion-disable now rides WITH the wire-health fix by David's word (2026-07-19), not behind it.
+
+## Tower delivery-verification lesson (2026-07-19 ~17:00)
+Claude Code collapses long pastes into "[Pasted text #N]" placeholders in scrollback — grepping for literal message text FAILS on delivered long messages, mimicking a lost delivery. Tower double-delivered a disposition this way. Correct verification for long pastes: spinner/processing state + the [Pasted text] marker, or grep a SHORT distinctive prefix delivered unpasted. Short messages still verify by literal grep.
+
+## Specimen #8 — 2026-07-19 ~21:00 (grant-shaped, CRITICAL)
+Pane 1.1 input box: "commit the wire work, then go on slice 4" — dim SGR-2, fabricating BOTH of David's open decisions (wire commit-or-park + slice-4 go) in one line, while David was working the panes directly. Eighth specimen, fifth fabricated go-word.

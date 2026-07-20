@@ -20,3 +20,5 @@ Corrections the crew applies to ALL of David's research docs (standing, from bot
 - Doc status headers like "Approved direction" mean synthesize-only, never build authorization.
 
 Tower read log: QB pair + WR doc + both syntheses read in full 2026-07-17/18 session.
+
+| 4 | Frontier & Edge brainstorm (`docs/strategies/2026-07-17-frontier-edge-brainstorm.md`) | 2026-07-19 11:04, on disk (uncommitted) | **DELIVERED 2026-07-19 ~22:05 — Tower sent disposition-read order to all three crew panes with the wake/brief, unredacted incl. Gemini-lane audit; all three deliveries spinner-verified** | Awaiting crew synthesis + ticket sequencing via spokesperson; David gates each ticket; H3 rides the ~07-24 Gemini review; H3/H4 sequencing to account for wire CLOSED-not-trusted; STUDIO EXCLUDED (governance-saturated — clean paraphrased briefs only when H5 opens) |

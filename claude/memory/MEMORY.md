@@ -1,5 +1,7 @@
 # Memory Index
 
+- [BMW search project](project_bmw_search.md) — used-BMW market research role; baseline findings; facebook-marketplace MCP installed & connected; awaiting David's car list + scoping answers
+
 - [David's profile](user_profile.md) — background, experience level, Sleeper username, working style
 - [Python environment](feedback_python39_syntax.md) — project venv is Python 3.14 now; old 3.9 constraints obsolete; avoid `round` as param name
 - [Dynasty Genius project state](project_dynasty_genius.md) — what's built, model performance, Sleeper IDs, next steps
