@@ -5,22 +5,23 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: d99ebbab-00f0-4911-9930-7ac9cc8130ea
-  modified: 2026-07-20T01:49:20.435Z
+  modified: 2026-07-20T02:46:51.757Z
 ---
 
 # Cockpit handoff — closed clean, 2026-07-19 (~22:00) — slice-3 SHIP + wire proportionality-close day
 
 **Headline:** QB-1 slice 3 (D2 label table) went go-word → 11-round adversarial arc (5→2→2→2→3→5→3→1→2→1→GREEN CLEAR) → committed `ae04a9e` → CI GREEN (run 29700989372) → state docs `aad356c`, all Tower-verified. Then David redirected: the wire-health thread (7 rounds, ~20 findings, non-converging on esoterica) was closed by PROPORTIONALITY, not CLEAR — committed `d18e3e1` (5 files, round-7 pins exact, 2B+2H residuals honestly ledgered, Codex-executed under David's typed word, Tower-verified incl. live ls-remote). **Governing lesson David set, adopted by the crew: rigor calibrates to stakes — product contracts get full rounds; tooling stops sooner.**
 
-## THE FRONTIER-DOC STANDING ORDER (David's typed word 2026-07-19 — execute at NEXT BOOT)
-Deliver `docs/strategies/2026-07-17-frontier-edge-brainstorm.md` to the spokesperson TOGETHER WITH the wake/morning-brief message, as a disposition-read per the DISPOSITION INSTRUCTIONS at the doc head (read+disposition only; crew returns synthesis + ticket sequencing; David gates every ticket; unredacted to all three crew panes incl. the Gemini-lane audit; NEVER to Studio — governance-saturated). Registered as row 4 in david_research_register.md.
+## FRONTIER-DOC STANDING ORDER — EXECUTED 2026-07-19 ~22:00-22:14 (same-evening reboot)
+Delivered to all three crew panes unredacted at boot; all three lanes dispositioned; spokesperson issued the THREE-LANE CONSOLIDATED PACKET (ledgered 22:14 ET). Convergent: slice-4 first; H1 evidence→contract→producer; Trade Desk behind H1; Studio wall; Tape ~Week 1; examiner never-verdicts; d18e3e1 ≠ wire trust. Divergences for David: (1) H3/H4 wire posture — Option A (Claude: wire-free redesign) vs Option B (Codex: explicit WIRE-TRUST-00 gate first); (2) Gemini's infra-first ordering treated advisory; (3) EDGE-H1-00 parallel vs behind PRECOMMIT-1. Codex ticket vocabulary (EDGE-H1-xx/GOV-H3/H4/UX-H5-xx) proposed as board vocabulary. NEW register row 5: CollegeQB pre-draft model (docs/strategies/2026-07-17-david-collegeqb-predraft-model/) — pointer delivered 22:08, slotted as CQB-1 behind slice-4 decision; full disposition-read awaits David's own word. WIRE NOTE: Codex's 22:01 disposition paste was eaten by an open approval dialog on 1.1 (live instance of accepted residual class); Tower recovered via ledger + preserved text — hand-carry discipline validated.
 
-## David's board — NEXT session, in order
-1. **Fresh session for Claude's lane FIRST** (it closed at ~700k+ tokens with two fatigue-class verification lapses today — David-endorsed; run before any product work).
-2. **QB-1 slice 4 go-word** (D2a study matrix) — David's stated next product step; resume via AGENT_SYNC QB banner + spec v8 + PARKED_SEAMS map.
-3. **Frontier-doc disposition returns** → David gates tickets (H3 Examiner rides the ~07-24 Gemini review; H3/H4 sequencing was "behind wire trust" — note the wire is now CLOSED-not-trusted; resequencing is part of the disposition).
-4. **/login both Claude panes** — expires ~07-21, NOW URGENT (1-2 days).
-5. Riders: pre-commit-hook mitigation ticket (FIVE incidents now, incl. the 07-18 index-corruption root cause — healed by Option A 07-19); provenance-authenticity question (registration gate); ack-clear on Codex's stale pane claim + carrier-trust (both moot while carrier paused and wire closed — surface only if David reopens the wire); D5 residue: Codex CLI 0.144.5 has NO suggestion-disable (officially verified) — ghost defense stays procedural.
+## David's board — CURRENT (updated 2026-07-19 ~22:50, live session)
+1. **SLICE-4 AMENDMENT-CYCLE WORD** — slice 4 GO was given 22:22 but Codex VETOED the opening scope (22:39, ledger line 690): frozen v8 not computable (4 of 5 H1 features lack pinned validation-lane sources; Claude verified independently and ACCEPTED, correcting 5-of-5→4-of-5 — sack_rate IS computable). GREEN PARKED. Path: David words the amendment cycle → Claude drafts scoped v9/registration amendment (H1 columns+formulas live-schema-verified; build_study_matrix contract; candidate universe; attrition vocabulary) → Codex CLEAR → David ratifies → Codex authors behavioral RED, proves red → GREEN. This is the ONLY blocker on the QB thread.
+2. **EDGE-H1-00 COMPLETE** — 4 seasons league history, 173 immutable snapshots, zero fetch failures; Claude-reviewed draft at docs/strategies/2026-07-19-league-behavior-evidence-pull-draft.md (untracked). 9/12 owners continuous since 2023. EDGE-H1-10 (Behavioral Book contract) awaits David's word.
+3. **/login both Claude panes** — expires ~07-21, URGENT.
+4. **State-doc commit word** — growing set of tonight's ledger/sync writes uncommitted by discipline.
+5. Riders: CQB-1 read-word (register row 5) whenever David's ready; pre-commit-hook mitigation ticket; provenance-authenticity question; D5 ghost residue (defense stays procedural).
+Rulings tonight (all ledgered 22:22): wire posture OPTION A (H3/H4 wire-free, explicit David decision); Codex ticket IDs = board vocabulary; EDGE-H1-00 was authorized parallel and has now completed.
 
 ## Wire/carrier state (critical context)
 - **Carrier: PAUSED by David's word 2026-07-19** — Tower removed `~/dg-cockpit/carrier.enabled`, verified `held: carrier_disabled`. Re-enable ONLY on David's carrier-trust word. The wire code is committed (`d18e3e1`) but NOT trusted for autonomous delivery — 2B+2H residuals ledgered open (round-7 verdict, 2026-07-19 ledger).
