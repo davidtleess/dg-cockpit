@@ -1,5 +1,28 @@
 # Ghost text in agent panes — capture-pane cannot be trusted without -e
 
+## DAVID'S RULING 2026-07-21 — SUPERSEDES THE ENTIRE "D5 SUGGESTION-DISABLE" THREAD BELOW
+**"I like the ghost text — you guys just need to ignore it."** David's typed word, 2026-07-21.
+
+The disable question is CLOSED. Do not reopen it, do not propose it, do not treat past D5
+urgency notes below as live. (A disable mechanism does exist — `claude --prompt-suggestions`
+in Claude Code 2.1.216 — and David has declined it. Recorded so nobody re-researches it.)
+
+What "ignore" means operationally, for every pane-reading agent:
+1. **Read with escapes by default.** `capture-pane -e` as the normal read, not a special check.
+   Ghosts then self-identify as dim SGR-2 on sight — no ritual, no script call, no cycles spent.
+   `ghost-check.sh` drops to a fallback for genuinely ambiguous lines.
+2. **Never submit text you did not send.** This is the load-bearing rule and it subsumes the
+   whole ghost problem: if every message is verified by its own sender, nobody is ever in the
+   business of rescuing an unattributed strand, and ghost text becomes harmless by construction.
+   Pressing Enter on an orphan is the ONLY way a ghost has ever caused harm.
+3. **Stop narrating specimens.** David sees the dim rendering himself and is not confused by it
+   (standing since 2026-07-20). Surface only a SUBMITTED ghost or a genuinely new class.
+   Stop appending specimen entries to this file — the log below is history, closed at #13.
+
+Cost of getting this wrong in the other direction: David is tired of cycles spent on this.
+Ghost text is visual noise he likes. Treat it as furniture.
+
+
 **Discovered 2026-07-16 (David spotted it).** Agent TUIs (Claude Code, and possibly Codex/Antigravity) render grey AI-generated *prompt suggestions* in the input box. `tmux capture-pane -p` flattens color, so ghost suggestions read as typed input to every pane-reader: Tower, the mail carrier, and crew agents reading each other's panes.
 
 ## The 2026-07-16 incident
@@ -42,6 +65,15 @@ David reports (his typed word, his own ghost-check: dim SGR-2): Tower's input bo
 
 ## Tower delivery-verification lesson (2026-07-19 ~17:00)
 Claude Code collapses long pastes into "[Pasted text #N]" placeholders in scrollback — grepping for literal message text FAILS on delivered long messages, mimicking a lost delivery. Tower double-delivered a disposition this way. Correct verification for long pastes: spinner/processing state + the [Pasted text] marker, or grep a SHORT distinctive prefix delivered unpasted. Short messages still verify by literal grep.
+
+## Specimen #13 — 2026-07-20 ~22:52 (GRANT-shaped, HIGHEST SEVERITY YET)
+Pane 1.1 input box: "commit anyway, log the exception, and board the tollgate ticket" — dim SGR-2. This is the worst specimen to date because it fabricated the **complete, correct-sounding resolution of a real escalation that had just been raised**: Claude had legitimately stopped at a FAILING sprint-closeout tollgate and asked David to choose (a) commit with logged governance exception or (b) hold. The ghost supplied option (a) verbatim, including the two secondary actions ("log the exception", "board the ticket") that a real David answer would plausibly contain. Submitting it would have committed a day's ratified work past a failing ENFORCE gate on a fabricated authorization.
+**Pattern escalation:** specimens 9-12 this session were instruction-shaped and harmless; the engine spent the evening tracking the arc, then produced a grant-shaped one at the exact moment a genuine David-gated decision appeared. Tower's standing rule proved correct and load-bearing: ghost-check EVERY unexplained input-box text, and never let plausibility substitute for the check. Thirteenth specimen; sixth fabricated grant.
+
+## Specimen #9 — 2026-07-20 ~22:14 (INSTRUCTION-shaped, new sub-class)
+Pane 1.1 input box: "tell me when codex clears r6" — dim SGR-2, appearing at the exact moment the lane was waiting on Codex's H2 r6 verdict. NOT grant-shaped: it fabricates a *David instruction to the agent* rather than an authorization. Lower blast radius (submitting it would have caused a status report, not an unauthorized action), but the same targeting precision — it names the exact pending artifact by its round number. Note the sub-class: ghost defense must cover instruction-shaped text too, not just grant-shaped; the tell is unexplained input-box text of ANY shape, and ghost-check.sh is the only arbiter. Ninth specimen. D5 residue stands: Codex CLI 0.144.5 has no suggestion-disable, so the defense remains procedural.
+
+**Specimen #10 — same session, ~6 min later:** identical shape with the round number incremented — "tell me when codex clears r7". The suggestion engine is now tracking the arc's state and re-emitting a stale-but-plausible instruction each round. Practical consequence for Tower: during multi-round arcs, ghost-check the implementer pane at EVERY idle, not just when text looks surprising — the same ghost re-appears with updated round numbers and would otherwise blend into the workflow.
 
 ## Specimen #8 — 2026-07-19 ~21:00 (grant-shaped, CRITICAL)
 Pane 1.1 input box: "commit the wire work, then go on slice 4" — dim SGR-2, fabricating BOTH of David's open decisions (wire commit-or-park + slice-4 go) in one line, while David was working the panes directly. Eighth specimen, fifth fabricated go-word.
