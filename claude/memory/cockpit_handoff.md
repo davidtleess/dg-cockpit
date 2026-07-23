@@ -1,46 +1,69 @@
 ---
 name: cockpit-handoff
 description: "Tower's parked board — durable snapshot of what every lane has parked and what David owes, updated at significant state changes"
-metadata:
+metadata: 
   node_type: memory
   type: handoff
-  originSessionId: d99ebbab-00f0-4911-9930-7ac9cc8130ea
-  modified: 2026-07-21T04:00:12.010Z
+  originSessionId: a85f87b5-cf15-4b11-9bb8-58209c7b5a60
+  modified: 2026-07-22T19:32:37.353Z
 ---
 
-# Cockpit handoff — CLOSED CLEAN, 2026-07-20 (~00:00) — slice 4 SHIPPED, pushed, CI green
+# Cockpit handoff — CLOSED 2026-07-22 (~12:00) — QB-1 STUDY REGISTRATION **RATIFIED AND COMMITTED**
 
-**Headline:** QB-1 **slice 4 is done end-to-end and on origin.** The arc began with Codex's feasibility VETO of the opening scope and ended with three commits pushed and two green CI runs. All four lanes closed; Tower closed last.
+**Headline:** The QB-1 pre-registration is **ratified, sealed, hashed, and on disk in git.** Binding pin `37065566a9b372e329454cc51edbcf3de724fd1e5cc57a2f15cc547b1ae54c9d`. It took five Codex review rounds and eleven findings, none waved through. The study is now contractually fixed before any result exists — which was the whole point.
 
-## What shipped (all David-worded, all pushed, `origin == local == 7ef75f73617c`)
-- **`2b25653`** — QB-1 slice 4: D2a `build_study_matrix` (F3) + the v9 contract carrying the H2 CPOE audit counter. 16 files, +2752/−74. **CI run 29799101472 SUCCESS.** Codex's post-commit zero-divergence audit: all 13 reviewed artifacts match their cleared blobs exactly.
-- **`d19746c`** — state docs: slice-4 publication record. 2 files.
-- **`7ef75f7`** — EDGE-H1-00 evidence draft + snapshot-store homing (`.gitignore` +5, `backup_manifest.json` +5). **CI run 29799731563 SUCCESS.** Zero `app/data/research/**` paths on the remote — verified.
+## What shipped (all David-worded)
+- **`cf9524e`** — THE WIRE RULE into all three crew bootstraps.
+- **`1f4817a`** — Wire rule amendment: Rule 1 requires POSITIVE delivery confirmation.
+- **`9c65d6c`** — RATIFIED study pre-registration + sealed canonical object.
+- **`95f80a1`** — Authority-of-record trail: three daily ledgers.
 
-## The review spine (why it took a day)
-Feasibility VETO → v9 amendment CLEARed over 5 rounds (7B5H → 4B5H → 3B2H → 3 literal → CLEAR) → **David ratified** → v9 frozen → behavioral RED proven **1F+18XF** → GREEN → 3 GREEN rounds (4B3H → 1B2H → enumerated CLEAR, 6 axes) → **David ratified the H2 counter** → addendum r6→r7 + implementation + delta CLEAR + third coherent re-freeze → tollgate root-caused and fixed → commit → push → CI.
-**Two study-corrupting defects killed before any code existed:** weekly CPOE was not losslessly recomposable (609/810 QB-seasons divergent — resolved by pinning the official season-summary input, no approximation), and the ANY/A sack-yards sign was backwards (nflverse ships it already negative; the draft would have inflated every passer AND refused ~493/664 honest rows). Both would have produced plausible, wrong numbers in the very study meant to test the model against the market.
-
-## Incidents absorbed this session (both recovered with proof)
-1. **Pre-commit-hook incident #6** — `git commit --only` hit a 2-minute wall and was killed mid-operation; the un-run restore reverted the parked valuation worktree. Comprehensive drift audit (Tower's and Claude's, independently) proved the four valuation files were the ONLY casualties; all 13 cleared pins byte-identical. Index restore with per-file hash proof; background retry with no timeout ceiling landed clean. **Named loss, honestly disclosed:** the two divergence files' *unstaged third layer* was not recovered (David chose index restore over the unverified 07-19 patches, still at `~/dg-cockpit/patches/`). **But no data was lost** — that layer was the derived output of the 09:40 scheduled refresh, and `app/data/market_divergence_history.db` (git-untracked) holds all 12,201 rows for capture_date 2026-07-20. The three-copy architecture worked: only the regenerable layer was ever exposed.
-2. **Ghost specimens #9–#15** — an evening-long run in Claude's input box, instruction-shaped and tracking the arc round by round, culminating in a grant-shaped fabrication of the exact resolution to a real pending escalation ("commit anyway, log the exception, and board the tollgate ticket"). None submitted. **David's note: he is not confused by ghosts — he sees the dim rendering directly. Tower should keep checking (pane-reading agents get color-flattened text) but STOP narrating each specimen to him; surface only a submitted ghost or a genuinely new class.**
+## ⚠️ THE MOST IMPORTANT THING FOR THE NEXT TOWER
+**Execution is the LAST word, not the next one.** Tower told David three gates stood between the ratified pin and a result. That was wrong. The study package has labels, matrix, guards, registration — but **no D3 runner, no D4 join module, no D5 report emitter.** Roughly half the machinery does not exist. The 17 parked seams are the real build list (D3 statistical engine 8 · D4 identity join 3 + the loader bridge · D5 report assembly 5 · F33 tripwire 1), **plus** the H5 status function which raises a named refusal in shipped code, so 4 of the 14 ratified contrasts cannot be scored at all yet.
+- **Honest cost: 4–6 more focused days**, upper end likely given review overhead.
+- **Sequence: ~5 commit words (batchable), THEN one execution word.**
+- **Good news, both verified:** the `eval/` allowlist gate is **moot** — the audit never descends into subdirectories and all study code lives in the `eval/qb_validation/` package. And **nothing in the ratified registration is unsatisfiable** — every refusal is "not built yet," never "cannot be built."
+- **Set expectations before the first result:** the spec's own risk table expects many of the 14 contrasts to return `not_separable` or `unsupported_power`. That is the pre-registered honest outcome, NOT a broken run.
 
 ## David's board — next session
-1. **Registration document + study execution** — the two words that convert slice 4 from *built* to *run*. This is the natural next step of the QB thread.
-2. **CQB-1** — David's CollegeQB pre-draft model doc (register row 5): pointer delivered 07-19, **never opened by any lane**; the disposition-read awaits his word.
-3. **PRECOMMIT-1 — promote off the rider list.** Six incidents; tonight it cost a commit and reached into parked data.
-4. **TESTENV-1** — sweep the 3 remaining direct-invocation test files (`test_model_output_ops_scheduler.py`, `test_market_divergence_ops_scheduler.py`, `test_frontend_banned_language_linter_contract.py`). Latent, not absent: the next dependency added downstream re-creates tonight's block.
-5. **EDGE-H1-10** — the Behavioral Book contract. EDGE-H1-00's findings are on disk and worth his read first (see below).
-6. **Amendment train** — spokesperson v3 + **governance-digest regeneration** + Examiner charter (GOV-H3, rides the ~07-24 Gemini review). The digest is DRAFT/void (pins point at 02 v1.2.0; committed law is v1.3.0), so every lane still eats a full-weight boot. David asked about this directly — it is the boot-lightening mechanism, and it is parked behind this train.
-7. **/login both Claude panes — OVERDUE** (was due ~07-21).
-8. Riders: the two registration-gate questions; frontier board (EXAM-1/SCOUT-1/TAPE-1/EDGE-H1-20/UX-H5-20/RECAP-1); wire ack-clear + carrier-trust (carrier still PAUSED; Tower is the wire).
+1. **The execution arc** — ~5 increments, each with its own commit word, then execution. Nothing has been authorized.
+2. **Studio 004 sequencing** — dispositioned by both lanes, agreed on all seven items, awaiting David's sequencing. It does not jump the QB-1 queue.
+3. **CQB-1** — disposition delivered (ADAPT + PARK behind two gates). Gate G1 is David's constitutional ruling on mock-draft consensus as feature-vs-overlay. **Note: David REFRAMED this** — the value is measuring historical accuracy of mock drafts at CLASS-COMPOSITION level (how many QB/RB/WR/TE actually go in round 1 vs projected N drafts out), which is a future-pick-value signal, not a player-level feature. That reframing largely dissolves the constitutional gate as originally posed.
+4. **Production-curve work** — several hypotheses ordered, pressure-tested, ranked. Awaiting David's read.
+5. **PRECOMMIT-1 · TESTENV-1 · EDGE-H1-10 · the amendment train** (spokesperson v3 + governance-digest regeneration + Examiner charter) — all unchanged, all parked.
+6. **/login both Claude panes** — was due ~07-21, still outstanding, nothing broken.
 
-## EDGE-H1-00 findings (read-only league-history pull, complete and reviewed)
-4 seasons, 173 immutable snapshots, zero fetch failures; 9 of 12 owners continuous since 2023 so longitudinal analysis is clean. Standouts: three managers spent **$0 of $100 FAAB across three straight seasons** (one won 43 waiver claims at $0); the post-loss tilt hypothesis came back **null** (0.667 vs 0.660 adds/manager-week, direction flips by season) — an honest negative that should reshape the H1 spec; David is the league's largest net holder of others' picks in every snapshot since 2024 (8 held / 0 away); and in 2024 roster 1 went 0–16 in paired weeks with the bench outscoring the starters. Draft at `docs/strategies/2026-07-19-league-behavior-evidence-pull-draft.md` (committed); snapshots gitignored + manifest-covered by David's ruling.
+## ⚠️ LIVE PARKED ITEMS — David's word 2026-07-22. Carry forward every closeout.
+### OPEN — H2 pre-registration guard (crew work; Tower tracks and verifies, never writes it)
+**The crew must add one line to the QB-1 H2 pre-registration: rushing is UNDER TEST, not to be asserted as established anywhere until the pre-registration resolves.**
+- **Surface this every boot until it lands.**
+- **CLOSED only when Tower verifies the line is on-disk in the H2 document — never on a crew claim.**
+- Why: David's research and CQB-1 call rushing "the secret sauce"; QB-1's H2 lane is testing exactly that. Asserting it as established pre-answers the study.
+- **⚠️ CORRECTED 2026-07-22 (David's word). THE BLOCKER WAS NEVER REAL.** The 07-22 closeout recorded that adding the guard would void the ratified pin and force a fresh registration. **False — asserted, not checked.** The pin hashes **only the canonical JSON**; a dated addendum in the registration *markdown* does not touch it. That false blocker cost a day and one of David's decision slots, and Tower propagated it to him unchallenged on 07-22 afternoon. **Do not restate it. If any lane or document repeats it, correct it at the source.**
+- **Landing shape (David-ordered direct to the spokesperson, 07-22):** on Codex CLEAR — dated addendum at the foot of `docs/validation/2026-07-21-qb-1-study-registration.md`, a one-line pointer at the H2 declaration (~line 153), and the same line into all three bootstraps where THE WIRE RULE went. **The JSON is not touched.**
+- **Record corrections ordered through Tower (07-22):** AGENT_SYNC close banner reason corrected in place; a dated correction **appended** to `docs/agent-ledger/2026-07-22.md` — ledgers are authority-of-record, never rewritten. **Tower verifies both on disk.**
+- **Status: OPEN.** Codex ruling pending; settled on CLEAR. Item closes on Tower's on-disk verification, not on the ruling.
+
+### DEFERRED — Constitution honesty fix (rides the next constitution amendment cycle)
+**Crew produces a short map of the ~5–10 load-bearing findings graded Validated / Provisional / Hypothesis, and corrects the constitution IN PLACE.**
+- **Draft capital = Hypothesis**, not the proven-sounding wording in `docs/governance/00-product-constitution.md`. Its bake-off evaluator exists; the bake-off sits deferred, unreopened.
+- **DO NOT stand up a new document.** In-place correction only.
+- (The ~Aug 2026 grounding-layer full-build go/no-go is a charter standing-agenda item, not a board item.)
+
+## Findings worth carrying
+- **Draft capital, MEASURED:** across 16 draft classes, round-1 QB count vs class fantasy production **r = +0.869** (p < 0.001, CI95 ≈ [0.66, 0.95]). **Position-specific** — RB ≈ +0.13. Named confound: teams play their first-round QBs, so capital creates opportunity — fatal for a talent claim, irrelevant for valuing a future pick, since the points accrue either way. Exploratory, not pre-registered.
+- **Studio 004 N0 — hypothesis REFUTED, correctly.** Studio measured a real positional skew (QB ~−11 percentile vs market, TE ~+14) and proposed a Superflex-baseline cause. **Both lanes refuted it; Codex proved it by re-ranking both sides over the same joined players — medians collapsed to TE 0.0 · WR −1.0 · RB 0.0 · QB −1.1.** It is a cohort/rebasing artifact. **The model does not mis-value QBs.**
+- **Studio 004 N3 — a real truth defect, worse than anyone stated.** The masthead "moves" hero sums three rendered list lengths (capped top-25 + every roster row + model rows), including zero-move rows and double-counting. On 07-22 the source had **448 actual movers while the hero read 52.** New dependency: N3 and N6 must close before Morning Tape consumes Daily Open output, or the audio layer narrates a rendering cap as "what changed."
+- **Scoring-layer gap:** there is **no general NFL-stats → fantasy-points layer** using David's league settings. Only `qb_ppg_labels.py` (QB-only, inside the validation harness). Measured consequence: the generic PPR column matches David's league exactly for 2024 (0/664 rows differ) but diverges on **304 of 663 QB rows for 2023**, when his league scored `pass_int = −1.0`. His 42 scoring keys ARE already captured into the operational snapshot daily, which materially lowers the cost of building it.
+- **Age curves:** QB rushing peaks 22–26; within-player year-over-year sign flips at 26→27. David's own writeup's "26% drop" is −21% cross-sectionally but ~−8% within-player — the gap IS survivorship. His 27–28 sell window survives; the magnitude does not.
+- **fum_rec CLOSED** — Sleeper files "Fumble Recovery" under IDP, separate from the offensive fumble settings. Own-recovery earns nothing. fgmiss/xpmiss measured at **exactly zero** across 847 QB-seasons.
 
 ## Standing state
-- **Rulings David made this session:** wire posture **Option A** (H3/H4 wire-free, his explicit decision, recorded not silently applied); Codex's granular ticket IDs = board vocabulary; H2 represented by the `cpoe_non_qb_joins` counter; **snapshots stay out of git** (data layer → disk + GCS, protected by manifest coverage, never version control — the `.gitignore` comment records the reasoning for future agents).
-- **Parked valuation four:** `M `×4 staged, index intact incl. `57741f3c6d13cb8b`. Tomorrow's 09:40 refresh regenerates the `_latest` layer and the `MM` shape returns naturally.
-- **Uncommitted by discipline:** the 07-20 ledger tail (closeout entries themselves) + 16 pre-existing untracked paths, unchanged all session.
-- Roles unchanged: Claude=developer · Codex=reviewer (binding adversarial engine) · Tower=moderator/wire · Studio=frontend (DORMANT three sessions now — freshness watch says wake it or retire the lane) · Gemini=ops/telemetry (engaged and on-role this session — a positive datapoint for the ~07-24 review).
-- Standing duties for next Tower: research register at boot and closeout; ghost-check every unexplained input-box text (but do not narrate specimens to David); verify EVERY delivery (long pastes collapse to "[Pasted text #N]" — verify by spinner/marker, not literal grep); disk over panes; David's typed word is the only grant.
+- **Roles:** Claude=developer/spokesperson · Codex=binding reviewer · Tower=moderator/wire · Studio=frontend outsider (**now on a standing self-directed mandate — no longer reactive**) · Gemini=ops/telemetry.
+- **Uncommitted by discipline:** AGENT_SYNC.md · today's ledger tail · the four STAGED valuation artifacts (index intact) · pre-existing untracked paths. **Nothing pushed** — `origin` is behind by four commits; push has never been granted.
+- **Mail carrier: PAUSED and UNARMED, permanently unless David words otherwise.** Codex's verification proved 3 of 4 safety claims false (it can press Enter on an open dialog, take over a live sender's message without liveness proof, submit an unattributed strand) plus server-wide pane discovery. **The wire rule replaced it.** Tower's wire-sweeping duty is RETIRED — Tower verifies only its own deliveries and tells senders to re-send.
+- **Ghost text: David LIKES it.** The disable question is CLOSED and declined. Read panes with `-e`, never submit, **never narrate specimens to him.**
+
+## Two things the next Tower must not repeat
+1. **Four inter-lane messages stranded in one day** — every cockpit stall traced to a handoff that never crossed while the sending lane believed it had. David noticed twice before Tower did. **Verify every handoff positively, in the recipient's transcript. Read the LEDGER, not just panes — the ledger is where the durable record lives, and Tower missed four completed deliverables by watching panes instead.**
+2. **The altitude standard (tower.md).** David's 07-22 correction: Tower was "way too deep into the coding and engineering… verbose and confusing… not really keeping track." Before every message run the four questions — what this means for the app and David, is it worth belaboring, what's the blast radius, how does it connect to real football. Going deep to TRANSLATE is encouraged; dumping raw depth is not. Never open a new question while one of his is unanswered.

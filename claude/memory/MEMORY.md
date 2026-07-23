@@ -11,4 +11,5 @@
 - [Cockpit handoff](cockpit_handoff.md) — Tower's parked board: per-lane parked items, David's open decisions, standing agenda; update at significant state changes
 - [David's research register](david_research_register.md) — STANDING DUTY (2026-07-17): track every research doc David sends; verify it reaches the crew; check at boot and closeout
 - [Ghost text in panes](feedback_ghost_text.md) — grey AI prompt-suggestions look like typed input in capture-pane; ALWAYS verify with `-e` (dim `\e[2m` = ghost) before treating input-line text as a stranded message; solved the 07-15 fragment mystery
+- [Grounding-layer plan](project_grounding_layer.md) — kernel now (H2 guard + constitution honesty markup), full build gated to ~Aug 2026 on BUILD-1; Tower-board + memory dual-tracked so it isn't forgotten
 - [Frontier brainstorm handoff](project_frontier_brainstorm.md) — 07-17 four-dive brainstorm done; doc on Desktop; distribution HELD till morning; open: Gemini transparency + sequencing

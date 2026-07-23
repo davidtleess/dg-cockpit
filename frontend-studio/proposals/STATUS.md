@@ -1,77 +1,87 @@
-# Studio proposals — status as of close, July 15 2026 (early AM)
+# Studio proposals — status
+
+## Current
 
 | Item | State |
 |---|---|
-| 000 first impressions + RELAY | Crossed to engineers; verification in progress; verdicts pending |
-| 001 Morning Tape + grounded analysis layer (proposal + RELAY) | Crossed to engineers; verification in progress |
-| 001b RELAY addendum (rank-first defaults, normalization challenge N1) | Written, **not yet relayed** — awaiting David's reaction to the rank-led iteration it documents |
-| 001 prototype (`001-morning-tape/prototype.html`) | Ahead of the docs: now includes the state-first restructure (roster-ranked default, position-shape strip with filters, movers demoted to change-view). **Tomorrow's first design review.** |
-| Question-ladder / IA document | Not yet written — blocked on the dynasty-strategy deep research (running overnight); architecture research complete and on file in this status' companion transcripts |
-| Week-3 concept (in-season lenses) | In prototype behind toggle; data asks itemized in 001-RELAY G4 |
+| **005 Where we stand** (proposal + RELAY + prototype) | **DESIGN REJECTED by David 2026-07-22 (v1 and v2 both).** "Really bad… awful visual experience": two long parallel lists, no interactivity, drift column backwards + verdict-colored. Root causes recorded in DAVID.md (designed from data not the question ladder; violated ≥3 standing rulings; over-built before validating IA). **The analysis survives** — frozen model (25 days), no published overall rank, superflex contamination, the age-artifact finding, and the 004 N0 withdrawal are all sound and belong in the RELAY. **The design restarts** from one interactive filterable list defaulted to My Roster. RELAY still NOT authorised to cross. Next step gated on David confirming the corrected design direction before any rebuild. |
+| **004 Us against the market** (proposal + RELAY + 4 prototypes) | **v4 KEPT by David 2026-07-21** ("pretty cool — we can keep this and iterate later"). Parked, not finished. **RELAY CROSSED to the crew 2026-07-21, confirmed by David directly. Awaiting verdicts.** |
+| 000 first impressions + RELAY | Crossed. Verdicts were still outbound at last session close. |
+| 001 Morning Tape + grounded analysis layer | Crossed. Verdicts still outbound at last close. |
+| 001b RELAY addendum (rank-first defaults, N1–N8) | Crossed 2026-07-15, **fully accepted** same-day (disposition at foot of file). |
+| 003 League data freshness (F1–F4) | Crossed 2026-07-15, **fully accepted** same-day (disposition at foot of file). |
+| 002 question ladder / IA | Written 2026-07-15 from the dynasty-strategy deep research. |
 
-Data assets captured (all real, in `assets/001-data/`): what-changed payload, 48 player evidence
-payloads, FantasyCalc universe (462), Engine B population (503, GSIS→Sleeper crosswalk verified),
-Sleeper 2025 season + 18 weekly stat files, DynastyProcess id database.
+## 004 — what it is (one line)
 
-| Dynasty-strategy deep research | **COMPLETE** (overnight, 102 agents, adversarially verified) — full cited result preserved at research/dynasty-strategy-priority-ladder-deep-research.json; synthesis into the question-ladder doc is tomorrow's pre-review task |
+Ranking daily market movement by size of move is, measurably, ranking it by cheapness; this proposes
+ranking every move against that player's own normal day instead, and lets the surface say "nothing
+happened" when nothing did.
 
-**Update Jul 15 (late morning):** 002-question-ladder.md written (strategy research synthesized).
-001b addendum COMPLETE on disk (N1–N8: rank-first, universe list w/ KTC anatomy, live-ownership fix,
-model-rank juxtaposition across 305/398). Prototype current with all of the above. S2 relay gate
-cleared on Studio's side; awaiting board.
+**Evidence base (all reproducible):** 404 players × 28 days from `app/data/fc_forward_capture.db`.
+Volatility runs 28× from cheap to expensive (−0.709 Spearman vs. log value) and is a stable player
+property (0.913 split-half). Dollar-ranking and signal-ranking overlap only 3.6/10 in the top ten,
+averaged over 14 straight days, with a different #1 on 13 of 14. FantasyCalc ships `displayTrend`
+(true for 26 of 463) plus trade frequency and roster percent; the capture retains none of the three.
 
-**Update Jul 15 (morning review, second session):** David reviewed the state-first default screen
-live and approved it ("looks better… yes I think this is logical"). 001b relay APPROVED by David and
-**CROSSED to the engineering crew (confirmed by David directly, Jul 15)** — awaiting crew verdicts
-alongside 000 and 001. Two new standing rules logged
-in DAVID.md: plain English in the pane (no untranslated codenames), and no decided language about
-work David hasn't reacted to.
+**Prototype:** `004-noise-floor/prototype.html` — self-contained, real data, app tokens and typefaces,
+inline row expansion, no red/green outside the standing rank-arrow ruling.
 
-**Update Jul 15 (late morning):** David directive — league data must refresh frequently. Verified:
-Sleeper league snapshot + derived artifacts (team posture, team value matrix, cut report, trade
-assets) all stamped Jun 23, hand-run, absent from the daily job schedule. Written up as
-003-league-data-freshness-RELAY.md (F1 schedule the capture, F2 refresh the derivation chain,
-F3 user cost, F4 age on-surface) — **CROSSED to the crew (confirmed by David directly, Jul 15)**;
-awaiting crew verdict alongside 000/001/001b. League Pulse payload
-captured to assets/league-pulse-capture-2026-07-15.json as scouting-view groundwork.
+**Revised twice by client review.** v1 was market-only — David called it on practicality ("should I
+really be ACTING on those signals?") and on the missing model-vs-market juxtaposition. v2 added both
+lanes and immediately falsified v1's headline (Omar Cooper: we 75th, market 76th — a non-event). v3
+removed the narrative headline entirely after David asked for a consistent instrument rather than a
+daily protagonist, and replaced it with a fixed state strip plus small-multiple gap-over-time cards
+on one shared scale. Full revision log at the foot of the proposal; all three prototypes preserved.
 
-**Update Jul 15 (afternoon):** Engineering response on 001b received (all eight items accepted;
-disposition logged at the foot of 001b-RELAY-ADDENDUM.md). Studio adopts: xVAR rank basis over the
-server valued cohort; per-lane denominators on cross-lane rank copy; "gap" not "opportunities";
-prose tiers gated on calibration (ladder remains client-mandated — tier-boundary derivation is
-Studio's next analytical task). Prototype rework to the corrected basis IN PROGRESS (source: the
-daily universe_market_divergence artifact — xVAR + identity + sleeper ids verified present).
-Scouting-view groundwork continues behind it (pulse payload captured and mapped).
+**Biggest finding, surfaced only by the consistent view — filed as relay item N0 (High):** the
+model-market divergence is systematic by position. Median gap +13.6 for TEs, −10.8 for QBs, with the
+QB distribution nearly one-sided. Plausibly a superflex scaling artifact (market is pulled at
+numQbs=2) rather than an analytical edge. Engineering question, not a design one.
 
-**Update Jul 15 (afternoon, 2):** Engineering response on 003 received — all four items
-confirmed/accepted (disposition logged at the foot of 003-league-data-freshness-RELAY.md). League
-capture becomes scheduled, atomic, and historically retained; age badge + age-skew guard accepted.
-Scoreboard: 001b and 003 fully accepted same-day; 000/001 verdicts still outbound.
+**Revised four times in one session.** v1 market-only → v2 added the model-vs-market juxtaposition →
+v3 replaced the narrative headline with a consistent instrument → v4 removed time from the overview
+and faceted by position. Full revision log at the foot of the proposal; all four prototypes preserved
+so the reasoning is auditable.
 
-**Close, Jul 15 afternoon (quota park):** Session parked on Tower's quota call (resets 1 AM).
-Everything on disk and current: David approved the state-first default screen live ("looks
-better... logical"); 001b and 003 both crossed and both FULLY ACCEPTED by engineering same-day
-(dispositions at the foot of each relay file); DAVID.md has today's rulings (plain English in the
-pane; no decided language pre-review; green/red scoped to rank arrows only — first escalation
-ruling; league-freshness directive). Assets ready for the rework: derived xVAR model-rank table
-(assets/model-rank-table-xvar-2026-07-15.json — 468 players, all identities resolved, note the
-5-way RB tie at xVAR 58.05 = probable top-end ceiling, render ties honestly) and the League Pulse
-capture (assets/league-pulse-capture-2026-07-15.json, structure mapped: 12 postures, 12 team
-values, 11 partner rankings, 31 cards).
+**Relay status:** 004 crossed 2026-07-21 (David confirmed directly). Six items; **N0 — the QB/TE
+position skew and whether it is a Superflex scaling artifact — is the one to watch**, because the
+answer determines whether anything built on the model-vs-market comparison is measuring analysis or
+league settings. Log dispositions at the foot of `004-RELAY.md` when verdicts land.
 
-**NEXT SESSION, in order:** (1) prototype rework — NOT STARTED in code: swap tape-data.js model
-ranks to the xVAR table, per-lane denominators on all cross-lane rank copy ("RB3 of 154 market ·
-RB17 of 62 model"), rename "opportunities" column → "gap", honest tie + unranked/unavailable
-rendering, pair rank with percentile/neighbor-distance cue (crew's cliff warning); (2) scouting-
-view proposal (question 6) from the pulse capture; (3) tier-boundary derivation analysis (prose
-ladder is client-mandated, gated on calibration — Studio volunteered to take it); (4) watch for
-crew verdicts on 000/001.
+**Parked, awaiting David:**
+1. Whether a *daily* surface earns its place at all — 22 of 23 roster gaps moved ≤8 points across 10
+   captures, so the disagreement is structural, not daily. Asked twice; unanswered.
+3. Whether position is the right cut for the overview, or the roster wants slicing another way.
 
-**Close, Jul 15 midday:** All work parked. On disk and current: 000/000-RELAY (crew verifying),
-001 + 001-RELAY (crew verifying), 001b-RELAY-ADDENDUM (complete N1–N8, relay decision-ready = S2),
-002-question-ladder.md (research-synthesized IA), prototype (state-first + universe list with
-model-rank juxtaposition), research/dynasty-strategy-priority-ladder-deep-research.json (14 verified
-claims). Open threads: S1 combined design review; S2 relay approval; crew verdicts on 000/001;
-Bo Nix live-ownership verification (QB12 market / QB4 model / FA per Jun 23 artifact — N7 fixes).
-No background tasks running: overnight watchdog and all research agents/workflows completed or
-stopped; nothing is lost on session rebuild — everything is on disk.
+## Carried forward from 2026-07-15 (unchanged, still open)
+
+1. Prototype rework of the 001 morning-tape artifact to the corrected xVAR model-rank basis
+   (per-lane denominators, "gap" not "opportunities", honest tie rendering). **Not started in code.**
+2. Scouting-view proposal (question 6) from `assets/league-pulse-capture-2026-07-15.json`.
+3. Tier-boundary derivation analysis — prose ladder is client-mandated, gated on calibration.
+4. Crew verdicts on 000 and 001 still outbound.
+5. Bo Nix live-ownership verification (market QB12 / model QB4 / FA per the Jun 23 artifact).
+
+## 005 — what it is (one line)
+
+The app has no rankings list, which is the one surface every product in this category leads with;
+this builds it with both lanes in rank space, and reports that our lane has been frozen for 25 days
+and has no agreed definition of "our rank."
+
+**Evidence base (all reproducible):** `model_forward_capture.db` across 29 days — last day with any
+`dynasty_value_score` change was 2026-06-27; 0 of 581 scores and 0 of 12,200 projections changed
+overnight; live `/api/league/what-changed` returns `daily_diff.model.deltas: []` with status
+`vintage_changed_no_score_delta`. Market re-ranked 370 of 452 the same night. Top-25 position mix:
+ours 3 QB / 15 RB / 7 WR / 0 TE (xVAR basis) or 1/6/6/12 (DVS basis) against the market's 9/7/7/2.
+Age gap monotone within Engine B (−22 → +28) and within every position.
+
+**Prototype:** `005-where-we-stand/prototype.html` — 340 players, both lanes, fixed-scale gap track
+per row, position-faceted age instrument, inline row expansion. Palette validated (all checks pass).
+
+## Notes on the product, observed 2026-07-21
+
+Shipped since 2026-07-14: headshots now render throughout; per-row 28-point sparklines exist;
+`/api/health` returns 200 (was 503); capture health is 28/28 days with zero gaps on both stores.
+Still open from the briefing's defect list: Movement history card still reads "Series pending" while
+sparklines render beside it (filed as 004 N6).

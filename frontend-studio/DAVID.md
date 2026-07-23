@@ -221,6 +221,130 @@ earlier one, mark the old one superseded and link them.
   reviews; any proposal built on league data states the data's age; relayed to engineering as 003
   (F1–F4: schedule the snapshot capture, refresh the derivation chain, show age on-surface).
 
+- **2026-07-21 — A market move alone is not actionable; the juxtaposition is the product.** David on
+  the 004 noise-floor pitch: "a player could move after a big week, or after an injury to someone
+  ahead of him on the depth chart, or after earning a starting role — but should I really be ACTING
+  on those signals?" He can get the *cause* of a move from anywhere. **How to apply:** detecting that
+  the market moved is a filter, never a headline. The headline must be what only this app knows —
+  whether that move carried the market *toward* our model's view or *away* from it. Any surface whose
+  top-line finding is "the market did something" is incomplete by construction.
+- **2026-07-21 — Our rank/value beside the market's, on every surface — restated after a miss.**
+  David: "it's important that we show a juxtaposition of our rank or value compared to the market
+  rank or value, otherwise I wouldn't know if we agree or disagree with the signals." Studio shipped
+  a market-only surface and had to be told this a second time (it was already standing doctrine from
+  2026-07-15, "the product mission, in order"). **How to apply:** before pitching any surface, check
+  that both lanes are present and that the comparison *leads*. A market-only panel does not leave
+  this lane again.
+- **2026-07-21 — A dense hero visual must separate, or it doesn't ship.** On the 404-player jittered
+  strip: "the top header is cool but the plots are indistinguishable — needs a lot of re-thinking if
+  it's gonna stay." **How to apply:** overplotting is a failure, not a texture. If the reader cannot
+  pick individual marks out of the mass, either change the form so the data separates (more
+  dimensions, faceting, filtering to what matters) or cut the visual. "Looks impressive at a glance"
+  is not a defence.
+
+- **2026-07-21 — Instrument, don't editorialize. David reads the anomalies himself.** On the v2
+  headline naming a single player: "it still feels like we're making a HUGE statement about one
+  player at the top — what if there's not an outlier and it's just a normal day or week? Are we
+  still going to have a huge headline about a player that barely moved? I'd think a more consistent
+  approach to that section would be just as valuable — **consistent color coding and ways to show the
+  shape of the data over time. I'll recognize the anomalies and outliers — I just need the mechanism
+  and design so I can see it.**" **How to apply:** a summary region must render the *same shape every
+  day* regardless of whether anything happened. Never let the design manufacture a protagonist on a
+  quiet day. Prefer a stable instrument — fixed layout, fixed encoding learned once, all entities
+  shown, shared scales, time on the x-axis — over a variable narrative headline. Ranking/ordering
+  rules are fine because they are stable; prose that changes its subject daily is not. This is the
+  Baseball Savant lineage he already endorsed: Savant never tells you who matters, it renders every
+  player identically and lets the reader see it.
+  **Studio's own trap, noted:** 004 v1 correctly criticised the app's "52 moves on the tape" for
+  manufacturing significance, then v2 committed the same error in prose form. Check new designs
+  against the critique they were built from.
+
+- **2026-07-21 — Measure where the variance lives BEFORE choosing an axis. (Studio method rule,
+  self-corrected.)** Across 004, three of four attempts failed for one underlying reason: Studio
+  encoded a variable that barely varied, or let copy assert significance the data did not support.
+  The v3 small-multiples spent every card's vertical axis on gap-over-time, where a player's gap
+  travels a median of **3.9 points**, while the spread of gaps *across players* is **40** — a tenth
+  of the signal, drawn 23 times. David: *"all the trend lines are flat… the design is largely hiding
+  anything of value in the data."*
+  **The diagnostic that catches it:** if the most important finding in a dataset arrives via a table
+  printed in a terminal rather than out of the visualisation, the visualisation is wrong. (004's
+  position skew did exactly that.)
+  **How to apply:** before picking a chart form, compute the dispersion of every candidate dimension
+  — across time, across entities, across categories — and give the display's dominant axis to the
+  largest. Do it first, not fourth. Report a flat dimension in one honest sentence instead of
+  plotting it repeatedly.
+
+- **2026-07-21 — KEPT: the position-faceted model-vs-market view (004 v4).** David, after three
+  rejections in one session: *"ok this is pretty cool - we can keep this and iterate later on."*
+  Kept, not finished — this is a park, not a sign-off, and no relay was authorised in the same
+  breath. Confirmed elements: the four position panels (our percentile against the market's, with an
+  agreement diagonal), roster drawn bright over a dimmed league, the fixed state strip above it, and
+  time removed from the overview in favour of the per-player drill-down.
+  **The lesson that got there:** three of Studio's four attempts failed for the same underlying
+  reason — encoding a variable that barely varies, or letting copy assert significance the data did
+  not support. The fix each time was to measure where the variance actually lived before choosing an
+  axis. Do that first, not fourth.
+
+- **2026-07-22 — The front door is STATE, not CHANGE. Reset endorsed by David.** After two rejected
+  attempts to fix the overnight-change surface, David pulled Studio to a blank canvas: *"should
+  [overnight change] be the opening page?"* Studio's answer, which he endorsed ("a better flow… you're
+  onto something… I like your thinking and proposal"): the opening page should be **the state of the
+  franchise** — where you stand, what you hold, what it implies — not a change log. The realization
+  that unlocked it: **Studio had inherited the app's own framing** (its default screen is "Daily
+  What-Changed") and spent the entire engagement — 001 morning tape, 004 noise floor, 005 — polishing
+  a *monitoring feed* as if it were the front door. That is the shared blind spot the engagement
+  exists to break, absorbed from the product itself. **The question ladder, most foundational first:**
+  (1) Where do I stand? — phase (contend/rebuild/stuck), roster value vs the other 11, positional
+  strength/weakness, QB in Superflex. (2) What do I hold? — each asset's value ours-vs-market and its
+  trajectory (ascending/peak/declining), sell-windows, dead weight. (3) What should I do? — convert
+  aging vets to picks/youth (the rebuild's whole job), fix a hole, trade-partner fit. (4) What's
+  changing? — the market/news feed; **this is where overnight-change belongs, #4 not #1**. (5) Is the
+  model any good? — the backtest, occasional. **How to apply:** every serious product in the category
+  opens on state and exiles change to a rail (KTC/FantasyCalc risers-fallers sidebar; ESPN/Sleeper
+  open on your team). Design the front door as orientation for a rebuilder around his timeline; the
+  daily-change work Studio already did is a feed on that page, not the page.
+
+- **2026-07-22 — Studio missed twice in one session (005 v1 and v2); the systemic causes, named by
+  David.** After v2 he called it "really bad… an awful visual experience," with three specific
+  faults, each tracing to a ruling already in this file:
+  1. **Two long lists.** The roster module and the full board are two parallel lists — a direct
+     violation of *2026-07-15 filters-and-sort-not-tabs* (views are filter+sort states over ONE
+     list). "My roster" was **already a filter chip** on the full board; Studio built a redundant
+     second list instead of defaulting the one list to that filter.
+  2. **No interactivity.** The daily list can't be clicked — a dead end — violating *2026-07-15
+     detail-expands-inline-in-the-row* (accordion rows are the default everywhere). He can't
+     investigate a player he cares about.
+  3. **Drift column backwards.** The toward-you/pulling-away tag colored model/market hues with a
+     good/bad valence — verdict coloring, forbidden — AND the metric ("gap to our model narrowing")
+     bundled opposite real outcomes: a player tagged "toward you / blue / reassuring" was often one
+     whose market value was *falling*. The thing he feels is his asset's own market movement, not its
+     distance from our model.
+  **How to apply, going forward:**
+  - **Check every surface against the standing rulings in this file BEFORE building, not after.** All
+    three faults were pre-ruled. Studio has the rules and still shipped against them.
+  - **Validate the interaction model cheaply first** — a rough sketch + one question — before pulling
+    340 players, 29 days of history, and polishing SVGs. Studio over-built two heavy artifacts on an
+    unvalidated concept. Small verified steps (David's global standing instruction), not big reveals.
+  - **Separate the two hats.** Critic findings (frozen model, no published rank, superflex
+    contamination) are *engineering relays*. The daily surface is *design for the user*. Studio keeps
+    smuggling critic findings into the user surface (the two-boards diagnostic module was a critique
+    dressed as a user module).
+  - **One list, filterable and sortable, with inline row expansion.** That was the answer the whole
+    time and it was already half-built.
+
+- **2026-07-22 — Design from the daily job, not from where the variance lives (005 v1→v2).** Studio
+  built a surface around the axis with the most statistical variance (age), producing anonymous
+  scatter panels David couldn't read ("who are the players in blue vs orange? who is the filled
+  dot?") and a top module whose value was unclear. His instruction: *"think about the real-life
+  usage of this product — think about what I should be analyzing every day."* **How to apply:** the
+  question ladder (2026-07-15) is the design input, not the variance decomposition. A statistically
+  real pattern is not automatically a daily tool — the age gradient is a learn-it-once insight, not
+  something he checks each morning. Lead with named entities on his roster, not anonymous marks of
+  the whole population. **The load-bearing finding:** a raw model-vs-market gap sort is mostly an
+  age sort (our "market is sleeping, buy low" list came out as 30–35-year-olds), so the naive
+  juxtaposition is an artifact for a rebuilder; compare *within position* where age washes out, and
+  make the daily read his own roster with a market-drift (toward/away) annotation.
+
 ## Rulings on escalations
 
 - **2026-07-15 — Green/red vs. the color rules (N3, first escalation): David ruled for the idiom,

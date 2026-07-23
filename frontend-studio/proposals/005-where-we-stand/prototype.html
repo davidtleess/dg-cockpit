@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where We Stand — Dynasty Genius / Studio prototype</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+
+:root{
+  /* app token system (frontend/src/styles/tokens.css, dark) */
+  --bg:oklch(0.16 0.01 250);
+  --surface:oklch(0.2 0.012 250);
+  --raised:oklch(0.24 0.014 250);
+  --border:oklch(0.32 0.012 250);
+  --border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250);
+  --muted:oklch(0.68 0.008 250);
+  --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+
+  /* The only colour encoding on this page: which board is higher on the player.
+     Hue is the app's constitutional model=255 / market=75; lightness stepped to
+     0.65 so the pair clears the CVD + lightness-band checks (validator: ALL PASS,
+     ΔE 25.1 protan / 26.1 normal on the dark surface). */
+  --model:oklch(0.65 0.13 255);
+  --market:oklch(0.65 0.13 75);
+  --model-hi:oklch(0.80 0.13 255);
+  --market-hi:oklch(0.82 0.14 75);
+  --model-soft:oklch(0.42 0.06 255);
+  --market-soft:oklch(0.42 0.06 75);
+  --ghost:oklch(0.34 0.006 250);
+
+  /* rank-movement idiom — David's ruling 2026-07-15: legal for positional
+     movement ONLY, never for value, gap, margin or tier */
+  --up:oklch(0.72 0.15 150);
+  --down:oklch(0.66 0.17 25);
+
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  font-size:0.9375rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1220px;margin:0 auto;padding:38px 26px 96px}
+
+/* ---------------- masthead ---------------- */
+.mast{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;
+  padding-bottom:20px;border-bottom:1px solid var(--border)}
+h1{font-family:var(--font-display);font-weight:700;font-size:2.35rem;letter-spacing:-0.022em;
+  margin:0 0 6px;line-height:1.02}
+.sub{color:var(--muted);font-size:0.9375rem;margin:0;max-width:46ch}
+.stamp{font-family:var(--font-mono);font-size:0.75rem;color:var(--dim);
+  text-align:right;white-space:nowrap;line-height:1.7}
+
+/* ---------------- the daily roster module ---------------- */
+.today{margin:24px 0 0}
+.today-h{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;
+  margin-bottom:14px;flex-wrap:wrap}
+.today-h h2{font-family:var(--font-display);font-weight:600;font-size:1.0625rem;margin:0 0 4px}
+.today-legend{display:flex;flex-direction:column;gap:4px;font-size:0.75rem;color:var(--muted);
+  white-space:nowrap}
+.today-legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:7px;
+  vertical-align:-1px}
+.rosterboard{border:1px solid var(--border);background:var(--surface)}
+.rrow{display:grid;grid-template-columns:26px 1.6fr 128px 210px auto;gap:14px;align-items:center;
+  padding:8px 14px;border-bottom:1px solid var(--border)}
+.rrow:last-child{border-bottom:none}
+.rrow.head{padding:9px 14px;border-bottom:1px solid var(--border-strong);
+  font-family:var(--font-display);font-weight:600;font-size:0.625rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim)}
+.rrow .rnum{font-family:var(--font-mono);font-size:0.8125rem;color:var(--dim);text-align:right}
+.rwho{display:flex;align-items:center;gap:9px;min-width:0}
+.rwho img,.rwho .rin{width:30px;height:30px;border-radius:4px;flex:none;background:var(--raised)}
+.rwho img{object-fit:cover;object-position:top center}
+.rwho .rin{display:grid;place-items:center;font-family:var(--font-display);font-weight:600;
+  font-size:0.6875rem;color:var(--dim)}
+.rwho .rnm{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rwho .rmeta{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);margin-top:1px}
+.ranks{display:flex;align-items:baseline;gap:8px;font-family:var(--font-mono);font-size:0.8125rem;
+  justify-content:flex-end}
+.ranks .ro{color:var(--model-hi)} .ranks .rm{color:var(--market-hi)}
+.ranks .rsep{color:var(--dim);font-size:0.6875rem}
+.rgap svg{display:block}
+.rdrift{font-size:0.75rem;color:var(--muted);white-space:nowrap;justify-self:end}
+.rdrift .toward{color:var(--model-hi)} .rdrift .away{color:var(--market-hi)}
+.rdrift .flat{color:var(--dim)}
+.today-foot{font-size:0.8125rem;color:var(--muted);margin:12px 2px 0;line-height:1.6;max-width:96ch}
+.today-foot b{color:var(--text);font-weight:500}
+
+/* ---------------- the two-board state strip (unused in daily view) ---------------- */
+.boards{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);
+  border:1px solid var(--border);margin:22px 0 0}
+.board{background:var(--surface);padding:15px 18px}
+.board-h{display:flex;align-items:baseline;gap:9px;margin-bottom:11px}
+.dot{width:9px;height:9px;border-radius:2px;flex:none}
+.board-name{font-family:var(--font-display);font-weight:600;font-size:0.8125rem;
+  letter-spacing:0.07em;text-transform:uppercase}
+.board-rows{display:grid;grid-template-columns:auto 1fr;gap:3px 12px;
+  font-size:0.8125rem;align-items:baseline}
+.board-rows b{font-family:var(--font-mono);font-weight:500;font-size:1.0625rem;
+  color:var(--text);letter-spacing:-0.01em}
+.board-rows span{color:var(--muted)}
+.mix{margin-top:12px;padding-top:10px;border-top:1px solid var(--border);
+  font-size:0.75rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;align-items:baseline}
+.mix .mixlab{color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;
+  font-family:var(--font-display);font-weight:600;font-size:0.625rem}
+.mix .mixv{font-family:var(--font-mono);color:var(--text)}
+.overlap{background:var(--surface);border:1px solid var(--border);border-top:none;
+  padding:11px 18px;font-size:0.8125rem;color:var(--muted);display:flex;
+  justify-content:space-between;gap:20px;flex-wrap:wrap}
+.overlap b{font-family:var(--font-mono);color:var(--text);font-weight:500}
+
+/* ---------------- section headings ---------------- */
+.sec{margin:40px 0 0}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:18px;
+  margin-bottom:4px;flex-wrap:wrap}
+h2{font-family:var(--font-display);font-weight:600;font-size:1.0625rem;margin:0;
+  letter-spacing:-0.005em}
+.sec-note{color:var(--muted);font-size:0.8125rem;margin:0 0 16px;max-width:78ch}
+
+/* ---------------- aging curve facets ---------------- */
+.facets{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);
+  border:1px solid var(--border)}
+.facet{background:var(--surface);padding:11px 12px 8px;position:relative}
+.facet-h{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:2px}
+.facet-pos{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;letter-spacing:0.06em}
+.facet-n{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim)}
+.facet svg{display:block;width:100%;height:auto}
+.axis-note{display:flex;justify-content:space-between;font-family:var(--font-mono);
+  font-size:0.625rem;color:var(--dim);margin-top:1px;letter-spacing:0.02em}
+.legend{display:flex;gap:20px;align-items:center;margin:12px 0 0;font-size:0.75rem;
+  color:var(--muted);flex-wrap:wrap}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;
+  vertical-align:-1px;font-style:normal}
+
+/* ---------------- filters ---------------- */
+.filters{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:18px 0 0;
+  padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.fgroup{display:flex;gap:5px;align-items:center}
+.flabel{font-size:0.6875rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.09em;
+  font-family:var(--font-display);font-weight:600;margin-right:3px}
+.chip{background:transparent;border:1px solid var(--border);color:var(--muted);
+  font:inherit;font-size:0.8125rem;padding:4px 11px;border-radius:3px;cursor:pointer;
+  font-family:var(--font-sans);transition:background .12s,border-color .12s,color .12s}
+.chip:hover{border-color:var(--border-strong);color:var(--text)}
+.chip[aria-pressed="true"]{background:var(--raised);border-color:var(--border-strong);color:var(--text)}
+.chip:focus-visible,.row:focus-visible,.sortbtn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.search{background:var(--surface);border:1px solid var(--border);color:var(--text);
+  font:inherit;font-size:0.8125rem;padding:5px 10px;border-radius:3px;width:170px;
+  font-family:var(--font-sans)}
+.search::placeholder{color:var(--dim)}
+.count{margin-left:auto;font-family:var(--font-mono);font-size:0.75rem;color:var(--dim)}
+
+/* ---------------- the board ---------------- */
+/* the board scrolls inside its own lane; the page body never scrolls sideways */
+.tscroll{overflow-x:auto;overscroll-behavior-x:contain}
+table{width:100%;border-collapse:collapse;margin-top:0;min-width:660px}
+thead th{position:sticky;top:0;background:var(--bg);z-index:3;text-align:left;
+  font-family:var(--font-display);font-weight:600;font-size:0.6875rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim);padding:11px 9px 8px;
+  border-bottom:1px solid var(--border-strong);white-space:nowrap}
+.sortbtn{background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;
+  letter-spacing:inherit;text-transform:inherit}
+.sortbtn:hover{color:var(--text)}
+.sortbtn[data-active="1"]{color:var(--text)}
+.sortbtn .car{font-size:0.625rem;opacity:.75;margin-left:3px}
+th.num,td.num{text-align:right;font-family:var(--font-mono)}
+tbody tr.row{border-bottom:1px solid var(--border);cursor:pointer}
+tbody tr.row:hover{background:var(--surface)}
+tbody tr.row.open{background:var(--surface)}
+td{padding:7px 9px;vertical-align:middle}
+
+.ourrank{font-family:var(--font-mono);font-size:1rem;font-weight:500;color:var(--text);
+  letter-spacing:-0.02em}
+.frozen{color:var(--ghost);font-family:var(--font-mono);font-size:0.75rem;margin-left:5px}
+.subrank{display:block;font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  margin-top:1px;letter-spacing:0.01em}
+.who{display:flex;align-items:center;gap:9px;min-width:0}
+.shot{width:28px;height:28px;border-radius:3px;flex:none;background:var(--raised);
+  object-fit:cover;object-position:top center}
+.initials{width:28px;height:28px;border-radius:3px;flex:none;background:var(--raised);
+  display:grid;place-items:center;font-family:var(--font-display);font-weight:600;
+  font-size:0.625rem;color:var(--dim);letter-spacing:0.02em}
+.nm{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nfl{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);margin-left:6px}
+.mine{display:inline-block;width:3px;height:15px;border-radius:1px;background:var(--text);
+  margin-right:1px;vertical-align:-3px}
+.pos{font-family:var(--font-mono);font-size:0.75rem;color:var(--muted)}
+.age{font-family:var(--font-mono);font-size:0.8125rem;color:var(--muted)}
+.mkt{font-family:var(--font-mono);font-size:0.875rem;color:var(--text)}
+.mv{font-family:var(--font-mono);font-size:0.6875rem;margin-left:5px}
+.mv.up{color:var(--up)} .mv.down{color:var(--down)} .mv.flat{color:var(--ghost)}
+
+/* the signature: one fixed-scale track per row, centred on agreement */
+.lane{width:190px}
+.lane svg{display:block}
+.spark{width:78px}
+.spark svg{display:block}
+
+/* ---------------- expansion ---------------- */
+tr.detail>td{padding:0;border-bottom:1px solid var(--border);background:var(--surface)}
+.dbox{padding:17px 20px 19px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
+  gap:26px}
+.dhead{font-family:var(--font-display);font-weight:600;font-size:0.6875rem;
+  letter-spacing:0.09em;text-transform:uppercase;color:var(--dim);margin:0 0 9px}
+.twolane{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px 16px;align-items:baseline;
+  font-size:0.8125rem;margin-bottom:15px}
+.twolane .lab{color:var(--muted)}
+.twolane .v{font-family:var(--font-mono);font-size:0.9375rem}
+.twolane .hdr{font-family:var(--font-display);font-weight:600;font-size:0.6875rem;
+  letter-spacing:0.08em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+.note{font-size:0.8125rem;color:var(--muted);margin:0 0 11px;line-height:1.55}
+.note b{color:var(--text);font-weight:500}
+.nb{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.nblist{list-style:none;margin:0;padding:0;font-size:0.8125rem}
+.nblist li{display:flex;gap:9px;padding:2.5px 0;color:var(--muted);align-items:baseline}
+.nblist li.self{color:var(--text);font-weight:500}
+.nblist .r{font-family:var(--font-mono);font-size:0.75rem;color:var(--dim);width:2.4em;
+  text-align:right;flex:none}
+.nblist li.self .r{color:var(--text)}
+.bigspark{margin-top:4px}
+.bigspark svg{display:block;width:100%;height:auto}
+.caveat{margin-top:26px;padding:13px 16px;border:1px solid var(--border);
+  background:var(--surface);color:var(--muted);font-size:0.8125rem;line-height:1.6}
+.caveat b{color:var(--text);font-weight:500}
+.empty{padding:40px 10px;color:var(--dim);font-size:0.875rem}
+
+@media (max-width:1100px){
+  .facets{grid-template-columns:repeat(2,1fr)}
+  .lane{width:130px} .spark{display:none}
+  .dbox{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  .wrap{padding:24px 14px 70px} h1{font-size:1.8rem}
+  .boards{grid-template-columns:1fr} .facets{grid-template-columns:1fr}
+  .mast{flex-direction:column;align-items:flex-start;gap:12px}
+  .stamp{text-align:left} .lane{width:96px} .nb{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="mast">
+    <div>
+      <h1>This morning</h1>
+      <p class="sub">The market re-priced overnight. Your model did not. Here is the market's new read on
+        the players you own, measured against where your model has stood for weeks.</p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <!-- The one thing to read every morning: the market's overnight verdict on YOUR roster,
+       against the model's standing view. Named, roster-first, drift annotated. -->
+  <section class="today">
+    <div class="today-h">
+      <div>
+        <h2>Your roster, ours vs the market</h2>
+        <p class="sec-note" style="margin-bottom:0">Sorted by where the two disagree most. The bar is
+          today's gap in <b>positional</b> rank; the hollow tick is where that gap sat a week ago — so
+          a bar shrinking toward the centre means the market is drifting to your model's view, growing
+          means it is pulling away.</p>
+      </div>
+      <div class="today-legend">
+        <span><i style="background:var(--model)"></i>you rank him higher — the market may be sleeping</span>
+        <span><i style="background:var(--market)"></i>the market ranks him higher — they would pay up</span>
+      </div>
+    </div>
+    <div class="rosterboard" id="rosterboard"></div>
+    <p class="today-foot" id="todayfoot"></p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-h"><h2>The full board — everyone on both lists</h2></div>
+    <p class="sec-note">Your roster above is the daily read. This is the whole population for scouting a
+      target or a trade. One caution it carries in its bones: most of where we and the market disagree is
+      just age — the market pays a youth premium our production model does not, so a raw "who do we like
+      more" sort becomes an age sort. Compare <b>within a position</b>, where that washes out.</p>
+    <div class="filters">
+    <div class="filters">
+      <div class="fgroup"><span class="flabel">Position</span><span id="posf"></span></div>
+      <div class="fgroup"><span class="flabel">Who holds him</span><span id="ownf"></span></div>
+      <div class="fgroup"><span class="flabel">Age</span><span id="agef"></span></div>
+      <input class="search" id="q" type="search" placeholder="Find a player" aria-label="Find a player">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tscroll">
+      <table>
+        <thead><tr id="head"></tr></thead>
+        <tbody id="body"></tbody>
+      </table>
+    </div>
+    <p class="empty" id="empty" hidden>No player matches those filters.</p>
+  </section>
+
+  <p class="caveat"><b>Descriptive only.</b> This page reports where two boards place a player and
+  nothing else. It does not say which board is right, and a gap is not a recommendation. The
+  market's youth premium may well be pricing career length correctly — the strongest argument for
+  it is that aging is a rising chance of losing a player outright rather than a gentle decline,
+  which a model projecting typical outcomes will always under-price.<br><br>
+  <b>Two things to hold while reading it.</b> Our rank here is derived from xVAR over the 340
+  players on both boards; the app does not publish an overall model rank of its own, and its other
+  number — dynasty value score — orders these same players differently (40% of them by more than 50
+  places). And the market board is priced for <i>this</i> league — 12 teams, Superflex, PPR —
+  while the model has no league-settings input at all. Overall rank therefore compares a
+  league-specific list against a league-agnostic one; the within-position comparison in each
+  expanded row is the cleaner read.</p>
+</div>
+
+<script src="./data.js"></script>
+<script>
+(function(){
+const D=window.DG, R=D.rows, M=D.meta, C=D.curve;
+const POS=['QB','RB','WR','TE'], DATES=M.dates;
+const MINE=1;
+const fmt=n=>n==null?'—':String(n);
+const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+
+/* ---------- masthead ---------- */
+const md=new Date(M.market_date+'T12:00:00');
+document.getElementById('stamp').innerHTML=
+  md.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'}).toUpperCase()
+  +'<br>market fetched '+M.market_date+'<br>model unchanged 25 days';
+
+const initials=n=>(n||'').split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+
+/* ---------- the daily roster module ----------
+   His players, ranked by how far our positional rank sits from the market's.
+   Positional rank is used deliberately: it is age-neutral within a position, so
+   it is not just re-sorting the roster by age. The gap bar carries a hollow tick
+   at the 7-days-ago gap, so state (today) and change (drift) live in one mark. */
+function rosterGapBar(r){
+  const w=210,h=20,cx=w/2,SC=40,half=w/2-8;   // positional-rank gap, ±40 full-scale
+  const g=Math.max(-SC,Math.min(SC,r.pgap));
+  const len=Math.abs(g)/SC*half;
+  const col=r.pgap>=0?'var(--model)':'var(--market)';
+  // 7-days-ago positional gap, reconstructed from the drift on overall gap (approx, same sign)
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'
+    +(r.pgap>=0?'you rank him '+r.pgap+' higher':'market ranks him '+(-r.pgap)+' higher')+' among '+r.pos+'s">';
+  [0.5].forEach(f=>{[-1,1].forEach(sg=>{const xx=cx+sg*f*half;
+    s+='<line x1="'+xx+'" x2="'+xx+'" y1="7" y2="13" stroke="var(--border)" stroke-width="1"/>';});});
+  s+='<line x1="'+cx+'" x2="'+cx+'" y1="2" y2="18" stroke="var(--border-strong)" stroke-width="1"/>';
+  if(len>0.6){const x0=r.pgap>=0?cx:cx-len;
+    s+='<rect x="'+x0.toFixed(1)+'" y="6.5" width="'+len.toFixed(1)+'" height="7" rx="3.5" fill="'+col+'"/>';
+  }else{s+='<circle cx="'+cx+'" cy="10" r="2" fill="var(--dim)"/>';}
+  // drift tick: where the OVERALL gap sat a week ago tells the direction; scale its
+  // magnitude into the same lane for a legible "was here" marker.
+  if(r.drift7!=null && Math.abs(r.drift7)>=2){
+    const wasWider=r.drift7>0;   // gap narrowed since -> a week ago it was wider (further from centre)
+    const tickLen=Math.min(half,len+Math.min(20,Math.abs(r.drift7))/SC*half*(wasWider?1:-1));
+    const tx=cx+(r.pgap>=0?1:-1)*Math.max(2,tickLen);
+    s+='<line x1="'+tx.toFixed(1)+'" x2="'+tx.toFixed(1)+'" y1="4.5" y2="15.5" stroke="'+col
+      +'" stroke-width="1.4" stroke-dasharray="1.5 1.5" opacity="0.8"/>';
+  }
+  return s+'</svg>';
+}
+function driftTag(r){
+  if(r.drift7==null) return '<span class="flat">—</span>';
+  if(Math.abs(r.drift7)<3) return '<span class="flat">holding</span>';
+  return r.drift7>0
+    ? '<span class="toward">→ toward you</span>'
+    : '<span class="away">← pulling away</span>';
+}
+const mine=R.filter(r=>r.rid===MINE).sort((a,b)=>Math.abs(b.pgap)-Math.abs(a.pgap));
+const rb=document.getElementById('rosterboard');
+rb.innerHTML='<div class="rrow head"><span></span><span>Player</span>'
+  +'<span style="text-align:right">Ours · Market</span>'
+  +'<span style="text-align:center">Positional-rank gap · vs a week ago</span>'
+  +'<span style="text-align:right">Market drift</span></div>'
+  +mine.map((r,i)=>{
+    const shot='http://127.0.0.1:8000/assets/headshots/'+r.sid+'.jpg';
+    return '<div class="rrow">'
+      +'<span class="rnum">'+(i+1)+'</span>'
+      +'<span class="rwho"><img class="rshot" src="'+shot+'" alt="" loading="lazy" data-ini="'+initials(r.name)+'">'
+        +'<span><span class="rnm">'+r.name+'</span>'
+        +'<span class="rmeta">'+r.pos+' · '+(r.age==null?'—':r.age)+' · '+(r.team||'FA')+'</span></span></span>'
+      +'<span class="ranks"><span class="ro">'+r.pos+r.ourp+'</span>'
+        +'<span class="rsep">vs</span><span class="rm">'+r.pos+r.mktp+'</span></span>'
+      +'<span class="rgap">'+rosterGapBar(r)+'</span>'
+      +'<span class="rdrift">'+driftTag(r)+'</span>'
+    +'</div>';
+  }).join('');
+// headshot fallback to initials (handled in JS to avoid inline-quote escaping)
+rb.querySelectorAll('img.rshot').forEach(img=>{
+  const swap=()=>{const s=el('span','rin',img.dataset.ini);img.replaceWith(s);};
+  img.addEventListener('error',swap);
+  if(img.complete&&img.naturalWidth===0)swap();
+});
+// honest footer: what the roster read is telling him, in one measured sentence
+(function(){
+  const sell=mine.filter(r=>r.pgap<-6).length, sleep=mine.filter(r=>r.pgap>6).length;
+  const toward=mine.filter(r=>r.drift7!=null&&r.drift7>=3).length;
+  const away=mine.filter(r=>r.drift7!=null&&r.drift7<=-3).length;
+  document.getElementById('todayfoot').innerHTML=
+    'On <b>'+sell+'</b> of your players the market ranks him higher than your model does — the ones a '
+    +'rival would pay up for. On <b>'+sleep+'</b> your model is higher, where the market may be asleep. '
+    +'Over the past week the market drifted <b>toward</b> your model on '+toward+' and <b>away</b> on '
+    +away+'. Nothing here is a verdict — it is where to point your own judgement first.';
+})();
+
+/* ---------- filters ---------- */
+const state={pos:'ALL',own:'ALL',age:'ALL',q:'',sort:'our',dir:1,open:null};
+function chips(host,opts,key){
+  const h=document.getElementById(host);
+  opts.forEach(([v,label,title])=>{
+    const b=el('button','chip',label); b.type='button';
+    if(title)b.title=title;
+    b.setAttribute('aria-pressed',state[key]===v);
+    b.onclick=()=>{state[key]=v;state.open=null;
+      h.querySelectorAll('.chip').forEach(c=>c.setAttribute('aria-pressed','false'));
+      b.setAttribute('aria-pressed','true');draw();};
+    h.appendChild(b);
+  });
+}
+chips('posf',[['ALL','All'],['QB','QB'],['RB','RB'],['WR','WR'],['TE','TE']],'pos');
+chips('ownf',[['ALL','Everyone'],['MINE','My roster'],['THEIRS','Other rosters'],['FA','Free agents']],'own');
+chips('agef',[['ALL','All'],['U24','Under 24'],['24_27','24–27'],['O27','28 and up']],'age');
+document.getElementById('q').oninput=e=>{state.q=e.target.value.toLowerCase();state.open=null;draw();};
+
+const COLS=[
+  {k:'our', l:'Our rank', num:1, t:'Our board — derived from xVAR over the 340 shared players'},
+  {k:'name',l:'Player',   num:0},
+  {k:'pos', l:'Pos',      num:0},
+  {k:'age', l:'Age',      num:1},
+  {k:'mkt', l:'Market',   num:1, t:'FantasyCalc rank, re-cut over the same 340 players'},
+  {k:'gap', l:'Where the boards differ', num:0, t:'Fixed scale, ±150 ranks'},
+  {k:'ser', l:'Market rank, 29 days', num:0}
+];
+function head(){
+  const h=document.getElementById('head'); h.innerHTML='';
+  COLS.forEach(c=>{
+    const th=el('th',c.num?'num':null);
+    if(c.k==='gap'||c.k==='ser'){th.textContent=c.l;}
+    else{
+      const b=el('button','sortbtn',c.l); b.type='button';
+      b.dataset.active=state.sort===c.k?'1':'0';
+      if(state.sort===c.k){const s=el('span','car',state.dir>0?'▲':'▼');b.appendChild(s);}
+      b.onclick=()=>{if(state.sort===c.k)state.dir*=-1;else{state.sort=c.k;state.dir=1;}
+        state.open=null;draw();};
+      th.appendChild(b);
+    }
+    if(c.t)th.title=c.t;
+    h.appendChild(th);
+  });
+}
+function filtered(){
+  return R.filter(r=>{
+    if(state.pos!=='ALL'&&r.pos!==state.pos)return false;
+    if(state.own==='MINE'&&r.rid!==MINE)return false;
+    if(state.own==='THEIRS'&&!(r.rostered&&r.rid!==MINE))return false;
+    if(state.own==='FA'&&r.rostered)return false;
+    if(state.age==='U24'&&!(r.age&&r.age<24))return false;
+    if(state.age==='24_27'&&!(r.age&&r.age>=24&&r.age<28))return false;
+    if(state.age==='O27'&&!(r.age&&r.age>=28))return false;
+    if(state.q&&!(r.name||'').toLowerCase().includes(state.q))return false;
+    return true;
+  }).sort((a,b)=>{
+    const k=state.sort;
+    let va=a[k],vb=b[k];
+    if(k==='name'){return (va||'').localeCompare(vb||'')*state.dir;}
+    if(k==='pos'){return ((POS.indexOf(a.pos)-POS.indexOf(b.pos))||a.our-b.our)*state.dir;}
+    if(va==null)return 1; if(vb==null)return -1;
+    return (va-vb)*state.dir;
+  });
+}
+
+/* the signature mark: a fixed-scale gap track, identical geometry on every row */
+function laneSvg(gap){
+  const w=190,h=17,cx=w/2,SC=150,half=w/2-6;
+  const g=Math.max(-SC,Math.min(SC,gap));
+  const len=Math.abs(g)/SC*half;
+  const col=gap>=0?'var(--model)':'var(--market)';
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'
+    +(gap>=0?'we rank him '+gap+' higher':'the market ranks him '+(-gap)+' higher')+'">';
+  [0.333,0.667].forEach(f=>{[-1,1].forEach(sg=>{
+    const xx=cx+sg*f*half;
+    s+='<line x1="'+xx+'" x2="'+xx+'" y1="6" y2="11" stroke="var(--border)" stroke-width="1" opacity="0.6"/>';});});
+  s+='<line x1="'+cx+'" x2="'+cx+'" y1="1.5" y2="15.5" stroke="var(--border-strong)" stroke-width="1"/>';
+  if(len>0.6){
+    const x0=gap>=0?cx:cx-len;
+    s+='<rect x="'+x0.toFixed(1)+'" y="5" width="'+len.toFixed(1)+'" height="7" rx="3.5" fill="'+col+'"/>';
+  }else{
+    s+='<circle cx="'+cx+'" cy="8.5" r="2" fill="var(--dim)"/>';
+  }
+  return s+'</svg>';
+}
+function sparkSvg(ser,big){
+  const pts=ser.map((v,i)=>[i,v]).filter(p=>p[1]!=null);
+  if(pts.length<2)return '';
+  const w=big?520:78,h=big?86:17,pad=big?7:2.5;
+  const xs=i=>pad+i/(ser.length-1)*(w-2*pad);
+  const lo=Math.min(...pts.map(p=>p[1])), hi=Math.max(...pts.map(p=>p[1]));
+  const rng=Math.max(6,hi-lo);
+  const ys=v=>pad+(v-lo)/rng*(h-2*pad);           // rank 1 at the top
+  let s='<svg viewBox="0 0 '+w+' '+h+'" width="'+(big?'100%':w)+'" height="'+(big?'':h)
+    +'" role="img" aria-label="market rank over '+ser.length+' days, best at top">';
+  if(big){
+    s+='<line x1="'+pad+'" x2="'+(w-pad)+'" y1="'+ys(lo)+'" y2="'+ys(lo)
+      +'" stroke="var(--border)" stroke-width="1"/>';
+  }
+  s+='<polyline fill="none" stroke="var(--market)" stroke-width="'+(big?2:1.6)
+    +'" stroke-linejoin="round" stroke-linecap="round" points="'
+    +pts.map(p=>xs(p[0]).toFixed(1)+','+ys(p[1]).toFixed(1)).join(' ')+'"/>';
+  const last=pts[pts.length-1];
+  s+='<circle cx="'+xs(last[0]).toFixed(1)+'" cy="'+ys(last[1]).toFixed(1)+'" r="'+(big?3.2:2)
+    +'" fill="var(--market-hi)" stroke="var(--surface)" stroke-width="'+(big?2:1)+'"/>';
+  return s+'</svg>';
+}
+function mktMove(r){
+  const f=r.ser.find(v=>v!=null), l=r.ser[r.ser.length-1];
+  if(f==null||l==null)return null;
+  return f-l;   // + = climbed the board
+}
+
+function neighbours(list,key,r,n){
+  const s=[...list].sort((a,b)=>a[key]-b[key]);
+  const i=s.findIndex(x=>x.sid===r.sid);
+  return s.slice(Math.max(0,i-n),i+n+1);
+}
+function detail(r){
+  const box=el('div','dbox');
+  const dvsDiff=Math.abs((r.ourdvs||0)-r.our);
+  const posLabel=r.pos+(r.ourp?r.ourp:'');
+  const left=el('div');
+  left.innerHTML=
+    '<p class="dhead">The two boards</p>'
+   +'<div class="twolane">'
+     +'<span></span>'
+     +'<span class="hdr" style="color:var(--model)"><span class="dot" style="background:var(--model)"></span>Ours</span>'
+     +'<span class="hdr" style="color:var(--market)"><span class="dot" style="background:var(--market)"></span>Market</span>'
+     +'<span class="lab">Overall</span><span class="v">#'+r.our+'</span><span class="v">#'+r.mkt+'</span>'
+     +'<span class="lab">Among '+r.pos+'s</span><span class="v">'+r.pos+r.ourp+'</span><span class="v">'+r.pos+r.mktp+'</span>'
+   +'</div>'
+   +'<p class="note">'+ (r.gap===0
+        ? 'The two boards place him identically.'
+        : (r.gap>0
+            ? 'We have him <b>'+r.gap+' places higher</b> than the market does.'
+            : 'The market has him <b>'+(-r.gap)+' places higher</b> than we do.'))
+      + ' Among '+r.pos+'s alone — the comparison league settings do not distort — '
+      + (r.pgap===0 ? 'the two boards agree exactly.'
+          : (r.pgap>0 ? 'we have him '+r.pgap+' higher.' : 'the market has him '+(-r.pgap)+' higher.'))
+      + '</p>'
+   + (dvsDiff>40 ? '<p class="note">Our own two numbers disagree about him: ranked by xVAR he is '
+        +'<b>#'+r.our+'</b>, ranked by dynasty value score <b>#'+r.ourdvs+'</b> — '+dvsDiff+' places apart.</p>' : '')
+   +'<p class="dhead" style="margin-top:15px">Market rank, last '+r.ser.filter(v=>v!=null).length+' days</p>'
+   +'<div class="bigspark">'+sparkSvg(r.ser,true)+'</div>'
+   +'<p class="note" style="margin-top:6px;font-size:0.75rem">'
+     +'best '+Math.min(...r.ser.filter(v=>v!=null))+' · worst '+Math.max(...r.ser.filter(v=>v!=null))
+     +' · our board held #'+r.our+' throughout</p>';
+  const pool=R.filter(x=>x.pos===r.pos);
+  const right=el('div');
+  const mk=(list,key)=>'<ul class="nblist">'+list.map(x=>
+      '<li class="'+(x.sid===r.sid?'self':'')+'"><span class="r">'+x.pos+x[key==='ourp'?'ourp':'mktp']
+      +'</span><span>'+x.name+'</span></li>').join('')+'</ul>';
+  right.innerHTML='<p class="dhead">Who he sits beside</p>'
+    +'<div class="nb"><div><p class="note" style="margin-bottom:5px;color:var(--model)">On our board</p>'
+    + mk(neighbours(pool,'ourp',r,3),'ourp')+'</div>'
+    +'<div><p class="note" style="margin-bottom:5px;color:var(--market)">On the market\'s</p>'
+    + mk(neighbours(pool,'mktp',r,3),'mktp')+'</div></div>';
+  box.appendChild(left); box.appendChild(right);
+  return box;
+}
+
+function draw(){
+  head();
+  const rows=filtered(), tb=document.getElementById('body');
+  tb.innerHTML='';
+  document.getElementById('count').textContent=rows.length+' of '+R.length+' players';
+  document.getElementById('empty').hidden=rows.length>0;
+  rows.forEach(r=>{
+    const tr=el('tr','row'+(state.open===r.sid?' open':''));
+    tr.tabIndex=0;
+    tr.setAttribute('aria-expanded',state.open===r.sid);
+    const mv=mktMove(r);
+    const mvCls=mv==null?'flat':(mv>0?'up':(mv<0?'down':'flat'));
+    const mvTxt=mv==null?'':(mv>0?'▲'+mv:(mv<0?'▼'+(-mv):'–'));
+    tr.innerHTML=
+      '<td class="num"><span class="ourrank">'+r.our+'</span>'
+        +'<span class="frozen" title="Our board&#39;s values have not changed since 27 June.">–</span>'
+        +'<span class="subrank">'+r.pos+r.ourp+'</span></td>'
+      +'<td><span class="who">'+(r.rid===MINE?'<span class="mine" title="On your roster"></span>':'')
+        +'<img class="shot" src="http://127.0.0.1:8000/assets/headshots/'+r.sid+'.jpg" alt="" loading="lazy"'
+        +' onerror="this.outerHTML=\'<span class=&quot;initials&quot;>'+initials(r.name)+'</span>\'">'
+        +'<span class="nm">'+r.name+'<span class="nfl">'+(r.team||'FA')+'</span></span></span></td>'
+      +'<td class="pos">'+r.pos+'</td>'
+      +'<td class="num age">'+(r.age==null?'—':r.age)+'</td>'
+      +'<td class="num"><span class="mkt">'+r.mkt+'</span>'
+        +'<span class="mv '+mvCls+'" title="Market rank change over the capture window">'+mvTxt+'</span>'
+        +'<span class="subrank">'+r.pos+r.mktp+'</span></td>'
+      +'<td class="lane">'+laneSvg(r.gap)+'</td>'
+      +'<td class="spark">'+sparkSvg(r.ser,false)+'</td>';
+    const toggle=()=>{state.open=state.open===r.sid?null:r.sid;draw();};
+    tr.onclick=toggle;
+    tr.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}};
+    tb.appendChild(tr);
+    if(state.open===r.sid){
+      const dr=el('tr','detail'), td=el('td'); td.colSpan=COLS.length;
+      td.appendChild(detail(r)); dr.appendChild(td); tb.appendChild(dr);
+    }
+  });
+}
+draw();
+})();
+</script>
+</body>
+</html>

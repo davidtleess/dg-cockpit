@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Noise Floor — Dynasty Genius / Studio prototype</title>
+<style>
+/* ---- The app's own faces, served by the running app (falls back cleanly if it is down) ---- */
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;
+  src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;
+  src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;
+  src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;
+  src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;
+  src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;
+  src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;
+  src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+
+/* ---- Inherited from the app's token system (frontend/src/styles/tokens.css, dark) ---- */
+:root{
+  --bg:oklch(0.16 0.01 250);
+  --surface:oklch(0.2 0.012 250);
+  --raised:oklch(0.24 0.014 250);
+  --border:oklch(0.32 0.012 250);
+  --border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250);
+  --muted:oklch(0.68 0.008 250);
+  --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+  --market:oklch(0.76 0.13 75);
+  --market-strong:oklch(0.86 0.15 78);
+  --market-muted:oklch(0.55 0.05 75);
+  --model:oklch(0.72 0.11 255);
+  --qb:oklch(0.6 0.14 300); --rb:oklch(0.62 0.13 170);
+  --wr:oklch(0.6 0.15 340); --te:oklch(0.64 0.12 205);
+  /* the routine lane means "nothing happened" — it must recede, never compete
+     with the mark it is a reference for */
+  --band:oklch(0.215 0.011 250);
+  --band-edge:oklch(0.30 0.012 250);
+  --font-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-sans);font-size:0.9375rem;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 32px 96px}
+
+/* ---------------- masthead ---------------- */
+.eyebrow{
+  font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 10px;
+}
+.verdict{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(2.6rem,6vw,4.2rem);line-height:0.98;letter-spacing:-0.03em;
+  margin:0 0 14px;
+}
+.verdict em{font-style:normal;color:var(--market)}
+.verdict-sub{
+  font-size:1.0625rem;color:var(--muted);max-width:62ch;margin:0 0 4px;line-height:1.45;
+}
+.verdict-sub b{color:var(--text);font-weight:600}
+
+/* ---------------- the day strip (hero visual) ---------------- */
+.strips{margin:34px 0 8px;border-top:1px solid var(--border);padding-top:22px}
+.strip-row{display:grid;grid-template-columns:132px 1fr;gap:18px;align-items:center;margin-bottom:6px}
+.strip-label{
+  font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--dim);text-align:right;line-height:1.35;
+}
+.strip-label b{display:block;color:var(--muted);font-weight:500}
+.strip-plot{position:relative;height:56px}
+.axis{
+  display:grid;grid-template-columns:132px 1fr;gap:18px;margin-top:2px;
+}
+.axis-marks{position:relative;height:22px}
+.axis-tick{
+  position:absolute;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);white-space:nowrap;
+}
+.axis-note{
+  grid-column:2;font-size:0.8125rem;color:var(--dim);margin-top:2px;
+}
+
+/* ---------------- filter row (one row, above everything it scopes) ---------------- */
+.controls{
+  display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+  margin:38px 0 0;padding:14px 0 16px;border-top:1px solid var(--border);
+}
+.controls .lbl{
+  font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--dim);margin-right:2px;
+}
+.chip{
+  appearance:none;background:transparent;border:1px solid var(--border);
+  color:var(--muted);border-radius:999px;padding:5px 13px;
+  font-family:var(--font-sans);font-size:0.8125rem;cursor:pointer;
+  transition:border-color .14s,color .14s,background .14s;
+}
+.chip:hover{border-color:var(--border-strong);color:var(--text)}
+.chip[aria-pressed="true"]{
+  background:var(--raised);border-color:var(--border-strong);color:var(--text);font-weight:500;
+}
+.chip:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.spacer{flex:1}
+
+/* ---------------- section ---------------- */
+.sec{margin-top:34px}
+.sec-head{
+  display:flex;align-items:baseline;gap:12px;
+  padding-bottom:10px;border-bottom:1px solid var(--border);
+}
+.sec-title{
+  font-family:var(--font-display);font-size:1.0625rem;font-weight:600;
+  letter-spacing:-0.01em;margin:0;
+}
+.sec-count{font-family:var(--font-mono);font-size:0.75rem;color:var(--dim)}
+.sec-note{margin:12px 0 0;font-size:0.875rem;color:var(--dim);max-width:70ch}
+
+/* column header */
+.colhead{
+  display:grid;grid-template-columns:34px 1fr 92px 104px 232px 1fr;
+  gap:14px;align-items:end;padding:14px 10px 8px;
+  font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.11em;
+  text-transform:uppercase;color:var(--dim);
+}
+.colhead .r{text-align:right}
+
+/* ---------------- row ---------------- */
+.row{border-bottom:1px solid var(--border)}
+.row-main{
+  display:grid;grid-template-columns:34px 1fr 92px 104px 232px 1fr;
+  gap:14px;align-items:center;width:100%;
+  background:transparent;border:0;color:inherit;text-align:left;
+  padding:11px 10px;cursor:pointer;font:inherit;
+  transition:background .12s;
+}
+.row-main:hover{background:oklch(0.22 0.012 250)}
+.row-main:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.row.open .row-main{background:oklch(0.22 0.012 250)}
+
+.sig{
+  font-family:var(--font-mono);font-size:0.8125rem;color:var(--dim);
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.row.notable .sig{color:var(--text)}
+
+.who{display:flex;align-items:center;gap:11px;min-width:0}
+.face{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:var(--raised);object-fit:cover;
+  border:1px solid var(--border);
+}
+.face-fb{
+  width:34px;height:34px;border-radius:50%;flex:none;
+  background:var(--raised);border:1px solid var(--border);
+  display:grid;place-items:center;
+  font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted);
+}
+.who-t{min-width:0}
+.nm{
+  font-weight:600;font-size:0.9375rem;letter-spacing:-0.005em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.meta{
+  font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  display:flex;align-items:center;gap:6px;margin-top:1px;
+}
+.pos{font-weight:600;letter-spacing:0.04em}
+.pos.QB{color:var(--qb)} .pos.RB{color:var(--rb)}
+.pos.WR{color:var(--wr)} .pos.TE{color:var(--te)}
+
+.val{
+  font-family:var(--font-mono);font-size:0.875rem;text-align:right;
+  font-variant-numeric:tabular-nums;color:var(--muted);
+}
+.mv{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.mv-d{display:block;font-size:0.875rem;color:var(--muted)}
+.row.notable .mv-d{color:var(--market)}
+.mv-p{display:block;font-size:0.6875rem;color:var(--dim);margin-top:1px}
+
+/* the band plot — the signature element */
+.plot-wrap{display:block}
+.plot{display:block;position:relative;height:34px}
+.plot-cap{
+  font-family:var(--font-mono);font-size:0.625rem;color:var(--dim);
+  margin-top:-2px;white-space:nowrap;
+}
+.read{font-size:0.8125rem;color:var(--dim);line-height:1.35}
+.row.notable .read{color:var(--muted)}
+.read b{color:var(--text);font-weight:600}
+
+/* inline expansion — detail attached to its row, overlays nothing */
+.detail{
+  display:none;padding:6px 10px 26px;
+}
+.row.open .detail{display:block}
+.dgrid{
+  display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);
+  gap:30px;align-items:start;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:20px 22px;
+}
+.dhead{
+  font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.11em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 10px;
+}
+.facts{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px;margin:0}
+.fact dt{
+  font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 3px;
+}
+.fact dd{
+  margin:0;font-family:var(--font-mono);font-size:0.9375rem;color:var(--text);
+  font-variant-numeric:tabular-nums;
+}
+.fact dd small{display:block;font-size:0.6875rem;color:var(--dim);margin-top:2px;font-family:var(--font-sans)}
+.unavail{color:var(--dim)!important;font-size:0.8125rem!important}
+
+/* table view twin */
+.tbl{width:100%;border-collapse:collapse;margin-top:6px}
+.tbl th,.tbl td{
+  text-align:right;padding:4px 8px;font-family:var(--font-mono);font-size:0.75rem;
+  font-variant-numeric:tabular-nums;border-bottom:1px solid var(--border);
+}
+.tbl th{color:var(--dim);font-weight:500;font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase}
+.tbl td:first-child,.tbl th:first-child{text-align:left;color:var(--muted)}
+
+.more{
+  display:block;margin:16px auto 0;background:transparent;border:1px solid var(--border);
+  color:var(--muted);border-radius:8px;padding:9px 20px;
+  font-family:var(--font-sans);font-size:0.8125rem;cursor:pointer;
+}
+.more:hover{border-color:var(--border-strong);color:var(--text)}
+.more:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* quiet-state block */
+.quiet{
+  border:1px solid var(--border);border-radius:10px;background:var(--surface);
+  padding:18px 20px;margin-top:16px;
+}
+.quiet p{margin:0;color:var(--muted);font-size:0.9375rem}
+.quiet p+p{margin-top:7px;color:var(--dim);font-size:0.875rem}
+
+/* method footer */
+.method{
+  margin-top:64px;padding-top:22px;border-top:1px solid var(--border);
+  font-size:0.8125rem;color:var(--dim);max-width:82ch;line-height:1.6;
+}
+.method h3{
+  font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 10px;font-weight:500;
+}
+.method p{margin:0 0 9px}
+.method b{color:var(--muted);font-weight:600}
+.caveat{
+  margin-top:18px;padding:12px 15px;border-left:2px solid var(--market-muted);
+  background:oklch(0.19 0.012 250);border-radius:0 6px 6px 0;
+}
+.tag{
+  display:inline-block;font-family:var(--font-mono);font-size:0.5625rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);
+  border:1px solid var(--border);border-radius:4px;padding:2px 7px;
+  vertical-align:middle;margin-left:9px;
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:900px){
+  .wrap{padding:26px 18px 70px}
+  .colhead,.row-main{grid-template-columns:30px 1fr 90px;gap:10px}
+  .colhead .h-val,.colhead .h-plot,.colhead .h-read,
+  .row-main .val,.plot-wrap,.read{display:none}
+  .strip-row,.axis{grid-template-columns:74px 1fr;gap:10px}
+  .dgrid{grid-template-columns:1fr;gap:22px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow" id="eyebrow">Loading</p>
+  <h1 class="verdict" id="verdict"></h1>
+  <p class="verdict-sub" id="vsub"></p>
+
+  <!-- HERO: the whole day on one axis -->
+  <section class="strips" aria-labelledby="strips-h">
+    <h2 class="sr" id="strips-h" style="position:absolute;left:-9999px">Today's moves, measured against each player's own normal day</h2>
+    <div class="strip-row">
+      <div class="strip-label">Your roster<b id="sl-roster"></b></div>
+      <div class="strip-plot" id="strip-roster"></div>
+    </div>
+    <div class="strip-row">
+      <div class="strip-label">Around the league<b id="sl-league"></b></div>
+      <div class="strip-plot" id="strip-league"></div>
+    </div>
+    <div class="axis">
+      <div></div>
+      <div class="axis-marks" id="axis-marks"></div>
+    </div>
+    <p class="axis-note">Each mark is one player's price move today, measured in multiples of his own normal day. The shaded lane is the range he moves in on an ordinary day.</p>
+  </section>
+
+  <!-- one filter row above everything it scopes -->
+  <div class="controls" role="group" aria-label="Filter and sort the tape">
+    <span class="lbl">Show</span>
+    <button class="chip" data-scope="roster" aria-pressed="true">Your roster</button>
+    <button class="chip" data-scope="league" aria-pressed="false">Around the league</button>
+    <button class="chip" data-scope="all" aria-pressed="false">Everyone</button>
+    <span class="spacer"></span>
+    <span class="lbl">Sort</span>
+    <button class="chip" data-sort="signal" aria-pressed="true">Unusual first</button>
+    <button class="chip" data-sort="dollar" aria-pressed="false">Biggest move</button>
+    <button class="chip" data-sort="rank" aria-pressed="false">Player rank</button>
+  </div>
+
+  <section class="sec" aria-labelledby="list-h">
+    <div class="sec-head">
+      <h2 class="sec-title" id="list-h">The tape</h2>
+      <span class="sec-count" id="list-count"></span>
+    </div>
+    <div id="quiet-slot"></div>
+    <div class="colhead" aria-hidden="true">
+      <div class="r">×norm</div><div>Player</div><div class="r h-val">Value</div>
+      <div class="r">Today</div><div class="h-plot">Against his normal day</div><div class="h-read">Reading</div>
+    </div>
+    <div id="rows"></div>
+    <button class="more" id="more" hidden>Show more</button>
+  </section>
+
+  <footer class="method">
+    <h3>How this reads a move</h3>
+    <p>Every player's price has its own daily wobble. Over the <b id="m-days">28</b> captured days, the typical
+      blue-chip moves about <b>0.4–1%</b> a day and a sub-$200 flier moves about <b>21%</b> a day — a
+      <b>28× spread</b>. Ranking the tape by size of move therefore ranks it, in practice, by cheapness. Every
+      move here is instead divided by that player's own normal day, so a 1.3% move by Josh Allen and a 22%
+      move by Ray Davis can sit on the same list and mean the same thing.</p>
+    <p>"Normal day" is the median absolute deviation of that player's daily percent changes across the captured
+      window, scaled to be comparable to a standard deviation. The median is used rather than the mean because
+      one genuine jump would otherwise inflate the baseline and hide the next real move.</p>
+    <div class="caveat">
+      <p style="margin:0"><b>What this does not claim.</b> An unusual move is a statement about this player's
+        price history and nothing else. It is not a reason to trade, and it carries no view on whether the market
+        is right. A move can be unusual because news broke, or because a thin market re-priced on one trade —
+        this surface cannot tell those apart, and it does not try.</p>
+    </div>
+    <p style="margin-top:16px"><b>Limits worth knowing.</b> <b id="m-days2">28</b> days is a short window: a
+      baseline built on it is provisional and firms up as the capture grows. A player's first big move inflates
+      his own baseline for the following month, so a second real move reads smaller than it is. Players whose
+      price sat still for most of the window have no usable baseline and are held out rather than flagged
+      (<span id="m-held">0</span> today). Prices come from the market overlay only — the model did not move
+      today, and nothing here is a model output.</p>
+  </footer>
+</div>
+
+<script src="./noise-data.js"></script>
+<script>
+(function(){
+  var D = window.TAPE, M = D.meta, P = D.players;
+
+  // ---- scale: multiples of a normal day, clamped for display ----
+  // The shaded lane is ±NORMAL and means "routine". Every prose threshold below is
+  // keyed to the same number, so the picture and the words can never disagree.
+  var MAX = 6, NORMAL = 2, LOUD = 3;
+  function xpct(mult, dir){                       // -> 0..100 across the plot
+    var m = Math.min(mult, MAX) / MAX;            // 0..1
+    var signed = (dir === 'down' ? -m : m);       // -1..1
+    return (signed + 1) / 2 * 100;
+  }
+  function frac(mult){ return (mult / MAX + 1) / 2; }   // signed multiple -> 0..1
+
+  // ---- the per-row band plot (bullet form: measure against a qualitative range) ----
+  function plotSVG(p){
+    var W = 232, x = xpct(p.mult, p.dir), out = p.mult >= NORMAL, over = p.mult > MAX;
+    var lane0 = frac(-NORMAL), lane1 = frac(NORMAL);
+    var hair = [LOUD, -LOUD, 5, -5].map(function(t){
+      return '<line x1="'+(W*frac(t)).toFixed(1)+'" x2="'+(W*frac(t)).toFixed(1)+
+             '" y1="10" y2="24" stroke="var(--border)" stroke-width="1"/>';
+    }).join('');
+    return ''+
+      '<svg viewBox="0 0 '+W+' 34" width="'+W+'" height="34" role="img" aria-hidden="true" preserveAspectRatio="none">'+
+        // the routine lane (±2x) — neutral, means "nothing to see"
+        // fill/stroke are alpha over whatever surface is behind, so the lane keeps the
+        // same relationship to the row in its default, hover and open states
+        '<rect x="'+(W*lane0).toFixed(1)+'" y="4" width="'+(W*(lane1-lane0)).toFixed(1)+
+          '" height="26" rx="2" fill="oklch(0.92 0.005 250)" fill-opacity="0.055" '+
+          'stroke="oklch(0.92 0.005 250)" stroke-opacity="0.10" stroke-width="1"/>'+
+        hair +
+        '<line x1="'+(W/2)+'" x2="'+(W/2)+'" y1="5" y2="29" stroke="var(--border-strong)" stroke-width="1"/>'+
+        '<rect x="'+(W*x/100 - 1.5).toFixed(1)+'" y="4" width="3" height="26" rx="1.5" fill="'+
+          (out ? 'var(--market)' : 'var(--market-muted)')+'"/>'+
+        (over ? '<path d="M'+(p.dir==='down'?5:227)+' 17 l'+(p.dir==='down'?7:-7)+' -5 v10 z" fill="var(--market)"/>' : '')+
+      '</svg>';
+  }
+
+  // ---- the hero strip: every player on one shared axis ----
+  function strip(el, set){
+    var w = el.clientWidth || 800, h = 56, PAD = 6;   // PAD keeps edge marks from clipping
+    var iw = w - PAD*2;
+    var marks = set.map(function(p,i){
+      var x = PAD + xpct(p.mult, p.dir) / 100 * iw;
+      var jitter = 10 + ((i * 37) % 100) / 100 * 36;      // deterministic vertical spread
+      var out = p.mult >= LOUD;
+      return '<circle cx="'+x.toFixed(1)+'" cy="'+jitter.toFixed(1)+'" r="'+(out?3.2:2.4)+'" '+
+             'fill="'+(out?'var(--market)':'var(--market-muted)')+'" '+
+             'fill-opacity="'+(out?1:0.5)+'"><title>'+p.name+' — '+p.mult.toFixed(1)+'x a normal day</title></circle>';
+    }).join('');
+    var X = function(m){ return PAD + frac(m)*iw; };
+    el.innerHTML =
+      '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" role="img" '+
+        'aria-label="'+set.length+' players plotted by how unusual today’s move was for each of them">'+
+        '<rect x="'+X(-NORMAL).toFixed(1)+'" y="0" width="'+((X(NORMAL)-X(-NORMAL))).toFixed(1)+
+          '" height="'+h+'" fill="var(--band)"/>'+
+        [-NORMAL,NORMAL].map(function(t){
+          return '<line x1="'+X(t).toFixed(1)+'" x2="'+X(t).toFixed(1)+
+                 '" y1="0" y2="'+h+'" stroke="var(--band-edge)" stroke-width="1"/>';
+        }).join('')+
+        [LOUD,-LOUD,5,-5].map(function(t){
+          return '<line x1="'+X(t).toFixed(1)+'" x2="'+X(t).toFixed(1)+
+                 '" y1="0" y2="'+h+'" stroke="var(--border)" stroke-width="1"/>';
+        }).join('')+
+        '<line x1="'+X(0).toFixed(1)+'" x2="'+X(0).toFixed(1)+
+          '" y1="0" y2="'+h+'" stroke="var(--border-strong)" stroke-width="1"/>'+
+        marks+
+      '</svg>';
+  }
+
+  function axis(el){
+    var PAD = 6, w = el.clientWidth || 800, iw = w - PAD*2;
+    // ±MAX is a clamp, not a maximum — say so, rather than implying the scale ends there
+    var labels = iw < 400
+      ? [[-MAX,'6×+'],[0,'normal range'],[MAX,'6×+']]
+      : [[-MAX,'6×+'],[-LOUD,'3×'],[0,'← his normal range →'],[LOUD,'3×'],[MAX,'6×+']];
+    el.innerHTML = labels.map(function(L){
+      var px = PAD + frac(L[0]) * iw;
+      return '<span class="axis-tick"'+(L[0]===0?' style="left:'+px.toFixed(1)+'px;color:var(--muted)"'
+        :' style="left:'+px.toFixed(1)+'px"')+'>'+L[1]+'</span>';
+    }).join('');
+  }
+
+  // ---- prose reading, in the market's own words ----
+  function reading(p){
+    var m = p.mult, big = p.biggestIn28;
+    if (m >= LOUD) return (big ? '<b>Biggest move in '+M.days+' days.</b> ' : '<b>Well outside his range.</b> ')+
+      'He normally moves ±'+p.normalDay.toFixed(1)+'% a day.';
+    if (m >= NORMAL) return '<b>Unusual for him.</b> About '+m.toFixed(1)+'× an ordinary day.';
+    return 'Inside his normal range.';
+  }
+
+  function fmtMoney(v){ return v.toLocaleString('en-US'); }
+  function sign(n){ return (n>0?'+':'') + fmtMoney(n); }
+
+  function faceHTML(p){
+    var ini = p.name.split(' ').map(function(s){return s[0]}).join('').slice(0,2);
+    return '<img class="face" alt="" loading="lazy" src="http://127.0.0.1:8000/assets/headshots/'+p.id+'.jpg" '+
+           'onerror="this.outerHTML=\'<span class=&quot;face-fb&quot; aria-hidden=&quot;true&quot;>'+ini+'</span>\'">';
+  }
+
+  // ---- inline detail: the 28-day series at a shared, honest scale ----
+  function series(p){
+    var s = p.series, w = 460, h = 232, padX = 8, padT = 20, padB = 20;
+    var lo = Math.min.apply(null,s), hi = Math.max.apply(null,s);
+    var rng = (hi-lo) || 1;
+    var Y = function(v){ return padT + (1 - (v-lo)/rng) * (h-padT-padB) };
+    var X = function(i){ return padX + i/(s.length-1) * (w-padX*2) };
+    var pts = s.map(function(v,i){ return [X(i), Y(v)] });
+    var d = pts.map(function(pt,i){ return (i?'L':'M')+pt[0].toFixed(1)+' '+pt[1].toFixed(1) }).join(' ');
+    var last = pts[pts.length-1], prev = pts[pts.length-2];
+    // the window's high and low, as recessive hairlines with direct labels
+    var rule = function(v,lab){
+      return '<line x1="'+padX+'" x2="'+(w-padX)+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+
+             '" stroke="oklch(0.92 0.005 250)" stroke-opacity="0.09" stroke-width="1"/>'+
+             '<text x="'+padX+'" y="'+(Y(v)-6).toFixed(1)+'" fill="var(--dim)" '+
+             'font-family="IBM Plex Mono, monospace" font-size="10">'+lab+' '+fmtMoney(v)+'</text>';
+    };
+    return '<svg viewBox="0 0 '+w+' '+h+'" width="100%" height="'+h+'" role="img" '+
+      'aria-label="Captured price over '+M.days+' days, from '+fmtMoney(s[0])+' to '+fmtMoney(s[s.length-1])+
+      '. Window high '+fmtMoney(hi)+', low '+fmtMoney(lo)+'.">'+
+      rule(hi,'high') + rule(lo,'low') +
+      '<path d="'+d+'" fill="none" stroke="var(--market)" stroke-width="2" '+
+        'stroke-linejoin="round" stroke-linecap="round"/>'+
+      // today's step, drawn heavier — the move the row is about
+      '<path d="M'+prev[0].toFixed(1)+' '+prev[1].toFixed(1)+'L'+last[0].toFixed(1)+' '+last[1].toFixed(1)+
+        '" fill="none" stroke="var(--market-strong)" stroke-width="3" stroke-linecap="round"/>'+
+      '<circle cx="'+last[0].toFixed(1)+'" cy="'+last[1].toFixed(1)+'" r="4" fill="var(--market-strong)" '+
+        'stroke="var(--surface)" stroke-width="2"/>'+
+      '</svg>'+
+      '<div style="display:flex;justify-content:space-between;font-family:var(--font-mono);'+
+        'font-size:0.625rem;color:var(--dim);margin-top:-2px">'+
+        '<span>'+M.days+' days ago · '+fmtMoney(s[0])+'</span>'+
+        '<span style="color:var(--muted)">today · '+fmtMoney(s[s.length-1])+'</span></div>';
+  }
+
+  function detailHTML(p){
+    var tf = p.tradeFreq == null
+      ? '<dd class="unavail">not published for this player</dd>'
+      : '<dd>'+(p.tradeFreq*100).toFixed(2)+'%<small>of leagues traded him recently</small></dd>';
+    var rp = p.rosterPct == null
+      ? '<dd class="unavail">not published for this player</dd>'
+      : '<dd>'+(p.rosterPct*100).toFixed(0)+'%<small>of leagues roster him</small></dd>';
+    return '<div class="detail"><div class="dgrid">'+
+      '<div><p class="dhead">Captured price · last '+M.days+' days</p>'+series(p)+'</div>'+
+      '<div><p class="dhead">Today, in context</p><dl class="facts">'+
+        '<div class="fact"><dt>Move today</dt><dd>'+sign(p.delta)+'<small>'+(p.pct>0?'+':'')+p.pct.toFixed(1)+'% of his value</small></dd></div>'+
+        '<div class="fact"><dt>His normal day</dt><dd>±'+p.normalDay.toFixed(2)+'%<small>median daily swing</small></dd></div>'+
+        '<div class="fact"><dt>Today vs normal</dt><dd>'+p.mult.toFixed(1)+'×<small>'+
+          (p.moveRankInWindow===1?'his largest in the window':'his #'+p.moveRankInWindow+' largest in the window')+'</small></dd></div>'+
+        '<div class="fact"><dt>Market rank</dt><dd>'+p.pos+p.prank+'<small>#'+p.orank+' overall</small></dd></div>'+
+        '<div class="fact"><dt>Trade frequency</dt>'+tf+'</div>'+
+        '<div class="fact"><dt>Rostered</dt>'+rp+'</div>'+
+      '</dl>'+
+      '<p class="dhead" style="margin-top:20px">The numbers behind the plot</p>'+
+      '<table class="tbl"><thead><tr><th>Reading</th><th>Value</th></tr></thead><tbody>'+
+        '<tr><td>Price today</td><td>'+fmtMoney(p.value)+'</td></tr>'+
+        '<tr><td>Price yesterday</td><td>'+fmtMoney(p.value-p.delta)+'</td></tr>'+
+        '<tr><td>Change</td><td>'+sign(p.delta)+' ('+(p.pct>0?'+':'')+p.pct.toFixed(2)+'%)</td></tr>'+
+        '<tr><td>Normal day (±)</td><td>'+p.normalDay.toFixed(2)+'%</td></tr>'+
+        '<tr><td>Multiple</td><td>'+p.mult.toFixed(2)+'×</td></tr>'+
+      '</tbody></table></div>'+
+    '</div></div>';
+  }
+
+  function rowHTML(p){
+    var cls = 'row' + (p.mult>=2 ? ' notable' : '');
+    return '<div class="'+cls+'" data-id="'+p.id+'">'+
+      '<button class="row-main" aria-expanded="false">'+
+        '<span class="sig">'+p.mult.toFixed(1)+'×</span>'+
+        '<span class="who">'+faceHTML(p)+'<span class="who-t">'+
+          '<span class="nm">'+p.name+'</span>'+
+          '<span class="meta"><span class="pos '+p.pos+'">'+p.pos+'</span>'+
+            (p.team?'<span>'+p.team+'</span>':'')+
+            (p.age?'<span>'+Math.floor(p.age)+'y</span>':'')+
+            '<span>'+p.pos+p.prank+'</span></span>'+
+        '</span></span>'+
+        '<span class="val">'+fmtMoney(p.value)+'</span>'+
+        '<span class="mv"><span class="mv-d">'+sign(p.delta)+'</span>'+
+          '<span class="mv-p">'+(p.pct>0?'+':'')+p.pct.toFixed(1)+'%</span></span>'+
+        '<span class="plot-wrap"><span class="plot">'+plotSVG(p)+'</span>'+
+          '<span class="plot-cap">normal day ±'+p.normalDay.toFixed(2)+'%</span></span>'+
+        '<span class="read">'+reading(p)+'</span>'+
+      '</button>'+ detailHTML(p) +'</div>';
+  }
+
+  // ---------------- state ----------------
+  var scope = 'roster', sort = 'signal', limit = 12;
+
+  function current(){
+    var set = scope==='roster' ? P.filter(function(p){return p.roster})
+            : scope==='league' ? P.filter(function(p){return !p.roster})
+            : P.slice();
+    set.sort(
+      sort==='signal' ? function(a,b){return b.mult-a.mult}
+    : sort==='dollar' ? function(a,b){return Math.abs(b.delta)-Math.abs(a.delta)}
+    : function(a,b){return a.orank-b.orank});
+    return set;
+  }
+
+  function quietBlock(set){
+    var n3 = set.filter(function(p){return p.mult>=3}).length;
+    var n2 = set.filter(function(p){return p.mult>=2}).length;
+    var where = scope==='roster' ? 'on your roster' : scope==='league' ? 'around the league' : 'in the pool';
+    if (n2 === 0) return '<div class="quiet"><p>Nothing '+where+' moved outside its normal range today.</p>'+
+      '<p>All '+set.length+' prices changed — they always do — but every change is inside the wobble those players show on an ordinary day.</p></div>';
+    if (n3 === 0) return '<div class="quiet"><p>Nothing '+where+' broke its range today. '+
+      n2+' move'+(n2>1?'s stand':' stands')+' out mildly.</p></div>';
+    return '';
+  }
+
+  function render(){
+    var set = current();
+    document.getElementById('list-count').textContent =
+      set.length + (scope==='roster'?' players on your roster':' players');
+    document.getElementById('quiet-slot').innerHTML = quietBlock(set);
+    var shown = set.slice(0, limit);
+    document.getElementById('rows').innerHTML = shown.map(rowHTML).join('');
+    var more = document.getElementById('more'), hidden = set.slice(limit);
+    more.hidden = hidden.length === 0;
+    // only make the "all routine" promise when it is true of every hidden row
+    var allRoutine = hidden.every(function(p){ return p.mult < NORMAL });
+    more.textContent = allRoutine
+      ? 'Show the other ' + hidden.length + ' — all inside their normal range'
+      : 'Show ' + hidden.length + ' more';
+  }
+
+  // masthead verdict — the thesis, in the market's register
+  function masthead(){
+    var roster = P.filter(function(p){return p.roster});
+    var r3 = roster.filter(function(p){return p.mult>=3});
+    var all3 = P.filter(function(p){return p.mult>=3});
+    document.getElementById('eyebrow').textContent =
+      'Tuesday, July 21 · market tape · ' + M.days + ' captured days';
+    var v = document.getElementById('verdict');
+    var s = document.getElementById('vsub');
+    if (all3.length === 0){
+      v.innerHTML = 'A quiet tape.';
+      s.innerHTML = 'All <b>'+M.cohort+'</b> prices moved. None of them moved unusually.';
+    } else if (r3.length === 0){
+      v.innerHTML = 'Quiet on your roster.';
+      s.innerHTML = 'Every one of <b>'+M.cohort+'</b> prices moved, as they do daily. Only <b>'+
+        all3.length+'</b> moved unusually, and none of them are yours. Closest: <b>'+
+        roster[0].name+'</b>, '+roster[0].mult.toFixed(1)+'× an ordinary day for him.';
+    } else {
+      v.innerHTML = r3.length===1 ? 'One move on your roster.' : r3.length+' moves on your roster.';
+      s.innerHTML = 'Every one of <b>'+M.cohort+'</b> prices moved, as they do daily. Only <b>'+
+        all3.length+'</b> moved unusually — '+(r3.length===1?'one is yours: ':r3.length+' are yours: ')+
+        r3.map(function(p){return '<b>'+p.name+'</b>'}).join(', ')+
+        '. The model itself did not move today.';
+    }
+    document.getElementById('sl-roster').textContent = M.rosterCount + ' players';
+    document.getElementById('sl-league').textContent = (M.cohort - M.rosterCount) + ' players';
+    document.getElementById('m-days').textContent = M.days;
+    document.getElementById('m-days2').textContent = M.days;
+    document.getElementById('m-held').textContent = '0';
+  }
+
+  function drawStrips(){
+    strip(document.getElementById('strip-roster'), P.filter(function(p){return p.roster}));
+    strip(document.getElementById('strip-league'), P.filter(function(p){return !p.roster}));
+    axis(document.getElementById('axis-marks'));
+  }
+
+  // events
+  document.querySelector('.controls').addEventListener('click', function(e){
+    var b = e.target.closest('.chip'); if(!b) return;
+    var group = b.dataset.scope ? 'scope' : 'sort';
+    if (group==='scope') scope = b.dataset.scope; else sort = b.dataset.sort;
+    document.querySelectorAll('.chip[data-'+group+']').forEach(function(c){
+      c.setAttribute('aria-pressed', String(c.dataset[group] === (group==='scope'?scope:sort)));
+    });
+    limit = 12; render();
+  });
+  document.getElementById('rows').addEventListener('click', function(e){
+    var b = e.target.closest('.row-main'); if(!b) return;
+    var row = b.parentElement, open = row.classList.toggle('open');
+    b.setAttribute('aria-expanded', String(open));
+  });
+  document.getElementById('more').addEventListener('click', function(){
+    limit += 40; render();
+  });
+  window.addEventListener('resize', drawStrips);
+
+  masthead(); drawStrips(); render();
+})();
+</script>
+</body>
+</html>
