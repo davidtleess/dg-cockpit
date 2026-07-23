@@ -5,12 +5,19 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: a85f87b5-cf15-4b11-9bb8-58209c7b5a60
-  modified: 2026-07-22T19:32:37.353Z
+  modified: 2026-07-23T04:45:28.006Z
 ---
 
-# Cockpit handoff — CLOSED 2026-07-22 (~12:00) — QB-1 STUDY REGISTRATION **RATIFIED AND COMMITTED**
+# Cockpit handoff — CLOSED 2026-07-23 (evening) — DURABILITY CLOSEOUT: H2 GUARD SHIPPED, EVERYTHING PUSHED, D3-a IS TOMORROW'S FIRST MOVE
 
-**Headline:** The QB-1 pre-registration is **ratified, sealed, hashed, and on disk in git.** Binding pin `37065566a9b372e329454cc51edbcf3de724fd1e5cc57a2f15cc547b1ae54c9d`. It took five Codex review rounds and eleven findings, none waved through. The study is now contractually fixed before any result exists — which was the whole point.
+**⭐ NEXT SESSION OPENS WITH D3-a.** David's explicit word: "start next session with the d3-a." The QB-1 execution arc opens — D3 runner → D4 identity join → D5 report emitter → F33 tripwire → H5 status. The D3-a behavioral RED already exists on disk (`tests/contract/test_qb_validation_program_red.py`, uncommitted, proven-red 5F/33P/17XF, authored by Codex). Each build increment earns its own David commit word; execution is his final word. ~5 build cycles + execution to a result. **David wants the study RUN and numbers in hand, THEN he rules on the dual-threat honesty question (H2-AUDIT-1) with real output.**
+
+**Session headline (07-23):** The H2 UNDER-TEST guard shipped and committed (`ae536f7`, 5 Codex rounds), then David ordered a full durability pass — **the first-ever push landed: 9 commits to `origin/main = 669df7d`, verified by fetch.** Everything is now on GitHub. The recurring valuation-commit friction is cured. All panes flipped to AUTO mode (David). Closeout ran clean: crew flushed, Studio closed, wire clean, data→GCS backup forced.
+
+**⚠️ ON-DISK-BUT-UNPUSHED at closeout (persists across `dg`, low risk):** the closeout flush (AGENT_SYNC + ledger 07-23 postflight) and the D3-a RED test are uncommitted on local disk. Not lost — `dg` rebuilds the tmux session, not the filesystem. The RED commits with D3-a next session; the ledger tail is routine. Push them with next session's first commit word if David wants them on GitHub.
+
+---
+**Prior headline (07-22), still true:** The QB-1 pre-registration is **ratified, sealed, hashed, committed.** Binding pin `37065566a9b372e329454cc51edbcf3de724fd1e5cc57a2f15cc547b1ae54c9d`. Five Codex review rounds, eleven findings, none waved through. The study is contractually fixed before any result exists.
 
 ## What shipped (all David-worded)
 - **`cf9524e`** — THE WIRE RULE into all three crew bootstraps.
@@ -26,7 +33,7 @@ metadata:
 - **Set expectations before the first result:** the spec's own risk table expects many of the 14 contrasts to return `not_separable` or `unsupported_power`. That is the pre-registered honest outcome, NOT a broken run.
 
 ## David's board — next session
-1. **The execution arc** — ~5 increments, each with its own commit word, then execution. Nothing has been authorized.
+1. **⭐ D3-a — THE EXECUTION ARC OPENS (David authorized as tomorrow's first move).** RED already on disk. ~5 increments, each its own commit word, then execution. This is the priority; it does not wait behind the items below.
 2. **Studio 004 sequencing** — dispositioned by both lanes, agreed on all seven items, awaiting David's sequencing. It does not jump the QB-1 queue.
 3. **CQB-1** — disposition delivered (ADAPT + PARK behind two gates). Gate G1 is David's constitutional ruling on mock-draft consensus as feature-vs-overlay. **Note: David REFRAMED this** — the value is measuring historical accuracy of mock drafts at CLASS-COMPOSITION level (how many QB/RB/WR/TE actually go in round 1 vs projected N drafts out), which is a future-pick-value signal, not a player-level feature. That reframing largely dissolves the constitutional gate as originally posed.
 4. **Production-curve work** — several hypotheses ordered, pressure-tested, ranked. Awaiting David's read.
@@ -34,7 +41,24 @@ metadata:
 6. **/login both Claude panes** — was due ~07-21, still outstanding, nothing broken.
 
 ## ⚠️ LIVE PARKED ITEMS — David's word 2026-07-22. Carry forward every closeout.
-### OPEN — H2 pre-registration guard (crew work; Tower tracks and verifies, never writes it)
+### ✅ CLOSED 2026-07-22 (~evening) — H2 pre-registration guard COMMITTED
+**Commit `ae536f7`** — "H2 UNDER-TEST guard — rushing is a live hypothesis, not a finding (David-worded)." Tower-verified: exactly 6 files (registration.md addendum+pointer, CLAUDE/AGENTS/GEMINI bootstraps, ledger, AGENT_SYNC), the parked valuation four EXCLUDED and still uncommitted, the study JSON NOT in the commit (pin `37065566…` intact), NOT pushed (origin 5 behind). 5 Codex review rounds (6→3→1→1→CLEAR) + post-write exact-delta LOOP-CLOSE. Guard bars asserting rushing as established until the study runs and David rules. **This item is DONE.** Two OPEN follow-ups it spawned, both David-authorizable, NOT actioned: **REG-STATUS-1** (post-ratification §13/§14 "candidate pin" status residues) and **H2-AUDIT-1** (corpus audit of pre-existing rushing language + the Engine B `is_dual_threat` mechanic — named, not ruled on; rides behind study results per David).
+
+### ✅ DURABILITY PASS COMPLETE + FIRST PUSH EVER — 2026-07-23
+**David's word "commit all this work and get it properly backed up."** Executed and Tower-verified:
+- **9 commits PUSHED to origin/main = `669df7d`** (0 ahead) — the FIRST push ever granted. Verified by fetch, not crew claim. Scope: 5 prior docs commits (wire rule ×2, QB-1 ratification ×2, guard) + C2 `0fab144` valuation data-refresh + C3 `51c5b0e` state/ledgers + C4 `f9384fe` research work-product (WR-RP, college-QB predraft, frontier-edge) + C5 `669df7d` specs/governance-digest/design/relay drafts + .gitignore boundary. All David-worded, all docs/data/state.
+- **OUT paths gitignored, committed to nothing:** `.gemini/` (agent-local), `.impeccable/` (hook cache), `paper.txt` (3rd-party). `git status` now clean.
+- **Recurring valuation-commit friction CURED:** the 4 `app/data/valuation/*latest*` files committed once (C2) then `git skip-worktree`'d, so daily data rewrites stop tripping every commit. D3-a's arc commits won't re-fight it.
+- **Backup 3-copy state:** code→GitHub ✅ pushed; data→GCS = irreplaceable-backup launchd job loaded/healthy, today's data captured ~10:08, runs on schedule (NOT force-run today — offered to David); cockpit→dg-cockpit last snapshot `d450257` 2026-07-22 22:00, tonight's 22:00 captures today.
+- **AUTO MODE:** David flipped ALL panes to auto 2026-07-23 (deliberate, his word — NOT a wire event). Changes permission-prompting only; grants no David-gate. All 3 lanes confirmed they hold: HOLD stands, PUSH stays David's word, no lane-crossing. **Consequence for Tower's approval authority #1: routine dialogs now auto-approve in-pane; Tower rarely sees them. Tower's git-state guard (watch for commit/push during any hold) becomes the real safety net, not dialogs.**
+
+### ⏳ D3-a HELD — study build not yet opened (David's word pending)
+Codex authored the D3-a behavioral RED (`tests/contract/test_qb_validation_program_red.py`, additions-only +295/−0, proven-red 5 fail/33 pass/17 xfail) — PARKED, not committed, no GREEN. The QB-1 execution arc (D3 runner → D4 identity join → D5 report emitter → F33 tripwire → H5 status) opens on David's word; each increment earns its own commit word; execution is his final word. ~5 build cycles + execution to a result. **David wants the study RUN and the numbers in hand, then rules on the dual-threat honesty question (H2-AUDIT-1) with real output.**
+
+### ⚙️ RECURRING FRICTION — parked-valuation staging vs pre-commit (Tower-flagged 2026-07-22, CURED 2026-07-23 — see durability pass above)
+The four `app/data/valuation/*` files sit half-staged (MM) in the worktree all session. Every commit runs pre-commit's stash-unstaged dance on them; an interrupt mid-commit leaves it half-done → manual patch-restore (cost this session: ~20+ min on the guard commit). NEITHER hook actually acts on them (ruff=Python only, leakage-guard=training CSVs only) — it's purely the staging. **Will recur on all ~5 D3-a→D5 build-arc commits.** Fix is a one-time crew engineering call (settle how the four are held so commits stop tripping over them). **David asked "will it repeat" — answered yes; Tower recommended settling it before D3-a's first commit; David's go PENDING.**
+
+### OPEN — (historical, now closed above) H2 pre-registration guard (crew work; Tower tracks and verifies, never writes it)
 **The crew must add one line to the QB-1 H2 pre-registration: rushing is UNDER TEST, not to be asserted as established anywhere until the pre-registration resolves.**
 - **Surface this every boot until it lands.**
 - **CLOSED only when Tower verifies the line is on-disk in the H2 document — never on a crew claim.**

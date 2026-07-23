@@ -9,6 +9,19 @@ earlier one, mark the old one superseded and link them.
 
 ## Standing directives
 
+- **2026-07-22 — THE GOVERNING METHOD (David: "I love this — think like this every session").**
+  Every surface starts from a blank canvas and the manager's real questions, never from the data or
+  from a prior artifact. The test each surface must pass: **does it carry a thesis about the user's
+  situation, or does it merely display his data?** A verdict ("rebuilding, at the bottom, but young
+  and stocked"), a portfolio with roles ("your tradeable surplus: 14 WRs"), a point of view — not a
+  neutral table, chart, or rank list. Apply this lens to **every region**, not just the top-level
+  architecture; re-derive each one from the question it answers. Reused pieces earn their place only
+  by answering a re-derived question — never by having "sound guts." Tools (sortable grids, raw
+  lists) may exist as secondary views, never as a region's default. When in doubt, do the
+  blank-canvas exercise: what would a dynasty manager actually ask here, in what order, and what is
+  the honest answer that changes what he does? This is the highest-value thing Studio does; when it
+  is skipped, the work gets rejected (see the 005 rejections and the 006 reset below).
+
 - **2026-07-14 — Relay briefs.** Every proposal ships with an engineer-facing `NNN-RELAY.md`:
   verifiable claims, exact repro paths, observed vs. expected, user cost, severity-ranked, each item
   ending with "confirm, fix, or refute with a concrete technical reason." Direct and unsoftened.
@@ -284,6 +297,76 @@ earlier one, mark the old one superseded and link them.
   reason — encoding a variable that barely varies, or letting copy assert significance the data did
   not support. The fix each time was to measure where the variance actually lived before choosing an
   axis. Do that first, not fourth.
+
+- **2026-07-22 — Team/roster pages group and sort by POSITION, in the order QB → RB → WR → TE.**
+  David, explicit "do not forget": this is the core organizing structure of every team page in the
+  category (ESPN, Sleeper, Yahoo all group the roster by position in lineup order). It is the default
+  skeleton for "what you hold" — not role-based groups, not a flat rank list. **How it marries the
+  portfolio thesis (2026-07-22 governing method):** position groups are the *vehicle* for the thesis,
+  not a replacement for it — the roster-construction insight is inherently positional ("14 WR = your
+  tradeable surplus; 3 TE = the hole; 5 young QB none market-trusts = the bet"), so the group headers
+  carry it. Role (core/ascending/sell-window/cut) and trajectory become per-player annotations and
+  sorts *within* each position group. Ties directly to *2026-07-15 copy-the-category's-structure*:
+  position grouping is the familiar substrate; our model-vs-market and the roster-shape verdict are
+  the juxtaposition laid over it.
+
+- **2026-07-23 — A prescription carries a FAR higher bar than a description; a shallow recommendation
+  is unacceptable and worse than none.** Studio put "sell Garrett Wilson" on the board reasoned only
+  from "you have 14 WRs." David: a recommendation that strong "MUST consider EVERYTHING" — age cliff
+  vs the rest of the roster's window (will he still produce when your core peaks?), is his value at an
+  all-time high and far above where we value him, replacement value, etc. The Wilson case was
+  indefensible on every axis: **our model doesn't even cover him** (no view to sell from), his market
+  rank was near its 29-day *low* not a high, the window argued *hold* (at 25 he peaks ~27-29, right
+  when the 22.5-median core arrives), and he's the roster's best WR. **How to apply:** never surface
+  a buy/sell/cut verdict unless the deep analysis genuinely and unambiguously supports it AND the
+  reasoning is shown. Default to **decision support, not decision making** — assemble the real case
+  (window alignment, our-view-vs-market, value trajectory over available history, replacement depth)
+  and let David rule. This independently rediscovers the app's own descriptive doctrine (it never
+  renders buy/sell verdicts) — a shallow prescription is dangerous because he might act on it. Honest
+  data limits to state whenever relevant: market history is only ~29 days (no "all-time" high
+  visible); replacement values are partly unavailable in the app.
+  **The dial David set (2026-07-23):** "lean HEAVILY on the decision data — the evidence, the
+  combination of factors, the reasoning — then you may have some softer earned tagging, not
+  prescription." Built as evidence cards: per decision, a factor grid (window / our-view-vs-market /
+  value-now / replacement) + a "The read" synthesis + a soft, un-colored lean tag ("lean: hold",
+  "lean: cut candidate", "unresolved"). The tag is a lean the visible evidence earns, never a command;
+  never colored as a verdict. Delivered 2026-07-23; David's reaction pending at closeout.
+
+- **2026-07-23 — Rank scales run best=RIGHT, worst=left (#1 at the far right).** David caught the
+  dumbbell built backwards (I had #1 on the left). The convention — the Baseball Savant one he
+  endorses — is that on any left-right ranking/percentile axis, better is further right; the #1
+  player sits at the far right, depth on the left. **How to apply:** every spatial rank or percentile
+  axis puts elite on the right. (Distinct from a ranking *table*, where the rank column is far-left
+  and #1 is the top row — that stays; this is about the horizontal viz axis only.)
+
+- **2026-07-22 — APPROVED: the "State of your franchise" front door (006) and its design vocabulary.**
+  David: "this is awesome — great updates," after a front door that opens on STATE (franchise verdict
+  + standing vs league + positional-shape bars), then "what you hold" as position groups QB→RB→WR→TE
+  each led by a thesis header, rows expanding to the July-15 player card. Two confirmed-good mechanics
+  to reuse, not reinvent:
+  1. **Dumbbell for our-rank-vs-market-rank** — one horizontal track per row on the position's pool
+     scale, **best on the left**, our rank a blue dot, market a amber dot, the connector = the
+     disagreement. Shows standing (how elite) and disagreement (how far apart) in one scannable mark.
+     This replaced an abstract centre-diverging "gap bar" that David said "wasn't speaking." Use the
+     dumbbell whenever two boards' ranks are compared in a row.
+  2. **Percentile-bar + raw-rank, never both numbers** — a lane's bar length carries the percentile,
+     the number at its end is the raw rank; the second number (the "85th") is dropped. David rejected
+     the 4-number version (percentile AND rank, twice) — "we could use just 2." Overall rank goes into
+     prose, not another number cell. General rule: a value gets one visual + one number, never two
+     numbers for the same thing.
+
+- **2026-07-22 — Apply the blank-canvas lens to EVERY region; never blanket-reuse a rejected
+  artifact.** When Studio proposed slotting the rejected ranked list straight back into "what you
+  hold," David: *"use the same lens as you just did with the blank canvas before blanketedly throwing
+  it back in there — it didn't blow my mind last time."* The rank table (our rank vs market, sortable,
+  per player) is a **reference lookup with no point of view** — that is why it never landed. **How to
+  apply:** re-derive each region from the manager's real questions the way the front-door ladder was
+  derived. Every surface must carry a *thesis about the user's situation*, not merely display his
+  data — the hero renders a verdict ("rebuilding, at the bottom, but young and stocked"); a ranked
+  table renders nothing. Reused pieces earn their place by answering a re-derived question, not by
+  having "sound guts." A tool (sortable grid) can exist, but it is never the default view of a region.
+- **2026-07-22 — Hero voice: measured-honest middle.** Not brutal ("dead last, at the bottom"), not
+  soft — honest with some spine. (Settled the 006 hero tone question.)
 
 - **2026-07-22 — The front door is STATE, not CHANGE. Reset endorsed by David.** After two rejected
   attempts to fix the overnight-change surface, David pulled Studio to a blank canvas: *"should
