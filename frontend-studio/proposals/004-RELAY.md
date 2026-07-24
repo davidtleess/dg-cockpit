@@ -219,3 +219,22 @@ Stated so they are not discovered as objections:
 - **The 2×/3× thresholds are borrowed from retail-finance convention, not derived from this
   dataset.** They yield 42 players past 2× and 11 past 3× of 404 today. They are uncalibrated
   against realized outcomes, and cannot be calibrated until the realized-outcome loop activates.
+
+---
+
+## Dispositions — David ruled 2026-07-23 (relayed via Tower)
+
+| ID | Verdict | What it means for Studio |
+|---|---|---|
+| **N1 + N4** | **CONFIRMED — as one design problem, Studio's to take forward** | Ranking daily moves by raw dollars buries big percentage moves on cheap players; per-row sparklines auto-scale independently so rows can't be compared. Design what deserves attention on the tape and how to keep magnitude comparable across rows; prototype it. No rush — queues behind engineering. |
+| **N3** | **CONFIRMED — worse than framed** | The count sums rendered list lengths: it double-counts and includes non-movers (52 shown vs 448 actual). Engineers own the fix. |
+| **N6** | **CONFIRMED — trivial** | Provenance-copy contradiction; engineers will fix. |
+| **N0** | **Pattern real; CAUSE REFUTED** | The positional skew is real, but the Superflex-baseline hypothesis is wrong — it's a ranking-pool artifact. The model does **not** mis-value QBs. **Cause retracted.** |
+| **N2** | **CLOSED — retract** | `displayTrend` is dropped for a deliberate, documented reason. **Retracted.** |
+| **N5** | **Approved for research capture** | Trade-frequency / roster-percent will be captured; value verdict after ~a week of data. |
+
+**Studio's forward thread from this: N1 + N4.** The comparable-magnitude-across-rows half is the same
+auto-scale problem Studio independently hit in the 006 deepened evidence cards' value-now sparkline —
+solve it once, coherently, across the daily tape and the player card. The 004 v4 position-faceted view
+(kept 2026-07-21) and the noise-floor signal-vs-normal ranking are prior art for the "what deserves
+attention" half.

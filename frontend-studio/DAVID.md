@@ -330,7 +330,13 @@ earlier one, mark the old one superseded and link them.
   prescription." Built as evidence cards: per decision, a factor grid (window / our-view-vs-market /
   value-now / replacement) + a "The read" synthesis + a soft, un-colored lean tag ("lean: hold",
   "lean: cut candidate", "unresolved"). The tag is a lean the visible evidence earns, never a command;
-  never colored as a verdict. Delivered 2026-07-23; David's reaction pending at closeout.
+  never colored as a verdict. Delivered 2026-07-23; **CONFIRMED by David 2026-07-23: "calls worth
+  weighing looks solid. something we can build upon."** The decision-support-not-decision-making frame
+  is now the settled pattern for surfacing any call. "Build upon," not "ship" — a foundation to extend
+  in small validated steps, not yet relayed to engineering. With this reaction the full "State of your
+  franchise" front door is approved in principle region by region (hero + positional shape 2026-07-22;
+  position groups + dumbbell + percentile-bars 2026-07-22; evidence cards now; feed demoted). The high
+  bar holds on every extension: a lean must be earned by shown evidence, never asserted.
 
 - **2026-07-23 — Rank scales run best=RIGHT, worst=left (#1 at the far right).** David caught the
   dumbbell built backwards (I had #1 on the left). The convention — the Baseball Savant one he
@@ -427,6 +433,73 @@ earlier one, mark the old one superseded and link them.
   age sort (our "market is sleeping, buy low" list came out as 30–35-year-olds), so the naive
   juxtaposition is an artifact for a rebuilder; compare *within position* where age washes out, and
   make the daily read his own roster with a market-drift (toward/away) annotation.
+
+- **2026-07-23 — ACCURACY CORRECTION (via Tower): "deepen the evidence" was NOT David's choice.** The
+  option Studio presented in its build-upon question menu was selected by a **stray Tower keystroke**,
+  not by David. David is fine with Studio having pursued it — the deepened evidence-cards prototype is
+  kept — but it must be presented at review as **Studio's own proposal for his reaction, not a
+  direction he chose.** David ruled on nothing at the fork; only his "calls worth weighing looks solid,
+  something we can build upon" reaction is real. **How to apply:** a menu selection is not a ruling.
+  Never attribute a direction to David unless he stated it in his own words; present self-initiated work
+  as a proposal and hold decided-language until he reacts (reinforces *2026-07-15 never use decided
+  language about undecided work*). Studio's own records were corrected the same day.
+
+- **2026-07-23 — 004 verdicts (via Tower, David ruled).** Dispositions logged at the foot of
+  `004-RELAY.md`. The load-bearing outcomes: **N1+N4 CONFIRMED as one design problem now Studio's to
+  take forward** — ranking daily moves by raw dollars buries big percentage moves on cheap players, and
+  per-row sparklines auto-scale independently so rows can't be compared; design what deserves attention
+  on the tape and how to keep magnitude comparable across rows, and prototype it (no rush, queues behind
+  engineering). **N0 positional-skew pattern is real but Studio's Superflex-baseline CAUSE is REFUTED**
+  (a ranking-pool artifact; the model does **not** mis-value QBs) — retract the cause. **N2
+  (displayTrend) CLOSED** — deliberate, documented; retract. **N3 CONFIRMED and worse than framed**
+  (count sums rendered list lengths, double-counts, includes non-movers — 52 shown vs 448 actual);
+  **N6 CONFIRMED trivial** — both engineer-owned. **N5** (trade-frequency / roster-percent) approved
+  for research capture; value verdict after ~a week of data. **How to apply:** the sparkline-comparability
+  half of N1+N4 is the *same* auto-scale problem Studio just flagged in the deepened evidence cards'
+  value-now mark — solve it once, coherently, across both surfaces.
+
+- **2026-07-23 — REACTED to the deepened evidence cards (Studio's proposal): direction validated,
+  execution not there, and a NEW STANDING BAR — ground viz in the peer-reviewed literature, not taste.**
+  David: the grounded visuals are "great in theory" and the **window concept is excellent** — but they
+  need "a tremendous amount of polish and even logic," and "all the visuals are very small." Two
+  concrete faults:
+  1. **The straight-line window is misleading — a LOGIC error, conceded.** Studio drew the productive
+     window as a flat bar, which silently claims uniform production from now to the cliff. Real
+     production is **not** linear — rookie ramp vs peak vs decline are different, and the whole decision
+     rides on that shape. A flat bar hides exactly what matters. The window/aging visual must render the
+     honest **production/value curve (ascent → peak → decline)**, not a uniform runway.
+  2. **Visuals too small and under-labeled** — the window especially "can do WAY BETTER on the way we
+     design this and label it."
+  **The standing bar (high-authority, generalizes the dataviz method):** encoding decisions must be
+  **defensible from cognitive-science / peer-reviewed design research, not subjective opinion.** David
+  named the canon to draw from: **Mackinlay**, *Automating the Design of Graphical Presentations* (the
+  perceptual effectiveness ranking — position/length judged far more accurately than area/angle/color/
+  saturation); **Rougier et al., *Ten Simple Rules for Better Figures*** (data-to-ink, viewer-attention
+  limits); the **PRISMA systematic review / Gestalt grouping laws**; **Material Design data-viz** and
+  **CMU** visualization guidelines; the **Awesome-Visualization-Research** and **Awesome-Dataviz**
+  repositories. **How to apply:** research the literature BEFORE iterating a chart; justify every
+  encoding from it (favour position/length over area/saturation per Mackinlay; maximise data-to-ink and
+  respect attention limits per Rougier; group and label per Gestalt); scale marks up for legibility; the
+  window becomes a true, well-labelled aging curve. This lifts the engagement's dataviz bar from
+  "validated palette" to "literature-defensible encodings." (Ties to the always-loaded dataviz skill —
+  its perceptual rules are the same canon; apply them, don't reinvent.)
+
+- **2026-07-23 — Session closeout (learnings + the day's arc).** A single design arc ran the day:
+  David confirmed the evidence-cards frame ("build upon") → Studio deepened each factor with grounding
+  visuals → David reacted "great in theory, but polish + LOGIC; visuals too small; ground it in the
+  peer-reviewed literature, not taste" and conceded-worthy: **the straight-line window was misleading**
+  → Studio researched the canon he handed over, rebuilt the window as a real **aging curve**, then
+  rebuilt the **whole card (v2)** to the literature standard (shared scales, recessed bands, direct
+  labels, CVD shape cue, position encoding). **What worked and to keep doing:** conceding a real logic
+  error cleanly and fast (no defending the flat bar); mining a handed-over research corpus *genuinely*
+  (via subagent) and letting it drive specific, cited changes rather than nodding; finding the
+  **through-line** — shared/fixed scales unifies the literature's #1 rule, the confirmed 004 N4, and
+  Studio's own flagged sparkline flaw (one fix, three surfaces). **Reinforcement that recurred twice
+  today (v1 delivery held by Tower, v2 open intercepted at closeout):** *delivery status in the record
+  must be literally true* — "held" / "intercepted" / "not yet shown" is never "delivered"; correct it
+  the moment it's wrong (an instance of the standing never-decided-language rule). **The open question
+  parked for his next look (thread a):** does deepening each factor earn its place — build the v2
+  standard out to the rest of the region, or too much? He closed out before seeing v2.
 
 ## Rulings on escalations
 

@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calls worth weighing — deepened evidence</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+:root{
+  --bg:oklch(0.16 0.01 250);--surface:oklch(0.2 0.012 250);--raised:oklch(0.24 0.014 250);
+  --border:oklch(0.32 0.012 250);--border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250);--muted:oklch(0.68 0.008 250);--dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+  --model:oklch(0.65 0.13 255);--market:oklch(0.65 0.13 75);
+  --model-hi:oklch(0.80 0.13 255);--market-hi:oklch(0.82 0.14 75);
+  --self:oklch(0.72 0.02 250);           /* neutral player-identity hue — not a valence */
+  --band:oklch(0.30 0.03 255);           /* faint contention-window shade */
+  --font-display:"Archivo",system-ui,sans-serif;--font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:0.9375rem;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:30px 24px 90px}
+
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:18px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.mast .id{font-family:var(--font-display);font-weight:700;font-size:0.75rem;letter-spacing:0.15em;color:var(--dim);text-transform:uppercase}
+.mast .id b{color:var(--model-hi)}
+.mast .stamp{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);text-align:right;line-height:1.7}
+
+.lead{margin:20px 0 6px}
+.lead h1{font-family:var(--font-display);font-weight:700;font-size:1.55rem;letter-spacing:-0.015em;margin:0 0 8px;line-height:1.12;max-width:26ch}
+.lead p{color:var(--muted);font-size:0.9375rem;max-width:78ch;margin:0}
+.lead p b{color:var(--text);font-weight:500}
+
+/* controls + legend */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-top:18px;padding:11px 14px;border:1px solid var(--border);background:var(--surface)}
+.key{display:flex;gap:16px;flex-wrap:wrap;font-size:0.75rem;color:var(--muted);align-items:center}
+.key .k{display:flex;align-items:center;gap:6px}
+.key .dot{width:9px;height:9px;border-radius:50%}
+.key .sw{width:16px;height:10px;border-radius:2px}
+.key i{font-style:normal;font-family:var(--font-mono);font-size:0.6875rem}
+.toggle{display:inline-flex;border:1px solid var(--border-strong);border-radius:5px;overflow:hidden}
+.toggle button{appearance:none;border:none;background:transparent;color:var(--muted);cursor:pointer;font-family:var(--font-mono);font-size:0.75rem;padding:6px 12px;border-right:1px solid var(--border);white-space:nowrap}
+.toggle button:last-child{border-right:none}
+.toggle button:hover{color:var(--text)}
+.toggle button[aria-pressed="true"]{background:var(--model);color:oklch(0.16 0.01 250);font-weight:500}
+.toggle button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+
+/* the evidence cards (chrome continuous with the approved 006 region) */
+.board{display:grid;grid-template-columns:1fr;gap:16px;margin-top:18px}
+.decision{border:1px solid var(--border);background:var(--surface)}
+.dhd{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:14px 18px 12px;border-bottom:1px solid var(--border)}
+.dnm{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-0.01em}
+.dmeta{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);margin-left:9px}
+.dtag{font-family:var(--font-mono);font-size:0.6875rem;padding:4px 11px;border:1px solid var(--border-strong);border-radius:100px;color:var(--muted);white-space:nowrap;align-self:center}
+
+.dfactors{padding:6px 18px 8px}
+.dfac{display:grid;grid-template-columns:84px 220px minmax(0,1fr);gap:16px;padding:11px 0;border-bottom:1px solid var(--border);align-items:center}
+.dfac:last-child{border-bottom:none}
+.dfl{font-family:var(--font-display);font-weight:600;font-size:0.5625rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);align-self:start;padding-top:3px}
+.dviz{width:220px}.dviz svg{display:block}
+.dviz .na{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);padding:8px 0}
+.dfv{font-size:0.8125rem;color:var(--muted);line-height:1.5}
+.dfv b{color:var(--text);font-weight:600}
+.dfv .o{color:var(--model-hi);font-family:var(--font-mono)}.dfv .mk{color:var(--market-hi);font-family:var(--font-mono)}
+.dfv .lim{color:var(--dim);font-style:italic}
+
+/* before mode: hide the viz column, let prose span it */
+.board.mode-before .dfac{grid-template-columns:84px minmax(0,1fr)}
+.board.mode-before .dviz{display:none}
+
+.dread{padding:13px 18px;background:var(--bg);border-top:1px solid var(--border);font-size:0.8125rem;color:var(--text);line-height:1.55}
+.dread .drl{font-family:var(--font-display);font-weight:600;font-size:0.5625rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);margin-right:9px}
+
+.foot{margin-top:26px;padding:13px 16px;border:1px solid var(--border);background:var(--surface);font-size:0.75rem;color:var(--dim);line-height:1.6}
+.foot b{color:var(--muted);font-weight:500}
+@media (max-width:720px){
+  .dfac,.board.mode-before .dfac{grid-template-columns:1fr}
+  .dfl{padding-top:0}.dviz{width:100%;max-width:280px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <span class="id">006 · <b>calls worth weighing</b> — deepened evidence</span>
+    <span class="stamp">real data · roster + market 2026-07-22<br>iteration of the approved region</span>
+  </div>
+
+  <div class="lead">
+    <h1>Each factor now <em>shows</em> its case, not just states it.</h1>
+    <p>The approved cards assemble the four factors that bear on a decision in prose. Deepening gives
+      each one its grounding visual — <b>window</b> as a timeline against your core's peak, <b>our view
+      vs the market</b> as the dumbbell, <b>value now</b> as the 29-day track, <b>replacement</b> as the
+      drop to the next man. The prose stays as the caption. Flip <b>Before / After</b> to see exactly
+      what the visuals add. Nothing here issues a verdict; the lean is what the shown evidence earns.</p>
+  </div>
+
+  <div class="bar">
+    <div class="key">
+      <span class="k"><span class="dot" style="background:var(--model)"></span><i style="color:var(--model-hi)">our rank</i></span>
+      <span class="k"><span class="dot" style="background:var(--market)"></span><i style="color:var(--market-hi)">market rank</i></span>
+      <span class="k"><span class="sw" style="background:var(--self)"></span><i>productive window</i></span>
+      <span class="k"><span class="sw" style="background:var(--band);opacity:0.9"></span><i>your core peaks</i></span>
+    </div>
+    <div class="toggle" id="toggle">
+      <button data-mode="after" aria-pressed="true">After — with visuals</button>
+      <button data-mode="before">Before — prose only</button>
+    </div>
+  </div>
+
+  <div class="board" id="board"></div>
+
+  <p class="foot"><b>Descriptive only.</b> Every reading is derived from the roster and FantasyCalc
+    market data (2026-07-22). Ranks compare our model's board to the market's, within position, best on
+    the right. The window timeline uses each position's age-cliff (RB 26 · WR 28 · TE 30 · QB 33) and
+    your core's ages; it is a lifecycle read, not a projection. Market history is only the 29 days the
+    app has captured — no true career high or low is visible, and that limit is stated wherever it bears
+    on the read. No buy/sell/cut verdict is issued; the lean is a soft tag the visible evidence earns.</p>
+</div>
+
+<script>
+const D = {"wilson":{"sid":"8146","name":"Garrett Wilson","pos":"WR","age":25,"team":"NYJ","exp":4,"our":null,"ourp":null,"mkt":45,"mktp":15,"starter":false,"taxi":false,"traj":"peak","ser":[42,43,42,42,45,40,41,42,42,42,38,40,43,43,43,43,42,42,42,42,42,42,42,42,42,44,44,44,45]},"ali":{"sid":"11570","name":"Rasheen Ali","pos":"RB","age":24,"team":"BAL","exp":2,"our":297,"ourp":88,"mkt":396,"mktp":111,"starter":false,"taxi":false,"traj":"peak","ser":[397,null,390,393,394,395,392,387,393,394,396,391,393,395,399,null,null,393,391,395,null,396,397,null,394,394,393,397,396]},"burden":{"sid":"12519","name":"Luther Burden","pos":"WR","age":22,"team":"CHI","exp":1,"our":129,"ourp":47,"mkt":56,"mktp":20,"starter":false,"taxi":false,"traj":"ascending","ser":[55,56,56,53,54,55,57,56,57,57,57,59,57,58,59,59,62,62,63,61,62,58,57,59,58,56,58,56,56]},"hero":{"vw_age":23.52,"pct_over28":0,"youth_rank":3},"core":[{"name":"Ashton Jeanty","pos":"RB","age":22,"mkt":14},{"name":"Jaxson Dart","pos":"QB","age":22,"mkt":26},{"name":"Tucker Kraft","pos":"TE","age":25,"mkt":63}],"poolRB":[{"sid":"4034","name":"Christian McCaffrey","ourp":1,"mktp":10},{"sid":"6813","name":"Jonathan Taylor","ourp":2,"mktp":7},{"sid":"9221","name":"Jahmyr Gibbs","ourp":3,"mktp":2},{"sid":"9226","name":"De'Von Achane","ourp":4,"mktp":6},{"sid":"9509","name":"Bijan Robinson","ourp":5,"mktp":1},{"sid":"13287","name":"Jeremiyah Love","ourp":6,"mktp":4},{"sid":"8150","name":"Kyren Williams","ourp":7,"mktp":16},{"sid":"13286","name":"Jadarian Price","ourp":8,"mktp":19},{"sid":"8138","name":"James Cook","ourp":9,"mktp":8},{"sid":"7543","name":"Travis Etienne","ourp":10,"mktp":20},{"sid":"3198","name":"Derrick Henry","ourp":11,"mktp":22},{"sid":"4866","name":"Saquon Barkley","ourp":12,"mktp":13},{"sid":"5850","name":"Josh Jacobs","ourp":13,"mktp":23},{"sid":"9224","name":"Chase Brown","ourp":14,"mktp":11},{"sid":"8155","name":"Breece Hall","ourp":15,"mktp":12},{"sid":"12481","name":"Cam Skattebo","ourp":16,"mktp":18},{"sid":"7588","name":"Javonte Williams","ourp":17,"mktp":21},{"sid":"12527","name":"Ashton Jeanty","ourp":18,"mktp":3},{"sid":"8151","name":"Kenneth Walker III","ourp":19,"mktp":9},{"sid":"6790","name":"D'Andre Swift","ourp":20,"mktp":25},{"sid":"11584","name":"Bucky Irving","ourp":21,"mktp":17},{"sid":"12507","name":"Omarion Hampton","ourp":22,"mktp":5},{"sid":"7611","name":"Rhamondre Stevenson","ourp":23,"mktp":38},{"sid":"8228","name":"Jaylen Warren","ourp":24,"mktp":30},{"sid":"12512","name":"Quinshon Judkins","ourp":25,"mktp":14},{"sid":"12489","name":"RJ Harvey","ourp":26,"mktp":28},{"sid":"12529","name":"TreVeyon Henderson","ourp":27,"mktp":15},{"sid":"5967","name":"Tony Pollard","ourp":28,"mktp":39},{"sid":"7567","name":"Kenneth Gainwell","ourp":29,"mktp":41},{"sid":"13414","name":"Kaelon Black","ourp":30,"mktp":61},{"sid":"7021","name":"Rico Dowdle","ourp":31,"mktp":34},{"sid":"5892","name":"David Montgomery","ourp":32,"mktp":26},{"sid":"9753","name":"Zach Charbonnet","ourp":33,"mktp":35},{"sid":"6806","name":"J.K. Dobbins","ourp":34,"mktp":40},{"sid":"11655","name":"Tyrone Tracy","ourp":35,"mktp":49},{"sid":"8136","name":"Rachaad White","ourp":36,"mktp":37},{"sid":"4035","name":"Alvin Kamara","ourp":37,"mktp":57},{"sid":"7594","name":"Chuba Hubbard","ourp":38,"mktp":31},{"sid":"13345","name":"Jonah Coleman","ourp":39,"mktp":33},{"sid":"12534","name":"Kyle Monangai","ourp":40,"mktp":27},{"sid":"12474","name":"Woody Marks","ourp":41,"mktp":50},{"sid":"4199","name":"Aaron Jones","ourp":42,"mktp":51},{"sid":"9508","name":"Tyjae Spears","ourp":43,"mktp":55},{"sid":"12533","name":"Jacory Croskey-Merritt","ourp":44,"mktp":43},{"sid":"11647","name":"Kimani Vidal","ourp":45,"mktp":66},{"sid":"13305","name":"Mike Washington Jr.","ourp":46,"mktp":62},{"sid":"8122","name":"Bam Knight","ourp":47,"mktp":98},{"sid":"8205","name":"Isiah Pacheco","ourp":48,"mktp":46},{"sid":"12469","name":"Dylan Sampson","ourp":49,"mktp":44},{"sid":"12476","name":"Devin Neal","ourp":50,"mktp":78},{"sid":"4098","name":"Kareem Hunt","ourp":51,"mktp":112},{"sid":"8132","name":"Tyler Allgeier","ourp":52,"mktp":45},{"sid":"11586","name":"Blake Corum","ourp":53,"mktp":32},{"sid":"12490","name":"Bhayshul Tuten","ourp":54,"mktp":24},{"sid":"8408","name":"Jordan Mason","ourp":55,"mktp":42},{"sid":"7607","name":"Michael Carter","ourp":56,"mktp":99},{"sid":"6130","name":"Devin Singletary","ourp":57,"mktp":100},{"sid":"10219","name":"Chris Rodriguez","ourp":58,"mktp":47},{"sid":"9506","name":"Sean Tucker","ourp":59,"mktp":72},{"sid":"11643","name":"Jaylen Wright","ourp":60,"mktp":70},{"sid":"12455","name":"Brashard Smith","ourp":61,"mktp":82},{"sid":"13337","name":"Emmett Johnson","ourp":62,"mktp":63},{"sid":"13302","name":"Adam Randall","ourp":63,"mktp":71},{"sid":"12495","name":"Ollie Gordon","ourp":64,"mktp":69},{"sid":"8154","name":"Brian Robinson","ourp":65,"mktp":52},{"sid":"13288","name":"Nicholas Singleton","ourp":66,"mktp":36},{"sid":"11571","name":"Isaiah Davis","ourp":67,"mktp":88},{"sid":"5995","name":"Justice Hill","ourp":68,"mktp":86},{"sid":"9511","name":"Keaton Mitchell","ourp":69,"mktp":48},{"sid":"8143","name":"Jerome Ford","ourp":70,"mktp":92},{"sid":"4988","name":"Nick Chubb","ourp":71,"mktp":102},{"sid":"6039","name":"Ty Johnson","ourp":72,"mktp":109},{"sid":"11435","name":"Emanuel Wilson","ourp":73,"mktp":75},{"sid":"11575","name":"Ray Davis","ourp":74,"mktp":67},{"sid":"11199","name":"Emari Demercado","ourp":75,"mktp":93},{"sid":"12544","name":"LeQuint Allen","ourp":76,"mktp":76},{"sid":"8800","name":"Malik Davis","ourp":77,"mktp":90},{"sid":"11299","name":"Zavier Scott","ourp":78,"mktp":null},{"sid":"4147","name":"Samaje Perine","ourp":79,"mktp":107},{"sid":"12531","name":"Trevor Etienne","ourp":80,"mktp":81},{"sid":"9225","name":"Tank Bigsby","ourp":81,"mktp":53},{"sid":"4219","name":"Jeremy McNichols","ourp":82,"mktp":null},{"sid":"11439","name":"Jaleel McLaughlin","ourp":83,"mktp":104},{"sid":"12048","name":"George Holani","ourp":84,"mktp":89},{"sid":"12504","name":"Kaleb Johnson","ourp":85,"mktp":60},{"sid":"11577","name":"Will Shipley","ourp":86,"mktp":96},{"sid":"8208","name":"Tyler Badie","ourp":87,"mktp":null},{"sid":"11570","name":"Rasheen Ali","ourp":88,"mktp":111},{"sid":"2749","name":"Raheem Mostert","ourp":89,"mktp":null},{"sid":"12543","name":"Tahj Brooks","ourp":90,"mktp":83},{"sid":"13347","name":"Demond Claiborne","ourp":91,"mktp":56},{"sid":"13405","name":"Kaytron Allen","ourp":92,"mktp":58},{"sid":"11370","name":"Chris Brooks","ourp":93,"mktp":80},{"sid":"12171","name":"British Brooks","ourp":94,"mktp":null},{"sid":"11510","name":"Hunter Luepke","ourp":95,"mktp":null},{"sid":"11237","name":"Jacob Saylors","ourp":96,"mktp":null},{"sid":"8123","name":"Hassan Haskins","ourp":97,"mktp":null},{"sid":"8254","name":"Julius Chestnut","ourp":98,"mktp":null},{"sid":"11574","name":"Dylan Laube","ourp":99,"mktp":null},{"sid":"11729","name":"Sione Vaki","ourp":100,"mktp":null},{"sid":"2359","name":"Ameer Abdullah","ourp":101,"mktp":null},{"sid":"8207","name":"Tyler Goodson","ourp":102,"mktp":null},{"sid":"7720","name":"Kene Nwangwu","ourp":103,"mktp":null},{"sid":"8195","name":"Ronnie Rivers","ourp":104,"mktp":null},{"sid":"4718","name":"Dare Ogunbowale","ourp":105,"mktp":null},{"sid":"13403","name":"Jam Miller","ourp":106,"mktp":91},{"sid":"11280","name":"Brady Russell","ourp":107,"mktp":null},{"sid":"6694","name":"D'Ernest Johnson","ourp":108,"mktp":null},{"sid":"7204","name":"Reggie Gilliam","ourp":109,"mktp":null},{"sid":"6012","name":"Travis Homer","ourp":110,"mktp":null},{"sid":"13424","name":"Seth McGowan","ourp":111,"mktp":79},{"sid":"4018","name":"Joe Mixon","ourp":null,"mktp":84},{"sid":"9757","name":"Kendre Miller","ourp":null,"mktp":97},{"sid":"11569","name":"Jarquez Hunter","ourp":null,"mktp":94},{"sid":"11579","name":"Audric Estime","ourp":null,"mktp":95},{"sid":"12457","name":"Jaydon Blue","ourp":null,"mktp":65},{"sid":"11589","name":"Trey Benson","ourp":null,"mktp":64},{"sid":"13419","name":"Jaydn Ott","ourp":null,"mktp":105},{"sid":"13423","name":"Eli Heidenreich","ourp":null,"mktp":77},{"sid":"4137","name":"James Conner","ourp":null,"mktp":73},{"sid":"11576","name":"Braelon Allen","ourp":null,"mktp":54},{"sid":"7528","name":"Najee Harris","ourp":null,"mktp":87},{"sid":"11581","name":"MarShawn Lloyd","ourp":null,"mktp":59},{"sid":"11651","name":"Isaac Guerendo","ourp":null,"mktp":101},{"sid":"12738","name":"Phil Mafah","ourp":null,"mktp":103},{"sid":"4663","name":"Austin Ekeler","ourp":null,"mktp":110},{"sid":"10235","name":"Roschon Johnson","ourp":null,"mktp":108},{"sid":"11583","name":"Jonathon Brooks","ourp":null,"mktp":29},{"sid":"12462","name":"Damien Martinez","ourp":null,"mktp":106},{"sid":"12471","name":"DJ Giddens","ourp":null,"mktp":74},{"sid":"13348","name":"J'Mari Taylor","ourp":null,"mktp":85},{"sid":"12467","name":"Jordan James","ourp":null,"mktp":68}],"poolWR":[{"sid":"10229","name":"Rashee Rice","ourp":1,"mktp":19},{"sid":"7547","name":"Amon-Ra St. Brown","ourp":2,"mktp":4},{"sid":"7564","name":"Ja'Marr Chase","ourp":3,"mktp":1},{"sid":"8137","name":"George Pickens","ourp":4,"mktp":10},{"sid":"9488","name":"Jaxon Smith-Njigba","ourp":5,"mktp":2},{"sid":"9493","name":"Puka Nacua","ourp":6,"mktp":3},{"sid":"8112","name":"Drake London","ourp":7,"mktp":8},{"sid":"6786","name":"CeeDee Lamb","ourp":8,"mktp":7},{"sid":"8144","name":"Chris Olave","ourp":9,"mktp":17},{"sid":"7569","name":"Nico Collins","ourp":10,"mktp":13},{"sid":"6801","name":"Tee Higgins","ourp":11,"mktp":26},{"sid":"9997","name":"Zay Flowers","ourp":12,"mktp":21},{"sid":"5859","name":"A.J. Brown","ourp":13,"mktp":14},{"sid":"2133","name":"Davante Adams","ourp":14,"mktp":35},{"sid":"8148","name":"Jameson Williams","ourp":15,"mktp":29},{"sid":"12526","name":"Tetairoa McMillan","ourp":16,"mktp":9},{"sid":"6794","name":"Justin Jefferson","ourp":17,"mktp":5},{"sid":"8126","name":"Wan'Dale Robinson","ourp":18,"mktp":46},{"sid":"13279","name":"Carnell Tate","ourp":19,"mktp":12},{"sid":"11635","name":"Ladd McConkey","ourp":20,"mktp":16},{"sid":"13281","name":"Jordyn Tyson","ourp":21,"mktp":18},{"sid":"7525","name":"DeVonta Smith","ourp":22,"mktp":22},{"sid":"12514","name":"Emeka Egbuka","ourp":23,"mktp":11},{"sid":"5045","name":"Courtland Sutton","ourp":24,"mktp":54},{"sid":"10232","name":"Michael Wilson","ourp":25,"mktp":43},{"sid":"13294","name":"Makai Lemon","ourp":26,"mktp":24},{"sid":"9754","name":"Quentin Johnston","ourp":27,"mktp":40},{"sid":"9487","name":"Parker Washington","ourp":28,"mktp":44},{"sid":"11631","name":"Brian Thomas Jr.","ourp":29,"mktp":27},{"sid":"13298","name":"KC Concepcion","ourp":30,"mktp":30},{"sid":"8134","name":"Khalil Shakir","ourp":31,"mktp":64},{"sid":"8142","name":"Alec Pierce","ourp":32,"mktp":33},{"sid":"5846","name":"DK Metcalf","ourp":33,"mktp":38},{"sid":"2449","name":"Stefon Diggs","ourp":34,"mktp":66},{"sid":"7526","name":"Jaylen Waddle","ourp":35,"mktp":28},{"sid":"4983","name":"D.J. Moore","ourp":36,"mktp":31},{"sid":"8121","name":"Romeo Doubs","ourp":37,"mktp":58},{"sid":"11620","name":"Rome Odunze","ourp":38,"mktp":25},{"sid":"6819","name":"Michael Pittman","ourp":39,"mktp":50},{"sid":"8167","name":"Christian Watson","ourp":40,"mktp":32},{"sid":"11628","name":"Marvin Harrison Jr.","ourp":41,"mktp":23},{"sid":"7049","name":"Jauan Jennings","ourp":42,"mktp":80},{"sid":"9756","name":"Jordan Addison","ourp":43,"mktp":36},{"sid":"11627","name":"Troy Franklin","ourp":44,"mktp":83},{"sid":"5872","name":"Deebo Samuel","ourp":45,"mktp":88},{"sid":"5947","name":"Jakobi Meyers","ourp":46,"mktp":56},{"sid":"12519","name":"Luther Burden","ourp":47,"mktp":20},{"sid":"5927","name":"Terry McLaurin","ourp":48,"mktp":34},{"sid":"13346","name":"Denzel Boston","ourp":49,"mktp":42},{"sid":"9500","name":"Josh Downs","ourp":50,"mktp":48},{"sid":"13276","name":"Omar Cooper Jr.","ourp":51,"mktp":39},{"sid":"8676","name":"Rashid Shaheed","ourp":52,"mktp":62},{"sid":"9504","name":"Kayshon Boutte","ourp":53,"mktp":86},{"sid":"11624","name":"Xavier Worthy","ourp":54,"mktp":49},{"sid":"12484","name":"Jayden Higgins","ourp":55,"mktp":51},{"sid":"13274","name":"Germie Bernard","ourp":56,"mktp":65},{"sid":"13301","name":"Antonio Williams","ourp":57,"mktp":57},{"sid":"11646","name":"Jalen Coker","ourp":58,"mktp":59},{"sid":"10213","name":"Tre Tucker","ourp":59,"mktp":84},{"sid":"1479","name":"Keenan Allen","ourp":60,"mktp":121},{"sid":"13417","name":"De'Zhaun Stribling","ourp":61,"mktp":61},{"sid":"4037","name":"Chris Godwin","ourp":62,"mktp":53},{"sid":"13317","name":"Ted Hurst","ourp":63,"mktp":72},{"sid":"12499","name":"Elic Ayomanor","ourp":64,"mktp":93},{"sid":"11637","name":"Keon Coleman","ourp":65,"mktp":76},{"sid":"2216","name":"Mike Evans","ourp":66,"mktp":41},{"sid":"12540","name":"Chimere Dike","ourp":67,"mktp":91},{"sid":"13311","name":"Chris Bell","ourp":68,"mktp":55},{"sid":"6783","name":"Jerry Jeudy","ourp":69,"mktp":77},{"sid":"9494","name":"Marvin Mims","ourp":70,"mktp":110},{"sid":"13285","name":"Malachi Fields","ourp":71,"mktp":70},{"sid":"13296","name":"Caleb Douglas","ourp":72,"mktp":97},{"sid":"13320","name":"Zachariah Branch","ourp":73,"mktp":63},{"sid":"13293","name":"Ja'Kobi Lane","ourp":74,"mktp":87},{"sid":"11638","name":"Ricky Pearsall","ourp":75,"mktp":47},{"sid":"4039","name":"Cooper Kupp","ourp":76,"mktp":99},{"sid":"12497","name":"Tory Horton","ourp":77,"mktp":82},{"sid":"12501","name":"Matthew Golden","ourp":78,"mktp":45},{"sid":"12485","name":"Tez Johnson","ourp":79,"mktp":105},{"sid":"13411","name":"Zavion Thomas","ourp":80,"mktp":101},{"sid":"9501","name":"Demario Douglas","ourp":81,"mktp":130},{"sid":"5848","name":"Marquise Brown","ourp":82,"mktp":115},{"sid":"13353","name":"Chris Brazzell II","ourp":83,"mktp":94},{"sid":"12492","name":"Pat Bryant","ourp":84,"mktp":92},{"sid":"13380","name":"Brenen Thompson","ourp":85,"mktp":112},{"sid":"12535","name":"Isaac TeSlaa","ourp":86,"mktp":75},{"sid":"11626","name":"Xavier Legette","ourp":87,"mktp":104},{"sid":"11610","name":"Malik Washington","ourp":88,"mktp":79},{"sid":"12509","name":"Tre Harris","ourp":89,"mktp":69},{"sid":"12536","name":"Jaylin Noel","ourp":90,"mktp":78},{"sid":"11783","name":"Ryan Flournoy","ourp":91,"mktp":95},{"sid":"13268","name":"Elijah Sarratt","ourp":92,"mktp":67},{"sid":"8180","name":"Jalen Nailor","ourp":93,"mktp":74},{"sid":"12503","name":"Isaiah Bond","ourp":94,"mktp":102},{"sid":"4950","name":"Christian Kirk","ourp":95,"mktp":111},{"sid":"4177","name":"Mack Hollins","ourp":96,"mktp":151},{"sid":"13297","name":"Reggie Virgil","ourp":97,"mktp":138},{"sid":"11625","name":"Adonai Mitchell","ourp":98,"mktp":73},{"sid":"6149","name":"Darius Slayton","ourp":99,"mktp":131},{"sid":"9486","name":"Dontayvion Wicks","ourp":100,"mktp":89},{"sid":"7090","name":"Darnell Mooney","ourp":101,"mktp":100},{"sid":"8125","name":"Calvin Austin III","ourp":102,"mktp":147},{"sid":"10218","name":"Xavier Hutchinson","ourp":103,"mktp":143},{"sid":"10226","name":"Andrei Iosivas","ourp":104,"mktp":120},{"sid":"12547","name":"Kyle Williams","ourp":105,"mktp":96},{"sid":"11834","name":"Devaughn Vele","ourp":106,"mktp":127},{"sid":"12641","name":"Jaylin Lane","ourp":107,"mktp":123},{"sid":"8188","name":"Tyquan Thornton","ourp":108,"mktp":113},{"sid":"11629","name":"Devontez Walker","ourp":109,"mktp":152},{"sid":"6271","name":"Olamide Zaccheaus","ourp":110,"mktp":142},{"sid":"12483","name":"Jack Bech","ourp":111,"mktp":81},{"sid":"10444","name":"Cedric Tillman","ourp":112,"mktp":125},{"sid":"8147","name":"John Metchie","ourp":113,"mktp":133},{"sid":"11630","name":"Roman Wilson","ourp":114,"mktp":135},{"sid":"7571","name":"Rashod Bateman","ourp":115,"mktp":106},{"sid":"5970","name":"Greg Dortch","ourp":116,"mktp":null},{"sid":"13402","name":"Skyler Bell","ourp":117,"mktp":90},{"sid":"4454","name":"Kendrick Bourne","ourp":118,"mktp":154},{"sid":"8917","name":"KaVontae Turpin","ourp":119,"mktp":146},{"sid":"11377","name":"Tyrell Shavers","ourp":120,"mktp":null},{"sid":"11650","name":"Luke McCaffrey","ourp":121,"mktp":128},{"sid":"12718","name":"Konata Mumpfield","ourp":122,"mktp":141},{"sid":"12523","name":"Jimmy Horn","ourp":123,"mktp":150},{"sid":"13420","name":"Bryce Lance","ourp":124,"mktp":103},{"sid":"7670","name":"Joshua Palmer","ourp":125,"mktp":null},{"sid":"3286","name":"Demarcus Robinson","ourp":126,"mktp":null},{"sid":"13477","name":"Colbie Young","ourp":127,"mktp":134},{"sid":"12482","name":"Savion Williams","ourp":128,"mktp":124},{"sid":"11608","name":"Isaiah Williams","ourp":129,"mktp":156},{"sid":"8117","name":"Jalen Tolbert","ourp":130,"mktp":126},{"sid":"13491","name":"Kaden Wetjen","ourp":131,"mktp":null},{"sid":"13412","name":"Kendrick Law","ourp":132,"mktp":null},{"sid":"11157","name":"Brycen Tremayne","ourp":133,"mktp":null},{"sid":"11068","name":"Mitchell Tinsley","ourp":134,"mktp":null},{"sid":"12541","name":"Dont'e Thornton","ourp":135,"mktp":107},{"sid":"3200","name":"Sterling Shepard","ourp":136,"mktp":null},{"sid":"7587","name":"Dyami Brown","ourp":137,"mktp":145},{"sid":"13101","name":"Gage Larvadain","ourp":138,"mktp":null},{"sid":"4040","name":"JuJu Smith-Schuster","ourp":139,"mktp":null},{"sid":"12542","name":"Efton Chism","ourp":140,"mktp":157},{"sid":"6853","name":"Van Jefferson","ourp":141,"mktp":null},{"sid":"8168","name":"Skyy Moore","ourp":142,"mktp":null},{"sid":"6154","name":"David Sills","ourp":143,"mktp":null},{"sid":"8119","name":"Jahan Dotson","ourp":144,"mktp":118},{"sid":"11623","name":"Jordan Whittington","ourp":145,"mktp":149},{"sid":"5938","name":"Lil'Jordan Humphrey","ourp":146,"mktp":null},{"sid":"1426","name":"DeAndre Hopkins","ourp":147,"mktp":null},{"sid":"12496","name":"Tai Felton","ourp":148,"mktp":148},{"sid":"6960","name":"Tyler Johnson","ourp":149,"mktp":null},{"sid":"6699","name":"Gunner Olszewski","ourp":150,"mktp":null},{"sid":"7596","name":"Elijah Moore","ourp":151,"mktp":null},{"sid":"12539","name":"Arian Smith","ourp":152,"mktp":null},{"sid":"12670","name":"KeAndre Lambert-Smith","ourp":153,"mktp":136},{"sid":"7562","name":"Tutu Atwell","ourp":154,"mktp":140},{"sid":"2197","name":"Brandin Cooks","ourp":155,"mktp":null},{"sid":"3634","name":"Kalif Raymond","ourp":156,"mktp":null},{"sid":"13533","name":"Barion Brown","ourp":157,"mktp":null},{"sid":"2374","name":"Tyler Lockett","ourp":158,"mktp":null},{"sid":"11617","name":"Malachi Corley","ourp":159,"mktp":null},{"sid":"13075","name":"Myles Price","ourp":160,"mktp":null},{"sid":"13338","name":"Kevin Coleman Jr.","ourp":161,"mktp":116},{"sid":"11168","name":"Xavier Smith","ourp":162,"mktp":null},{"sid":"12699","name":"LaJohntay Wester","ourp":163,"mktp":null},{"sid":"1689","name":"Adam Thielen","ourp":164,"mktp":null},{"sid":"7039","name":"Cody White","ourp":165,"mktp":null},{"sid":"11994","name":"Kameron Johnson","ourp":166,"mktp":null},{"sid":"13413","name":"Cyrus Allen","ourp":167,"mktp":108},{"sid":"4351","name":"Tim Patrick","ourp":168,"mktp":null},{"sid":"13554","name":"CJ Williams","ourp":169,"mktp":null},{"sid":"3269","name":"Chris Moore","ourp":170,"mktp":null},{"sid":"13541","name":"Lewis Bond","ourp":171,"mktp":null},{"sid":"7496","name":"Nick Westbrook-Ikhine","ourp":172,"mktp":144},{"sid":"8135","name":"Treylon Burks","ourp":173,"mktp":119},{"sid":"13394","name":"Josh Cameron","ourp":174,"mktp":122},{"sid":"11895","name":"Mason Tipton","ourp":175,"mktp":null},{"sid":"5086","name":"Marquez Valdes-Scantling","ourp":176,"mktp":null},{"sid":"5185","name":"Allen Lazard","ourp":177,"mktp":null},{"sid":"13329","name":"Malik Benson","ourp":178,"mktp":117},{"sid":"11633","name":"Jamari Thrash","ourp":179,"mktp":null},{"sid":"11421","name":"Ryan Miller","ourp":180,"mktp":null},{"sid":"13313","name":"Emmanuel Henderson Jr.","ourp":181,"mktp":null},{"sid":"11320","name":"Nikko Remigio","ourp":182,"mktp":null},{"sid":"6427","name":"Ashton Dulin","ourp":183,"mktp":null},{"sid":"7757","name":"Ben Skowronek","ourp":184,"mktp":null},{"sid":"4992","name":"Dante Pettis","ourp":185,"mktp":null},{"sid":"7595","name":"Tylan Wallace","ourp":186,"mktp":null},{"sid":"6847","name":"Devin Duvernay","ourp":187,"mktp":null},{"sid":"10867","name":"Jake Bobo","ourp":188,"mktp":null},{"sid":"13270","name":"CJ Daniels","ourp":189,"mktp":132},{"sid":"8527","name":"Dareke Young","ourp":190,"mktp":null},{"sid":"10234","name":"Derius Davis","ourp":191,"mktp":null},{"sid":"11762","name":"Anthony Gould","ourp":192,"mktp":null},{"sid":"4198","name":"Jamal Agnew","ourp":193,"mktp":null},{"sid":"10228","name":"Charlie Jones","ourp":194,"mktp":null},{"sid":"7612","name":"Dee Eskridge","ourp":195,"mktp":null},{"sid":"13582","name":"Anthony Smith","ourp":196,"mktp":null},{"sid":"6386","name":"Alex Bachman","ourp":197,"mktp":null},{"sid":"5773","name":"KhaDarel Hodge","ourp":198,"mktp":null},{"sid":"13333","name":"Deion Burks","ourp":199,"mktp":114},{"sid":"3321","name":"Tyreek Hill","ourp":null,"mktp":85},{"sid":"8146","name":"Garrett Wilson","ourp":null,"mktp":15},{"sid":"2078","name":"Odell Beckham","ourp":null,"mktp":139},{"sid":"10222","name":"Jayden Reed","ourp":null,"mktp":52},{"sid":"11619","name":"Ja'Lynn Polk","ourp":null,"mktp":137},{"sid":"9497","name":"Jalin Hyatt","ourp":null,"mktp":153},{"sid":"11632","name":"Malik Nabers","ourp":null,"mktp":6},{"sid":"12860","name":"Theo Wease","ourp":null,"mktp":155},{"sid":"4981","name":"Calvin Ridley","ourp":null,"mktp":98},{"sid":"13392","name":"Jeff Caldwell","ourp":null,"mktp":129},{"sid":"6803","name":"Brandon Aiyuk","ourp":null,"mktp":68},{"sid":"9502","name":"Tank Dell","ourp":null,"mktp":71},{"sid":"12505","name":"Jalen Royals","ourp":null,"mktp":109},{"sid":"11618","name":"Jalen McMillan","ourp":null,"mktp":60},{"sid":"12530","name":"Travis Hunter","ourp":null,"mktp":37}]};
+const CLIFF={QB:33,RB:26,WR:28,TE:30};
+const NOW=2026;
+const poolMax=pool=>Math.max(1,...pool.map(x=>Math.max(x.ourp||0,x.mktp||0)));
+const WRMAX=poolMax(D.poolWR), RBMAX=poolMax(D.poolRB);
+
+/* ---- MARK: window timeline — productive runway vs the core's peak window ---- */
+function vizWindow(pos,age){
+  const w=220,h=44,pl=8,pr=12,iw=w-pl-pr,yBar=17;
+  const seasons=[2026,2027,2028,2029,2030];
+  const x=yr=>pl+((yr-2026)/4)*iw;
+  const cliffYr=NOW+(CLIFF[pos]-Math.floor(age));       // season he reaches the position cliff
+  const bandA=2028, bandB=2030;                          // core (22yo Jeanty/Dart) ramp→peak, 2–4 yrs out
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="Productive window: age '+Math.floor(age)+' now through the position cliff at '+CLIFF[pos]+' ('+cliffYr+'), against the core peak window '+bandA+'–'+bandB+'"><title>Window vs your core’s peak</title>';
+  // contention band (labelled by the legend, not in-viz — avoids colliding with the cliff marker)
+  s+='<rect x="'+x(bandA).toFixed(1)+'" y="6" width="'+(x(bandB)-x(bandA)).toFixed(1)+'" height="'+(h-6)+'" fill="var(--band)" opacity="0.55"/>';
+  // baseline ticks
+  seasons.forEach(yr=>{s+='<line x1="'+x(yr).toFixed(1)+'" x2="'+x(yr).toFixed(1)+'" y1="'+(yBar+7)+'" y2="'+(yBar+10)+'" stroke="var(--border)" stroke-width="1"/>';
+    s+='<text x="'+x(yr).toFixed(1)+'" y="'+(h-1)+'" text-anchor="middle" font-size="6" font-family="var(--font-mono)" fill="var(--dim)">’'+String(yr).slice(2)+'</text>';});
+  // productive runway bar now -> cliff
+  const x0=x(2026),x1=x(Math.min(cliffYr,2030));
+  s+='<rect x="'+x0.toFixed(1)+'" y="'+(yBar-4)+'" width="'+(x1-x0).toFixed(1)+'" height="8" rx="4" fill="var(--self)" opacity="0.9"/>';
+  // cliff marker
+  if(cliffYr<=2030){s+='<line x1="'+x1.toFixed(1)+'" x2="'+x1.toFixed(1)+'" y1="'+(yBar-8)+'" y2="'+(yBar+6)+'" stroke="var(--border-strong)" stroke-width="1.4"/>';
+    s+='<text x="'+x1.toFixed(1)+'" y="'+(yBar-10)+'" text-anchor="end" font-size="6.5" font-family="var(--font-mono)" fill="var(--muted)">cliff '+CLIFF[pos]+'</text>';}
+  // age-now label
+  s+='<text x="'+x0.toFixed(1)+'" y="'+(yBar-10)+'" font-size="6.5" font-family="var(--font-mono)" fill="var(--muted)">age '+Math.floor(age)+'</text>';
+  return s+'</svg>';
+}
+
+/* ---- MARK: dumbbell — our rank vs market rank, best on the RIGHT ---- */
+function vizDumb(pos,ourp,mktp,max){
+  const w=220,h=30,pl=14,pr=16,iw=w-pl-pr,y=17;
+  const X=r=>pl+(1-Math.min(1,Math.max(0,(r-1)/Math.max(1,max-1))))*iw;
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+pos+' rank — ours '+(ourp||'not covered')+', market '+(mktp||'none')+'; best on the right"><title>Our rank vs market rank</title>';
+  s+='<line x1="'+pl+'" x2="'+(w-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--border)" stroke-width="1"/>';
+  s+='<text x="'+(w-pr)+'" y="9" text-anchor="end" font-size="6" font-family="var(--font-mono)" fill="var(--dim)">best</text>';
+  if(ourp!=null&&mktp!=null) s+='<line x1="'+X(ourp).toFixed(1)+'" x2="'+X(mktp).toFixed(1)+'" y1="'+y+'" y2="'+y+'" stroke="var(--border-strong)" stroke-width="2"/>';
+  if(mktp!=null){s+='<circle cx="'+X(mktp).toFixed(1)+'" cy="'+y+'" r="4.5" fill="var(--market)" stroke="var(--surface)" stroke-width="1.2"/>';
+    s+='<text x="'+X(mktp).toFixed(1)+'" y="28.5" text-anchor="middle" font-size="7.5" font-family="var(--font-mono)" fill="var(--market-hi)">'+pos+mktp+'</text>';}
+  if(ourp!=null){s+='<circle cx="'+X(ourp).toFixed(1)+'" cy="'+y+'" r="4.5" fill="var(--model)" stroke="var(--surface)" stroke-width="1.2"/>';
+    s+='<text x="'+X(ourp).toFixed(1)+'" y="8.5" text-anchor="middle" font-size="7.5" font-family="var(--font-mono)" fill="var(--model-hi)">'+pos+ourp+'</text>';}
+  else s+='<text x="'+pl+'" y="8.5" font-size="6.5" font-family="var(--font-mono)" fill="var(--dim)">ours: not covered</text>';
+  return s+'</svg>';
+}
+
+/* ---- MARK: value-now sparkline — 29-day market rank, drawn up = better ---- */
+function vizValue(ser,pos){
+  const pts=ser.map((v,i)=>[i,v]).filter(p=>p[1]!=null);
+  const w=220,h=40,pl=4,pr=44,pt=6,pb=8,iw=w-pl-pr,ih=h-pt-pb;
+  const lo=Math.min(...pts.map(p=>p[1])),hi=Math.max(...pts.map(p=>p[1]));
+  const rng=Math.max(4,hi-lo);
+  const xs=i=>pl+i/(ser.length-1)*iw;
+  const ys=v=>pt+(v-lo)/rng*ih;                          // higher rank number (worse) -> lower on screen -> better is up
+  const cur=pts[pts.length-1][1];
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="29-day market rank, now '+pos+' '+cur+', range '+lo+' to '+hi+'; drawn so better is higher"><title>Value over the 29 captured days</title>';
+  // range band
+  s+='<rect x="'+pl+'" y="'+ys(lo).toFixed(1)+'" width="'+iw+'" height="'+(ys(hi)-ys(lo)).toFixed(1)+'" fill="var(--market)" opacity="0.08"/>';
+  s+='<line x1="'+pl+'" x2="'+(pl+iw)+'" y1="'+ys(lo).toFixed(1)+'" y2="'+ys(lo).toFixed(1)+'" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="2 2"/>';
+  s+='<line x1="'+pl+'" x2="'+(pl+iw)+'" y1="'+ys(hi).toFixed(1)+'" y2="'+ys(hi).toFixed(1)+'" stroke="var(--border)" stroke-width="0.75" stroke-dasharray="2 2"/>';
+  s+='<text x="'+(pl+iw+3)+'" y="'+(ys(lo)+2.5).toFixed(1)+'" font-size="6" font-family="var(--font-mono)" fill="var(--dim)">best '+lo+'</text>';
+  s+='<text x="'+(pl+iw+3)+'" y="'+(ys(hi)+2.5).toFixed(1)+'" font-size="6" font-family="var(--font-mono)" fill="var(--dim)">soft '+hi+'</text>';
+  // the line
+  s+='<polyline fill="none" stroke="var(--market)" stroke-width="1.5" stroke-linejoin="round" points="'
+    +pts.map(p=>xs(p[0]).toFixed(1)+','+ys(p[1]).toFixed(1)).join(' ')+'"/>';
+  const last=pts[pts.length-1];
+  s+='<circle cx="'+xs(last[0]).toFixed(1)+'" cy="'+ys(last[1]).toFixed(1)+'" r="2.4" fill="var(--market-hi)"/>';
+  s+='<text x="'+xs(last[0]).toFixed(1)+'" y="'+(ys(last[1])-4).toFixed(1)+'" text-anchor="end" font-size="7" font-family="var(--font-mono)" fill="var(--market-hi)">'+pos+'</text>';
+  return s+'</svg>';
+}
+
+/* ---- MARK: replacement — self vs next man on the pool scale (best right) ---- */
+function vizReplace(pos,selfRank,nextRank,max){
+  const w=220,h=30,pl=14,pr=16,iw=w-pl-pr,y=15;
+  const X=r=>pl+(1-Math.min(1,Math.max(0,(r-1)/Math.max(1,max-1))))*iw;
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+pos+selfRank+' now, next man '+pos+nextRank+'; the gap is the drop"><title>Drop to the next man up</title>';
+  s+='<line x1="'+pl+'" x2="'+(w-pr)+'" y1="'+y+'" y2="'+y+'" stroke="var(--border)" stroke-width="1"/>';
+  s+='<line x1="'+X(selfRank).toFixed(1)+'" x2="'+X(nextRank).toFixed(1)+'" y1="'+y+'" y2="'+y+'" stroke="var(--border-strong)" stroke-width="2"/>';
+  s+='<circle cx="'+X(selfRank).toFixed(1)+'" cy="'+y+'" r="4.5" fill="var(--market)" stroke="var(--surface)" stroke-width="1.2"/>';
+  s+='<text x="'+X(selfRank).toFixed(1)+'" y="8" text-anchor="middle" font-size="7.5" font-family="var(--font-mono)" fill="var(--market-hi)">'+pos+selfRank+'</text>';
+  s+='<circle cx="'+X(nextRank).toFixed(1)+'" cy="'+y+'" r="4" fill="none" stroke="var(--market)" stroke-width="1.5"/>';
+  s+='<text x="'+X(nextRank).toFixed(1)+'" y="27" text-anchor="middle" font-size="7" font-family="var(--font-mono)" fill="var(--muted)">next '+pos+nextRank+'</text>';
+  return s+'</svg>';
+}
+
+/* ---- MARK: capacity — the roster spot owed back ---- */
+function vizCapacity(total,cap){
+  const w=220,h=30,cell=6,gap=2.5,y=10;
+  let s='<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+total+' players on a '+cap+' cap — one over"><title>Roster capacity</title>';
+  for(let i=0;i<total;i++){const over=i>=cap;
+    s+='<rect x="'+(i*(cell+gap)).toFixed(1)+'" y="'+y+'" width="'+cell+'" height="'+cell+'" rx="1.2" '
+      +(over?'fill="none" stroke="var(--border-strong)" stroke-width="1.2" stroke-dasharray="1.6 1.4"':'fill="var(--self)" opacity="0.65"')+'/>';}
+  s+='<text x="0" y="28" font-size="6.5" font-family="var(--font-mono)" fill="var(--muted)">'+total+' held · '+cap+' cap · +'+(total-cap)+' over</text>';
+  return s+'</svg>';
+}
+
+/* ---- the two confirmed leans, deepened ---- */
+const W=D.wilson, A=D.ali, B=D.burden;
+const CARDS=[
+  {name:W.name, meta:'WR · 25 · your WR15 (market)', tag:'lean: hold',
+   factors:[
+     ['Window', vizWindow('WR',W.age),
+      'Prime through ~27, cliff at 28. Your core (Jeanty, Dart, both 22) peaks in 2–4 years — he’d be ~28 then, <b>producing alongside the ramp, not before it.</b>'],
+     ['Our view', vizDumb('WR',W.ourp,W.mktp,WRMAX),
+      '<b>We don’t model him</b> — no independent number to trade against. The market’s <span class="mk">WR15</span> is the only read there is.'],
+     ['Value now', vizValue(W.ser,'WR'),
+      'Sitting at <span class="mk">WR15 (#45 ovr)</span>, near the <b>soft end</b> of the 29-day range — selling now is selling low. <span class="lim">Only 29 days captured; no career high/low visible.</span>'],
+     ['Replacement', vizReplace('WR',W.mktp,B.mktp,WRMAX),
+      'Your <b>best receiver.</b> Next in line is Burden (<span class="mk">WR20</span>) — a clear step down the moment you move him.'],
+   ],
+   read:'The sell case is thin on every axis: he fits the window, he’s your top WR, the price is soft, and we can’t even value him ourselves. Nothing here says move him.'},
+  {name:A.name, meta:'RB · 24 · your RB88', tag:'lean: cut candidate',
+   factors:[
+     ['Window', vizWindow('RB',A.age),
+      'Age-24 RB, cliff at 26 — a year or two of runway, but on a player <b>neither board sees producing.</b> The window exists; it’s empty.'],
+     ['Our view', vizDumb('RB',A.ourp,A.mktp,RBMAX),
+      '<span class="o">Our RB88</span> and <span class="mk">market RB111</span> — independently, <b>both boards rank him the bottom asset</b> on your roster. The short connector is agreement.'],
+     ['Value now', vizValue(A.ser,'RB'),
+      'Market ~<span class="mk">RB111 (#396 ovr)</span>, bouncing in the ~390s all window — <b>noise at the floor</b> of the pool, no real value accruing. <span class="lim">The whole range is the basement.</span>'],
+     ['Replacement', vizCapacity(27,26),
+      'You’re <b>27 on a 26 cap.</b> His spot is the one you owe back, and nothing you field runs through him — the cut costs you waiver-level value.'],
+   ],
+   read:'The one call the evidence makes cleanly. Both boards agree he’s your least valuable player and you owe a cut — but even here, it’s the factors saying it, not us.'},
+];
+
+document.getElementById('board').innerHTML=CARDS.map(c=>
+  '<div class="decision"><div class="dhd"><div><span class="dnm">'+c.name+'</span><span class="dmeta">'+c.meta+'</span></div>'
+  +'<span class="dtag">'+c.tag+'</span></div>'
+  +'<div class="dfactors">'+c.factors.map(f=>
+    '<div class="dfac"><span class="dfl">'+f[0]+'</span>'
+    +'<span class="dviz">'+f[1]+'</span>'
+    +'<span class="dfv">'+f[2]+'</span></div>').join('')+'</div>'
+  +'<div class="dread"><span class="drl">The read</span>'+c.read+'</div></div>').join('');
+
+/* before/after toggle */
+const board=document.getElementById('board');
+document.getElementById('toggle').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  e.currentTarget.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed','false'));
+  b.setAttribute('aria-pressed','true');
+  board.classList.toggle('mode-before',b.dataset.mode==='before');});
+</script>
+</body>
+</html>
