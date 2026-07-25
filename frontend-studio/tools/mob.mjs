@@ -1,0 +1,13 @@
+import { chromium } from '/Users/davidleess/dynasty-genius-product/frontend/node_modules/playwright/index.mjs';
+const b = await chromium.launch();
+const p = await b.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,deviceScaleFactor:2});
+await p.goto('file:///Users/davidleess/frontend-studio/proposals/008-draft-capital/prototype.html',{waitUntil:'networkidle'});
+await p.waitForTimeout(500);
+await p.screenshot({path:'/Users/davidleess/frontend-studio/proposals/assets/008-capital/06a-mobile-top.png'});
+await p.locator('.prow').first().click();
+await p.waitForTimeout(600);
+await p.locator('.prow').first().scrollIntoViewIfNeeded();
+await p.waitForTimeout(300);
+await p.screenshot({path:'/Users/davidleess/frontend-studio/proposals/assets/008-capital/06b-mobile-exp.png'});
+console.log(await p.evaluate(()=>({s:document.documentElement.scrollWidth,c:document.documentElement.clientWidth})));
+await b.close();

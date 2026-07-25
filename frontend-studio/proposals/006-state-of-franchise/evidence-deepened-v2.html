@@ -63,8 +63,6 @@ a{color:var(--model-hi)}
 
 /* WINDOW — full width, the hero factor */
 .win{padding:15px 18px 6px;border-bottom:1px solid var(--border)}
-.win .fl-row{display:flex;justify-content:space-between;align-items:baseline}
-.win .traj{font-family:var(--font-mono);font-size:0.75rem;color:var(--model-hi)}
 .win svg{display:block;width:100%;height:auto}
 
 /* trio of the other three factors */
@@ -195,13 +193,13 @@ function valueSpark(ser){
   const xs=i=>pl+i/(ser.length-1)*iw;
   const ys=v=>{let f=(v-top)/RANKWIN;f=Math.max(0,Math.min(1,f));return pt+f*ih;};
   let s='<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="29-day market rank, now '+cur+', range '+lo+' to '+hi+', fixed scale so movement is comparable"><title>Value over the 29 captured days</title>';
-  // recessed range band (fill only)
+  // recessed range band (fill only) — the band carries the 29-day range visually; prose carries the numbers
   s+='<rect x="'+pl+'" y="'+ys(lo).toFixed(1)+'" width="'+iw+'" height="'+Math.max(1.5,(ys(hi)-ys(lo))).toFixed(1)+'" fill="var(--market)" opacity="0.12"/>';
-  s+='<text x="'+(pl+iw+4)+'" y="'+(ys(lo)+3).toFixed(1)+'" font-size="8.5" font-family="var(--font-mono)" fill="var(--dim)">#'+lo+'</text>';
-  s+='<text x="'+(pl+iw+4)+'" y="'+(ys(hi)+3).toFixed(1)+'" font-size="8.5" font-family="var(--font-mono)" fill="var(--dim)">#'+hi+'</text>';
   s+='<polyline fill="none" stroke="var(--market)" stroke-width="1.8" stroke-linejoin="round" points="'+pts.map(p=>xs(p[0]).toFixed(1)+','+ys(p[1]).toFixed(1)).join(' ')+'"/>';
   const last=pts[pts.length-1];
-  s+='<circle cx="'+xs(last[0]).toFixed(1)+'" cy="'+ys(last[1]).toFixed(1)+'" r="3" fill="var(--market-hi)"/>';
+  s+='<circle cx="'+xs(last[0]).toFixed(1)+'" cy="'+ys(last[1]).toFixed(1)+'" r="3.2" fill="var(--market-hi)"/>';
+  // single direct label: where he is NOW (the value that matters); collision-free by construction
+  s+='<text x="'+(xs(last[0])+6).toFixed(1)+'" y="'+(ys(last[1])+3.2).toFixed(1)+'" font-size="9.5" font-family="var(--font-mono)" fill="var(--market-hi)">#'+cur+'</text>';
   s+='<text x="'+(pl+2)+'" y="'+(h-2)+'" font-size="8" font-family="var(--font-mono)" fill="var(--dim)">29 days →</text>';
   return s+'</svg>';
 }
@@ -255,7 +253,7 @@ const CARDS=[
 document.getElementById('board').innerHTML=CARDS.map(c=>
   '<div class="decision">'
   +'<div class="dhd"><div><span class="dnm">'+c.name+'</span><span class="dmeta">'+c.meta+'</span></div><span class="dtag">'+c.tag+'</span></div>'
-  +'<div class="win"><div class="fl-row"><p class="fl">Window — his production arc, and where your years land</p><span class="traj">● '+trajWord(c.pos,c.age)+'</span></div>'
+  +'<div class="win"><p class="fl">Window — his production arc, and where your years land</p>'
     +agingCurve(c.pos,c.age)+'<p class="cap">'+c.win+'</p></div>'
   +'<div class="trio">'
     +'<div class="tile"><p class="fl">Our view vs the market</p><div class="vwrap">'+c.ourView+'</div><p class="cap">'+c.ourCap+'</p></div>'

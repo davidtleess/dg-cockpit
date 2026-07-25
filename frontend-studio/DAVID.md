@@ -501,6 +501,80 @@ earlier one, mark the old one superseded and link them.
   parked for his next look (thread a):** does deepening each factor earn its place — build the v2
   standard out to the rest of the region, or too much? He closed out before seeing v2.
 
+- **2026-07-23 — REACTED to v2 (the polished deepened cards): "I like it… this is good — we can keep
+  going with this."** The deepening earns its place (answers thread-a's parked question: YES, build the
+  standard out). And a **new design direction + a data-reality ruling**, both durable:
+  **The direction — the aging curve should carry his own track record, not just a generic prior.** David:
+  *"if we had enough data it would be interesting to see how our model performed vs his actuals in
+  previous seasons. so the aging curve from his current age leftwards shows the model and his actuals —
+  this would give me an idea as to whether we've been accurate with him or not, and if we're getting more
+  or less accurate over time."* So the window mark gains a second job: **right-of-now = the position
+  prior (typical arc); left-of-now = HIS realized history — our model's past prediction vs his actual
+  production, per season.** The question it answers: *have we been right about THIS player, and is our
+  accuracy on him improving?* This personalizes the generic curve into a per-player model-report-card on
+  the same canvas. **How to apply:** design the curve's left-of-now region as his realized track (model
+  line vs actual marks); it is the app's own Accuracy-Tracker concept (the realized-outcome loop),
+  drawn per-player onto the window.
+  **The data reality (verified live 2026-07-23 against the running API, not memory):**
+  - **Forward — buildable by construction.** The app already has the pipe: `/api/realized-outcome/scorecard`
+    is per-player by design (`tracking_rows` built to hold exactly model-vs-actual rows) but currently
+    `inactive / awaiting_first_finalized_week`, `tracking_rows: []`. It **accrues from September** once
+    weeks finalize. "Are we getting more/less accurate over time" is a when-games-are-played enhancement,
+    NOT a permanent no.
+  - **Backward — genuinely blocked (a §4 hard constraint, respect it).** No per-player historical actuals
+    exist in the app: Sleeper serves no usage/stat lines through the called endpoints, the normalizer
+    keeps 6 fields, and market history reaches back only ~29 days with no backfill. The model *was*
+    backtested on realized historical seasons, but Model Trust exposes only **position-aggregate** folds
+    (tau/RMSE/r²), not per-player residuals — surfacing per-player would be an engineering question, and
+    young players (Ali 2yr, Wilson 4yr) have little pre-model history regardless. **How to apply:** design
+    the realized track with an honest pending state ("his track record accrues from September") rather than
+    fabricating past actuals; never invent a player's history to fill the curve. State the data limit
+    on-surface, as always.
+
+- **2026-07-24 — A content curve must represent OUR MODEL, not a generic prior (David's push) + a durable
+  capability FACT.** Reacting to the track-record curve, David: *"isn't our model supposed to create an age
+  curve? … whether that curve should be a representation of our model. If so we can remove the [model] dots
+  and just show his actuals in dots compared to the line."* The principle: a curve labeled as his production
+  arc is far more valuable as **our model's personalized prediction for him** than as a league-average
+  position prior — a generic prior tells him nothing about our model. If the line IS our model, the separate
+  "our call" marks are redundant; show his actuals as dots against the line, gap = model-vs-reality.
+  **How to apply:** when a surface draws a "his X over time/age" curve, default the line to our model's
+  own per-player output, not a population average; overlay reality as the comparison. Studio rebuilt the
+  curve this way same-session (line = our model, actuals = dots).
+  **The capability FACT (verified live 2026-07-24 via `/api/players/{id}`, treat as near-hard as §4 until
+  engineering says otherwise):** our model does **NOT** emit a per-player production-by-age curve. Per player
+  it exposes a DVS value, xVAR, and **sparse** `projection_1y/2y/3y` — often only ONE of the three populated
+  (Rashee Rice: only 2y; Rasheen Ali: only 2y). So "draw our model's arc for him" is an **engineering ask**
+  (can the model expose a per-player production-by-age arc?), not something design can conjure — and its past
+  half, if built, is also the baseline his past actuals would be measured against (one ask unlocks the whole
+  left-of-now surface). **How to apply:** before proposing any per-player model-trajectory viz, remember the
+  model ships a value + a couple of sparse points, not a curve; show such curves illustratively with the
+  ask stated on-surface, and never pass a generic prior off as our model's output. Ties to the standing
+  honesty doctrine and the verify-before-claiming method (Studio checked the API rather than assuming).
+  **Fork left with David (undecided — do not record as ruled):** pursue "curve = our model, per player" as
+  an engineering capability ask (Studio's rec) vs fall back to a position-prior backdrop with our-model
+  marks overlaid. Held pending his word; nothing relayed.
+
+- **2026-07-24 — Session/day arc (closeout).** One continuous thread ran: Studio fresh-eyes-reviewed the
+  unseen deepened four-factor cards (v2), caught + fixed two real defects before gating (a redundant
+  "ascending" trajectory chip that contradicted Ali's own cut thesis — removed, since the NOW-dot's slope
+  already carries trajectory per Mackinlay + David's own "read it from the slope" model; and a colliding
+  value-now sparkline label — cut to a single current-rank label) → David APPROVED the deepening ("I like
+  it… we can keep going") → he handed a new idea (the aging curve should carry his own left-of-now track
+  record: model vs actuals, "are we getting more accurate on HIM over time") → Studio verified the data
+  reality (forward accuracy buildable by construction via the app's per-player realized-outcome loop,
+  inactive till Sept; backward blocked — no per-player history in-app) → built the track-record curve with
+  an honest Illustrative/Today toggle → David pushed the sharper conceptual point above (line should be our
+  model) → Studio verified the model emits no per-player curve, rebuilt to his spec, posed the engineering
+  fork. **What worked, keep doing:** fresh-eyes self-review with headless screenshots before gating (caught
+  the slope-logic contradiction — the same *class* of error David made me concede on the flat window bar,
+  so not handed to him twice); verifying capability against the live API before answering a "can we?"
+  question; conceding his design instinct cleanly when it was better than mine. **A time-sink to avoid:**
+  chased a phantom mobile-overflow bug for several cycles because headless Chrome wasn't honoring the mobile
+  viewport meta (it rendered the 980px desktop layout inside a 390px window → looked clipped); the DOM
+  measurement (scrollWidth == clientWidth) proved no overflow. Next time, MEASURE the DOM first before
+  trusting a mobile screenshot from headless Chrome.
+
 ## Rulings on escalations
 
 - **2026-07-15 — Green/red vs. the color rules (N3, first escalation): David ruled for the idiom,

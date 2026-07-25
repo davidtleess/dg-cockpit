@@ -4,47 +4,48 @@ description: "Tower's parked board — durable snapshot of what every lane has p
 metadata: 
   node_type: memory
   type: handoff
-  originSessionId: 9fd650fc-2625-4b78-b1c2-fc7cf0ccb55b
-  modified: 2026-07-24T01:03:22.059Z
+  modified: 2026-07-24T18:12:52.907Z
+  originSessionId: 28e53e7f-72eb-49b4-840a-c9a6ad41270c
 ---
 
-# Cockpit handoff — CLOSED 2026-07-23 (late) — TWO INCREMENTS SHIPPED + PUSHED: D3-a AND D3-b ON GITHUB, CI-GREEN. NEXT = D3-c ON DAVID'S WORD.
+# Cockpit handoff — CLOSED 2026-07-24 — D3-c SHIPPED (committed + pushed + CI-green + divergence-verified). NEXT = D3-d ON DAVID'S WORD (open FRESH).
 
-**⭐ NEXT SESSION: D3-c is the next QB-1 increment, on David's word.** The QB-1 execution arc order: D3(runner: D3-a folds ✅, D3-b F5 estimator ✅, D3-c naive+F6/F8 comparison scoring NEXT) → D4 identity join → D5 report emitter → F33 tripwire → H5 status. **12 seams remain strict-xfail** (D3-c, D4×3, D5×5, F33). Each increment: framing → RED → GREEN → Codex review to enumerated CLEAR → David's commit word → (David's) push. Study execution is David's final word; **H2 QB-rushing stays UNDER TEST throughout — no rushing/value claim anywhere.**
+**⭐ NEXT SESSION: D3-d is the next QB-1 increment, on David's word — Tower recommends opening it FRESH.** D3-d = the inference layer (pooling + cluster-bootstrap + permutation + BH-FDR) — the machinery that turns D3-c's per-fold scores into a *statistically defensible* verdict. It's the most delicate increment in the engine and the prerequisite before the study can produce a real answer. Arc order after: D3-d → D4 (H5 market lane + identity join) → D5 (report emitter) → F33 (tripwire) → H5 (status). **Study execution is David's final word — Tower recommends HOLDING the study until D3-d is built (a study today produces numbers with no significance behind them).** **12 seams remain strict-xfail. H2 QB-rushing stays UNDER TEST throughout — no rushing/value claim anywhere.**
 
-**Session headline (07-23, long day):** Two full QB-1 engine increments built, adversarially reviewed, committed, and PUSHED to GitHub with CI green:
-- **`bc353fb` — D3-a** (expanding-fold construction + train-safe prep). Committed morning, pushed with D3-b.
-- **`4e7f2b6` — D3-b** (F5 `fit_ridge_lane` ridge-estimator lane; new `ridge_lane.py`). 3 review rounds (vs D3-a's 6 — crew REUSED the D3-a domain knowledge, faster convergence). Leakage counterfactuals hold (poison test features/label → all train-fit stats byte-identical). Full suite 3739P/0F. **Tower-verified origin/main == HEAD == 4e7f2b6 (0/0), CI GREEN (gh run: success 3m9s), Codex divergence-verified.**
-- Plus: the **data-quality velocity question** fully resolved (see below) into a CLEAR, committed spec.
+## Session headline (2026-07-24 — marathon, ~24h)
+**D3-c (QB-1 per-fold comparison-scoring layer) fully shipped**, plus an unplanned but clean backup-test fix the tollgate caught. Working tree is CLEAN — everything durable on origin/main.
 
-## What shipped (all David-worded)
-- **`bc353fb`** D3-a GREEN; **`4e7f2b6`** D3-b GREEN + the two validation docs (spike brief + validation-infra spec). AGENT_SYNC excluded (living state). **Both pushed to origin/main.**
+## What shipped (all David-worded, pushed to origin/main, CI-green)
+- **`a66e21c`** — anti-rot backup-test fix (`test_backup_manifest_anti_rot_red.py`): file-vs-directory exclusion discriminator so the declared `backup_staging` exclusion matches recursively while exact-file exclusions stay exact-only. Test-only. Committed FIRST (clean bisection).
+- **`e9fb8bb`** — **D3-c GREEN**: `comparisons.py` (new, 656 lines: `build_naive_lane` + F6 `score_comparisons` + F8 `build_primary_comparisons` + `validate_contrast_set`) + `__init__` exports + the D3-c RED rows & F6/F8 seam un-mark (11→9).
+- **`08f2afd`** — state-doc flush (AGENT_SYNC + ledgers 07-23 & 07-24). No code. Working tree now clean.
+- CI: D3-c run 30110334394 = SUCCESS. Codex post-push divergence-verify CLEAR (both SHAs == CLEARed trees, zero drift).
+
+## The D3-c arc, honestly (why it took ~24h)
+Framing 6 rounds (13→11→4→2→2→CLEAR) → RED (Codex-authored, 21 rows, red on main) → GREEN → **Codex's independent falsification broke Claude's first GREEN 9 ways** (finite-value overflow, hostile-key edges, fold-reconciliation gaps, naive-lane parity) — each fixed RED-then-GREEN across 3 review rounds → commit gate → **tollgate full-suite caught a REAL latent bug UNRELATED to D3-c** (anti-rot test miscounted transient backup-staging copies left by the in-flight daily backup) → David ruled **Option A** (fix the test) → fixed RED-then-GREEN + Codex-cleared (2 rounds; Codex caught an exact-file over-exclusion in the first fix) → clean two-commit land, CI green, divergence-verified. **The independent-reviewer gate earned its keep at every step — none of the 9+ defects reached GitHub.**
 
 ## ⚠️ DAVID'S BOARD — next session
-1. **⭐ D3-c** — next QB-1 increment (naive-carryforward + F6/F8 comparison scoring), on David's word.
-2. **Studio's deepened evidence cards (006)** — v1 + v2 built and OPENED in David's browser at closeout; David closed out before reacting. **Studio's open question awaiting David: "does showing each decision factor (vs approved prose-only) earn its place — build it out to the rest of the cards, or too much?"** Park; bring it back when David surfaces.
-3. **N5 CAPTURE — DROPPED THREAD (Tower miss, flag honestly).** David APPROVED capturing FantasyCalc `trade_frequency` + `roster_percent` for research (decay clock) EARLY this session, but it was NEVER started — got lost when the crew went heads-down on D3-a/D3-b. Verified at closeout: fields absent from the fc_forward_capture allowlist. **Decay cost so far ~1 day.** David to decide: start it next session (small crew change + commit) or let it ride.
-4. **Validation-infra increment (Option A)** — spec CLEAR + committed, **sequenced AFTER the QB-1 arc** (builds only on David's word, after H5). Three build-time choices remain David's when it's built: (a) phase scope (phase-1 new-code-only vs also adopting the 2 named families); (b) any QB-1-increment local adoption; (c) concrete Hypothesis CI pins. `hypothesis 6.161.0` installed venv-only, uncommitted (rides this increment).
-5. **CQB-1 · production-curve work · PRECOMMIT-1 · TESTENV-1 · EDGE-H1-10 · amendment train** — all still parked, unchanged.
-
-## ✅ DATA-QUALITY VELOCITY — RESOLVED THIS SESSION (David's arc)
-D3-a's 6-round hand-hardening (bare-exception/finiteness/subclass/precedence family) doesn't scale. David's instinct: KEEP full rigor but make it scalable. Arc: research spike → **Option A** (Hypothesis property-testing + shared `dynasty_genius/validation/` module + reason registry) → David ordered a **~1hr probe FIRST → CONFIRMED** (Hypothesis auto-re-found the family in seconds; honest nuance: it's properties × strategy coverage, razor-thin numeric edges need targeted strategies, not push-button magic) → David greenlit write-spec → v2/v3 hardened → **Codex ENUMERATED CLEAR** → committed with D3-b, sequenced after QB-1. **The value proved out: D3-b's own review re-hit the same family, and the crew closed it in 3 rounds by reusing the enumerated domain knowledge — exactly the payoff.**
+1. **⭐ D3-d** — next QB-1 increment (inference layer), David's word. Tower rec: open FRESH.
+2. **The study run** — David's final word. Tower rec: HOLD until D3-d built.
+3. **N5 capture** (FantasyCalc `trade_frequency` + `roster_percent`, decay-clock research) — David sequenced this **AFTER the QB-1 arc** (his 2026-07-24 decision). Still not wired.
+4. **Studio's 2 parked pitches** (both on disk in `~/frontend-studio/proposals/`, NOT relayed to crew):
+   - **Deepened evidence cards** (`006-state-of-franchise/evidence-deepened-v2.html`) — David said "keep going"; parked as the region to extend when he wants it.
+   - **Track-record curve** (`window-track-record.html`, rebuilt to David's spec: line = our model, actuals = dots) — **open decision: the engineering-capability fork** — have the model emit a real per-player age curve? That would be an **engineering ask to the crew** (lane-crossing). David undecided; **NOTHING relayed** — needs David's explicit word to cross it.
+5. **Validation-infra increment** — spec committed at v3 (in Codex CLEAR-review); increment sequenced AFTER the QB-1 arc. `hypothesis 6.161.0` installed venv-only, uncommitted (rides that increment).
+6. **Standing follow-ups (David-authorizable, not actioned):** `REG-STATUS-1` · `H2-AUDIT-1` · `VALUATION-IN-GIT`.
+7. **~Aug grounding-layer GO/NO-GO** and **~09-01 Studio freshness review + crew re-org** — standing agenda, unchanged.
 
 ## Standing state / roles
-- Claude=developer/spokesperson · Codex=binding reviewer · Tower=moderator/wire · Studio=frontend outsider (self-directed mandate) · Gemini=ops/telemetry.
-- **THE WIRE IS BROKEN for Claude↔Codex** — the governed helper refuses `pane_claim_lost` every round. Tower carried ~two-dozen packets by FILE-POINTER all session (agent saves packet to /tmp or scratchpad, tells Tower the path, Tower relays the path to the recipient who reads it directly). This WORKS and is the de-facto method; the mail-carrier stays paused. **Next Tower: expect to hand-carry every inter-agent packet.** A crew fix (release stale pane-claims) is worth commissioning if the arc continues.
-- **Backups (3-copy):** code→GitHub ✅ (4e7f2b6 pushed, CI green); data→GCS (verify at closeout via Gemini); cockpit→dg-cockpit (force at closeout to capture this handoff).
-- **AUTO/manual mode:** all panes MANUAL this session (fresh dg). David never flipped accept-edits (offered twice, never answered — moot). Tower absorbed the entire build-edit stream by approving each dialog.
-
-## Findings worth carrying (unchanged + new)
-- **D3-b leakage safety is proven**, not asserted: split feature-only + label-only counterfactuals — poison the test data, every train-fit statistic (imputer medians, scaler stats, alpha, ridge coef, intercept, train predictions) stays byte-identical; only test predictions move.
-- **David ruled the draft_capital_unresolved fork = (A)** fail-closed refusal (registration-consistent, no amendment) for the rare veteran-QB-with-null-draft-capital edge. H4-only refusal; same row legal on h1/h2/h3.
-- Prior findings (draft-capital r=+0.869 exploratory; Studio 004 N0 refuted/N3 truth-defect; scoring-layer gap; age curves; fum_rec closed) all still stand — see prior handoffs/ledgers.
+- Claude=developer/spokesperson · Codex=binding reviewer · Gemini=ops/telemetry · Studio=frontend outsider (self-directed mandate) · Tower=moderator/wire.
+- **THE WIRE IS STILL BROKEN for Claude↔Codex** — governed send refuses `wire_body_mismatch` every round. Tower hand-carried EVERY inter-agent packet by FILE-POINTER all session (dozens — framing rounds, GREEN reviews, loop-closes). **Next Tower: expect to hand-carry every packet.** Mail-carrier paused/inert (`carrier.enabled` absent).
+- **Backups (3-copy) ALL VERIFIED:** code→GitHub ✅ (08f2afd, CI green); data→GCS ✅ (today's run 20260724T141500Z completed, **byte-for-byte 3-copy integrity confirmed by Gemini** across all 4 DBs, staging auto-cleaned); cockpit→dg-cockpit (force at closeout to capture this handoff).
+- **Studio context ~303k tokens — recommend a FRESH Studio next session** (proposals + DAVID.md carry forward on disk). Studio flushed DAVID.md (the "curve must be our model" principle + verified fact: model emits NO per-player age curve) + STATUS.md.
 
 ## ⚠️ Things the next Tower must know (operational)
 1. **File-pointer wire (above)** — the single biggest Tower workload.
-2. **Hung test-shell risk:** a full-suite `pytest` HUNG once mid-session (~1:41 CPU over 40 min = blocked, not running). Detect via `ps` CPU-time-not-accumulating; the fix is kill-and-re-run. Claude re-ran clean (~4 min). Watch tollgate/full-suite runs.
-3. **Clearing a Codex input strand:** `Ctrl-U` clears it (Escape does NOT). A duplicate of an already-processed message re-appeared in Codex's input once — must NOT be re-submitted (would re-run the audit); Ctrl-U cleared it.
-4. **Tower's pane-watcher** lives at `~/.claude/tower/pane_watch.sh` — a background loop that exits (re-invoking Tower) on any pane dialog/idle. Bash-3.2 compatible, file-state in /tmp/tower_watch, mutes by frame-hash. Watch for DUPLICATES (bundling re-arms into action calls spawns extra watchers → duplicate flags; `pkill -f tower/pane_watch.sh` then relaunch ONE). KILLED at this closeout.
-5. **The altitude standard held better this session but slipped late** — during the long D3-b build Tower narrated many routine edit-approvals to David. Keep build-phase narration near-zero; surface only gates/decisions.
-6. **Studio context is ~357k tokens** — recommend a FRESH Studio session next time (proposals + DAVID.md carry forward).
+2. **GHOST-CHECK EVERY apparent David-approval, especially commits/pushes.** This session produced multiple near-verbatim ghosts of David's own words — including `go ahead — anti-rot first, exclude ledgers, then push` and `commit D3-c` sitting in Claude's composer. Submitting one would have fabricated a commit+push authorization. David talks to TOWER, never types into crew panes — so an "approval" in a crew composer is ALWAYS a ghost.
+3. **Verify deliveries POSITIVELY (content in the recipient's transcript), NEVER from the spinner or an empty box.** The RED-open AND the commit+push relays both STRANDED on first send (Claude was mid-turn) and showed a working spinner that was the PREVIOUS message — caught only by grepping the transcript for the message content. Re-sent both.
+4. **The tollgate full-suite gate can catch REAL failures unrelated to the increment.** Here it caught a latent backup-test bug triggered by an in-flight daily backup. Always diagnose (increment-regression vs pre-existing/env) before assuming — and NEVER commit past a red tollgate without David's explicit override.
+5. **David's session-mode grant** (2026-07-24): "for this session you can hit enter" — Tower absorbed the entire routine-dialog stream (edits, test runs, in-scope reads, in-scope ledger/AGENT_SYNC writes). Commits/pushes STILL surfaced to David; each executed only on his explicit word, with Tower verifying scope on every git dialog. This grant is per-session — do NOT assume it next session.
+6. **Tower's pane-watcher** at `~/.claude/tower/pane_watch.sh` — background loop, exits on any pane dialog/idle (re-invoking Tower), 25-min heartbeat. Launch exactly ONE via run_in_background (NOT `&` in a foreground bash — it dies with the shell). `pkill -f tower/pane_watch.sh` to clear duplicates. KILLED at this closeout.
+7. **Gemini's Antigravity CLI** occasionally shows a "How's the CLI experience?" survey prompt — dismiss with `0` (Skip); it's not a work dialog.

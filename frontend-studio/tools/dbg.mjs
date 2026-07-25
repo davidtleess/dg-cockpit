@@ -1,0 +1,10 @@
+import { chromium } from '/Users/davidleess/dynasty-genius-product/frontend/node_modules/playwright/index.mjs';
+const b = await chromium.launch();
+const p = await b.newPage();
+p.on('pageerror', e => console.log('PAGE ERR:', e.message.slice(0,400), '\n', (e.stack||'').split('\n').slice(0,4).join('\n')));
+p.on('console', m => console.log(m.type().toUpperCase()+':', m.text().slice(0,300)));
+await p.goto('file:///Users/davidleess/frontend-studio/proposals/008-draft-capital/prototype.html', {waitUntil:'networkidle'});
+await p.waitForTimeout(500);
+console.log('rows', await p.locator('.prow').count(), 'grps', await p.locator('.grp').count());
+console.log(await p.evaluate(()=>({keys:Object.keys(CAP), yearf:Object.keys(CAP.yearf).slice(0,4), slot:Object.keys(CAP.slot26).slice(0,4), pick0:CAP.picks[0]})));
+await b.close();
