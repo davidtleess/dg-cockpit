@@ -5,6 +5,18 @@ Nobody asked for this.*
 
 ---
 
+
+> **CLOSED 2026-07-24, did not land.** David: *"we dont have 4 rounds we only have 3 — lets stop
+> here. you've tried but we need a fresh perspective."* His dynasty rookie draft is **three rounds**;
+> every one of his sixteen picks is a 1st, 2nd or 3rd, and Studio's own first-pass table showed that
+> before any of this was designed. Seven versions, five domain corrections, none landed.
+>
+> **Do not resume this framing.** Read the revision log at the foot before reusing anything — the
+> craft got better every version while the underlying misunderstanding did not, which is the actual
+> lesson. What survives is independent of the framing: the engineering findings in `008-RELAY.md`
+> (still verifiable, still un-relayed), the measured +14–17% market premium on the 2027 class, and
+> the self-derived draft-capital outcome dataset together with the two traps found in it.
+
 ## Problem
 
 David is the 12th-of-12 team in a rebuild. He holds **16 future picks — more than any other team
@@ -177,6 +189,189 @@ pass.
    restating. **I could not determine this from the app; it is a question for the market source.**
 
 ---
+
+## v4 — the research David ordered, and three things I had wrong
+
+David, on v3: *"that's not really how it works in dynasty fantasy football… do some research about
+dynasty rookie drafts and 1st round picks in dynasty rookie drafts — then come back to the league
+here and my roster here and try again."* He also corrected a terminology error: every draft after
+the **startup** is a **dynasty rookie draft** — rookies only, the class that just came off the NFL
+board. Different thing entirely, and one of my searches was contaminated by startup-draft material.
+
+### What I had wrong
+
+**1. I never checked the roster rules.** The league is **20 active (9 starters + 11 bench) + 4 IR +
+2 taxi = 26**, and taxi is **rookies-only, one year** — a slot type that exists specifically to
+absorb rookie picks. He is one over in an offseason where being over is legal, with until Week 1 to
+resolve it. My "you must shed ten players" was wrong on the rule and on the timing.
+
+**2. Room was never the constraint, and the market says so.** His **bottom ten players are worth
+8,033 combined — less than his top three picks (13,743)**. Nine of the ten are NFL third- and
+fourth-rounders. Dropping a bubble player for a rookie first is not a cost; it is an upgrade.
+David's argument — *"I will likely not have a problem dropping players in favor of my first round
+draft picks"* — is straightforwardly correct on the measured numbers.
+
+**3. I said the round boundary was nearly meaningless. That is the opposite of true.** I read
+adjacent market prices — a 1.12 (2,249) is only 5% above a 2.01 (2,134) — and mistook *price
+continuity between two adjacent picks* for *value continuity across rounds*. They are different
+things, and the published outcome data is emphatic:
+
+| rookie-draft round | hit rate | market price | cost per startable player |
+|---|---|---|---|
+| 1st | **47.6%** | 2,907 | 6,107 |
+| 2nd | **31.0%** | 1,510 | **4,871** |
+| 3rd and later | **7.0%** | 1,048 | **14,971** |
+
+Source: NBC Sports / Rotoworld, **504 rookie picks, 2010–17**, 12-team PPR six-round dynasty rookie
+drafts; a "hit" is at least one season as a top-12 QB/TE or top-24 RB/WR. Corroborated
+independently by Advanced Sports Logic: **29 of the top 42 dynasty assets came from the top 15
+rookie-draft picks**, against only six from 2.04–3.12.
+
+### v5 — the chart that contradicted its own footnote
+
+The first v4 hero plotted **cost per startable player** (market price ÷ hit rate): 1st 6,107, 2nd
+4,871, 3rd 14,971, captioned *"shorter is better."* David: *"your saying shorter is better which is
+weird and then the 2nds are shorter than the firsts?? wtf man."*
+
+Two failures, one of them serious:
+
+1. **The encoding was inverted.** Length meant *worse*. Longer should mean more.
+2. **The metric was invalid, and I had already written the reason down.** The chart's own footnote
+   read: *"a hit is binary — it counts a league-winning 1.01 and a flex-only 2.10 the same, which
+   understates the firsts."* Dividing price by a binary hit rate treats a league-winner and a flex
+   body as one unit, so cheap picks win by construction. **I noted the flaw in the caveat and then
+   made it the headline.**
+
+The underlying habit is the one worth keeping: **I kept collapsing a pick into a single number so I
+could draw a bar** — cost per hit, expected hits, value per pick. Every one of those averages away
+the only thing that makes a first-round pick valuable. A rookie pick is an option with a fat right
+tail; the 1.01 is not worth 3× the 1.12 because it hits more often, but because the top of its
+outcome range contains a league-winner and the 1.12's does not. **An option cannot be represented by
+its average.**
+
+**v5 hero:** one bar per pick, length = the chance that pick returns at least one startable season,
+**longer is better**, zero baseline, grouped by round, his own picks marked. Deliberately **one
+source** for the bars rather than fusing studies with different definitions and eras into a stacked
+mark. The within-round-1 slot premium — **1.01–1.03 ≈ 42% "stud" rate against ≈ 21% for 1.04–1.06**,
+reported by Dynasty League Football — stays in **prose, unfused**, with the honest note that the
+primary is paywalled and the figure is cited as reported. Three of his picks project into that top
+band.
+
+### v7 — the fat tail, derived instead of borrowed
+
+The thread David greenlit: the tail was stranded in prose because two outside studies with
+different definitions could not honestly be fused into one mark. The fix was not a cleverer chart —
+it was **a dataset I could compute on myself**. The app already had one:
+`app/data/training/prospects_with_outcomes_v3.csv`, every drafted QB/RB/WR/TE with NFL draft slot
+and realized fantasy points.
+
+**Two traps caught before drawing anything.**
+
+1. **Round-dependent survivor bias.** The file's `best3of4_ppg` is only populated for complete
+   four-year arcs — 358 of 874. Filtering to those would have kept **94% of round 1 and 50% of round
+   4+**, and the 195 excluded mature-class players have a **median career total of 0 points**. They
+   are washouts, not "too recent." Using `total_points` (seasons 2–4, populated for all) over the
+   full mature population keeps them in. Restricted to classes **2015–2021**, every one of which has
+   had four seasons — per `craft/metric-validity.md` §D, mixing unresolved recent classes with
+   resolved old ones is the musician-mortality error.
+2. **A position-mix confound, caught by the validity gate's check 6.** My first cut used an absolute
+   points threshold pooled across positions and read **25% / 9% / 1% / 1%** — a 25× gap between
+   rounds one and three. But **round one is 35% quarterbacks** against 8–13% elsewhere, and only
+   quarterbacks clear a high absolute points bar — **no tight end in eleven draft classes did**. The
+   metric was substantially a QB detector. Cutting **within position** (top 15% of your own
+   position) removes it.
+
+**The corrected result, n = 553:**
+
+| | top-15% players | rate | 95% interval |
+|---|---|---|---|
+| Round 1 | 34 of 72 | 47% | 36–59% |
+| Round 2 | 22 of 65 | 34% | 22–45% |
+| Round 3 | 19 of 79 | 24% | 15–33% |
+| Round 4+ | 10 of 337 | 3% | 1–5% |
+
+**The real cliff is between round three and round four, not between the first and the third.** Rounds
+one to three are a gradient; everything after is a different asset class. Both the naive and the
+controlled numbers are left on the surface rather than one quietly replacing the other.
+
+**The mark**, per `craft/uncertainty-viz.md` §A/§D: a **countable unit chart** — one dot per real
+player, tail dots leading so they can be counted from a fixed anchor, highlighted by size, ring and
+lightness rather than colour alone, with the **frequency sentence** ("34 of 72") beside each row and
+a 95% interval. Not a proportion bar, because a proportion bar cannot be counted; not a summary
+statistic, because the whole failure of this proposal was summary statistics.
+
+**The gap that remains, stated on-surface:** this is **NFL** draft capital, not dynasty
+rookie-draft position. They are different boards. An early rookie pick is how you buy *access* to
+the early-NFL-capital tier, and that link is what the chart rests on.
+
+### v6 — the year axis I had measured on day one and then dropped
+
+David: *"there is a recency bias — draft picks that are closer to real time hold a higher value
+because they have more demand on the trade market and more certainty… there are exceptions i.e. the
+2027 draft is 'loaded' and that's been the expert consensus for 2 years."*
+
+I had measured this in the first hour of the engagement — it is in the relay as "no year decay" —
+and then built three successive surfaces around round and slot while dropping year entirely. The v5
+chart showed all five firsts at an identical 48%, which silently claims a 2029 first equals a 2027
+first. It does not.
+
+**The discount, measured** (FantasyCalc generic year+round, read live 2026-07-24):
+
+| | 2027 | 2028 | 2029 | 27→28 | 28→29 |
+|---|---|---|---|---|---|
+| 1st | 2,907 | 2,153 | 1,865 | **−25.9%** | **−13.4%** |
+| 2nd | 1,510 | 1,277 | 1,228 | −15.4% | −3.8% |
+| 3rd | 1,048 | 938 | 953 | −10.5% | **+1.6%** |
+
+The discount is steep in round one, mild in round two, and has **stopped working entirely by round
+three** — a 2029 third prices *above* a 2028 third, because a third is already near the floor and
+has little certainty left to lose. That nuance is on the surface.
+
+**The 2027 exception, and it validates independently three times.** Take the 2028→2029 gap as the
+ordinary one-year step and carry it back: a 2027 first *should* cost 2,485. It costs **2,907 — 17%
+above trend**. The same premium appears in round two (**+14%**) and round three (**+14%**). Three
+rounds agreeing within three points is not noise — **the market is pricing the 2027 class above its
+own trend, exactly as the consensus David describes says it should.**
+
+**And that is where his capital sits:** **9 of 16 picks in 2027 — 64% of the portfolio by market
+value**, concentrated in the premium year. Which cuts both ways, and is his call: the picks most
+worth keeping if the class delivers, and the picks that fetch the most today if he would rather
+convert them.
+
+**v6 hero:** three small multiples, one per round, **on a single shared price scale** — within a
+panel you read the year discount, across panels the round cliff. One constructed mark on the whole
+chart: a dashed tick at what 2027 would cost on the ordinary one-year step, so the premium is
+something you see rather than something I assert. Stated as a counterfactual, not a forecast. The
+app cannot verify "loaded class" itself; it can only show the market pricing 2027 above its own
+trend.
+
+### What that means for this roster
+
+- **Five firsts carry 57% of the portfolio's value and 55% of its expected starters.** The six
+  thirds are 19% of the value and project to **0.4 of a startable player between them**. Across all
+  sixteen picks he is buying roughly **4.3** startable players.
+- **A startable player is cheapest through a second (4,871), not a first.** Thirds cost **3.1×** as
+  much per starter as seconds — that is where the trade filler is.
+- **His own roster is the mechanism, measured:** **9 NFL first-rounders carry 53% of his roster's
+  market value** (Jeanty, Dart, Garrett Wilson, Mendoza, Odunze…), against 17.7% / 16.2% / 9.5% /
+  3.7% for rounds 2/3/4/6. Draft capital is exactly why rookie picks are worth holding.
+
+### The calendar, which he described and the literature confirms
+
+Published dynasty trade-window guidance matches David's own account: rookie picks bottom out
+**September–November** (contenders discount future capital to chase a title) and peak
+**February–April** as draft coverage builds; productive veterans peak **November–December** when
+contenders pay for playoff-ready assets. The rebuilder's documented play is to sell aging veterans
+into that November peak and buy picks in the autumn trough — the trade he said he makes.
+
+The app's own capture corroborates the direction: his sixteen picks are **down 1.6% over 30 days**
+(26,167 → 25,747). The seasonal percentages are other people's claims; the drift is measured.
+
+**Honest limits on all of the above:** the hit rates are 12-team PPR, **not superflex** — his league
+is superflex, which raises QB value and probably lifts early firsts above these rates. A "hit" is
+binary: it counts a league-winning 1.01 and a flex-only 2.10 identically, which understates firsts.
+And the market history in this app reaches back only 29 days, so it cannot verify the annual cycle
+itself.
 
 ## The audit that should have come first (v3, 2026-07-24)
 

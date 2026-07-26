@@ -583,3 +583,313 @@ earlier one, mark the old one superseded and link them.
   movement, it is outside the ruling. (Ruling delivered via the engineering side; boundary is
   hard.) **Implication:** Studio designs rank chips in the idiom freely and keeps every other
   encoding in the neutral palette.
+
+- **2026-07-24 — DYNASTY DOMAIN FUNDAMENTALS David had to teach Studio (four corrections in one
+  session; none may ever need repeating).** Studio designed a whole draft-capital surface on invented
+  domain assumptions and was corrected on each. The durable facts:
+  1. **It is a "dynasty rookie draft."** Every draft after the one-time **startup draft** is
+     **rookies only** — the class that just came off the real NFL board. Startup drafts are a
+     different thing entirely; do not mix their literature or their logic in.
+  2. **Roster limits are almost never a rebuilder's constraint, and Studio never checked the rules.**
+     This league: **20 active (9 starters + 11 bench) + 4 IR + 2 taxi = 26**; taxi is
+     **rookies-only, one year** — a slot type that exists to absorb rookie picks. You may be **over
+     the limit all offseason**, only needing to be legal at the start of the regular season. And
+     bubble players are cheap to drop: *"NFL players ascend quickly or they don't."* Studio's
+     measured check agreed with David — his **bottom ten players are worth less than his top three
+     picks**. **How to apply:** read the league settings before reasoning about roster space, and
+     never treat a roster spot as scarce without pricing what occupies it.
+  3. **First-round rookie picks are very valuable — his own roster is the proof.** Jeanty, Henderson,
+     Mendoza, Cooper, Dart. Measured: **9 NFL first-rounders carry 53% of his roster's market
+     value.** Published outcome data agrees — a rookie first hits ~48%, a second ~31%, a third ~7%.
+     **Studio had claimed the round boundary was "nearly meaningless,"** having read two *adjacent*
+     prices (1.12 vs 2.01, 5% apart) and mistaken price continuity between neighbouring picks for
+     value continuity across rounds. Opposite of true.
+  4. **Picks carry a recency premium — nearer years are worth more** (more trade demand, more
+     certainty); further-out years trade for less. **Exceptions are class-driven:** the 2027 class is
+     "loaded" and has been expert consensus for two years. Studio measured the market agreeing:
+     a 2027 first sits **+17% above** the ordinary one-year step, with **+14%** appearing
+     independently in rounds two and three.
+  5. **The seasonal trade calendar is real and is the rebuilder's engine:** late in the season you
+     sell aging veterans to contenders for future picks, because that player is worth more to them
+     now than to you next season. **How to apply:** any pick or roster surface must respect the
+     calendar — what is cheap now, what is expensive now, and which window is next.
+  **The meta-lesson David is enforcing:** do the domain research *before* designing, not after three
+  rejected surfaces. Studio's fresh eyes are an asset on interface; they are a liability on dynasty
+  fundamentals, and the fix is research, not intuition.
+
+- **2026-07-24 — THE EPIPHANY David demanded: an option cannot be represented by its average.**
+  Studio shipped a hero chart of "cost per startable player" (price ÷ hit rate) captioned *"shorter
+  is better"*, which rendered **seconds as better than firsts**. David: *"your saying shorter is
+  better which is weird and then the 2nds are shorter than the firsts?? wtf man - you gotta have a
+  serious epiphany."* Two faults:
+  1. **Inverted encoding — length meant worse.** Length must mean *more*; never make the reader
+     invert an axis in their head.
+  2. **The metric was invalid and Studio had already written the reason in its own footnote** — *"a
+     hit is binary; it counts a league-winning 1.01 and a flex-only 2.10 the same."* Dividing by a
+     binary rate makes cheap assets win by construction. **Studio noted the flaw in the caveat and
+     then made it the headline.**
+  **The durable rule:** Studio kept **collapsing an asset into one number so it could draw a bar** —
+  cost per hit, expected hits, value per pick. Every one averaged away the only thing that mattered.
+  A draft pick is an **option with a fat right tail**; the 1.01 is not worth 3× the 1.12 because it
+  hits more often, but because the top of its outcome range contains a league-winner. **How to
+  apply:** before drawing a summary statistic, ask what the distribution's tail is doing — if the
+  tail is the value, the tail must be in the picture, not in the footnote. **And read your own
+  caveats as design criticism:** if a footnote invalidates the mark above it, the mark is wrong.
+
+- **2026-07-24 — Do not fuse studies with different definitions into one mark.** When two sources
+  measure "success" differently (one 12-team PPR hit rate 2010–17, another a "stud" rate by pick
+  band), stacking them into a single bar invents precision neither has. Keep the second source in
+  **prose beside the chart**, sourced, with its limits named — including when a primary is paywalled
+  and the figure is therefore **cited as reported**. Direction confirmed by David the same session.
+
+- **2026-07-24 — REACTED to the rebuilt draft-capital surface: "yep you're now heading in the right
+  direction."** A direction checkpoint, **not an approval** — the surface is not signed off and
+  nothing is relayed. Confirmed-good so far: round-level outcome odds (longer = better, one source,
+  zero baseline), the year-discount small multiples on one shared price scale with the 2027 premium
+  shown as a dashed counterfactual tick, the on-surface retraction of Studio's wrong roster-crunch
+  claim, and the validated pick board underneath.
+
+- **2026-07-24 — Skills: there is no "impeccable" available to Studio; and Studio disclosed it had
+  skipped one of its own.** David asked why Studio uses `frontend-design` rather than "impeccable."
+  Answer: no such skill exists in Studio's environment; the brief names `frontend-design` and
+  `dataviz`. Studio also volunteered that **this session it loaded only `dataviz`**, reusing the
+  approved 006 visual language instead of re-deriving the aesthetic. David is looking into providing
+  "impeccable." **How to apply:** say which craft tools were and were not used, unprompted.
+
+- **2026-07-24 — Standing offer: a PERSISTENT CRAFT LIBRARY on disk, curated by Studio.** David
+  authorised Tower to fetch craft references into Studio's own directory — the point is memory
+  across resets, extending what `dataviz-principles.md` already proved. **Studio curates; David
+  deliberately does not.** Limits: nothing paywalled or pirated, and **craft only** — how a product
+  is built and animated, never what a product chose to prioritise. Studio's submitted priority list:
+  (1) uncertainty/distribution visualization — Hullman & Kay, hypothetical outcome plots, quantile
+  dotplots, Correll & Gleicher on error bars (the fat-tail gap that caused today's failure);
+  (2) graphical-perception primary sources — Cleveland & McGill 1984, Mackinlay 1986, Heer & Bostock;
+  (3) metric validity — ratios, normalization traps, base rates, Simpson's paradox (Calling Bullshit
+  course materials); (4) typography canon — Butterick, Bringhurst-for-web, Material 3 / Carbon type;
+  (5) layout and grid; (6) colour and accessibility — APCA/WCAG, practical OKLCH, CVD for charts;
+  (7) motion — Material 3 motion, Apple HIG, spring vs cubic-bezier, reduced-motion; (8) craft
+  captures — Baseball Savant, Stripe, Linear, Sofascore, Sleeper. **Studio also raised, explicitly as
+  out-of-scope-as-written, that dynasty subject-matter fluency (empirical rookie-pick outcome
+  studies) would fix more of its errors than any typography reference — David's call.**
+
+- **2026-07-24 — 008 STOPPED BY DAVID; the lesson is sequence, not craft.** After seven versions
+  David closed the draft-capital thread: *"we dont have 4 rounds we only have 3 - lets stop here.
+  you've tried but we need a fresh perspective."* His dynasty rookie draft is **three rounds** —
+  and **Studio's own first-pass table had already printed all sixteen of his picks as R1/R2/R3.**
+  The answer was in data Studio pulled on day one and did not read. (The chart's fourth row was
+  *NFL* draft rounds, but that it read as his rookie draft is proof the surface failed.)
+  **The through-line across all seven versions: the craft improved every time and the outcome did
+  not.** The last two marks were literature-correct — countable unit chart, position-controlled
+  metric, shared scales, stated intervals — and the work still failed, because Studio kept reaching
+  for an analytical frame *before* understanding the domain, and paid five corrections for it:
+  rookie-draft-vs-startup, roster rules (IR/taxi/offseason over-limit), first-round pick value, the
+  year/recency premium, and the round count.
+  **How to apply, and this outranks any craft rule:** on a domain-heavy surface, **spend the first
+  cycle on the domain and on the league's own settings, not on a chart.** Read the league config.
+  Read the user's actual holdings and let their shape tell you the rules. Ask David one factual
+  question early — cheap — rather than shipping a surface built on a guess. Studio's fresh eyes are
+  an asset on *interface* and a liability on *dynasty fundamentals*; treating them as an asset in
+  both places is what produced seven rejected versions in one day.
+  **Also durable:** when a thread is closed, close it *honestly on disk* — mark it did-not-land,
+  name what survives independent of the framing, and tell the next reader not to resume it. Do not
+  argue the last point; concede and stop.
+
+- **2026-07-25 — THE LANE COLOURS ARE CONSTITUTIONAL. Never re-tune them for a surface.** David, on the
+  009 board: *"we have to stay consistent with our color scheme — if Model is orange on one surface and
+  blue is Market, we cannot switch that on another surface."* **model = cool blue `oklch(0.72 0.11 255)`,
+  market = amber `oklch(0.76 0.13 75)`** (the app's own dark-block tokens; the product's `tokens.css`
+  calls hue meaning "constitutional" and identical in both themes). Studio had *not* flipped the
+  assignment — but it had shifted **both hues a half-step darker** than the app's tokens in order to clear
+  the dataviz validator's dark **lightness band**, and disclosed that only in a proposal file David does
+  not read. That drift is the violation, and reading as "the colours changed" is exactly the cost.
+  **The resolution, and the general rule it sets:** the app's pair fails only the glare-oriented lightness
+  band and **passes every check that governs whether a reader can tell the lanes apart** (CVD protan ΔE
+  22.5, tritan 22.8, normal-vision 24.3, contrast ≥3:1). So **consistency with the product outranks an
+  internal craft-tool heuristic** whenever the heuristic is not a legibility failure. **How to apply:**
+  take the two lane colours verbatim from the app's tokens on every surface, forever; if a validator
+  objects, satisfy it with lightness/chroma *elsewhere* in the palette or state the deviation **in the
+  pane to David**, never silently in a file. A craft check is advice; the product's colour contract is not.
+  Studio also aligned the rank readouts to lead with **ours / market** in the same pass, matching the
+  legend order and the standing product mission (our rank compared to the market, ours first).
+
+- **2026-07-25 — REACTED to the 009 board ("Who holds what"): "pretty solid — I like where you're going
+  with this — very logical slicing and analysis."** A direction checkpoint, **not an approval** — nothing
+  is signed off and the relay is not authorised. Confirmed-good so far: slicing the league one position at
+  a time, every team on one shared rank scale with our rank beside the market's, and the per-team inline
+  expansion. The only correction was the colour drift above.
+
+- **2026-07-25 — THE SIGNAL DAVID ACTUALLY WANTS: the CONJUNCTION of positional strength, our lane, and
+  posture — and it survives Studio's own refutation.** David, after Studio measured that lineup
+  complementarity is worth almost nothing in this league: *"think about the signals i could use to my
+  advantage. one, for example — i am looking at my roster gaps, say RB — and i want to find a trade
+  partner. which team is rich in RBs that my model likes, is that team rebuilding or contending.
+  Another scenario — finding a team that's contending but injuries have thinned out his WR room — do i
+  have excess wrs? i could see shading being really valuable and easy to read in a surface like this,
+  perhaps. showing strength in position groups compared to the league."*
+  **Why this beats the thing Studio just refuted, and Studio was wrong to treat its own test as
+  decisive:** Studio measured *value-neutral gains from trade* (does my spare part raise their lineup)
+  and found ~nothing — max 642 against 50,000 rosters. But David is not describing arithmetic
+  complementarity, he is describing **urgency**: a CONTENDER whose window is now will pay above market
+  to fix a hole, and a rebuilder will not. Willingness-to-overpay is invisible to a value-neutral test
+  by construction. **How to apply:** the signal is the *three-way conjunction* — their weakness ×
+  **their posture** × my depth **in our lane, not the market's** — never any one of the three alone.
+  Posture is what makes a gap actionable.
+  **The form: a team × position matrix, and the literature says framed rectangles rather than pure
+  shading.** Cleveland & McGill put shading/saturation in the **bottom tier** for magnitude and their
+  own named replacement for shaded statistical maps is the **framed-rectangle chart**, which converts a
+  shading judgement into a *position* judgement inside a constant frame — same scan, tier-1 read
+  (`craft/graphical-perception.md` §A). Shading is legitimate for **pattern/where-do-I-look**, unfit for
+  **magnitude**. Studio's recommendation is therefore: keep David's matrix, keep the at-a-glance scan,
+  but put a positioned tick in a constant frame in each cell rather than asking him to read strength off
+  a colour ramp. His own 2026-07-23 standing bar (ground encodings in the literature, not taste) is what
+  decides this.
+  **The data reality, verified live 2026-07-25 — one half of scenario two is BLOCKED:**
+  the snapshot normalizer retains exactly six player fields (`age, full_name, position, sleeper_status,
+  team, years_exp`) and **retains NO injury field at all**; Sleeper's transactions endpoint is never
+  called. So "injuries have thinned out his WR room" is **not** directly observable. What IS observable
+  is **IR membership** (`league_context.on_ir`) — today: roster 1 has 3, rosters 5, 7 and 9 have 1 each
+  — which is a usable proxy for a thinned room but says nothing about severity or timeline. **How to
+  apply:** build the matrix on IR membership and state the limit on-surface; retaining `injury_status`
+  in the normalizer is an engineering ask, not something design can conjure.
+
+- **2026-07-25 — Studio must not treat its own refutation as the end of an argument.** Studio measured
+  complementarity as worthless and reported it as a settled finding; David's very next message supplied
+  the mechanism the test could not see. **How to apply:** when a measurement kills a premise, state
+  what the measurement *could not observe* in the same breath — a value-neutral test cannot see
+  motivation, urgency, or willingness to overpay. A refutation is scoped to its instrument.
+
+- **2026-07-25 — REJECTED: the first matrix. "Extremely confusing and hard to read." The fault was
+  DENSITY WITHOUT HIERARCHY, and Studio measured it rather than guessing.** The page carried **265 marks
+  and 192 numbers across 48 cells — 5.5 marks per cell**, a **four-item legend** the reader had to
+  memorise and re-apply 48 times, **35 pairs of dots within 10px** of each other, and **two thin vertical
+  rules per cell meaning different things** (rank-15 threshold vs "you") — identical in form, opposite in
+  meaning. **Tier 2 of the craft library convicts it directly, and David pointed Studio there himself:**
+  `colour-accessibility.md` §D (Okabe & Ito) — *"label directly on the graphic rather than in a separate
+  key; a legend forces the reader to match by hue, which is the exact channel that failed"* and *"make
+  coloured objects thick or large; avoid thin lines and small marks relying solely on colour"* (the 7px
+  55%-opacity depth dots); `typography.md` §E (Butterick) — **11px is a label size, the smallest slot the
+  whole scale contains**, and Studio set *content* (player names, counts) at 11px 192 times;
+  `layout-grid.md` §G — every cell invented its own internal rhythm instead of sharing bands.
+  **How to apply: a grid that needs a key has already failed. Budget marks per cell before drawing —
+  two is a design, five is a puzzle. Never let two marks of the same FORM carry different MEANINGS in
+  one cell.**
+
+- **2026-07-25 — THE MISAPPLIED RULING, named: "instrument, don't editorialize" is NOT "render everything
+  at uniform weight."** Studio had been reading the 2026-07-21 ruling as a mandate for a flat, uniform
+  grid — which produced 48 equally-weighted cells in which nothing popped, and handed David the job of
+  finding the conjunction himself. What David actually said was *"I'll recognize the anomalies and
+  outliers — I just need the mechanism and design so I can SEE it."* **How to apply:** the encoding stays
+  stable and identical every day; what must NOT be uniform is the *result*. Choose the quantity so that
+  an interesting cell looks different **because the data is different**, never because Studio flagged it.
+  A design where nothing pops on an interesting day is as wrong as a headline that manufactures a
+  protagonist on a quiet one.
+
+- **2026-07-25 — v2, built after David returned the decision to Studio ("you decide… what do your tier 2
+  craft tools suggest or empower you to do?"). The medicine was subtraction.** One question per cell —
+  *is their best at this position better than mine?* — as **one diverging quantity on one shared scale**
+  (max |gap| 28 rank places, the same scale in all 44 cells). Two bars per cell, ours and market, from a
+  shared centre that IS David; right = they are ahead of him, left = behind. **No legend at all** —
+  identity is direct-labelled once on the first cell, per Okabe & Ito. Marks cut from 265 to 88; numbers
+  from 192 to 0 (detail moved to hover). Type addressed by four named roles with nothing under 12px
+  carrying content. His own row was **cut** — all zeros rendered as an empty strip that read as missing
+  data, and the baseline it stood for is already the centre line in every cell plus the "you:" line in
+  each column heading. **A structural grid bug (a stray `grid-row: span 2` on the column headers shifted
+  every row by one cell, putting team names in the last column) was invisible to the automated collision
+  and clipping probes and was caught only by looking at the screenshot** — the reason the eye pass exists.
+  **Awaiting David's reaction; nothing approved.**
+
+- **2026-07-25 — REJECTED AGAIN, and the fatal criticism was the QUESTION, not the drawing: "what are we
+  even asking — 'is their best better than mine?' why is that the question???"** David also named
+  "extremely disproportionate" design elements and insights "like finding a needle in a haystack."
+  **Measured:** the v2 grid was **4.3% ink** — 214×65px cells holding a median bar of 26px, bar lengths
+  spanning 3px to 91px. He was precisely right.
+  **Why the question was wrong — three reasons, all of which Studio should have caught before drawing:**
+  1. **Nobody trades their best player.** Comparing my best to their best benchmarks an asset that is by
+     definition unavailable. It is the single least actionable player on their roster.
+  2. **It is symmetric and exhaustive; the need is asymmetric and specific.** David has one roster with
+     one or two real holes. Studio rendered 44 comparisons and made him find the two that mattered —
+     which is exactly the haystack he named.
+  3. **It answers "who is better," a STANDINGS question** — region 1 of the ladder, already built in 006
+     — while he had asked a region 3 "who can I deal with" question. The surface was region 1 wearing
+     region 3's clothes.
+  **THE RIGHT QUESTION, and it was in David's own words from the start:** *"i am looking at my roster
+  gaps, say RB — and i want to find a trade partner."* It begins at **his hole**, not at a map. And
+  "rich in RBs" means **surplus** — and the load-bearing realisation Studio missed: **the tradeable
+  asset is the one they CANNOT START.** A team with eight RBs starting three has five doing nothing, and
+  those are the ones that move. Computed against best-legal-lineup, that produces named, specific,
+  genuinely available targets — Derrick Henry (RB22 market / RB11 ours, 2,853) on a contender's bench;
+  Kyle Pitts (TE8/TE11, 2,920) on Florida Man's; Dak Prescott (QB15/QB13, 3,990) benched in a superflex
+  league. **How to apply: start every "what should I do" surface from the user's specific need and
+  return a short ranked list of named, available assets — never a complete map the user has to search.
+  A matrix is an answer to "how does everything relate"; he almost never asks that.**
+
+- **2026-07-25 — Two rejected builds in one day, same root cause: Studio built before validating the
+  FRAME.** Both the 48-cell matrix and its rebuild were executed carefully against a question nobody had
+  agreed to. **How to apply, and this is a hard rule now:** when a surface answers a *new* question,
+  state the question in one line and get it confirmed before building anything. Craft cannot rescue a
+  wrong question, and Studio has now paid for that lesson three times (008's seven versions, and both of
+  today's grids).
+
+- **2026-07-25 — Session learnings, logged at Tower's accountability probe.** Four durable lessons, each
+  bought with a rejection today.
+  1. **A wrong question cannot be rescued by craft.** Two grids were built carefully — validated palette,
+     literature-cited encodings, clean probes — against a question David had never agreed to
+     (*"is their best better than mine?"*). His verdict: *"why is that even the question???"* Both were
+     technically sound and both were worthless. **Confirm the question in one line before building
+     anything that answers a new one.** Studio has now paid for this three times (008's seven versions,
+     and both of today's grids).
+  2. **Do not fuse two dimensions into one score so a single bar can be drawn.** `gain − cost` looked like
+     the perfect ranking key and came out a constant (910, 910, 910) because it measured a team-pair
+     difference, not the player. Caught before drawing, but only just. This is the same error as the
+     2026-07-24 cost-per-hit chart in a new costume. **Show both dimensions; rank on one.**
+  3. **Budget marks before drawing.** The rejected grid was measured after the fact at 265 marks + 192
+     numbers over 48 cells (5.5 per cell), a 4-item legend re-applied 48 times, and **4.3% ink** in its
+     rebuild. A pre-flight budget would have killed both. Requested as Tier 4 of the craft library.
+  4. **Automated probes do not see structure.** A stray `grid-row: span 2` shifted every row of the matrix
+     by one cell, putting team names in the last column. Zero collisions, zero clipping, zero overflow,
+     zero errors — and obviously broken to the eye. **The screenshot pass is not optional and is not
+     redundant with the DOM probes.**
+
+- **2026-07-25 — Anything that matters goes to disk, immediately, not at closeout.** Studio quoted David
+  real figures (the Skattebo/Price replaceability numbers) that existed only in a pane with almost no
+  scrollback, and a craft-tools answer scrolled away before Tower could read it. Both were nearly lost.
+  **How to apply:** the moment a number is quoted to David or a decision is taken, it is written to disk
+  in the same turn — with its derivation and an explicit verified/unverified status. Never rely on the
+  pane to hold anything, and never assume a relay crossed without an acknowledgment.
+
+- **2026-07-25 — 009 relay CROSSED (David: "009 relayed to crew"), and Studio discharged its own disclosed
+  caveat the same hour.** The accountability probe had disclosed that two correlation figures inside the
+  relay were computed over a population containing P2's fifteen coerced zeros and had never been re-run.
+  Studio re-ran them immediately on the authorisation, rather than waiting to be asked: **xVAR lane
+  +0.313 → +0.340** (the relayed figure *understated* the contamination), **DVS lane +0.218 unchanged**
+  (those fifteen have no DVS and were excluded by construction — obvious in hindsight and Studio should
+  have seen it before disclosing it as a risk). No item P1–P6 affected; the argument is strengthened.
+  Issued as `009-RELAY-ADDENDUM.md`, unauthorised, David's to send. **How to apply: when a disclosed
+  defect in Studio's own numbers becomes cheap to close, close it immediately and unprompted — a
+  disclosure is not a substitute for the fix, and a number already in an engineer's hands is the most
+  expensive place to leave one wrong.**
+
+- **2026-07-25 — APPROVED: dynasty domain fluency is inside Studio's remit.** David, on the re-raised
+  request: *"i agree - domaine fluency is fine."* Empirical rookie-pick outcome studies, draft-capital-to-
+  production research, the trade calendar, and **public historical datasets Studio can compute on
+  directly** are now legitimate craft-library pulls. Same division as always — Studio curates, Tower
+  fetches, Tower does not curate. Same limits — nothing paywalled or pirated, and never what another
+  product chose to prioritise; domain knowledge is the game, not anyone's doctrine. **Why it matters:**
+  every one of the five corrections David had to issue on 2026-07-24, and the closure of the 008 thread,
+  were domain errors rather than craft errors. Six items curated in `CRAFT-LIBRARY.md` Tier 5, led by
+  nflverse-class open datasets — the item that turns Studio from a citer of two incompatible studies into
+  someone who measures a distribution first-hand.
+
+- **2026-07-25 — CONFIRMED: the trade-partner framing, and the refinement that completes it.** David
+  confirmed the question Studio proposed — *"who has a good player at my position of need that they can't
+  start?"* — replacing the rejected *"is their best better than mine?"*. He then sharpened it in the same
+  breath: *"not just that they cant start - but what if they have a backfill for a starter that they may
+  be satisfied with."* **The settled question is therefore: who holds a player at my position of need that
+  they can AFFORD TO LOSE — because the drop-off to their backfill is small?** Measured, this changes the
+  answer materially: Cam Skattebo is Florida Man's *starting* RB2 and costs them only 289 to lose while
+  adding 1,199 here; bench-only logic misses him entirely. **And the load-bearing pattern underneath it:
+  for genuine stars, cost ≈ gain** (Bijan 8,344/8,206; Chase 8,258/7,883) — the market is efficient on the
+  players everyone wants, and the asymmetry only exists further down a roster. That is precisely why
+  best-versus-best was the wrong question. Figures persisted in `analysis/`, marked unverified.
+  **The surface itself is NOT built** — data generation was interrupted at closeout.
+

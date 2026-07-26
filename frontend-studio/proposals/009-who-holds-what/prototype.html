@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who holds what — the league's board by position / Studio</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+
+:root{
+  /* surfaces — the app's own dark tokens */
+  --bg:oklch(0.16 0.01 250); --surface:oklch(0.2 0.012 250); --raised:oklch(0.24 0.014 250);
+  --sunk:oklch(0.185 0.011 250);
+  --border:oklch(0.32 0.012 250); --border-strong:oklch(0.46 0.014 250);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250); --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+
+  /* The two lanes, taken verbatim from the app's own tokens.css dark block. Hue meaning is
+     constitutional in this product and identical across every surface:
+       model  = cool blue  oklch(0.72 0.11 255)   market = amber  oklch(0.76 0.13 75)
+     These fail the dataviz validator's dark LIGHTNESS BAND (0.719 / 0.760 against 0.48–0.67) and
+     pass every check that governs whether a reader can tell them apart — CVD protan ΔE 22.5,
+     tritan 22.8, normal-vision 24.3, contrast >= 3:1. The band is a glare heuristic; consistency
+     with the product is worth more than clearing it, so the app's values stand. */
+  --model:#74a7e8; --market:#e1a447;
+  --model-hi:#83c1ff; --market-hi:#f9b64f;
+
+  /* Carbon spacing ramp */
+  --s1:2px;--s2:4px;--s3:8px;--s4:12px;--s5:16px;--s6:24px;--s7:32px;--s8:40px;--s9:48px;--s10:64px;
+
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+
+  /* motion — Carbon productive; this is repeating interaction, not a flourish */
+  --dur-fast:110ms; --dur-mod:240ms;
+  --ease-standard:cubic-bezier(0.2,0,0.38,0.9);
+  --ease-entrance:cubic-bezier(0,0,0.38,0.9);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  font-size:0.9375rem;line-height:1.5;-webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums}
+.wrap{max-width:1180px;margin:0 auto;padding:var(--s7) var(--s6) var(--s10)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* ---------- masthead ---------- */
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s6);flex-wrap:wrap;
+  padding-bottom:var(--s5);border-bottom:1px solid var(--border);margin-bottom:var(--s6)}
+.mast .app{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;letter-spacing:0.14em;
+  color:var(--dim);text-transform:uppercase}
+.mast .stamp{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);text-align:right;line-height:1.7}
+
+h1{font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-0.02em;
+  margin:0 0 var(--s2);line-height:1.12}
+.lede{color:var(--muted);font-size:0.9375rem;margin:0;max-width:74ch}
+
+/* ---------- provenance ---------- */
+.prov{margin-top:var(--s5);border:1px solid var(--border);border-left:3px solid var(--market);
+  background:var(--surface);padding:var(--s4) var(--s5);font-size:0.8125rem;color:var(--muted);
+  max-width:96ch}
+.prov b{color:var(--text);font-weight:600}
+.prov code{font-family:var(--font-mono);font-size:0.75rem;color:var(--text)}
+
+/* ---------- filter row ---------- */
+.controls{display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap;margin:var(--s7) 0 var(--s4)}
+.chips{display:flex;gap:var(--s1);background:var(--sunk);border:1px solid var(--border);padding:var(--s1)}
+.chip{appearance:none;background:transparent;border:0;color:var(--muted);cursor:pointer;
+  font-family:var(--font-display);font-weight:600;font-size:0.8125rem;letter-spacing:0.06em;
+  padding:var(--s3) var(--s5);transition:background var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard)}
+.chip:hover{color:var(--text);background:var(--raised)}
+.chip[aria-pressed="true"]{background:var(--raised);color:var(--text);box-shadow:inset 0 -2px 0 var(--model)}
+.chip .n{font-family:var(--font-mono);font-weight:400;font-size:0.6875rem;color:var(--dim);margin-left:var(--s2)}
+.chip[aria-pressed="true"] .n{color:var(--muted)}
+
+.legend{display:flex;gap:var(--s5);align-items:center;font-size:0.75rem;color:var(--muted);flex-wrap:wrap}
+.legend span{display:inline-flex;align-items:center;gap:var(--s3);white-space:nowrap}
+.legend svg{display:block;flex:none}
+
+/* ---------- the fixed state line ---------- */
+.state{border:1px solid var(--border);background:var(--surface);padding:var(--s5) var(--s6);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:var(--s5) var(--s6)}
+.state .cell{min-width:0}
+.state .k{font-family:var(--font-display);font-weight:600;font-size:0.625rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim);margin-bottom:var(--s2)}
+.state .v{font-family:var(--font-mono);font-size:1.5rem;line-height:1.1;letter-spacing:-0.02em}
+.state .v em{font-style:normal;color:var(--model-hi)}
+.state .n{font-size:0.75rem;color:var(--muted);margin-top:var(--s2);overflow-wrap:anywhere}
+
+/* ---------- axis header ---------- */
+.board{margin-top:var(--s6);border:1px solid var(--border);background:var(--surface)}
+.axhead{display:grid;grid-template-columns:var(--colA) 1fr var(--colC);gap:var(--s5);
+  padding:var(--s4) var(--s6);border-bottom:1px solid var(--border-strong);align-items:end}
+.axhead .lbl{font-family:var(--font-display);font-weight:600;font-size:0.625rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim);min-width:0}
+.axends{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.6875rem;
+  color:var(--muted)}
+.axends .r{color:var(--text)}
+
+:root{--colA:230px;--colC:132px}
+
+/* ---------- team rows ---------- */
+.trow{border-bottom:1px solid var(--border)}
+.trow:last-child{border-bottom:0}
+.trow.me{background:linear-gradient(90deg,color-mix(in oklab,var(--model) 13%,transparent),transparent 62%)}
+.thead{display:grid;grid-template-columns:var(--colA) 1fr var(--colC);gap:var(--s5);width:100%;
+  padding:var(--s4) var(--s6);background:transparent;border:0;color:inherit;font:inherit;
+  text-align:left;cursor:pointer;align-items:center;
+  transition:background var(--dur-fast) var(--ease-standard)}
+.thead:hover{background:color-mix(in oklab,var(--raised) 60%,transparent)}
+
+.ident{min-width:0;display:flex;align-items:center;gap:var(--s4)}
+.chev{flex:none;color:var(--dim);transition:transform var(--dur-mod) var(--ease-standard)}
+.trow.open .chev{transform:rotate(90deg)}
+.ident .txt{min-width:0}
+.tname{font-family:var(--font-display);font-weight:600;font-size:0.875rem;letter-spacing:0.01em;
+  overflow-wrap:anywhere}
+.trow.me .tname{color:var(--model-hi)}
+.tmeta{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);margin-top:1px;
+  display:flex;gap:var(--s3);flex-wrap:wrap}
+.tmeta .post{color:var(--muted)}
+
+/* reference frame */
+.tick{position:absolute;top:50%;width:1px;height:11px;margin-top:-5.5px;background:var(--border)}
+.tick.key{height:100%;top:0;margin-top:0;background:color-mix(in oklab,var(--border-strong) 55%,transparent)}
+.axends .mid{position:absolute;left:0;transform:translateX(-50%);color:var(--dim)}
+.axends{position:relative}
+
+/* the rank track — HTML marks, not SVG, so labels use real type and never distort */
+.track{position:relative;min-width:0;height:var(--trkH);min-height:var(--trkH)}
+:root{--trkH:40px;--dotR:15px}
+
+.db{position:absolute;left:0;right:0;top:50%;height:0}
+.dbline{position:absolute;top:-1.5px;height:3px;background:var(--border-strong)}
+.dot{position:absolute;width:var(--dotR);height:var(--dotR);margin-left:calc(var(--dotR) / -2);
+  margin-top:calc(var(--dotR) / -2);border-radius:50%;
+  /* 2px surface ring so adjacent-rank marks separate — never transparency */
+  box-shadow:0 0 0 2.5px var(--surface)}
+.trow.me .dot,.trow.me .dbline{box-shadow:0 0 0 2.5px color-mix(in oklab,var(--model) 6%,var(--surface))}
+.dot.mdl{background:var(--model)}
+.dot.mkt{background:transparent;border:3px solid var(--market)}
+.dblab{position:absolute;top:-0.72em;font-family:var(--font-sans);font-weight:500;font-size:0.8125rem;
+  color:var(--text);white-space:nowrap;line-height:1.4}
+.dblab.l{text-align:right}
+.dbrk{font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted);margin-left:9px}
+
+.subhead{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr) 6.5rem 3rem;gap:var(--s4);
+  font-family:var(--font-mono);font-size:0.625rem;color:var(--dim);padding-bottom:var(--s2);
+  border-bottom:1px solid var(--border);margin-bottom:var(--s2)}
+.subhead span:nth-child(3),.subhead span:nth-child(4){text-align:right}
+
+/* per-asset sub-rows inside the expansion */
+.sublist{display:grid;gap:var(--s1)}
+.subrow{display:grid;grid-template-columns:minmax(0,13rem) minmax(0,1fr) 6.5rem 3rem;gap:var(--s4);
+  align-items:center;padding:var(--s2) 0;border-bottom:1px dotted var(--border)}
+.subrow:last-child{border-bottom:0}
+.subnm{min-width:0;font-size:0.8125rem;overflow-wrap:anywhere}
+.subtrack{position:relative;min-width:0;height:24px}
+.subrk{font-family:var(--font-mono);font-size:0.75rem;white-space:nowrap;text-align:right}
+.subrk .m{color:var(--market-hi)}.subrk .o{color:var(--model-hi)}.subrk .sl{color:var(--dim);padding:0 3px}
+.subag{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);text-align:right;white-space:nowrap}
+.subrow.off .subtrack{display:flex;align-items:center}
+.nomodel{font-size:0.6875rem;color:var(--dim);font-family:var(--font-mono);overflow-wrap:anywhere}
+.subtrack .db{--dotR:11px}
+.blk.wide{grid-column:1 / -1}
+.mk{font-family:var(--font-mono)}.mk.m{color:var(--market-hi)}.mk.o{color:var(--model-hi)}
+
+/* the window column */
+.win{min-width:0}
+.win .wk{display:block;font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted);
+  margin-bottom:var(--s2);white-space:nowrap}
+.wtrack{display:block;position:relative;height:11px;background:var(--sunk);border:1px solid var(--border)}
+.wfill{position:absolute;left:0;top:0;bottom:0;background:var(--border-strong)}
+.trow.me .wfill{background:var(--model)}
+
+/* ---------- inline expansion (grid 0fr→1fr recipe) ---------- */
+.panelwrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dur-mod) var(--ease-standard)}
+.trow.open .panelwrap{grid-template-rows:1fr}
+.panel{overflow:hidden;min-height:0}
+.panelin{padding:var(--s2) var(--s6) var(--s6);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));gap:var(--s6)}
+.blk{min-width:0}
+.blk h4{font-family:var(--font-display);font-weight:600;font-size:0.625rem;letter-spacing:0.09em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 var(--s3)}
+.plist{list-style:none;margin:0;padding:0;font-size:0.8125rem}
+.plist li{display:grid;grid-template-columns:1fr auto auto;gap:var(--s4);align-items:baseline;
+  padding:var(--s2) 0;border-bottom:1px dotted var(--border);min-width:0}
+.plist li:last-child{border-bottom:0}
+.plist .nm{min-width:0;overflow-wrap:anywhere}
+.plist .rk{font-family:var(--font-mono);font-size:0.75rem;white-space:nowrap}
+.plist .rk .m{color:var(--market-hi)}
+.plist .rk .o{color:var(--model-hi)}
+.plist .ag{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);white-space:nowrap}
+.roleflag{font-family:var(--font-mono);font-size:0.625rem;color:var(--market-hi);
+  border:1px solid var(--market);padding:0 4px;margin-left:var(--s3);white-space:nowrap}
+.shape{display:grid;grid-template-columns:auto 1fr auto;gap:var(--s2) var(--s4);align-items:center;
+  font-family:var(--font-mono);font-size:0.75rem}
+.shape .p{color:var(--muted)}
+.shape .bar{height:8px;background:var(--sunk);border:1px solid var(--border);position:relative;min-width:40px}
+.shape .bf{position:absolute;left:0;top:0;bottom:0;background:var(--border-strong)}
+.shape .c{color:var(--text);text-align:right;white-space:nowrap}
+.note{font-size:0.8125rem;color:var(--muted);margin:var(--s3) 0 0}
+.note b{color:var(--text);font-weight:500}
+
+/* ---------- footer limits ---------- */
+.limits{margin-top:var(--s8);border-top:1px solid var(--border);padding-top:var(--s5)}
+.limits h3{font-family:var(--font-display);font-weight:600;font-size:0.6875rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 var(--s3)}
+.limits ul{margin:0;padding-left:1.15em;color:var(--muted);font-size:0.8125rem;max-width:96ch}
+.limits li{margin-bottom:var(--s3)}
+.limits b{color:var(--text);font-weight:500}
+
+/* ---------- tooltip ---------- */
+.tip{position:fixed;pointer-events:none;z-index:40;background:var(--raised);
+  border:1px solid var(--border-strong);padding:var(--s3) var(--s4);font-size:0.75rem;
+  font-family:var(--font-mono);color:var(--text);opacity:0;transition:opacity var(--dur-fast) linear;
+  max-width:16rem;line-height:1.45}
+.tip.on{opacity:1}
+.tip .t{color:var(--muted)}
+
+@media (max-width:820px){
+  :root{--colA:1fr;--colC:1fr}
+  .axhead,.thead{grid-template-columns:1fr}
+  .axhead .lbl:last-child{display:none}
+  .track{height:52px;min-height:52px}
+}
+@media (prefers-reduced-motion:reduce){
+  .panelwrap{transition:none}
+  .chev{transition:none}
+  .thead{transition:none}
+  .tip{transition:none}
+}
+@media (forced-colors:active){
+  .wfill,.bf{background:CanvasText}
+  .board,.state,.prov{border:1px solid CanvasText}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <div class="app">Dynasty Genius · Studio proposal 009</div>
+    <div class="stamp" id="stamp"></div>
+  </div>
+
+  <h1>Who holds what</h1>
+  <p class="lede">The league's board at one position at a time — every team's assets on one shared rank
+  scale, our model's rank beside the market's. Not a power ranking: a map of where the talent sits and
+  where the two boards disagree about it.</p>
+
+  <div class="prov" id="prov"></div>
+
+  <div class="controls">
+    <div class="chips" role="group" aria-label="Position">
+      <button class="chip" data-pos="QB" aria-pressed="false">QB<span class="n"></span></button>
+      <button class="chip" data-pos="RB" aria-pressed="false">RB<span class="n"></span></button>
+      <button class="chip" data-pos="WR" aria-pressed="true">WR<span class="n"></span></button>
+      <button class="chip" data-pos="TE" aria-pressed="false">TE<span class="n"></span></button>
+    </div>
+    <div class="legend">
+      <span><svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5" fill="var(--model)" stroke="var(--surface)" stroke-width="2"/></svg> our model's rank</span>
+      <span><svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true"><circle cx="7.5" cy="7.5" r="4.4" fill="none" stroke="var(--market)" stroke-width="2.4"/></svg> the market's rank</span>
+      <span><svg width="30" height="15" viewBox="0 0 30 15" aria-hidden="true"><line x1="3" y1="7.5" x2="27" y2="7.5" stroke="var(--border-strong)" stroke-width="2"/></svg> the disagreement</span>
+      <span><svg width="9" height="15" viewBox="0 0 9 15" aria-hidden="true"><line x1="4.5" y1="0" x2="4.5" y2="15" stroke="var(--border-strong)" stroke-width="1.6"/></svg> the tall rule is rank 15 &mdash; roughly where startable ends</span>
+    </div>
+  </div>
+
+  <div class="state" id="state"></div>
+
+  <div class="board" id="board"></div>
+
+  <div class="limits">
+    <h3>What this does not know</h3>
+    <ul id="limits"></ul>
+  </div>
+</div>
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script src="./board-data.js"></script>
+<script>
+(function(){
+  const POS=['QB','RB','WR','TE'];
+  const ME=DATA.me;
+  const SHOWN=4;                       // dumbbells drawn per team row before the "and N more" chip
+  let pos='WR', topHere={}, TOPN=15;
+  const $=s=>document.querySelector(s);
+  const tip=$('#tip');
+
+  const fmtAge=a=>a==null?'—':a.toFixed(1);
+  const ordinal=n=>{const s=['th','st','nd','rd'],v=n%100;return n+(s[(v-20)%10]||s[v]||s[0]);};
+
+  /* ---------- provenance + limits ---------- */
+  const snapDate=DATA.snapshot.slice(0,10), mktDate=DATA.marketFetched.slice(0,10);
+  $('#stamp').innerHTML='Studio prototype · built '+DATA.generated+'<br>league snapshot '+snapDate+
+    ' · market '+mktDate;
+  $('#prov').innerHTML='<b>Read this first.</b> Every number here comes from the league snapshot written '+
+    'by the app\'s own daily job on <code>'+snapDate+'</code>. The running app does not serve that file — '+
+    '<code>/api/league/pulse</code> still returns the <code>2026-06-23</code> artifact, 32 days older. '+
+    'This prototype shows data the app already has and does not surface. That gap is filed as 009 relay item P1.';
+
+  $('#limits').innerHTML=[
+    '<b>It cannot tell you who wants to trade.</b> Sleeper publishes a league-transactions endpoint; this '+
+      'codebase never calls it. There is no trade history, no read on intent, no idea whether anyone has '+
+      'answered a message. Everything here is <em>fit</em>, and fit is not interest.',
+    '<b>The two lanes are ranked inside a position, never across.</b> Our dynasty value score is calibrated '+
+      'per position and saturates: twelve rostered players sit at exactly 100.0, from the market\'s #3 to its '+
+      '#137. A cross-position model rank cannot be built from it, so this board never draws one.',
+    '<b>Thirty of the league\'s 272 rostered skill players cannot be placed on a two-lane track</b>, and '+
+      'they are named inside each team panel rather than quietly dropped. Fifteen of them are the '+
+      'serious case: the app grades them <code>ACTIVE_B</code> — its own top grade — while returning '+
+      '<code>null</code> for both value fields, and the league layer stores that null as <b>0.0</b>. '+
+      'They include the market\'s '+DATA.nullTop.map(x=>x.nm+' (#'+x.ovr+')').join(', ')+
+      ', and they carry '+DATA.nullValue.toLocaleString()+' of market value between them. A zero is not '+
+      'a low opinion, but once it is ranked it reads as one. Filed as 009 relay item P2.',
+    '<b>Future picks are not on this board.</b> A pick has no position and no player rank; putting one on a '+
+      'rank axis would be a made-up number. Sixteen of them are yours, and they belong on a surface of their own.',
+    '<b>Rank is not value.</b> The step from rank 1 to rank 2 is not the step from rank 40 to rank 41. '+
+      'The track shows standing and disagreement; the market figures in each panel show size.'
+  ].map(s=>'<li>'+s+'</li>').join('');
+
+  /* ---------- chips ---------- */
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.querySelector('.n').textContent=DATA.boards[c.dataset.pos].pool;
+    c.addEventListener('click',()=>{
+      pos=c.dataset.pos;
+      document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',String(x===c)));
+      render();
+    });
+  });
+
+  /* ---------- geometry ---------- */
+  // rank axis: worst on the LEFT, best on the RIGHT (#1 at the far right).
+  // position on a common scale, both endpoints named in words — no length mark from an arbitrary origin.
+  const PADPX=22;
+  // frac: 0 at the deep end (left), 1 at rank 1 (right) — best on the RIGHT, per the rank-axis convention
+  const frac=(r,dom)=>(dom-Math.min(r,dom))/(dom-1);
+  const posCss=(r,dom)=>'calc('+PADPX+'px + '+frac(r,dom).toFixed(5)+' * (100% - '+(2*PADPX)+'px))';
+
+  const TICKS=[1,5,10,15,25,40,60];
+  function ticksHTML(dom){
+    return TICKS.filter(t=>t<=dom).map(t=>
+      '<span class="tick'+(t===15?' key':'')+'" style="left:'+posCss(t,dom)+'"></span>').join('')+
+      '<span class="tick" style="left:'+posCss(dom,dom)+'"></span>';
+  }
+
+  function dumbbell(it,dom,opts){
+    const o=opts||{};
+    const a=Math.min(it.mr,it.dr), b=Math.max(it.mr,it.dr);   // b is deeper = further left
+    const L=posCss(b,dom), R=posCss(a,dom);
+    let s='<span class="db">';
+    s+='<span class="dbline" style="left:'+L+';right:calc(100% - '+R+')"></span>';
+    s+='<span class="dot mkt" style="left:'+posCss(it.mr,dom)+'"></span>';
+    s+='<span class="dot mdl" style="left:'+posCss(it.dr,dom)+'"></span>';
+    if(o.label){
+      // direct label beside the pair — never a legend-only identity (Okabe & Ito)
+      const rightSide=frac(b,dom)<0.34;
+      s+='<span class="dblab '+(rightSide?'r':'l')+'" style="'+(rightSide
+            ? 'left:calc('+R+' + 16px)' : 'right:calc(100% - '+L+' + 16px)')+'">'+esc(o.label)+
+            (o.ranks?'<span class="dbrk">'+esc(o.ranks)+'</span>':'')+'</span>';
+    }
+    s+='</span>';
+    return s;
+  }
+
+  const PAD=18;
+  // The domain is clipped to the deepest rank any drawn mark actually reaches, shared by every row
+  // on the board. Drawing to WR94 when nothing drawn sits below WR64 would spend 40% of the scale on
+  // empty track and compress the region where every mark lives. The left endpoint is labelled with
+  // the real number so the clip is stated, not hidden.
+  let DOMAIN=1;
+  // The domain is the WHOLE position pool, always. The collapsed row draws one mark and the expansion
+  // draws every mark; if the axis rescaled between them the two would not be comparable, which is the
+  // shared-scale failure this engagement has already fixed twice. Reference ticks carry the resolution
+  // instead — a denser reference frame measurably improves estimation at small chart sizes
+  // (Heer & Bostock 2010), which is the one place the data-ink rule yields.
+  function computeDomain(B){ return B.pool; }
+  function xOf(r,dom,w){ return PAD + (Math.min(r,dom)-1)/(dom-1) * (w-2*PAD); }
+
+  /* ---------- render ---------- */
+  function render(){
+    const B=DATA.boards[pos], pool=B.pool;
+    DOMAIN=computeDomain(B);
+    const mine=(B.teams.find(t=>t.rid===ME)||{items:[]}).items;
+    TOPN=15; const topN=TOPN;
+    const topOwners={}; B.teams.forEach(t=>t.items.forEach(i=>{ if(i.mr<=TOPN) topOwners[t.rid]=(topOwners[t.rid]||0)+1; }));
+    topHere=topOwners;
+    const mineTop=topOwners[ME]||0;
+    const best=mine[0];
+
+    // ---- fixed state line: identical shape every day, whatever the data says
+    $('#state').innerHTML=[
+      ['Top '+topN+' '+pos+'s you hold', '<em>'+mineTop+'</em> <small style="font-size:.8125rem;color:var(--muted)">of '+topN+'</small>',
+        Object.keys(topOwners).length+' of 12 teams hold at least one'],
+      ['Your best '+pos, best?('<em>'+pos+best.mr+'</em>'):'—',
+        best?('the market\'s '+ordinal(best.mr)+'; our model has him '+pos+best.dr):'you hold none'],
+      ['You hold', '<em>'+ (DATA.meta[ME].counts[pos]) +'</em> <small style="font-size:.8125rem;color:var(--muted)">'+pos+'s</small>',
+        (mine.length!==DATA.meta[ME].counts[pos] ? (DATA.meta[ME].counts[pos]-mine.length)+' of them unmodeled' : 'all modeled') +
+        ' · league median '+medianCount(pos)],
+      ['Pool on this board', '<em>'+pool+'</em>',
+        'every '+pos+' rostered in the league with both a model output and a market price']
+    ].map(([k,v,n])=>'<div class="cell"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="n">'+n+'</div></div>').join('');
+
+    // ---- board
+    const rows=B.teams.map(t=>{
+      const m=DATA.meta[t.rid], items=t.items, isMe=t.rid===ME;
+      const more=items.length-SHOWN;
+      const oldPct=Math.round(m.oldShare*100);
+      return '<div class="trow'+(isMe?' me':'')+'" data-rid="'+t.rid+'">'+
+        '<button class="thead" aria-expanded="false">'+
+          '<span class="ident">'+
+            '<svg class="chev" width="9" height="11" viewBox="0 0 9 11" aria-hidden="true"><path d="M1 1l6 4.5L1 10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'+
+            '<span class="txt">'+
+              '<span class="tname">'+esc(m.name)+(isMe?' — you':'')+'</span>'+
+              '<span class="tmeta"><span class="post">'+m.posture.toLowerCase()+'</span>'+
+                '<span>'+items.length+' '+pos+(items.length===1?'':'s')+' here</span>'+
+                '<span>'+(topHere[t.rid]||0)+' in the top '+TOPN+'</span>'+
+              '</span>'+
+            '</span>'+
+          '</span>'+
+          '<span class="track">'+ticksHTML(DOMAIN)+dumbbell(items[0],DOMAIN,{label:items[0].nm,ranks:pos+items[0].dr+'/'+pos+items[0].mr})+'</span>'+
+          '<span class="win"><span class="wk">'+oldPct+'% aged 28+</span>'+
+            '<span class="wtrack"><span class="wfill" style="width:'+Math.round(m.oldShare/0.40*100)+'%"></span></span></span>'+
+        '</button>'+
+        '<div class="panelwrap"><div class="panel"><div class="panelin">'+panelHTML(t,m,pool)+'</div></div></div>'+
+      '</div>';
+    }).join('');
+    $('#board').innerHTML=
+      '<div class="axhead">'+
+        '<span class="lbl">team · posture</span>'+
+        '<span class="axends"><span>'+pos+DOMAIN+' &mdash; the bottom of the league</span>'+
+          
+          '<span class="r">'+pos+'1 &mdash; the top of the board</span></span>'+
+        '<span class="lbl">window</span>'+
+      '</div>'+rows;
+
+    wire();
+  }
+
+  function medianCount(p){
+    const c=Object.values(DATA.meta).map(m=>m.counts[p]).sort((a,b)=>a-b);
+    return ((c[5]+c[6])/2);
+  }
+
+  function panelHTML(t,m,pool){
+    const items=t.items, isMe=t.rid===ME;
+    const unmod=t.off||[];
+    // 1. everything they hold at this position
+    let a='<div class="blk wide"><h4>Every '+pos+' they hold, on the same scale</h4>'+
+      '<div class="subhead"><span></span><span></span><span>ours / market</span><span>age</span></div>'+
+      '<div class="sublist">'+
+      items.map(i=>'<div class="subrow">'+
+        '<span class="subnm">'+esc(i.nm)+
+          (i.role==='ir'||i.role==='taxi'?'<span class="roleflag">'+i.role+'</span>':'')+'</span>'+
+        '<span class="subtrack">'+ticksHTML(DOMAIN)+dumbbell(i,DOMAIN)+'</span>'+
+        '<span class="subrk"><span class="o">'+pos+i.dr+'</span><span class="sl">/</span><span class="m">'+pos+i.mr+'</span></span>'+
+        '<span class="subag">'+fmtAge(i.age)+'y</span>'+
+      '</div>').join('')+
+      unmod.map(u=>'<div class="subrow off">'+
+        '<span class="subnm">'+esc(u.nm)+
+          (u.role==='ir'||u.role==='taxi'?'<span class="roleflag">'+u.role+'</span>':'')+'</span>'+
+        '<span class="subtrack"><span class="nomodel">'+({
+            nullvalue:'graded <b>'+u.grade+'</b> &mdash; but the model returns no value for him, and the league layer stores that as 0.0',
+            nomodel:'no model output yet',
+            nomarket:'no market price'
+          }[u.state]||'off the board')+'</span></span>'+
+        '<span class="subrk">&mdash;</span><span class="subag">'+(u.v!=null?u.v.toLocaleString():'&mdash;')+'</span></div>').join('')+
+      '</div><p class="note">Same axis as the board above: '+pos+DOMAIN+' at the left, '+pos+
+      '1 at the right. <span class="mk o">&#9679;</span> ours, <span class="mk m">&#9711;</span> market.</p></div>';
+
+    // 2. the whole roster's shape
+    const maxc=Math.max(...POS.map(p=>Math.max(...Object.values(DATA.meta).map(x=>x.counts[p]))));
+    let b='<div class="blk"><h4>Their whole roster</h4><div class="shape">'+
+      POS.map(p=>'<span class="p">'+p+'</span>'+
+        '<span class="bar"><span class="bf" style="width:'+Math.round(m.counts[p]/maxc*100)+'%"></span></span>'+
+        '<span class="c">'+m.counts[p]+'</span>').join('')+
+      '</div><p class="note">'+m.n+' players · '+m.total.toLocaleString()+' in market value · '+
+      Math.round(m.oldShare*100)+'% of it aged 28 or older. Posture <b>'+m.posture.toLowerCase()+'</b>, '+
+      'from the app\'s own heuristic.</p></div>';
+
+    // 3. where the two boards disagree most about their players
+    const d=(DATA.disagree[t.rid]||[]).slice(0,4);
+    let c='<div class="blk"><h4>Where the boards disagree most about them</h4><ul class="plist">'+
+      d.map(x=>'<li><span class="nm">'+esc(x.nm)+' <span style="color:var(--dim);font-family:var(--font-mono);font-size:.6875rem">'+x.pos+'</span>'+
+        (x.role==='ir'||x.role==='taxi'?'<span class="roleflag">'+x.role+'</span>':'')+'</span>'+
+        '<span class="rk"><span class="o">'+x.pos+x.dr+'</span> <span style="color:var(--dim)">/</span> <span class="m">'+x.pos+x.mr+'</span></span>'+
+        '<span class="ag">'+(x.gap>0?'we rate him '+x.gap+' higher':'market rates him '+(-x.gap)+' higher')+'</span></li>').join('')+
+      '</ul><p class="note">'+(isMe
+        ? 'On your own roster this reads as where you may be holding at a price the market will pay — or holding something we like more than anyone else does.'
+        : 'A gap is a starting point for a conversation, not a verdict. It says the two boards see the player differently; it does not say which one is right, and Model Trust reports the edge as unproven.')+'</p></div>';
+    return a+b+c;
+  }
+
+  function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+  /* ---------- interaction ---------- */
+  function wire(){
+    document.querySelectorAll('.thead').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const row=btn.closest('.trow'), open=row.classList.toggle('open');
+        btn.setAttribute('aria-expanded',String(open));
+      });
+    });
+    document.querySelectorAll('.dot').forEach(d=>{
+      d.addEventListener('mouseenter',e=>{
+        const row=d.closest('.trow'); const sub=d.closest('.subrow');
+        const rid=+row.dataset.rid;
+        const items=(DATA.boards[pos].teams.find(t=>t.rid===rid)||{items:[]}).items;
+        const it = sub ? items[[...sub.parentNode.children].indexOf(sub)] : items[0];
+        if(!it) return;
+        tip.innerHTML='<b>'+esc(it.nm)+'</b><br>'+
+          '<span class="t">market</span> '+pos+it.mr+' &nbsp; <span class="t">ours</span> '+pos+it.dr+'<br>'+
+          '<span class="t">'+fmtAge(it.age)+' years · '+it.v.toLocaleString()+' market value</span>'+
+          (it.role==='ir'||it.role==='taxi'
+            ? '<br><span class="t">on '+it.role+' — excluded from the app\'s lineup maths</span>':'');
+        tip.classList.add('on');
+        const r=d.getBoundingClientRect();
+        tip.style.left=Math.min(r.left+18,innerWidth-274)+'px';
+        tip.style.top=(r.bottom+10)+'px';
+      });
+      d.addEventListener('mouseleave',()=>tip.classList.remove('on'));
+    });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>

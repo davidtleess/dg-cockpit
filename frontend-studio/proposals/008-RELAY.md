@@ -38,6 +38,15 @@ Three consequences, each independently checkable:
 - **No year decay.** A 2029 first is priced identically to a 2027 first.
 - **Round 2 and round 3 are the same number.** `0.1076` appears for both.
 
+**The outcome evidence, added 2026-07-24.** Published hit rates for dynasty rookie drafts make the
+round-2/round-3 collapse the most consequential of the three. NBC Sports / Rotoworld (504 rookie
+picks, 2010–17, 12-team PPR, six-round rookie drafts; a "hit" = at least one season as a top-12
+QB/TE or top-24 RB/WR): **round 1 hits 47.6%, round 2 hits 31.0%, round 3 and later hits 7.0%.**
+Corroborated by Advanced Sports Logic: 29 of the top 42 dynasty assets came from the top 15
+rookie-draft picks, against six from 2.04–3.12. Our model assigns a second and a third the **same
+number** while the observed probability of producing a startable player differs by **4.4×**. (Caveat
+we own: those rates are 12-team PPR, not superflex.)
+
 **Expected.** At minimum a round-2/round-3 separation and a year discount. The payload's own caveats
 (`pick_value_floored_at_replacement`, `pick_value_thin_sample`,
 `generic_future_pick_round_only`, `pick_value_resolution: "round_tier"`) suggest this is a known

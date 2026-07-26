@@ -39,12 +39,12 @@
   },
   "effortLevel": "high",
   "tui": "fullscreen",
-  "skipWorkflowUsageWarning": true,
-  "theme": "dark",
-  "preferredNotifChannel": "terminal_bell",
-  "voiceEnabled": true,
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark",
+  "preferredNotifChannel": "terminal_bell",
+  "voiceEnabled": true
 }

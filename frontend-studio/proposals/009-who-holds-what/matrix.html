@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where every team is strong — Dynasty Genius / Studio</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+:root{
+  --bg:oklch(0.16 0.01 250); --surface:oklch(0.2 0.012 250); --raised:oklch(0.24 0.014 250);
+  --sunk:oklch(0.175 0.011 250);
+  --border:oklch(0.32 0.012 250); --border-strong:oklch(0.46 0.014 250);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250); --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+  /* the app's constitutional lane hues, verbatim from tokens.css */
+  --model:#74a7e8; --market:#e1a447; --model-hi:#83c1ff; --market-hi:#f9b64f;
+  --s1:2px;--s2:4px;--s3:8px;--s4:12px;--s5:16px;--s6:24px;--s7:32px;--s8:40px;--s10:64px;
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --dur:110ms; --ease:cubic-bezier(0.2,0,0.38,0.9);
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:0.9375rem;
+  line-height:1.5;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:1280px;margin:0 auto;padding:var(--s7) var(--s6) var(--s10)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s6);flex-wrap:wrap;
+  padding-bottom:var(--s5);border-bottom:1px solid var(--border);margin-bottom:var(--s6)}
+.mast .app{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;letter-spacing:0.14em;
+  color:var(--dim);text-transform:uppercase}
+.mast .stamp{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);text-align:right;line-height:1.7}
+h1{font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-0.02em;margin:0 0 var(--s2)}
+.lede{color:var(--muted);margin:0;max-width:78ch}
+
+.howto{margin-top:var(--s5);border:1px solid var(--border);border-left:3px solid var(--model);
+  background:var(--surface);padding:var(--s4) var(--s5);font-size:0.8125rem;color:var(--muted);max-width:96ch}
+.howto b{color:var(--text);font-weight:600}
+
+.legend{display:flex;gap:var(--s5);align-items:center;flex-wrap:wrap;font-size:0.75rem;
+  color:var(--muted);margin:var(--s6) 0 var(--s4)}
+.legend span{display:inline-flex;align-items:center;gap:var(--s3);white-space:nowrap}
+.legend svg{display:block;flex:none}
+
+/* ---- the matrix ---- */
+.mx{border:1px solid var(--border);background:var(--surface);overflow:hidden}
+.colh .ends .m15{position:absolute;transform:translateX(-50%);color:var(--border-strong)}
+.mrow{display:grid;grid-template-columns:var(--hdr) repeat(4,1fr);gap:1px;background:var(--border)}
+:root{--hdr:236px}
+.mrow > *{background:var(--surface);min-width:0}
+.mhead > *{background:var(--sunk)}
+.colh{padding:var(--s4) var(--s4) var(--s3)}
+.colh .p{font-family:var(--font-display);font-weight:700;font-size:0.9375rem;letter-spacing:0.04em}
+.colh .n{font-family:var(--font-mono);font-size:0.625rem;color:var(--dim);margin-top:1px}
+.colh .ends{display:flex;justify-content:space-between;position:relative;min-height:1.1em;font-family:var(--font-mono);font-size:0.5625rem;
+  color:var(--dim);margin-top:var(--s3)}
+
+.rowh{padding:var(--s4);min-width:0}
+.rowh .t{font-family:var(--font-display);font-weight:600;font-size:0.8125rem;overflow-wrap:anywhere}
+.rowh .m{font-family:var(--font-mono);font-size:0.625rem;color:var(--dim);margin-top:2px;
+  display:flex;gap:var(--s3);flex-wrap:wrap}
+.rowh .post{color:var(--muted)}
+.irb{color:var(--market-hi)}
+.mrow.me > *{background:color-mix(in oklab,var(--model) 9%,var(--surface))}
+.mrow.me .rowh .t{color:var(--model-hi)}
+
+/* a cell is a framed rectangle: constant frame, position read inside it
+   (Cleveland & McGill's own replacement for a shaded cell) */
+.cell{padding:var(--s4) var(--s4) var(--s3);min-width:0}
+.frame{position:relative;height:30px;border-left:1px solid var(--border-strong);
+  border-right:1px solid var(--border-strong);background:var(--sunk)}
+.frame .mid{position:absolute;top:0;bottom:0;width:1px;background:var(--border-strong);opacity:0.65}
+.frame .meline{position:absolute;top:-5px;bottom:-5px;width:0;
+  border-left:2px dashed var(--model);opacity:0.85}
+.mrow.me .frame .meline{opacity:0}
+.bar{position:absolute;top:50%;height:2.5px;margin-top:-1.25px;background:var(--border-strong)}
+.tk{position:absolute;top:50%;width:13px;height:13px;margin-left:-6.5px;margin-top:-6.5px;
+  border-radius:50%;box-shadow:0 0 0 2.5px var(--sunk)}
+.tk.o{background:var(--model)}
+.tk.m{border:2.5px solid var(--market)}
+.tk.d{width:7px;height:7px;margin-left:-3.5px;margin-top:-3.5px;background:var(--model);opacity:0.55}
+.cellfoot{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);
+  font-family:var(--font-mono);font-size:0.6875rem;color:var(--muted);margin-top:var(--s3)}
+.cellfoot .rk{color:var(--text)}
+.cellfoot .dep{color:var(--dim);white-space:nowrap}
+.cellfoot .t15{color:var(--model-hi)}
+.cellnm{font-size:0.6875rem;color:var(--muted);margin-top:1px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap}
+
+.foot{margin-top:var(--s8);border-top:1px solid var(--border);padding-top:var(--s5)}
+.foot h3{font-family:var(--font-display);font-weight:600;font-size:0.6875rem;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 var(--s3)}
+.foot ul{margin:0;padding-left:1.15em;color:var(--muted);font-size:0.8125rem;max-width:98ch}
+.foot li{margin-bottom:var(--s3)}
+.foot b{color:var(--text);font-weight:500}
+
+@media (max-width:900px){
+  :root{--hdr:1fr}
+  .mrow{grid-template-columns:1fr 1fr}
+  .mhead{display:none}
+  .cell::before{content:attr(data-pos);display:block;font-family:var(--font-display);font-weight:700;
+    font-size:0.6875rem;letter-spacing:0.06em;color:var(--dim);margin-bottom:var(--s2)}
+}
+@media (forced-colors:active){
+  .tk.o{background:CanvasText}.tk.m{border-color:CanvasText}
+  .meline{background:CanvasText}.frame{border-color:CanvasText}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <div class="app">Dynasty Genius · Studio · sketch for reaction</div>
+    <div class="stamp" id="stamp"></div>
+  </div>
+
+  <h1>Where every team is strong</h1>
+  <p class="lede">Twelve teams down, the four positions across, ordered by posture — contenders at the
+  top, rebuilders at the bottom. The signal you asked for is a conjunction, so it is read as one:
+  find a row near the top, then a column where their mark sits well left of yours.</p>
+
+  <div class="howto" id="howto"></div>
+
+  <div class="legend">
+    <span><svg width="15" height="15" aria-hidden="true"><circle cx="7.5" cy="7.5" r="5.5" fill="var(--model)"/></svg> their best at that position, our model's rank</span>
+    <span><svg width="15" height="15" aria-hidden="true"><circle cx="7.5" cy="7.5" r="4.6" fill="none" stroke="var(--market)" stroke-width="2.4"/></svg> the same player, the market's rank</span>
+    <span><svg width="15" height="15" aria-hidden="true"><circle cx="7.5" cy="7.5" r="3.5" fill="var(--model)" opacity="0.55"/></svg> their other top-15 players there — depth you can see</span>
+    <span><svg width="9" height="16" aria-hidden="true"><line x1="4" y1="0" x2="4" y2="16" stroke="var(--model)" stroke-width="2" stroke-dasharray="3 2"/></svg> where <b style="color:var(--text);font-weight:500">your</b> best sits — the same dashed rule in every cell</span>
+  </div>
+
+  <div class="mx" id="mx"></div>
+
+  <div class="foot">
+    <h3>What this does not know</h3>
+    <ul id="limits"></ul>
+  </div>
+</div>
+
+<script src="./matrix-data.js"></script>
+<script>
+(function(){
+  const POS=['QB','RB','WR','TE'], ME=MX.me;
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const PAD=13;
+  // worst on the left, best on the right — the standing rank-axis convention
+  const x=(r,pool)=>'calc('+PAD+'px + '+((pool-Math.min(r,pool))/(pool-1)).toFixed(5)+' * (100% - '+(2*PAD)+'px))';
+
+  document.getElementById('stamp').innerHTML='sketch · '+MX.generated+'<br>league snapshot '+MX.snapshot.slice(0,10);
+
+  const mine={};
+  POS.forEach(p=>{ const c=(MX.cells[ME]||{})[p]; mine[p]=c?c.best.dr:null; });
+
+  document.getElementById('howto').innerHTML=
+    '<b>How to read one cell.</b> The frame is that position\'s whole league pool — worst on the left, '+
+    'the best player in the league at the far right. The filled dot is that team\'s best at the position '+
+    'by <b>our model</b>; the ring is where <b>the market</b> has the same player. The dashed rule '+
+    'is where <b>your</b> best sits, drawn identically in every cell, so "they are weak where I am deep" '+
+    'is a distance you can see rather than a number you have to hold in your head. Beneath each frame: '+
+    'their best rank, how many they hold there, and how many of those are top-15 in our lane. Small '+
+    'faint dots are those extra top-15 players, so a genuinely deep room looks deep. The solid rule '+
+    'inside each frame is rank 15 &mdash; roughly where startable ends, and the reason a mark left of it '+
+    'is depth rather than quality however far up the axis it looks.';
+
+  document.getElementById('limits').innerHTML=[
+    '<b>Injury is not observable; IR membership is.</b> The snapshot normalizer keeps six fields per '+
+      'player and no injury field at all, and Sleeper\'s transactions endpoint is never called. The '+
+      '<span style="color:var(--market-hi)">IR badge</span> beside a posture is a count of players on '+
+      'injured reserve — a proxy for a thinned room that says nothing about severity or timeline. '+
+      'Retaining injury status is an engineering ask.',
+    '<b>Posture is the app\'s own heuristic</b>, weighted 60% to starter value — and that number '+
+      'currently excludes anyone on IR or taxi. Read the label as a rough sort, not a fact.',
+    '<b>Depth counts every player they hold at the position; the mark is only their best.</b> A team '+
+      'can be RB-rich and still show a modest mark, which is why the count sits under the frame.',
+    '<b>Our lane ranks inside a position only.</b> The 0&ndash;100 model score saturates &mdash; twelve '+
+      'rostered players tie at exactly 100.0 &mdash; so no cross-position rank is drawn anywhere here.'
+  ].map(s=>'<li>'+s+'</li>').join('');
+
+  let html='<div class="mrow mhead"><div class="colh"><div class="p" style="color:var(--dim);font-size:.625rem;letter-spacing:.09em">TEAM · POSTURE</div></div>'+
+    POS.map(p=>'<div class="colh"><div class="p">'+p+'</div><div class="n">'+MX.pool[p]+' rostered league-wide</div>'+
+      '<div class="ends"><span>'+p+MX.pool[p]+'</span><span class="m15" style="left:'+x(15,MX.pool[p])+'">'+p+'15</span><span>'+p+'1</span></div></div>').join('')+'</div>';
+
+  MX.order.forEach(rid=>{
+    const m=MX.meta[rid], isMe=+rid===ME;
+    html+='<div class="mrow'+(isMe?' me':'')+'">'+
+      '<div class="rowh"><div class="t">'+esc(m.name)+(isMe?' — you':'')+'</div>'+
+        '<div class="m"><span class="post">'+m.posture.toLowerCase()+'</span>'+
+        (m.ir?'<span class="irb">'+m.ir+' on IR</span>':'')+'</div></div>'+
+      POS.map(p=>{
+        const c=(MX.cells[rid]||{})[p], pool=MX.pool[p];
+        if(!c) return '<div class="cell" data-pos="'+p+'"><div class="frame"></div>'+
+          '<div class="cellfoot"><span class="dep">none</span></div></div>';
+        const b=c.best, lo=Math.max(b.dr,b.mr), hi=Math.min(b.dr,b.mr);
+        return '<div class="cell" data-pos="'+p+'">'+
+          '<div class="frame">'+
+            '<span class="mid" style="left:'+x(15,pool)+'"></span>'+
+            (mine[p]?'<span class="meline" style="left:'+x(mine[p],pool)+'"></span>':'')+
+            '<span class="bar" style="left:'+x(lo,pool)+';right:calc(100% - '+x(hi,pool)+')"></span>'+
+            (c.depth||[]).slice(1).filter(r=>r<=15).map(r=>
+              '<span class="tk d" style="left:'+x(r,pool)+'"></span>').join('')+
+            '<span class="tk m" style="left:'+x(b.mr,pool)+'"></span>'+
+            '<span class="tk o" style="left:'+x(b.dr,pool)+'"></span>'+
+          '</div>'+
+          '<div class="cellfoot"><span class="rk">'+p+b.dr+'</span>'+
+            '<span class="dep">'+c.n+' held · <span class="t15">'+c.top15+'</span> top-15</span></div>'+
+          '<div class="cellnm">'+esc(b.nm)+'</div>'+
+        '</div>';
+      }).join('')+'</div>';
+  });
+  document.getElementById('mx').innerHTML=html;
+})();
+</script>
+</body>
+</html>

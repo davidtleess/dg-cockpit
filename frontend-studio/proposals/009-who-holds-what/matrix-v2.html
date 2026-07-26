@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Better or worse than you — Dynasty Genius / Studio</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+:root{
+  --bg:oklch(0.16 0.01 250); --surface:oklch(0.2 0.012 250); --sunk:oklch(0.175 0.011 250);
+  --border:oklch(0.32 0.012 250); --border-strong:oklch(0.46 0.014 250);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250); --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+  /* constitutional lane hues, verbatim from the app's tokens.css — identity only, never magnitude */
+  --model:#74a7e8; --market:#e1a447;
+
+  /* Carbon spacing ramp — a dense grid spends its whole budget in 01–05 */
+  --s1:2px;--s2:4px;--s3:8px;--s4:12px;--s5:16px;--s6:24px;--s7:32px;--s8:40px;--s10:64px;
+
+  /* type addressed by ROLE, never by size (M3 convention). Nothing below 12px carries content. */
+  --t-col:0.9375rem;      /* column heading   */
+  --t-row:0.875rem;       /* row heading      */
+  --t-meta:0.75rem;       /* supporting meta  */
+  --t-prose:0.9375rem;    /* body             */
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --dur:110ms; --ease:cubic-bezier(0.2,0,0.38,0.9);
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:var(--t-prose);
+  line-height:1.5;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:1120px;margin:0 auto;padding:var(--s7) var(--s6) var(--s10)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s6);flex-wrap:wrap;
+  padding-bottom:var(--s5);border-bottom:1px solid var(--border);margin-bottom:var(--s6)}
+.mast .app{font-family:var(--font-display);font-weight:700;font-size:var(--t-meta);letter-spacing:0.14em;
+  color:var(--dim);text-transform:uppercase}
+.mast .stamp{font-family:var(--font-mono);font-size:var(--t-meta);color:var(--dim);text-align:right;line-height:1.6}
+h1{font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-0.02em;margin:0 0 var(--s2)}
+.lede{color:var(--muted);margin:0 0 var(--s6);max-width:70ch}
+.lede b{color:var(--text);font-weight:500}
+
+/* ---------- the grid ---------- */
+.grid{display:grid;grid-template-columns:210px repeat(4,1fr);gap:1px;background:var(--border);
+  border:1px solid var(--border)}
+.grid > *{background:var(--surface);min-width:0}
+
+.ch{background:var(--sunk);padding:var(--s4) var(--s4) var(--s3)}
+.ch .p{font-family:var(--font-display);font-weight:700;font-size:var(--t-col);letter-spacing:0.03em}
+.ch .you{font-family:var(--font-mono);font-size:var(--t-meta);color:var(--muted);margin-top:var(--s1)}
+.corner{background:var(--sunk);padding:var(--s4)}
+.corner .k{font-family:var(--font-display);font-weight:600;font-size:var(--t-meta);letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--dim)}
+
+.rh{padding:var(--s4);display:flex;flex-direction:column;justify-content:center}
+.rh .t{font-family:var(--font-display);font-weight:600;font-size:var(--t-row);overflow-wrap:anywhere}
+.rh .m{font-size:var(--t-meta);color:var(--dim);margin-top:var(--s1)}
+.rh .ir{color:var(--market)}
+
+/* one cell = one shared centre, two bars. no legend, no key, no extra rules. */
+.c{padding:var(--s4) var(--s5);display:flex;flex-direction:column;justify-content:center;gap:3px;
+  position:relative}
+.c .axis{position:absolute;left:50%;top:6px;bottom:6px;width:1px;background:var(--border-strong)}
+.b{position:relative;height:10px}
+.b i{position:absolute;top:0;bottom:0;display:block;border-radius:1px}
+.b.o i{background:var(--model)}
+.b.m i{background:var(--market)}
+.c.zero .b i{background:var(--border-strong);opacity:0.45}
+
+/* the one row that teaches the encoding, labelled on the graphic itself */
+.c .tag{position:absolute;font-size:var(--t-meta);color:var(--muted);white-space:nowrap;
+  font-family:var(--font-mono);pointer-events:none}
+.rowme > *{background:color-mix(in oklab,var(--model) 8%,var(--surface))}
+.rowme .rh .t{color:var(--model)}
+
+.grid .r{display:contents}
+.hint{display:flex;justify-content:space-between;gap:var(--s5);margin-top:var(--s3);
+  font-family:var(--font-mono);font-size:var(--t-meta);color:var(--dim)}
+.hint b{color:var(--muted);font-weight:400}
+
+.tip{position:fixed;z-index:30;pointer-events:none;background:oklch(0.24 0.014 250);
+  border:1px solid var(--border-strong);padding:var(--s3) var(--s4);font-size:var(--t-meta);
+  font-family:var(--font-mono);color:var(--text);opacity:0;transition:opacity var(--dur) linear;
+  line-height:1.5;max-width:17rem}
+.tip.on{opacity:1}
+.tip b{font-family:var(--font-sans);font-size:var(--t-row)}
+.tip .o{color:var(--model)} .tip .m{color:var(--market)}
+
+.foot{margin-top:var(--s8);border-top:1px solid var(--border);padding-top:var(--s5)}
+.foot h3{font-family:var(--font-display);font-weight:600;font-size:var(--t-meta);letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--dim);margin:0 0 var(--s3)}
+.foot ul{margin:0;padding-left:1.15em;color:var(--muted);font-size:var(--t-meta);max-width:92ch}
+.foot li{margin-bottom:var(--s3)}
+.foot b{color:var(--text);font-weight:500}
+
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr 1fr}
+  .corner,.ch{display:none}
+  .rh{grid-column:1 / -1;border-top:1px solid var(--border-strong);padding-top:var(--s5)}
+  .c::before{content:attr(data-p);font-family:var(--font-display);font-weight:700;
+    font-size:var(--t-meta);color:var(--dim);margin-bottom:var(--s2)}
+}
+@media (forced-colors:active){ .b.o i,.b.m i{background:CanvasText} .c .axis{background:CanvasText} }
+@media (prefers-reduced-motion:reduce){ .tip{transition:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="mast">
+    <div class="app">Dynasty Genius · Studio · sketch v2</div>
+    <div class="stamp" id="stamp"></div>
+  </div>
+
+  <h1>Better or worse than you</h1>
+  <p class="lede">Every cell asks one question: <b>is their best at this position better than mine?</b>
+  Bars run right when they are ahead of you and left when they are behind. The centre line in every cell is
+  <b>you</b> &mdash; your own best at that position, printed in each column heading.</p>
+
+  <div class="grid" id="grid"></div>
+  <div class="hint">
+    <span>← <b>they are behind you here</b> — what you could sell into</span>
+    <span><b>they are ahead of you here</b> — what you would be buying →</span>
+  </div>
+
+  <div class="foot">
+    <h3>What this does not know</h3>
+    <ul id="limits"></ul>
+  </div>
+</div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<script src="./gap-data.js"></script>
+<script>
+(function(){
+  const POS=['QB','RB','WR','TE'], ME=G.me, MAX=G.maxGap, tip=document.getElementById('tip');
+  const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const w=g=>(Math.abs(g)/MAX*50).toFixed(2)+'%';
+
+  document.getElementById('stamp').innerHTML='sketch v2 · '+G.generated+'<br>league snapshot '+G.snapshot.slice(0,10);
+  document.getElementById('limits').innerHTML=[
+    '<b>A rank place is not a fixed amount of value.</b> The step from RB3 to RB4 is worth far more '+
+      'than the step from RB40 to RB41, and this grid draws them the same width. It is built to point '+
+      'you at a matchup, never to price one.',
+    '<b>Only each team\'s best at a position is compared.</b> A deep room and a shallow one can show '+
+      'the same bar; hovering a cell gives the count.',
+    '<b>Injury is not observable.</b> The snapshot keeps six fields per player and none is injury '+
+      'status, and Sleeper\'s transactions endpoint is never called. The IR count beside a posture is '+
+      'the only proxy available and says nothing about severity or timeline.',
+    '<b>Posture is the app\'s own heuristic</b>, weighted 60% to a starter value that currently '+
+      'excludes everyone on IR or taxi. Read it as a rough sort, not a fact.'
+  ].map(s=>'<li>'+s+'</li>').join('');
+
+  let h='<div class="corner"><div class="k">Team · posture</div></div>'+
+    POS.map(p=>{const m=G.mine[p];
+      return '<div class="ch"><div class="p">'+p+'</div>'+
+        '<div class="you">you: '+p+m.orank+' · '+m.n+' held</div></div>';}).join('');
+
+  G.order.filter(rid=>+rid!==ME).forEach(rid=>{
+    const meta=G.meta[rid], isMe=false;
+    h+='<div class="rh'+(isMe?' rowme':'')+'"><div class="t">'+esc(meta.name)+(isMe?' — you':'')+'</div>'+
+       '<div class="m">'+meta.posture.toLowerCase()+(meta.ir?' · <span class="ir">'+meta.ir+' on IR</span>':'')+'</div></div>';
+    POS.forEach((p,pi)=>{
+      const c=(G.gaps[rid]||{})[p];
+      if(!c){ h+='<div class="c" data-p="'+p+'"><span class="axis"></span></div>'; return; }
+      const bar=(g,cls)=>'<span class="b '+cls+'"><i style="'+
+        (g>=0?'left:50%;width:'+w(g):'right:50%;width:'+w(g))+'"></i></span>';
+      // identity is labelled ON the graphic, once, on the first row — never in a separate key
+      const tags = (rid===G.order.filter(r=>+r!==ME)[0] && pi===0)
+        ? '<span class="tag" style="top:-4px;'+(c.o>=0?'left:calc(50% + '+w(c.o)+' + 8px)':'right:calc(50% + '+w(c.o)+' + 8px)')+'">ours</span>'+
+          '<span class="tag" style="top:14px;'+(c.m>=0?'left:calc(50% + '+w(c.m)+' + 8px)':'right:calc(50% + '+w(c.m)+' + 8px)')+'">market</span>' : '';
+      h+='<div class="c'+(isMe?' zero':'')+'" data-p="'+p+'" data-rid="'+rid+'" tabindex="0">'+
+         '<span class="axis"></span>'+bar(c.o,'o')+bar(c.m,'m')+tags+'</div>';
+    });
+  });
+  const grid=document.getElementById('grid'); grid.innerHTML=h;
+
+  function show(el,e){
+    const c=(G.gaps[+el.dataset.rid]||{})[el.dataset.p]; if(!c) return;
+    const m=G.meta[+el.dataset.rid], p=el.dataset.p, mine=G.mine[p];
+    const say=g=>g===0?'the same as you':(g>0?g+' places ahead of you':(-g)+' places behind you');
+    tip.innerHTML='<b>'+esc(m.name)+' · '+p+'</b><br>'+
+      '<span class="o">our board</span> — '+esc(c.onm)+', '+p+c.orank+'<br>'+
+      '&nbsp;&nbsp;'+say(c.o)+'<br>'+
+      '<span class="m">the market</span> — '+esc(c.mnm)+', '+p+c.mrank+'<br>'+
+      '&nbsp;&nbsp;'+say(c.m)+'<br>'+
+      'they hold '+c.n+' · '+c.t15+' inside our top 15<br>'+
+      'you hold '+mine.n+' · best is '+esc(mine.nm)+', '+p+mine.orank;
+    const r=el.getBoundingClientRect();
+    tip.classList.add('on');
+    tip.style.left=Math.min(r.left,innerWidth-290)+'px';
+    tip.style.top=(r.bottom+8>innerHeight-160?r.top-150:r.bottom+8)+'px';
+  }
+  grid.addEventListener('mouseover',e=>{const c=e.target.closest('.c'); if(c)show(c,e);});
+  grid.addEventListener('focusin',e=>{const c=e.target.closest('.c'); if(c)show(c,e);});
+  grid.addEventListener('mouseleave',()=>tip.classList.remove('on'));
+  grid.addEventListener('focusout',()=>tip.classList.remove('on'));
+})();
+</script>
+</body>
+</html>

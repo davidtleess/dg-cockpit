@@ -144,35 +144,86 @@ a{color:var(--model-hi)}
   </div>
 
   <div class="lead">
-    <h1>Sixteen picks is not sixteen of <em>the same thing</em>.</h1>
-    <p>You are <b>last of twelve in players</b> and <b>first of twelve in future picks</b> — roughly a third of your
-      franchise has not been drafted yet. The app renders that third as a count. But the market prices your best
-      pick at <b>6.4&times;</b> your worst, and the biggest driver is not the round — it is <b>which team the pick
-      came from</b>. Our model prices all sixteen as two numbers.</p>
+    <h1>Sixteen picks, and they are <em>not</em> sixteen of the same thing.</h1>
+    <p>You hold more future capital than anyone in the league, and the app renders it as a count. Two things
+      actually separate them. <b>Draft capital</b> — measured below on eleven real draft classes, where the
+      odds of landing a top-15% player run <b>47% → 34% → 24%</b> across the first three rounds and then fall
+      off a shelf to <b>3%</b>. And the <b>draft year</b> — nearer picks trade higher, except that the market
+      is paying a <b>17% premium</b> for the 2027 class, where <b>nine of your sixteen</b> sit. Our model
+      prices all sixteen as two numbers.</p>
   </div>
 
-  <!-- ============ THE SITUATION — measured facts only, no chart ============ -->
+  <!-- ============ WHAT DRAFT CAPITAL RETURNS — self-derived distribution ============ -->
   <section class="reg">
     <div class="reghd">
-      <h2>The situation, in numbers the app already has</h2>
-      <p>Three facts, each read straight off a live endpoint or the market cache. Nothing here is
-        projected, aged, or modelled.</p>
+      <h2>What draft capital actually returns</h2>
+      <p>A pick is an option, and an option is not its average — so this is every outcome, one dot per
+        player, countable. Every drafted QB, RB, WR and TE from the mature classes <b>2015&ndash;2021</b>
+        (<b>n&nbsp;=&nbsp;553</b>), washouts included, scored on fantasy points produced in seasons two to
+        four, derived here from the app's own training data. A <b>bright dot</b> is a player who finished
+        in the <b>top 15% of his own position</b> — the cut is position-relative on purpose; see below.</p>
+    <div class="regbody"><div id="dist"></div></div>
+    <div class="tell" id="disttell"></div>
+  </section>
+
+
+  <!-- ============ YEAR — the time discount, and the 2027 exception ============ -->
+  <section class="reg">
+    <div class="reghd">
+      <h2>And the year decides what you can get for it</h2>
+      <p>Round decides what a pick <i>becomes</i>. The draft <b>year</b> decides what it is worth to trade
+        <i>today</i> — nearer picks carry more demand and more certainty, so they price higher. That
+        discount is plainly visible in the market's own numbers, and so is the exception:
+        <b>2027 sits well above the ordinary one-year step, in all three rounds.</b></p>
+    </div>
+    <div class="regbody"><div id="years"></div></div>
+    <div class="tell" id="yeartell"></div>
+  </section>
+
+
+  <!-- ============ THE CORRECTION ============ -->
+  <section class="reg">
+    <div class="reghd">
+      <h2>Correcting what I had here before</h2>
     </div>
     <div class="tell">
-      <p><span class="drl">you cannot roster what you own</span>Your roster is <b>27 players against a
-        26-man cap</b> — one cut is required <i>today</i>, before any pick arrives. Nine picks land in the
-        2027 rookie draft alone. To keep all nine you would have to shed <b>ten players</b>.
-        These picks are not inventory; they are <b>currency you are obliged to spend</b>.
-        <span class="lim">/api/roster/capacity, live.</span></p>
-      <p><span class="drl">it is three picks and a tail</span>Your top <b>3 of 16</b> hold <b>41%</b> of the
-        portfolio's value; the bottom 8 hold 28%. All three of the top ones are <b>your own</b> firsts —
-        the picks that are only this valuable while you are this bad.
-        <span class="lim">FantasyCalc slot ladder, cached 2026-07-24.</span></p>
-      <p><span class="drl">"a first-round pick" is not a unit</span>The market's own ladder falls
-        <b>34% from 1.01 to 1.02</b>, and a 1.12 (<span class="mk">2,249</span>) is worth barely more than
-        a 2.01 (<span class="mk">2,134</span>) — a <b>5%</b> gap across the round boundary everyone
-        negotiates around. A 1.01 is <b>3.06&times;</b> a 1.12.
-        <span class="lim">48 measured slot prices, FantasyCalc.</span></p>
+      <p><span class="drl">i had the roster rules wrong</span>I claimed you were out of room. Your league is
+        <b>20 active</b> (9 starters + 11 bench) <b>+ 4 IR + 2 taxi</b> = 26, and taxi is
+        <b>rookies-only, one year</b> — it exists precisely to absorb rookie picks. You are one over in an
+        offseason where being over is legal, and you have until Week 1.
+        <span class="lim">Sleeper league settings, live snapshot.</span></p>
+      <p><span class="drl">and room was never the constraint</span>Your <b>bottom ten players are worth
+        8,033 combined</b> — less than your <b>top three picks (13,743)</b>. Nine of those ten are NFL
+        third- and fourth-rounders. Dropping a bubble player for a rookie first isn't a cost; on the
+        market's own numbers it's an upgrade. <span class="lim">FantasyCalc, 2026-07-24.</span></p>
+      <p><span class="drl">your roster already proves the mechanism</span><b>9 NFL first-rounders carry 53%
+        of your roster's market value.</b> Jeanty, Dart, Garrett Wilson, Mendoza, Odunze. The rounds below
+        carry 17.7%, 16.2%, 9.5%, 3.7%. Draft capital is why rookie picks are worth holding, and your own
+        team is the evidence.</p>
+    </div>
+  </section>
+
+  <!-- ============ THE CALENDAR ============ -->
+  <section class="reg">
+    <div class="reghd">
+      <h2>Where you are on the dynasty calendar</h2>
+    </div>
+    <div class="tell">
+      <p><span class="drl">today, late july</span>Rookie picks sit near their annual floor and are still
+        drifting: your sixteen are <b>down 1.6%</b> over the last 30 days
+        (<span class="mk">26,167</span> &rarr; <span class="mk">25,747</span>).
+        <span class="lim">Measured, FantasyCalc 30-day trend.</span></p>
+      <p><span class="drl">september–november</span>Picks bottom out — contenders discount future capital to
+        chase a title. The documented window to <b>buy</b> picks.</p>
+      <p><span class="drl">november–december</span>Productive veterans peak; contenders pay a premium for
+        playoff-ready assets. The documented window to <b>sell</b> the older players on your roster into
+        future picks — exactly the trade you described.</p>
+      <p><span class="drl">february–april</span>Picks peak as draft coverage builds, reportedly inflating
+        well above their offseason baseline. The window to <b>sell</b> picks, not buy them.</p>
+      <p class="lim">Calendar from published dynasty trade-window guidance (Dynasty Dealmaker, Fantasy
+        Footballers); the 30-day drift is measured from the app's own capture. The seasonal percentages are
+        other people's claims, not something this app has observed — its market history only reaches back
+        29 days.</p>
     </div>
   </section>
 
@@ -223,6 +274,173 @@ a{color:var(--model-hi)}
     return n+({1:"st",2:"nd",3:"rd"}[n%10]||"th");
   }
   function clip(s,n){return s.length>n?s.slice(0,n-1).trim()+"…":s;}
+
+  /* ============================================================
+     WHAT DRAFT CAPITAL RETURNS — a countable unit chart (icon array):
+     one dot per real player, tail dots leading, highlighted by size +
+     ring + lightness, with the frequency sentence beside it. Per
+     craft/uncertainty-viz.md §A/§D: a fat tail must be drawn as
+     COUNTABLE OUTCOMES with a named quantile, never as a moment.
+
+     The cut is position-relative (top 15% within position) because the
+     validity gate in craft/metric-validity.md §A check 6 caught a
+     confound: round 1 is 35% QB and only QBs clear an absolute points
+     bar, so a pooled absolute cut was measuring position mix. Naive
+     pooled rates read 25/9/1/1; controlled they read 47/34/24/3.
+     95% intervals shown per §C — n is adequate here (65-337) but the
+     rates are proportions and must not be read as exact.
+     ============================================================ */
+  (function(){
+    var PER=60,PITCH=10,R=3.1,X0=158,TOP=44,GAP=17;
+    var rows=OUT.bands.map(function(b,i){
+      return {b:b, lines:Math.ceil(b.n/PER)};
+    });
+    var H=TOP+rows.reduce(function(a,r){return a+r.lines*PITCH+GAP+14;},0)+16;
+    var W=900;
+    var svg=el("svg",{viewBox:"0 0 "+W+" "+H,role:"img",
+      "aria-label":"One dot per drafted player by round. Bright dots finished top 15% of their position: 34 of 72 in round one, 22 of 65 in round two, 19 of 79 in round three, 10 of 337 in round four or later."});
+    svg.appendChild(el("text",{x:X0,y:18,"text-anchor":"start","font-size":11.5,"font-weight":600,
+      fill:"var(--muted)","font-family":"var(--font-sans)"},
+      "one dot = one drafted player  ·  bright = finished top 15% of his position"));
+    var y=TOP;
+    var byRound={1:[],2:[],3:[],4:[]};
+    POPD.forEach(function(d){byRound[d[0]].push(d[1]);});
+    rows.forEach(function(row,ri){
+      var b=row.b, dots=byRound[ri+1].slice().sort(function(p,q){return q-p;});  // tail leads
+      svg.appendChild(el("text",{x:X0-16,y:y+6,"text-anchor":"end","font-size":13,"font-weight":700,
+        fill:"var(--text)","font-family":"var(--font-display)"},b.lbl));
+      svg.appendChild(el("text",{x:X0-16,y:y+22,"text-anchor":"end","font-size":10.5,
+        fill:"var(--dim)","font-family":"var(--font-mono)"},"n = "+b.n));
+      dots.forEach(function(isStar,i){
+        var cx=X0+(i%PER)*PITCH+R, cy=y+Math.floor(i/PER)*PITCH+R;
+        if(isStar){
+          svg.appendChild(el("circle",{cx:cx,cy:cy,r:R+1.4,fill:"var(--market-hi)",
+            stroke:"var(--surface)","stroke-width":1.2}));
+        } else {
+          svg.appendChild(el("circle",{cx:cx,cy:cy,r:R-0.5,fill:"var(--faint)"}));
+        }
+      });
+      // frequency sentence + interval, per uncertainty-viz §A
+      var fy=y+row.lines*PITCH+13;
+      svg.appendChild(el("text",{x:X0,y:fy,"text-anchor":"start","font-size":11.5,
+        fill:"var(--market-hi)","font-family":"var(--font-mono)","font-weight":600},
+        b.stars+" of "+b.n));
+      svg.appendChild(el("text",{x:X0+66,y:fy,"text-anchor":"start","font-size":11,
+        fill:"var(--dim)","font-family":"var(--font-sans)"},
+        "= "+b.rate+"%  (95% interval "+b.lo+"–"+b.hi+"%)   "+
+        (b.names.length?b.names.slice(0,3).join(", ")+(b.stars>3?"…":""):"")));
+      y=fy+GAP;
+    });
+    document.getElementById("dist").appendChild(svg);
+
+    var r=OUT.bands, nv=OUT.naive;
+    document.getElementById("disttell").innerHTML=
+      '<p><span class="drl">the read</span>Count the bright dots. <b>'+r[0].stars+' of '+r[0].n+'</b> '+
+      'first-rounders became a top-15% player at their position, <b>'+r[1].stars+' of '+r[1].n+'</b> '+
+      'second, <b>'+r[2].stars+' of '+r[2].n+'</b> third — and then it falls off a shelf: '+
+      '<b>'+r[3].stars+' of '+r[3].n+'</b> from round four onward. <b>The real cliff is between round '+
+      'three and round four</b>, not between the first and the third. Rounds one to three are a gradient '+
+      '('+r[0].rate+'% → '+r[1].rate+'% → '+r[2].rate+'%); everything after is a different asset class.</p>'+
+      '<p><span class="drl">what I got wrong an hour ago</span>My first version used an absolute points '+
+      'cut pooled across positions, and it read <b>'+nv["Round 1"]+'% / '+nv["Round 2"]+'% / '+
+      nv["Round 3"]+'% / '+nv["Round 4+"]+'%</b> — a 25&times; gap between rounds one and three. That was '+
+      'largely a <b>position-mix artefact</b>: round one is <b>35% quarterbacks</b> against 8–13% in the '+
+      'other rounds, and quarterbacks are the only position that clears a high absolute points bar (no '+
+      'tight end in eleven draft classes did). Cutting <b>within position</b> removes it, and the honest '+
+      'gap between rounds one and three is <b>2&times;</b>, not 25&times;. I have left both numbers here '+
+      'rather than quietly replacing one.</p>'+
+      '<p class="lim">Population: every drafted QB/RB/WR/TE in the 2015–2021 classes (n = '+OUT.n+'), '+
+      'app training data, <b>washouts included</b> — filtering to complete four-year arcs would have '+
+      'deleted 50% of round 4+ against 6% of round 1, which is round-dependent survivor bias. Classes '+
+      'after 2021 are excluded because their outcomes are not yet final. "Top 15% of position" cuts at '+
+      OUT.cut.QB+' / '+OUT.cut.RB+' / '+OUT.cut.WR+' / '+OUT.cut.TE+' points for QB / RB / WR / TE across '+
+      'seasons 2–4; the 15% is my choice and is stated, but every player is measured against his own '+
+      'position on one scale. Intervals are 95% on the proportion — read the bands, not the points. '+
+      '<b>The gap I cannot close:</b> this is <b>NFL</b> draft capital, not dynasty rookie-draft position. '+
+      'They are different boards; an early rookie pick is how you buy access to the early-NFL-capital '+
+      'tier, and that link is what this chart rests on.</p>';
+  })();
+
+  /* ============================================================
+     YEAR — three small multiples (one per round) on a SHARED price
+     scale. Within a panel: the time discount. Across panels: the round
+     cliff. The dashed tick on 2027 is the ONLY constructed mark — what
+     2027 would cost at the same one-year step the 2028->2029 pair
+     implies. The bar overshooting it is the loaded-class premium.
+     ============================================================ */
+  (function(){
+    var G={"2027-1":2907,"2027-2":1510,"2027-3":1048,
+           "2028-1":2153,"2028-2":1277,"2028-3":938,
+           "2029-1":1865,"2029-2":1228,"2029-3":953};
+    var YRS=[2027,2028,2029], RDS=[1,2,3], LBL={1:"1st round",2:"2nd round",3:"3rd round"};
+    var W=900,H=306,PW=250,GAP=30,T=76,B=H-56,BW=46,PAD=48;
+    var max=2907;
+    function py(v){return B-v/max*(B-T);}            // shared scale, zero baseline
+    var svg=el("svg",{viewBox:"0 0 "+W+" "+H,role:"img",
+      "aria-label":"Market price by draft year for each round, on one shared scale. Prices fall as the draft year gets further out, and 2027 sits above trend in all three rounds."});
+    svg.appendChild(el("text",{x:PAD,y:16,"text-anchor":"start","font-size":11.5,"font-weight":600,
+      fill:"var(--muted)","font-family":"var(--font-sans)"},
+      "what the market pays for one pick, by draft year  ·  all three panels share one scale"));
+    var counts={};
+    CAP.picks.forEach(function(p){counts[p.year+"-"+p.rnd]=(counts[p.year+"-"+p.rnd]||0)+1;});
+
+    RDS.forEach(function(r,pi){
+      var ox=PAD+pi*(PW+GAP);
+      svg.appendChild(el("text",{x:ox,y:T-30,"text-anchor":"start","font-size":12.5,"font-weight":700,
+        fill:"var(--text)","font-family":"var(--font-display)"},LBL[r]));
+      svg.appendChild(el("line",{x1:ox,y1:B,x2:ox+PW-24,y2:B,stroke:"var(--border-strong)","stroke-width":1}));
+      // the ordinary one-year step, taken from the far pair, extrapolated back to 2027
+      var step=G["2028-"+r]/G["2029-"+r], pred=G["2028-"+r]*step;
+      YRS.forEach(function(y,i){
+        var v=G[y+"-"+r], cx=ox+34+i*74;
+        svg.appendChild(el("rect",{x:cx-BW/2,y:py(v),width:BW,height:B-py(v),rx:3,
+          fill:"var(--market)","fill-opacity":0.8}));
+        svg.appendChild(el("text",{x:cx,y:py(v)-7,"text-anchor":"middle","font-size":11.5,
+          "font-weight":600,fill:"var(--text)","font-family":"var(--font-mono)"},fmt(v)));
+        svg.appendChild(el("text",{x:cx,y:B+16,"text-anchor":"middle","font-size":11,
+          fill:"var(--muted)","font-family":"var(--font-mono)"},String(y)));
+        var n=counts[y+"-"+r]||0;
+        svg.appendChild(el("text",{x:cx,y:B+31,"text-anchor":"middle","font-size":10,
+          fill:n?"var(--now)":"var(--faint)","font-family":"var(--font-sans)"},
+          n?("you hold "+n):"—"));
+      });
+      // the counterfactual tick on 2027
+      var cx0=ox+34;
+      svg.appendChild(el("line",{x1:cx0-BW/2-4,y1:py(pred),x2:cx0+BW/2+4,y2:py(pred),
+        stroke:"var(--text)","stroke-width":1.5,"stroke-dasharray":"4 3"}));
+      svg.appendChild(el("text",{x:cx0-BW/2-9,y:py(pred)+4,"text-anchor":"end","font-size":10.5,
+        fill:"var(--dim)","font-family":"var(--font-mono)"},
+        "+"+Math.round((G["2027-"+r]/pred-1)*100)+"%"));
+    });
+    svg.appendChild(el("text",{x:PAD,y:H-8,"text-anchor":"start","font-size":10.5,
+      fill:"var(--dim)","font-family":"var(--font-sans)"},
+      "dashed = what 2027 would cost at the same one-year step 2028→2029 implies"));
+    document.getElementById("years").appendChild(svg);
+
+    var n27=CAP.picks.filter(function(p){return p.year===2027;}).length;
+    var v27=CAP.picks.filter(function(p){return p.year===2027;})
+                     .reduce(function(a,p){return a+G[p.year+"-"+p.rnd];},0);
+    var vall=CAP.picks.reduce(function(a,p){return a+G[p.year+"-"+p.rnd];},0);
+    document.getElementById("yeartell").innerHTML=
+      '<p><span class="drl">the discount is real</span>A first falls <b>−25.9%</b> from 2027 to 2028 and '+
+      'another <b>−13.4%</b> to 2029. A second, <b>−15.4%</b> then <b>−3.8%</b>. By the third round the '+
+      'discount has essentially stopped working — 2029 thirds price <b>+1.6%</b> above 2028 — because a '+
+      'third is already near the floor and has little certainty left to lose.</p>'+
+      '<p><span class="drl">and 2027 is the exception you described</span>Take the 2028→2029 gap as the '+
+      'ordinary one-year step and carry it back, and 2027 <i>should</i> cost 2,485 in the first round. It '+
+      'costs <b>2,907 — 17% above trend</b>. The same premium shows up independently in the second round '+
+      '(<b>+14%</b>) and the third (<b>+14%</b>). Three rounds agreeing to within three points is not '+
+      'noise: the market is paying up for the 2027 class exactly as the consensus says it should.</p>'+
+      '<p><span class="drl">and that is where your capital sits</span>You hold <b>'+n27+' of 16</b> picks '+
+      'in 2027 — <b>'+Math.round(v27/vall*100)+'%</b> of your portfolio by market value, concentrated in '+
+      'the one year the market pays a premium for. That cuts both ways, and it is your call which way: '+
+      'they are the picks most worth keeping if the class delivers, and the picks that would fetch the '+
+      'most today if you would rather convert them.</p>'+
+      '<p class="lim">Prices are FantasyCalc\'s own generic year+round values, read live from the app\'s '+
+      'market lane on 2026-07-24. The dashed tick is the one constructed mark on this chart — a stated '+
+      'counterfactual, not a forecast. The app cannot verify the "loaded class" claim itself; it can only '+
+      'show that the market is pricing 2027 above its own trend.</p>';
+  })();
 
   /* the timing region was removed 2026-07-24. It was built from position priors +
      "a rookie is 22" + "prime is +3..+6 years" + today's prices held fixed, projected

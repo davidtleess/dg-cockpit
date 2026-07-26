@@ -102,6 +102,32 @@ When your work ends in something only he can do (react, approve, decide), the **
 
 So whenever he flips to this window, the bottom of the pane is always either work in progress or the one thing he owes you.
 
+## Where things live (standing rule, recorded 2026-07-25)
+
+`proposals/` is **the only directory the engineering team is sanctioned to read.** It therefore holds
+**only** numbered proposals and their `NNN-RELAY.md` briefs — work written *for the engineers*, plus the
+prototypes and assets those briefs reference.
+
+Everything else lives outside it, in `for-david/`:
+
+- **STATUS.md** — the working board
+- **working notes / notebooks** — measurement records, killed axes, reasoning in progress
+- **accountability and cockpit material** — anything quoting Tower, relay mechanics, or crew coordination
+- **anything quoting David's rulings, his dated bars, his verbatim words, or the terms of this
+  engagement** — that is the same class as the never-put-bus-strategy-in-proposals rule, and it applies
+  to doctrine as well as strategy.
+
+**How this was learned:** on 2026-07-25 an accountability file quoting Tower's errors and David's private
+confirmations, and a notebook carrying David's doctrine verbatim, were both written into `proposals/`
+because the instruction said "write it to a file on disk" and never said which shelf. **A file's
+directory is part of its audience. Decide the shelf before writing, not after.**
+
+**Two consequences to hold:**
+- A file that stays in `proposals/` must never point at a file that does not. Check cross-references
+  after any move.
+- Measurement that lives only in a notebook and should reach the engineers goes as a **relay addendum
+  Studio authors**, never by exposing the notebook.
+
 ## Closeout
 
 When Tower (or David) announces a cockpit closeout, finish your current thought to a clean stopping point, then flush: today's learnings and any David-feedback to `DAVID.md`, every proposal and status current on disk, and a two-line reply naming your open threads and where they're parked. Conversation memory does not survive sessions — anything not on disk at closeout is lost. Reply "Studio closed" when done.
