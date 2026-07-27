@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who can I actually get — need and availability / Studio</title>
+<style>
+@font-face{font-family:"Archivo";font-weight:600;font-display:swap;src:url("./fonts/archivo-latin-600-normal-3BBy0ZsW.woff2") format("woff2")}
+@font-face{font-family:"Archivo";font-weight:700;font-display:swap;src:url("./fonts/archivo-latin-700-normal-D9cHMWGj.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Sans";font-weight:600;font-display:swap;src:url("./fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:400;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2") format("woff2")}
+@font-face{font-family:"IBM Plex Mono";font-weight:500;font-display:swap;src:url("./fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2") format("woff2")}
+
+:root{
+  --bg:oklch(0.16 0.01 250); --surface:oklch(0.2 0.012 250); --raised:oklch(0.24 0.014 250);
+  --sunk:oklch(0.185 0.011 250);
+  --border:oklch(0.32 0.012 250); --border-strong:oklch(0.46 0.014 250);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250); --dim:oklch(0.55 0.01 250);
+  --focus:oklch(0.72 0.14 255);
+
+  /* The two lanes, verbatim from the app's tokens.css dark block. Hue meaning is constitutional
+     in this product and identical on every surface: model = cool blue, market = amber.
+     Never re-tuned for a surface. (DAVID.md 2026-07-25) */
+  --model:#74a7e8; --market:#e1a447;
+
+  /* Availability marks are NOT lanes — they are two readings of the same unit (market-value
+     points), so they carry no hue at all. Figure/ground instead: what he gains is the figure,
+     what it costs its owner is the ground. */
+  --gain:oklch(0.88 0.006 250); --costfill:oklch(0.58 0.014 250); --costline:oklch(0.70 0.014 250);
+
+  --s1:2px;--s2:4px;--s3:8px;--s4:12px;--s5:16px;--s6:24px;--s7:32px;--s8:40px;--s9:48px;--s10:64px;
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --dur-fast:110ms; --dur-mod:240ms;
+  --ease-standard:cubic-bezier(0.2,0,0.38,0.9);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);
+  font-size:0.9375rem;line-height:1.5;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:1300px;margin:0 auto;padding:var(--s7) var(--s6) var(--s10)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+svg{display:block}
+
+/* ---------- masthead ---------- */
+.mast{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s6);flex-wrap:wrap;
+  padding-bottom:var(--s5);border-bottom:1px solid var(--border);margin-bottom:var(--s6)}
+.mast .app{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;letter-spacing:0.14em;
+  color:var(--dim);text-transform:uppercase}
+.mast .stamp{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);text-align:right;line-height:1.7}
+h1{font-family:var(--font-display);font-weight:700;font-size:1.75rem;letter-spacing:-0.02em;
+  margin:0 0 var(--s3);line-height:1.12}
+.lede{color:var(--muted);font-size:0.9375rem;margin:0;max-width:76ch}
+.lede b{color:var(--text);font-weight:600}
+
+.sec{margin-top:var(--s10)}
+.sec-head{display:flex;align-items:baseline;gap:var(--s4);flex-wrap:wrap;
+  padding-bottom:var(--s4);border-bottom:1px solid var(--border);margin-bottom:var(--s5)}
+.sec-num{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);letter-spacing:0.1em}
+h2{font-family:var(--font-display);font-weight:700;font-size:1.125rem;letter-spacing:-0.01em;margin:0}
+.sec-q{color:var(--dim);font-size:0.8125rem;font-style:italic}
+
+/* ---------- region 1: the starting nine ---------- */
+.nine{border:1px solid var(--border);background:var(--surface)}
+.nine-hd,.nine-row{display:grid;grid-template-columns:4.25rem 10.5rem 1fr 7.5rem;
+  gap:var(--s4);align-items:center;padding:var(--s3) var(--s5)}
+.nine-hd{border-bottom:1px solid var(--border);padding-top:var(--s4);padding-bottom:var(--s4)}
+.nine-hd span{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  letter-spacing:0.08em;text-transform:uppercase}
+.nine-hd .r{text-align:right}
+.nine-row+.nine-row{border-top:1px solid oklch(0.26 0.012 250)}
+.nine-row .slot{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;
+  letter-spacing:0.06em;color:var(--muted)}
+.nine-row .who{font-size:0.8125rem;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nine-row .read{text-align:right;font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);
+  white-space:nowrap}
+.nine-row .read b{color:var(--text);font-weight:500}
+button.nine-row{width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;
+  cursor:pointer;transition:background var(--dur-fast) var(--ease-standard)}
+button.nine-row:hover{background:var(--raised)}
+.nine-row.thin .slot,.nine-row.thin .who{color:var(--text)}
+.nine-row.thin .slot{color:var(--gain)}
+
+/* ---------- marks: CSS-positioned so circles stay circular at any column width ---------- */
+.tk{position:relative;height:36px}
+.tk i{position:absolute;display:block}
+.tk-base{left:0;right:0;top:50%;height:1px;margin-top:-0.5px;background:oklch(0.29 0.012 250)}
+.tk-med{top:50%;width:1px;height:26px;margin-top:-13px;margin-left:-0.5px;
+  background:oklch(0.52 0.012 250);z-index:3}
+.tk-med::before{content:"";position:absolute;left:-6px;right:-6px;top:0;bottom:0}
+.tk-dot{top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;
+  background:oklch(0.42 0.012 250);box-shadow:0 0 0 1.5px var(--surface)}
+.tk-me{top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  background:var(--gain);box-shadow:0 0 0 2px var(--surface)}
+.nine-foot{border-top:1px solid var(--border);padding:var(--s3) var(--s5) var(--s4);
+  padding-left:calc(4.25rem + 10.5rem + var(--s4)*2 + var(--s5))}
+.scale-ends{display:flex;justify-content:space-between;gap:var(--s4);font-family:var(--font-mono);
+  font-size:0.6875rem;color:var(--dim);white-space:nowrap}
+@media (max-width:900px){.nine-foot{padding-left:var(--s5)}
+  .scale-ends span:nth-child(2){display:none}}
+
+.db{position:relative;height:46px}
+.db i,.db b{position:absolute;display:block}
+.db-base{left:6%;right:6%;top:50%;height:1px;margin-top:-0.5px;background:oklch(0.29 0.012 250)}
+.db-link{top:50%;height:2px;margin-top:-1px;background:oklch(0.50 0.012 250)}
+.db-ours{top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  background:var(--model);box-shadow:0 0 0 2px var(--surface)}
+.db-mkt{top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+  background:var(--surface);border:2.5px solid var(--market);box-shadow:0 0 0 2px var(--surface)}
+.db-lab{font-family:var(--font-mono);font-weight:400;font-size:0.75rem;white-space:nowrap;
+  transform:translateX(-50%)}
+.db-lab.up{top:0;color:var(--model)}
+.db-lab.dn{bottom:0;color:var(--market)}
+.db-lab.none{transform:none;color:var(--dim);font-style:italic}
+.db-ax{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.6875rem;
+  color:var(--dim);padding:0 2%}
+
+.db-ref{top:50%;width:1px;height:30px;margin-top:-15px;margin-left:-0.5px;
+  background:repeating-linear-gradient(var(--gain) 0 4px,transparent 4px 8px);opacity:0.55;z-index:3}
+.db-ref::before{content:"";position:absolute;left:-7px;right:-7px;top:0;bottom:0}
+.trow.mine{background:oklch(0.225 0.013 250)}
+.trow.mine:hover{background:oklch(0.26 0.014 250)}
+.yours{font-family:var(--font-mono);font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--bg);background:var(--gain);padding:1px var(--s2);margin-left:var(--s3)}
+.na{font-family:var(--font-mono);font-size:0.8125rem;color:var(--dim)}
+.refkey{display:block;font-style:normal;text-transform:none;letter-spacing:0;
+  font-family:var(--font-sans);font-size:0.6875rem;color:var(--muted);margin-top:var(--s1)}
+
+/* ---------- the hover layer ----------------------------------------------------------------
+   Standing requirement, not a flourish: an HTML chart IS interactive, and every mark on it should
+   answer "what is this?" on demand. Two rules it enforces, both from the craft library:
+     - a reference line is labelled ON the graphic the first time it appears (Okabe & Ito), so the
+       reader never has to memorise a key;
+     - identity for a dot in a cloud is available on demand rather than absent.
+   Touch has no hover, so nothing lives ONLY here -- every tip restates something the row, the
+   expansion, or the aria-label already carries. */
+#tip{position:fixed;z-index:50;pointer-events:none;opacity:0;transform:translateY(3px);
+  transition:opacity var(--dur-fast) var(--ease-standard),transform var(--dur-fast) var(--ease-standard);
+  background:oklch(0.28 0.014 250);border:1px solid var(--border-strong);
+  padding:var(--s3) var(--s4);max-width:20rem;box-shadow:0 6px 20px oklch(0.10 0.01 250/0.6)}
+#tip.on{opacity:1;transform:translateY(0)}
+#tip b{display:block;font-family:var(--font-display);font-weight:700;font-size:0.8125rem;
+  color:var(--text);letter-spacing:-0.005em}
+#tip u{display:block;text-decoration:none;font-family:var(--font-mono);font-size:0.75rem;
+  color:var(--gain);margin:2px 0 var(--s2)}
+#tip{font-size:0.75rem;color:var(--muted);line-height:1.5}
+[data-tip]{cursor:help}
+.tk-dot[data-tip]:hover{background:var(--gain);transform:scale(1.35)}
+.tk-dot{transition:background var(--dur-fast) var(--ease-standard),
+  transform var(--dur-fast) var(--ease-standard)}
+.tk-medlab,.db-reflab{position:absolute;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--font-mono);font-weight:400;font-size:0.625rem;letter-spacing:0.04em;
+  color:var(--dim);text-transform:uppercase}
+.tk-medlab{top:-2px}
+.db-reflab{top:-1px;color:oklch(0.72 0.008 250)}
+
+/* availability: trough = his own market value, fill = what his owner's lineup actually loses.
+   Both on the shared per-position scale, so length reads absolutely and proportion reads relatively. */
+.av{display:grid;grid-template-columns:1fr 3.4rem;gap:var(--s3);align-items:center}
+.av-t{position:relative;display:block;height:17px;background:oklch(0.215 0.012 250);
+  box-shadow:inset 0 0 0 1px oklch(0.33 0.012 250);min-width:2px}
+.av-t i{position:absolute;left:0;top:0;bottom:0;display:block;background:var(--costfill);
+  border-radius:0 2px 2px 0}
+.av-v{font-family:var(--font-mono);font-size:0.8125rem;color:var(--muted);text-align:right}
+.av-r{grid-column:1/-1;font-size:0.6875rem;color:var(--dim);margin-top:var(--s1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.av-r em{font-family:var(--font-mono);font-style:normal;color:var(--muted)}
+
+.ft{display:grid;grid-template-columns:1fr 3.4rem;gap:var(--s3);align-items:center}
+.ft-t{position:relative;display:block;height:17px;background:oklch(0.235 0.012 250)}
+.ft-t i{position:absolute;left:0;top:0;bottom:0;display:block;background:var(--gain);
+  border-radius:0 2px 2px 0}
+.ft-v{font-family:var(--font-mono);font-size:0.8125rem;color:var(--text);text-align:right}
+.ft-v.nil{color:var(--dim)}
+
+/* ---------- shared: filter chips ---------- */
+.controls{display:flex;align-items:center;gap:var(--s5);flex-wrap:wrap;margin-bottom:var(--s5)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s1);background:var(--sunk);border:1px solid var(--border);padding:var(--s1)}
+.chip{appearance:none;background:transparent;border:0;color:var(--muted);cursor:pointer;
+  font-family:var(--font-display);font-weight:600;font-size:0.8125rem;letter-spacing:0.06em;
+  padding:var(--s3) var(--s5);transition:background var(--dur-fast) var(--ease-standard),
+    color var(--dur-fast) var(--ease-standard)}
+.chip:hover{color:var(--text);background:var(--raised)}
+.chip[aria-pressed="true"]{background:var(--raised);color:var(--text);box-shadow:inset 0 -2px 0 var(--model)}
+.chip .n{font-family:var(--font-mono);font-weight:400;font-size:0.75rem;color:var(--dim);margin-left:var(--s3)}
+.chip[aria-pressed="true"] .n{color:var(--muted)}
+
+.sortby{display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap}
+.sortby>span{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  letter-spacing:0.08em;text-transform:uppercase}
+.sortby .chip{font-family:var(--font-sans);font-weight:500;font-size:0.8125rem;letter-spacing:0;
+  padding:var(--s2) var(--s4)}
+.sortnote{font-size:0.8125rem;color:var(--dim);margin:0 0 var(--s4);max-width:90ch}
+
+.chip.sm{font-family:var(--font-sans);font-weight:500;font-size:0.8125rem;letter-spacing:0;
+  padding:var(--s3) var(--s4)}
+.filterbar{gap:var(--s4);align-items:flex-end;margin-top:var(--s4)}
+.fl{display:flex;flex-direction:column;gap:var(--s2);font-family:var(--font-mono);
+  font-size:0.625rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim)}
+.fl select{font-family:var(--font-sans);font-size:0.8125rem;letter-spacing:0;text-transform:none;
+  color:var(--text);background:var(--sunk);border:1px solid var(--border);padding:var(--s3) var(--s4);
+  min-width:9rem;cursor:pointer}
+.fl select:hover{border-color:var(--border-strong)}
+.reset{align-self:flex-end;font-family:var(--font-sans);font-size:0.8125rem;color:var(--muted);
+  background:transparent;border:1px solid var(--border);padding:var(--s3) var(--s5);cursor:pointer}
+.reset:hover{color:var(--text);border-color:var(--border-strong)}
+
+/* ---------- named views: each one is a question, not an axis pair ---------- */
+.views{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));
+  gap:var(--s3);margin:var(--s5) 0 var(--s6)}
+.vw{text-align:left;background:var(--sunk);border:1px solid var(--border);cursor:pointer;
+  padding:var(--s4) var(--s5);display:grid;gap:var(--s1);
+  transition:background var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard)}
+.vw:hover{background:var(--raised);border-color:var(--border-strong)}
+.vw b{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;color:var(--muted);
+  letter-spacing:-0.005em;line-height:1.25}
+.vw span{font-size:0.75rem;color:var(--dim);line-height:1.4}
+.vw[aria-pressed="true"]{background:var(--raised);border-color:var(--border-strong);
+  box-shadow:inset 0 -2px 0 var(--model)}
+.vw[aria-pressed="true"] b{color:var(--text)}
+
+/* ---------- the plot ---------- */
+.viewbar{margin-top:var(--s4);align-items:flex-end}
+.plot{margin-bottom:var(--s6)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));
+  gap:var(--s5)}
+.pnl{margin:0}
+.pnl figcaption{font-family:var(--font-display);font-weight:700;font-size:0.8125rem;
+  letter-spacing:0.06em;color:var(--muted);margin-bottom:var(--s3)}
+.pnl figcaption span{font-family:var(--font-mono);font-weight:400;font-size:0.6875rem;
+  color:var(--dim);margin-left:var(--s2)}
+.pbox{position:relative;aspect-ratio:1;background:var(--sunk);border:1px solid var(--border);
+  overflow:hidden}
+.pdiag{position:absolute;left:0;bottom:0;width:141.5%;height:1px;transform-origin:left bottom;
+  transform:rotate(-45deg);background:oklch(0.36 0.012 250);z-index:1}
+.pdiag::before{content:"";position:absolute;left:0;right:0;top:-6px;bottom:-6px}
+.pt{position:absolute;width:9px;height:9px;margin:0 0 -4.5px -4.5px;border-radius:50%;
+  background:var(--surface);border:1.5px solid oklch(0.55 0.012 250);z-index:2;
+  transition:transform var(--dur-fast) var(--ease-standard),
+    border-color var(--dur-fast) var(--ease-standard)}
+.pt:hover{transform:scale(1.7);border-color:var(--gain);z-index:4}
+.pt-me{background:var(--gain);border-color:var(--gain);width:11px;height:11px;
+  margin:0 0 -5.5px -5.5px;z-index:3}
+.paxis{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  letter-spacing:0.08em;text-transform:uppercase}
+.paxis-x{text-align:center;margin-top:var(--s3)}
+.paxis-y{margin-bottom:var(--s3)}
+.pnote{font-size:0.75rem;color:var(--dim);margin:var(--s4) 0 0;max-width:80ch}
+.pnote b{color:var(--muted);font-weight:600}
+
+/* ---------- region 2: the structural readout ---------- */
+.struct{border:1px solid var(--border);border-left:3px solid var(--border-strong);
+  background:var(--surface);padding:var(--s5) var(--s6);margin-bottom:var(--s5);max-width:96ch}
+.struct p{margin:0;font-size:0.9375rem;color:var(--muted)}
+.struct b{color:var(--text);font-weight:600}
+.struct .pay{margin-top:var(--s3);font-size:0.8125rem;color:var(--dim)}
+.struct .pay b{color:var(--muted);font-weight:500}
+
+/* ---------- region 2: target rows ---------- */
+.tbl{border:1px solid var(--border);background:var(--surface)}
+.thd,.trow{display:grid;grid-template-columns:14rem minmax(11rem,1fr) 15rem 9rem;gap:var(--s5);
+  align-items:center;padding:var(--s4) var(--s5)}
+.thd{border-bottom:1px solid var(--border);padding-top:var(--s4);padding-bottom:var(--s4)}
+.thd span{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);
+  letter-spacing:0.08em;text-transform:uppercase}
+.trow{width:100%;text-align:left;background:transparent;border:0;color:inherit;font:inherit;cursor:pointer;
+  border-top:1px solid oklch(0.26 0.012 250);
+  transition:background var(--dur-fast) var(--ease-standard)}
+.trow:hover{background:var(--raised)}
+.trow[aria-expanded="true"]{background:var(--raised)}
+.who-nm{font-size:0.9375rem;font-weight:500;color:var(--text);display:flex;align-items:center;gap:var(--s3)}
+.who-nm .chev{color:var(--dim);font-size:0.6875rem;transition:transform var(--dur-mod) var(--ease-standard)}
+.trow[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.who-sub{font-size:0.75rem;color:var(--dim);margin-top:var(--s1)}
+.who-sub .own{color:var(--muted)}
+.badge{font-family:var(--font-mono);font-size:0.6875rem;letter-spacing:0.04em;
+  border:1px solid var(--border-strong);color:var(--muted);padding:1px var(--s2);white-space:nowrap}
+
+/* the inline expansion — grid 0fr->1fr, the 007 disclosure recipe */
+.exp{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dur-mod) var(--ease-standard);
+  border-top:0 solid transparent}
+.exp.open{grid-template-rows:1fr;border-top:1px solid var(--border)}
+.exp>div{overflow:hidden}
+.exp-in{padding:var(--s6) var(--s5) var(--s6) var(--s5);background:var(--sunk)}
+.exp-lede{font-size:0.8125rem;color:var(--muted);margin:0 0 var(--s5);max-width:78ch}
+.exp-lede b{color:var(--text);font-weight:600}
+.room-row{display:grid;grid-template-columns:12rem 1fr 4.5rem;gap:var(--s4);align-items:center;
+  padding:var(--s2) 0;font-size:0.8125rem}
+.room-row .nm{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.room-row.is-me .nm{color:var(--text);font-weight:600}
+.room-row .val{text-align:right;font-family:var(--font-mono);font-size:0.75rem;color:var(--dim)}
+.room-row.is-me .val{color:var(--text)}
+.room-hd{font-family:var(--font-mono);font-size:0.6875rem;color:var(--dim);letter-spacing:0.08em;
+  text-transform:uppercase;margin:0 0 var(--s3)}
+
+.empty{padding:var(--s8) var(--s6);border-top:1px solid oklch(0.26 0.012 250);
+  display:grid;gap:var(--s3);max-width:78ch}
+.empty b{font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--text)}
+.empty span{font-size:0.875rem;color:var(--muted);line-height:1.65}
+
+.limits{margin-top:var(--s9);border-top:1px solid var(--border);padding-top:var(--s5);
+  font-size:0.8125rem;color:var(--dim);max-width:92ch}
+.limits h3{font-family:var(--font-display);font-size:0.8125rem;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 var(--s3);font-weight:700}
+.limits li{margin-bottom:var(--s3);line-height:1.6}
+.limits b{color:var(--muted);font-weight:600}
+
+@media (max-width:900px){
+  .nine-hd,.nine-row{grid-template-columns:3.5rem 1fr;grid-template-areas:"slot who" "track track" "read read";
+    row-gap:var(--s2)}
+  .nine-row .slot{grid-area:slot}.nine-row .who{grid-area:who}
+  .nine-row .track{grid-area:track}.nine-row .read{grid-area:read;text-align:left}
+  .nine-hd{display:none}
+  .thd{display:none}
+  .trow{grid-template-columns:1fr;gap:var(--s4)}
+  .sortby{align-items:flex-start;flex-direction:column;gap:var(--s2)}
+  .av-r{white-space:normal}
+  .room-row{grid-template-columns:8rem 1fr 4rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition-duration:0.01ms!important;animation-duration:0.01ms!important}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="mast">
+    <span class="app">Dynasty Genius · Studio prototype</span>
+    <span class="stamp" id="stamp"></span>
+  </div>
+
+  <h1>Where you're thin, and who you can actually get</h1>
+  <p class="lede">Your confirmed question, computed: <b>who holds a player at your position of need
+  that they can afford to lose?</b> It has two halves, and the first half is the one that has to be
+  measured before the second can run — <b>which of your nine starting slots is actually weak</b>,
+  against the same slot on the other eleven rosters. League Pulse carries the app's answer today and
+  it discriminates nothing: it labels <b>all four</b> of your positions <code>deficit</code>, and
+  prices your QB starters at <b>exactly 0.0</b>. Measured slot by slot it separates. The second half
+  then shows <b>every player at that position in the league</b> — nothing filtered out — with what
+  his owner would actually lose, and to whom.</p>
+
+  <!-- ══════════ region 1 ══════════ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2>Your starting nine, against the league</h2>
+      <span class="sec-q">Where is my need — measured, not counted?</span>
+    </div>
+    <div class="nine">
+      <div class="nine-hd">
+        <span>Slot</span><span>Your starter</span>
+        <span>Every team's filler at this slot &nbsp;·&nbsp; worse ← → better &nbsp;·&nbsp;
+          <em style="font-style:normal;text-transform:none;letter-spacing:0">click a row to shop that position</em></span>
+        <span class="r">Your standing</span>
+      </div>
+      <div id="nine"></div>
+      <div class="nine-foot">
+        <div class="scale-ends"><span>0</span><span>market value of the player filling the slot</span>
+          <span id="smax"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ region 2 ══════════ -->
+  <section class="sec">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2>The league board</h2>
+      <span class="sec-q">Every rostered player — ask it whatever you want</span>
+    </div>
+    <div class="controls">
+      <div class="chips" id="chips" role="group" aria-label="Position"></div>
+      <div class="chips" id="whose" role="group" aria-label="Whose players">
+        <button class="chip sm" type="button" data-w="all" aria-pressed="true">Everyone</button>
+        <button class="chip sm" type="button" data-w="mine" aria-pressed="false">Mine</button>
+        <button class="chip sm" type="button" data-w="others" aria-pressed="false">Not mine</button>
+      </div>
+    </div>
+    <div class="controls filterbar">
+      <label class="fl">Team<select id="fTeam"><option value="">any</option></select></label>
+      <label class="fl">Their posture<select id="fPost"><option value="">any</option></select></label>
+      <label class="fl" id="sortWrap">Sort by<select id="fSort">
+        <option value="mkt">market rank</option><option value="ours">our rank</option>
+        <option value="disagree">lane disagreement</option><option value="v">market value</option>
+        <option value="age">age, youngest first</option><option value="ageDesc">age, oldest first</option>
+        <option value="cost">what their owner would lose</option>
+        <option value="gain">what he'd add to you</option></select></label>
+      <button class="reset" type="button" id="fReset">Clear</button>
+    </div>
+    <div class="views" id="views" role="group" aria-label="View">
+      <button class="vw" type="button" data-view="lanes" aria-pressed="true">
+        <b>Where we disagree with the market</b>
+        <span>Our rank against theirs. Off the diagonal is an opinion.</span></button>
+      <button class="vw" type="button" data-view="avail" aria-pressed="false">
+        <b>Who they can afford to lose</b>
+        <span>What it costs his owner against what he adds here.</span></button>
+      <button class="vw" type="button" data-view="window" aria-pressed="false">
+        <b>Value against age</b>
+        <span>Who is expensive and old, who is cheap and young.</span></button>
+      <button class="vw" type="button" data-view="table" aria-pressed="false">
+        <b>The full table</b>
+        <span>Every number, sortable. The tool, not the picture.</span></button>
+    </div>
+    <p class="sortnote" id="sortnote"></p>
+    <div class="struct" id="struct"></div>
+    <div id="plotwrap"></div>
+    <div class="tbl" id="tblwrap">
+      <div class="thd">
+        <span>Player · owner · posture</span>
+        <span id="axhd">Our rank vs the market</span>
+        <span>What his owner would lose · and to whom</span>
+        <span>Adds to you</span>
+      </div>
+      <div id="rows"></div>
+    </div>
+  </section>
+
+  <div class="limits">
+    <h3>What this is built on, and what it cannot see</h3>
+    <ul>
+      <li><b>Cross-position value is market units only.</b> Comparing a QB slot to a TE slot needs one
+      currency, and our model's DVS cannot be ranked across positions (twelve players tie at exactly
+      100.0 — relay 009 P4). So region 1 is a <b>market</b> measurement. Our lane is honest
+      <i>within</i> a position, which is the only place region 2 uses it.</li>
+      <li><b>Fifteen rostered players have no model view at all</b> (relay 009 P2: graded
+      <code>ACTIVE_B</code>, returning null, stored as 0.0). They appear here with the market dot only
+      and no model dot — including <b>Jayden Daniels</b>, the market's QB3, and your own
+      <b>Garrett Wilson</b>.</li>
+      <li><b>The two lanes genuinely disagree about your hole, and that is worth reading, not
+      resolving.</b> Measured in market units against every other lineup, QB is your weakest slot and
+      TE is your fifth-best. Our lane's <code>positional_summary</code> says the opposite — TE is your
+      worst z-score (−2.72). Some of that is a real difference of opinion between the model and the
+      market. Some of it is not: the same payload prices your QB starters at <code>0.0</code>, which
+      is the IR/taxi exclusion already filed as relay 009 P3, not a view about Jaxson Dart.</li>
+      <li><b>Built on the fresh on-disk artifact, not on what the app serves.</b> The league endpoints
+      still return the 2026-06-23 snapshot (relay 009 P1, undelivered), so this surface cannot ship
+      until that lands.</li>
+      <li><b>"Costs them" is a lineup measurement, not a price.</b> It is what removing him does to
+      their best legal lineup today — it is not what they would ask for, and it cannot see whether
+      they want to trade at all. Sleeper's transactions endpoint is never called by this app.</li>
+      <li><b>No verdicts.</b> Nothing here says buy, sell or offer. Two independent quantities are
+      drawn side by side and deliberately never fused — <code>adds − costs</code> is degenerate
+      (it collapses to a team-pair constant) and <code>adds ÷ costs</code> is unbounded, because
+      cost is exactly zero for any bench player.</li>
+    </ul>
+  </div>
+
+</div>
+
+<div id="tip" role="tooltip" aria-hidden="true"></div>
+<script src="./surface-data.js"></script>
+<script>
+(function(){
+  var D=window.DATA, POS=['QB','RB','WR','TE'];
+
+  /* one delegated hover layer for the whole page -- no per-mark listeners, so it keeps working
+     for marks that are re-rendered when the position or sort changes */
+  // title / figure / explanation — escaped so a name with a quote can never break the attribute
+  function tip(title,figure,body){
+    return [title,figure,body].map(function(x){
+      return String(x).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+    }).reduce(function(a,x,i){
+      return a+(i===0?'&lt;b>'+x+'&lt;/b>':i===1?'&lt;u>'+x+'&lt;/u>':x);
+    },'').replace(/&lt;(\/?[bu])>/g,'<$1>');
+  }
+
+  var tipEl=document.getElementById('tip'), tipFor=null;
+  function showTip(el){
+    if(el===tipFor) return;
+    tipFor=el; tipEl.innerHTML=el.getAttribute('data-tip');
+    tipEl.classList.add('on'); tipEl.setAttribute('aria-hidden','false');
+    place(el);
+  }
+  function place(el){
+    var r=el.getBoundingClientRect(), t=tipEl.getBoundingClientRect();
+    var x=r.left+r.width/2-t.width/2;
+    x=Math.max(8,Math.min(x,window.innerWidth-t.width-8));
+    var y=r.top-t.height-10;
+    if(y<8) y=r.bottom+10;                      // flip below when there is no room above
+    tipEl.style.left=x+'px'; tipEl.style.top=y+'px';
+  }
+  function hideTip(){
+    tipFor=null; tipEl.classList.remove('on'); tipEl.setAttribute('aria-hidden','true');
+  }
+  document.addEventListener('pointerover',function(e){
+    var el=e.target.closest('[data-tip]');
+    if(el) showTip(el); else if(tipFor) hideTip();
+  });
+  document.addEventListener('pointerdown',hideTip);
+  window.addEventListener('scroll',hideTip,{passive:true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')hideTip();});
+  document.getElementById('stamp').innerHTML=
+    'league artifact 2026-07-25<br>market capture '+D.fetched;
+
+  /* ---------- region 1: nine slots on ONE shared value scale ---------- */
+  var SMAX=Math.ceil(D.maxSlotV/1000)*1000;
+  var weakest=D.need.reduce(function(a,b){return b.gap<a.gap?b:a;});
+  document.getElementById('smax').textContent=SMAX.toLocaleString();
+
+  /* Marks are CSS-positioned, not SVG-scaled. An SVG with preserveAspectRatio="none" stretches a
+     circle into an ellipse as the column width changes, which makes mark SIZE — a channel that is
+     supposed to carry nothing here — vary with layout. Percentage-positioned divs keep every dot
+     circular at every width. */
+  function track(row,first){
+    function pc(v){return (v/SMAX)*100;}
+    var s='<div class="tk" role="img" aria-label="'+row.slot+': your starter '+row.who+' at '
+      +row.mine.toLocaleString()+', '+row.rank+' of 12, league median '+row.median.toLocaleString()+'">'
+      +'<i class="tk-base"></i>'
+      // Median reference — Heer & Bostock: a reference frame turns a cloud into a position judgement.
+      // Labelled ON the graphic the first time it appears, never only in a key (Okabe & Ito).
+      +'<i class="tk-med" style="left:'+pc(row.median)+'%" data-tip="'+tip('League median at this slot',
+        row.median.toLocaleString(),'The middle of what the twelve teams field here.')+'"></i>'
+      +(first?'<b class="tk-medlab" style="left:'+pc(row.median)+'%">league median</b>':'');
+    row.league.forEach(function(d){
+      if(d.me) return;                                   // his own filler is drawn as the figure
+      s+='<i class="tk-dot" style="left:'+pc(d.v)+'%" data-tip="'
+        +tip(d.nm,d.pos+' · '+d.v.toLocaleString(),d.team+'&#39;s '+row.slot)+'"></i>';
+    });
+    return s+'<i class="tk-me" style="left:'+pc(row.mine)+'%" data-tip="'
+      +tip(row.who,row.pos+' · '+row.mine.toLocaleString(),
+           'Your '+row.slot+' — '+row.rank+' of 12 in the league')+'"></i></div>';
+  }
+  document.getElementById('nine').innerHTML=D.need.map(function(r,i){
+    var ord=['','st','nd','rd'][r.rank%10>3||(r.rank>10&&r.rank<14)?0:r.rank%10]||'th';
+    return '<button class="nine-row'+(r.slot===weakest.slot?' thin':'')+'" type="button" '
+      +'data-pos="'+r.pos+'" title="Show every '+r.pos+' in the league">'
+      +'<div class="slot">'+r.slot+'</div>'
+      +'<div class="who">'+r.who+'</div>'
+      +'<div class="track">'+track(r,i===0)+'</div>'
+      +'<div class="read"><b>'+r.rank+ord+'</b> of 12 &nbsp;'
+      +(r.gap>=0?'+':'−')+Math.abs(r.gap).toLocaleString()+'</div>'
+      +'</button>';
+  }).join('');
+
+  /* ---------- region 2 ---------- */
+  var GMAX=0;
+  D.targets.forEach(function(t){GMAX=Math.max(GMAX,t.gain,t.cost);});
+  GMAX=Math.ceil(GMAX/1000)*1000;                 // ONE shared scale across every position
+
+  document.getElementById('chips').innerHTML=
+    '<button class="chip" type="button" data-p="" aria-pressed="true">All<span class="n">'
+    +D.targets.length+'</span></button>'
+    +POS.map(function(p){
+      return '<button class="chip" type="button" data-p="'+p+'" aria-pressed="false">'
+        +p+'<span class="n">'+(D.struct[p].held+D.struct[p].iHold)+'</span></button>';
+    }).join('');
+  (function(){
+    var teams=[],posts=[];
+    D.targets.forEach(function(t){
+      if(teams.indexOf(t.owner)<0) teams.push(t.owner);
+      if(posts.indexOf(t.posture)<0) posts.push(t.posture);
+    });
+    teams.sort(); posts.sort();
+    document.getElementById('fTeam').innerHTML='<option value="">any</option>'
+      +teams.map(function(x){return '<option>'+x+'</option>';}).join('');
+    document.getElementById('fPost').innerHTML='<option value="">any</option>'
+      +posts.map(function(x){return '<option>'+x+'</option>';}).join('');
+  })();
+
+  /* Both ranks are direct-labelled AT their own dot — never in a key and never at the column edge.
+     "Ours" rides above the track, "market" below, so the two labels can never collide however close
+     the dots sit. (Okabe & Ito: label on the graphic; DAVID.md 2026-07-25: a label must sit over the
+     thing it names.) Best = RIGHT, the standing rank-axis convention. */
+  function dumbbell(t,first){
+    function pc(rank,pool){return 6+(1-(rank-1)/Math.max(pool-1,1))*88;}
+    var xm=pc(t.mkt,t.pool), xo=t.ours?pc(t.ours,t.poolOurs):null;
+    var ref=D.struct[t.pos];
+    var s='<div class="db'+(t.mine?' is-mine':'')+'" role="img" aria-label="'+t.nm+': market '+t.pos+t.mkt
+      +(t.ours?', ours '+t.pos+t.ours:', no model view')+'">'
+      +'<i class="db-base"></i>'
+      // your own best at this position, in every row: anything right of this line is an upgrade
+      +(ref.mineMkt&&!t.mine&&F.pos
+        ? '<i class="db-ref" style="left:'+pc(ref.mineMkt,t.pool)+'%" data-tip="<b>Your best '+t.pos
+          +'</b><u>'+ref.mineNm+' · market '+t.pos+ref.mineMkt+'</u>Anything to the RIGHT of this line '
+          +'is better than what you already have."></i>'
+          +(first?'<b class="db-reflab" style="left:'+pc(ref.mineMkt,t.pool)+'%">your '+ref.mineNm.split(' ').pop()+'</b>':'')
+        : '');
+    if(xo!==null)
+      s+='<i class="db-link" style="left:'+Math.min(xo,xm)+'%;width:'+Math.abs(xo-xm)+'%"></i>';
+    if(xo!==null){
+      s+='<i class="db-ours" style="left:'+xo+'%" data-tip="<b>Our model</b><u>'+t.pos+t.ours
+        +' of '+t.poolOurs+' modelled</u>'+t.nm+'"></i>'
+        +'<b class="db-lab up" style="left:'+xo+'%">'+t.pos+t.ours+'</b>';
+    }else{
+      s+='<b class="db-lab up none" style="left:6%">no model view</b>';
+    }
+    s+='<i class="db-mkt" style="left:'+xm+'%" data-tip="<b>The market</b><u>'+t.pos+t.mkt
+      +' of '+t.pool+' rostered</u>'+t.nm+' · '+t.v.toLocaleString()+'"></i>'
+      +'<b class="db-lab dn" style="left:'+xm+'%">'+t.pos+t.mkt+'</b>';
+    return s+'</div>';
+  }
+
+  /* Availability as ONE mark carrying two raw quantities, never a derived score. The trough is the
+     player's own market value; the fill is what his owner's lineup actually loses if he goes. Both
+     sit on the same shared per-position scale, so the mark reads two ways at once: fill LENGTH is
+     the absolute drop-off, comparable across every row, and fill PROPORTION of its trough is how
+     much of his price his owner would actually feel. A star with no cover fills his trough; a good
+     player with a real backup barely stains it. The replacement is named underneath, because "do
+     they have a good replacement" is answered by a name, not by a number. */
+  function avail(t){
+    var mx=D.posMax[t.pos]||1;
+    var trough=(t.v/mx)*100, fill=(t.cost/mx)*100;
+    return '<div class="av">'
+      +'<span class="av-t" style="width:'+trough+'%" data-tip="<b>'+t.owner+' would lose '
+      +t.cost.toLocaleString()+'</b><u>of '+t.nm+"'s "+t.v.toLocaleString()+' market value</u>'
+      +(t.cost===0?'Their best lineup never used him.'
+        :t.repl?'The bar is the drop-off. '+t.repl.nm+' ('+t.repl.pos+') moves up behind him.'
+               :'Nobody behind him.')+'">'
+      // a true zero draws nothing; a minimum-width sliver would render "costs them nothing" as a
+      // small positive cost, and that is the single reading that matters most here
+      +'<i style="width:'+(t.v?(t.cost===0?0:Math.max(fill/trough*100,0.8)):0)+'%"></i></span>'
+      +'<span class="av-v">'+t.cost.toLocaleString()+'</span>'
+      +'<span class="av-r">'+(t.cost===0
+          ? 'not in their best lineup'
+          : t.repl ? 'backfilled by '+t.repl.nm+' <em>'+t.repl.pos+' '
+                     +t.repl.v.toLocaleString()+'</em>'
+                   : 'nobody behind him')+'</span>'
+      +'</div>';
+  }
+
+  function fit(t){
+    return '<div class="ft">'
+      +'<span class="ft-t" data-tip="<b>'+(t.gain?'Adds '+t.gain.toLocaleString()+' to your lineup'
+        :'Adds nothing')+'</b><u>'+t.nm+'</u>'+(t.gain?'How much your best legal lineup improves.'
+        :'He would not crack your starting nine.')+'"><i style="width:'+(t.gain===0?0:Math.max((t.gain/GMAX)*100,0.8))+'%"></i></span>'
+      +'<span class="ft-v'+(t.gain?'':' nil')+'">'+(t.gain?t.gain.toLocaleString():'—')+'</span>'
+      +'</div>';
+  }
+
+  function room(t){
+    // shared per-position scale, NOT the room's own max — otherwise a shallow room and a deep one
+    // draw identically and the drop-off that answers the question stops being comparable
+    var mx=D.posMax[t.pos]||1;
+    return '<p class="room-hd">'+t.owner+"'s "+t.pos+' room — why losing him costs '
+      +t.cost.toLocaleString()+'</p>'
+      +t.room.map(function(r){
+        return '<div class="room-row'+(r.me?' is-me':'')+'">'
+          +'<span class="nm">'+r.nm+(r.starter?' <span style="color:var(--dim);font-size:0.6875rem">· starts</span>':'')+'</span>'
+          +'<svg viewBox="0 0 100 9" preserveAspectRatio="none" style="width:100%;height:9px">'
+          +'<rect x="0" y="0.5" width="'+((r.v/mx)*100)+'" height="8" rx="1.2" fill="'
+          +(r.me?'var(--gain)':'oklch(0.36 0.012 250)')+'"/></svg>'
+          +'<span class="val">'+r.v.toLocaleString()+'</span></div>';
+      }).join('');
+  }
+
+  /* Both dimensions stay separate: the list is always RANKED by what he adds, and "cheap to their
+     owner" is a stated FILTER, never folded into the ranking key. adds − costs is degenerate and
+     adds ÷ costs is unbounded, so neither can be a sort. */
+  /* One queryable population. Every "view" is a filter+sort state over the same list -- never a
+     separate widget and never a pre-filtered short list (DAVID.md 2026-07-15, restated 2026-07-26:
+     "i prefer a robust data viz where multiple answers can be found against multiple questions").
+     Ranks are always WITHIN position, so the rank axis means "how elite for his position" even when
+     positions are mixed; that is stated in the axis header rather than assumed. */
+  var F={pos:'',whose:'all',team:'',post:'',age:'',slot:'',lane:'',sort:'mkt'};
+
+  function query(){
+    return D.targets.filter(function(t){
+      if(F.pos && t.pos!==F.pos) return false;
+      if(F.whose==='mine' && !t.mine) return false;
+      if(F.whose==='others' && t.mine) return false;
+      if(F.team && t.owner!==F.team) return false;
+      if(F.post && t.posture!==F.post) return false;
+      if(F.slot && t.slot!==F.slot) return false;
+      if(F.age){var a=F.age.split('-');if(t.age<+a[0]||t.age>+a[1])return false;}
+      if(F.lane){
+        var dis=t.ours?t.mkt-t.ours:null;      // positive = we rank him better than the market does
+        if(F.lane==='none' && t.ours) return false;
+        if(F.lane==='we-high' && !(dis>0)) return false;
+        if(F.lane==='mkt-high' && !(dis<0)) return false;
+        if(F.lane==='big' && !(dis!==null && Math.abs(dis)>=10)) return false;
+      }
+      return true;
+    }).sort({
+      mkt:function(a,b){return a.pos===b.pos?a.mkt-b.mkt:(a.mkt-b.mkt)||a.pos.localeCompare(b.pos);},
+      ours:function(a,b){return (a.ours||9e9)-(b.ours||9e9);},
+      disagree:function(a,b){return (b.ours?Math.abs(b.mkt-b.ours):-1)-(a.ours?Math.abs(a.mkt-a.ours):-1);},
+      v:function(a,b){return b.v-a.v;},
+      age:function(a,b){return a.age-b.age;},
+      ageDesc:function(a,b){return b.age-a.age;},
+      cost:function(a,b){return (a.cost-b.cost)||(b.gain-a.gain);},
+      gain:function(a,b){return b.gain-a.gain;}
+    }[F.sort]);
+  }
+
+
+  /* ---------- the plot view -------------------------------------------------------------------
+     A robust instrument rather than a purpose-built answer: the same filtered population, drawn in
+     a space whose axes the reader chooses. Ranks are drawn as PERCENTILE WITHIN POSITION so the
+     four panels share one 0-100 scale (raw rank stays on hover) -- the confirmed percentile-plus-
+     raw-rank pattern. Elite is right and up, the standing rank-axis convention. Everything else
+     uses one global domain across all players so panels stay comparable and the picture does not
+     rescale when a filter changes. Position over area throughout (Cleveland & McGill): a player is
+     a dot placed in the space, never a sized mark. */
+  var AX={
+    mkt:{lab:'market rank',rank:true,get:function(t){return t.mkt;}},
+    ours:{lab:'our rank',rank:true,get:function(t){return t.ours;}},
+    v:{lab:'market value',get:function(t){return t.v;}},
+    age:{lab:'age',get:function(t){return t.age;}},
+    /* Square-root scale, and it is a measured choice rather than a stylistic one: cost and gain are
+       so skewed (161 and 187 of 269 players sit at exactly zero) that on a LINEAR axis the middle
+       half of the field occupies 11% and 6.2% of the axis respectively -- everything interesting
+       collapses into one corner. On sqrt those become 33% and 25%. Nobody is removed; the crowd is
+       simply given room. Disclosed on-surface, because a non-linear axis the reader does not know
+       about is a lie. */
+    cost:{lab:'what their owner would lose',sqrt:true,get:function(t){return t.cost;}},
+    gain:{lab:"what he'd add to you",sqrt:true,get:function(t){return t.gain;}}
+  };
+  var DOM={};
+  Object.keys(AX).forEach(function(k){
+    if(AX[k].rank) return;
+    var vs=D.targets.map(AX[k].get).filter(function(x){return x!=null;});
+    DOM[k]=[Math.min.apply(null,vs),Math.max.apply(null,vs)];
+  });
+  /* Named views, not free axes. Two dropdowns over six measures is thirty-six charts, and most of
+     them mean nothing -- configurability is not robustness. Each view below answers a question a
+     dynasty manager actually asks, and carries that question as its label. */
+  var VIEWS={
+    lanes: {x:'mkt', y:'ours'},
+    avail: {x:'cost', y:'gain'},
+    window:{x:'age', y:'v'}
+  };
+  var view='lanes';
+
+  function norm(t,key){
+    var a=AX[key], raw=a.get(t);
+    if(raw==null) return null;
+    if(a.rank){ var pool=key==='ours'?t.poolOurs:t.pool;
+      return (1-(raw-1)/Math.max(pool-1,1))*100; }          // elite -> 100
+    var d=DOM[key];
+    if(a.sqrt){
+      var lo=Math.sqrt(Math.max(d[0],0)), hi=Math.sqrt(Math.max(d[1],0));
+      return ((Math.sqrt(Math.max(raw,0))-lo)/Math.max(hi-lo,1e-9))*100;
+    }
+    return ((raw-d[0])/Math.max(d[1]-d[0],1e-9))*100;
+  }
+
+  function panel(pos,rows,xk,yk){
+    var W=100,H=100,pad=7;
+    function px(v){return pad+(v/100)*(W-pad*2);}
+    var diag = AX[xk].rank && AX[yk].rank;
+    var marks=rows.map(function(t){
+      var x=norm(t,xk), y=norm(t,yk);
+      if(x==null||y==null) return '';
+      var rawx=AX[xk].get(t), rawy=AX[yk].get(t);
+      function fmt(k,r){return AX[k].rank?t.pos+r:(k==='age'?'age '+r:r.toLocaleString());}
+      return '<i class="pt'+(t.mine?' pt-me':'')+'" style="left:'+px(x)+'%;bottom:'+px(y)+'%" '
+        +'data-tip="'+tip(t.nm,fmt(xk,rawx)+'  ·  '+fmt(yk,rawy),
+             (t.mine?'Yours':t.owner+' · '+t.posture)+' · age '+t.age)+'"></i>';
+    }).join('');
+    return '<figure class="pnl">'
+      +'<figcaption>'+pos+' <span>'+rows.length+'</span></figcaption>'
+      +'<div class="pbox">'
+        +(diag?'<i class="pdiag" data-tip="'+tip('The agreement line',
+            'both lanes rank him the same','Above it we rate him higher than the market does; '
+            +'below it the market rates him higher.')+'"></i>':'')
+        +marks
+      +'</div></figure>';
+  }
+
+  function renderPlot(list){
+    var xk=VIEWS[view].x, yk=VIEWS[view].y;
+    var groups = F.pos ? [F.pos] : POS;
+    document.getElementById('plotwrap').innerHTML=
+      '<div class="plot">'
+      +'<div class="paxis paxis-y"><span>'+AX[yk].lab+' →</span></div>'
+      +'<div class="pgrid">'
+      +groups.map(function(p){
+         return panel(p,list.filter(function(t){return t.pos===p;}),xk,yk);
+       }).join('')
+      +'</div>'
+      +'<div class="paxis paxis-x"><span>'+AX[xk].lab+' →</span></div>'
+      +'<p class="pnote">Each dot is one player; <b>yours are filled</b>. '
+      +(AX[xk].rank||AX[yk].rank
+         ? 'Rank axes are drawn as position percentile so the panels share one scale — hover for the raw rank. '
+         : '')
+      +(AX[xk].sqrt||AX[yk].sqrt
+         ? 'These axes use a <b>square-root scale</b>: '+(AX[xk].sqrt&&AX[yk].sqrt?'both are':'one is')
+           +' so bunched at zero — 161 players cost their owner nothing and 187 add nothing here — that a '
+           +'straight scale would pile the whole field into one corner. Nobody is hidden; the crowd is given room. '
+         : '')
+      +'Elite is right and up. Hover any dot for who it is.</p>'
+      +'</div>';
+  }
+
+  function render(){
+    var list=query();
+    var pool=D.struct[F.pos||'QB'];
+    document.getElementById('axhd').innerHTML='Our rank vs the market &nbsp;·&nbsp; '
+      +'within his own position &nbsp;·&nbsp; deeper ←  better →'
+      +(F.pos&&pool.mineNm
+        ?'<em class="refkey">your '+pool.mineNm+' is the dashed line — right of it is an upgrade</em>'
+        :'<em class="refkey">pick one position to see your own player as a reference line</em>');
+
+    var mine=list.filter(function(t){return t.mine;}).length;
+    document.getElementById('struct').innerHTML=
+      '<p><b>'+list.length+'</b> of <b>'+D.targets.length+'</b> rostered players match — <b>'+mine
+      +'</b> of them yours. '+(list.length?'Sorted by '+({mkt:'market rank',ours:'our rank',
+        disagree:'how far the two lanes disagree',v:'market value',age:'age, youngest first',
+        ageDesc:'age, oldest first',cost:'what their owner would lose',
+        gain:'what he would add to your lineup'}[F.sort])+'.'
+       :'Nothing matches this combination — clear a filter.')+'</p>'
+      +'<p class="pay">Your tradeable surplus is <b>'+D.surplusTotal.toLocaleString()+'</b> across '
+      +D.surplus.length+' players outside your own best lineup, led by '
+      +D.surplus.slice(0,3).map(function(p){return p.nm+' ('+p.v.toLocaleString()+')';}).join(', ')+'.</p>';
+
+    var plotOn=view!=='table';
+    document.getElementById('plotwrap').style.display=plotOn?'':'none';
+    document.getElementById('tblwrap').style.display=plotOn?'none':'';
+    document.getElementById('sortWrap').style.display=plotOn?'none':'';   // sort only sorts a table
+    if(plotOn) renderPlot(list);
+
+    document.getElementById('rows').innerHTML=list.map(function(t,i){
+      var lu = t.realStart===null ? 'lineup not set'
+             : t.realStart ? 'they start him' : 'they bench him';
+      var tag = t.slot==='ir' ? ' <span class="badge">IR</span>'
+              : t.slot==='taxi' ? ' <span class="badge">taxi</span>' : '';
+      return '<button class="trow'+(t.mine?' mine':'')+'" type="button" aria-expanded="false" data-i="'+i+'">'
+        +'<div><div class="who-nm"><span class="chev">▶</span>'+t.nm
+        +(t.mine?'<span class="yours">yours</span>':'')+'</div>'
+        +'<div class="who-sub">'+(t.mine
+            ? 'on your roster · '+t.pos+t.depth+' of '+t.held+' · age '+t.age+tag
+            : '<span class="own">'+t.owner+'</span> · '+t.posture+' · '+t.pos+t.depth+' of '+t.held
+              +' · age '+t.age+' · '+lu+tag)+'</div></div>'
+        +'<div>'+dumbbell(t,i===0)+'</div>'
+        +'<div>'+(t.mine?'<span class="na">—</span>':avail(t))+'</div>'
+        +'<div>'+(t.mine?'<span class="na">—</span>':fit(t))+'</div>'
+        +'</button>'
+        +'<div class="exp" id="exp'+i+'"><div><div class="exp-in">'
+        +'<p class="exp-lede">Age '+t.age+' · market value <b>'+t.v.toLocaleString()+'</b>'
+        +(t.mine?' · on your roster.'
+          :' · '+t.owner+' are <b>'+t.posture.toLowerCase()+'</b> and hold <b>'+t.held
+           +'</b> at this position. '
+           +(t.cost===0
+              ? 'Removing him costs their best legal lineup <b>nothing</b> — it never used him. '
+              : 'Removing him drops their best legal lineup by <b>'+t.cost.toLocaleString()+'</b>'
+                +(t.repl?', because '+t.repl.nm+' ('+t.repl.pos+', '+t.repl.v.toLocaleString()
+                  +') moves into the slot':'')+'. ')
+           +'Adding him lifts yours by <b>'+(t.gain?t.gain.toLocaleString()
+              :'nothing — he would not crack your lineup')+'</b>. Sleeper has him '
+           +(t.realStart===null?'in a lineup that is not fully set'
+             :t.realStart?'in their saved lineup':'on their bench')+'.')+'</p>'
+        +room(t)+'</div></div></div>';
+    }).join('');
+
+    Array.prototype.forEach.call(document.querySelectorAll('.trow'),function(b){
+      b.addEventListener('click',function(){
+        var open=b.getAttribute('aria-expanded')==='true';
+        b.setAttribute('aria-expanded',String(!open));
+        document.getElementById('exp'+b.dataset.i).classList.toggle('open',!open);
+      });
+    });
+  }
+
+  function chipGroup(id,key,attr){
+    document.getElementById(id).addEventListener('click',function(e){
+      var b=e.target.closest('.chip'); if(!b) return;
+      F[key]=b.dataset[attr];
+      Array.prototype.forEach.call(this.querySelectorAll('.chip'),function(c){
+        c.setAttribute('aria-pressed',String(c.dataset[attr]===F[key]));
+      });
+      render();
+    });
+  }
+  document.getElementById('views').addEventListener('click',function(e){
+    var b=e.target.closest('.vw'); if(!b) return;
+    view=b.dataset.view;
+    Array.prototype.forEach.call(this.querySelectorAll('.vw'),function(c){
+      c.setAttribute('aria-pressed',String(c===b));
+    });
+    render();
+  });
+  chipGroup('chips','pos','p');
+  chipGroup('whose','whose','w');
+  [['fTeam','team'],['fPost','post'],['fSort','sort']].forEach(function(pair){
+    document.getElementById(pair[0]).addEventListener('change',function(){
+      F[pair[1]]=this.value; render();
+    });
+  });
+  document.getElementById('fReset').addEventListener('click',function(){
+    F={pos:'',whose:'all',team:'',post:'',age:'',slot:'',lane:'',sort:'mkt'};
+    ['fTeam','fPost'].forEach(function(id){document.getElementById(id).value='';});
+    document.getElementById('fSort').value='mkt';
+    Array.prototype.forEach.call(document.querySelectorAll('#chips .chip'),function(c){
+      c.setAttribute('aria-pressed',String(c.dataset.p===''));});
+    Array.prototype.forEach.call(document.querySelectorAll('#whose .chip'),function(c){
+      c.setAttribute('aria-pressed',String(c.dataset.w==='all'));});
+    render();
+  });
+
+  document.getElementById('nine').addEventListener('click',function(e){
+    var b=e.target.closest('.nine-row'); if(!b||!b.dataset.pos) return;
+    // a weak slot is a query: scope the board to the position that fills it
+    F.pos=b.dataset.pos; F.whose='all';
+    Array.prototype.forEach.call(document.querySelectorAll('#chips .chip'),function(c){
+      c.setAttribute('aria-pressed',String(c.dataset.p===F.pos));
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('#whose .chip'),function(c){
+      c.setAttribute('aria-pressed',String(c.dataset.w==='all'));
+    });
+    render();
+    document.querySelector('.tbl').scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -893,3 +893,136 @@ earlier one, mark the old one superseded and link them.
   best-versus-best was the wrong question. Figures persisted in `analysis/`, marked unverified.
   **The surface itself is NOT built** — data generation was interrupted at closeout.
 
+
+- **2026-07-26 — DO NOT FINISH THE ANALYSIS AND SHOW ONLY THE CONCLUSION. Show all the data; design so
+  his eye is called to what he'll want to see.** David on the 010 trade-target board: *"I feel that
+  you've been a little too prescriptive here and aren't really displaying all the information, but
+  rather you've finished the analysis and determined what to show me, rather than finding a good way
+  to show me all the data but call my eyes to the things i will want to see."* Studio had filtered a
+  41-player QB population down to the 13 it judged relevant, hidden the rest behind a threshold
+  filter, and written the conclusion into an empty state (*"this position gets fixed by paying, or not
+  at all"*). **How to apply:** the population is the surface. Show every entity at the chosen slice;
+  never pre-filter to the subset Studio finds interesting. Ordering, sorting and visual weight are the
+  legitimate tools for directing attention — a hidden row and a written verdict are not. This is the
+  operational form of *instrument, don't editorialize* (2026-07-21) and its 2026-07-25 refinement (the
+  encoding is uniform, the RESULT must not be): Studio keeps satisfying the letter by flattening the
+  drawing while violating the spirit by pre-selecting the data. He also confirmed the direction is
+  sound — *"i see where youre going with this and its on the right track... so you're getting there."*
+
+- **2026-07-26 — STARTER-VS-BENCH IS NOT A FACT STUDIO MAY ASSERT, and the drop-off is the real
+  signal.** David: *"we must not look simply at if the player is in the starting slot. some managers
+  have their best qbs on the bench sometimes. we need to look at a full picture — do they have a great
+  replacement if they trade one? are they contending or rebuilding etc."*
+  **Measured the same session, and he is literally right at the top of the board:** Studio had inferred
+  every team's lineup with a greedy market-value optimiser and built the headline on it (*"all 13 QBs
+  who would help are their owner's starter"*). Sleeper carries **real** saved lineups — **92% of slots
+  are set league-wide, 10 of 12 teams complete** — and they contradict the optimiser for **10 players**.
+  The sharpest case: **Free Kelly BENCH Josh Allen (10,232, the most valuable player in the league) and
+  start Dak Prescott (3,970).** The headline was false.
+  **The durable rules:** (1) **Never infer a fact the source already carries** — read Sleeper's
+  `rosters[].starters` before modelling a lineup. (2) **Neither lineup is authoritative in the
+  off-season** — Studio's is inferred, Sleeper's may be untouched since last season — so starter/bench
+  is *recorded per player and never used to rank, filter, or claim anything.* (3) **The signal that
+  survives is the drop-off to the replacement**, which does not depend on who nominally starts, and it
+  must be answered with **a name** ("replaced by Jadarian Price, 3,041"), not only a number.
+  (4) **Posture is part of the full picture, per row, not a footnote.**
+
+- **2026-07-26 — BUILD ROBUST INSTRUMENTS, NOT SINGLE-QUESTION SURFACES. (Restates 2026-07-15
+  filters-and-sort-not-tabs, which Studio violated again.)** David on the 010 board: *"i'm just not
+  loving the data viz — i don't need it to be so prescriptive — i prefer a robust data viz, where
+  multiple answers can be found against multiple questions i may ask, easily. even if i have to change
+  a filter or sort — but this is too narrow of a board, it's hyper focused on one use case."*
+  **How to apply:** the default deliverable is **one queryable population with many filter and sort
+  axes**, not a surface purpose-built for the single question that prompted it. He explicitly accepts
+  interaction cost — changing a filter is fine; being unable to ask a second question is not. Ask, for
+  every surface: *how many different questions can he answer here?* If the answer is one, it is too
+  narrow, however well drawn. Studio has now been told this three times (005's two-lists rejection,
+  the 2026-07-15 ruling, and here) and keeps rebuilding bespoke single-purpose boards.
+
+- **2026-07-26 — HOVER TIPS ARE STANDING, ON EVERY SURFACE, AND A REFERENCE LINE MUST LABEL ITSELF.**
+  David: *"hovering tips… there are so many dots on the my team scale — who are they?? and how am i
+  supposed to know what the dotted lines represent — unless i memorize it."* Confirmed after the fix:
+  *"hover is very helpful."* Studio had shipped an anonymous 12-dot cloud per row and put the
+  reference-line explanation in a **column header** — a key, which is the exact failure
+  `craft/colour-accessibility.md` §D (Okabe & Ito) warns against and the one that sank the 009 matrix.
+  **How to apply:** (1) every mark answers "what is this?" on hover — identity, value, and what it
+  means; (2) every reference line is **labelled on the graphic** where it sits, the first time it
+  appears; (3) hit targets are widened well beyond thin marks (a 1px rule is unhoverable); (4) nothing
+  lives ONLY in a tooltip, since touch has no hover — each tip restates what the row, the expansion or
+  the aria-label already carries. This is also the always-loaded dataviz skill's own rule ("add the
+  hover layer — by default") which Studio skipped.
+
+- **2026-07-26 — A CONSTANT APPLIED TO ONE GROUP IS STILL A REPRICING (Studio reasoning error, caught
+  by Tower).** Studio tried to refute the claim that FantasyCalc's superflex values are a flat 1.872×
+  scalar on its 1QB values, arguing that QB1 prices at 1.04× WR1 and 8 of the top 24 are QBs, so "the
+  values do appear to reprice QBs." **That observation is what the claim predicts, not evidence against
+  it** — multiplying quarterbacks and nobody else by a constant *is* a repricing of quarterbacks
+  against the field. **How to apply:** before offering an observation as a refutation, ask whether the
+  hypothesis being tested would produce that same observation. What would actually settle it: whether
+  superflex ÷ 1QB is the *same* number for every QB (supports) or *varies by rank* (refutes) — and
+  neither is testable from a superflex-only pull, because a single pull contains no ratio. **Live
+  consequence:** if the ratio is constant, the QB market curve is shape-borrowed from a format David
+  does not play, and it would be wrong exactly in the QB25–48 band. Do not rest a curve-shape argument
+  on that source until the test lands.
+
+- **2026-07-26 — CONFIGURABILITY IS NOT ROBUSTNESS. Options that answer nothing are worse than fewer
+  options.** Having asked for a robust instrument, David got two free axis dropdowns over six measures
+  plus six filters, and rejected it: *"tooo much. there are too many options that tell me absolutely
+  nothing."* Two dropdowns over six measures is **thirty-six possible charts**, and most are
+  meaningless (age against age, value against market rank). Studio had heard "robust" and built
+  *configurable*. **How to apply:** robustness means **several curated views that each answer a real
+  question**, not a combinatorial space the reader must search for the meaningful corners. Name each
+  view with its question, so no control is ever an unlabelled axis. Cut any filter made redundant by a
+  view (a "lanes disagree" filter is pointless when a view already plots the disagreement). Controls
+  went 11 → 5 and the 36 charts became 3 named views plus the table. Sits between the two failure
+  modes he has now named on the same day: **too prescriptive** (one hard-coded answer) and **too
+  configurable** (infinite empty answers). The target is a few good questions, each answered well.
+
+- **2026-07-26 — Skew is a measurement, not a taste call: check what fraction of the axis the data
+  actually occupies.** The availability view piled every interesting player into one corner because
+  161 of 269 players cost their owner exactly zero and 187 add exactly zero. **Measured: on a linear
+  axis the middle half of the field occupied 11% (cost) and 6.2% (gain) of the axis; on a square-root
+  axis, 33% and 25%.** So the scale changed, and nobody was removed. **How to apply:** when a plot
+  looks crowded, compute the interquartile span as a share of the axis before reaching for a filter —
+  the fix is often the scale, not the population. Any non-linear axis must say so **on the surface**,
+  with the reason, because an undisclosed non-linear axis is a lie.
+
+- **2026-07-26 — 010 CLOSED BY DAVID; the failure is the 008 failure, repeated.** *"i dont know — its
+  not speaking to me. might need to call it a day. were not getting better."* Six versions in one
+  session, each fixing a real defect — inferred lineups replaced with Sleeper's real ones, David added
+  to his own board, a hover layer, filters, named views, a measured sqrt scale — and **the craft
+  improved every time while the outcome did not.** That is verbatim the 2026-07-24 lesson from the
+  draft-capital thread, which is now the second time Studio has paid for it: **when a surface is not
+  landing, iterating the drawing is the wrong move; the premise is what needs re-examining.** After
+  two rejections of the *same* surface, stop redrawing and put the premise itself to David in one
+  line.
+  **Studio's own diagnosis of why it never spoke, recorded for the next attempt:** every version was
+  denominated in **units Studio invented** — "adds 1,184 to your best legal lineup", "costs his owner
+  289", best-legal-lineup slot standing. Those are an optimiser's outputs, not the language of the
+  hobby. Everything David has responded well to across this engagement spoke the game's own tongue:
+  **prose tiers** ("the market prices him a high-end WR2, our model sees a mid WR1"), **named
+  comparables**, **rank and rank movement**, the **aging curve**. **How to apply: check the units
+  before building. If a number on the surface is one no dynasty manager would ever say out loud, it
+  will not speak, however well it is drawn.**
+
+- **2026-07-26 — CAPABILITY FACT, verified: FantasyCalc superflex = one-QB values × a fixed
+  per-position constant. Treat as near-hard, like a §4 constraint.** Measured by Tower across 475
+  players present in both pulls (marker TW26R): **QB ×1.8711, RB ×0.9179, WR ×1.0012, TE ×1.0936,
+  picks ×1.0521**, with **no drift by rank inside quarterbacks** (QB1–24 mean 1.872356, sd 0.00033;
+  QB25–48 mean 1.872639 — Josh Allen and a QB34 carry the same multiplier to five decimals). It is a
+  blanket positional adjustment; FantasyCalc has no mechanism to represent a superflex-specific curve.
+  **How to apply — three rules:**
+  1. **Within a position you are safe.** A positive constant cannot reorder anyone, so every
+     single-position ranking, dumbbell and list Studio has drawn against market is legitimate and
+     identical to its one-QB ordering.
+  2. **Cross-position magnitudes must name the adjustment**, because they are scaled by a known
+     constant rather than measured.
+  3. **Never build an argument on the SHAPE of the market QB curve.** How steeply value falls from QB5
+     to QB25 is a one-QB shape wearing superflex clothes. Ordering fine; steepness is not evidence.
+  **It cost a headline the same hour it landed.** Studio had told David "QB is your hole by twice the
+  next gap." Deflating the constants: QB −838 vs WR1 −767 — **2.04× becomes 1.09×**. The rank (9th of
+  12) holds; the *twice* does not. **Corrected finding: two roughly equal weakest slots, QB and WR1**,
+  which fits the fourteen-receivers-with-no-top shape better than one dominant hole did. Two
+  cross-position slots also moved on deflation (FLEX1 4th→5th, SF 4th→6th); no single-position slot
+  moved. **The general lesson: a number that compares across positions in market units is resting on
+  a constant somebody chose, not on a measurement.**

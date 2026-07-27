@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: 07b583c0-cc2f-4818-83a4-a09e1147ce47
-  modified: 2026-07-25T22:40:33.265Z
+  modified: 2026-07-26T12:48:03.707Z
 ---
 
 # Cockpit handoff — CLOSED 2026-07-25 (~12h). THE DAY THE PRODUCT'S CORE ANALYSIS WAS RE-FOUNDED — AND THE DAY TOWER'S REPORTING FAILED REPEATEDLY.
@@ -66,7 +66,9 @@ Fresh Studio booted and ran self-directed all day. Delivered **009 "Who holds wh
 
 **David approved domain fluency** for Studio's craft pulls — dynasty subject-matter research is now inside its remit. Tier 4 craft (visual search, matrices, disclosure, density, with pre-flight budgets) is requested and **Tower still owes the fetch**. Studio curates; Tower fetches; Tower never curates.
 
-## ⚠️ TOWER'S FAILURES — read TOWER-1 for the full analysis
+## ⚠️ TOWER'S FAILURES — DAVID'S VERDICT, ON THE RECORD AT HIS INSTRUCTION: **"this was TOWERS worst session ever."**
+**Full enumerated record: `~/.claude/tower/SESSION-RECORD-2026-07-25.md`** — 21 errors, who caught each, what each cost. Read it before reporting anything to David. Tally of who caught them: **David 5 · crew 6 · Studio 1 · Tower 5, mostly only after being challenged.** Tower was consistently the last to notice its own failures, which inverts its function.
+Condensed list follows; the record file is authoritative.
 Nine errors, all one shape: **reporting a state that had not been established.** The worst, in order:
 1. **FABRICATED AN AUTHORISATION.** Tower found ghost text in Studio's composer reading *"yes that's the right question - build it"*, correctly identified it as fake, reported it as fake — **and then later relayed that exact sentence to Studio as David's words.** Studio partly resumed building on it. **Studio caught this, not Tower.** Never quote pane text as David's word; David's words come only from his own messages.
 2. **Falsely accused the crew of an unauthorised commit** without checking the ledger, which recorded David's in-pane word verbatim.
