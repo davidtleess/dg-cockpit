@@ -7,7 +7,7 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 REPO="$HOME/dg-cockpit"
 cd "$REPO"
 
-mkdir -p home claude/agents claude/memory frontend-studio codex gemini launchagents
+mkdir -p home claude/agents claude/memory claude/tower claude/skills frontend-studio codex gemini launchagents
 
 # Cockpit scripts and terminal config
 cp "$HOME/dynasty_flight_deck.sh"  home/
@@ -19,6 +19,19 @@ grep -E "alias dg|alias dg-|claude --agent" "$HOME/.bash_profile" > home/dg_alia
 cp "$HOME/.claude/agents/tower.md" claude/agents/
 jq 'del(.env)' "$HOME/.claude/settings.json" > claude/settings.sanitized.json
 rsync -a --delete "$HOME/.claude/projects/-Users-davidleess/memory/" claude/memory/
+
+# Tower's WORKING LAYER — added 2026-07-26 on David's word. The charter and memory
+# above tell a new Tower what the board is; these tell it how to observe and what
+# the doctrine was learned from. Without them a fresh Tower boots knowing the rules
+# and holding no instrument.
+#   tower/  — the TOWER-1 ticket, the 2026-07-25 failure record, ghost-check and
+#             the pane watchers, and durable measurement evidence.
+#   skills/ — Tower-authored skills, notably cockpit-observation.
+# Excludes transient watcher state; those are runtime artifacts, not durable.
+rsync -a --delete --exclude '*.heartbeat' --exclude 'tower-watch-*' \
+      "$HOME/.claude/tower/" claude/tower/
+rsync -a --delete --exclude '__pycache__' \
+      "$HOME/.claude/skills/cockpit-observation/" claude/skills/cockpit-observation/
 
 # Studio's entire world: persona, DAVID.md, proposals, prototypes, bus protocol, permissions
 rsync -a --delete --exclude '.git' "$HOME/frontend-studio/" frontend-studio/

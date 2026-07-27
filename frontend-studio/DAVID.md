@@ -1026,3 +1026,28 @@ earlier one, mark the old one superseded and link them.
   cross-position slots also moved on deflation (FLEX1 4th→5th, SF 4th→6th); no single-position slot
   moved. **The general lesson: a number that compares across positions in market units is resting on
   a constant somebody chose, not on a measurement.**
+
+- **2026-07-25/26 — A FILE'S DIRECTORY IS PART OF ITS AUDIENCE. Decide the shelf before writing, not
+  after.** `proposals/` is the only directory the engineering team is sanctioned to read, so it holds
+  only numbered proposals, their `NNN-RELAY.md` briefs, and the prototypes those reference. Everything
+  else — the working board, notebooks, measurement records, accountability material, and **anything
+  quoting David's rulings, his verbatim words, or the terms of this engagement** — lives in
+  `for-david/`. **How it was learned:** an accountability file quoting Tower's errors and David's
+  private confirmations, and a notebook carrying his doctrine verbatim, were both written into
+  `proposals/` because the instruction said "write it to a file" and never said which shelf.
+  **Two consequences to hold:** a file in `proposals/` must never point at one that is not (check
+  cross-references after any move); and measurement that lives only in a notebook but needs to reach
+  the engineers goes as a **relay addendum Studio authors**, never by exposing the notebook.
+
+- **2026-07-26 (late) — THE TWO LANES ARE RANKED OVER DIFFERENT POPULATIONS, AND MOST OF THE
+  "DISAGREEMENT" STUDIO HAS BEEN DRAWING MAY BE THAT ARTIFACT.** Two independent measurements, one
+  walled off from the other, established it: re-ranking both lanes over **only the players they
+  share** moves average disagreement by **~10.7 percentile points** and reclassifies **131 of 336
+  players**. The apparent systematic bias — our model looking higher than the market — **goes to
+  exactly zero** once the populations match. It was never disagreement.
+  **Distortion is worst where the population mismatch is worst: RB 15%, TE 46%, WR 49%.**
+  **How to apply:** every model-vs-market mark Studio has drawn — the dumbbell, the agreement
+  diagonal, the "where we disagree" view, the 49-players-off-the-diagonal count — is measured with the
+  instrument this engagement exists to repair. **Rebase both lanes onto the shared population before
+  any comparison is drawn or any number is quoted.** Until that is done, treat lane disagreement as
+  unproven, not as a finding — and say so on-surface rather than in a footnote.

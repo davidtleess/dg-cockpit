@@ -259,6 +259,23 @@ verbatim, inline row expansion, no verdict colouring.
 - **Posture is the app's own heuristic**, computed on the same IR/taxi-excluding number as 009 P3.
 - **Region 1 measures market value, not projected points.** It is a proxy for lineup strength.
 
+## Open question raised after closure (2026-07-26, via Tower — do not resume on this alone)
+
+**The corrected WR1 finding sits in the most distorted position on the board.** Two independent
+measurements established that the model lane and the market lane are ranked over **different
+populations**. Rebasing both onto only the players they share moves average disagreement by **~10.7
+percentile points**, reclassifies **131 of 336 players**, and takes the apparent systematic
+model-above-market bias to **exactly zero** — it was never disagreement.
+
+The distortion is worst where the population mismatch is worst: **RB 15%, TE 46%, WR 49%.**
+
+Tonight's corrected finding — that QB and **WR1** are two roughly equal weakest slots rather than QB
+being a lone hole — was measured in the market lane, so the constant-deflation correction above still
+holds on its own terms. But **any statement about our lane at WR, and every model-vs-market mark in
+this proposal, was made with the instrument this engagement exists to repair.** Not shown to be wrong;
+shown to be unverified. **Re-check against rebased numbers before David acts on any of it.** Nothing
+was reworked on this basis tonight, deliberately.
+
 ## Open questions
 
 1. **Does region 1 belong here, or on the 006 front door?** It answers "where do I stand," which is
