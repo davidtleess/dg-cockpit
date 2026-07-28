@@ -24,32 +24,49 @@
   --dg-font-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
   --dg-font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --dg-font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+
+  /* ---- TYPE SCALE, also taken verbatim from the product ----
+     tokens.css:50-52 ships exactly three steps and this surface had been
+     ignoring them, inventing eleven sizes of its own (9.5 · 10 · 10.5 · 11 ·
+     11.5 · 12 · 12.5 · 13.5 · 17 · 19 · 21). The product's steps are the ruler;
+     addressing type by ROLE rather than by size is typography.md §A/§B. */
+  --dg-text-sm:0.8125rem;            /* 13px — product token */
+  --dg-text-base:0.9375rem;          /* 15px — product token */
+  --dg-text-lg:1.125rem;             /* 18px — product token */
+
+  /* Two roles the product ships no token for, each an explicit extension: */
+  --t-h2:22px;                       /* above --dg-text-lg, continuing its ~1.2 step */
+  --t-h1:clamp(28px,4.4vw,44px);     /* page title only */
+  --t-chart:11px;                    /* SVG axis annotation ONLY — a stated exception
+                                        below the product's 13px floor, because tick
+                                        labels on a 150-player axis cannot carry it.
+                                        Never used for HTML content. */
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
   background:var(--dg-bg);color:var(--dg-text);
   font-family:var(--dg-font-sans);
-  font-size:15px;line-height:1.5;
+  font-size:var(--dg-text-base);line-height:1.5;
   -webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 96px}
 
 /* ---------- masthead ---------- */
 .eyebrow{
-  font-family:var(--dg-font-mono);font-size:12px;letter-spacing:.14em;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.14em;
   text-transform:uppercase;color:var(--dg-text-muted);margin:0 0 10px;
 }
 h1{
   font-family:var(--dg-font-display);font-weight:700;
-  font-size:clamp(28px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;
+  font-size:var(--t-h1);line-height:1.08;letter-spacing:-.02em;
   margin:0 0 12px;max-width:20ch;
 }
 .standfirst{
-  color:var(--dg-text-muted);max-width:66ch;margin:0 0 8px;font-size:15px;
+  color:var(--dg-text-muted);max-width:66ch;margin:0 0 8px;font-size:var(--dg-text-base);
 }
 .provenance{
-  font-family:var(--dg-font-mono);font-size:11.5px;color:var(--dg-text-muted);
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
   margin:14px 0 0;padding-top:12px;border-top:1px solid var(--dg-border);
 }
 
@@ -61,12 +78,12 @@ h1{
 }
 .state-cell{background:var(--dg-surface);padding:14px 16px}
 .state-pos{
-  font-family:var(--dg-font-display);font-weight:700;font-size:19px;
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--t-h2);
   letter-spacing:.01em;margin-bottom:8px;
 }
 .state-line{
   display:flex;justify-content:space-between;gap:10px;
-  font-size:12.5px;color:var(--dg-text-muted);padding:2px 0;
+  font-size:var(--dg-text-sm);color:var(--dg-text-muted);padding:2px 0;
 }
 .state-line b{
   font-family:var(--dg-font-mono);font-weight:500;color:var(--dg-text);
@@ -81,10 +98,10 @@ h1{
   border-radius:10px;padding:16px 16px 12px;
 }
 .panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:2px}
-.panel-title{font-family:var(--dg-font-display);font-weight:700;font-size:17px}
-.panel-sub{font-size:12px;color:var(--dg-text-muted)}
+.panel-title{font-family:var(--dg-font-display);font-weight:700;font-size:var(--dg-text-lg)}
+.panel-sub{font-size:var(--dg-text-sm);color:var(--dg-text-muted)}
 .panel-note{
-  font-size:12px;color:var(--dg-text-muted);margin:8px 2px 0;line-height:1.45;
+  font-size:var(--dg-text-sm);color:var(--dg-text-muted);margin:8px 2px 0;line-height:1.45;
 }
 .panel-note b{color:var(--dg-text);font-weight:600}
 svg{display:block;width:100%;height:auto;overflow:visible}
@@ -92,23 +109,23 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .axis-line{stroke:var(--dg-border);stroke-width:1}
 .band{fill:var(--dg-surface-raised)}
 .band-label{
-  font-family:var(--dg-font-mono);font-size:10.5px;fill:var(--dg-text-muted);
+  font-family:var(--dg-font-mono);font-size:var(--t-chart);fill:var(--dg-text-muted);
   text-anchor:middle;letter-spacing:.04em;
 }
 .curve{fill:none;stroke:var(--dg-market);stroke-width:2;stroke-linejoin:round}
 .curve-fill{fill:var(--dg-market);opacity:.10}
 .gridline{stroke:var(--dg-border);stroke-width:1;stroke-dasharray:2 4;opacity:.7}
-.gridlabel{font-family:var(--dg-font-mono);font-size:10px;fill:var(--dg-text-muted)}
+.gridlabel{font-family:var(--dg-font-mono);font-size:var(--t-chart);fill:var(--dg-text-muted)}
 
 .rule-start{stroke:var(--dg-border-strong);stroke-width:1.5}
 .rule-repl{stroke:var(--dg-border-strong);stroke-width:1.5;stroke-dasharray:4 3}
 .rule-label{
-  font-family:var(--dg-font-mono);font-size:10px;fill:var(--dg-text-muted);
+  font-family:var(--dg-font-mono);font-size:var(--t-chart);fill:var(--dg-text-muted);
   letter-spacing:.02em;
 }
 .cliff{stroke:var(--dg-market-muted);stroke-width:1;stroke-dasharray:1 2}
 .cliff-tag{
-  font-family:var(--dg-font-mono);font-size:9.5px;fill:var(--dg-market-muted);
+  font-family:var(--dg-font-mono);font-size:var(--t-chart);fill:var(--dg-market-muted);
   text-anchor:middle;
 }
 
@@ -119,7 +136,7 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .dumb{stroke:var(--dg-border-strong);stroke-width:2}
 .leader{stroke:var(--dg-border-strong);stroke-width:1}
 .mine-label{
-  font-family:var(--dg-font-sans);font-size:10.5px;fill:var(--dg-text);
+  font-family:var(--dg-font-sans);font-size:var(--t-chart);fill:var(--dg-text);
   font-weight:600;
 }
 .hit{fill:transparent;cursor:crosshair}
@@ -134,11 +151,11 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 }
 .pending-head{
   display:flex;align-items:center;gap:9px;
-  font-family:var(--dg-font-mono);font-size:11.5px;letter-spacing:.1em;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.1em;
   text-transform:uppercase;color:var(--dg-model);margin-bottom:7px;
 }
 .swatch{width:11px;height:11px;border-radius:2px;background:var(--dg-model);flex:none}
-.pending p{margin:0;font-size:13px;color:var(--dg-text-muted);max-width:88ch;line-height:1.5}
+.pending p{margin:0;font-size:var(--dg-text-sm);color:var(--dg-text-muted);max-width:88ch;line-height:1.5}
 
 /* ---------- the one list ---------- */
 .list-head{
@@ -146,12 +163,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
   margin:36px 0 12px;justify-content:space-between;
 }
 h2{
-  font-family:var(--dg-font-display);font-weight:700;font-size:21px;margin:0;
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--t-h2);margin:0;
   letter-spacing:-.01em;
 }
 .views{display:flex;gap:6px;flex-wrap:wrap}
 .chip{
-  font-family:var(--dg-font-sans);font-size:12.5px;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);
   background:var(--dg-surface);color:var(--dg-text-muted);
   border:1px solid var(--dg-border);border-radius:999px;
   padding:5px 12px;cursor:pointer;
@@ -161,20 +178,20 @@ h2{
   border-color:var(--dg-border-strong);
 }
 .chip:focus-visible{outline:2px solid var(--dg-focus);outline-offset:2px}
-.view-q{font-size:12.5px;color:var(--dg-text-muted);margin:0 0 10px}
+.view-q{font-size:var(--dg-text-sm);color:var(--dg-text-muted);margin:0 0 10px}
 
 .tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tablewrap:focus-visible{outline:2px solid var(--dg-focus)}
-table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:340px}
+table{width:100%;border-collapse:collapse;font-size:var(--dg-text-base);min-width:340px}
 thead th{
-  text-align:left;font-family:var(--dg-font-mono);font-size:10.5px;
+  text-align:left;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
   letter-spacing:.09em;text-transform:uppercase;color:var(--dg-text-muted);
   font-weight:500;padding:8px 10px;border-bottom:1px solid var(--dg-border);
   cursor:pointer;white-space:nowrap;user-select:none;
 }
 thead th:focus-visible{outline:2px solid var(--dg-focus);outline-offset:-2px}
 thead th[aria-sort]:not([aria-sort="none"]){color:var(--dg-text)}
-th .arrow{opacity:.55;font-size:9px}
+th .arrow{opacity:.55;font-size:var(--dg-text-sm)}
 tbody td{padding:8px 10px;border-bottom:1px solid var(--dg-border)}
 tbody tr.row{cursor:pointer}
 tbody tr.row:hover{background:var(--dg-surface)}
@@ -186,17 +203,17 @@ tbody tr.is-mine:hover td{background:color-mix(in oklab,var(--dg-market) 11%,tra
 .tier{color:var(--dg-text)}
 .muted{color:var(--dg-text-muted)}
 .badge{
-  font-family:var(--dg-font-mono);font-size:10px;letter-spacing:.05em;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.05em;
   border:1px solid var(--dg-border-strong);border-radius:3px;
   padding:1px 5px;color:var(--dg-text-muted);margin-left:6px;
 }
 .expand{background:var(--dg-surface);}
 .expand-inner{padding:6px 10px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
 .fact-k{
-  font-family:var(--dg-font-mono);font-size:10px;letter-spacing:.08em;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.08em;
   text-transform:uppercase;color:var(--dg-text-muted);margin-bottom:4px;
 }
-.fact-v{font-size:13px;line-height:1.45}
+.fact-v{font-size:var(--dg-text-sm);line-height:1.45}
 
 /* ---------- tooltip ---------- */
 #tip{
@@ -204,10 +221,10 @@ tbody tr.is-mine:hover td{background:color-mix(in oklab,var(--dg-market) 11%,tra
   background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
   border-radius:7px;padding:9px 11px;max-width:250px;
   box-shadow:0 8px 26px rgb(0 0 0/.45);
-  font-size:12.5px;line-height:1.45;
+  font-size:var(--dg-text-sm);line-height:1.45;
 }
 #tip .t-name{font-weight:700;margin-bottom:3px}
-#tip .t-row{color:var(--dg-text-muted);font-size:11.5px}
+#tip .t-row{color:var(--dg-text-muted);font-size:var(--dg-text-sm)}
 #tip .t-row b{color:var(--dg-text);font-family:var(--dg-font-mono);font-weight:500}
 #tip .lane-m{font-family:var(--dg-font-mono)}
 #tip .lane-d{font-family:var(--dg-font-mono)}
@@ -217,10 +234,10 @@ tbody tr.is-mine:hover td{background:color-mix(in oklab,var(--dg-market) 11%,tra
 /* ---------- footer ---------- */
 .limits{margin-top:44px;border-top:1px solid var(--dg-border);padding-top:18px}
 .limits h3{
-  font-family:var(--dg-font-mono);font-size:11px;letter-spacing:.11em;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.11em;
   text-transform:uppercase;color:var(--dg-text-muted);font-weight:500;margin:0 0 10px;
 }
-.limits ul{margin:0;padding-left:18px;color:var(--dg-text-muted);font-size:12.5px}
+.limits ul{margin:0;padding-left:18px;color:var(--dg-text-muted);font-size:var(--dg-text-sm)}
 .limits li{margin-bottom:7px;max-width:92ch;line-height:1.5}
 .limits b{color:var(--dg-text);font-weight:600}
 
@@ -428,17 +445,25 @@ tbody tr.is-mine:hover td{background:color-mix(in oklab,var(--dg-market) 11%,tra
       d:`${line} L ${X(n).toFixed(1)} ${padT+plotH} L ${X(1).toFixed(1)} ${padT+plotH} Z`}));
     svg.appendChild(s("path",{class:"curve",d:line}));
 
-    // measured cliffs — the two largest only, kept quiet, tags dodged apart
-    let lastTagX = -Infinity;
+    // measured cliffs — the two largest only, kept quiet, tags dodged apart.
+    // The dodge measures the RENDERED extent rather than comparing x against a
+    // magic threshold: the old `x - lastTagX < 34` was tuned to a 9.5px tag and
+    // silently began overprinting the moment the type scale changed. A dodge
+    // keyed to a font size is a defect waiting for the next edit.
+    const cliffTags = [];
     d.cliffs.slice().sort((a,b)=>b.pct-a.pct).slice(0,2)
       .sort((a,b)=>a.after-b.after).forEach(c => {
       const x = X(c.after + 0.5);
       svg.appendChild(s("line",{class:"cliff",x1:x,x2:x,y1:padT+2,y2:padT+plotH}));
-      const row = (x - lastTagX < 34) ? padT-17 : padT-6;   // stack, never overprint
-      if (row === padT-6) lastTagX = x;
-      const t = s("text",{class:"cliff-tag",x:x,y:row}); t.textContent = `−${c.pct.toFixed(0)}%`;
+      const t = s("text",{class:"cliff-tag",x:x,y:padT-6}); t.textContent = `−${c.pct.toFixed(0)}%`;
       svg.appendChild(t);
+      cliffTags.push({t,x});
     });
+    for (let i=1;i<cliffTags.length;i++){
+      const prev=cliffTags[i-1], cur=cliffTags[i];
+      const half = (n)=> (n.t.getComputedTextLength ? n.t.getComputedTextLength() : 30)/2;
+      if (cur.x - half(cur) < prev.x + half(prev) + 4) cur.t.setAttribute("y", padT-21);
+    }
 
     // ---- startable region ---------------------------------------------
     // The FORM carries the epistemic status. The dedicated-slot count is exact

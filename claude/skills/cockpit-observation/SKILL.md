@@ -429,3 +429,31 @@ Tower's own message markers use the crew's ticket prefix (`TW28-…`). The Studi
 **refused a Studio message on its marker alone** — correctly: that prefix is crew process
 vocabulary and had been riding along on Tower's messages into Studio's lane. **Markers toward
 `dynasty:2.1` carry no crew vocabulary.** The guard caught what Tower's own eye had normalised.
+
+## The inverse of a rule already taught — found 2026-07-28
+
+`pane-send.sh` verified delivery with `capture-pane -S -`, which **includes the composer**. A
+message still sitting UNSENT in the input box therefore satisfied the marker check, and the script
+reported **DELIVERED for a message the recipient had never seen.** It was caught only because the
+next send was REFUSED for a composer strand — and the strand was the script's own previous
+"delivered" message, quoted back verbatim.
+
+The skill already taught *"an empty composer is not proof of delivery."* Nobody had written the
+inverse: **seeing your own text is not proof either, if where you are seeing it is the input box.**
+
+Now: the composer region is cut from the buffer **using tmux's own row coordinates**
+(`-S - -E <row above the cursor>`), never by counting lines across two captures — `capture-pane -p`
+pads the visible screen with trailing blanks and `-p -S -` does not, so the counting version left
+the composer in place. When the composer cannot be located it falls back to the whole buffer, which
+is the pre-fix behaviour, so the depth fix it replaced is not regressed.
+
+A stuck paste is now also **detected and retried once**: if Tower's own marker is found in the
+composer, Enter is pressed again — legal, because the marker was required to be in the message body
+before sending, so the text is provably Tower's own and can never be furniture or another lane's.
+
+`tests/send-composer-selftest.sh`, 5 cases. **Its own first two runs were wrong in the day's
+recurring way:** it simulated a composer by typing at a shell prompt (the shell prefixes its prompt,
+so the cursor is never at line start and the heuristic never fires), and then it planted the marker
+inside the command it ran, so the shell's echo put the needle into the very scrollback being
+searched — failing a fix that was already working. **A test that plants its needle in its own
+haystack proves nothing.**

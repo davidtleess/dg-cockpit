@@ -41,6 +41,7 @@ const opt = (name, fallback) => {
 };
 const UNIT_SEL = opt('unit', null);
 const WIDTH = Number(opt('width', 1400));
+const SCALE_OVERRIDE = opt('scale', null);
 const AS_JSON = argv.includes('--json');
 
 /* ---------------------------------------------------------------- thresholds
@@ -57,11 +58,27 @@ const T = {
   marksPerUnit:   { warn: 1.75, fail: 3.0, src: 'Calibrated on 2 labelled Studio examples (009 matrix rejected ≈3.6/10k px²; 006 front door approved ≈1.4). Mechanism: T4-1 §7.5 — emphasis is zero-sum within a feature map' },
   legendLoad:     { max: 0,               src: 'colour-accessibility.md §D (Okabe & Ito) — label directly on the graphic; a legend forces a hue match, the channel that fails' },
   hues:           { max: 5,               src: 'Healey 1996 — detection "rapid and accurate" at 3 and 5 colours, "mixed" at 7 and 9 (T4-1 §7.3)' },
-  typeFloor:      { px: 12,               src: 'typography.md §A — Carbon scale step 1 is 12px; below the ramp there is no role for content' },
-  typeScale:      { steps: [12, 14, 16, 18, 20, 24, 28, 32, 36, 42, 48, 54, 60, 68, 76, 84, 92], src: 'typography.md §A — Carbon @carbon/type recurrence; an off-ramp size means the scale is wrong or absent' },
+  /* THE RULER COMES FROM THE PRODUCT, NOT FROM CARBON.
+   * The first version of this gate used Carbon's ramp (12/14/16/18…) and duly
+   * convicted the live app for using 13px and 15px — which are the product's OWN
+   * tokens. That is the 2026-07-25 lane-colour violation repeating in the type
+   * channel: an internal craft heuristic overruling the product's contract.
+   * Verified in dynasty-genius-product/frontend/src/styles/tokens.css:50-52 —
+   *   --dg-text-sm 0.8125rem = 13px | --dg-text-base 0.9375rem = 15px
+   *   --dg-text-lg 1.125rem = 18px  (no rem-base override, so 1rem = 16px)
+   * Override with --scale 13,15,18 if the product's tokens ever change. */
+  typeFloor:      { px: 13,               src: "The product's own smallest type token (--dg-text-sm = 13px, tokens.css:50). Content below it is smaller than anything the app ships" },
+  typeScale:      { steps: [13, 15, 18],  src: "The product ships exactly three type tokens (tokens.css:50-52). Sizes off them are ad-hoc — the app itself has ~11, which is the 'no scale' signal, not a per-surface bug" },
   hitTarget:      { px: 24,               src: 'WCAG 2.2 SC 2.5.8 Target Size (Minimum), 24×24 CSS px' },
   occupancy:      { min: 0.25,            src: 'Ruling 2026-07-26 — compute the IQR span as a share of the axis before reaching for a filter; the fix is often the scale' },
 };
+
+if (SCALE_OVERRIDE) {
+  T.typeScale.steps = SCALE_OVERRIDE.split(',').map(Number).filter((n) => n > 0).sort((a, b) => a - b);
+  T.typeFloor.px = T.typeScale.steps[0];
+  T.typeScale.src = `--scale override: ${T.typeScale.steps.join(', ')}px`;
+  T.typeFloor.src = `--scale override: floor is the smallest given step (${T.typeFloor.px}px)`;
+}
 
 /* ------------------------------------------------------------ browser probe */
 const browser = await chromium.launch();
@@ -440,7 +457,13 @@ if (c3.hueFamilies > T.hues.max) add('C3', 'FAIL', `${c3.hueFamilies} hue famili
 else add('C3', 'PASS', `${c3.hueFamilies} hue families in the data region${c3.bins.length ? ` (${c3.bins.join(', ')})` : ''}; ${c3.greyMarks} structural/grey marks.`, null);
 
 const c4 = report.checks.C4;
-const c4tail = `(${c4.smallLabels} sub-${T.typeFloor.px}px LABELS not counted — label sizes are legitimate)`;
+// The content/label split is "is it inside a repeating unit". With no unit found
+// there is no basis for the split and everything falls to "label", which
+// understates the finding. Say so rather than report a quiet warn.
+const c4blind = report.unitCount === 0 && c4.smallLabels > 0;
+const c4tail = c4blind
+  ? `(${c4.smallLabels} sub-${T.typeFloor.px}px nodes ALL classified label — no repeating unit, so the content/label split is unreliable here; inspect by eye)`
+  : `(${c4.smallLabels} sub-${T.typeFloor.px}px LABELS not counted — label sizes are legitimate)`;
 if (c4.belowFloor > 0) add('C4', 'FAIL', `${c4.belowFloor} CONTENT nodes below ${T.typeFloor.px}px, e.g. ${c4.belowFloorSamples.map((s) => `${s.fs}px "${s.text}"`).slice(0, 3).join('; ')} ${c4tail}.`, T.typeFloor.src);
 else if (c4.offScale.length) add('C4', 'WARN', `${c4.distinctSizes} distinct sizes, ${c4.offScale.length} off the ramp: ${c4.offScale.join(', ')}px ${c4tail}.`, T.typeScale.src);
 else add('C4', 'PASS', `${c4.distinctSizes} distinct sizes, all on the ramp, no content below ${T.typeFloor.px}px ${c4tail}.`, null);

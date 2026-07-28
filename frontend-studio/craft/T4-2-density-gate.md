@@ -23,7 +23,7 @@ rather than fetched — no published source measures a Studio prototype.
 | **C1** | Density: marks + text per 10,000px² of the repeating unit | warn 1.75, fail 3.0 | **Calibrated, not cited** — see §C |
 | **C2** | Legend entries × repeating units = hue matches the reader performs | fail ≥3 entries, warn 1–2 | `colour-accessibility.md` §D (Okabe & Ito) — label on the graphic; a legend forces a match in the channel that fails |
 | **C3** | Distinct hue families among data marks | fail >5 | Healey 1996 — detection "rapid and accurate" at 3 and 5 colours, "mixed" at 7 and 9 (`T4-1` §7.3) |
-| **C4** | Content text below the type ramp's first step | fail any | `typography.md` §A — Carbon `@carbon/type` step 1 is 12px; below the ramp there is no role |
+| **C4** | Content text below the **product's** smallest type token | fail any | `tokens.css:50-52` — the product ships `--dg-text-sm/base/lg` = **13 / 15 / 18px**. See §A2 |
 | **C5** | Interactive mark size and nearest-neighbour spacing | fail <24px | WCAG 2.2 SC 2.5.8 Target Size (Minimum) |
 | **C6** | Does the dominant mark's encoding channel actually vary, and use its range | fail IQR <25% of available, or constant | Ruling 2026-07-26 (compute IQR occupancy before filtering) and 2026-07-21 (measure where the variance lives before choosing an axis) |
 
@@ -31,6 +31,52 @@ rather than fetched — no published source measures a Studio prototype.
 most-repeated failure — *encoding a variable that barely varies*. It reports the coefficient of
 variation of the mark's channel. A mark that neither changes length nor moves is drawn n times and
 encodes nothing.
+
+---
+
+## A2. The ruler comes from the PRODUCT — a correction made the day after the gate was built
+
+The gate shipped with Carbon's ramp (12 / 14 / 16 / 18 …) as its type scale. Run against the live
+app the next morning, it flagged **13px and 15px as "off the ramp" on every surface** — and those
+are the product's **own tokens**:
+
+```
+dynasty-genius-product/frontend/src/styles/tokens.css:50-52
+  --dg-text-sm:   0.8125rem  = 13px      (no rem-base override, so 1rem = 16px)
+  --dg-text-base: 0.9375rem  = 15px
+  --dg-text-lg:   1.125rem   = 18px
+```
+
+**This is the 2026-07-25 lane-colour violation, in a new channel, inside the very instrument built
+to prevent that class of error.** David's ruling that day was that consistency with the product
+outranks an internal craft-tool heuristic whenever the heuristic is not a legibility failure. It
+was recorded as a rule about colour. It is not about colour — **it is about every token channel**,
+and a craft tool with a rival ruler is the most durable way to get it wrong, because it converts a
+one-off drift into an enforced standard.
+
+**The rule, generalised:** a gate must measure a surface against *the product's* contract, and may
+only impose an outside standard where the product has none. `--scale 13,15,18` overrides it if the
+tokens ever move.
+
+**What the correction did to the finding, and it inverted it.** With the right ruler:
+
+| | Sizes off the ramp | Content below 13px |
+|---|---|---|
+| **Live app**, default screen | **1** — a 24px heading | **0** |
+| 006 front door (Studio) | — | **88** |
+| 009 matrix (Studio) | — | **144** |
+| 011 tier ladder (Studio) | **11** (9.5, 10, 10.5, 11, 11.5, 12, 13.5, 17, 19, 21, 44) | see §E |
+
+**The app respects its own type scale. Studio's prototypes do not.** The original write-up of this
+finding — "C4 fires on every surface including the app's" — was an artifact of the wrong ruler and
+is withdrawn. The corrected version is sharper and points the other way: *Studio* sets content
+smaller than anything the product ships, and "all the visuals are very small" (David, 2026-07-23)
+is a Studio defect, not an inherited one.
+
+**One honest caveat the correction surfaced.** C4's content/label split is "is the text inside a
+repeating unit." On a page with no repeating unit — a single large chart, like 011 — there is no
+basis for the split, everything falls to "label," and the finding is understated. The gate now says
+so in the output rather than reporting a quiet warn.
 
 ---
 
@@ -119,14 +165,18 @@ matters: everything in §D is Studio marking its own homework.
 
 ## E. The one finding the gate produced immediately
 
-**C4 fires on every surface Studio has ever built**, approved ones included: 144 sub-12px content
-nodes in the matrix, 88 in the front door, 55 in 004, 32 in 008. And 011 — the most recent — carries
-**14 distinct type sizes, 11 of them off the ramp** (9.5, 10.5, 12.5, 13, 15, 17, 19, 21…), which is
-precisely the failure `typography.md` was written against: *"picking sizes ad hoc per surface. A
-scale is a specification you can violate and detect. A pile of chosen sizes is not."*
+**Restated after the §A2 ruler correction — the finding survived it and got sharper.**
 
-This was **not** tuned away to make the approved work pass. David has said *"all the visuals are very
-small"* once already (2026-07-23). The habit is real, systematic, and now measurable.
+**C4 fires on every surface Studio has built, approved ones included, and on none of the app's**:
+144 sub-13px *content* nodes in the matrix, 88 in the front door, 55 in 004, 32 in 008 — against
+**zero** on the live app's default screen. And 011, the most recent, carries **14 distinct type
+sizes, 11 off the product's three tokens** (9.5, 10, 10.5, 11, 11.5, 12, 13.5, 17, 19, 21, 44),
+which is precisely the failure `typography.md` §A was written against: *"picking sizes ad hoc per
+surface. A scale is a specification you can violate and detect. A pile of chosen sizes is not."*
+
+This was **not** tuned away to make Studio's approved work pass. David said *"all the visuals are
+very small"* on 2026-07-23; with the product's own ruler it is now clear that is a **Studio** habit
+and not one inherited from the app. Real, systematic, measurable, and mine to fix.
 
 ---
 

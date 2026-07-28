@@ -59,7 +59,67 @@ returns mostly SKIP, which *reads* like a pass and is not one.
 
 **Unverified at close:** every threshold except WCAG 2.5.8 and Healey's five is Studio's own
 reading of a source, and C1's cut-point is fitted to two examples. Nobody but Studio has checked
-any figure in this thread. **Nothing retracted today.**
+any figure in this thread.
+
+---
+
+### 2026-07-28 (second session) — THE RULER CORRECTION. Studio's own new instrument caught doing the exact thing it was built to prevent.
+
+**Followed my own named next step** (take the type-size finding seriously before drawing another
+surface) and the first move — check whether the product already defines a type scale before
+authoring one — is what caught it.
+
+**It does.** `tokens.css:50-52` ships exactly three type tokens: **13 / 15 / 18px** (no rem-base
+override). The gate had shipped with **Carbon's** ramp (12/14/16/18…), so run against the live app
+it flagged **13px and 15px as "off the ramp" on every surface — the product's own tokens.**
+
+**That is the 2026-07-25 lane-colour violation repeating in the type channel, inside the instrument
+built to stop that class of error.** David's ruling that day — consistency with the product outranks
+an internal craft-tool heuristic unless the heuristic is a legibility failure — was recorded as a
+rule about *colour*. It is not about colour. **It is about every token channel**, and a craft tool
+carrying a rival ruler is the most durable way to get it wrong, because it turns a one-off drift
+into an enforced standard. Gate now takes the ruler from the product, with `--scale` to override.
+
+**RETRACTED from this morning's report:** *"sub-12px content fires on every surface including the
+app's."* Artifact of the wrong ruler. **The corrected finding inverts and is sharper:** with the
+product's ruler the live app's default screen has **zero** sub-13px content and **one** off-scale
+size (a 24px heading) — it respects its own scale. Studio's prototypes do not: 144 sub-13px content
+nodes in the matrix, 88 in the front door, 55 in 004, and 011 carries **11 sizes off the product's
+three tokens**. So *"all the visuals are very small"* (David, 2026-07-23) is a **Studio** defect,
+not one inherited from the app. Still mine to fix, now correctly aimed.
+
+**Also fixed:** C4's content/label split has no basis on a page with no repeating unit (everything
+falls to "label" and the finding is understated). The gate now says so in its output instead of
+reporting a quiet warn — 011 is exactly that case.
+
+**THEN APPLIED IT — 011's type retrofitted to the product's scale.** Not a redraw and not a premise
+change: the surface's argument, data, layout and marks are untouched. Only the type roles moved.
+
+- **Audited by role first, which killed the blanket-lift instinct.** Of 011's small text, **71 nodes
+  were SVG axis annotation** (tick values, position labels on a 153-player axis) — legitimately
+  label-sized, and lifting them to 13px would have wrecked the chart. The actual defect was **~96
+  HTML nodes at 10–12.5px carrying content**: table column headers, IR/taxi badges, a section
+  heading at 11px, caveat prose, and the roster-count readouts. The table body sat at 13.5px — off
+  the scale in the other direction.
+- **Result: 14 distinct sizes → 6**, of which three are the product's own tokens (13/15/18) and
+  three are stated extensions (22, 44 for headings; **11px for SVG axis annotation only** — an
+  explicit exception below the product's floor, with the reason written in the file). **HTML content
+  below the product's 13px floor: 96 → 0.** Table body lifted 13.5 → 15px.
+- **A real regression found and fixed, and it is a reusable defect class.** The lift made two cliff
+  tags overprint, because the dodge compared x against a **magic `34px` threshold tuned to the old
+  9.5px tag**. Replaced with a dodge that measures the rendered text extent. **A dodge keyed to a
+  font size is a defect waiting for the next edit** — it passes every probe until someone touches
+  the type.
+- **Verified:** 0 SVG text collisions, 0 clipped, no overflow DOM-measured at 1400 and 390, 0 page
+  errors, crosshair still resolves **10 distinct players over 10 scrub positions** (8/8 last
+  session), keyboard focus still reaches the SVG hit target. Eye pass done on the full-page capture
+  — the table is materially more legible at 15px. Backup of the pre-change file kept in scratch.
+
+**Fresh-eyes covenant judgement, recorded.** The product's frontend contains `visualCraftAudit.test.js`
+and `visualCraftAuditBaseline.json`. **Deliberately not read.** A visual-craft audit with a baseline
+is plausibly the executable form of the in-house design doctrine, and reading it would correlate
+Studio's instrument with theirs — the precise harm the covenant exists to prevent. Only raw CSS
+token values were read, which are product contract, not doctrine. **No exposure occurred.**
 
 Files: `tools/craft-gate.mjs`, `craft/T4-2-density-gate.md`; `CRAFT-LIBRARY.md` Tier 4 item 4
 marked partly discharged (the layered-reading glance/scan/study canon is still wanted).

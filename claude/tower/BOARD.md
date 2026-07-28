@@ -50,8 +50,29 @@ HOLDING     tier-ladder question parked with Tower for David
 BLOCKER     David's gate on 011 — has NOT crossed to the crew
 VERIFIED    08:45 from disk
 
+## ⚠ PROVENANCE CORRECTION — the identity priority's stated ORIGIN was wrong
+GEMINI'S OWN ANSWER (11:14, its record, quoted): there is **NO separate "general identity-layer
+finding"** in Gemini's record. The origin was the DG2-S0-01 `sleeper_id` nested-vs-root mismatch
+recorded 2026-07-26T22:19 — a test-fixture shape item, NOT the broad "four parallel identity
+systems / crosswalk fails open / ~10% PFF miss on Round 5/6 breakouts" narrative.
+SOURCE OF THE ERROR: that narrative lives in the INHERITED handoff file under "THE IDENTITY
+FINDING — the longest shadow on the board", attributed to Gemini. No lane's record supports it.
+Tower repeated it to David this morning as established provenance without checking it against
+any lane's record — the same defect as relaying an unreviewed claim, one layer further back.
+⭐ THE DECISION STILL STANDS. Everything the priority rests on was independently MEASURED today
+by Claude and Codex — the false on-screen message, the unprotected crosswalk, the parallel
+systems, the orphan players. David's call was right; Tower's attribution of who found it was not.
+RULE ADDED: the handoff file is INHERITED CLAIM, not verified fact. Treat it as a lead to check,
+never as a source. Tower's own board law already said Tower's earlier statements are not a
+source; that now explicitly includes the PREVIOUS Tower's.
+
 ## IDENTITY — David's named priority, 2026-07-28
 BOARD v1    Claude, parked at docs/agent-ledger/evidence/2026-07-28/identity_board_claude_v1.md
+WIRE 10:43  Codex→Claude challenge packet DELIVERED and confirmed (Codex verified content in
+            Claude's transcript, Tower verified Codex's own receipt). Chain re-formed after the
+            guard repair. Claude→Gemini strand: a REAL unsubmitted 24-line paste sits in Gemini's
+            composer; Tower did NOT submit it and told Claude to own it. Codex holds its Gemini
+            packet until Tower confirms that pane clear.
 CHALLENGE   Codex 09:34: **NOT CLEAR — eight v2 corrections required.** No downstream work opens
             before Codex re-review and explicit CLEAR.
 REPRODUCED INDEPENDENTLY BY CODEX (Tower supplied none of these): 12,203/581/11,621/1 universe
@@ -61,8 +82,19 @@ REPRODUCED INDEPENDENTLY BY CODEX (Tower supplied none of these): 12,203/581/11,
 ⚠ TOWER TOLD DAVID SOMETHING NARROWER THAN THE TRUTH — CORRECTED 09:36
             Tower said a lost crosswalk ships "zero model values". Codex measured: 80 Engine A
             values SURVIVE. Severe, not total. Correction delivered to David.
-⚠ WORSE THAN v1 SAID   the player-detail surface MISLABELS the two misses as a player-category
-            gap — a WRONG reason shown, not merely a missing one. Also a live `"0"` pseudo-player.
+⚠ CONFIRMED AT THE UI LAYER 11:05 — the false reason is ON DAVID'S SCREEN, not merely in a
+            payload: frontend/src/player/PlayerDetailCard.tsx:37-39 renders degradation.message as
+            visible body text, reading "No active model score for this player category" for what is
+            actually an identity-join miss. Codex's find; Claude carried it to the surface and
+            self-corrected its own v1, which had said "no caveat" — wrong in the WORSE direction.
+            Also a live `"0"` pseudo-player answering HTTP 200 as if it were a human.
+⭐ NEW, DECISION-RELEVANT TO DAVID'S ITEM 3: the crosswalk's ENTIRE recorded provenance is
+            source + pull_timestamp + count. There is NO upstream SHA field at all, so the exact
+            input cannot be re-pinned even in principle. A re-pull is unreproducible BY
+            CONSTRUCTION — which converts "back up or commit" into "commit the frozen snapshot".
+DISPOSITION Claude accepted all 12 Codex items, ZERO rejections, and flagged its own 100%
+            acceptance as a YELLOW FLAG ON ITSELF rather than a clean result. It tested the
+            reviewer back twice; both of Codex's claims held.
 CORROBORATION NOTE  Claude's confirmation of Tower's three crosswalk-file claims is CORROBORATION,
             not independent reproduction — Tower supplied the figures first and said so up front.
 
