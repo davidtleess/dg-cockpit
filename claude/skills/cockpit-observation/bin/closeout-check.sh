@@ -2,6 +2,7 @@
 # Tower closeout verifier. "Safe to walk away" is a MEASURED verdict, never an assertion.
 # Usage: closeout-check.sh            (report only — never changes anything)
 # Every check prints PASS / FAIL / UNKNOWN / FACT and the evidence it used.
+HERE="$(cd "$(dirname "$0")/.." && pwd)"   # absolute; section 5 cd's away and relative bin/ calls silently vanish
 REPO="$HOME/dynasty-genius-product"
 STUDIO="$HOME/frontend-studio"
 HANDOFF="$HOME/.claude/projects/-Users-davidleess/memory/cockpit_handoff.md"
@@ -45,7 +46,7 @@ wf=$(pgrep -f "backup_irreplaceable_data.py" 2>/dev/null | wc -l | tr -d ' ')
 echo
 echo "-- 2. LANES (mid-turn work landed, no open dialog, no strand) --"
 for p in $PANES; do
-  st=$(bin/pane-state.sh "$p" 2>/dev/null)
+  st=$("$HERE/bin/pane-state.sh" "$p" 2>/dev/null)
   busy=$(sed -n 's/^BUSY=//p' <<<"$st"); dlg=$(sed -n 's/^DIALOG=//p' <<<"$st"); comp=$(sed -n 's/^COMPOSER=//p' <<<"$st")
   if [ -z "$busy" ]; then say UNKNOWN "$p unreadable" "pane-state failed"; continue; fi
   if [ "$busy" = yes ]; then say FAIL "$p STILL WORKING" "let it reach a stopping point"
@@ -97,8 +98,8 @@ else say UNKNOWN "no backup marker" "$mk"; fi
 
 echo
 echo "-- 6. OPEN ASKS (a lane waiting on Tower looks identical to a lane at rest) --"
-oa=$(bin/open-asks.sh 2>/dev/null | tail -3 | head -1)
-if grep -q "^CLEAN" <<<"$oa"; then say PASS "no lane waiting on a word" "open-asks clean"
+oa=$("$HERE/bin/open-asks.sh" 2>/dev/null)
+if grep -qE '^CLEAN' <<<"$oa"; then say PASS "no lane waiting on a word" "open-asks clean"
 else say FAIL "open ask(s) outstanding" "run bin/open-asks.sh and answer or escalate each"; fi
 
 echo
@@ -119,7 +120,7 @@ echo "-- 8. DELIVERY STATE IS TOWER'S TO ASSERT, NOT THE LANE'S --"
 echo "     Studio: \"you accept my account of delivery when YOU hold the evidence. I am the interested party.\""
 strand=0
 for p in $PANES; do
-  c=$(bin/pane-state.sh "$p" 2>/dev/null | sed -n 's/^COMPOSER=//p')
+  c=$("$HERE/bin/pane-state.sh" "$p" 2>/dev/null | sed -n 's/^COMPOSER=//p')
   [ "$c" = real ] && { say FAIL "$p holds unsent text" "identify the SENDER and have them re-send"; strand=1; }
 done
 [ "$strand" = 0 ] && say PASS "no unsent text in any composer" "Tower measured this, did not ask"
