@@ -1051,3 +1051,66 @@ earlier one, mark the old one superseded and link them.
   instrument this engagement exists to repair. **Rebase both lanes onto the shared population before
   any comparison is drawn or any number is quoted.** Until that is done, treat lane disagreement as
   unproven, not as a finding — and say so on-surface rather than in a footnote.
+
+- **2026-07-27 — LEAGUE FACT, read from the league's own config. Treat as near-hard, like §4.**
+  Studio had reasoned about roster shape for two weeks without ever reading the lineup. It is:
+  **`QB 1 · RB 2 · WR 2 · TE 1 · FLEX 2 · SUPER_FLEX 1 · BN 11`** — 12 teams, **full PPR**
+  (`rec: 1.0`), **no TE premium**, 9 starters per team, 108 weekly starting slots league-wide,
+  `position_limit_qb: 4`, 3 draft rounds, taxi 2 / IR 4. Source:
+  `app/data/research/league_behavior/raw/2026-07-19/season_2026_1314363401744416768/league.json`.
+  **What it implies, via Harstad's positional-baseline formulas (Footballguys), parameterised by
+  that lineup:** this league's real startable depth is **QB ~21 start weekly, replacement ≈ QB33;
+  RB 24 / RB39; WR 24 / WR52; TE 12 / TE22.** So the superflex slot makes **QB2 a starting job**,
+  TE is only ~22 deep, and WR runs ~52 deep — which is why "I hold 14 WRs" and "I hold 3 TEs" are
+  not comparable statements, and why quantity at receiver is cheap.
+  **How to apply:** never reason about roster space, positional need, or whether a player is
+  "startable" from the generic 12-team convention — read this lineup. The naive "WR1 = top 12" is
+  a *naming* convention, not this league's structure. Extends the 2026-07-24 meta-lesson (read the
+  league's settings before designing) from roster limits to the starting lineup itself.
+  **The related measurement, same day:** the vernacular's twelve-blocks are not where the market
+  breaks — of the 32 largest single-step value drops across the four boards, exactly **one** lands
+  on a twelve-boundary. Tier *names* are a coordinate system; the *cliffs* are the structure. A
+  tier surface must show both rather than pretending they coincide.
+
+- **2026-07-27 — REACTED to the two-lane tier ladder (011 v2): *"this is interesting - we can work
+  with this - i especially like the charts. the table is clear to read."* A direction checkpoint,
+  NOT an approval** — nothing signed off, no relay authorised in the same breath. Confirmed-good so
+  far: the **two-lane value curve** (market's curve as ground, each held player a dumbbell with our
+  mark and the market's on the same positional-rank axis, connector = the disagreement), the **tie
+  bar** where our model cannot separate players, and the **table's readability** with both lanes as
+  adjacent columns. He did **not** answer the coarse-vs-fine question that was put to him — do not
+  record the coarse ladder as ruled; it is accepted-in-practice, not decided.
+  **The durable principle this established, and it generalises beyond tiers:** David asked for both
+  lanes side by side *"without creating an apples-to-oranges comparison — i don't want arbitrary
+  tiering."* That is **two** risks, and they need two different fixes:
+  1. **One population.** The lanes rank different players; rank both over only the set they share
+     (337 of 399/468). This is the already-known broken comparison.
+  2. **One ruler.** If each lane's tiers came from its own value distribution, "our WR2" and "the
+     market's WR2" would be **different-sized objects** — a deeper apples-to-oranges than the first.
+     So tier boundaries must belong to the **position, not the lane**, and must come from something
+     outside both: here, the league's own starting structure (twelve teams each fielding one starter
+     at the position). A rule, not a taste call, and identical for both lanes.
+  **How to apply:** any two-lane comparison Studio draws must satisfy BOTH — same population, and a
+  ruler derived from neither lane. Deriving cut-points from one lane's data and applying the labels
+  to both is the trap.
+  **And the measurement that decided the grain:** a fine sub-tier was not merely arbitrary, it was
+  **undefined** — see the DVS ceiling fact logged below. When the data cannot support the resolution,
+  the honest move is a coarser ladder that shows the tie, never a finer one that invents an order.
+
+- **2026-07-27 — CAPABILITY FACT, verified live: OUR DVS SATURATES AT A CEILING OF 100.0, and the
+  model lane is effectively static. Treat as near-hard until engineering rules.** Measured from
+  `app/data/model_forward_capture.db`, capture 2026-07-27 (relayed as 011 R1/R2/R3):
+  - **23 players sit at exactly 100.0.** RB 6 tied (next distinct 92.3 — a 7.7-point gap below the
+    tie, i.e. a clip, not a cluster); WR 6 tied (next 98.3); **TE 11 tied** (next 99.5). QB does not
+    saturate (max 99.0, held by one).
+  - **The cost, in market terms:** the 11 tied TEs are priced by the market from **1,467 to 7,730 —
+    a 5.3× spread flattened to a single number**, and it rates **Brock Bowers (23) exactly level
+    with Travis Kelce (37)**. RB spread 2.4×, WR 2.8×.
+  - **xVAR is absent from the joinable capture entirely** (0 of 468 rows), so DVS is the only
+    rankable model quantity available.
+  - **The lane barely moves:** across 34 capture days (2026-06-24 → 07-27) values changed on only
+    **3 of 33 day-transitions** (06-26: 430 players, 06-27: 79, 07-10: 5). **17 consecutive days
+    unchanged.** This extends the 005 frozen-model finding rather than contradicting it.
+  **How to apply:** never design a surface that needs fine ordering at the top of RB/WR/TE from our
+  lane — it does not exist. Show ties as ties. And any "our view vs market" disagreement Studio
+  draws is **structural, a month-old opinion against today's market**, never news.

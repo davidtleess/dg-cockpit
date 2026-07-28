@@ -2,6 +2,125 @@
 
 ## Current
 
+### 2026-07-27 — 011 "What is he?" — the prose tier ladder. SHOWN TO DAVID; REACTED, NOT APPROVED.
+
+**Self-directed, strand 1.** Closes the oldest open item on this board: the prose tier
+ladder, client-mandated 2026-07-15 ("statistically sound and representative, but it must
+be prose") and carried unbuilt for eleven days. Chosen deliberately as the answer to the
+010 closeout diagnosis — *check the units before building; a number no dynasty manager
+would say out loud will not speak* — because a tier name is pure hobby language.
+
+**The load-bearing new input: the league's own lineup, read for the first time.**
+`QB 1 · RB 2 · WR 2 · TE 1 · FLEX 2 · SUPER_FLEX 1 · BN 11`, 12 teams, full PPR, no TE
+premium. Harstad's positional-baseline formulas parameterised by it give this league's
+real startable depth: **QB ~21 start weekly / replacement QB33; RB 24 / RB39;
+WR 24 / WR52; TE 12 / TE22.** The superflex slot makes QB2 a starting job; TE is only
+~22 deep while WR runs ~52 deep.
+
+**Measured findings:**
+- **The vernacular's twelve-blocks are not the market's breaks.** Of the 32 largest
+  single-step drops across the four boards, exactly one lands on a twelve-boundary
+  (RB24→25, −8.9%, only the 6th-largest RB break). Real cliffs: TE4→5 −26.6%,
+  RB2→3 −26.1%, QB27→28 −22.6%, WR3→4 −18.0%. Names are a coordinate system; cliffs are
+  the structure. The surface draws both rather than conflating them.
+- **The roster in hobby units:** WR hold 14 / 5 clear replacement / **3 start-grade /
+  0 top-12**; QB hold 5 / **exactly 2 start-grade** against 2 he must field; RB 4/2/2/1;
+  TE 3/1/1/1. Nine of the fourteen receivers clear no bar in this league — a materially
+  different statement from a count.
+- **Sqrt y-axis, measured not chosen by taste:** on a linear axis ~45% of every position
+  sits in the bottom tenth of the height; middle-half occupancy 15–31% linear vs 25–42%
+  sqrt. Disclosed on-surface with the reason.
+- **y = share of the position's #1 cancels the superflex constant exactly**, so the axis
+  is invariant to the ×1.8711 QB adjustment and all four panels honestly share a scale.
+
+**Model lane deliberately WITHHELD in v1/v2** as a labelled pending lane, per TW27E.
+**Superseded by v3 below** — David asked for both lanes directly, and the lane is now
+drawn, rebased onto the shared population rather than quoting the broken comparison.
+
+**Self-review caught four real defects the automated probes could not** — a
+self-crossing area-fill path rendering as a diagonal wedge; a label dodge that compared
+offsets instead of final positions so names still overprinted; cliff tags overprinting
+at TE; and, surfaced by the interaction test, **per-dot hit targets that made most
+players unhoverable** (153 WRs at ~3.2px spacing under 9px targets — replaced with a
+crosshair scrubber). Clean: 0 errors, 0 SVG text overlaps measured pairwise, 0 clipped,
+no overflow 390/1360 DOM-measured, keyboard traversal works.
+
+**One claim retracted by my own check before it left the lane:** I had flagged "no
+surface reads `roster_positions`" as a candidate relay item, checked it, and found it
+false — the field is read in `roster_cut_engine.py`, `team_value_matrix.py` and
+`trade_lab/reconciler.py`. Corrected in the proposal. **No relay authored; nothing here
+warrants an engineer's time yet.**
+
+**v2 same session — I answered my own open question #2 rather than parking it.** I had
+named the replacement line the surface's weakest joint and then shipped it with a
+footnote, which is the failure the 2026-07-24 epiphany names ("if a footnote invalidates
+the mark above it, the mark is wrong"). Four things came out of going back at it:
+1. **A plain error in my own honest-costs section, corrected.** I wrote that the
+   seasonal-points baseline "understates young players." Backwards. A dynasty ordering
+   ranks a 22-year-old above his current production, so the line **overstates** his
+   present startability and understates an older producer.
+2. **Tried to validate it, and could not.** FantasyCalc's
+   `redraftDynastyValuePercDifference` survives in the raw cache on all 475 rows, but is
+   **unsigned and saturates at 100** (extremes are all sub-$40 players; age correlation
+   only −0.193), so no redraft ordering is recoverable — and §4 rules out production data
+   outright. The estimate stands unvalidated and the surface now says so.
+3. **The mark's form now carries its epistemic status.** A crisp replacement rule asserts
+   a sharp startable/not cutoff the data does not contain — the binary within/without
+   heuristic in Correll & Gleicher, whose tested replacement is a gradient. Redrawn as a
+   depth ruler under the axis: solid across the exact span, fading where the estimate
+   does. Moved out of the plot after the first attempt washed amber over the curve fill
+   and the tier bands.
+4. **A comparability flaw I found by looking and then measured.** Each panel's rank axis
+   is normalized to its own pool, so WR's 52-deep ruler and TE's 22-deep ruler render at
+   **33.6% vs 31.3% of width — near-identical lengths for a 2.4× difference.** The depth
+   spread is the best cross-position finding here, so it is now carried in numbers stated
+   in the copy, with the limit named on-surface and in costs. Shared-axis alternative
+   rejected on the record (would leave QB/TE panels 55% empty); a defensible call, not an
+   obviously right one.
+
+Re-verified after every change: 0 errors, 0 SVG text overlaps, 0 clipped, no overflow
+390/1360, crosshair still reaches 8/8 distinct players.
+
+**v3 — DAVID ASKED FOR BOTH LANES, and reacted.** He answered the parked question directly:
+*"i would like to see both side by side but can we do that without creating an
+apples-to-oranges comparison? i don't want arbitrary tiering."* Built same session; shown via
+the ritual. **His reaction: "this is interesting - we can work with this - i especially like
+the charts. the table is clear to read." A DIRECTION CHECKPOINT, NOT AN APPROVAL** — nothing
+signed off. He did **not** answer the coarse-vs-fine question put to him; the coarse ladder is
+accepted-in-practice, not ruled.
+
+The two-fix principle is logged in DAVID.md: a two-lane comparison needs **one population**
+(rank both over the 337 shared) **and one ruler** (boundaries from the league's starting
+structure, belonging to the position rather than either lane) — because per-lane cut-points
+would make "our WR2" and "the market's WR2" different-sized objects, the deeper
+apples-to-oranges.
+
+**The measurement that decided the grain, and it is now a relay:** DVS **saturates at 100.0**.
+23 players clipped — TE 11 tied (market prices them 1,467→7,730, a **5.3× spread on one
+number**; Brock Bowers 23 rated level with Travis Kelce 37), WR 6, RB 6 with a 7.7-point gap
+below the tie (a clip, not a cluster). QB does not saturate. So a fine sub-tier was not merely
+arbitrary — **at the top of three positions it is undefined.** Ties are drawn as a bar across
+the ranks the model cannot separate.
+
+**011-RELAY.md AUTHORED — R1 ceiling saturation (Critical), R2 model values unchanged 17
+consecutive days / last change 2026-07-10 (High), R3 xVAR null on all 468 rows (Medium), R4
+per-position coverage figures for the rebase already in flight (Info). NOT AUTHORISED TO
+CROSS.** R1 is the direct blocker on David's standing 2026-07-15 "publish market-comparable
+rankings" ask — the ceiling, not the ranking method, is what stops it.
+
+Honest costs now on-surface: rebasing drops **4 of his 27 players** entirely; tier names drift
+from the full market board (median 2 places); the disagreement view's top row is Keenan Allen
+(34.3y, market WR107 / ours WR67) — the 005 age artifact showing through, not an edge.
+
+Files: `proposals/011-what-is-he.md`, `011-RELAY.md`, `011-what-is-he/prototype.html` +
+`ladder-data.js`, `analysis/two-lane-feasibility.py`, `build-two-lane-data.py`,
+`tier-ladder.py`, `tier-ladder-roster.py`, `build-ladder-data.py`.
+
+Files: `proposals/011-what-is-he.md`, `011-what-is-he/prototype.html` + `ladder-data.js`,
+`analysis/tier-ladder.py`, `tier-ladder-roster.py`, `build-ladder-data.py`.
+
+---
+
 ### Open threads at 2026-07-25 closeout, and exactly where each is parked
 
 | thread | state | parked at |

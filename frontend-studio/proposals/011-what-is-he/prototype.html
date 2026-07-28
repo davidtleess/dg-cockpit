@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What is he? — the tier ladder</title>
+<style>
+/* ---- app tokens, taken verbatim from frontend/src/styles/tokens.css ----
+   Lane hues are constitutional: model = cool blue, market = amber. Not re-tuned. */
+:root{
+  --dg-bg:oklch(0.16 0.01 250);
+  --dg-surface:oklch(0.2 0.012 250);
+  --dg-surface-raised:oklch(0.24 0.014 250);
+  --dg-border:oklch(0.32 0.012 250);
+  --dg-border-strong:oklch(0.48 0.014 250);
+  --dg-text:oklch(0.92 0.005 250);
+  --dg-text-muted:oklch(0.68 0.008 250);
+  --dg-focus:oklch(0.72 0.14 255);
+  --dg-model:oklch(0.72 0.11 255);
+  --dg-model-muted:oklch(0.62 0.07 255);
+  --dg-market:oklch(0.76 0.13 75);
+  --dg-market-emphasis:oklch(0.82 0.14 75);
+  --dg-market-muted:oklch(0.66 0.08 75);
+  --dg-font-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+  --dg-font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --dg-font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--dg-bg);color:var(--dg-text);
+  font-family:var(--dg-font-sans);
+  font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:32px 24px 96px}
+
+/* ---------- masthead ---------- */
+.eyebrow{
+  font-family:var(--dg-font-mono);font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dg-text-muted);margin:0 0 10px;
+}
+h1{
+  font-family:var(--dg-font-display);font-weight:700;
+  font-size:clamp(28px,4.4vw,44px);line-height:1.08;letter-spacing:-.02em;
+  margin:0 0 12px;max-width:20ch;
+}
+.standfirst{
+  color:var(--dg-text-muted);max-width:66ch;margin:0 0 8px;font-size:15px;
+}
+.provenance{
+  font-family:var(--dg-font-mono);font-size:11.5px;color:var(--dg-text-muted);
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--dg-border);
+}
+
+/* ---------- the fixed state strip: same shape every day ---------- */
+.state{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--dg-border);border:1px solid var(--dg-border);
+  margin:28px 0 8px;border-radius:8px;overflow:hidden;
+}
+.state-cell{background:var(--dg-surface);padding:14px 16px}
+.state-pos{
+  font-family:var(--dg-font-display);font-weight:700;font-size:19px;
+  letter-spacing:.01em;margin-bottom:8px;
+}
+.state-line{
+  display:flex;justify-content:space-between;gap:10px;
+  font-size:12.5px;color:var(--dg-text-muted);padding:2px 0;
+}
+.state-line b{
+  font-family:var(--dg-font-mono);font-weight:500;color:var(--dg-text);
+  font-variant-numeric:tabular-nums;
+}
+.state-line.short b{color:var(--dg-market-emphasis)}
+
+/* ---------- panels ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:28px}
+.panel{
+  background:var(--dg-surface);border:1px solid var(--dg-border);
+  border-radius:10px;padding:16px 16px 12px;
+}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:2px}
+.panel-title{font-family:var(--dg-font-display);font-weight:700;font-size:17px}
+.panel-sub{font-size:12px;color:var(--dg-text-muted)}
+.panel-note{
+  font-size:12px;color:var(--dg-text-muted);margin:8px 2px 0;line-height:1.45;
+}
+.panel-note b{color:var(--dg-text);font-weight:600}
+svg{display:block;width:100%;height:auto;overflow:visible}
+
+.axis-line{stroke:var(--dg-border);stroke-width:1}
+.band{fill:var(--dg-surface-raised)}
+.band-label{
+  font-family:var(--dg-font-mono);font-size:10.5px;fill:var(--dg-text-muted);
+  text-anchor:middle;letter-spacing:.04em;
+}
+.curve{fill:none;stroke:var(--dg-market);stroke-width:2;stroke-linejoin:round}
+.curve-fill{fill:var(--dg-market);opacity:.10}
+.gridline{stroke:var(--dg-border);stroke-width:1;stroke-dasharray:2 4;opacity:.7}
+.gridlabel{font-family:var(--dg-font-mono);font-size:10px;fill:var(--dg-text-muted)}
+
+.rule-start{stroke:var(--dg-border-strong);stroke-width:1.5}
+.rule-repl{stroke:var(--dg-border-strong);stroke-width:1.5;stroke-dasharray:4 3}
+.rule-label{
+  font-family:var(--dg-font-mono);font-size:10px;fill:var(--dg-text-muted);
+  letter-spacing:.02em;
+}
+.cliff{stroke:var(--dg-market-muted);stroke-width:1;stroke-dasharray:1 2}
+.cliff-tag{
+  font-family:var(--dg-font-mono);font-size:9.5px;fill:var(--dg-market-muted);
+  text-anchor:middle;
+}
+
+.dot-league{fill:var(--dg-market-muted);opacity:.45}
+.dot-market{fill:var(--dg-market);stroke:var(--dg-bg);stroke-width:1.5}
+.dot-model{fill:var(--dg-model);stroke:var(--dg-bg);stroke-width:1.5}
+.tiebar{fill:var(--dg-model);stroke:var(--dg-bg);stroke-width:1.5}
+.dumb{stroke:var(--dg-border-strong);stroke-width:2}
+.leader{stroke:var(--dg-border-strong);stroke-width:1}
+.mine-label{
+  font-family:var(--dg-font-sans);font-size:10.5px;fill:var(--dg-text);
+  font-weight:600;
+}
+.hit{fill:transparent;cursor:crosshair}
+.hit:focus-visible{outline:2px solid var(--dg-focus);outline-offset:1px}
+.crosshair{stroke:var(--dg-text-muted);stroke-width:1;pointer-events:none}
+.focus-dot{fill:var(--dg-market-emphasis);stroke:var(--dg-bg);stroke-width:2;pointer-events:none}
+
+/* ---------- pending model lane ---------- */
+.pending{
+  margin-top:24px;border:1px dashed var(--dg-model-muted);border-radius:10px;
+  padding:14px 16px;background:color-mix(in oklab,var(--dg-model) 6%,transparent);
+}
+.pending-head{
+  display:flex;align-items:center;gap:9px;
+  font-family:var(--dg-font-mono);font-size:11.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dg-model);margin-bottom:7px;
+}
+.swatch{width:11px;height:11px;border-radius:2px;background:var(--dg-model);flex:none}
+.pending p{margin:0;font-size:13px;color:var(--dg-text-muted);max-width:88ch;line-height:1.5}
+
+/* ---------- the one list ---------- */
+.list-head{
+  display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;
+  margin:36px 0 12px;justify-content:space-between;
+}
+h2{
+  font-family:var(--dg-font-display);font-weight:700;font-size:21px;margin:0;
+  letter-spacing:-.01em;
+}
+.views{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+  font-family:var(--dg-font-sans);font-size:12.5px;
+  background:var(--dg-surface);color:var(--dg-text-muted);
+  border:1px solid var(--dg-border);border-radius:999px;
+  padding:5px 12px;cursor:pointer;
+}
+.chip[aria-pressed="true"]{
+  background:var(--dg-surface-raised);color:var(--dg-text);
+  border-color:var(--dg-border-strong);
+}
+.chip:focus-visible{outline:2px solid var(--dg-focus);outline-offset:2px}
+.view-q{font-size:12.5px;color:var(--dg-text-muted);margin:0 0 10px}
+
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tablewrap:focus-visible{outline:2px solid var(--dg-focus)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:340px}
+thead th{
+  text-align:left;font-family:var(--dg-font-mono);font-size:10.5px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--dg-text-muted);
+  font-weight:500;padding:8px 10px;border-bottom:1px solid var(--dg-border);
+  cursor:pointer;white-space:nowrap;user-select:none;
+}
+thead th:focus-visible{outline:2px solid var(--dg-focus);outline-offset:-2px}
+thead th[aria-sort]:not([aria-sort="none"]){color:var(--dg-text)}
+th .arrow{opacity:.55;font-size:9px}
+tbody td{padding:8px 10px;border-bottom:1px solid var(--dg-border)}
+tbody tr.row{cursor:pointer}
+tbody tr.row:hover{background:var(--dg-surface)}
+tbody tr.row:focus-visible{outline:2px solid var(--dg-focus);outline-offset:-2px}
+tbody tr.is-mine td{background:color-mix(in oklab,var(--dg-market) 7%,transparent)}
+tbody tr.is-mine:hover td{background:color-mix(in oklab,var(--dg-market) 11%,transparent)}
+.num{font-family:var(--dg-font-mono);font-variant-numeric:tabular-nums}
+.rk{color:var(--dg-text);font-weight:500}
+.tier{color:var(--dg-text)}
+.muted{color:var(--dg-text-muted)}
+.badge{
+  font-family:var(--dg-font-mono);font-size:10px;letter-spacing:.05em;
+  border:1px solid var(--dg-border-strong);border-radius:3px;
+  padding:1px 5px;color:var(--dg-text-muted);margin-left:6px;
+}
+.expand{background:var(--dg-surface);}
+.expand-inner{padding:6px 10px 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:18px}
+.fact-k{
+  font-family:var(--dg-font-mono);font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--dg-text-muted);margin-bottom:4px;
+}
+.fact-v{font-size:13px;line-height:1.45}
+
+/* ---------- tooltip ---------- */
+#tip{
+  position:fixed;pointer-events:none;z-index:50;opacity:0;
+  background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
+  border-radius:7px;padding:9px 11px;max-width:250px;
+  box-shadow:0 8px 26px rgb(0 0 0/.45);
+  font-size:12.5px;line-height:1.45;
+}
+#tip .t-name{font-weight:700;margin-bottom:3px}
+#tip .t-row{color:var(--dg-text-muted);font-size:11.5px}
+#tip .t-row b{color:var(--dg-text);font-family:var(--dg-font-mono);font-weight:500}
+#tip .lane-m{font-family:var(--dg-font-mono)}
+#tip .lane-d{font-family:var(--dg-font-mono)}
+#tip .lane-m::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--dg-market);margin-right:7px}
+#tip .lane-d::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--dg-model);margin-right:7px}
+
+/* ---------- footer ---------- */
+.limits{margin-top:44px;border-top:1px solid var(--dg-border);padding-top:18px}
+.limits h3{
+  font-family:var(--dg-font-mono);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--dg-text-muted);font-weight:500;margin:0 0 10px;
+}
+.limits ul{margin:0;padding-left:18px;color:var(--dg-text-muted);font-size:12.5px}
+.limits li{margin-bottom:7px;max-width:92ch;line-height:1.5}
+.limits b{color:var(--dg-text);font-weight:600}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .state{grid-template-columns:repeat(2,1fr)}
+  .wrap{padding:24px 16px 72px}
+  .hide-sm{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Studio · 011 · self-directed</p>
+  <h1>What is he, in words you'd actually say?</h1>
+  <p class="standfirst">
+    Every player sits somewhere on his position's ladder. The hobby has names for those
+    places — <em>low-end QB1</em>, <em>high-end WR2</em> — and this league has its own answer
+    to whether that place is a starting job. Below, <b>our rank and the market's sit on the
+    same ladder</b>: an amber mark where the market puts him, a blue one where we do, and the
+    distance between them is the disagreement. Where our model cannot tell players apart, the
+    blue mark becomes a bar across the ranks it cannot separate.
+  </p>
+
+  <!-- fixed state strip: identical shape every day, numbers vary -->
+  <div class="state" id="state"></div>
+  <p class="panel-note" style="margin-left:2px">
+    “Start-grade” counts the players good enough to hold a weekly starting slot in
+    <em>this</em> league's lineup, not the generic top 12.
+    The value axis below is <b>square-root, not linear</b> — on a linear axis about
+    45% of every position piles into the bottom tenth of the height and the ranks you
+    care about are unreadable. Nobody is filtered out; only the scale changed.
+  </p>
+  <p class="panel-note" style="margin-left:2px">
+    Ranks are over the <b>337 players both lanes cover</b>. Against the full market board
+    they sit a median of 2 places lower (mean 4.4, max 20). <b>Four of your 27 players are
+    absent entirely</b> — one lane prices them and the other does not, so no comparison
+    exists for them; they are listed at the foot.
+    <br><b>How deep each position runs here is the thing to take away, and it is not the
+    same number:</b> startable fades out around <b>QB33</b>, <b>RB39</b>, <b>WR52</b>,
+    <b>TE22</b>. Read those figures, not the bar lengths — each panel's rank axis is
+    scaled to its own pool (69 QB against 153 WR), so equal widths do not mean equal
+    depth. That spread is why fourteen receivers is a thinner asset than it sounds and
+    why one startable tight end is not.
+  </p>
+
+  <div class="grid" id="panels"></div>
+
+  <div class="pending">
+    <div class="pending-head"><span class="swatch"></span>How the two lanes are made comparable</div>
+    <p id="pending-copy"></p>
+  </div>
+
+  <div class="list-head">
+    <h2>Every priced player</h2>
+    <div class="views" id="views" role="group" aria-label="Views"></div>
+  </div>
+  <p class="view-q" id="view-q"></p>
+
+  <div class="tablewrap">
+  <table id="tbl">
+    <caption class="sr">Players by position rank, tier name, market value, and whether they clear this league's replacement level.</caption>
+    <thead><tr id="thead"></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+  </div>
+
+  <div class="limits">
+    <h3>What this can't tell you</h3>
+    <ul id="limits"></ul>
+  </div>
+
+  <p class="provenance" id="prov"></p>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script src="./ladder-data.js"></script>
+<script>
+(function(){
+  "use strict";
+  const D = window.LADDER;
+  const POS = ["QB","RB","WR","TE"];
+  const NEED = {QB:2, RB:2, WR:2, TE:1};   // slots he must field weekly (SF counted as a QB job)
+  const fmt = n => n.toLocaleString("en-US");
+  const el = (t,c,txt) => { const e=document.createElement(t); if(c)e.className=c; if(txt!=null)e.textContent=txt; return e; };
+
+  // ---------------------------------------------------------------- state strip
+  const state = document.getElementById("state");
+  POS.forEach(p => {
+    const d = D.positions[p];
+    const held = d.players.filter(x=>x.mine);
+    const grade = held.filter(x=>x.mrank <= d.weekly_starts).length;
+    const cell = el("div","state-cell");
+    cell.appendChild(el("div","state-pos",p));
+    const rows = [
+      ["you hold", held.length, false],
+      ["start-grade", grade, grade < NEED[p]],
+      ["you must field", NEED[p], false],
+    ];
+    rows.forEach(([k,v,short]) => {
+      const r = el("div","state-line" + (short?" short":""));
+      r.appendChild(el("span",null,k));
+      const b = el("b",null,String(v)); r.appendChild(b);
+      cell.appendChild(r);
+    });
+    state.appendChild(cell);
+  });
+
+  // ---------------------------------------------------------------- tooltip
+  const tip = document.getElementById("tip");
+  function showTip(html, x, y){
+    tip.innerHTML = html; tip.style.opacity = "1";
+    const r = tip.getBoundingClientRect();
+    let left = x + 14, top = y + 14;
+    if (left + r.width > innerWidth - 8)  left = x - r.width - 14;
+    if (top + r.height > innerHeight - 8) top = y - r.height - 14;
+    tip.style.left = Math.max(8,left)+"px"; tip.style.top = Math.max(8,top)+"px";
+  }
+  const hideTip = () => { tip.style.opacity = "0"; };
+  function tipHTML(pl, pos, d){
+    const startable = pl.mrank <= d.replacement;
+    const weekly = pl.mrank <= d.weekly_starts;
+    const who = pl.mine ? "You" : (pl.owner || "not rostered in your league");
+    const ours = pl.tie > 1
+      ? `<b>tied with ${pl.tie-1} others</b>${pl.atCeiling?" at our ceiling":""} — we cannot rank them`
+      : `<b>${pos}${pl.drank}</b> · ${pl.dgrade} ${pl.dtier}`;
+    const g = pl.gap;
+    const verdict = pl.tie > 1 ? "our model does not separate him from his tie"
+      : g === 0 ? "both lanes agree"
+      : `we have him <b>${Math.abs(g)}</b> ${Math.abs(g)===1?"place":"places"} ${g>0?"higher":"lower"}`;
+    return `<div class="t-name">${pl.name}</div>
+      <div class="t-row lane-m">market &nbsp;<b>${pos}${pl.mrank}</b> · ${pl.mgrade} ${pl.mtier}</div>
+      <div class="t-row lane-d">ours &nbsp;&nbsp;&nbsp;&nbsp;${ours}</div>
+      <div class="t-row">${verdict}</div>
+      <div class="t-row">${fmt(pl.value)} · ${pl.pct.toFixed(0)}% of ${pos}1${pl.age?` · ${pl.age.toFixed(1)}y`:""}</div>
+      <div class="t-row">${weekly ? "good enough to start here"
+                        : startable ? "clears replacement, not start-grade"
+                        : "below replacement in this league"}</div>
+      <div class="t-row">held by <b>${who}</b>${pl.reserve?` · ${pl.reserve}`:""}</div>`;
+  }
+
+  // ---------------------------------------------------------------- panels
+  const NS = "http://www.w3.org/2000/svg";
+  const s = (t,a) => { const e=document.createElementNS(NS,t); for(const k in a) e.setAttribute(k,a[k]); return e; };
+  const panels = document.getElementById("panels");
+
+  const W=520, H=300, padL=16, padR=16, padT=26, padB=76;
+  const plotW = W-padL-padR, plotH = H-padT-padB;
+
+  POS.forEach(pos => {
+    const d = D.positions[pos];
+    const n = d.n;
+    d.players.forEach(p => { p.atCeiling = (p.dvs === d.ceiling); });
+    // best on the RIGHT: rank 1 at the right edge (Savant convention, David 2026-07-23)
+    const X = r => padL + (n - r)/(n - 1) * plotW;
+    // Square-root value axis. Measured: on a linear axis ~45% of every position
+    // sits in the bottom 10% of the height and the middle half of the field
+    // occupies only 15-31% of it; sqrt roughly doubles that and removes nobody.
+    // Disclosed on the surface — an undisclosed non-linear axis is a lie.
+    const Y = pct => padT + (1 - Math.sqrt(Math.max(pct,0))/10) * plotH;
+
+    const panel = el("div","panel");
+    const head = el("div","panel-head");
+    head.appendChild(el("div","panel-title",pos));
+    head.appendChild(el("div","panel-sub",
+      `${n} priced · you hold ${d.held}`));
+    panel.appendChild(head);
+
+    const svg = s("svg",{viewBox:`0 0 ${W} ${H}`,role:"img",
+      "aria-label":`${pos} value curve. ${n} players priced, best on the right. `+
+        `This league starts about ${d.weekly_starts} ${pos}s weekly; replacement level is near ${pos}${Math.round(d.replacement)}. `+
+        `You hold ${d.held}.`});
+
+    // alternating vernacular blocks, recessed
+    d.blocks.forEach((b,i) => {
+      if (i % 2 === 1) return;
+      const x1 = X(Math.min(b.hi,n)), x2 = X(b.lo);
+      svg.appendChild(s("rect",{class:"band",x:x1,y:padT,width:Math.max(0,x2-x1),height:plotH}));
+    });
+    d.blocks.forEach(b => {
+      if (b.hi - b.lo < 5) return;             // don't label a stub block
+      const cx = (X(Math.min(b.hi,n)) + X(b.lo))/2;
+      svg.appendChild(s("text",{class:"band-label",x:cx,y:padT+plotH+15},)).textContent = b.name;
+    });
+
+    // y gridlines — uneven spacing is the sqrt axis showing itself honestly
+    [5,10,25,50,100].forEach(v => {
+      svg.appendChild(s("line",{class:"gridline",x1:padL,x2:padL+plotW,y1:Y(v),y2:Y(v)}));
+      const t = s("text",{class:"gridlabel",x:padL,y:Y(v)-4}); t.textContent = v+"%";
+      svg.appendChild(t);
+    });
+
+    // the curve
+    const pts = d.players.map(p => [X(p.mrank), Y(p.pct)]);
+    const line = pts.map((p,i)=> (i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+    // Close from the LAST point (rank n, far left) down to the baseline, then
+    // back along it to the right edge. Closing to X(1) first self-crosses the
+    // polygon and renders as a diagonal wedge.
+    svg.appendChild(s("path",{class:"curve-fill",
+      d:`${line} L ${X(n).toFixed(1)} ${padT+plotH} L ${X(1).toFixed(1)} ${padT+plotH} Z`}));
+    svg.appendChild(s("path",{class:"curve",d:line}));
+
+    // measured cliffs — the two largest only, kept quiet, tags dodged apart
+    let lastTagX = -Infinity;
+    d.cliffs.slice().sort((a,b)=>b.pct-a.pct).slice(0,2)
+      .sort((a,b)=>a.after-b.after).forEach(c => {
+      const x = X(c.after + 0.5);
+      svg.appendChild(s("line",{class:"cliff",x1:x,x2:x,y1:padT+2,y2:padT+plotH}));
+      const row = (x - lastTagX < 34) ? padT-17 : padT-6;   // stack, never overprint
+      if (row === padT-6) lastTagX = x;
+      const t = s("text",{class:"cliff-tag",x:x,y:row}); t.textContent = `−${c.pct.toFixed(0)}%`;
+      svg.appendChild(t);
+    });
+
+    // ---- startable region ---------------------------------------------
+    // The FORM carries the epistemic status. The dedicated-slot count is exact
+    // league arithmetic, so it gets a crisp rule. Where "startable" fades out is
+    // an estimate (flex allocation + games-started inefficiency), so it gets a
+    // gradient with no far edge: a hard line there would assert a sharp
+    // within/without cutoff the data does not have — the binary-heuristic
+    // failure in Correll & Gleicher, whose tested replacement is a gradient.
+    const xHard = X(Math.min(d.weekly_starts, n));
+    const xFade = X(Math.min(d.replacement, n));
+    const xTop  = X(1);
+
+    // A depth ruler UNDER the axis rather than a wash across the plot: keeping it
+    // out of the plot stops it competing with the amber curve fill and the tier
+    // bands, and it reads as what it is — a measurement along the rank axis.
+    // Solid across the startable span, fading out where the estimate does.
+    const gid = `fade-${pos}`;
+    const defs = s("defs",{});
+    const lg = s("linearGradient",{id:gid,x1:"0",x2:"1",y1:"0",y2:"0"});
+    const solidAt = (xHard - xFade) / Math.max(1, xTop - xFade);
+    lg.appendChild(s("stop",{offset:"0%","stop-color":"var(--dg-market)","stop-opacity":"0"}));
+    lg.appendChild(s("stop",{offset:`${(solidAt*100).toFixed(1)}%`,
+                             "stop-color":"var(--dg-market)","stop-opacity":"0.8"}));
+    lg.appendChild(s("stop",{offset:"100%","stop-color":"var(--dg-market)","stop-opacity":"0.8"}));
+    defs.appendChild(lg); svg.appendChild(defs);
+
+    const ry = padT + plotH + 28;
+    svg.appendChild(s("rect",{fill:`url(#${gid})`,x:xFade,y:ry,
+      width:Math.max(0,xTop-xFade),height:6,rx:3}));
+    // crisp tick only where the fact is exact; quiet full-height twin so the same
+    // boundary can be read against the curve without shouting
+    svg.appendChild(s("line",{class:"rule-start",x1:xHard,x2:xHard,y1:ry-5,y2:ry+11}));
+    svg.appendChild(s("line",{class:"rule-start",x1:xHard,x2:xHard,y1:padT,y2:padT+plotH,
+                              opacity:"0.3"}));
+
+    const l1 = s("text",{class:"rule-label",x:xHard,y:ry+20,"text-anchor":"end"});
+    l1.textContent = `${Math.round(d.weekly_starts)} start here →`;
+    svg.appendChild(l1);
+    const l2 = s("text",{class:"rule-label",x:xFade,y:ry+34,"text-anchor":"start"});
+    l2.textContent = `← fades out ≈ ${pos}${Math.round(d.replacement)}`;
+    svg.appendChild(l2);
+
+    // every player: a faint mark. His: bright, larger, labelled if start-grade.
+    d.players.forEach(p => {
+      const x = X(p.mrank), y = Y(p.pct);
+      if (!p.mine) svg.appendChild(s("circle",{class:"dot-league",cx:x,cy:y,r:1.6}));
+    });
+    const held = d.players.filter(p=>p.mine);
+    // Dumbbell per held player: market mark at its market rank, our mark at our
+    // rank, on the SAME rank axis — the connector's length IS the disagreement.
+    // Where our model ties players at its ceiling it cannot order them, so the
+    // model mark becomes a bar spanning the ranks it cannot separate.
+    held.forEach(p => {
+      const y = Y(p.pct), xm = X(p.mrank), xd = X(p.drank);
+      if (Math.abs(xm-xd) > 1)
+        svg.appendChild(s("line",{class:"dumb",x1:xm,x2:xd,y1:y,y2:y}));
+      if (p.tie > 1){
+        const x2 = X(Math.min(p.drank + p.tie - 1, n));
+        svg.appendChild(s("rect",{class:"tiebar",x:Math.min(xd,x2),y:y-3.5,
+          width:Math.abs(x2-xd)||3,height:7,rx:3.5}));
+      } else {
+        svg.appendChild(s("circle",{class:"dot-model",cx:xd,cy:y,r:4.5}));
+      }
+      svg.appendChild(s("circle",{class:"dot-market",cx:xm,cy:y,r:4.5}));
+    });
+    // Direct-label the start-grade ones (Okabe & Ito: label on the graphic).
+    // Greedy vertical dodge, right-to-left, so clustered names stack instead of
+    // overprinting — the rest stay hoverable and are restated in the table.
+    const placed = [];
+    held.filter(p => p.mrank <= d.weekly_starts)
+        .sort((a,b)=>a.mrank-b.mrank)                 // rank 1 is rightmost
+        .forEach(p => {
+      const x = X(p.mrank), dotY = Y(p.pct);
+      let ly = dotY - 10;                           // test the FINAL y, not the offset
+      while (placed.some(q => Math.abs(q.x - x) < 52 && Math.abs(q.y - ly) < 12)) ly -= 12;
+      placed.push({x, y: ly});
+      // a dodged label needs a leader, or it is a floating word rather than a label
+      if (dotY - ly > 11)
+        svg.appendChild(s("line",{class:"leader",x1:x,x2:x,y1:ly+3,y2:dotY-5}));
+      const t = s("text",{class:"mine-label",x:x,y:ly,
+        "text-anchor": p.mrank<=3 ? "end" : "middle"});
+      t.textContent = p.name.split(" ").slice(-1)[0];
+      svg.appendChild(t);
+    });
+
+    // ---- crosshair scrubber -------------------------------------------
+    // Per-dot hit circles do not work here: 153 WRs across 488px sit ~3.2px
+    // apart, so 9px targets overlap six deep and the last-drawn one swallows
+    // its neighbours — most players become unreachable. One scrubber with a
+    // nearest-rank lookup reaches every player at every density.
+    const cross = s("line",{class:"crosshair",y1:padT,y2:padT+plotH,x1:0,x2:0,opacity:0});
+    const focusDot = s("circle",{class:"focus-dot",r:5,opacity:0});
+    svg.appendChild(cross); svg.appendChild(focusDot);
+
+    let cur = null;
+    function pick(rank, clientX, clientY){
+      rank = Math.max(1, Math.min(n, rank));
+      cur = rank;
+      const p = d.players[rank-1], x = X(rank), y = Y(p.pct);
+      cross.setAttribute("x1",x); cross.setAttribute("x2",x); cross.setAttribute("opacity",1);
+      focusDot.setAttribute("cx",x); focusDot.setAttribute("cy",y); focusDot.setAttribute("opacity",1);
+      const box = svg.getBoundingClientRect();
+      showTip(tipHTML(p,pos,d),
+        clientX ?? box.left + (x/W)*box.width,
+        clientY ?? box.top  + (y/H)*box.height);
+      scrub.setAttribute("aria-label",
+        `${pos} ladder. ${p.name}. Market ${pos}${p.mrank}, ${p.mgrade} ${p.mtier}. ` +
+        (p.tie>1 ? `Our model ties him with ${p.tie-1} others at its ceiling. `
+                 : `Ours ${pos}${p.drank}, ${p.dgrade} ${p.dtier}. `) +
+        `Arrow keys to move along the ladder.`);
+    }
+    function clear(){ cur=null; cross.setAttribute("opacity",0);
+                      focusDot.setAttribute("opacity",0); hideTip(); }
+
+    const scrub = s("rect",{class:"hit",x:padL,y:padT,width:plotW,height:plotH,
+      tabindex:"0",role:"slider","aria-label":`${pos} ladder — arrow keys to move along it`,
+      "aria-valuemin":"1","aria-valuemax":String(n)});
+    scrub.addEventListener("mousemove", ev => {
+      const box = svg.getBoundingClientRect();
+      const sx = (ev.clientX - box.left)/box.width * W;          // to viewBox units
+      pick(Math.round(n - (sx - padL)/plotW * (n - 1)), ev.clientX, ev.clientY);
+    });
+    scrub.addEventListener("mouseleave", clear);
+    scrub.addEventListener("focus", () => pick(cur ?? 1));
+    scrub.addEventListener("blur", clear);
+    scrub.addEventListener("keydown", ev => {
+      const step = ev.shiftKey ? 10 : 1;
+      if (ev.key === "ArrowRight" || ev.key === "ArrowUp")   { ev.preventDefault(); pick((cur??1) - step); }
+      if (ev.key === "ArrowLeft"  || ev.key === "ArrowDown") { ev.preventDefault(); pick((cur??1) + step); }
+      if (ev.key === "Home") { ev.preventDefault(); pick(1); }
+      if (ev.key === "End")  { ev.preventDefault(); pick(n); }
+      if (ev.key === "Escape") clear();
+    });
+    svg.appendChild(scrub);
+
+    panel.appendChild(svg);
+
+    // the reading, counted rather than asserted
+    const grade = held.filter(p=>p.mrank<=d.weekly_starts).length;
+    const clears = held.filter(p=>p.mrank<=d.replacement).length;
+    const note = el("div","panel-note");
+    note.innerHTML =
+      `Value at ${pos}12 is <b>${d.players[11] ? d.players[11].pct.toFixed(0)+"%" : "—"}</b> of ${pos}1. ` +
+      `You hold <b>${held.length}</b>, of which <b>${clears}</b> clear replacement and <b>${grade}</b> are start-grade.`;
+    panel.appendChild(note);
+    panels.appendChild(panel);
+  });
+
+  document.getElementById("pending-copy").innerHTML =
+    `<b>One population.</b> Both lanes are ranked over only the <b>${D.shared}</b> players they share. ` +
+    `${D.market_only} are priced by the market but not modelled by us; ${D.model_only} are modelled but ` +
+    `unpriced. Ranking each lane over its own board is the comparison that was found broken — ` +
+    `rebasing shifts market ranks a median of 2 places (mean 4.4, max 20).<br>` +
+    `<b>One ruler.</b> Tier boundaries come from this league's starting structure — twelve teams, each ` +
+    `fielding one starter at the position — not from either lane's values. They are therefore identical ` +
+    `for both lanes. Deriving them per lane would make "our ${'WR2'}" and "the market's ${'WR2'}" ` +
+    `different-sized objects, which is the deeper apples-to-oranges.<br>` +
+    `<b>Ties stay ties.</b> Our model gives several players the identical top value at three positions ` +
+    `(<b>${D.positions.TE.ceiling_ties} tight ends</b>, ${D.positions.WR.ceiling_ties} receivers and ` +
+    `${D.positions.RB.ceiling_ties} backs all sit at its ceiling). It cannot order them, so they are drawn ` +
+    `as a bar spanning the ranks it cannot separate, and marked * in the table — never given an invented rank.`;
+
+  // ---------------------------------------------------------------- the one list
+  const ALL = [];
+  POS.forEach(pos => D.positions[pos].players.forEach(p => {
+    const d = D.positions[pos];
+    ALL.push(Object.assign({}, p, {
+      pos,
+      atCeiling: p.dvs === d.ceiling,
+      startable: p.mrank <= d.replacement,
+      weekly: p.mrank <= d.weekly_starts,
+      repl: d.replacement, starts: d.weekly_starts, posN: d.n,
+    }));
+  }));
+
+  // Named views. Each is a question, never a bare axis control.
+  const VIEWS = [
+    {id:"mine",  label:"What do I hold?",
+     q:"Your 27 players on their positions' ladders, deepest position first.",
+     filter:r=>r.mine, sort:{k:"pos",dir:1}},
+    {id:"all",   label:"Where does everyone stand?",
+     q:"Every priced player in the market's board — the full population, nobody filtered out.",
+     filter:()=>true, sort:{k:"value",dir:-1}},
+    {id:"grade", label:"Who is start-grade here?",
+     q:"Only players good enough to hold a weekly starting slot in this league's lineup.",
+     filter:r=>r.weekly, sort:{k:"value",dir:-1}},
+    {id:"below", label:"Who is below replacement?",
+     q:"Players who do not clear this league's replacement level at their position — the roster's tail.",
+     filter:r=>!r.startable, sort:{k:"value",dir:-1}},
+    {id:"apart", label:"Where do the two lanes disagree?",
+     q:"Sorted by how far our rank sits from the market's, widest first. Players our model ties at its ceiling are excluded — it has no rank to disagree with.",
+     filter:r=>r.tie===1, sort:{k:"gap",dir:-1}},
+  ];
+  let view = VIEWS[0], sort = Object.assign({},view.sort), open = null;
+
+  const COLS = [
+    {k:"mrank", h:"Market",  cls:"num rk", get:r=>`${r.pos}${r.mrank}`, num:true},
+    {k:"drank", h:"Ours",    cls:"num rk", get:r=>r.tie>1?`${r.pos}${r.drank}*`:`${r.pos}${r.drank}`, num:true},
+    {k:"gap",   h:"Gap",     cls:"num",    get:r=>r.tie>1?"—":(r.gap>0?`+${r.gap}`:String(r.gap)), num:true, sm:true},
+    {k:"name",  h:"Player",  get:r=>r.name},
+    {k:"age",   h:"Age",     cls:"num muted", get:r=>r.age?r.age.toFixed(1):"—", num:true, sm:true},
+    {k:"mtier", h:"Market tier", cls:"tier", get:r=>`${r.mgrade} ${r.mtier}`},
+    {k:"dtier", h:"Our tier",    cls:"tier", get:r=>r.tie>1?(r.atCeiling?`tied, ${r.tie} at our ceiling`:`tied with ${r.tie-1}`):`${r.dgrade} ${r.dtier}`},
+    {k:"value", h:"Value",   cls:"num", get:r=>fmt(r.value), num:true, sm:true},
+    {k:"owner", h:"Held by", cls:"muted", get:r=>r.mine?"You":(r.owner||"—"), sm:true},
+  ];
+
+  const thead = document.getElementById("thead");
+  COLS.forEach(c => {
+    const th = el("th",c.sm?"hide-sm":null); th.tabIndex = 0;
+    th.setAttribute("aria-sort","none");
+    th.innerHTML = c.h + ' <span class="arrow"></span>';
+    const go = () => {
+      sort = (sort.k===c.k) ? {k:c.k,dir:-sort.dir} : {k:c.k,dir:c.num?-1:1};
+      open = null; render();
+    };
+    th.addEventListener("click",go);
+    th.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();go();} });
+    thead.appendChild(th);
+  });
+
+  const views = document.getElementById("views");
+  VIEWS.forEach(v => {
+    const b = el("button","chip",v.label);
+    b.type="button"; b.setAttribute("aria-pressed", String(v===view));
+    b.addEventListener("click",()=>{ view=v; sort=Object.assign({},v.sort); open=null; render(); });
+    views.appendChild(b);
+  });
+
+  const POS_ORDER = {QB:0,RB:1,WR:2,TE:3};
+  function render(){
+    [...views.children].forEach((b,i)=>b.setAttribute("aria-pressed",String(VIEWS[i]===view)));
+    document.getElementById("view-q").textContent = view.q;
+    [...thead.children].forEach((th,i)=>{
+      const c = COLS[i], on = sort.k===c.k;
+      th.setAttribute("aria-sort", on ? (sort.dir===1?"ascending":"descending") : "none");
+      th.querySelector(".arrow").textContent = on ? (sort.dir===1?"▲":"▼") : "";
+    });
+
+    let rows = ALL.filter(view.filter);
+    rows.sort((a,b)=>{
+      let x,y;
+      if (sort.k==="pos"||sort.k==="mrank"||sort.k==="drank"){
+        const kk = sort.k==="drank" ? "drank" : "mrank";
+        x=POS_ORDER[a.pos]*1000+a[kk]; y=POS_ORDER[b.pos]*1000+b[kk]; }
+      else { x=a[sort.k]; y=b[sort.k]; }
+      if (x==null) x = sort.dir===1 ? Infinity : -Infinity;
+      if (y==null) y = sort.dir===1 ? Infinity : -Infinity;
+      if (typeof x==="string") return sort.dir * x.localeCompare(y);
+      return sort.dir * (x-y);
+    });
+
+    const tb = document.getElementById("tbody");
+    tb.textContent = "";
+    rows.forEach(r => {
+      const tr = el("tr","row" + (r.mine?" is-mine":""));
+      tr.tabIndex = 0;
+      tr.setAttribute("aria-expanded", String(open===r));
+      COLS.forEach(c => {
+        const td = el("td",[c.cls,c.sm?"hide-sm":null].filter(Boolean).join(" "));
+        td.textContent = c.get(r);
+        if (c.k==="name" && r.reserve) td.appendChild(el("span","badge",r.reserve));
+        tr.appendChild(td);
+      });
+      const toggle = () => { open = (open===r) ? null : r; render(); };
+      tr.addEventListener("click",toggle);
+      tr.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle();} });
+      tb.appendChild(tr);
+
+      if (open===r){
+        const ex = el("tr","expand");
+        const td = el("td"); td.colSpan = COLS.length;
+        const inner = el("div","expand-inner");
+        const facts = [
+          ["Where the market has him", `${r.mgrade} ${r.mtier} — ${r.pos}${r.mrank} of ${r.posN} on the shared board.`],
+          ["In this lineup", r.weekly
+              ? `Start-grade. This league starts about ${Math.round(r.starts)} ${r.pos}s every week.`
+              : r.startable
+                ? `Clears replacement (${r.pos}${Math.round(r.repl)}) but is not start-grade here.`
+                : `Below replacement — this league's ${r.pos} pool runs about ${Math.round(r.repl)} deep.`],
+          ["Market", `${fmt(r.value)}, ${r.pct.toFixed(0)}% of ${r.pos}1` +
+              (r.trend30!=null ? ` · 30-day trend ${r.trend30>0?"+":""}${fmt(r.trend30)}` : "")],
+          ["Our rank", r.tie>1
+              ? `Our model gives ${r.tie} ${r.pos}s the identical value ${r.dvs}${r.atCeiling?" — its ceiling":""}, so it cannot order them. He is somewhere in ${r.pos}${r.drank}–${r.pos}${r.drank+r.tie-1} by our lane; we cannot say where.`
+              : `${r.pos}${r.drank} — ${r.dgrade} ${r.dtier}. ` +
+                (r.gap===0 ? "The two lanes agree exactly."
+                 : `We have him ${Math.abs(r.gap)} ${Math.abs(r.gap)===1?"place":"places"} ${r.gap>0?"higher":"lower"} than the market.`)],
+        ];
+        facts.forEach(([k,v])=>{
+          const b = el("div");
+          b.appendChild(el("div","fact-k",k));
+          b.appendChild(el("div","fact-v",v));
+          inner.appendChild(b);
+        });
+        td.appendChild(inner); ex.appendChild(td); tb.appendChild(ex);
+      }
+    });
+  }
+  render();
+
+  // ---------------------------------------------------------------- limits
+  const L = [
+    ["The tier names are a coordinate system, not the market's own breaks.",
+     "Blocks of twelve are how the hobby says where a player stands. Measured, only one of the "+
+     "32 largest value breaks on these four boards lands on a twelve-boundary. Where a cliff and a "+
+     "block edge disagree, the cliff is the real structure — the drawn curve shows both so you can see it."],
+    ["Where startable fades out is an estimate, and it leans the wrong way for young players.",
+     "The solid line is exact league arithmetic (the QB figure of 21 is the one exception — it assumes "+
+     "roughly three in four superflex slots hold a quarterback). The fade uses Harstad's published "+
+     "positional-baseline formulas, derived for seasonal points. Read against a dynasty value "+
+     "ordering, that conflates who is good now with who is valuable later: a 22-year-old priced for "+
+     "his future sits higher than his current production earns, so the surface <b>overstates</b> how "+
+     "startable he is today — and correspondingly understates an older player still producing. "+
+     "It is drawn as a fade rather than a line because there is no sharp cutoff to assert."],
+    ["Curve shape at QB is borrowed from a format you don't play.",
+     "FantasyCalc's superflex board is its one-QB board multiplied by a fixed per-position constant "+
+     "(QB ×1.8711, no drift by rank). A within-position ratio cancels that constant, so the ordering "+
+     "and this y-axis are safe — but the steepness of the QB curve is a one-QB shape. Do not read the "+
+     "QB cliffs as evidence about superflex scarcity."],
+    ["Our lane cannot resolve the top of three positions.",
+     "Our model gives 11 tight ends, 6 receivers and 6 backs the identical top value. Inside those "+
+     "groups it has no opinion about who is better, so no sub-tier can be assigned and none is "+
+     "invented — they are drawn as a bar and marked * in the table. This is the reason the ladder is "+
+     "coarse: a four-player sub-tier is not available where the model does not separate four players."],
+    ["Our lane has barely moved.",
+     "Across the last 30 daily captures our model produced only 2 distinct sets of values. The market "+
+     "lane is today's; ours is effectively a month-old opinion, which is defensible for dynasty value "+
+     "but means the disagreement you see is structural, not news."],
+    ["Rebasing costs coverage, and the tier names drift slightly.",
+     "Ranking both lanes over the 337 shared players is what makes the comparison legitimate, but it "+
+     "removes 62 players the market prices and we do not model, and 131 we model and it does not price "+
+     "— including four of yours. It also means WR12 here is not exactly WR12 on the full market board "+
+     "(median 2 places, max 20)."],
+    ["One player on your roster is unpriced.",
+     "Rasheen Ali has no FantasyCalc value, so no tier can be assigned to him at all."],
+  ];
+  const ul = document.getElementById("limits");
+  L.forEach(([h,b])=>{ const li=el("li"); li.innerHTML=`<b>${h}</b> ${b}`; ul.appendChild(li); });
+
+  document.getElementById("prov").textContent =
+    `Market: FantasyCalc superflex, captured ${D.generated_from.market.slice(0,10)} · ` +
+    `League snapshot ${D.generated_from.snapshot.slice(0,10)} · ` +
+    `${D.league.teams}-team superflex PPR, ${D.league.starters_per_team} starters ` +
+    `(1QB / 2RB / 2WR / 1TE / 2FLEX / 1SF) · ` +
+    `Replacement level via Harstad, Footballguys.`;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+{
+ "generated_note": "market lane only; model lane quarantined pending population rebase",
+ "market_fetched_at": "2026-07-26T20:44:41Z",
+ "league": {
+  "name": "Redzone Champions League",
+  "N": 12,
+  "ppr": 1.0,
+  "te_premium": false,
+  "S": {
+   "QB": 1,
+   "RB": 2,
+   "WR": 2,
+   "TE": 1
+  },
+  "F": 2,
+  "SF": 1,
+  "BN": 11,
+  "counts": {
+   "QB": 1,
+   "RB": 2,
+   "WR": 2,
+   "TE": 1,
+   "FLEX": 2,
+   "SUPER_FLEX": 1,
+   "BN": 11
+  }
+ },
+ "harstad_replacement": {
+  "QB": 32.76,
+  "RB": 39.235200000000006,
+  "WR": 52.264799999999994,
+  "TE": 21.72
+ },
+ "dedicated_starts": {
+  "QB": 12,
+  "RB": 24,
+  "WR": 24,
+  "TE": 12,
+  "QB_with_sf": 21.0
+ },
+ "breaks": {
+  "QB": [
+   {
+    "from": 44,
+    "to": 45,
+    "drop_pct": 40.722495894909684,
+    "from_name": "Drew Allar",
+    "to_name": "Will Howard"
+   },
+   {
+    "from": 27,
+    "to": 28,
+    "drop_pct": 22.607260726072607,
+    "from_name": "Daniel Jones",
+    "to_name": "Ty Simpson"
+   },
+   {
+    "from": 42,
+    "to": 43,
+    "drop_pct": 20.127388535031848,
+    "from_name": "Jalen Milroe",
+    "to_name": "Cade Klubnik"
+   },
+   {
+    "from": 2,
+    "to": 3,
+    "drop_pct": 17.540546545212177,
+    "from_name": "Drake Maye",
+    "to_name": "Jayden Daniels"
+   },
+   {
+    "from": 40,
+    "to": 41,
+    "drop_pct": 14.258373205741627,
+    "from_name": "Justin Fields",
+    "to_name": "Anthony Richardson"
+   },
+   {
+    "from": 1,
+    "to": 2,
+    "drop_pct": 13.550369730145011,
+    "from_name": "Josh Allen",
+    "to_name": "Drake Maye"
+   },
+   {
+    "from": 6,
+    "to": 7,
+    "drop_pct": 12.394366197183098,
+    "from_name": "Joe Burrow",
+    "to_name": "Justin Herbert"
+   },
+   {
+    "from": 41,
+    "to": 42,
+    "drop_pct": 12.388392857142858,
+    "from_name": "Anthony Richardson",
+    "to_name": "Jalen Milroe"
+   }
+  ],
+  "RB": [
+   {
+    "from": 2,
+    "to": 3,
+    "drop_pct": 26.075845855054688,
+    "from_name": "Jahmyr Gibbs",
+    "to_name": "Ashton Jeanty"
+   },
+   {
+    "from": 8,
+    "to": 9,
+    "drop_pct": 17.000583544057577,
+    "from_name": "James Cook",
+    "to_name": "Kenneth Walker"
+   },
+   {
+    "from": 4,
+    "to": 5,
+    "drop_pct": 13.94698085419735,
+    "from_name": "Jeremiyah Love",
+    "to_name": "Omarion Hampton"
+   },
+   {
+    "from": 23,
+    "to": 24,
+    "drop_pct": 12.175502742230348,
+    "from_name": "Josh Jacobs",
+    "to_name": "Bhayshul Tuten"
+   },
+   {
+    "from": 26,
+    "to": 27,
+    "drop_pct": 11.928702010968921,
+    "from_name": "D'Andre Swift",
+    "to_name": "RJ Harvey"
+   },
+   {
+    "from": 15,
+    "to": 16,
+    "drop_pct": 9.541577825159914,
+    "from_name": "TreVeyon Henderson",
+    "to_name": "Kyren Williams"
+   },
+   {
+    "from": 24,
+    "to": 25,
+    "drop_pct": 8.90924229808493,
+    "from_name": "Bhayshul Tuten",
+    "to_name": "David Montgomery"
+   },
+   {
+    "from": 43,
+    "to": 44,
+    "drop_pct": 7.932203389830509,
+    "from_name": "Jordan Mason",
+    "to_name": "Tyler Allgeier"
+   }
+  ],
+  "WR": [
+   {
+    "from": 3,
+    "to": 4,
+    "drop_pct": 17.997698504027618,
+    "from_name": "Puka Nacua",
+    "to_name": "Amon-Ra St. Brown"
+   },
+   {
+    "from": 28,
+    "to": 29,
+    "drop_pct": 17.40081224617307,
+    "from_name": "Tee Higgins",
+    "to_name": "Jameson Williams"
+   },
+   {
+    "from": 8,
+    "to": 9,
+    "drop_pct": 13.847239372023285,
+    "from_name": "Drake London",
+    "to_name": "Tetairoa McMillan"
+   },
+   {
+    "from": 7,
+    "to": 8,
+    "drop_pct": 10.696282293635791,
+    "from_name": "CeeDee Lamb",
+    "to_name": "Drake London"
+   },
+   {
+    "from": 1,
+    "to": 2,
+    "drop_pct": 10.46403951023768,
+    "from_name": "Ja'Marr Chase",
+    "to_name": "Jaxon Smith-Njigba"
+   },
+   {
+    "from": 30,
+    "to": 31,
+    "drop_pct": 7.7261809447558045,
+    "from_name": "KC Concepcion",
+    "to_name": "DJ Moore"
+   },
+   {
+    "from": 5,
+    "to": 6,
+    "drop_pct": 7.639484978540772,
+    "from_name": "Justin Jefferson",
+    "to_name": "Malik Nabers"
+   },
+   {
+    "from": 13,
+    "to": 14,
+    "drop_pct": 7.367433129985922,
+    "from_name": "Nico Collins",
+    "to_name": "A.J. Brown"
+   }
+  ],
+  "TE": [
+   {
+    "from": 4,
+    "to": 5,
+    "drop_pct": 26.559229803264966,
+    "from_name": "Tyler Warren",
+    "to_name": "Tucker Kraft"
+   },
+   {
+    "from": 2,
+    "to": 3,
+    "drop_pct": 19.07523510971787,
+    "from_name": "Trey McBride",
+    "to_name": "Colston Loveland"
+   },
+   {
+    "from": 1,
+    "to": 2,
+    "drop_pct": 16.872964169381106,
+    "from_name": "Brock Bowers",
+    "to_name": "Trey McBride"
+   },
+   {
+    "from": 8,
+    "to": 9,
+    "drop_pct": 13.259284970496356,
+    "from_name": "Kyle Pitts",
+    "to_name": "Kenyon Sadiq"
+   },
+   {
+    "from": 9,
+    "to": 10,
+    "drop_pct": 11.484593837535014,
+    "from_name": "Kenyon Sadiq",
+    "to_name": "George Kittle"
+   },
+   {
+    "from": 15,
+    "to": 16,
+    "drop_pct": 11.01063829787234,
+    "from_name": "Dalton Kincaid",
+    "to_name": "Brenton Strange"
+   },
+   {
+    "from": 5,
+    "to": 6,
+    "drop_pct": 8.66343687660302,
+    "from_name": "Tucker Kraft",
+    "to_name": "Harold Fannin"
+   },
+   {
+    "from": 6,
+    "to": 7,
+    "drop_pct": 8.393135725429017,
+    "from_name": "Harold Fannin",
+    "to_name": "Sam LaPorta"
+   }
+  ]
+ },
+ "pos_counts": {
+  "QB": 69,
+  "RB": 109,
+  "WR": 153,
+  "TE": 68
+ }
+}
