@@ -7,7 +7,7 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 REPO="$HOME/dg-cockpit"
 cd "$REPO"
 
-mkdir -p home claude/agents claude/memory claude/tower claude/skills frontend-studio codex gemini launchagents
+mkdir -p home claude/agents claude/memory claude/tower claude/skills claude/hooks frontend-studio codex gemini launchagents
 
 # Cockpit scripts and terminal config
 cp "$HOME/dynasty_flight_deck.sh"  home/
@@ -32,6 +32,13 @@ rsync -a --delete --exclude '*.heartbeat' --exclude 'tower-watch-*' \
       "$HOME/.claude/tower/" claude/tower/
 rsync -a --delete --exclude '__pycache__' \
       "$HOME/.claude/skills/cockpit-observation/" claude/skills/cockpit-observation/
+
+# Hook SCRIPTS — added 2026-07-28. settings.sanitized.json above records that a hook is
+# WIRED, but not what it does; the scripts it invokes lived only on this machine. That is
+# the same coverage hole DGX-02 and the 07-28 cockpit-backup audit each found once already:
+# a manifest that names the pointer and not the payload. notify-permission.sh drives David's
+# macOS "needs you" banners and writes the permission-request evidence log.
+rsync -a --delete "$HOME/.claude/hooks/" claude/hooks/
 
 # Studio's entire world: persona, DAVID.md, proposals, prototypes, bus protocol, permissions
 rsync -a --delete --exclude '.git' "$HOME/frontend-studio/" frontend-studio/
