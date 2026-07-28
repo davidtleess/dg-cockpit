@@ -457,3 +457,41 @@ so the cursor is never at line start and the heuristic never fires), and then it
 inside the command it ran, so the shell's echo put the needle into the very scrollback being
 searched — failing a fix that was already working. **A test that plants its needle in its own
 haystack proves nothing.**
+
+## TOWER-1 failure 7, alive again — found by DAVID, 2026-07-28
+
+His words: *"figure out why your skill did not see that claude and studio are waiting on a 'yes'.
+they are both idle."* Two lanes sat blocked on approval prompts and **no alert had been raised.**
+
+**Cause.** `DIALOG_KEY` was hashed from `dialog_block` — the grep-matched boilerplate plus the
+cursor'd option. That deliberately excludes the **command**, which is the only part that varies.
+Every Studio bash prompt renders identically:
+
+```
+ Do you want to proceed?
+ ❯ 1. Yes
+```
+
+so every one hashed to the same key. `pane-watch.sh` de-duplicates by key, alerted once, and then
+went **silent for every subsequent dialog on that pane, permanently.** Claude's edit dialogs
+carried the filename, so consecutive edits to one file collapsed the same way.
+
+**Why the existing test did not catch it.** AC6 ("two DIFFERENT prompts produce two alerts")
+PASSES, and always did — its two prompts differ **in the grep-matched lines.** Real dialogs differ
+in the lines the grep throws away. The test proved the mechanism on a shape the cockpit never
+emits.
+
+**Fix.** The key hashes the whole dialog region (`tail_content 25`), which contains the command.
+Safe, because a pane with an open dialog is BLOCKED and its contents are static until answered.
+`tests/dialogkey-selftest.sh`, 4 cases, all built from **shapes captured off the live cockpit**:
+identical boilerplate with different commands must differ; an identical prompt must still collapse
+(no alert spam); a different edit target must differ; two different permission requests must differ.
+
+**The lesson, larger than the bug.**
+1. **A key must be built from what VARIES.** Hashing the stable part of a message is hashing
+   nothing.
+2. **Test against shapes the system actually emits**, captured from it — never shapes invented to
+   demonstrate the mechanism. An invented shape tests the test.
+3. **A fix with a passing test is not a fixed problem.** TOWER-1 failure 7 was closed, documented,
+   and covered by a green test for three days while the defect it described was live in production
+   the whole time.

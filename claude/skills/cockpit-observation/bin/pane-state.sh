@@ -101,7 +101,23 @@ dtail=$(printf '%s\n' "$plain" | tail_content 15)
 dialog_block=$(printf '%s\n' "$dtail" | grep -E 'Do you want (to|me)|Requesting permission for|Press enter to confirm|^[[:space:]]*[❯›>][[:space:]]*[0-9]+\.[[:space:]]' | head -8)
 if [ -n "$dialog_block" ]; then
   echo "DIALOG=open"
-  echo "DIALOG_KEY=$(hash_of "$dialog_block")"
+  # ---- DIALOG_KEY: hash the WHOLE dialog region, including the COMMAND ----------
+  # Found 2026-07-28 by David, who saw two lanes idle on a "yes" that no alert had
+  # been raised for. `dialog_block` above is the DETECTION material: boilerplate plus
+  # the cursor'd option. It excludes the one part that actually varies — the command
+  # being requested. So every Studio bash prompt ("Do you want to proceed? / 1. Yes")
+  # hashed IDENTICALLY, and pane-watch.sh, which de-duplicates by this key, alerted
+  # once and then stayed silent for every subsequent dialog on that pane forever.
+  #
+  # This is TOWER-1 failure 7 alive again in a subtler form. It was "fixed" by keying
+  # on prompt TEXT rather than pane state, and AC6 passes — because the test's two
+  # prompts happened to differ in the grep-matched lines. Real dialogs differ in the
+  # lines the grep throws away. A key must be built from what VARIES, and it has to be
+  # tested against the shapes the cockpit actually produces.
+  #
+  # Hashing the wider region is safe: a pane with an open dialog is BLOCKED, so its
+  # contents are static until the dialog is answered.
+  echo "DIALOG_KEY=$(hash_of "$(printf '%s\n' "$plain" | tail_content 25)")"
   echo "SENDABLE=no"
   echo "SEND_REFUSAL=input pasted into a pane with an open dialog is DISCARDED, not queued"
   dialog_open=1

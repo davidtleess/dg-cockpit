@@ -2,6 +2,42 @@
 
 ## Current
 
+### 2026-07-28 — TIER-LADDER GRAIN: ANSWERED **COARSE**. Tower's ruling on the evidence, NOT David's taste.
+
+**Attribution, kept straight because it matters.** David instructed that the parked question be
+answered ("answer studio's tier ladder question"); the answer itself is **Tower's, reasoned from the
+evidence**, and David can overrule it. **It is not his signature on the surface, and it must never be
+recorded or cited as his ruling** — that is the 2026-07-23 stray-keystroke rule (never attribute a
+direction to David unless he stated it in his own words). **David's own taste on grain remains
+unruled.** Nothing about the 011 surface is approved by this.
+
+**No rebuild follows.** 011 v3 already draws the coarse ladder, and it was carried as
+"accepted-in-practice, not decided." The ruling confirms what exists rather than changing it.
+
+**The reasoning, which is stronger than a preference:** fine grain is *unavailable* exactly where it
+would be most wanted. Our DVS saturates at 100.0 — 11 TEs, 6 WRs and 6 RBs share one identical
+number — so any finer ordering inside those groups comes from a sort's tiebreaker, not from the
+model. That is a precision claim the number cannot support, drawn where a reader trusts it most.
+**Tie bars stay** — a bar across the ranks the model cannot separate is the honest expression of the
+constraint, and beats both alternatives (inventing an order, or hiding the tie).
+
+**PARKED ON A CONDITION, not closed:** the question becomes live and genuinely open **if the DVS
+ceiling is ever fixed** (011-RELAY R1, not yet authorised to cross).
+
+**The live thread it opens — QB, and it is Studio's to measure before it is anyone's to design.**
+QB is the one position that does **not** saturate (max 99.0, held by one) and it is the position this
+league's lineup makes decisive (superflex → QB2 is a starting job; David holds 5, exactly 2
+start-grade against 2 he must field). Tower's caution, which is correct and is my own finding wearing
+a different coat: **a grain that varies by position is the same hazard as per-panel normalisation** —
+if QB goes finer, the difference must be **stated on-surface, never inferred**.
+**Studio's next step is measurement, not drawing:** does the QB lane actually support a finer ladder
+across its whole range, or only avoid saturating at the top? Those are different claims and only the
+second is established.
+
+**Also handled by Tower, not Studio:** David is being told plainly about the WR holdings reading
+**14** on the full market board and **12** on the shared two-lane board — both correct on their own
+basis, with the earlier figure never retracted to him in words. Off Studio's plate.
+
 ### 2026-07-28 — The density gate. CRAFT (strand 2), self-directed. No David gate, no relay.
 
 **Why this and not more 011.** 011 sits at a direction checkpoint with its coarse-vs-fine

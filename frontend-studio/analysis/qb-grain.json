@@ -1,0 +1,61 @@
+{
+ "capture": "2026-07-28",
+ "positions": {
+  "QB": {
+   "n": 47,
+   "distinct": 46,
+   "ceiling": 0,
+   "tied_top24": 0,
+   "largest": 2,
+   "resolution": 0.979,
+   "cuts_tested": 11,
+   "cuts_inside_tie": 0,
+   "median_gap_at_cut": 0.5,
+   "median_move": 7.5,
+   "p90_move": 20.6,
+   "noise_to_gap": 15.0
+  },
+  "RB": {
+   "n": 111,
+   "distinct": 103,
+   "ceiling": 6,
+   "tied_top24": 6,
+   "largest": 6,
+   "resolution": 0.928,
+   "cuts_tested": 11,
+   "cuts_inside_tie": 1,
+   "median_gap_at_cut": 0.6,
+   "median_move": 9.4,
+   "p90_move": 21.2,
+   "noise_to_gap": 15.67
+  },
+  "WR": {
+   "n": 199,
+   "distinct": 182,
+   "ceiling": 6,
+   "tied_top24": 5,
+   "largest": 6,
+   "resolution": 0.915,
+   "cuts_tested": 11,
+   "cuts_inside_tie": 1,
+   "median_gap_at_cut": 0.23,
+   "median_move": 10.6,
+   "p90_move": 27.2,
+   "noise_to_gap": 46.09
+  },
+  "TE": {
+   "n": 111,
+   "distinct": 93,
+   "ceiling": 11,
+   "tied_top24": 11,
+   "largest": 11,
+   "resolution": 0.838,
+   "cuts_tested": 11,
+   "cuts_inside_tie": 2,
+   "median_gap_at_cut": 0.81,
+   "median_move": 9.9,
+   "p90_move": 23.9,
+   "noise_to_gap": 12.22
+  }
+ }
+}

@@ -243,3 +243,43 @@ TWO TEST BUGS FOUND FIRST, both the day's recurring class:
               into the scrollback being searched, FAILING A FIX THAT ALREADY WORKED.
 AUTHORITY  DAVID-WORD (2026-07-28 "fix it so Tower doesn't miss things like this") — same duty;
            reported to David as queued before it was started.
+
+## 2026-07-28 11:42 — answered Studio's parked tier-grain question (COARSE)
+DAVID'S WORD  "route 1, and answer studio's tier ladder question" — the second half delegated the
+           answer to Tower rather than supplying one.
+FIRST        Read the question FROM SOURCE (frontend-studio/for-david/STATUS.md), not from the
+           handoff. The handoff paraphrased it as "does 'high-end WR2' land on its own, or only
+           beside the market's rank" — that is NOT the parked question. The real one is
+           COARSE-VS-FINE TIER GRAIN, and Studio records that David reacted to v3 but never ruled
+           it. Second time today the inherited handoff misdescribed something material.
+ANSWER     COARSE — and framed as evidence, not taste: the model's score saturates, so at the top
+           of TE/WR/RB a fine sub-tier would be a precision claim the number cannot support. QB is
+           the genuine exception and also the position this league is decided by, but a grain that
+           varies by position must be stated on-surface — the same hazard as the per-panel
+           normalisation flaw Studio already found. Tie bars kept. Question parked on the
+           condition that the ceiling is fixed, not closed.
+ATTRIBUTION Explicitly labelled to Studio as TOWER'S answer, given under David's instruction, which
+           he can overrule — NOT his signature on the surface. Tower does not impersonate the gate.
+COST IT WAS Studio was holding 011 work behind it by its own choice, citing the 008/010 failure
+           ("the craft improved every time and the outcome did not").
+AUTHORITY  DAVID-WORD (2026-07-28) + DELEGATED for the content
+
+## 2026-07-28 11:40 — TOWER-1 failure 7 was never actually fixed; found by DAVID
+DAVID      "figure out why your skill did not see that claude and studio are waiting on a 'yes'.
+           they are both idle." Two lanes blocked, zero alerts raised.
+CAUSE      DIALOG_KEY hashed only the grep-matched boilerplate + cursor'd option — excluding the
+           COMMAND, the sole varying part. Every Studio bash prompt hashed identically
+           (b55a2124911c33f6, seen ~8 times today across TWO different panes). pane-watch.sh
+           de-duplicates by key, so after the first alert it went silent for that pane forever.
+WHY MISSED AC6 passes and always did: its two test prompts differ in the grep-matched lines. Real
+           dialogs differ in the lines the grep discards. The test proved the mechanism on a shape
+           the cockpit never emits. A GREEN TEST COVERED A LIVE DEFECT FOR THREE DAYS.
+FIX        Key now hashes the whole dialog region (tail_content 25), which contains the command.
+           Safe: a pane with an open dialog is blocked and static. Verified LIVE within a minute —
+           distinct keys and simultaneous alerts on both 1.1 and 2.1, which is precisely what had
+           not happened.
+TESTS      tests/dialogkey-selftest.sh — 4 cases, built from shapes CAPTURED OFF THE LIVE COCKPIT.
+           Suite total 64 green (21 · 16 · 6 · 12 · 5 · 4).
+STANDING   Build keys from what varies. Test against emitted shapes, never invented ones. A fix
+           with a passing test is not a fixed problem.
+AUTHORITY  DAVID-WORD (2026-07-28)
