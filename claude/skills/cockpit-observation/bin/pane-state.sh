@@ -117,7 +117,15 @@ if [ -n "$dialog_block" ]; then
   #
   # Hashing the wider region is safe: a pane with an open dialog is BLOCKED, so its
   # contents are static until the dialog is answered.
-  echo "DIALOG_KEY=$(hash_of "$(printf '%s\n' "$plain" | tail_content 25)")"
+  # NORMALISE BEFORE HASHING. Widening the key to include the command (above) was right, but
+  # the claim in that comment — "a pane with an open dialog is blocked, so its contents are
+  # static" — was WRONG, and it froze a lane within the hour: an activity glyph on a status
+  # line above the prompt BLINKS, alternating one character, so the key oscillated between two
+  # values and pane-approve.sh refused forever ("the prompt CHANGED between check and keypress").
+  # Strip leading decoration and collapse whitespace so blink noise cannot move the key, while
+  # the command text — the part that must vary — still does.
+  echo "DIALOG_KEY=$(hash_of "$(printf '%s\n' "$plain" | tail_content 25 \
+      | sed -E 's/^[^[:alnum:]"'"'"'/._-]*//; s/[[:space:]]+/ /g; s/[[:space:]]*$//')")"
   echo "SENDABLE=no"
   echo "SEND_REFUSAL=input pasted into a pane with an open dialog is DISCARDED, not queued"
   dialog_open=1

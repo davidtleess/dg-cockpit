@@ -388,3 +388,21 @@ ACTION     Tower submitted its OWN stranded message (verified verbatim Tower's f
 STANDING   Two false DELIVERED verdicts in one day from one root cause, each fixed and each
            insufficient. Do not treat a verifier as trustworthy because its last fix was correct.
 AUTHORITY  n/a — defect record
+
+## 2026-07-28 13:18 — this morning's dialog-key fix froze a lane; normalisation added
+CAUSED BY  Tower's own 11:40 fix. Widening DIALOG_KEY to include the command was right; the
+           JUSTIFICATION written beside it was wrong — "a pane with an open dialog is BLOCKED, so
+           its contents are static." An ACTIVITY GLYPH on a status line above the prompt BLINKS.
+SYMPTOM    The key oscillated between two values one character apart, so pane-approve.sh refused
+           on every attempt: "the prompt CHANGED between check and keypress." That refusal is
+           correct behaviour against a genuinely changing prompt — it just had nothing real to
+           protect against, and it froze the lane implementing David's authorised work.
+DIAGNOSIS  Captured the region twice two seconds apart and diffed it. One character: `⏺` vs a
+           space. Measured, not guessed.
+FIX        Normalise before hashing — strip leading decoration, collapse whitespace. The command
+           text still varies the key; blink noise cannot. Verified STABLE across three reads;
+           dialogkey selftest still 4/4.
+LESSON     A fix's stated justification is a claim, and it needs testing like any other. "Contents
+           are static" was asserted from reasoning about how dialogs behave, never measured. It
+           was wrong within the hour, in the same file, on the same day.
+AUTHORITY  n/a — defect record
