@@ -31,10 +31,40 @@ BLOCKER     read-only `launchctl` dialogs still refused by Tower's guard — Dav
 VERIFIED    09:03 from pane-send DELIVERED verdict
 
 ## LANE: Studio (dynasty:2.1) — outsider design, self-directed. PANE RETAINS NO SCROLLBACK.
-STATUS      CLOSED. DAVID.md written, 011 + RELAY on disk, retractions recorded.
+STATUS      WORKING then AT REST (stall 09:58, composer FURNITURE not a strand — verified by
+            pane-strand.sh; the ghost read "fix the type scale across 011", authorisation-shaped
+            and correctly NOT submitted). Woken 09:33 into its standing licence; produced all day's
+            only crew-independent output. VERIFIED 09:58 from disk + visible pane.
+PRODUCED    tools/craft-gate.mjs (a measuring instrument), CRAFT-LIBRARY.md, craft/T4-2-density-gate.md,
+            STATUS.md refresh.
+FINDINGS    (a) LIVE APP: 30 failed image requests on EVERY load of the opening screen — the known
+            missing-headshots defect, now quantified; three screens contain no charts at all.
+            (b) its gate independently ranks David's own past verdicts in the order he gave them.
+            (c) SELF-CRITICISM it did not tune away: 14 type sizes on its latest surface, 11 off
+            any scale — David had told it once already that its visuals are too small.
+            (d) STATED LIMIT: the tool measures the drawing, never whether the question is worth
+            asking. "A clean result is never a reason to build something."
+NOT VERIFIED BY TOWER  the 30-request figure is Studio's measurement, unchecked by Tower.
+PRIOR       CLOSED. DAVID.md written, 011 + RELAY on disk, retractions recorded.
 HOLDING     tier-ladder question parked with Tower for David
 BLOCKER     David's gate on 011 — has NOT crossed to the crew
 VERIFIED    08:45 from disk
+
+## IDENTITY — David's named priority, 2026-07-28
+BOARD v1    Claude, parked at docs/agent-ledger/evidence/2026-07-28/identity_board_claude_v1.md
+CHALLENGE   Codex 09:34: **NOT CLEAR — eight v2 corrections required.** No downstream work opens
+            before Codex re-review and explicit CLEAR.
+REPRODUCED INDEPENDENTLY BY CODEX (Tower supplied none of these): 12,203/581/11,621/1 universe
+            counts · 501 gsis vs 80 slug split · 7,952 crosswalk rows / 6,117 Sleeper ids / zero
+            dupes · exactly Kallerup + Ke'Shawn Williams as the two identity misses · zero
+            production callers of the fuzzy matcher.
+⚠ TOWER TOLD DAVID SOMETHING NARROWER THAN THE TRUTH — CORRECTED 09:36
+            Tower said a lost crosswalk ships "zero model values". Codex measured: 80 Engine A
+            values SURVIVE. Severe, not total. Correction delivered to David.
+⚠ WORSE THAN v1 SAID   the player-detail surface MISLABELS the two misses as a player-category
+            gap — a WRONG reason shown, not merely a missing one. Also a live `"0"` pseudo-player.
+CORROBORATION NOTE  Claude's confirmation of Tower's three crosswalk-file claims is CORROBORATION,
+            not independent reproduction — Tower supplied the figures first and said so up front.
 
 ## PRODUCT / INFRA — verified by Tower directly
 BACKUP      20260727T233130Z · 288 files · sha256_verified=true · pointer names it · restore drill PASSED
@@ -45,7 +75,12 @@ CI          VERIFIED 08:54 from `gh run list`: main `CI` workflow GREEN on head 
             Cause undiagnosed. FIRST ITEM.
 GIT         VERIFIED 08:53: product repo main == origin/main, 0 uncommitted. Cockpit repo: only
             carrier.log dirty (the paused carrier logs 'held: carrier_disabled' every 30s, 11.6k lines).
-DATA JOBS   VERIFIED 08:55 from log mtimes vs plists: 7 morning jobs scheduled 09:00-10:15. On 07-27 six
+DATA JOBS   ⭐ VERIFIED 09:36 BY TOWER DIRECTLY (log mtimes): TODAY'S JOBS RAN ON TIME —
+            fc-snapshot 09:00 · feature-refresh 09:20 · league-capture 09:20 · pvo-refresh 09:30.
+            Runtime artifact universe_pvo_runtime.json rewritten 09:30 today. Yesterday's 10h
+            sleep-delay did NOT repeat. Still inside their window at time of check: market-
+            divergence (09:40) and what-changed (09:45). Prior read below, superseded:
+            VERIFIED 08:55 from log mtimes vs plists: 7 morning jobs scheduled 09:00-10:15. On 07-27 six
             of them ran 19:31-20:46 (~10h late, macOS sleep); only fc-snapshot ran on time at 09:00.
             Today's window has NOT opened yet. `realized-outcome-scoring` has not written since 07-21 —
             its output is a legitimate offseason no-op (`no_predictions_for_target`), low concern.
@@ -59,13 +94,27 @@ MARKET/TIMING   FC snapshot ~13:00Z vs model vintage ~23:32Z — compared ~10h32
 ## DAVID'S OPEN BOARD
 ⭐ ANSWERED 2026-07-28 ~09:00 — item 4: "start with identity." Identity is the NAMED PRIORITY.
    Items 1, 2, 3, 5 remain open. Compliance-audit CI and S0-01 (d) parked behind identity.
-1 read-only launchctl override
+1 read-only launchctl override — ⚠ LIVE BLOCKER 09:27: Gemini frozen on `launchctl list | grep
+  davidleess`, guard REFUSED (gate-shaped). Cascaded: Claude could not deliver its identity-record
+  request (blocked pane discards pastes) and parked it to
+  docs/agent-ledger/evidence/2026-07-28/msg_gemini_identity_record_PARKED.md
 2 identity crosswalk file into the backup manifest
 3 --dry-run / network-incapable drill guard (3 same-class incidents argue for it)
 4 identity as a named priority — Tower's read: outranks most of the backlog
 5 Studio's tier-ladder question
 
+## TOWER'S WATCH — TOWER-3, built 2026-07-28 09:35 after David caught a blocked lane
+watchdog.sh   VERIFIED LIVE 09:27. Starts pane-watch + output-watch and PROVES liveness
+              (both processes + heartbeat < 90s). SessionStart hook auto-starts it in Tower's
+              pane only. Logs: /tmp/tower-run/{pane-watch,output-watch}.log
+say-clear.sh  MANDATORY before the words clear/quiet/at rest/nothing needs you/safe to walk away.
+Monitor       persistent, armed on both watcher logs — events PUSH into Tower's turn.
+COVERAGE LIMIT  ~/.claude/notification-hook.log = Claude Code panes ONLY. Gemini and Codex never
+              appear in it. pane-watch.sh is the only feed covering all four lanes.
+
 ## TOWER'S OWN OPEN DEFECTS (do not let these rot)
 - `--closeout-push` also relaxes `git commit` — broader than the charter line. Narrow or widen.
 - contamination guard WARNs on messages that DISCUSS contamination (~4 deliberate overrides).
-- gate-shaped guard suffers scope bleed from earlier commands in the captured context.
+- gate-shaped guard scope bleed — NOW PROVEN AND BLOCKING. 2026-07-28 09:33: refused Claude's own
+  ledger write because the PROSE contained "launchctl". Fix proposed, NOT self-applied (narrowing
+  this guard changes Tower's own authority boundary = David's word). Both blocked dialogs on his board.

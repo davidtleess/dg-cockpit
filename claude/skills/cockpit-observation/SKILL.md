@@ -423,3 +423,9 @@ for `pane-watch.sh`, which is the only feed covering all four lanes.
 **Snapshots support statements about the moment they were taken. Nothing else.**
 If Tower is about to say a lane is idle, a board is clear, or nothing needs David, the question
 is not "did I look?" but **"is the watch running, and did I run the gate?"**
+
+## A small one, found by the firewall on 2026-07-28
+Tower's own message markers use the crew's ticket prefix (`TW28-…`). The Studio firewall
+**refused a Studio message on its marker alone** — correctly: that prefix is crew process
+vocabulary and had been riding along on Tower's messages into Studio's lane. **Markers toward
+`dynasty:2.1` carry no crew vocabulary.** The guard caught what Tower's own eye had normalised.

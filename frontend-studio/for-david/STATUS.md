@@ -2,6 +2,70 @@
 
 ## Current
 
+### 2026-07-28 — The density gate. CRAFT (strand 2), self-directed. No David gate, no relay.
+
+**Why this and not more 011.** 011 sits at a direction checkpoint with its coarse-vs-fine
+question parked with Tower for David. Redrawing a surface while its premise question is
+unanswered is verbatim the 008 and 010 failure ("the craft improved every time and the
+outcome did not"). So: sharpen the instrument instead.
+
+**What it is.** `tools/craft-gate.mjs` — six measured checks on any prototype, each traceable
+to a documented rejection and to a source. Density per unit **area** (not per unit); legend
+entries × units = the lookups a reader actually performs; hue-family count against Healey's
+five; content type below the ramp's 12px first step; WCAG 2.5.8 hit targets; and **C6 — does
+the dominant mark's channel actually vary and use its range**, which is the automated form of
+Studio's single most-repeated failure (*encoding a variable that barely varies*).
+
+**It failed its own validation first, and that was the useful part.** v1 scored the APPROVED
+006 front door at 5 FAIL and the REJECTED 009 matrix at 1 FAIL. Four instrument bugs, each a
+reusable lesson, all recorded in `craft/T4-2-density-gate.md` §B:
+`getComputedStyle(div).fill` computes to opaque black so every OKLCH lane colour read as grey
+(parse colour through a 1×1 canvas, never a regex); a mark inside a clickable row is not
+itself a 24px target; 10–11px is a legitimate *label* size and the 009 conviction was for
+*content*; and channel inference is fooled by categorical size differences (a filled dot and
+a hollow ring) and by one tag serving several roles.
+
+**Validated against six prototypes whose verdicts David has already given.** Ordering tracks
+the verdicts: 009 matrix (rejected) density **3.95** / 3 fail; 006 front door (approved)
+2.13 / 1 fail; 004 v4 (kept) **1.60** / 1 fail. C6 independently reproduces the two figures
+hand-measured after the matrix-v2 rejection — **15.2% IQR of a 214px cell, 4.3% ink**.
+Honest limit stated in the file: six examples, all Studio's own, graded by one reader.
+
+**The finding it produced immediately, NOT tuned away:** sub-12px *content* fires on every
+surface Studio has built, approved ones included (144 nodes in the matrix, 88 in the front
+door, 55 in 004). And **011 carries 14 distinct type sizes, 11 off the ramp** — the exact
+failure `typography.md` was written against. David has already said "all the visuals are very
+small" once (2026-07-23); it is now measurable rather than anecdotal. Studio's to fix on the
+next surface, not a question for him.
+
+**What the gate cannot see, printed on every run so a green result is never mistaken for a
+good surface:** whether the question is worth asking (what actually sank 008 and 010),
+whether the units are the hobby's own, page structure (the stray `grid-row: span 2` passed
+every probe and was caught only by eye), and whether any number is true.
+
+**Also run against the LIVE APP** (it accepts URLs, not just files) — the test that it is an
+instrument rather than Studio marking its own homework. Daily What-Changed player row measures
+density **4.15**, the highest figure anywhere; **deliberately not over-read**, because the two
+calibration points are chart rows and this is a text table, so it says "go and look," not
+"worse than what David rejected." Hue count sits **exactly at Healey's ceiling of 5**. **30
+failed requests on every load**, all `/assets/headshots/*.jpg` 404s — the known briefing §5
+defect, now with a number. Roster Audit, Roster Capacity and League Pulse return **no repeating
+unit and zero data marks** — text tables end to end.
+
+**Two limitations the live run exposed, recorded not hidden:** C6 measures bounding boxes, so a
+path-shaped mark is unreadable to it — twenty sparklines with identical boxes classify as chrome,
+and whether they share a scale (the confirmed 004 N4) stays invisible. And a surface with no marks
+returns mostly SKIP, which *reads* like a pass and is not one.
+
+**Unverified at close:** every threshold except WCAG 2.5.8 and Healey's five is Studio's own
+reading of a source, and C1's cut-point is fitted to two examples. Nobody but Studio has checked
+any figure in this thread. **Nothing retracted today.**
+
+Files: `tools/craft-gate.mjs`, `craft/T4-2-density-gate.md`; `CRAFT-LIBRARY.md` Tier 4 item 4
+marked partly discharged (the layered-reading glance/scan/study canon is still wanted).
+
+---
+
 ### 2026-07-27 — 011 "What is he?" — the prose tier ladder. SHOWN TO DAVID; REACTED, NOT APPROVED.
 
 **Self-directed, strand 1.** Closes the oldest open item on this board: the prose tier

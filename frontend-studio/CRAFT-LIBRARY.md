@@ -178,6 +178,14 @@ deciding the split by feel. There is a canon here and Studio has never cited it.
 - Anything that gives a *pre-flight budget* (marks per cell, elements per screen) rather than a
   post-hoc critique
 
+**PARTLY DISCHARGED 2026-07-28 — Studio built the pre-flight budget rather than waiting for a fetch,
+because no published source measures a Studio prototype.** `tools/craft-gate.mjs` + `craft/T4-2-density-gate.md`:
+six checks (density per unit area, legend re-application load, hue count, sub-ramp content type,
+hit-target size, and whether the dominant mark's channel actually varies), validated against six
+prototypes whose verdicts David has already given. **Still wanted from this item:** the layered-reading
+canon — glance / scan / study as a deliberate three-distance design method — which the gate does not
+touch and Studio still does by feel.
+
 ---
 
 **Still unruled, and Studio is re-raising it once because David asked:** dynasty subject-matter fluency

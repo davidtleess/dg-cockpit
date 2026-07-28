@@ -67,3 +67,92 @@ NOTE       Tower's three verified facts about the crosswalk file were handed ove
            TEST with "your measurement wins" — so any agreement is corroboration, not independence,
            and the lane was told so up front.
 AUTHORITY  DAVID-WORD (2026-07-28 "start with identity") + TRAFFIC for the sequencing
+
+## 2026-07-28 09:35 — TOWER-3: the watch must be running, and "clear" is a measured verdict
+TRIGGER    David: "can you not see gemini needs approval on something?" then "fix it so Tower
+           doesn't miss things like this in this session or future sessions."
+FINDING    The Part II watchers were NOT RUNNING. Nothing started them at boot and nothing
+           detected their absence. Tower issued "nothing needs you" from a 2-minute-old snapshot.
+BUILT      bin/watchdog.sh (starts + PROVES watcher liveness; idempotent; --hook self-gates to
+           Tower's pane by title) · bin/say-clear.sh (the gate before the words clear/quiet/at
+           rest/nothing needs you/safe to walk away) · SessionStart hook in ~/.claude/settings.json
+           · persistent Monitor on the watcher logs · SKILL.md Part IV · backup.sh now covers
+           ~/.claude/hooks/ (the hook SCRIPTS existed on one machine only).
+PROOF      say-clear.sh's first live run immediately caught 2 open dialogs and an unanswered Codex
+           ask that Tower — minutes after being corrected — was still about to miss.
+LIMIT NAMED ~/.claude/notification-hook.log covers Claude Code panes ONLY. Gemini and Codex never
+           appear in it. The lane David caught was Gemini. pane-watch.sh remains the only
+           all-four-lane feed.
+AUTHORITY  DAVID-WORD (2026-07-28 "fix it so Tower doesn't miss things like this") ·
+           DAVID-STANDING (2026-07-28 backup coverage) for the backup.sh change
+PROPOSED, NOT TAKEN — needs David's charter word:
+           "Tower may not tell David the cockpit is clear, quiet, at rest, or that nothing needs
+           him without a passing say-clear.sh. Unverified is never rounded up to clear."
+           Written as METHOD in the skill; NOT written into the charter, because charter edits
+           are David's word and Tower does not author its own law.
+
+## 2026-07-28 09:33 — Studio woken into its standing licence (watcher-triggered)
+TRIGGER    pane-watch STALL on dynasty:2.1 (316s idle). Verified from DISK, not the pane: Studio's
+           last write was its 07:54 closeout; nothing since; not blocked, composer empty.
+RULING     Woke Studio with its standing self-directed licence ONLY — no roadmap, no task list, no
+           crew content. Told it its tier-ladder question is parked with Tower for David, not lost.
+WHY        "Blocked-idle is the waste. Rest is fine." Studio was idle because nobody had spoken to
+           it this session — the exact waiting-to-be-relayed pattern the mandate exists to prevent.
+AUTHORITY  DAVID-STANDING (2026-07-21 Studio Mandate)
+FINDING    The pre-send firewall REFUSED Tower's first draft over its own marker: "TW28" is crew
+           ticket vocabulary. Tower's default marker convention was leaking process language into
+           Studio's lane on every message. Markers toward 2.1 now carry no crew vocabulary.
+
+## 2026-07-28 09:33 — Tower's own guard is now blocking TWO lanes; NOT self-narrowed
+FACTS      Gemini frozen on read-only `launchctl list | grep davidleess` — REFUSED (gate-shaped).
+           Claude frozen on writing its own 2026-07-28 ledger entry — REFUSED because the PROSE
+           being written contains the word "launchctl". `ctx` in pane-approve.sh is "everything
+           above the first numbered option", which in an edit dialog swallows the whole diff.
+           A diff body is CONTENT, not a command.
+RULING     Tower did NOT narrow its own guard. Both dialogs go to David.
+WHY        Narrowing the guard that protects David's gates changes the boundary of Tower's own
+           authority. That is his word, not Tower's — even when the guard is demonstrably wrong
+           and even when it is blocking the priority he named an hour ago. The designed escape
+           hatch for a refusal, false positive or not, is David.
+PROPOSED   For an edit/create dialog, judge the TARGET PATH, not the diff body — and refuse
+           outright on settings.json / LaunchAgents / .plist / crontab / .git/ / shell rc /
+           credentials, which is STRICTER than today's command-shape scan for that dialog class.
+           Plus a narrow standing exception for read-only inspection (`launchctl list`, `ls`).
+AUTHORITY  HELD — awaiting David
+
+## 2026-07-28 09:37 — full wire stall recorded; Tower carried nothing
+STATE      Claude blocked (edit dialog, Tower's guard false-refused it) · Gemini blocked
+           (`launchctl list`) · Codex free but its TWO bounded sends refused, both parked, neither
+           claimed delivered. Every lane behaved correctly: attempt, park, say where.
+RULING     Tower delivered NOTHING and pointed no recipient at a parked path — both recipients have
+           OPEN DIALOGS, where a paste is DISCARDED, not queued. Pointing a blocked pane at a file
+           is not delivery; it is a lost message with a receipt.
+NOTE       Codex parked its message wrappers under /private/tmp (ephemeral). The SUBSTANCE is
+           durable at docs/agent-ledger/evidence/2026-07-28/identity_board_codex_challenge_v1.md
+           and in today's ledger, so nothing is at risk of being lost — only the wrappers.
+CASCADE    3 of 4 lanes idle, 2 packets parked, 1 lane waiting on another lane — ALL of it behind
+           two keystrokes that are David's. Cost reported to David once, not repeated.
+AUTHORITY  DAVID-STANDING (2026-07-21 wire rule: sender owns delivery)
+
+## 2026-07-28 10:35 — the two guard fixes, BUILT, TESTED, APPLIED
+AUTHORITY  DAVID-WORD (2026-07-28 "go ahead with the guard fixes")
+FIX A      Edit dialogs are judged by their TARGET, not the diff body. The diff is CONTENT —
+           writing "launchctl" into a markdown file does not run it. Gate-shaped TARGETS
+           (settings.json, LaunchAgents, .plist, crontab, .git/, shell rc, credentials) are now
+           refused ON SIGHT, which is STRICTER than the old command scan for that dialog class.
+FIX B      launchctl is an ALLOWLIST, not a blocklist: list/print/dumpstate/blame/examine and
+           peers pass; EVERY occurrence must carry a known read-only subcommand or it refuses.
+           Bare `launchctl`, unknown subcommands, and a read smuggled ahead of a mutation
+           (`launchctl list && launchctl unload …`) all still refuse. load/unload/bootstrap/
+           bootout/enable/disable/start/stop/remove/setenv remain David's.
+TESTS      tests/guardfix-selftest.sh — 12 cases, every one PAIRED: the wrongly-refused thing must
+           now pass AND the thing it protected must still refuse. Suite total now 55 green
+           (21 observation · 16 pre-send · 6 open-asks · 12 guard-fix).
+THREE BUGS IN THE TEST ITSELF, all found before trusting it, all the day's recurring class:
+  1. hardcoded pane :0.0 — David's tmux.conf sets base-index 1, so it addressed NOTHING and
+     printed two green lines for guards never exercised.
+  2. CANNOT_VERIFY counted as "not refused" — an unreadable pane could produce a PASS.
+  3. it judged panes whose content it had not confirmed rendered, producing two false FAILs on
+     REAL refusals. Now every case confirms its dialog is on screen before judging.
+APPLIED    Gemini 1.3 (launchctl list) and Claude 1.1 (ledger edit) both APPROVED and unblocked
+           at 10:35, marker-verified: prompt gone, no stray digit in either composer.

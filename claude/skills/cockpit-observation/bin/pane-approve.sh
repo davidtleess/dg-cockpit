@@ -54,9 +54,31 @@ prompt=$(tmux capture-pane -t "$pane" -p 2>/dev/null | tail_content 25)
 # screen was dangerous (e.g. an unchosen "Persist to settings.json"), which
 # blocked routine work on 2026-07-26. Falls back to the whole prompt if the menu
 # cannot be parsed, so an unparseable dialog still fails safe.
+# ---- FIX A (David's word, 2026-07-28) — edit dialogs: judge WHERE it writes ----
+# A file-edit dialog renders the whole DIFF above the option menu, and `ctx` below is
+# "everything above the first numbered option" — so the diff was being scanned as if
+# it were a command. On 2026-07-28 this refused Claude's own ledger entry because the
+# PROSE contained the word "launchctl", freezing David's named priority for an hour.
+# A diff body is CONTENT: writing "launchctl" into a markdown file does not run it.
+# The real risk in an edit dialog is its TARGET, and that is judged STRICTLY here —
+# stricter than the command scan, because these paths are refused on sight.
+edit_q=$(printf '%s\n' "$prompt" \
+  | grep -iE 'Do you want to (make this edit to|create|write to|overwrite|update) ' | tail -1)
+if [ -n "$edit_q" ]; then
+  if printf '%s' "$edit_q" | grep -qiE 'settings\.json|settings\.local\.json|LaunchAgents|\.plist|crontab|/\.git/|\.gitconfig|\.zshrc|\.bash_profile|\.bashrc|\.profile|authorized_keys|\.env|id_rsa|\.netrc|credentials'; then
+    echo "VERDICT=REFUSED"
+    echo "REASON=GATE-SHAPED EDIT TARGET — this dialog writes to persisted settings, a scheduled job, shell config or credentials. Not Tower's under any standing authority. Take it to David."
+    printf '%s\n' "$edit_q"
+    exit 4
+  fi
+fi
+
 ctx=$(printf '%s\n' "$prompt" | awk '
   { t=$0; sub(/^[[:space:]]+/,"",t); sub(/^[^0-9[:space:]]+[[:space:]]+/,"",t)
     if (t ~ /^[0-9]+\./) exit; print }')
+# For an edit dialog the question line ALONE is the command context. The diff above it
+# is content and must never be scanned for command shapes.
+[ -n "$edit_q" ] && ctx="$edit_q"
 optblk=$(printf '%s\n' "$prompt" | awk -v d="$digit" '
   BEGIN{ inopt=0; seen=0 }
   { t=$0; sub(/^[[:space:]]+/,"",t); sub(/^[^0-9[:space:]]+[[:space:]]+/,"",t)
@@ -72,14 +94,30 @@ else
 fi
 
 # Under --closeout-push, a plain `git push` is permitted; force/non-ff/other-branch never is.
-gate_re='git (push|commit)|rm -rf|launchctl|crontab|delete|force|--hard|npm publish|gh (pr|release) create|persist to settings'
+# ---- FIX B (David's word, 2026-07-28) — launchctl: reads are not schedule changes ----
+# A bare `launchctl` token used to refuse everything, which froze Gemini three times on
+# `launchctl list` — a command that changes nothing and is its telemetry job. This is an
+# ALLOWLIST, never a blocklist: EVERY launchctl occurrence in scope must carry a known
+# read-only subcommand. `launchctl` with no subcommand, or with one not on this list,
+# is still refused — so load / unload / bootstrap / bootout / enable / disable / start /
+# stop / remove / setenv all remain David's, and so does anything new that appears later.
+lc_ro='list|print|print-cache|print-disabled|dumpstate|dumpjpcategory|blame|examine|managername|manageruid|managerpid|getenv|version|help'
+if printf '%s' "$scope" | grep -oiE 'launchctl[[:space:]]*[a-z-]*' \
+   | grep -qivE "^launchctl[[:space:]]+($lc_ro)$"; then
+  echo "VERDICT=REFUSED"
+  echo "REASON=GATE-SHAPED: a launchctl invocation here is not a known read-only subcommand. Loading, unloading, enabling, disabling, starting or stopping a scheduled job is David's. Take it to David."
+  printf '%s' "$scope" | grep -oiE 'launchctl[[:space:]]*[a-z-]*' | head -3
+  exit 4
+fi
+
+gate_re='git (push|commit)|rm -rf|crontab|delete|force|--hard|npm publish|gh (pr|release) create|persist to settings'
 if [ "$CLOSEOUT_PUSH" = 1 ]; then
   if printf '%s' "$scope" | grep -qiE '\-\-force|\+refs/|--hard|rm -rf|delete|persist to settings|gh (pr|release) create'; then
     echo "VERDICT=REFUSED"
     echo "REASON=closeout-push authority does NOT cover force pushes, deletions, refspec overrides or settings changes. David's."
     exit 4
   fi
-  gate_re='rm -rf|launchctl|crontab|npm publish|persist to settings'
+  gate_re='rm -rf|crontab|npm publish|persist to settings'
   echo "NOTE=closeout-push authority asserted (charter 2026-07-28). Verify commits on the remote afterwards and log it in DECISIONS.md."
 fi
 if printf '%s' "$scope" | grep -qiE "$gate_re"; then
