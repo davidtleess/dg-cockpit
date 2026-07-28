@@ -106,7 +106,15 @@ stuck_retries=0
 i=0
 while [ "$i" -lt 6 ]; do
   sleep 1
-  if transcript_of "$pane" | grep -qF -- "$marker"; then
+  # DELIVERED requires BOTH: present in the transcript AND absent from the composer.
+  # Added after a second false DELIVERED on 2026-07-28. Excluding the composer from the
+  # search was necessary but not sufficient — while a long paste is still settling the
+  # cursor row can be drawn in a position that puts pasted text above the cut, so the
+  # marker satisfies the transcript check while the message is still sitting unsent.
+  # A message cannot be both delivered and waiting in the input box; when it looks like
+  # both, believe the input box, because that is the state that costs a lost message.
+  if transcript_of "$pane" | grep -qF -- "$marker" \
+     && ! composer_region "$pane" | grep -qF -- "$marker"; then
     found=1; break
   fi
   # STUCK PASTE: our own text is sitting in the input box unsubmitted. Pressing

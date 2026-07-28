@@ -338,3 +338,53 @@ CLASS     Same family as the 07-27 production-bucket write: an agent's UNATTENDE
 STANDING  Sweep every lane's "NEVER TOLD TO DAVID" section at boot and at closeout. It is the one
           place the crew explicitly parks what he does not know, and Tower was not reading it.
 AUTHORITY TRAFFIC
+
+## 2026-07-28 12:14 — refused a probe containing `rm -rf "$T"`; lane now frozen, escalated
+COMMAND   A gitignore probe building a scratch tree: `T=<scratchpad path>; rm -rf "$T"; mkdir -p …`
+REFUSED   Correctly. Not the intent — the SHAPE. `$T` is runtime-determined, so at the keypress
+          Tower cannot verify what is about to be recursively deleted. Same unverifiable-runtime-
+          path hazard as this week's two production incidents (Claude's --bucket default, Gemini's
+          --repo-root default).
+CONSEQUENCE  The lane is frozen on the open dialog, and a blocked pane DISCARDS pastes — so Tower
+          cannot even tell it to restructure. Draft was written and could not be delivered.
+NOT DONE  Tower did NOT press "No" either. The charter delegates APPROVING in-scope prompts; it
+          does not delegate DENYING a lane's work. Cancelling another lane's command is a decision,
+          and the safe direction is not automatically the authorised one.
+ESCALATED To David, folded into the existing sequencing question rather than fired as a new board.
+RECOMMENDED  decline it; the restructure (build in a directory fresh BY CONSTRUCTION — `mktemp -d`
+          — so no delete is needed at all) is drafted and goes to the lane the moment it is free.
+AUTHORITY HELD — David's
+
+## 2026-07-28 12:24 — standing watch: notify David at commit-ready (A/B/D)
+DAVID      "keep me posted when it's ready to commit"
+SET UP     A dedicated background watch on today's ledger for the commit-ready signal (tollgate
+           pass / enumerated CLEAR on A/B/D / an explicit commit ask), separate from the general
+           output watcher so it is not lost in routine ledger noise.
+WHAT TOWER WILL BRING HIM
+           the commit ask itself, anything that changes scope again, and any lane telling him
+           the split created a problem.
+WHAT TOWER WILL NOT BRING HIM
+           routine approvals, review rounds that resolve themselves, ledger entries, wire
+           mechanics, or Unit C's iteration until it has earned its way through review.
+NOTE       The commit word: David's "ship the honesty fix and commit the file" is the standing
+           authorisation. Claude was instructed to ASK if scope moved again rather than stretch
+           it. A PUSH is separate and routes through Tower regardless.
+AUTHORITY  DAVID-WORD (2026-07-28)
+
+## 2026-07-28 12:33 — SECOND false DELIVERED; verifier tightened again
+FOUND      TW28-IDENTITY-9 (David's "split it" relay) reported DELIVERED, then was found sitting
+           UNSENT in Claude's composer minutes later — blocking Codex, which was explicitly
+           waiting for that composer to clear before delivering its RED packet.
+WHY THE MORNING FIX DID NOT CATCH IT
+           Excluding the composer was NECESSARY BUT NOT SUFFICIENT. While a long paste is still
+           settling, the cursor row can be drawn where pasted text falls ABOVE the cut, so the
+           marker satisfies the transcript check while the message is still unsent. The
+           stuck-paste retry only ran when the transcript check FAILED, so a false pass skipped it.
+FIX        DELIVERED now requires BOTH: marker present in the transcript AND absent from the
+           composer. When it appears in both, believe the composer — that is the state that costs
+           a lost message. 5/5 send-composer tests still green.
+ACTION     Tower submitted its OWN stranded message (verified verbatim Tower's first), unblocking
+           Codex's delivery.
+STANDING   Two false DELIVERED verdicts in one day from one root cause, each fixed and each
+           insufficient. Do not treat a verifier as trustworthy because its last fix was correct.
+AUTHORITY  n/a — defect record
