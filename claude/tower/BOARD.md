@@ -6,7 +6,7 @@
 # SOURCES: today's ledger read in full · each lane's complete postflight · the artifact
 # itself (git, CI, marker, disk) · Studio from DISK (pane 2.1 retains no scrollback).
 
-LAST FULL REBUILD: 2026-07-28 16:06 ET — closeout in progress, ordered by David
+LAST FULL REBUILD: 2026-07-28 17:15 ET — CLOSEOUT COMPLETE, all lanes stopped
 
 ## LANE: Claude (dynasty:1.1) — implementing lane, spokesperson
 STATUS      BLOCKED on the records-commit dialog awaiting DAVID'S KEYSTROKE (Tower's guard
@@ -68,10 +68,16 @@ TIER GRAIN  Answered COARSE (Tower's answer, at David's direction, explicitly la
 VERIFIED    16:06 from disk + visible pane
 
 ## PRODUCT / INFRA
-GIT         commit 8975741 (Units A/B/D) on origin/main, CI GREEN, post-commit audit CLEAR.
-            ⚠ UNCOMMITTED: today's ledger + 54 evidence artifacts + AGENT_SYNC.md — the entire
-            written record of the day, on ONE MACHINE. The backup manifest covers NO docs/ path.
-            Commit prepared and sitting on David's keystroke at close.
+GIT         VERIFIED 17:14 — THREE commits, ALL on origin/main, local and remote LEVEL:
+              8975741 Units A/B/D (code)  · CI GREEN · post-commit divergence audit CLEAR
+              38a07c9 session record + 54 evidence artifacts · CI GREEN
+              c2afcd2 closeout postflights (both lanes' two-question answers) + CI result
+            Verified by `git branch -r --contains` and by reading the REMOTE copy: 56 evidence
+            files and 5 closeout-question sections present on origin/main. The durability gap
+            that opened this closeout is CLOSED.
+            ⚠ ONE uncommitted path remains, deliberately: msg_tower_final_PARKED.md
+              sha256 46127cf2a7a1… — the lane's sign-off message, written after the final flush.
+              Trivial content; hashed here so the next Tower can detect drift.
 CI          `CI` green on 8975741. `Codex Compliance Audit` RED since 2026-07-25 — now DIAGNOSED
             as a broken check (see Gemini above), not a product defect.
 DATA JOBS   ran ON TIME today (09:00-09:30). Yesterday's 10h sleep-delay did not repeat.

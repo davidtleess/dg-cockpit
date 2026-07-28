@@ -34,12 +34,27 @@ metadata:
 
 Full suite 3,949 passing. Verified independently on live data: 503 predictions → 501 joins, 2 orphans.
 
-## ⚠ WHERE THE DAY ENDED — CHECK THIS FIRST
+## ✅ HOW THE DAY ENDED — DURABLE, VERIFIED 17:14
 
-**A records commit was prepared and left sitting on David's keystroke at close** (Tower's guard
-refuses commits). It covers today's ledger + 54 evidence artifacts + AGENT_SYNC.md. **If it did not
-land, the entire written record of 2026-07-28 exists on one machine and the backup manifest covers
-no `docs/` path.** Check `git log` and `git status` immediately.
+**THREE commits, all on `origin/main`, local and remote level:**
+- `8975741` Units A/B/D — the code. CI GREEN. Post-commit divergence audit CLEAR.
+- `38a07c9` session record + 54 evidence artifacts. CI GREEN.
+- `c2afcd2` closeout postflights — **both lanes' answers to the two questions** + the CI result.
+
+Verified by `git branch -r --contains` AND by reading the REMOTE copy: 56 evidence files and 5
+closeout-question sections present on `origin/main`. **The durability gap that opened this closeout
+is closed** — today's code AND its reasoning are both off the single machine.
+
+**One uncommitted path left deliberately**, hashed so drift is detectable:
+`docs/agent-ledger/evidence/2026-07-28/msg_tower_final_PARKED.md` — sha256 `46127cf2a7a1…`, the
+implementing lane's sign-off written after the final flush. Trivial content; sweep it tomorrow.
+
+**Cockpit backup:** 32 Tower files byte-identical to the backup copy and present on its remote —
+coverage verified, not merely execution.
+
+**Closeout gate:** `closeout-check.sh` FAILED first on staleness — BOARD.md and this handoff were
+older than the last commit. That is the same defect David caught on 2026-07-28 07:53. Both rewritten
+and re-run. **Do not skip that check; it is the one that catches a tidy-looking lie.**
 
 ## 🏈 DAVID'S OPEN BOARD — 5 items
 
