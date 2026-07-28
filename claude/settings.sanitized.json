@@ -12,6 +12,18 @@
           }
         ]
       }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/davidleess/.claude/skills/cockpit-observation/bin/watchdog.sh --hook >> \"$HOME/.claude/tower-watchdog-boot.log\" 2>&1 || true",
+            "timeout": 25,
+            "statusMessage": "Starting Tower's cockpit watchers"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {

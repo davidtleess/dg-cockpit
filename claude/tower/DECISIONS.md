@@ -48,3 +48,22 @@
 | 08:5x | Fixed backup.sh silent push: fails loudly + verifies presence on origin/main | DAVID-WORD ("fix the silent push") |
 | 08:5x | Ran cockpit backup; verified 24/24 Tower files byte-identical + on remote     | DAVID-WORD ("back up the cockpit at every closeout") |
 | 08:5x | Charter + skill amended: cockpit backup is now a STEP of every closeout        | DAVID-WORD (standing) |
+
+## 2026-07-28 08:57 — hold the crew's morning-brief wake
+RULING     Did NOT send the boot-ritual "run your bootstrap and deliver the morning brief" to pane 1.1.
+WHY        The session closed at 08:45; David reopened at 08:52. The panes are the SAME processes with
+           their closeout context intact — a bootstrap re-brief would re-emit what he read 10 minutes ago
+           and spend crew context for nothing. Lanes verified at rest; open-asks CLEAN.
+PLAN       Wake the lane David names the moment he sequences the first job.
+AUTHORITY  TRAFFIC
+
+## 2026-07-28 09:02 — identity ordered as the named priority; scope-only, no build
+RULING     Relayed David's "start with identity" to pane 1.1 as a SCOPE-ONLY order: bring David a board,
+           do not begin repair. Sequenced the failing Codex Compliance Audit workflow and DG2-S0-01 (d)
+           as PARKED behind it. Closed the loop to Gemini, whose finding originated the priority.
+WHY        David named the priority; he did not authorise building. Scoping is the step that gives him
+           the gate. Sequencing two items behind an explicit "start with identity" is traffic.
+NOTE       Tower's three verified facts about the crosswalk file were handed over labelled CLAIMS TO
+           TEST with "your measurement wins" — so any agreement is corroboration, not independence,
+           and the lane was told so up front.
+AUTHORITY  DAVID-WORD (2026-07-28 "start with identity") + TRAFFIC for the sequencing

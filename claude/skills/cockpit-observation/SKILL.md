@@ -353,3 +353,73 @@ drift from the first. A short acknowledgment is still welcome; it is no longer e
 `closeout-check.sh` exits **0** only when every check passes. Exit **2** means something could not
 be established — say what, and **do not say "safe to walk away."** Exit **1** means closeout is not
 complete. Tower does not talk its way past a FAIL.
+
+---
+
+# PART IV — THE WATCH MUST BE RUNNING, AND "CLEAR" IS A MEASURED VERDICT
+
+Added 2026-07-28. **TOWER-3.** David: *"can you not see gemini needs approval on something?"*
+then *"fix it so Tower doesn't miss things like this in this session or future sessions."*
+
+## What happened
+Tower swept every pane at 09:03, saw no dialogs, and closed its message to David with
+**"Nothing needs you right now."** Within two minutes three approval dialogs were open — Gemini
+twice, and **Claude blocked on permission to create the very identity board Tower had just told
+David was coming.** David saw it; Tower did not. Two more opened while the fix was being built,
+plus an unanswered ask sitting in Codex.
+
+## The diagnosis — and it is NOT "sweep harder"
+Part II built `pane-watch.sh` and `output-watch.sh`. **Nothing in the boot ritual started them,
+and nothing detected their absence.** They were not running. The tooling that existed precisely
+to catch this was switched off, and its silence was indistinguishable from calm.
+
+Underneath that sits the real error:
+
+> **A pane sweep is a SNAPSHOT. "Nothing needs you" is a claim about an ONGOING state.**
+> A snapshot cannot support it. Only a live watcher can, and only while it stays live.
+
+Every phrasing is the same claim: *clear · quiet · at rest · nothing needs you · all lanes idle ·
+safe to walk away.* Tower had been issuing them from point-in-time reads for weeks and got away
+with it until the timing was unlucky.
+
+## The three mechanisms
+
+### 1 · `bin/watchdog.sh` — the watch is started and PROVEN alive
+Idempotent; safe from a hook or by hand. Starts `pane-watch.sh` and `output-watch.sh` if absent,
+then measures: both processes running **and** the heartbeat file younger than 90s.
+`VERDICT=LIVE` or `VERDICT=DEAD` with `PROBLEMS=`. **DEAD means Tower is blind — cockpit silence
+is then evidence of nothing.** Run it at boot, and any time a report is about to be made.
+
+### 2 · `bin/say-clear.sh` — the gate before the word "clear" leaves Tower's mouth
+**Tower may not tell David the cockpit is clear, quiet, at rest, or that nothing needs him
+without a passing run of this script.** It changes nothing; it establishes facts:
+watchers live · every pane checked for an open dialog **now** · every composer checked for a REAL
+strand · `open-asks.sh` CLEAN. Exit 0 `CLEAR` · 1 `NOT_CLEAR` (reasons) · 2 `CANNOT_ESTABLISH`.
+**"Unverified" is never rounded up to "clear."** Its own verdict says so: the result decays, and
+holds only while the watchers stay live.
+
+It earned itself on the first run — it immediately surfaced two dialogs and an open Codex ask
+that Tower, having just been corrected, was still about to miss.
+
+### 3 · `SessionStart` hook — future sessions cannot forget
+`~/.claude/settings.json` runs `watchdog.sh --hook` at every session start. The `--hook` form
+**self-gates to Tower's pane** by tmux pane title and exits 2 silently everywhere else, so crew
+lanes never start Tower's watchers. **This is the part that survives Tower's memory dying.**
+
+### 4 · Arm a Monitor at boot — events must PUSH, not wait to be read
+A running watcher writes to a log. A log nobody reads is not a watch. At boot, arm a persistent
+Monitor on `/tmp/tower-run/pane-watch.log` and `output-watch.log`, filtered to
+`DIALOG|STALL|CANNOT_VERIFY|FATAL|UNDELIVERED|LEDGER|NEW FILE|PROPOSAL|DAVID.md`, so events
+interrupt Tower instead of waiting for David to notice first.
+
+## A coverage limit, named rather than discovered later
+`~/.claude/notification-hook.log` (the `PermissionRequest` hook behind David's macOS banners)
+records every permission dialog **from Claude Code panes only** — 1.1, 2.1 and Tower itself.
+**Gemini (1.3) and Codex (1.2) do not appear in it**, because they are not Claude Code. The lane
+David caught was Gemini. So that log is a fast supplementary signal and is **never** a substitute
+for `pane-watch.sh`, which is the only feed covering all four lanes.
+
+## The standing rule
+**Snapshots support statements about the moment they were taken. Nothing else.**
+If Tower is about to say a lane is idle, a board is clear, or nothing needs David, the question
+is not "did I look?" but **"is the watch running, and did I run the gate?"**
