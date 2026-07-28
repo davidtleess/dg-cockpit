@@ -129,6 +129,24 @@ while [ "$i" -lt 6 ]; do
   i=$((i + 1))
 done
 
+# SETTLE CHECK, added 2026-07-28 after a THIRD false DELIVERED — this one carried David's
+# commit authorisation and left it sitting in the input box while both lanes waited.
+# A long paste can pass every check above and THEN settle back into the composer a few
+# seconds later; verification that stops the instant it sees the marker is looking too early.
+# So: having decided DELIVERED, wait, look again, and press Enter if our own text is sitting
+# there. Legal — the marker was required in the body before sending, so the text is provably
+# Tower's own and can never be furniture or another lane's.
+if [ "$found" -eq 1 ]; then
+  sleep 3
+  if composer_region "$pane" | grep -qF -- "$marker"; then
+    tmux send-keys -t "$pane" C-m 2>/dev/null
+    sleep 2
+    if composer_region "$pane" | grep -qF -- "$marker"; then
+      verdict NOT_DELIVERED "marker settled back into $pane's composer and a submit retry did not clear it. The message is NOT delivered. Re-send." 1
+    fi
+  fi
+fi
+
 post_hist=$(tmux display -t "$pane" -p '#{history_size}' 2>/dev/null)
 
 if [ "$found" -eq 1 ]; then

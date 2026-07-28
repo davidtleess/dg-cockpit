@@ -406,3 +406,20 @@ LESSON     A fix's stated justification is a claim, and it needs testing like an
            are static" was asserted from reasoning about how dialogs behave, never measured. It
            was wrong within the hour, in the same file, on the same day.
 AUTHORITY  n/a — defect record
+
+## 2026-07-28 13:55 — THIRD false DELIVERED, and this one carried David's commit authorisation
+WHAT       TW28-COMMIT-3 ("commit it") reported DELIVERED and the composer read clear immediately
+           after. Minutes later the full message was sitting UNSUBMITTED in Claude's composer.
+           Both lanes were idle waiting for a word that had never arrived.
+WHY THE TWO EARLIER FIXES DID NOT CATCH IT
+           Fix 1 excluded the composer from the search. Fix 2 required the marker to be absent
+           from the composer at verification time. BOTH LOOK TOO EARLY. A long paste can pass
+           every check and THEN settle back into the composer seconds later.
+FIX 3      A settle check: having decided DELIVERED, wait, look again, press Enter if Tower's own
+           marker is sitting there, and downgrade to NOT_DELIVERED if a retry does not clear it.
+PATTERN, NAMED  Three fixes to one verifier in one day, each correct, each insufficient, each
+           failing in the same direction — claiming success too early. The defect was never in
+           WHERE it looked; it is in WHEN. Tower kept fixing the space and not the time.
+COST       David's authorisation sat undelivered while Tower told him the commit prompt was
+           imminent. Nothing was lost, but Tower's report to him was wrong for several minutes.
+AUTHORITY  n/a — defect record
