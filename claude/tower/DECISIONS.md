@@ -45,3 +45,6 @@
 | 08:2x | Pushed 127f07f + 67bd75f (closeout postflight + corrections) main->origin/main | DAVID-STANDING (2026-07-28 closeout push, charter edit) — verified both ON REMOTE by branch -r --contains |
 | 08:3x | Resolved 6 parked packets with consumption evidence in RESOLVED-PACKETS.md | TRAFFIC — evidence is recipient ACTION, never Tower pointing at a path |
 | 08:3x | KNOWN VERIFIER DEFECT, not fixed during a closeout: open-asks.sh reads HISTORICAL pane text, so a resolved ask still flags. Manually cleared with evidence tonight. Fix tomorrow; do not defang. | HELD |
+| 08:5x | Fixed backup.sh silent push: fails loudly + verifies presence on origin/main | DAVID-WORD ("fix the silent push") |
+| 08:5x | Ran cockpit backup; verified 24/24 Tower files byte-identical + on remote     | DAVID-WORD ("back up the cockpit at every closeout") |
+| 08:5x | Charter + skill amended: cockpit backup is now a STEP of every closeout        | DAVID-WORD (standing) |

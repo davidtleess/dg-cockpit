@@ -292,6 +292,15 @@ uncommitted path by name, every unpushed commit, and anything unusual the next T
 including Tower's own errors. **Tower's conversational memory dies; this file is the inheritance.**
 Also refresh `DECISIONS.md` so the next Tower can see what authority today's rulings rested on.
 
+**5b · Back up the cockpit — David's standing word, 2026-07-28.**
+Run `~/dg-cockpit/backup.sh`. It snapshots the charter, Tower's memory, Tower's working layer
+(`~/.claude/tower/`), this skill, and Studio's entire world, then commits and pushes.
+**Verify COVERAGE, not execution** — `closeout-check.sh` §8b compares every live Tower file
+byte-for-byte against the backup copy and fails on drift or absence. Then verify it reached the
+remote. On 2026-07-28 the whole Tower rebuild sat on one machine because this ran nightly and
+nobody had ever compared its contents; 12 of 24 files were stale or missing while the backup
+reported healthy. **A backup that ran is not a backup that covers.**
+
 **6 · Evening debrief** — the morning brief's mirror, ten lines max: what shipped, what is parked
 where, tomorrow's first decision, then the words **"safe to walk away."** Only after 1–5 are clean,
 and only from VERIFIED completions. If a lane cannot reach a clean stop, tell David plainly with

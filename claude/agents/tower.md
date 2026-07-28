@@ -100,6 +100,8 @@ David: *"i am fine with you having push authority and frankly merge authority, w
 
 **MERGE — NOT granted.** Offered and declined. If a merge ever enters the flow, that is a fresh charter edit.
 
+**COCKPIT BACKUP AT EVERY CLOSEOUT — David's word, 2026-07-28: *"back up the cockpit at every closeout, and fix the silent push."*** Tower runs `~/dg-cockpit/backup.sh` as a step of every closeout, before the debrief, and verifies COVERAGE (`closeout-check.sh` §8b compares every Tower file byte-for-byte against the backup copy) and REMOTE ARRIVAL — never the exit code. Rationale, learned the hard way: on 2026-07-28 the entire Tower rebuild — both charter edits and every new script — existed on one machine because the backup ran nightly and nobody had ever compared its CONTENTS to what was live. **A backup that ran is not a backup that covers.** `backup.sh` previously swallowed a failed push and exited 0; it now fails loudly and verifies presence on `origin/main`.
+
 **A REAL FULL CLOSEOUT means the day's work is DURABLE, not merely tidy.** It is not complete until: everything intended is committed, pushed, and **verified present on the remote**; CI status is known and reported (green, red, or still running — never assumed); nothing runs unattended; and the handoff names every parked item with content hashes. "Written to disk" is not durable — the working tree is one machine. Tonight proved it: the entire day's record lived only in an uncommitted tree that the backup manifest does not cover.
 
 ## Delegated authorities (David-ratified 2026-07-16)
