@@ -1,179 +1,96 @@
 # TOWER BOARD — the live state of every lane
 # RULE: every line carries WHEN it was verified and FROM WHAT. A line without a fresh
 # verification stamp is NOT reportable to David. Rebuild from source, never from Tower's
-# own earlier messages. A summary must be NEWER THAN EVERYTHING IT SUMMARISES.
-# SOURCES, in order: the session ledger read in full · the pane's complete latest report ·
-# the artifact itself (git, marker, bucket, disk) · Studio from DISK (pane 2.1 retains none).
+# own earlier messages — and never from the PREVIOUS Tower's handoff, which is INHERITED
+# CLAIM, not fact. That distinction was learned on 2026-07-28 by getting it wrong.
+# SOURCES: today's ledger read in full · each lane's complete postflight · the artifact
+# itself (git, CI, marker, disk) · Studio from DISK (pane 2.1 retains no scrollback).
 
-LAST FULL REBUILD: 2026-07-28 12:00 ET (prior: 08:56) — new session opened 7 min after close; all four lanes
-verified at rest (pane-state), open-asks CLEAN, git clean, CI re-verified.
+LAST FULL REBUILD: 2026-07-28 16:06 ET — closeout in progress, ordered by David
 
 ## LANE: Claude (dynasty:1.1) — implementing lane, spokesperson
-STATUS      WORKING. David's word 2026-07-28: IDENTITY IS THE NAMED PRIORITY, first work of the day.
-            TW28-IDENTITY-1 DELIVERED 09:02 (marker verified in transcript, whole buffer).
-HOLDING     nothing uncommitted
-BLOCKER     none
-NEXT        Scope-only deliverable: a David-facing board of identity work (what exists / what production
-            runs / cheap-vs-deep / what needs his gate / what is wrong in the app TODAY). NOT a repair.
-PARKED      DG2-S0-01 unit (d) — parked by David's sequencing, not by blocker.
-VERIFIED    09:02 from pane-send DELIVERED verdict + pane-state + git
+STATUS      BLOCKED on the records-commit dialog awaiting DAVID'S KEYSTROKE (Tower's guard
+            refuses commits under any standing authority). Postflight already filed.
+TODAY       Shipped Thread 1 (Units A/B/D) end to end: RED verified, GREEN, CLEAR, tollgate,
+            commit 8975741 under David's fresh word, post-commit audit CLEAR, pushed, CI green.
+SELF-DISCLOSED  SIX assertions retracted (incl. "2,233 rows" -> 3,453, which it calls
+            conceptually wrong not arithmetic; and "cannot be re-pinned in principle").
+            SIX figures checked by nobody else, named individually. THREE authority items
+            against itself, incl. writing David-facing copy before reading PRODUCT/DESIGN,
+            and `git add` ahead of the commit word.
+BACKGROUND  Nothing of its survives the session.
+VERIFIED    16:06 from its postflight + git + pane
 
 ## LANE: Codex (dynasty:1.2) — review lane
-STATUS      CLOSED. Verified content receipt of its own packets independently.
-BLOCKER     none
-VERIFIED    08:45 from ledger + pane
+STATUS      CLOSED. Postflight filed; lane stopped.
+TODAY       Broke Claude's population figure (2,233 -> 3,453), found the SECOND David-visible
+            surface rendering its own false claim, found both decoder holes (duplicate JSON keys,
+            non-UTF-8), and issued the enumerated CLEARs plus the post-commit divergence audit.
+SELF-DISCLOSED  FOUR retractions, incl. reversing its own reading that Claude could commit under
+            David's older word — reversed in the STRICTER direction.
+NO SINGLE-LANE FIGURES  claims none of its substantive figures remain unchecked.
+BACKGROUND  Nothing survives.
+VERIFIED    16:06 from its postflight
 
 ## LANE: Gemini (dynasty:1.3) — operations & telemetry, read-only
-STATUS      AWAKE, BUSY. TW28-IDENTITY-2 delivered 09:03 (loop closed: its identity finding is the
-            origin of David's priority). NOTE: first attempt returned NOT_DELIVERED, retry DELIVERED,
-            and the pane was BUSY in between — the message may have landed twice. Harmless, informational.
-BLOCKER     read-only `launchctl` dialogs still refused by Tower's guard — David's override unanswered
-VERIFIED    09:03 from pane-send DELIVERED verdict
+STATUS      CLOSED. Postflight filed.
+COMPLIANCE AUDIT — DIAGNOSED (David released it 15:35; Tower assigned read-only)
+   ESTABLISHED: failing since 2026-07-25 (a day EARLIER than Tower's count). Cause is a cold
+   SQL-warehouse start >50s; the synchronous call returns non-terminal PENDING/RUNNING, the
+   script has no polling/retry and no on_wait_timeout, so it dies after ~250s with an
+   "Unknown error" fallback. THE STATIC COMPLIANCE CHECKS THEMSELVES PASS GREEN.
+   => it is a BROKEN CHECK, not a product defect. Nothing shipped unguarded in the sense
+   that matters.
+   UNKNOWN, and correctly left unknown: the warehouse's actual state. Verifying it needed an
+   external API call with David's credentials; the lane stopped at the boundary and reported
+   the gap instead of routing around it.
+ALSO TODAY  the identity-origin answer that CORRECTED Tower's inflated account, cited to exact
+            lines which Tower then read directly rather than trusting.
+BACKGROUND  Nothing survives. /tmp artifacts it downloaded do NOT survive a reboot.
+VERIFIED    16:06 from its postflight + Tower's own read of the cited lines
 
 ## LANE: Studio (dynasty:2.1) — outsider design, self-directed. PANE RETAINS NO SCROLLBACK.
-STATUS      WORKING then AT REST (stall 09:58, composer FURNITURE not a strand — verified by
-            pane-strand.sh; the ghost read "fix the type scale across 011", authorisation-shaped
-            and correctly NOT submitted). Woken 09:33 into its standing licence; produced all day's
-            only crew-independent output. VERIFIED 09:58 from disk + visible pane.
-PRODUCED    tools/craft-gate.mjs (a measuring instrument), CRAFT-LIBRARY.md, craft/T4-2-density-gate.md,
-            STATUS.md refresh.
-FINDINGS    (a) LIVE APP: 30 failed image requests on EVERY load of the opening screen — the known
-            missing-headshots defect, now quantified; three screens contain no charts at all.
-            (b) its gate independently ranks David's own past verdicts in the order he gave them.
-            (c) SELF-CRITICISM it did not tune away: 14 type sizes on its latest surface, 11 off
-            any scale — David had told it once already that its visuals are too small.
-            (d) STATED LIMIT: the tool measures the drawing, never whether the question is worth
-            asking. "A clean result is never a reason to build something."
-NOT VERIFIED BY TOWER  the 30-request figure is Studio's measurement, unchecked by Tower.
-PRIOR       CLOSED. DAVID.md written, 011 + RELAY on disk, retractions recorded.
-HOLDING     tier-ladder question parked with Tower for David
-BLOCKER     David's gate on 011 — has NOT crossed to the crew
-VERIFIED    08:45 from disk
+STATUS      CLOSED — "Studio closed. Good night." DAVID.md 15:58, STATUS.md 15:59, both
+            verified from DISK.
+TODAY       Woken into its standing licence at 09:33 after going blocked-idle. Produced the
+            day's only crew-independent work: a craft-gate instrument that reproduces David's
+            own past verdicts; LIVE-APP findings (30 failed image requests on every load of the
+            opening screen; three screens with no charts); its own type scale fixed after
+            self-criticism; and a named defect class — spacing logic keyed to a hard-coded font
+            size passes every check until someone touches the type.
+FRESH EYES  It found the product's own visual-craft audit files and DELIBERATELY DID NOT OPEN
+            THEM, unprompted, because correlating its instrument with ours is what it is there
+            not to do. Guard this behaviour.
+TIER GRAIN  Answered COARSE (Tower's answer, at David's direction, explicitly labelled as NOT
+            David's taste). Studio then TESTED it and broke the QB exception Tower had attached,
+            with a better argument: a fine boundary sits on ~0.5pt while a real revision moves a
+            player ~7.5pt, so distinct is not resolved. Tower's reasoning was the weaker half.
+VERIFIED    16:06 from disk + visible pane
 
-## ⚠ PROVENANCE CORRECTION — the identity priority's stated ORIGIN was wrong
-GEMINI'S OWN ANSWER (11:14, its record, quoted): there is **NO separate "general identity-layer
-finding"** in Gemini's record. The origin was the DG2-S0-01 `sleeper_id` nested-vs-root mismatch
-recorded 2026-07-26T22:19 — a test-fixture shape item, NOT the broad "four parallel identity
-systems / crosswalk fails open / ~10% PFF miss on Round 5/6 breakouts" narrative.
-SOURCE OF THE ERROR: that narrative lives in the INHERITED handoff file under "THE IDENTITY
-FINDING — the longest shadow on the board", attributed to Gemini. No lane's record supports it.
-Tower repeated it to David this morning as established provenance without checking it against
-any lane's record — the same defect as relaying an unreviewed claim, one layer further back.
-⭐ THE DECISION STILL STANDS. Everything the priority rests on was independently MEASURED today
-by Claude and Codex — the false on-screen message, the unprotected crosswalk, the parallel
-systems, the orphan players. David's call was right; Tower's attribution of who found it was not.
-RULE ADDED: the handoff file is INHERITED CLAIM, not verified fact. Treat it as a lead to check,
-never as a source. Tower's own board law already said Tower's earlier statements are not a
-source; that now explicitly includes the PREVIOUS Tower's.
-
-## IDENTITY — David's named priority, 2026-07-28.  STATE AT 12:00
-DAVID RULED  (1) "ship the honesty fix and commit the file"  (2) "route 1" — class-level honesty.
-             Route 2 / row targeting / name matching / I-5 all UNAUTHORISED. Canonical key PARKED
-             on Tower's recommendation. A push remains a separate word.
-BOARD        v3 CLEAR (Codex, reviewed SHA b42dcbae…). Three adversarial rounds survived.
-FRAMING      v2 NOT CLEAR (ten items) → v3 authored → with Codex now. NO CODE WRITTEN ALL DAY.
-             No RED opened. Nothing committed.
-POPULATION   Tower said 2 rows. Claude measured 2,233. Codex broke that to 3,453. ⚠ NOT SETTLED —
-             each number superseded the last within the hour. Tower's original "2" was wrong by
-             ~1,700x and went into David's decision.
-SECOND SURFACE  Codex found PlayerInspector.tsx renders its own "Unmodeled category" claim, so an
-             API-only repair leaves a second false statement on David's screen. Caught BEFORE code.
-SCOPE GROWTH David authorised a one-surface fix on a handful of rows; it is now two surfaces on
-             thousands. Claude is routing that back to him rather than expanding under the old yes.
-COPY         The replacement wording is David-facing copy and is HIS. Expect a short ask.
-BOARD v1    Claude, parked at docs/agent-ledger/evidence/2026-07-28/identity_board_claude_v1.md
-WIRE 10:43  Codex→Claude challenge packet DELIVERED and confirmed (Codex verified content in
-            Claude's transcript, Tower verified Codex's own receipt). Chain re-formed after the
-            guard repair. Claude→Gemini strand: a REAL unsubmitted 24-line paste sits in Gemini's
-            composer; Tower did NOT submit it and told Claude to own it. Codex holds its Gemini
-            packet until Tower confirms that pane clear.
-CHALLENGE   Codex 09:34: **NOT CLEAR — eight v2 corrections required.** No downstream work opens
-            before Codex re-review and explicit CLEAR.
-REPRODUCED INDEPENDENTLY BY CODEX (Tower supplied none of these): 12,203/581/11,621/1 universe
-            counts · 501 gsis vs 80 slug split · 7,952 crosswalk rows / 6,117 Sleeper ids / zero
-            dupes · exactly Kallerup + Ke'Shawn Williams as the two identity misses · zero
-            production callers of the fuzzy matcher.
-⚠ TOWER TOLD DAVID SOMETHING NARROWER THAN THE TRUTH — CORRECTED 09:36
-            Tower said a lost crosswalk ships "zero model values". Codex measured: 80 Engine A
-            values SURVIVE. Severe, not total. Correction delivered to David.
-⚠ CONFIRMED AT THE UI LAYER 11:05 — the false reason is ON DAVID'S SCREEN, not merely in a
-            payload: frontend/src/player/PlayerDetailCard.tsx:37-39 renders degradation.message as
-            visible body text, reading "No active model score for this player category" for what is
-            actually an identity-join miss. Codex's find; Claude carried it to the surface and
-            self-corrected its own v1, which had said "no caveat" — wrong in the WORSE direction.
-            Also a live `"0"` pseudo-player answering HTTP 200 as if it were a human.
-⭐ NEW, DECISION-RELEVANT TO DAVID'S ITEM 3: the crosswalk's ENTIRE recorded provenance is
-            source + pull_timestamp + count. There is NO upstream SHA field at all, so the exact
-            input cannot be re-pinned even in principle. A re-pull is unreproducible BY
-            CONSTRUCTION — which converts "back up or commit" into "commit the frozen snapshot".
-DISPOSITION Claude accepted all 12 Codex items, ZERO rejections, and flagged its own 100%
-            acceptance as a YELLOW FLAG ON ITSELF rather than a clean result. It tested the
-            reviewer back twice; both of Codex's claims held.
-CORROBORATION NOTE  Claude's confirmation of Tower's three crosswalk-file claims is CORROBORATION,
-            not independent reproduction — Tower supplied the figures first and said so up front.
-
-## PRODUCT / INFRA — verified by Tower directly
-BACKUP      20260727T233130Z · 288 files · sha256_verified=true · pointer names it · restore drill PASSED
-GIT         product repo 0 uncommitted / 0 unpushed · cockpit repo 0 uncommitted / 0 unpushed
-CI          VERIFIED 08:54 from `gh run list`: main `CI` workflow GREEN on head 67bd75f (and af70cda).
-            ⚠ `Codex Compliance Audit` LAST RAN 2026-07-27 16:11 on 5459734 = FAILURE. It has NOT run on
-            af70cda or 67bd75f — so it is red at its last data point and has produced no signal since.
-            Cause undiagnosed. FIRST ITEM.
-GIT         VERIFIED 08:53: product repo main == origin/main, 0 uncommitted. Cockpit repo: only
-            carrier.log dirty (the paused carrier logs 'held: carrier_disabled' every 30s, 11.6k lines).
-DATA JOBS   ⭐ VERIFIED 09:36 BY TOWER DIRECTLY (log mtimes): TODAY'S JOBS RAN ON TIME —
-            fc-snapshot 09:00 · feature-refresh 09:20 · league-capture 09:20 · pvo-refresh 09:30.
-            Runtime artifact universe_pvo_runtime.json rewritten 09:30 today. Yesterday's 10h
-            sleep-delay did NOT repeat. Still inside their window at time of check: market-
-            divergence (09:40) and what-changed (09:45). Prior read below, superseded:
-            VERIFIED 08:55 from log mtimes vs plists: 7 morning jobs scheduled 09:00-10:15. On 07-27 six
-            of them ran 19:31-20:46 (~10h late, macOS sleep); only fc-snapshot ran on time at 09:00.
-            Today's window has NOT opened yet. `realized-outcome-scoring` has not written since 07-21 —
-            its output is a legitimate offseason no-op (`no_predictions_for_target`), low concern.
-MODEL/CEILING   VERIFIED (author-checked only, no second lane): DVS saturates at 100.0 —
-                TE 11 of 111 tied (Bowers 7,734 → Goedert 1,473 = 5.25x) · RB 6 (2.42x) · WR 6 (2.84x) ·
-                QB none, 46 distinct of 47. At the ceiling the lane declares ties, not ranks.
-MODEL/STALENESS RETRACTED. Tower counted by calendar date; capture_date is not a unique grain.
-                "Frozen" is NOT supportable. Re-measure on the vintage grain.
-MARKET/TIMING   FC snapshot ~13:00Z vs model vintage ~23:32Z — compared ~10h32m apart, always.
-
-## ⏰ TOWER OWES DAVID — GEMINI DECISION, OVERDUE SINCE ~07-24
-Deliberately HELD while he is mid-flow on identity. Raise at closeout or when the identity
-thread lands. Today's record, Tower's observation: its identity-origin answer was precise, cited
-to exact lines, and CORRECTED Tower's inflated account rather than agreeing with it — the single
-most useful thing any lane did for the record today. Telemetry (backup 300 files verified, data
-jobs on time) accurate and unprompted. Narrow scope, high reliability within it.
-
-## STANDING SWEEP ADDED 2026-07-28 — "NEVER TOLD TO DAVID"
-The crew's postflights carry a structured heading with that exact name. Tower had NEVER swept it.
-Sweep it at boot and at closeout: `grep -A6 "NEVER TOLD TO DAVID" docs/agent-ledger/*.md`.
-First sweep found a live item from 07-26 that never reached him (Claude's automation altered
-another lane's evidence; reverted, net-zero, but never surfaced).
+## PRODUCT / INFRA
+GIT         commit 8975741 (Units A/B/D) on origin/main, CI GREEN, post-commit audit CLEAR.
+            ⚠ UNCOMMITTED: today's ledger + 54 evidence artifacts + AGENT_SYNC.md — the entire
+            written record of the day, on ONE MACHINE. The backup manifest covers NO docs/ path.
+            Commit prepared and sitting on David's keystroke at close.
+CI          `CI` green on 8975741. `Codex Compliance Audit` RED since 2026-07-25 — now DIAGNOSED
+            as a broken check (see Gemini above), not a product defect.
+DATA JOBS   ran ON TIME today (09:00-09:30). Yesterday's 10h sleep-delay did not repeat.
+BACKUP      data backup run 20260728T141500Z: 300 files, ~1.24 GB, drill passed, 0 failures.
 
 ## DAVID'S OPEN BOARD
-⭐ ANSWERED 2026-07-28 ~09:00 — item 4: "start with identity." Identity is the NAMED PRIORITY.
-   Items 1, 2, 3, 5 remain open. Compliance-audit CI and S0-01 (d) parked behind identity.
-1 read-only launchctl override — ⚠ LIVE BLOCKER 09:27: Gemini frozen on `launchctl list | grep
-  davidleess`, guard REFUSED (gate-shaped). Cascaded: Claude could not deliver its identity-record
-  request (blocked pane discards pastes) and parked it to
-  docs/agent-ledger/evidence/2026-07-28/msg_gemini_identity_record_PARKED.md
-2 identity crosswalk file into the backup manifest
-3 --dry-run / network-incapable drill guard (3 same-class incidents argue for it)
-4 identity as a named priority — Tower's read: outranks most of the backlog
-5 Studio's tier-ladder question
+1 THE 113 "Modeled" rows — shown as Modeled with no value at all. Tower's read: the biggest
+  remaining honesty defect, and the one David is most likely to care about.
+2 COVERAGE-THRESHOLD POLICY — how much missing data should stop a refresh. Genuinely his;
+  nobody invented it in his absence.
+3 UNIT C — the false on-screen wording. Parked mid-review, shares no commit.
+4 The non-player sentinel ("0") answering as if it were a person.
+5 GEMINI DECISION — overdue since ~07-24. Today's record: narrow scope, high reliability,
+  and it corrected Tower rather than agreeing with it.
 
-## TOWER'S WATCH — TOWER-3, built 2026-07-28 09:35 after David caught a blocked lane
-watchdog.sh   VERIFIED LIVE 09:27. Starts pane-watch + output-watch and PROVES liveness
-              (both processes + heartbeat < 90s). SessionStart hook auto-starts it in Tower's
-              pane only. Logs: /tmp/tower-run/{pane-watch,output-watch}.log
-say-clear.sh  MANDATORY before the words clear/quiet/at rest/nothing needs you/safe to walk away.
-Monitor       persistent, armed on both watcher logs — events PUSH into Tower's turn.
-COVERAGE LIMIT  ~/.claude/notification-hook.log = Claude Code panes ONLY. Gemini and Codex never
-              appear in it. pane-watch.sh is the only feed covering all four lanes.
-
-## TOWER'S OWN OPEN DEFECTS (do not let these rot)
-- `--closeout-push` also relaxes `git commit` — broader than the charter line. Narrow or widen.
-- contamination guard WARNs on messages that DISCUSS contamination (~4 deliberate overrides).
-- gate-shaped guard scope bleed — NOW PROVEN AND BLOCKING. 2026-07-28 09:33: refused Claude's own
-  ledger write because the PROSE contained "launchctl". Fix proposed, NOT self-applied (narrowing
-  this guard changes Tower's own authority boundary = David's word). Both blocked dialogs on his board.
+## TOWER'S OWN OPEN DEFECTS
+- Everything Tower says to DAVID bypasses every guard Tower owns. turn-brief.sh narrows the
+  state half; nothing covers the PROVENANCE of a claim. Named in SKILL.md Part V.
+- `--closeout-push` still relaxes `git commit`, broader than the charter line granting PUSH.
+- contamination guard false-positives on the literal word "independent" near any figure.
+- open-asks REPLY pattern only recognises a Tower marker; asks answered lane-to-lane need
+  explicit retirement in RESOLVED-ASKS.md.

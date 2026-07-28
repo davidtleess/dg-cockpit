@@ -1,5 +1,71 @@
 # Studio proposals — status
 
+## CLOSEOUT 2026-07-28
+
+**Two threads, both self-directed, nothing requested.** (1) Built the pre-flight density gate and
+validated it against six prototypes whose verdicts David has already given; ran it on the live app.
+(2) Applied its findings to Studio's own type scale on 011, and tested the tier-grain ruling that
+arrived rather than accepting it.
+
+### (a) WHICH FIGURES PRODUCED TODAY HAS NOBODY BUT STUDIO CHECKED?
+
+**All of them. Every figure below is Studio's own computation, reproducible but unreviewed.**
+
+| Figure | Status |
+|---|---|
+| **QB grain: 46 distinct DVS of 47; gap at a finer cut 0.50 QB / 0.23 WR / 0.60 RB / 0.81 TE; median revision move 7.50 QB / 10.6 WR / 9.4 RB / 9.9 TE; churn coarse-vs-fine 19/34% QB … 54/81% TE** | **Highest stakes of the day** — this refuted Tower's QB exception and now underwrites the coarse ladder in the proposal and on-surface. Computed by Studio alone from `model_forward_capture_raw`. Repro: `analysis/qb-grain.py`. **Rests on only 2 of 34 transitions showing any change, both population-BUILD events; absolute churn is explicitly NOT projectable** and that limit is stated in the artifact, the proposal and the surface. |
+| **Gate thresholds** — the C1 density cut-point (warn 1.75 / fail 3.0 per 10k px²) | **Fitted to two labelled examples**, 009 matrix ≈3.95 rejected vs 006 front door ≈2.13 approved. Two points is a weak fit; documented as "a prompt to look, never a verdict." |
+| **Gate validation ordering** across six prototypes | Six examples, all Studio's own, graded by one reader. The weakest form of validation there is — stated as such in `craft/T4-2-density-gate.md` §D. |
+| **Product type tokens = 13/15/18px** | Read directly from `frontend/src/styles/tokens.css:50-52`; verified no rem-base override. The most solid fact of the day, but still only Studio's read. |
+| **Live app: 30 failed requests per load, all `/assets/headshots/*.jpg`** | Measured twice (console errors, then request URLs). Corroborates the briefing §4/§5 known defect rather than being new. |
+| **011 type retrofit: 96 → 0 sub-floor content nodes; 14 → 6 sizes** | Measured by Studio's own audit script and its own gate — **the instrument and the subject are the same tool**, which is a real weakness in this particular number. |
+
+### (b) WHAT DID STUDIO ASSERT TODAY AND LATER RETRACT OR REVERSE?
+
+1. **RETRACTED — "sub-12px content fires on every surface Studio has built, including the app's."**
+   Told to David in the morning report. **Artifact of the wrong ruler** (Carbon's ramp instead of the
+   product's). Corrected same day and **the finding inverted**: the live app has **zero** sub-13px
+   content on its default screen and respects its own scale; Studio's prototypes carry 144 / 88 / 55.
+   So *"all the visuals are very small"* is a **Studio** defect, not an inherited one. Retraction was
+   stated to David in words, not just fixed on disk.
+2. **REVERSED — the gate's own verdicts on first run.** It scored the approved front door 5 FAIL and
+   the rejected matrix 1 FAIL. Four instrument bugs, all fixed, all documented.
+3. **REFUTED (not Studio's own claim, but tested rather than accepted) — Tower's "QB is the genuine
+   exception" to the coarse ruling.** QB does not saturate, which is true and looks like support; the
+   boundary-versus-revision measurement kills it. Coarse survives on a *better* argument.
+4. **CORRECTED ON A SHIPPED SURFACE — 011's on-surface grain caveat.** It told the reader the limit
+   was confined to the top of three positions. New evidence made that wording too generous; rewritten
+   to state the population-wide reason. **A caveat that new evidence has made understated is a defect,
+   not a footnote.**
+
+**Not retracted, and worth saying:** the C4 small-type finding survived the ruler correction and was
+**not tuned away** to make Studio's approved work pass.
+
+### Open threads at this close, and where each is parked
+
+| thread | state | parked at |
+|---|---|---|
+| **Tier-ladder grain** | **ANSWERED COARSE by Tower on the evidence at David's direction — NOT David's taste, and David's own taste remains unruled.** Studio tested it and refuted the QB exception; coarse now rests on the whole population. No rebuild — 011 already draws it. **Reopens if the DVS ceiling is fixed.** | `proposals/011-what-is-he.md` §"Grain settled"; `analysis/README-qb-grain-2026-07-28.md` |
+| **011 surface** | Direction checkpoint only, **NOT approved**. Type retrofitted to the product's scale; grain caveat corrected. Clean at 1400/390, 0 errors, crosshair resolves 10/10. | `proposals/011-what-is-he/prototype.html` |
+| **011-RELAY R1–R4** | **AUTHORED, NOT AUTHORISED TO CROSS.** R1 (DVS ceiling) is the blocker on David's standing "publish market-comparable rankings" ask. **R2 now has a second half measured today** — the lane is not merely frozen; when it moves it moves ~9 points and reshuffles a large share of any ranking on it. Recorded, not sent. | `proposals/011-RELAY.md` |
+| **The density gate** | Built, validated, in use. **Tier 4 item 4 partly discharged**; the layered-reading glance/scan/study canon is still wanted from the craft library. | `tools/craft-gate.mjs`, `craft/T4-2-density-gate.md` |
+| **Type scale across older surfaces** | 011 done. 006 front door (88 sub-floor nodes), 009, 004, 008 **not** retrofitted — deliberately, since they are closed or under review. **Ride it along the next time each is legitimately opened.** | this board |
+| **004 N1+N4** | Confirmed by engineering as Studio's forward thread; untouched again today. | foot of `proposals/004-RELAY.md` |
+| **009 relay P1–P6 + addendum** | Crossed and acknowledged; verdicts still outstanding. | `proposals/009-RELAY.md` |
+| **006 per-player model curve fork** | Unruled since 2026-07-24. Studio's rec: pursue as an engineering capability ask. | this board |
+| **008 / 010** | Closed, did-not-land, **do not resume.** Their engineering findings remain valid and unrelayed. | `008-RELAY.md`, `010-RELAY.md` |
+| **WR holdings 14-vs-12** | **Off Studio's plate** — Tower is telling David plainly. | — |
+
+**Background jobs in Studio's lane at close: NONE.** No processes, no watchers, nothing scheduled.
+
+**Fresh-eyes covenant: intact, one judgement call made.** The product ships
+`visualCraftAudit.test.js` and `visualCraftAuditBaseline.json`; **deliberately not read** — a
+visual-craft audit with a baseline is plausibly the executable form of the in-house design doctrine,
+and reading it would correlate Studio's instrument with theirs, the exact harm the covenant prevents.
+Only raw CSS token *values* were read, which are product contract, not doctrine. **No exposure.**
+
+---
+
 ## Current
 
 ### 2026-07-28 — TIER-LADDER GRAIN: ANSWERED **COARSE**. Tower's ruling on the evidence, NOT David's taste.

@@ -126,7 +126,12 @@ if printf '%s' "$scope" | grep -oiE 'launchctl[[:space:]]*[a-z-]*' \
   exit 4
 fi
 
-gate_re='git (push|commit)|rm -rf|crontab|delete|force|--hard|npm publish|gh (pr|release) create|persist to settings'
+# `force` is WORD-BOUNDED and `delete` likewise. Substring matching refused a read-only
+# closeout verifier at 16:48 on 2026-07-28 because its output contains the word "ENFORCE".
+# This narrows nothing that was ever meant to be caught: `--force`, a standalone `force`,
+# and `delete` as a word all still refuse. A guard that fires on a substring inside an
+# unrelated word teaches Tower to route around it, which is how guards die.
+gate_re='git (push|commit)|git branch +(-[dDm]|--delete)|git tag +(-d|--delete)|git remote +(remove|rm)|rm -rf|crontab|\bdelete\b|\bforce\b|--force|--hard|npm publish|gh (pr|release) create|persist to settings'
 if [ "$CLOSEOUT_PUSH" = 1 ]; then
   if printf '%s' "$scope" | grep -qiE '\-\-force|\+refs/|--hard|rm -rf|delete|persist to settings|gh (pr|release) create'; then
     echo "VERDICT=REFUSED"

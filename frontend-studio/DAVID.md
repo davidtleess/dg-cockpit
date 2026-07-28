@@ -1185,3 +1185,81 @@ earlier one, mark the old one superseded and link them.
      his present startability and understates an older producer. Corrected in artifact and proposal.
   3. **Design retraction:** the crisp replacement rule — it asserted a sharp startable/not cutoff the
      data does not contain (Correll & Gleicher). Replaced by a fading depth ruler.
+
+- **2026-07-28 — THE LANE-COLOUR RULING IS ABOUT EVERY TOKEN CHANNEL, NOT ABOUT COLOUR. (Extends
+  2026-07-25; caught inside the instrument built to prevent that class of error.)** David's 2026-07-25
+  ruling — *consistency with the product outranks an internal craft-tool heuristic whenever the
+  heuristic is not a legibility failure* — was recorded as a rule about hue. It is not. Studio built a
+  density/legibility gate and shipped it with **Carbon's** type ramp (12/14/16/18…) as its ruler. Run
+  against the live app, it flagged **13px and 15px as "off the ramp" on every surface** — those are the
+  product's own tokens (`frontend/src/styles/tokens.css:50-52`: `--dg-text-sm` 13px, `--dg-text-base`
+  15px, `--dg-text-lg` 18px, no rem-base override). **A craft tool carrying a rival ruler is the most
+  durable way to commit this error, because it converts a one-off drift into an enforced standard.**
+  **How to apply:** a gate measures a surface against *the product's* contract, and may impose an
+  outside standard only where the product has none — and then says so on the artifact. Before authoring
+  any scale, check whether the product already ships one and take it verbatim. This generalises to
+  spacing, radii, motion durations, and every other token family, not just colour and type.
+
+- **2026-07-28 — RESOLUTION OF THE ENCODING IS NOT RESOLUTION OF THE ESTIMATE. (Studio method rule,
+  self-caught.)** Testing whether QB could carry a finer tier ladder, Studio measured **97.9% distinct
+  DVS values (46 of 47 players, zero ties in the top 24)** and came close to reporting it as support for
+  a finer grain. It is not. A finer boundary sits on a value gap of **0.50 points at QB** (0.23 WR /
+  0.60 RB / 0.81 TE) on a 0–100 score, while a real revision of the model moves a player a median of
+  **7.50 points** (10.6 WR / 9.4 RB / 9.9 TE) — the boundary is **12–46× narrower than the model's own
+  movement**. In interpretable form, finer sub-tier churn exceeds coarse-tier churn at every position
+  (**QB 34% vs 19%**, TE 81% vs 54%). **How to apply:** before treating precision as available, compare
+  the width of the distinction being drawn against the magnitude by which the underlying number moves.
+  Decimals produced by arithmetic are not precision — the same class of error as the 2026-07-24
+  cost-per-hit metric, in a new costume. **And the design consequence that inverts intuition:** the
+  position that never ties is the *worst* place to go fine, not the safest, because it fails
+  **invisibly** — TE at least draws a tie bar that warns the reader.
+
+- **2026-07-28 — Tier-ladder grain ANSWERED COARSE — by TOWER, on the evidence, at David's direction.
+  NOT David's taste and not to be cited as his ruling.** David instructed that Studio's parked question
+  be answered; the answer itself was Tower's reasoning, explicitly overrulable, and **David's own taste
+  on grain remains unruled.** Recorded here only so the attribution is never lost (the 2026-07-23
+  stray-keystroke rule: never attribute a direction to David unless he said it in his own words).
+  Studio **tested the answer rather than taking it**, and the measurement above **refuted the QB
+  exception Tower had attached to it** — so coarse now rests on the whole population at four positions
+  rather than on 23 saturated players at the top of three. No surface change followed; 011 already drew
+  coarse with tie bars. **Reopens on a condition:** if the DVS ceiling is ever fixed (011-RELAY R1).
+
+- **2026-07-28 — An instrument that has not been tested against known-good AND known-bad cases is an
+  opinion generator.** Studio's new density gate, on its first run, scored the **approved** 006 front
+  door at 5 FAIL and the **rejected** 009 matrix at 1 FAIL — exactly backwards. Four bugs in the
+  measuring, not in the designs: `getComputedStyle(div).fill` computes to opaque black on HTML elements
+  (every OKLCH lane colour read as grey — parse colour through a 1×1 canvas, never a regex); a mark
+  inside a clickable row is not itself a 24px WCAG target; 10–11px is a legitimate *label* size and the
+  009 conviction was for *content*; and channel inference is fooled both by categorical size differences
+  (filled dot vs hollow ring) and by one tag serving several roles. **How to apply:** validate any new
+  measuring tool against cases whose verdict is already known, in both directions, before trusting one
+  number it produces. **And build in the refusal:** where the instrument's own population is mixed, it
+  must decline the verdict rather than issue a confident wrong one.
+
+- **2026-07-28 — DEFECT CLASS: spacing or dodge logic keyed to a hard-coded font size.** Lifting 011's
+  chart labels from 9.5px to 11px made two cliff tags overprint, because the dodge compared x against a
+  magic `34px` threshold tuned to the old size. It had passed every probe for as long as nobody touched
+  the type. Replaced with a dodge measuring the rendered text extent. **How to apply:** any collision,
+  dodge or truncation rule must measure what is actually rendered; a constant tuned to one type size is
+  a latent defect that fires on the next edit and is invisible until then.
+
+- **2026-07-28 — Session arc and method learnings (closeout).** Two self-directed threads, neither
+  requested. **(1) Craft:** built the pre-flight density gate Studio's own 2026-07-25 learnings had
+  asked for — six checks (density per unit *area*, legend re-application load, hue count against
+  Healey's five, content below the product's type floor, WCAG 2.5.8 targets, and whether the dominant
+  mark's channel actually varies), each traceable to a documented rejection. Validated against six
+  prototypes whose verdicts David had already given; it reproduced the two figures hand-measured after
+  the matrix-v2 rejection (15.2% IQR, **4.3% ink**). Run against the live app it found **30 failed
+  image requests on every load** of the opening screen (the known headshot 404s, now counted) and three
+  screens carrying no data marks at all. **(2) Applied it to Studio's own worst offender:** 011's type
+  went from **14 sizes, 11 off any scale** to 6, of which three are the product's own tokens; **HTML
+  content below the product's 13px floor went 96 → 0**; table body lifted to 15px. Auditing by role
+  first is what made it safe — 71 of the small nodes were SVG axis annotation on a 153-player axis and
+  would have wrecked the chart if lifted. **What worked, keep doing:** checking whether the product
+  already ships a standard *before* authoring one (this is what caught the ruler error); testing a new
+  instrument against labelled cases in both directions; testing a handed-down ruling by measurement
+  instead of accepting it; and declining to spend David's attention on legibility hygiene when he
+  already had an unanswered question outstanding. **What to watch:** Studio twice this session reported
+  a finding before checking the instrument that produced it — the Carbon ruler and the "97.9% distinct"
+  reading. Both were caught by Studio, one only just. **Check the instrument before reporting the
+  reading.**

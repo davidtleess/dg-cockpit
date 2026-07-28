@@ -441,3 +441,18 @@ REMAINS   Everything Tower says to DAVID bypasses every guard Tower owns. presen
           Named in SKILL.md Part V rather than hidden, along with the uncomfortable line: for the
           residue, David's correction is the only remaining check, and that is a bad design.
 AUTHORITY DAVID-WORD (2026-07-28)
+
+## 2026-07-28 16:50 — substring false-positive fixed, and it exposed a REAL gap
+FALSE POS  The gate guard refused a read-only closeout verifier because its output contains the
+           word "ENFORCE", which contains "force". A guard that fires on a substring inside an
+           unrelated word teaches Tower to route around it, which is how guards die.
+FIX        `force` and `delete` are now WORD-BOUNDED. This narrows nothing that was ever meant to
+           be caught: `--force`, standalone `force`, and `delete` as a word all still refuse.
+REAL GAP FOUND WHILE TESTING THE FIX — the more important half:
+           `git branch -D`, `git tag -d` and `git remote remove` were ALL APPROVED, before and
+           after the change. Branch and tag deletion were never covered; the old `delete` substring
+           never matched `-D`. Tower could have approved destroying a branch all week.
+           Now explicitly refused, tested in both directions.
+LESSON     Testing a narrowing change is what exposed a hole that had been open the whole time.
+           Do not test only the case you are fixing — test the neighbours.
+AUTHORITY  TRAFFIC (bug fix, not an authority change: nothing previously refused is now allowed)

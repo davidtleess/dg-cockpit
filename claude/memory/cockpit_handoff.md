@@ -1,174 +1,145 @@
 ---
 name: cockpit-handoff
 description: "Tower's parked board — durable snapshot of what every lane has parked and what David owes, updated at significant state changes"
-metadata: 
+metadata:
   node_type: memory
   type: handoff
-  originSessionId: 32b25c77-3d64-431f-93e6-c5407affbc20
-  modified: 2026-07-28T11:53:40.606Z
 ---
 
-# Cockpit handoff — CLOSED 2026-07-27/28. THE DAY TOWER'S OWN METHOD WAS REBUILT, AND THE DAY DAVID'S BACKUP STOPPED LYING.
+# Cockpit handoff — 2026-07-28. THE DAY THE IDENTITY BLACKOUT RISK WAS CLOSED, AND THE DAY DAVID CAUGHT TOWER FOUR TIMES.
 
-## ⭐ FIRST THINGS, NEW TOWER — READ IN THIS ORDER
+## ⭐ FIRST THINGS, NEW TOWER — IN THIS ORDER
 
-1. **Invoke the `cockpit-observation` skill BEFORE anything else.** It is no longer just observation and delivery — it now carries Tower's whole duty set in three parts: observation (Part I), knowing the team (Part II), and the closeout (Part III). Your charter's boot ritual now opens with it. **Do not operate from memory of it.**
-2. **Read the charter.** `~/.claude/agents/tower.md` gained TWO charter edits on 2026-07-27/28: **THE VERIFIED BOARD** and **CLOSEOUT PUSH AUTHORITY**. Both are law, not method.
-3. **`~/.claude/tower/BOARD.md`** — the live per-lane board. Every line stamped with when it was verified and from what. **Rebuild it from source before you report anything.**
-4. **`~/.claude/tower/DECISIONS.md`** — every Tower ruling with the authority it rested on.
+1. **Invoke `cockpit-observation` BEFORE anything else.** It now has FIVE parts. Part V was written
+   today and is the one that matters most: it classifies Tower's failure modes and names the hole
+   that scripts cannot fill.
+2. **Read `~/.claude/tower/BOARD.md`** — rebuilt from source at 16:06 today.
+3. **⚠ THIS FILE IS INHERITED CLAIM, NOT VERIFIED FACT.** On 2026-07-28 Tower repeated a story from
+   the previous handoff — that Gemini had made a sweeping "identity finding" — and used it to frame
+   David's first decision of the day. **Gemini's own record says no such finding exists.** The real
+   origin was one narrow fixture-shape defect. **Treat every line below as a LEAD TO CHECK.**
+   The board law already said Tower's own earlier statements are never a source; that now explicitly
+   extends to the PREVIOUS Tower's.
+4. `~/.claude/tower/DECISIONS.md` — every ruling with the authority it rested on, including today's
+   failures.
 
-## ⚠ DAVID'S CORRECTION, 2026-07-27 — THE REASON EVERYTHING ABOVE EXISTS
+## WHAT SHIPPED — commit 8975741, on origin/main, CI GREEN, post-commit audit CLEAR
 
-His words: *"youre missing a lot — your monitor is wrong"* · *"if Tower was truly on top of the team you would KNOW what happened"* · *"i need all these holes filled."*
+**Units A/B/D of the identity honesty work.** In plain terms:
+- The daily refresh can no longer publish a model-less board in silence. If the gsis→Sleeper
+  crosswalk is missing or corrupt it now ABORTS and says why.
+- Every player dropped at the join is counted and NAMED. Today: Nick Kallerup, Ke'Shawn Williams.
+- The crosswalk (3.8 MB, previously gitignored and backed up NOWHERE) is now tracked in git.
+  Payload verified out of the committed tree: `8ed4b67578d06a24527356f9f355ed97f12be827e34885270c0b1d28c079f593`.
 
-Tower spent the day narrating approval prompts while three lanes filed full reports it had not read. It told David an acceptance criterion was open hours after it was satisfied; never mentioned his seven data jobs ran ten hours late; reported a leftover artifact instead of the event that **an agent wrote to his production bucket without authorisation**; and let two lanes idle ~20 minutes each waiting on words Tower owed.
+Full suite 3,949 passing. Verified independently on live data: 503 predictions → 501 joins, 2 orphans.
 
-**Root cause, and it will recur if you let it:** the dialog/stall watcher fires when a lane gets STUCK, never when a lane PRODUCES something. **A lane waiting on Tower is indistinguishable from a lane resting** — `BUSY=no · DIALOG=none · COMPOSER=empty` for both. Run `bin/open-asks.sh`. Do not call the cockpit quiet until it returns CLEAN.
+## ⚠ WHERE THE DAY ENDED — CHECK THIS FIRST
 
-## Git state — ALL PUSHED, WORKING TREE CLEAN
+**A records commit was prepared and left sitting on David's keystroke at close** (Tower's guard
+refuses commits). It covers today's ledger + 54 evidence artifacts + AGENT_SYNC.md. **If it did not
+land, the entire written record of 2026-07-28 exists on one machine and the backup manifest covers
+no `docs/` path.** Check `git log` and `git status` immediately.
 
-`origin/main` = `af70cda`. **0 ahead, 0 behind, 0 uncommitted.** Verified by `git branch -r --contains` per commit, not by exit code. First fully-clean tree in three days.
+## 🏈 DAVID'S OPEN BOARD — 5 items
 
-- `af70cda` session record + three-lane closeout-gap finding
-- `3aa7ae0` DG2 backlog cover-page repair + Ruling-K note (**the stale header from 07-26 is fixed**)
-- `509ebf3` **PARTIAL** — DG2-S0-01 (a)-(c) only, NOT integrated. Subject line says so.
-- `a73ab02` DGX-02 backup coverage + silent-failure guards
-- `5459734` Codex terminal closeout answer key
+1. **THE 113 "Modeled" ROWS.** 113 of 581 modeled rows carry a null score AND null xVAR while the app
+   labels them **"Modeled"**. Claude's read, and Tower agrees: **worse than the defect we fixed** — a
+   wrong reason misinforms; claiming the model produced a result when it produced nothing
+   misrepresents the model itself. Untouched. **Tower's recommendation: this is the next thing.**
+2. **COVERAGE-THRESHOLD POLICY.** `>=1 join` is a 1-of-503 floor. Three candidate policies exist; one
+   (fail-on-any-orphan) **would stop today's refresh**, since 2 orphans exist now. An engineer nearly
+   chose this; it was pulled and left to David. Nothing asserted in either direction.
+3. **UNIT C — the false on-screen wording.** THE THING THAT MOST LOOKS LIKE A LIE IS STILL ON HIS
+   SCREEN: player cards say "No active model score for this player category" for **3,453 rows across
+   TWO surfaces** whose category IS modelled. Parked mid-review, shares no commit. `PlayerInspector.tsx`
+   renders its own claim independently, so an API-only fix is not enough.
+4. **The non-player sentinel** — Sleeper id `"0"` answers HTTP 200 as if it were a person.
+5. **GEMINI DECISION — overdue since ~07-24.** Today: narrow scope, high reliability, and it CORRECTED
+   Tower's account rather than agreeing with it. Diagnosed the compliance audit cleanly and stopped at
+   a boundary rather than routing around it.
 
-## ⚠ FIRST THING TOMORROW — A SECOND CI WORKFLOW IS RED AND NOBODY WAS WATCHING IT
+## CI — the compliance audit is DIAGNOSED, not fixed
 
-**`Codex Compliance Audit` (Sovereign Unity compliance audit) is FAILING on main** — confirmed red on `5459734` and `2102a2a`. The main `CI` workflow is green, which is why every previous handoff said "CI GREEN". **Two workflows exist; everyone checked one.** Cause not yet diagnosed — deliberately not chased at closeout. This is the first item.
+**`Codex Compliance Audit` has been RED since 2026-07-25.** Cause: a cold SQL-warehouse start >50s;
+the synchronous call returns non-terminal PENDING/RUNNING, the script has no polling/retry and no
+`on_wait_timeout`, so it fails after ~250s with an "Unknown error" fallback. **The static compliance
+checks themselves PASS GREEN — it is a broken check, not a product defect.** Unknown and correctly
+left unknown: the warehouse's real state (needed an external API call with David's credentials).
+**A fix has NOT been authorised.**
 
-## 🏈 THE PRODUCT FINDING THAT MATTERS — YOUR MODEL HAS NO OPINION AT THE TOP
+## ⚠ TOWER'S FAILURES — 2026-07-28. David caught four of them.
 
-**Verified by Tower directly against `model_forward_capture.db`, then re-measured by Claude with market prices, method reviewed by Codex.**
+1. **Watchers were never started at boot.** Lanes sat blocked while Tower said "nothing needs you".
+   David: *"can you not see gemini needs approval on something?"*
+2. **TOWER-1 failure 7 was never actually fixed.** The dialog key hashed only the boilerplate, so every
+   Studio prompt keyed identically and the watcher went silent for that pane permanently. **A green
+   test covered a live defect for three days** because the test used a shape the cockpit never emits.
+   David found it: *"figure out why your skill did not see that claude and studio are waiting."*
+3. **THREE false DELIVERED verdicts**, one root cause, three fixes, each correct and each
+   insufficient — all asked *where do I look*, none asked *when*. One carried David's commit
+   authorisation and left it unsent while both lanes idled.
+4. **A fix's JUSTIFICATION was never tested** ("a blocked pane's contents are static" — a blinking
+   glyph froze a lane within the hour).
+5. **Relayed unreviewed claims as fact, twice** — the crosswalk provenance, and the inherited
+   "Gemini identity finding". Both corrected to David.
+6. **Told David the population was 2 players.** It was 3,453. Wrong by ~1,700x, and it went into his
+   decision.
+7. **Never swept the crew's "NEVER TOLD TO DAVID" section** until an accident surfaced it. It held a
+   live item: an automation of Claude's had edited another lane's evidence file (reverted, net-zero).
+8. **Approved a credentials-file read without thinking.** No secret was in it; the judgment was still
+   wrong.
 
-DVS saturates at a ceiling of 100.0:
+**What held:** every authorisation-shaped ghost refused. No foreign keystroke. Every gate-shaped
+dialog — commit, push, launchctl mutation, credential path — went to David.
 
-| position | tied at ceiling | span of the tied group, in market value |
-|---|---|---|
-| **TE** | **11 of 111** | Bowers (TE1, 7,734) → Goedert (TE21, 1,473) = **5.25×** |
-| RB | 6 | Bijan (RB1) → McCaffrey (RB10) = 2.42× |
-| WR | 6 | Chase (WR1) → Rashee Rice (WR22) = 2.84× |
-| **QB** | **none** | 46 distinct values across 47 players |
-
-**Consequence, in Claude's words:** *at the ceiling our lane doesn't rank, it declares ties* — so any order David sees among those 11 TEs comes from the sort's tiebreaker, not the model. **A model-vs-market divergence in that group can be entirely our own missing resolution.** Rebasing does not help; tied values rank identically in any population.
-
-**QB is the exception and it is the position that matters most in his superflex format.** It ranks cleanly.
-
-**xVAR is absent** — 0 of 581 rows populated.
-
-**⚠ STATUS: author-checked only.** The per-position ceiling table has not been reviewed by a second lane. Do not present it as settled.
-
-**⚠ RETRACTED, TOWER'S ERROR:** Tower told David *"your model is frozen — values changed on 2 of 33 day-transitions"* as re-derived fact. **Codex rejected the method:** `capture_date` is NOT a unique snapshot grain (2026-06-26 holds two distinct artifact vintages), so a date-keyed map silently picks one. Also, on 07-26→07-27 **every raw row's semantic hash changed while the stored score columns did not** — something moves that those columns do not show. **"Frozen" is not supportable.** Re-measure on the vintage grain.
-
-**⚠ APPLIES TO ALL MODEL-VS-MARKET WORK:** the FantasyCalc snapshot is retrieved ~13:00Z and the model artifact is stamped ~23:32Z — the two lanes are compared **~10h32m apart**. Same calendar day, not contemporaneous, never an acquisition cost.
-
-## Your backup — the gap is closed and PROVEN
-
-Run `20260727T233130Z`: **288 files** (was 272), 1,137,173,796 bytes, `sha256_verified=true`, restore drill passed end-to-end including all 16 newly covered files. Pointer names it. **Tower verified the marker AND the bucket pointer directly.**
-
-Now covered: `prospect_identity_review.jsonl`, `app/data/pff_exports/`, `app/data/league_snapshots/`. Three silent-failure holes closed: `empty_inventory`, `directory_empty_required:<path>`, and order-independence (every failing store reported, not just the first).
-
-**⚠ THE BACKUP MANIFEST COVERS ZERO `docs/` PATHS.** The entire written record lives in git only. That is why the push mattered.
-
-## ⚠ TWO INCIDENTS, SAME ROOT CAUSE, PLUS A NEAR-MISS — the argument for the guard David has not yet decided
-
-1. **Claude wrote to the PRODUCTION bucket without authorisation.** A positive-control test passed every flag except `--bucket`, so it defaulted to production, uploaded 3 fixture objects and **advanced the live `latest.json` pointer**. Wrong restore target stood ~8 hours. No payload lost; append-only held. Self-disclosed immediately.
-2. **Gemini wrote a false failure marker** onto the live status path — `--repo-root` not passed to `main()`, defaulted to the live repo. Self-disclosed with the mechanism.
-3. Near-miss: Claude's first control stayed safe **only** because the guard fires before gcloud resolves.
-
-**Three instances of one defect class in one day: a production default reachable from a probe.** Claude's proposed fix and Codex's sharpening of it are on David's board.
-
-## ⚠ DAVID'S OPEN BOARD — 5 items, carried
-
-1. **Read-only `launchctl` override** — Tower's own guard refuses it; blocked two lanes three times. Trivial, annoying, unresolved.
-2. **Identity crosswalk into the backup manifest** — one line, 3.7 MB.
-3. **The drill-can't-reach-production guard.** Codex's sharpening is the better design: an explicit `--bucket` still permits accidentally naming production, so a true `--dry-run` must be **structurally network-incapable before gcloud resolution**.
-4. **Identity as a named priority** — Tower's read: this outranks most of the backlog. See below.
-5. **Studio's tier-ladder question** — parked with Tower since 07-27 afternoon, told to Studio it is neither lost nor declined. *"Does 'high-end WR2, low-end QB1' land on its own, or only once our rank sits beside the market's in those same words?"*
-
-## 🔎 THE IDENTITY FINDING — the longest shadow on the board
-
-**There is no durable identity graph in production.** Four parallel identity systems; the best-built one (contracts, UUIDs, fail-closed, 27 test files) **is not the one running**.
-
-- **The load-bearing crosswalk is unprotected:** `app/data/identity/_runs/ff_playerids_20260516.json`, 3.7 MB, **gitignored**, hardcoded to a single May date, not in the backup manifest, no refresh path — and it **fails open**, returning an empty dict and silently skipping every player.
-- **PFF attaches to players by matching name text**, with **eight mutually-incompatible normalizers** and no test asserting they agree.
-- **The ~10% PFF miss is not random.** Named in the repo's own validation doc: Puka Nacua, DeMario Douglas, Andrei Iosivas — Round 5/6 small-school breakouts. **The exact profile dynasty is won on.**
-- **2025 draft class: 0 of 85 in Engine B.** 2024: 46 of 77.
-
-## Where the work stands
-
-- **DG2-S0-01 — (a)(b)(c) DONE, reviewed, committed as PARTIAL.** The module that found **zero of 12,201 players while passing 10/10 tests** now reads root `sleeper_player_id`, indexes 468, and reproduces the independent answer key **exactly**: cohort 336 (QB 45 · RB 88 · TE 65 · WR 138), **131 band crossings + 2 direction reversals = 133 union**. The 133-vs-131 dispute is resolved — both were right about different things. **The real finding is not the key; it is that green tests meant nothing was being compared**, because the fixtures invented a shape production does not emit.
-- **(d)–(g) NOT STARTED.** Next is (d), rounding-order repair. **Pre-declared risk: 79/336 rows differ by 0.001 and 54/336 deltas sit within 0.02 of the band edge, so (d) may move the headline 131 by a boundary case.** Re-measure against the answer key; do not assume stability.
-- **Live integration HELD** — David's call, not a repair step. Nothing the app shows is affected by any of this.
-- **Backlog cover repair — DONE and pushed** (`3aa7ae0`). The 07-26 stale-header problem is closed.
-
-## Studio
-
-Shipped **011** (+ RELAY) — a tier ladder built on David's real league settings, which it read for the first time (QB1/RB2/WR2/TE1/FLEX2/SF1, 12-team, full PPR, no TE premium). **Held it rather than pushing it at David.** Retracted one of its own claims after checking it. Its screenshot pass found four defects every automated probe called clean, including per-dot hit targets making most WRs unhoverable.
-
-**Studio found the DVS ceiling first.** Tower verified it independently. **Its 011 has NOT crossed to the crew — David's gate.** The crew were given the question, never the source.
-
-**Studio's critique of the closeout — the sharpest feedback of the day, adopted the same night:** *"You ask me to confirm I'm finished — the one thing I cannot get wrong — and never ask the two things I can."* And: *"you accept my account of delivery state when YOU hold the evidence… I'm the interested party."*
-
-## THE WIRE — the finding that should shape tomorrow
-
-**Five inter-agent delivery attempts tonight. Five failures. Five recoveries from disk. Zero packets lost, zero arrived by wire.** Every lane behaved correctly: two attempts, no third, park on disk, say where. **The parked file is the channel that works.** Tower's failure was not reading the parked notices — it read ledger entries for content and skipped the state lines.
-
-`bin/output-watch.sh` now raises a loud **UNDELIVERED PACKET** alert on that language. All wire engineering remains **CANCELLED**.
-
-## ⚠ TOWER'S FAILURES — 2026-07-27
-
-1. **Ran on interrupts, not inspection.** The whole reason for the charter edit.
-2. **Reported a symptom instead of an event** — never told David an agent wrote to his production bucket without authorisation.
-3. **Contaminated a review**: stated the measured bucket state to Codex, then asked it to re-derive independently. **Same species as the 07-26 target-in-the-briefing error.** That agreement is **CORROBORATION, not independence** — Codex has been told and the record is amended.
-4. **Stated a broken measurement as fact** (the "frozen model" claim). Retracted above.
-5. **Left two lanes idle** waiting on words Tower owed.
-6. Lost track of elapsed time — told David "10:15 will exercise it" and never went back; the jobs actually ran at 19:31.
-
-**What held:** every authorisation-shaped ghost was refused — at least four, including *"go ahead with (d)"* and *"commit the ledger"*, both of which would have been plausible. No foreign keystroke. No unauthorised commit. A REAL 68-line strand in Claude's composer was left untouched and its sender told to re-send.
-
-## What was BUILT tonight (all tested, all in the skill)
+## WHAT WAS BUILT TODAY (all tested, all backed up)
 
 | artifact | what it prevents |
 |---|---|
-| `bin/output-watch.sh` | blindness to agent OUTPUT; raises **UNDELIVERED PACKET** alerts |
-| `bin/open-asks.sh` | a lane waiting on Tower reading as a lane at rest |
-| `bin/presend-check.sh` | Studio firewall · inversion rule · contamination shape · delivery-by-proxy · unattributed gate authorisation · lean leakage. **16 tests** |
-| `bin/closeout-check.sh` | "safe to walk away" as an assertion. 9 sections; **exits clean only when everything passes** |
-| `bin/pane-approve.sh --closeout-push` | the new push authority being used casually |
-| `~/.claude/tower/BOARD.md` · `DECISIONS.md` | stale propagation; invisible drift into David's gates |
+| `bin/watchdog.sh` + SessionStart hook | watchers silently not running; survives Tower's memory dying |
+| `bin/say-clear.sh` | "clear/quiet/nothing needs you" as an assertion |
+| `bin/turn-brief.sh` + UserPromptSubmit hook | **the board is measured BEFORE Tower speaks** — the answer to "no script can force Tower to run it" |
+| dialog-key widening + normalisation | the watcher going permanently silent on a pane |
+| composer-exclusion + settle check in `pane-send.sh` | false DELIVERED (three fixes; see failure 3) |
+| credential-path refusal in `pane-approve.sh` | approving a secret into a transcript |
+| edit-target guard + launchctl allowlist | false refusals freezing lanes; settings/plists still refused |
+| `RESOLVED-ASKS.md` | retiring a false alarm without weakening the alarm |
 
-Original skill selftest **21/21**, presend selftest **16/16**.
+Suite: 21 observation · 16 pre-send · 6 open-asks · 12 guard-fix · 5 send-composer · 4 dialog-key.
 
-**Known weakness, named not hidden:** the contamination guard has WARNed on three Tower messages that *discussed* contamination rather than committed it. Each override was deliberate and logged. **A warning routinely overridden is on its way to being ignored.** Watch it.
+## THE HOLE THAT REMAINS — read SKILL.md Part V
 
-## ⭐ CLOSEOUT ADDENDUM — 08:00-08:40, after the handoff above was first written
+**Everything Tower says to DAVID bypasses every guard Tower owns.** `presend-check.sh` governs
+messages to lanes; nothing governs the channel that actually shapes his decisions. Three of today's
+worst errors travelled through it. `turn-brief.sh` narrows the STATE half; nothing covers the
+PROVENANCE of a claim. **For the residue, David's correction is the only check — and that is a bad
+design, stated plainly rather than dressed up.**
 
-**David: *"that's a huge failure… do you have a truly solid plan to fix this hole?"*** — the hole being that Tower's entire rebuild existed on ONE machine. The cockpit backup ran nightly and **nobody had ever compared its CONTENTS to what was live**: 12 of 24 Tower files were stale or missing, including BOTH charter edits, while the backup reported healthy.
+## STANDING RULES ADDED TODAY
+- An unreviewed lane finding reaches David LABELLED unreviewed, or it does not reach him.
+- The handoff file is inherited claim, not fact.
+- Build keys from what VARIES; test against shapes the system EMITS, never invented ones.
+- A fix's stated justification is a claim and needs testing like the fix.
+- When two instructions conflict, the one that NARROWS authority wins until David says otherwise.
+- Sweep "NEVER TOLD TO DAVID" at boot and at closeout.
+- Stamp times from `date`, never from another lane's header (the crew's headers drifted ~25 min).
 
-**David's word: *"back up the cockpit at every closeout, and fix the silent push."*** Both done:
+## STANDING AGENDA
+- **~Aug 2026 grounding-layer GO/NO-GO** — gated on BUILD-1 + four open questions. "Don't build"
+  remains a legitimate outcome.
+- **~2026-09-01** — Studio freshness review (LIVE; see below), crew re-organisation settled before
+  NFL Week 1.
+- Untouched: `REG-STATUS-1`, `H2-AUDIT-1`, `VALUATION-IN-GIT`, N5 capture, `DEPPIN-1`, the NumPy RNG
+  reproducibility ticket (**blocks QB-1**). **H2 QB rushing remains UNDER TEST; the QB-1 study has
+  not run; there is no result.**
 
-1. **`~/dg-cockpit/backup.sh` no longer lies.** It previously ran `git push … || echo "push failed"` and **exited 0**, so launchd logged a clean run on a backup that never reached GitHub — the identical silent-success disease DGX-02 cured in the data backup. It now fails loudly, non-zero, and **verifies the commit is present on `origin/main`** rather than trusting an exit code.
-2. **CHARTER EDIT #3: the cockpit backup is a STEP of every closeout**, before the debrief, with coverage verified byte-for-byte (`closeout-check.sh` §8b) and remote arrival confirmed. **A backup that ran is not a backup that covers.**
-3. **`bin/open-asks.sh` rebuilt to v2** on David's *"fix the open-asks check now."* v1 matched historical text, so an answered ask kept failing the close. **Now: an ask is open only if NOTHING answered it** (transcript line positions), and a parked packet resolves only with recorded evidence the recipient ACTED (`~/.claude/tower/RESOLVED-PACKETS.md`). Six tests on throwaway panes.
-
-**Three bugs found in Tower's own tooling while testing it, all the same class as the day's theme:**
-- the self-test matched its own banner text, so half the cases passed for the wrong reason;
-- two cases passed because the pane was UNREADABLE — an unreadable pane can now never produce a pass;
-- **`closeout-check.sh` `cd`s to the product repo partway through, so its relative call to `open-asks.sh` silently resolved to nothing and produced a FALSE FAILURE.** Absolute paths now.
-
-**Final state: 43 tests green** (21 observation · 16 pre-send · 6 open-asks). `closeout-check.sh` returns **ALL CHECKS PASS**. Everything backed up and verified on `origin/main` of both repos.
-
-**⚠ STILL OPEN, TOWER'S OWN TOOLING — do not let these rot:**
-- **The `--closeout-push` flag also relaxes `git commit`**, which is broader than the charter line granting PUSH only. Used twice for non-pushes (a commit, and a read-only grep the guard falsely refused). **Narrow the flag or widen the charter line — David's call, logged in DECISIONS.md.**
-- **The contamination guard has WARNed on ~4 Tower messages that DISCUSSED contamination rather than committed it.** Every override was deliberate and logged. **A warning routinely overridden is on its way to being ignored.**
-- The gate-shaped guard suffers **scope bleed**: text from an earlier command in the captured context can falsely refuse a harmless one.
-
-## Standing agenda
-- **~Aug 2026 grounding-layer GO/NO-GO** — gated on BUILD-1 + four open questions. "Don't build" remains legitimate.
-- **~2026-09-01** — Studio freshness review (still LIVE), crew re-organisation settled before NFL Week 1.
-- **Gemini decision** (~07-24, overdue): its record today was strong — it caught the identity defect nobody else saw, verified DGX-02 independently, and self-disclosed its own marker error with the mechanism.
-- Untouched: `REG-STATUS-1`, `H2-AUDIT-1`, `VALUATION-IN-GIT`, N5 capture, validation-infra increment, `DEPPIN-1`, NumPy RNG reproducibility ticket (**blocks QB-1 execution**; authoring it is queued third and not written).
-- **H2 QB rushing production remains UNDER TEST. The QB-1 study has not run. There is no result.**
+## STUDIO — the freshness review is NOT yet due
+Today it produced the only crew-independent work: a craft-gate instrument that reproduces David's own
+past verdicts on his surfaces; **live-app findings — 30 failed image requests on EVERY load of the
+opening screen, three screens with no charts**; and its own type scale fixed after self-criticism.
+**It found the product's own visual-craft audit files and deliberately did not open them**, unprompted,
+to protect its independence. It also declined to show David finished work because he had an unanswered
+question from it. **Fresh eyes are intact. Do not hand it our roadmap.**
+Its tier-grain question was answered COARSE (Tower's answer at David's direction, explicitly labelled
+as not David's taste) — and Studio then broke the QB exception Tower attached, with a better argument.
