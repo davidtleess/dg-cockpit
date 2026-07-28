@@ -5,7 +5,7 @@
 # SOURCES, in order: the session ledger read in full · the pane's complete latest report ·
 # the artifact itself (git, marker, bucket, disk) · Studio from DISK (pane 2.1 retains none).
 
-LAST FULL REBUILD: 2026-07-28 08:56 ET — new session opened 7 min after close; all four lanes
+LAST FULL REBUILD: 2026-07-28 12:00 ET (prior: 08:56) — new session opened 7 min after close; all four lanes
 verified at rest (pane-state), open-asks CLEAN, git clean, CI re-verified.
 
 ## LANE: Claude (dynasty:1.1) — implementing lane, spokesperson
@@ -66,7 +66,21 @@ RULE ADDED: the handoff file is INHERITED CLAIM, not verified fact. Treat it as 
 never as a source. Tower's own board law already said Tower's earlier statements are not a
 source; that now explicitly includes the PREVIOUS Tower's.
 
-## IDENTITY — David's named priority, 2026-07-28
+## IDENTITY — David's named priority, 2026-07-28.  STATE AT 12:00
+DAVID RULED  (1) "ship the honesty fix and commit the file"  (2) "route 1" — class-level honesty.
+             Route 2 / row targeting / name matching / I-5 all UNAUTHORISED. Canonical key PARKED
+             on Tower's recommendation. A push remains a separate word.
+BOARD        v3 CLEAR (Codex, reviewed SHA b42dcbae…). Three adversarial rounds survived.
+FRAMING      v2 NOT CLEAR (ten items) → v3 authored → with Codex now. NO CODE WRITTEN ALL DAY.
+             No RED opened. Nothing committed.
+POPULATION   Tower said 2 rows. Claude measured 2,233. Codex broke that to 3,453. ⚠ NOT SETTLED —
+             each number superseded the last within the hour. Tower's original "2" was wrong by
+             ~1,700x and went into David's decision.
+SECOND SURFACE  Codex found PlayerInspector.tsx renders its own "Unmodeled category" claim, so an
+             API-only repair leaves a second false statement on David's screen. Caught BEFORE code.
+SCOPE GROWTH David authorised a one-surface fix on a handful of rows; it is now two surfaces on
+             thousands. Claude is routing that back to him rather than expanding under the old yes.
+COPY         The replacement wording is David-facing copy and is HIS. Expect a short ask.
 BOARD v1    Claude, parked at docs/agent-ledger/evidence/2026-07-28/identity_board_claude_v1.md
 WIRE 10:43  Codex→Claude challenge packet DELIVERED and confirmed (Codex verified content in
             Claude's transcript, Tower verified Codex's own receipt). Chain re-formed after the
@@ -122,6 +136,19 @@ MODEL/CEILING   VERIFIED (author-checked only, no second lane): DVS saturates at
 MODEL/STALENESS RETRACTED. Tower counted by calendar date; capture_date is not a unique grain.
                 "Frozen" is NOT supportable. Re-measure on the vintage grain.
 MARKET/TIMING   FC snapshot ~13:00Z vs model vintage ~23:32Z — compared ~10h32m apart, always.
+
+## ⏰ TOWER OWES DAVID — GEMINI DECISION, OVERDUE SINCE ~07-24
+Deliberately HELD while he is mid-flow on identity. Raise at closeout or when the identity
+thread lands. Today's record, Tower's observation: its identity-origin answer was precise, cited
+to exact lines, and CORRECTED Tower's inflated account rather than agreeing with it — the single
+most useful thing any lane did for the record today. Telemetry (backup 300 files verified, data
+jobs on time) accurate and unprompted. Narrow scope, high reliability within it.
+
+## STANDING SWEEP ADDED 2026-07-28 — "NEVER TOLD TO DAVID"
+The crew's postflights carry a structured heading with that exact name. Tower had NEVER swept it.
+Sweep it at boot and at closeout: `grep -A6 "NEVER TOLD TO DAVID" docs/agent-ledger/*.md`.
+First sweep found a live item from 07-26 that never reached him (Claude's automation altered
+another lane's evidence; reverted, net-zero, but never surfaced).
 
 ## DAVID'S OPEN BOARD
 ⭐ ANSWERED 2026-07-28 ~09:00 — item 4: "start with identity." Identity is the NAMED PRIORITY.

@@ -135,3 +135,43 @@ for pos in ("QB", "RB", "WR", "TE"):
 
 json.dump({"capture": day, "positions": summary},
           open("analysis/qb-grain.json", "w"), indent=1)
+
+# ---------------------------------------------------------------------------
+# The directly interpretable form: across a real model revision, how many
+# players change their COARSE tier (blocks of 12) versus their FINER sub-tier
+# (blocks of 4)? A ladder whose labels churn on every model run is not a
+# description of the player; it is a description of the run.
+print("\n" + "=" * 71)
+print("TIER STABILITY ACROSS REAL MODEL REVISIONS  (rank within position)")
+print("=" * 71)
+def tiers(vals_by_sid, pos_of, pos, block):
+    ranked = sorted(((v, s) for s, v in vals_by_sid.items() if pos_of.get(s) == pos),
+                    key=lambda t: -t[0])
+    return {s: (i // block) for i, (v, s) in enumerate(ranked)}
+
+print(f"{'pos':<4}{'revision':>24}{'n':>6}{'coarse (12) churn':>20}{'fine (4) churn':>17}")
+print("-" * 71)
+agg = collections.defaultdict(lambda: [0, 0, 0])
+for a, b in zip(days, days[1:]):
+    if all(series[a].get(s) == series[b].get(s) for s in series[a].keys() & series[b].keys()):
+        continue
+    for pos in ("QB", "RB", "WR", "TE"):
+        ca, cb = tiers(series[a], pos_of, pos, 12), tiers(series[b], pos_of, pos, 12)
+        fa, fb = tiers(series[a], pos_of, pos, 4), tiers(series[b], pos_of, pos, 4)
+        shared = ca.keys() & cb.keys()
+        if not shared: continue
+        coarse = sum(1 for s in shared if ca[s] != cb[s])
+        fine = sum(1 for s in shared if fa[s] != fb[s])
+        print(f"{pos:<4}{a[5:]+'→'+b[5:]:>24}{len(shared):>6}"
+              f"{coarse:>13} ({coarse/len(shared):>4.0%}){fine:>10} ({fine/len(shared):>4.0%})")
+        agg[pos][0] += coarse; agg[pos][1] += fine; agg[pos][2] += len(shared)
+
+print("-" * 71)
+for pos in ("QB", "RB", "WR", "TE"):
+    c, f, n = agg[pos]
+    if not n: continue
+    summary[pos].update(coarse_churn=round(c/n, 3), fine_churn=round(f/n, 3))
+    print(f"{pos:<4}{'POOLED':>24}{n:>6}{c:>13} ({c/n:>4.0%}){f:>10} ({f/n:>4.0%})")
+
+json.dump({"capture": day, "revisions_observed": changed_days,
+           "positions": summary}, open("analysis/qb-grain.json", "w"), indent=1)

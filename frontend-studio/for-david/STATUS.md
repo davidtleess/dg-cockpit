@@ -30,9 +30,36 @@ league's lineup makes decisive (superflex → QB2 is a starting job; David holds
 start-grade against 2 he must field). Tower's caution, which is correct and is my own finding wearing
 a different coat: **a grain that varies by position is the same hazard as per-panel normalisation** —
 if QB goes finer, the difference must be **stated on-surface, never inferred**.
-**Studio's next step is measurement, not drawing:** does the QB lane actually support a finer ladder
-across its whole range, or only avoid saturating at the top? Those are different claims and only the
-second is established.
+**MEASURED SAME SESSION — the QB exception is REFUTED, and COARSE gets a better reason than the
+ceiling.** (`analysis/qb-grain.py` + `README-qb-grain-2026-07-28.md`.)
+
+- **QB does resolve, and that is the trap.** 47 players, **46 distinct values (97.9%)**, zero at the
+  ceiling, **zero ties in the top 24**, and **none of the 11 finer cuts falls inside a tie**. On the
+  saturation test the exception looks real.
+- **It is not.** A finer boundary sits on a gap of **0.50 points at QB** (0.23 WR / 0.60 RB / 0.81
+  TE) on a 0–100 score — while a real model revision moves a player a median of **7.50 points**
+  (10.6 WR / 9.4 RB / 9.9 TE). **The boundary is 12–46× narrower than the model's own movement.**
+  Distinct is not resolved.
+- **In interpretable form:** across the revisions on record, **fine (blocks of 4) sub-tier churn
+  exceeds coarse (blocks of 12) churn at every position** — QB **34% vs 19%**, nearly double; TE
+  81% vs 54%.
+- **So the coarse ruling now rests on the whole population at all four positions**, not on 23
+  saturated players at the top of three. And **QB is the worst place to go finer, not the safest** —
+  it fails *invisibly*, with no tie bar to warn the reader, unlike TE where the constraint is at
+  least drawn.
+- **Honest limits, stated because they are not small:** only **2 of 34 transitions** show any change,
+  both are early **population-build** events (QB 36→47, WR 147→199), and the model has been static
+  since 06-27. **Absolute churn rates are NOT projectable to a future run and that claim must not be
+  made.** What is robust is the *relative* coarse-vs-fine comparison and the order-of-magnitude gap
+  between boundary width and revision magnitude, which does not depend on the churn rates at all.
+- **A method error caught on myself:** I measured "97.9% distinct" first and came close to reporting
+  it as support for a finer QB ladder. **Resolution of the encoding says nothing about resolution of
+  the estimate** — the same class of error as the 2026-07-24 cost-per-hit metric, precision
+  manufactured by arithmetic producing decimals.
+- **Extends `011-RELAY.md` R2, not yet relayed** (R2 is not authorised to cross): the model is not
+  merely frozen — when it does move, it moves ~9 points and reshuffles a large share of any ranking
+  built on it. Recorded, not sent.
+- **No surface change follows.** 011 already draws coarse with tie bars. Nothing rebuilt.
 
 **Also handled by Tower, not Studio:** David is being told plainly about the WR holdings reading
 **14** on the full market board and **12** on the shared two-lane board — both correct on their own

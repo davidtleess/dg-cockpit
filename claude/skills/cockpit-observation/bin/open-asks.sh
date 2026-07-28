@@ -12,6 +12,7 @@
 #      in ~/.claude/tower/RESOLVED-PACKETS.md. Pointing at a path is not evidence.
 REPO="$HOME/dynasty-genius-product"
 RESOLVED="$HOME/.claude/tower/RESOLVED-PACKETS.md"
+RESOLVED_ASKS="$HOME/.claude/tower/RESOLVED-ASKS.md"
 SESSION_HOURS=${SESSION_HOURS:-18}
 LEDGER="$REPO/docs/agent-ledger/$(date +%F).md"
 [ -f "$LEDGER" ] || LEDGER=$(find "$REPO/docs/agent-ledger" -maxdepth 1 -name '20*.md' -mmin -$((SESSION_HOURS*60)) 2>/dev/null | sort | tail -1)
@@ -31,6 +32,23 @@ for p in $PANES; do
   last_ask=$(grep -niE "$ASK" <<<"$txt" | tail -1 | cut -d: -f1)
   last_reply=$(grep -niE "$REPLY" <<<"$txt" | tail -1 | cut -d: -f1)
   if [ -n "$last_ask" ] && { [ -z "$last_reply" ] || [ "$last_reply" -lt "$last_ask" ]; }; then
+    # RETIREMENT, added 2026-07-28 after this fired falsely three times on one item.
+    # The REPLY pattern only recognises a TOWER marker, so an ask answered BY ANOTHER LANE
+    # never clears — and Gemini's answer, which quoted the ask as a header before answering
+    # it, put the ask text after its own reply as well. Both make a genuinely answered item
+    # look permanently open.
+    #
+    # The fix is NOT a looser heuristic — that would trade a noisy alarm for a silent one,
+    # which is the worse failure and exactly what the dialog-key bug did. Instead Tower may
+    # RETIRE an ask explicitly, in ~/.claude/tower/RESOLVED-ASKS.md, and the record must
+    # carry the evidence. Same shape as RESOLVED-PACKETS.md. Retiring is auditable and
+    # deliberate; nothing clears itself.
+    askline=$(sed -n "${last_ask}p" <<<"$txt" | sed 's/^ *//;s/ *$//' | cut -c1-60)
+    if [ -n "$askline" ] && [ -f "$RESOLVED_ASKS" ] \
+       && grep -F "$p" "$RESOLVED_ASKS" 2>/dev/null | grep -qF "$askline"; then
+      printf '%-13s %s\n' "$p" "ask present but RETIRED by Tower with recorded evidence (RESOLVED-ASKS.md)"
+      continue
+    fi
     echo "── $p  ⚠ OPEN ASK — nothing answered it"
     sed -n "${last_ask}p" <<<"$txt" | sed 's/^ *//;s/^/     /' | cut -c1-170
     found=$((found+1))

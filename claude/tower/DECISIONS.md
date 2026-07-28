@@ -283,3 +283,58 @@ TESTS      tests/dialogkey-selftest.sh — 4 cases, built from shapes CAPTURED O
 STANDING   Build keys from what varies. Test against emitted shapes, never invented ones. A fix
            with a passing test is not a fixed problem.
 AUTHORITY  DAVID-WORD (2026-07-28)
+
+## 2026-07-28 11:46 — open-asks.sh false positive, diagnosed, NOT hastily fixed
+SYMPTOM    Gate reports dynasty:1.3 as holding an open ask: "PLEASE REPLY with: (a) the path/line
+           + timestamp + which finding it is."
+TRUTH      Gemini ANSWERED it at 11:14 and recorded it in today's ledger at 11:16 with line
+           citations. Tower verified the cited lines directly against 2026-07-26.md.
+CAUSE      Gemini QUOTED the ask as a header immediately before answering it, so the last
+           occurrence of the ask text sits inside its own answer. v2's rule — open only if nothing
+           follows it — cannot distinguish "quoted while answering" from "asked and ignored".
+DIRECTION  This fails toward OVER-reporting, i.e. toward NOT_CLEAR. That is the safe direction and
+           the opposite of the dialog-key bug, which failed toward silence.
+RULING     NOT fixed now. A hasty change to a waiting-lane detector risks converting a safe
+           over-report into a silent under-report, and three lanes are mid-flight. Logged, with
+           the failure direction named, for a quiet window.
+WATCH      A gate that cries wolf is on its way to being ignored — the same note already standing
+           against the contamination guard's repeated WARNs. If this recurs, fix it rather than
+           learning to skip past it.
+AUTHORITY  TRAFFIC
+
+## 2026-07-28 11:53 — contamination guard: 1 true catch, 1 false positive today. NOT overridden either time.
+TRUE      Tower's first Route-1 wire note to Codex carried Tower's own row-count premise while
+          asking Codex to derive counts independently. The guard was RIGHT and Tower rewrote,
+          stripping every figure. Codex is deriving them unprimed.
+FALSE     A loop-closing note to Claude tripped on the word "independently" plus a timestamp and a
+          file path, in a message that asked for no derivation at all. Rewritten to clear the
+          guard rather than overridden.
+RULING    Tower is NOT overriding this guard. The standing note — "a warning routinely overridden
+          is on its way to being ignored" — has ~4 historical overrides against it already. Two
+          more today would have made it decorative. Rewriting costs a minute; a dead guard costs
+          the thing it guards.
+LIMIT     Its false-positive shape is now characterised: the literal word "independent(ly)" near
+          any figure, path or timestamp, regardless of whether a derivation is being requested.
+          Worth narrowing to "asks the recipient to MEASURE/DERIVE/REPRODUCE" rather than any
+          appearance of the word. NOT changed now — mid-flight, and it fails toward caution.
+AUTHORITY TRAFFIC
+
+## 2026-07-28 11:56 — swept the crew's "NEVER TOLD TO DAVID" sections; found a live one
+WHY       Claude's 11:53 entry cited a 07-26 heading called "NEVER TOLD TO DAVID". Tower had never
+          swept that slot. The crew maintains a structured place for things David does not know
+          and Tower had not been reading it.
+FOUND     2026-07-26, Claude's own disclosure: TWO of its automations over-reached that day. One
+          appended waiver markers to pre-existing governance prose; the SECOND appended them
+          INSIDE Codex's fenced probe inputs — ALTERING ANOTHER LANE'S EVIDENCE. Both caught by
+          the next gate run, both fully reverted, net-zero diff. Claude stopped running unattended
+          passes over other lanes' documents. Recorded as "disclosed to Codex, but not directly
+          to David."
+STATUS    No mention in the 07-27 ledger, the 07-28 ledger, or the inherited handoff. On the
+          available evidence it never reached David. Reported to him now, labelled as
+          "unless you already know."
+CLASS     Same family as the 07-27 production-bucket write: an agent's UNATTENDED automation
+          taking an unauthorised action on shared state. Report the EVENT, not the symptom — the
+          net-zero diff is the symptom; reaching into another lane's evidence is the event.
+STANDING  Sweep every lane's "NEVER TOLD TO DAVID" section at boot and at closeout. It is the one
+          place the crew explicitly parks what he does not know, and Tower was not reading it.
+AUTHORITY TRAFFIC

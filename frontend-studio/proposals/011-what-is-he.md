@@ -185,6 +185,42 @@ sort and the row expansion function.
 3. Should the cliffs be promoted — currently they are quiet dotted marks, and they are
    arguably the truest structure on the board.
 
+## Grain settled: COARSE, and the reason changed (2026-07-28)
+
+The ladder stays coarse — blocks of twelve, with a tie bar wherever the model cannot
+separate players. The surface does not change; the *justification* does, and it is now
+much stronger.
+
+**The old reason covered 23 players.** DVS saturates at 100.0 — 11 TEs, 6 WRs, 6 RBs tied
+at the ceiling — so a finer sub-tier there would assert an order the number does not
+contain. That argument is real but narrow, and it left **QB as an apparent exception**: QB
+does not saturate at all (47 players, **46 distinct values, 97.9% resolution**, zero ties in
+the top 24), and **none of the 11 finer cuts at QB falls inside a tie.** Superflex makes QB
+the decisive position in this league, so that exception mattered.
+
+**Measured, the exception is refuted.** A finer boundary sits on a gap of **0.50 points at
+QB** (0.23 WR, 0.60 RB, 0.81 TE) on a 0–100 score. When the model actually revises a player
+it moves him a median of **7.50 points** (10.6 WR, 9.4 RB, 9.9 TE). **The boundary is 12–46×
+narrower than the model's own movement.** In directly interpretable terms, across the
+revisions on record, finer sub-tier churn exceeds coarse-tier churn at every position —
+**QB 34% against 19%**, nearly double.
+
+**So the honest statement is not "the ceiling blocks a finer grain at the top of three
+positions." It is that no sub-tier boundary at any position is wider than the noise in the
+estimate it divides.** And **QB is the worst place to go finer, not the safest**: it fails
+*invisibly*, with no tie bar to warn the reader, where TE at least draws its constraint.
+
+**Limits on this measurement, which are not small.** Only 2 of 34 capture transitions show
+any change, both are early population-build events, and the lane has been static since
+2026-06-27. **The absolute churn rates are not projectable to a future model run and no such
+claim is made here.** What is robust is the relative coarse-versus-fine comparison and the
+order-of-magnitude gap between boundary width and revision magnitude — neither of which
+depends on the churn rates. Working: `analysis/qb-grain.py`.
+
+**Studio's own error, recorded.** I measured "97.9% distinct" first and came close to
+reporting it as support for a finer QB ladder. **Resolution of the encoding says nothing
+about resolution of the estimate.** Decimals produced by arithmetic are not precision.
+
 ## Why there is no relay brief
 
 011 is a design proposal, and the measured facts inside it are either already relayed

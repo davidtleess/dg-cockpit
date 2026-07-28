@@ -1,5 +1,6 @@
 {
  "capture": "2026-07-28",
+ "revisions_observed": 2,
  "positions": {
   "QB": {
    "n": 47,
@@ -13,7 +14,9 @@
    "median_gap_at_cut": 0.5,
    "median_move": 7.5,
    "p90_move": 20.6,
-   "noise_to_gap": 15.0
+   "noise_to_gap": 15.0,
+   "coarse_churn": 0.193,
+   "fine_churn": 0.337
   },
   "RB": {
    "n": 111,
@@ -27,7 +30,9 @@
    "median_gap_at_cut": 0.6,
    "median_move": 9.4,
    "p90_move": 21.2,
-   "noise_to_gap": 15.67
+   "noise_to_gap": 15.67,
+   "coarse_churn": 0.258,
+   "fine_churn": 0.371
   },
   "WR": {
    "n": 199,
@@ -41,7 +46,9 @@
    "median_gap_at_cut": 0.23,
    "median_move": 10.6,
    "p90_move": 27.2,
-   "noise_to_gap": 46.09
+   "noise_to_gap": 46.09,
+   "coarse_churn": 0.295,
+   "fine_churn": 0.384
   },
   "TE": {
    "n": 111,
@@ -55,7 +62,9 @@
    "median_gap_at_cut": 0.81,
    "median_move": 9.9,
    "p90_move": 23.9,
-   "noise_to_gap": 12.22
+   "noise_to_gap": 12.22,
+   "coarse_churn": 0.537,
+   "fine_churn": 0.811
   }
  }
 }
