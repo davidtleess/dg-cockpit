@@ -179,7 +179,11 @@ echo "-- 9. TOWER'S OWN RECORDS --"
 # and commits landed after it, and a new Tower would have booted blind. A summary must be
 # NEWER THAN EVERYTHING IT SUMMARISES.
 newest_src=0; newest_name=""
-for src in "$LEDGER" "$DEC" "$HOME/.claude/tower/RESOLVED-PACKETS.md" "$HOME/.claude/agents/tower.md" "$HERE/SKILL.md"; do
+# STATE sources only. The board and handoff describe the COCKPIT, so they go stale when the
+# cockpit changes — not when Tower edits its own tooling. SKILL.md is deliberately excluded:
+# it is method, and the handoff points at it rather than restating it. The CHARTER stays in,
+# because a charter edit is a state change the next Tower must be told about.
+for src in "$LEDGER" "$DEC" "$HOME/.claude/tower/RESOLVED-PACKETS.md" "$HOME/.claude/agents/tower.md"; do
   [ -f "$src" ] || continue
   m=$(stat -f %m "$src"); [ "$m" -gt "$newest_src" ] && { newest_src=$m; newest_name=$(basename "$src"); }
 done
