@@ -423,3 +423,21 @@ PATTERN, NAMED  Three fixes to one verifier in one day, each correct, each insuf
 COST       David's authorisation sat undelivered while Tower told him the commit prompt was
            imminent. Nothing was lost, but Tower's report to him was wrong for several minutes.
 AUTHORITY  n/a — defect record
+
+## 2026-07-28 15:52 — David: "are there holes that can be filled?" — classification + two builds
+CLASS A   wrong PLACE (watchers off · composer in the search · key hashed from the stable part).
+          Filled, with tests.
+CLASS B   wrong TIME (3 false DELIVERED, one root cause, three insufficient fixes). Filled.
+CLASS C   a fix's JUSTIFICATION untested ("contents are static" — a blinking glyph froze a lane
+          within the hour). Standing rule added.
+CLASS D   TOWER DID NOT RUN ITS OWN PROCEDURE — said "nothing needs you" 3x without say-clear;
+          never swept "NEVER TOLD TO DAVID"; approved a credentials read without thinking.
+          This is the hole the skill already admitted was uncovered.
+BUILT     bin/turn-brief.sh on UserPromptSubmit — measures the board BEFORE Tower speaks (~1.4s,
+          self-gated to Tower's pane). Credential-path refusal in pane-approve.sh (tested: 3
+          credential shapes refused, an ordinary file still approved).
+REMAINS   Everything Tower says to DAVID bypasses every guard Tower owns. presend-check governs
+          messages to lanes; nothing governs the channel that actually shapes his decisions.
+          Named in SKILL.md Part V rather than hidden, along with the uncomfortable line: for the
+          residue, David's correction is the only remaining check, and that is a bad design.
+AUTHORITY DAVID-WORD (2026-07-28)

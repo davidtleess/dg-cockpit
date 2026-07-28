@@ -24,6 +24,17 @@
           }
         ]
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/davidleess/.claude/skills/cockpit-observation/bin/turn-brief.sh 2>/dev/null || true",
+            "timeout": 15
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {

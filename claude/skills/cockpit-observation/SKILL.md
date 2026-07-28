@@ -495,3 +495,69 @@ identical boilerplate with different commands must differ; an identical prompt m
 3. **A fix with a passing test is not a fixed problem.** TOWER-1 failure 7 was closed, documented,
    and covered by a green test for three days while the defect it described was live in production
    the whole time.
+
+---
+
+# PART V — THE HOLE THAT SCRIPTS CANNOT FILL, AND WHAT WAS DONE ABOUT IT
+
+Added 2026-07-28 in answer to David: *"how are you addressing these failures in TOWER's workflow
+going forward? are there holes that can be filled?"*
+
+## The honest classification of one day's failures
+
+**Class A — the tooling looked in the wrong PLACE.** Watchers not started; delivery verified over
+a buffer that included the composer; a dialog key hashed from the part that never varies.
+*Fillable, and filled.* Each has code and a test.
+
+**Class B — the tooling looked at the wrong TIME.** Three false DELIVERED verdicts in one day
+from one root cause, each fix correct and each insufficient, because every one asked *where do I
+look* and none asked *when*. A long paste passes every check and settles back afterwards.
+*Fillable, and filled* — the verifier now waits, re-checks, and downgrades.
+
+**Class C — a fix's JUSTIFICATION was never tested.** "A pane with an open dialog is blocked, so
+its contents are static" was written as fact beside the dialog-key fix. A blinking glyph disproved
+it within the hour and froze a lane. *Standing rule now: the reason beside a fix is a claim and
+needs testing like any other.*
+
+**Class D — Tower did not run its own procedure.** `say-clear.sh` was built in the morning
+precisely so Tower could never again call the cockpit quiet from a stale snapshot — and Tower then
+said "nothing needs you" three more times without running it. The "NEVER TOLD TO DAVID" section
+the crew maintains had never once been swept. A credentials file was approved without a thought
+about what it was.
+
+**Class D is the real hole, and it is the one the skill already admitted was uncovered:**
+*"no script can force Tower to run it."*
+
+## What was actually built to narrow Class D
+
+1. **`bin/turn-brief.sh`, wired to `UserPromptSubmit`.** The cockpit is measured and printed
+   BEFORE Tower composes a word — dialogs, busy state, real strands, watcher liveness, in ~1.4s.
+   Speaking from an unmeasured board now requires ignoring a fresh reading rather than merely
+   forgetting to take one. It says plainly that it is a SNAPSHOT and that `say-clear.sh` is still
+   required. Self-gated to Tower's pane; crew sessions see nothing.
+2. **Credential paths refused in `pane-approve.sh`.** Reading a secret copies it into a
+   transcript, which is a wider audience than the file had a second earlier. The guard covered
+   EDITS to those paths and said nothing about READS; Tower filled that gap with inattention.
+3. **The "NEVER TOLD TO DAVID" sweep** is now a standing boot and closeout step.
+4. **`RESOLVED-ASKS.md`** — retiring a false alarm requires writing down the evidence, so the
+   alternative to a noisy gate is never a quiet one.
+
+## The hole that remains, named rather than hidden
+
+**Everything Tower says to David bypasses every guard Tower owns.** `presend-check.sh` governs
+messages to lanes. Nothing governs the only channel that actually shapes David's decisions. Three
+of today's worst errors — an unreviewed claim relayed as fact, an inherited handoff claim relayed
+as fact, and a population figure wrong by three orders of magnitude — travelled through that
+ungoverned channel and changed what he decided.
+
+`turn-brief.sh` narrows it: the board's *state* is now measured for him whether Tower asks or not.
+It does nothing for the *provenance of a claim*. The standing rules are the only cover:
+
+- **An unreviewed lane finding reaches David LABELLED unreviewed, or it does not reach him.**
+- **The handoff file is INHERITED CLAIM, not verified fact** — a lead to check, never a source.
+- **Report the event, not the symptom.**
+- **When two instructions conflict, the one that NARROWS authority wins** until David says otherwise.
+
+And the uncomfortable part, which belongs in the record: **for the residue, David's correction is
+the only remaining check.** That is a bad design and it should be said plainly rather than dressed
+up as collaboration. Every mechanism above exists to make his catching things rarer.

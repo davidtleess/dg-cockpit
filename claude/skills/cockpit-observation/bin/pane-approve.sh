@@ -101,6 +101,22 @@ fi
 # read-only subcommand. `launchctl` with no subcommand, or with one not on this list,
 # is still refused — so load / unload / bootstrap / bootout / enable / disable / start /
 # stop / remove / setenv all remain David's, and so does anything new that appears later.
+# ---- CREDENTIAL PATHS: reading one is not Tower's to approve either ----------
+# Added 2026-07-28. Tower approved `cat ~/.databrickscfg` without thinking about what the
+# file was. That file turned out to hold no secret, so nothing was exposed — but the guard
+# had a real hole: it refused EDITS to credential files and said nothing about READS, and
+# Tower filled the gap with inattention. A read puts the contents into a transcript, which
+# is a wider audience than the file had a moment earlier.
+# Deliberately broad and deliberately not clever: ANY command naming one of these paths is
+# David's, whatever it intends to do with it.
+cred_re='\.databrickscfg|\.netrc|\.npmrc|\.pypirc|id_rsa|id_ed25519|\.aws/credentials|\.ssh/|authorized_keys|\.env($|[^a-zA-Z])|credentials\.json|service.account|\.pem($|[^a-zA-Z])|keychain|secrets?\.(json|ya?ml|toml|txt)'
+if printf '%s' "$scope" | grep -qiE "$cred_re"; then
+  echo "VERDICT=REFUSED"
+  echo "REASON=CREDENTIAL PATH — this command names a credentials or key file. Reading one copies it into a transcript; Tower does not approve that under any standing authority. Take it to David."
+  printf '%s' "$scope" | grep -oiE "$cred_re" | head -3
+  exit 4
+fi
+
 lc_ro='list|print|print-cache|print-disabled|dumpstate|dumpjpcategory|blame|examine|managername|manageruid|managerpid|getenv|version|help'
 if printf '%s' "$scope" | grep -oiE 'launchctl[[:space:]]*[a-z-]*' \
    | grep -qivE "^launchctl[[:space:]]+($lc_ro)$"; then
