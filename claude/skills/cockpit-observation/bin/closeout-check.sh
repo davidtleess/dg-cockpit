@@ -174,9 +174,26 @@ else say UNKNOWN "no dg-cockpit repo found" "$CB"; fi
 
 echo
 echo "-- 9. TOWER'S OWN RECORDS --"
-today_mtime "$BOARD"   && say PASS "BOARD.md rebuilt today"    "$(date -r "$BOARD" '+%H:%M')"   || say FAIL "BOARD.md stale"    "rebuild from source before the debrief"
+# STALENESS IS RELATIVE, NOT ABSOLUTE. "Touched during the session" is not current —
+# on 2026-07-28 the handoff passed at 07:53 while an hour of charter edits, tooling fixes
+# and commits landed after it, and a new Tower would have booted blind. A summary must be
+# NEWER THAN EVERYTHING IT SUMMARISES.
+newest_src=0; newest_name=""
+for src in "$LEDGER" "$DEC" "$HOME/.claude/tower/RESOLVED-PACKETS.md" "$HOME/.claude/agents/tower.md" "$HERE/SKILL.md"; do
+  [ -f "$src" ] || continue
+  m=$(stat -f %m "$src"); [ "$m" -gt "$newest_src" ] && { newest_src=$m; newest_name=$(basename "$src"); }
+done
+gitm=$(git -C "$REPO" log -1 --format=%ct 2>/dev/null || echo 0)
+[ "${gitm:-0}" -gt "$newest_src" ] && { newest_src=$gitm; newest_name="last commit"; }
+stale_vs_source(){ # <file> <label>
+  [ -f "$1" ] || { say FAIL "$2 MISSING" "the next Tower boots blind"; return; }
+  fm=$(stat -f %m "$1")
+  if [ "$fm" -ge "$newest_src" ]; then say PASS "$2 current" "$(date -r "$1" '+%H:%M'), newer than $newest_name"
+  else say FAIL "$2 STALE — older than $newest_name" "written $(date -r "$1" '+%H:%M'), $newest_name at $(date -r "$newest_src" '+%H:%M' 2>/dev/null || echo '?'). Rewrite it."; fi
+}
+stale_vs_source "$BOARD" "BOARD.md"
 today_mtime "$DEC"     && say PASS "DECISIONS.md current"      "$(date -r "$DEC" '+%H:%M')"     || say FAIL "DECISIONS.md stale" "log today's rulings with authorities"
-today_mtime "$HANDOFF" && say PASS "handoff written today"     "$(date -r "$HANDOFF" '+%H:%M')" || say FAIL "HANDOFF NOT WRITTEN" "the next Tower boots blind without it"
+stale_vs_source "$HANDOFF" "handoff"
 
 echo
 echo "=== VERDICT ==="
