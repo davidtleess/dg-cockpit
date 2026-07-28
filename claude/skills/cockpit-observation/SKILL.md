@@ -292,6 +292,19 @@ uncommitted path by name, every unpushed commit, and anything unusual the next T
 including Tower's own errors. **Tower's conversational memory dies; this file is the inheritance.**
 Also refresh `DECISIONS.md` so the next Tower can see what authority today's rulings rested on.
 
+**STALENESS IS RELATIVE, NOT ABSOLUTE — and it decides the ORDER of these steps.**
+A summary must be **newer than everything it summarises.** `closeout-check.sh` §9 compares
+`BOARD.md` and the handoff against the newest of: the session ledger, `DECISIONS.md`,
+`RESOLVED-PACKETS.md`, the charter, this file, and the last commit. **"Touched during the
+session" is not current.** On 2026-07-28 the handoff passed at 07:53 while an hour of charter
+edits, tooling fixes and commits landed after it — a new Tower would have booted blind, and the
+check said PASS. David caught it by asking *"are you sure i can close?"*
+
+**Therefore the last three steps run in THIS order, and only this order:**
+1. write the board from source · 2. write the handoff from the board · 3. back up the cockpit.
+The backup must be LAST, because every write above invalidates its coverage. If you back up
+first you will loop.
+
 **5b · Back up the cockpit — David's standing word, 2026-07-28.**
 Run `~/dg-cockpit/backup.sh`. It snapshots the charter, Tower's memory, Tower's working layer
 (`~/.claude/tower/`), this skill, and Studio's entire world, then commits and pushes.
