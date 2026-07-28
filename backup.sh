@@ -48,8 +48,22 @@ cp "$HOME"/Library/LaunchAgents/com.davidleess.dg-*.plist      launchagents/ 2>/
 git add -A
 if ! git diff --cached --quiet; then
   git commit -q -m "cockpit backup $(date '+%Y-%m-%d %H:%M')"
-  git push -q origin main 2>/dev/null || echo "push failed — will retry next run"
-  echo "backed up and pushed"
+  # 2026-07-28, David's word: "fix the silent push."
+  # This previously swallowed a failed push with an echo and still exited 0, so launchd
+  # recorded a clean run on a backup that never reached GitHub — the same silent-success
+  # disease DGX-02 cured in the data backup. A backup that did not land must SAY SO.
+  if ! git push origin main; then
+    echo "BACKUP FAILED: push to origin/main did not succeed." >&2
+    echo "The cockpit snapshot is committed LOCALLY ONLY and is NOT protected." >&2
+    exit 1
+  fi
+  # Verify presence on the remote. An exit code is not evidence.
+  git fetch -q origin main
+  if [ "$(git rev-list --count origin/main..HEAD)" -ne 0 ]; then
+    echo "BACKUP FAILED: push reported success but the commit is NOT on origin/main." >&2
+    exit 1
+  fi
+  echo "backed up and pushed — verified present on origin/main"
 else
   echo "no changes"
 fi

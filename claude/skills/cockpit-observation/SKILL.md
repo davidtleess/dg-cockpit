@@ -1,6 +1,6 @@
 ---
 name: cockpit-observation
-description: Use whenever Tower sends a message to a cockpit pane, approves a dialog, checks whether a lane is blocked, or is about to tell David the state of any pane. Turns observation and delivery from a habit into an enforced procedure that returns DELIVERED, NOT DELIVERED, or CANNOT DETERMINE — never a guess.
+description: Use at the START of every Tower turn and before Tower speaks about the cockpit at all — before sending to any pane, approving a dialog, judging whether a lane is blocked, relaying between lanes, or telling David the state of anything. Turns Tower's whole duty set — knowing the team's real state, delivering, approving, contamination control, David's gates, and Studio's fresh-eyes firewall — from habit into enforced procedure that returns a verdict, never a guess.
 ---
 
 # Cockpit observation and delivery discipline
@@ -154,3 +154,180 @@ with accumulated confidence, because early successes felt like competence while 
 **Treat your own most elegant syntheses as your highest-risk claims.** And treat "David caught
 something I should have caught" as a hard signal to stop expanding scope and start confirming
 what is already claimed.
+
+---
+
+# PART II — KNOWING THE TEAM, NOT JUST WATCHING THE PANES
+
+Added 2026-07-27. **TOWER-2.** David: *"youre missing a lot — your monitor is wrong"* · *"if Tower
+was truly on top of the team you would KNOW what happened"* · *"i need all these holes filled."*
+
+Part I made **observation** honest. It did nothing for **awareness**, and Tower spent 2026-07-27
+narrating approval prompts while three lanes filed full reports it had not read.
+
+## The diagnosis, in one line
+`pane-watch.sh` fires when a lane gets **STUCK**. Nothing fired when a lane **PRODUCED** something.
+Tower let the smoke alarm be the status feed.
+
+## What that cost, same day
+- Told David the restore-drill AC was **open** hours after it was **satisfied**.
+- Never told him his seven scheduled data jobs ran **ten hours late**.
+- Never told him **an agent wrote to his production bucket without authorisation** — reported only
+  the leftover pointer. *Report the EVENT, not the symptom.*
+- Let Claude carry a healed pointer and an unnamed marker-writer for hours because Tower told only
+  David. **Lane → Tower → David is half a circuit.**
+- **Contaminated a review**: stated the measured bucket state to Codex, then asked it to re-derive
+  independently. Same species as the 2026-07-26 target-in-the-briefing error. That agreement is
+  **corroboration, not independence**, and is recorded as such.
+
+## The four mechanisms
+
+### 1. `bin/output-watch.sh` — the feed that fires on OUTPUT
+New lines in `docs/agent-ledger/<today>.md` (with the newest entry header), new files in
+`~/frontend-studio/proposals` and `for-david`, and `DAVID.md` changes. Run it **alongside**
+`pane-watch.sh`. Dialog watcher = smoke alarm. Output watcher = status feed. **Neither replaces
+reading.**
+
+### 2. `~/.claude/tower/BOARD.md` — the board lives on disk, not in conversation
+One block per lane: STATUS · LAST OUTPUT · HOLDING · BLOCKER · NEXT · **VERIFIED `<time>` from
+`<source>`**.
+- **A line without a fresh verification stamp is NOT reportable to David.**
+- Sources, in order: today's ledger read **in full** · the pane's **complete latest report**, not a
+  12-line tail · the artifact itself (git, marker, bucket, disk) · Studio's **disk**, because pane
+  2.1 retains zero scrollback.
+- **Tower's own earlier statements are never a source.** Every wrong thing Tower told David on
+  2026-07-27 was true when first said; the defect was repeating it without re-verifying.
+- The closeout handoff is generated FROM this file, so it is never written cold at 22:00.
+
+### 3. `bin/presend-check.sh` — the pre-send gate. Run before EVERY `pane-send.sh`.
+`presend-check.sh <pane> <message-file>` → 0 PASS · 1 REFUSE · 2 WARN. Five guards, 12 tests in
+`tests/presend-selftest.sh`, most drawn from real messages and real mistakes:
+
+| Guard | Refuses / warns on | Why |
+|---|---|---|
+| **Studio firewall** | any mention of the crew, its members, or its machinery toward `dynasty:2.1` | Studio gets PRODUCT facts and DAVID's decisions. Never who is doing what, never process. |
+| **Studio inversion** | task-list / roadmap-shaped language toward Studio | Ideas originate FROM Studio. Handing it our backlog destroys the asset David is paying for. |
+| **Contamination** | a message that carries figures AND asks for independent work | You cannot buy independence after handing over the answer. Strip the figures or label the result corroboration. |
+| **Delivery** | telling any lane to submit text it did not author | Sender owns delivery (David, 2026-07-21). Tower submits only Tower's own strands. |
+| **Gates** | commit/push/delete/schedule/merge authorisation with no attribution to David's word | Tower never authors authorisation it was not given. |
+| **Lean leakage** | signalling David's preference to a review lane before it has reviewed | A relay that carries the lean is not a review. |
+
+### 3b. `bin/open-asks.sh` — a lane waiting on Tower looks EXACTLY like a lane at rest
+`BUSY=no · DIALOG=none · COMPOSER=empty` is the signature of both. The stall watcher cannot tell
+them apart and will call it rest. This sweeps panes and today's ledger for unanswered asks and
+parked packets. **Run it before every status to David, before closeout, and whenever a lane goes
+quiet.** On 2026-07-27 two lanes idled ~20 minutes each waiting on words Tower owed — once for a
+parked verdict, once for permission to fan out a question Tower itself had asked for.
+
+### 4. `~/.claude/tower/DECISIONS.md` — every Tower ruling with its authority
+Valid authorities only: `DAVID-WORD` · `DAVID-STANDING` (cite the date) · `DELEGATED-1` ·
+`TRAFFIC` · `HELD`. **A decision with no authority column is a decision Tower should not have
+made.** This is how drift into David's territory becomes visible instead of invisible.
+
+## The sweep ritual — triggers, not vibes
+Rebuild the board from source: **on any output-feed event · before ANY status to David · every
+~30 minutes of quiet · always immediately after David says Tower missed something.**
+
+## What this still cannot do
+Tower cannot see inside a lane between ledger entries. The honest standard is
+**"verified at HH:MM from `<source>`"**, never "I know." When the stamp is old, say so out loud.
+
+## Standing judgements, learned the hard way
+- **Report the event, not the symptom.**
+- **A reviewer's CLEAR clears content; it does not schedule work.** Claude enforced this against
+  Codex unprompted on 2026-07-27. Tower holds the same line.
+- **Unblocking has exactly three legal forms**: approve an in-scope dialog · submit Tower's OWN
+  stranded message · tell the SENDER to re-send theirs. Pressing Enter on another lane's text is
+  not available to Tower and widening that is a charter edit, not a judgement call.
+- **The better Tower knows the team, the more it holds that must never reach Studio.** Awareness
+  raises contamination risk; the firewall exists because the gate got stronger, not weaker.
+
+## STATUS
+Method, not law. Per the charter, a change to Tower's ROLE is law only by David's charter edit.
+Proposed line, awaiting his word:
+> **Tower maintains a verified board.** Before reporting any lane's state, Tower rebuilds it from
+> source — the ledger, the lane's own latest report, and the artifact — never from its own earlier
+> statements. Tower watches for agent output, not only for agents getting stuck, and runs the
+> pre-send gate on every message it writes.
+
+---
+
+# PART III — THE CLOSEOUT, RUN PROPERLY
+
+`dg` kills and rebuilds the session. Closing well means **everything durable reaches disk and the
+live session becomes safely disposable.** "Safe to walk away" is a MEASURED verdict — run
+`bin/closeout-check.sh` and read its output. It changes nothing; it only establishes facts.
+
+**Closeout intent is STICKY.** Once David says close out, that is the cockpit's goal state until
+Tower has said "safe to walk away" or David cancels — across interruptions, fixes and overnight.
+Anything that starts new work during an open closeout is a protocol violation, **including by
+Tower.** If interrupted, the next message to David begins *"Resuming your closeout —"*.
+
+## The order. Usher each step; never fire and forget.
+
+**1 · Let work land, then INVENTORY what cannot.**
+No lane is interrupted mid-build. Then name every long-running thing: background jobs, scheduled
+runs in flight, subagents, monitors. `closeout-check.sh` §1 catches repo scripts and backup runs.
+**Nothing runs unattended past closeout** unless David explicitly accepts the risk AND a watcher
+guards it with revival instructions. While a recurring instability is open, unattended overnight
+work is presumptively postponed.
+
+**2 · Crew flush**, via the spokesperson: postflight ledger entries and sync state written NOW;
+approved-but-uncommitted work flagged; anything half-done named with where it is parked. They have
+their own `david-update` / session-closeout tooling — let them use it. §3 verifies a postflight
+entry exists **per lane in today's ledger**, which is the only proof that survives.
+
+**3 · Studio flush** — today's learnings and David-feedback into `DAVID.md`, proposals and status
+current on disk, open threads named, reply `Studio closed`. **Pane 2.1 retains no scrollback, so
+disk mtime and Studio's own acknowledgment are the only evidence that exists.** §4 checks it.
+
+**4 · Wire check** — sweep every composer. A REAL strand is **not Tower's to submit**: identify the
+sender and tell them to re-send. Verify every claimed relay actually landed in the recipient's
+transcript. §2 flags strands and open dialogs.
+
+**5 · Write the handoff** to `~/.claude/projects/-Users-davidleess/memory/cockpit_handoff.md`
+(overwrite), generated FROM `BOARD.md` so it is never composed cold at midnight. It must carry:
+every parked thread with its location, David's pending decisions in dependency order, every
+uncommitted path by name, every unpushed commit, and anything unusual the next Tower must know —
+including Tower's own errors. **Tower's conversational memory dies; this file is the inheritance.**
+Also refresh `DECISIONS.md` so the next Tower can see what authority today's rulings rested on.
+
+**6 · Evening debrief** — the morning brief's mirror, ten lines max: what shipped, what is parked
+where, tomorrow's first decision, then the words **"safe to walk away."** Only after 1–5 are clean,
+and only from VERIFIED completions. If a lane cannot reach a clean stop, tell David plainly with
+the cost of leaving versus waiting.
+
+## WHAT THE CREW SAID WAS MISSING — asked 2026-07-27, adopted the same night
+
+**Claude:** *"the closeout list verifies that things are WRITTEN and AT REST, not that what was
+written is TRUE. Every one of my three errors today would have passed that list untouched."*
+
+**Studio:** *"You ask me to confirm I'm finished — the one thing I cannot get wrong — and never
+ask the two things I can."* And: *"you accept my account of delivery state when YOU hold the
+evidence… I'm the interested party."*
+
+Three additions, now enforced by `closeout-check.sh` §6–§8:
+
+**A · Ask the two questions a lane CAN get wrong.** Per lane, every close:
+1. **Which figures you produced today has nobody but you checked?**
+2. **What did you assert today and later retract or reverse?**
+Neither has ever had a slot in the routine, and both are the most useful facts for whoever comes
+next. "Are you finished?" is not a question anyone fails.
+
+**B · Tower asserts delivery state; the lane does not.** Tower holds the buffers — the lane is the
+interested party. Every relay and every composer is measured by Tower at close, not confirmed by
+the sender. A parked or undelivered packet recorded in today's ledger is a FAIL until Tower has
+confirmed the recipient actually has it.
+
+**C · Open asks are swept before the debrief.** `bin/open-asks.sh`. Nothing is called quiet until
+it returns CLEAN.
+
+**Dropped as theatre** (Studio's nomination, accepted): treating the "Studio closed" token as
+proof — disk mtime already shows it, and the token certifies nothing; and re-naming open threads
+in the reply when `STATUS.md` already carries them, which just creates a second copy free to
+drift from the first. A short acknowledgment is still welcome; it is no longer evidence.
+
+## The rule that makes it honest
+`closeout-check.sh` exits **0** only when every check passes. Exit **2** means something could not
+be established — say what, and **do not say "safe to walk away."** Exit **1** means closeout is not
+complete. Tower does not talk its way past a FAIL.

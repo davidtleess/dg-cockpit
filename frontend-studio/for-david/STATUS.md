@@ -112,6 +112,20 @@ Honest costs now on-surface: rebasing drops **4 of his 27 players** entirely; ti
 from the full market board (median 2 places); the disagreement view's top row is Keenan Allen
 (34.3y, market WR107 / ours WR67) — the 005 age artifact showing through, not an edge.
 
+**CLOSEOUT 2026-07-27 — unverified and retracted, per the new close questions.**
+*Unverified (Studio alone, nobody has checked):* every figure in `011-RELAY.md` R1–R3 (DVS
+ceiling saturation, the 17-day freeze, null xVAR) — reproducible via the `sqlite3` commands in
+the brief, but **not reviewed**; plus the Harstad depth lines (QB33/RB39/WR52/TE22, an estimate
+applied to a dynasty ordering it was not derived for), the 1-of-32 twelve-boundary finding, the
+sqrt-axis occupancy figures, and the 337/62/131 shared-population numbers.
+*Retracted today:* the `roster_positions` claim (false — read in three modules; killed before it
+left the lane) and the replacement-line caveat, which I had written **backwards**. Design
+retraction: the crisp replacement rule, replaced by a fading ruler.
+*One number told to David two ways:* his WR holdings read **14** on the full market board and
+**12** on the shared two-lane board — both correct on their own basis; the surface says "4 of
+your 27 are absent," but the earlier 14 was never retracted to him in words. **Next session
+should say so plainly if the roster counts come up.**
+
 Files: `proposals/011-what-is-he.md`, `011-RELAY.md`, `011-what-is-he/prototype.html` +
 `ladder-data.js`, `analysis/two-lane-feasibility.py`, `build-two-lane-data.py`,
 `tier-ladder.py`, `tier-ladder-roster.py`, `build-ladder-data.py`.

@@ -1114,3 +1114,74 @@ earlier one, mark the old one superseded and link them.
   **How to apply:** never design a surface that needs fine ordering at the top of RB/WR/TE from our
   lane — it does not exist. Show ties as ties. And any "our view vs market" disagreement Studio
   draws is **structural, a month-old opinion against today's market**, never news.
+
+- **2026-07-27 — Session arc and method learnings (closeout).** One thread ran the whole session:
+  the **prose tier ladder** (011), chosen self-directed as the answer to the 010 closeout diagnosis
+  — *check the units before building* — because a tier name is the hobby's own language. Arc:
+  read the league's real lineup for the first time → derived this league's startable depth from
+  Harstad → measured that the vernacular's twelve-blocks are not the market's breaks → built
+  market-only with the model lane held → **went back at my own weakest joint unprompted** → David
+  asked for both lanes → measured feasibility → built the two-lane version → he reacted
+  *"we can work with this."*
+  **What worked, keep doing:**
+  1. **Reading the source of truth before designing.** Two weeks of reasoning about roster shape
+     without ever opening `roster_positions`. One file read produced the session's load-bearing input.
+     Generalises the 2026-07-24 meta-lesson from roster limits to every league setting.
+  2. **Going back at my own flagged weakness instead of shipping it with a footnote.** I had named
+     the replacement line the weakest joint and shipped it anyway; returning to it caught a
+     *backwards* caveat, produced a literature-grounded redraw, and surfaced a comparability flaw.
+     **A footnote is not a discharge.**
+  3. **Letting a failed test be a finding.** The interaction harness could not hover a WR dot; that
+     was not a test problem but a real defect (153 players at ~3.2px under 9px targets, six-deep
+     overlap). **When the harness cannot drive the surface, suspect the surface first.**
+  4. **Checking a candidate relay item before asserting it.** "No surface reads `roster_positions`"
+     was false; a two-minute grep killed it before it reached an engineer.
+  **What to watch:** I twice built a mark before asking what its *form* claimed — the crisp
+  replacement rule asserted a cutoff that does not exist, and the first gradient washed the plot.
+  Both were caught by looking. **The screenshot pass caught four defects no probe could see; it is
+  not optional and it is not redundant with the DOM probes.**
+
+- **2026-07-27 — CLOSEOUT ROUTINE CHANGED at David's request, and Studio's answers were adopted.**
+  David asked what the session flush was missing. Adopted into every lane's close:
+  1. **"Which of your figures has nobody but you checked?"** The old close asked me to confirm I was
+     finished — the one thing I cannot get wrong — and never asked the thing I can.
+  2. **"What did you assert today and later retract?"** The close captured learnings, framed as
+     gains, with no slot for what I would take back — which is the highest-value thing for whoever
+     reads next.
+  3. **"What did you change your mind about, and what remains unverified?"** (Studio's own proposed
+     addition.)
+  4. **The "Studio closed" token is dropped as evidence** — the disk shows the state; the token
+     certified nothing. A short acknowledgment is still welcome, just not proof.
+  **Also raised and not yet ruled:** Tower currently accepts Studio's account of delivery state
+  ("shown" / "held" / "crossed") while Tower is the one holding the buffer evidence — Studio is the
+  interested party. Proposed that Tower *assert* delivery and relay state at close rather than
+  confirm mine. Recorded as raised, not adopted.
+  **The durable rule underneath all of it:** a routine that only verifies *existence* of artifacts
+  cannot catch a confidently-wrong artifact. Ask what is unchecked and what was withdrawn.
+
+- **2026-07-27 — UNVERIFIED REGISTER for the session (nobody but Studio has checked any of these).**
+  Recorded because an unverified figure fails silently by promoting itself to a fact.
+  - **Relay-grade, highest stakes** (would reach engineers as 011 R1–R3): DVS ceiling saturation —
+    23 players at exactly 100.0, TE 11 tied spanning a 5.3× market spread, RB tie followed by a
+    7.7-point gap; model values unchanged on 30 of 33 day-transitions, last change 2026-07-10;
+    xVAR null on all 468 rows. All computed by Studio alone from `model_forward_capture.db`.
+    Each carries a copy-pasteable repro in `011-RELAY.md` — **they are reproducible, not reviewed.**
+  - **Design-grade:** this league's startable depth (QB33 / RB39 / WR52 / TE22) — Studio's
+    computation from Harstad's published formula, and **applied to a dynasty ordering it was not
+    derived for**; the 1-of-32 twelve-boundary finding; the sqrt-axis occupancy figures (45% in the
+    bottom tenth; IQR 15–31% linear vs 25–42% sqrt); the shared-population figures (337 / 62 / 131,
+    median 2-place rebase shift).
+  - **The one number that changed meaning mid-session and was told to David both ways:** his WR
+    holdings read **14** on the full market board (v1) and **12** on the shared two-lane board (v3),
+    because rebasing drops players only one lane covers. Both are correct on their own basis. **The
+    surface states "4 of your 27 are absent"; the earlier 14 was never retracted to him in words.**
+
+- **2026-07-27 — RETRACTED TODAY (asserted, then withdrawn by Studio's own check).**
+  1. **"No surface reads `roster_positions`."** False — read in `roster_cut_engine.py`,
+     `team_value_matrix.py`, `trade_lab/reconciler.py`. Caught before it left the lane; the real
+     claim is narrower (no *per-position startable depth* is derived from it).
+  2. **"The seasonal-points baseline understates young players held for the future."** Backwards.
+     A dynasty ordering ranks a 22-year-old above his current production, so the line **overstates**
+     his present startability and understates an older producer. Corrected in artifact and proposal.
+  3. **Design retraction:** the crisp replacement rule — it asserted a sharp startable/not cutoff the
+     data does not contain (Correll & Gleicher). Replaced by a fading depth ruler.
