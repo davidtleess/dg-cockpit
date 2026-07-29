@@ -6,7 +6,18 @@
 # SOURCES: today's ledger read in full · each lane's complete postflight · the artifact
 # itself (git, CI, marker, disk) · Studio from DISK (pane 2.1 retains no scrollback).
 
-LAST FULL REBUILD: 2026-07-29 07:36 ET — CLOSEOUT RESUMED after an ~8h overnight freeze.
+LAST FULL REBUILD: 2026-07-29 07:41 ET — CLOSEOUT RESUMED after an ~8h overnight freeze.
+
+## CLOSEOUT COMPLETION — VERIFIED 07:41
+POSTFLIGHTS  BOTH crew lanes filed, and they are COMMITTED, not just written:
+               8807eda  Claude lane postflight — TW28 close, parked with reasons  (PUSHED)
+               90e1c17  Codex TW28 session-end flush                              (LOCAL ONLY)
+             Both were written into `docs/agent-ledger/2026-07-28.md` — the day the work happened.
+             There is NO 2026-07-29 ledger, and closeout-check reads that as three FAILs. It is a
+             DATE-BOUNDARY ARTIFACT, not missing work. Verify by reading 07-28's ledger, not by
+             trusting the check.
+STUDIO       Closed and durable from DISK: DAVID.md 23:30 · for-david/STATUS.md 23:34.
+UNPUSHED     `90e1c17` is one commit ahead of origin. Needs David's keystroke on a push dialog.
 
 ## ⚠ WHAT HAPPENED OVERNIGHT — read before anything else
 David's closeout on 2026-07-28 was INTERRUPTED at ~23:45 by a push-approval dialog that then
