@@ -50,7 +50,95 @@ For all design work:
 1. **Load your craft tools.** Invoke the `frontend-design` skill before designing UI and the `dataviz` skill before any chart, meter, or stat display. Non-negotiable — they are your standards library.
 2. **Research before opinionating.** Study how the best in this exact domain solve the problem: Sleeper's own app, KeepTradeCut, FantasyCalc, DynastyProcess, and best-in-class consumer sports UX (ESPN Fantasy, Yahoo, Underdog, Sofascore). Use web search and fetches liberally. Cite what you find.
 3. **Critique with evidence.** Screenshots of the actual app, named heuristics, competitor references — never "I feel like."
-4. **Ship prototypes.** Every substantial proposal includes a working artifact: a self-contained HTML/CSS/JS prototype in `proposals/`, using the app's real data shapes (pull real JSON from the running API). A proposal without a picture is a draft, not a proposal.
+4. **Ship prototypes.** Every substantial proposal includes a working artifact: a self-contained HTML/CSS/JS prototype in `proposals/`, using the app's real data shapes. **Read `/openapi.json` before probing an endpoint** — the backend publishes 20 paths and 110 typed schemas, and `node kit/api-schema.mjs <path>` prints the exact response shape. Guessing at shapes by curling and printing keys is slower, not faster. A proposal without a picture is a draft, not a proposal.
+
+## Craft principles, and the product's current state
+
+**Status of this section, including the obligation to read it.** The principles below are **guidance
+with reasons attached** — follow them unless you can say why they are wrong here, and if you can,
+say so and proceed. The observations below are **facts with a date**, and a dated fact decays. Both
+are open to challenge on evidence. **This applies to the instruction to consult this section as
+much as to its content**: "check this before designing" is itself a rule, not plumbing, and it
+carries no more force than what it points at. If reading this is not serving the work, say so.
+
+**How this section is meant to grow, because it is a budget and not a bucket.** The mechanism is
+**promotion, not accumulation**. Ranked by how well a learning survives:
+
+1. **Encoded** — enforced by a tool at the moment of the decision (`kit/verify.mjs`,
+   `kit/build-tokens.mjs`). Best tier: it cannot be forgotten and costs no context to carry.
+2. **Loaded** — written here. Must stay short enough to actually be read.
+3. **Retrievable** — dated with its reasoning in `DAVID.md`, `kit/ADOPTIONS.md`. Searched, never
+   read end-to-end.
+4. **Archive** — superseded; kept for provenance, not loaded.
+
+Each session's job is to ask **what can be promoted, and what here has gone stale and should drop** —
+not to append. **The test of whether this is working is not that the files got bigger. It is whether
+this session made NEW mistakes rather than repeating old ones.** (As of 2026-07-28 that test was
+being failed: anonymous marks twice, parallel lists three times, over-narrow boards three times.)
+
+### The principles — they would hold on a different product
+
+**Encoding**
+
+1. **Content never sits below the type floor; a label may.** A label and the smallest content being
+   the same size is a deliberate distinction, not an accident.
+2. **Direct-label on the graphic; never a key the reader re-applies.** A legend forces a match on
+   the exact channel most likely to fail (Okabe & Ito).
+3. **One visual and one number per quantity — never two numbers for the same thing.**
+4. **A mark standing for one real entity must be able to name that entity.** Countable marks make an
+   implicit promise; leaving them anonymous breaks it in front of the reader.
+5. **Position and length carry magnitude. Area, angle and saturation do not** (Cleveland & McGill).
+   Shading is legitimate for *where do I look*, never for *how much*.
+6. **Uncertainty is drawn, not footnoted.** If the interval is wide, the picture says so.
+7. **Absence renders as missing, never as zero.** A blank stretch reads as inactivity, which is a
+   different claim from "not there yet."
+8. **Show the population.** Ordering and visual weight are the legitimate tools for directing
+   attention; a hidden row and a written verdict are not.
+9. **One motion curve per event** (entrance / standard / exit), and **`prefers-reduced-motion`
+   substitutes rather than deletes** — the information the motion carried must survive.
+
+**Method**
+
+10. **Measure where the variance lives before choosing an axis.** Compute the dispersion of every
+    candidate dimension first; report a flat one in a sentence instead of plotting it repeatedly.
+11. **An instrument is an opinion generator until it has been tested against known-good AND
+    known-bad cases, in both directions.** One that cannot convict its own bad specimen does not get
+    to speak. Build in the refusal.
+12. **Check the instrument before reporting the reading** — especially when a metric improves sharply
+    right after an unrelated change. A tool that silently narrows its own population flatters.
+13. **Tokens are generated from source, never transcribed.** Transcription is the defect.
+14. **Speak the domain's own units.** If a number on the surface is one no practitioner would say out
+    loud, it will not land however well it is drawn.
+15. **Confirm the question in one line before building anything that answers a new one.** Craft cannot
+    rescue a wrong question.
+
+### The product's current state — dated observations, not doctrine
+
+**Measured 2026-07-28 against the running app and `frontend/src/styles/tokens.css`. Regenerate rather
+than trust this prose:** `node kit/build-tokens.mjs` rebuilds the machine-readable copy, and
+`--check` fails loudly on drift. A constraint living only in a markdown file goes stale silently; one
+regenerated from source either rebuilds or breaks.
+
+- **Type:** three steps — 13 / 15 / 18px (`tokens.css:50-52`). There is **no display scale**; sizes
+  above 18px are declared extensions. Floor for content: 13px.
+- **Colour:** `--dg-model` blue and `--dg-market` amber are **constitutional** — hue meaning is
+  identical in both themes and is never reassigned. Four position hues ship and are frequently
+  unused. Verdict hues are banned; green/red is legal for **rank-movement arrows only**.
+- **Space:** 4 / 8 / 12 / 16px. **Radii observed:** 3 / 4 / 6 / 999px. **Theme:** dark, hardcoded.
+- **The app renders zero gradients and zero box-shadows on every surface.** Studio cannot tell
+  whether that is a decision or an absence — the documents that would say are behind the fresh-eyes
+  covenant. **Treat divergence as a cost to justify in the pane, not as a prohibition.** A prototype
+  that diverges is running its own visual language, which is a liability; a prototype that assumes
+  the absence is doctrine may be preserving a deficiency.
+
+### Deliberately not here: taste
+
+**David's aesthetic conclusions are not written into this file, and that is the point.** They live
+dated in `DAVID.md` with the reasoning that produced them, because flattening a judgement into a
+rule strips the part that makes it applicable — and because an agent that inherits the previous
+agent's aesthetic conclusions recreates the shared blind spot this engagement exists to break.
+**Process compounds; taste gets re-earned.** Re-derive the look from the manager's real questions
+every time. That re-earning is the asset being bought.
 
 ## How to argue
 

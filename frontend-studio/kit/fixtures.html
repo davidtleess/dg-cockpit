@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<title>studio-kit fixtures — labelled good and bad specimens</title>
+<link rel="stylesheet" href="studio-kit.tokens.css">
+<link rel="stylesheet" href="studio-kit.css">
+<style>
+  body{margin:0;padding:32px;font-family:var(--dg-font-sans)}
+  .spec{margin:0 0 28px;padding:16px;border:1px solid var(--dg-border);border-radius:6px}
+  .spec h4{margin:0 0 4px;font-family:var(--dg-font-display);font-size:15px}
+  .spec p{margin:0 0 12px;color:var(--dg-text-muted);font-size:13px}
+  .lane{position:relative;height:34px;width:420px;background:var(--dg-surface-raised);border-radius:4px}
+</style>
+</head>
+<body class="sk">
+
+<h1 class="sk-h2">studio-kit fixtures</h1>
+<p class="sk-note">
+  Every specimen below carries <code>data-expect="pass"</code> or <code>data-expect="fail"</code> for a
+  named check. <code>kit/verify.mjs</code> asserts the checker returns exactly that verdict — <b>in both
+  directions</b>. A checker that cannot reproduce a known-bad as bad is an opinion generator, which is
+  what the density gate turned out to be on 2026-07-28 when it scored an approved surface worse than a
+  rejected one, and again the same night when it silently stopped counting marks that gained a gradient
+  and reported a <b>false pass</b>.
+</p>
+
+<!-- ==================== hit targets ==================== -->
+<div class="spec" data-check="hit" data-expect="pass">
+  <h4>HIT / pass — kit marks</h4>
+  <p>Small visual marks with the kit's expanded <code>::after</code> target. Countability preserved, WCAG 2.5.8 met.</p>
+  <div class="lane" id="hitGood"></div>
+</div>
+
+<div class="spec" data-check="hit" data-expect="fail">
+  <h4>HIT / fail — hand-rolled marks</h4>
+  <p>The same marks written by hand, the way every Studio surface before the kit wrote them. 13×16px, no expanded target.</p>
+  <div class="lane" id="hitBad"></div>
+</div>
+
+<!-- ==================== semantics ==================== -->
+<div class="spec" data-check="semantics" data-expect="pass">
+  <h4>SEMANTICS / pass — every mark says what it is</h4>
+  <p>Marks bound with <code>tip()</code> carry an accessible name built from the same strings the
+     tooltip shows. A screen reader and a mouse reader get the same facts.</p>
+  <div class="lane" id="semGood"></div>
+</div>
+
+<div class="spec" data-check="semantics" data-expect="fail">
+  <h4>SEMANTICS / fail — pressable, and meaningless</h4>
+  <p>The same marks with a hit target but no accessible name. <code>hit</code> would clear these;
+     this is a different sense and must convict them.</p>
+  <div class="lane" id="semBad"></div>
+</div>
+
+<!-- ==================== marks that carry a gradient ==================== -->
+<div class="spec" data-check="census" data-expect="pass">
+  <h4>CENSUS / pass — marks stay countable when they carry a gradient</h4>
+  <p>The exact regression that produced a false pass: adding a gradient must not make a mark invisible to the counter.</p>
+  <div class="lane" id="censusGood"></div>
+</div>
+
+<!-- ==================== chrome must not count as data ==================== -->
+<div class="spec" data-check="chrome" data-expect="pass">
+  <h4>CHROME / pass — constant-width bands are not data</h4>
+  <p>Three season bands of identical width plus three real marks. A checker must count 3 data marks, not 6.</p>
+  <div class="lane" id="chromeLane"></div>
+</div>
+
+<!-- ==================== type floor ==================== -->
+<div class="spec" data-check="type" data-expect="pass">
+  <h4>TYPE / pass — content on the product's scale, labels at the floor</h4>
+  <p>A 13px micro-label is legitimate; 13px is the product's own smallest step.</p>
+  <span class="sk-label">roster moves a season</span>
+  <div><span class="sk-figure">29.5</span></div>
+</div>
+
+<div class="spec" data-check="type" data-expect="fail">
+  <h4>TYPE / fail — content below the floor</h4>
+  <p>Content, not a label, at 11px. This is the 009-matrix conviction: 192 numbers set at label size.</p>
+  <div style="font-size:11px">Derrick Henry moved to Florida Man for a 2026 2nd</div>
+</div>
+
+<!-- ==================== legend vs direct labels ==================== -->
+<div class="spec" data-check="legend" data-expect="fail">
+  <h4>LEGEND / fail — a key the reader must re-apply</h4>
+  <p>Okabe &amp; Ito: label on the graphic. A legend forces a hue match, the channel that fails.</p>
+  <div class="sk-legend"><span>■ ours</span> <span>■ market</span> <span>■ gap</span> <span>■ you</span></div>
+</div>
+
+<div class="spec" data-check="legend" data-expect="pass">
+  <h4>LEGEND / pass — identity direct-labelled once</h4>
+  <p>The dumbbell names its two lanes on the mark itself the first time it appears.</p>
+  <div class="sk-dumbbell" style="width:280px">
+    <span class="sk-dumbbell-rail"></span>
+    <span class="sk-dumbbell-link" style="left:30%;width:34%"></span>
+    <span class="sk-dumbbell-dot" data-lane="model" style="left:30%"></span>
+    <span class="sk-dumbbell-dot" data-lane="market" style="left:64%"></span>
+  </div>
+  <span class="sk-mono">ours 30th · market 64th</span>
+</div>
+
+<!-- ==================== product vocabulary ==================== -->
+<div class="spec" data-check="vocab" data-expect="pass">
+  <h4>VOCAB / pass — kit surfaces</h4>
+  <p>Flat fills, the product's radii, no elevation shadow. Hatch patterns are allowed: they encode missing data.</p>
+  <div class="sk-surface" style="padding:14px">
+    <span class="sk-mono">a surface</span>
+    <div class="lane" style="width:200px;height:24px">
+      <span class="sk-absent" style="left:0;width:40%"></span>
+    </div>
+  </div>
+</div>
+
+<div class="spec" data-check="vocab" data-expect="fail">
+  <h4>VOCAB / fail — the atmosphere pass</h4>
+  <p>A gradient surface with elevation and a 10px radius, against a product that renders zero of either.</p>
+  <div style="padding:14px;border-radius:10px;
+              background:linear-gradient(180deg,#2a2f3a,#1c2029);
+              box-shadow:0 18px 48px -12px rgba(0,0,0,.75)">
+    <span class="sk-mono">a surface that does not belong to this product</span>
+  </div>
+</div>
+
+<script type="module">
+import { tip, fmt } from './studio-kit.js';
+
+// kit marks — expanded target via ::after
+const good = document.getElementById('hitGood');
+[12, 30, 44, 61, 80].forEach((x, i) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'sk-mark';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;transform:translateX(-50%)`;
+  tip(b, `trade ${i + 1}`, 'A completed trade. Click to open it.');
+  good.appendChild(b);
+});
+
+// hand-rolled marks — no expanded target, exactly as every pre-kit surface did it
+const bad = document.getElementById('hitBad');
+[12, 30, 44, 61, 80].forEach((x) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;` +
+    `transform:translateX(-50%);border:0;padding:0;background:var(--dg-text);border-radius:3px`;
+  bad.appendChild(b);
+});
+
+// named marks — the tip() binding sets the aria-label from the same strings
+const sg = document.getElementById('semGood');
+[20, 50, 78].forEach((x, i) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'sk-mark';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;transform:translateX(-50%)`;
+  tip(b, `2025-11-0${i + 1}`, 'Woodbury Riders got a 2027 2nd; Drew P. Bauls got DeAndre Hopkins (WR).');
+  sg.appendChild(b);
+});
+
+// pressable but meaningless: a 24px target with nothing to announce
+const sb = document.getElementById('semBad');
+[20, 50, 78].forEach((x) => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'sk-mark';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;transform:translateX(-50%)`;
+  sb.appendChild(b);
+});
+
+// marks carrying a gradient must remain countable
+const cen = document.getElementById('censusGood');
+[20, 45, 70].forEach((x) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'sk-mark';
+  b.dataset.skRole = 'data';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;` +
+    `transform:translateX(-50%);background:linear-gradient(180deg,#f7f7f8,#d8dade)`;
+  cen.appendChild(b);
+});
+
+// chrome: three identical bands that must NOT be counted as data
+const ch = document.getElementById('chromeLane');
+[[8, 18], [38, 18], [68, 18]].forEach(([l, w]) => {
+  const d = document.createElement('div');
+  d.className = 'sk-band';
+  d.dataset.skRole = 'chrome';
+  d.setAttribute('aria-hidden', 'true');
+  d.style.cssText = `position:absolute;top:2px;bottom:2px;left:${l}%;width:${w}%;` +
+    `background:color-mix(in oklch,var(--dg-text) 4%,transparent)`;
+  ch.appendChild(d);
+});
+[15, 47, 74].forEach((x) => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.className = 'sk-mark';
+  b.dataset.skRole = 'data';
+  b.style.cssText = `position:absolute;top:9px;left:${x}%;width:13px;height:16px;transform:translateX(-50%)`;
+  ch.appendChild(b);
+});
+</script>
+</body>
+</html>

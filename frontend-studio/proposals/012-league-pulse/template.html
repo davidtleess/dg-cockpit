@@ -20,6 +20,21 @@
   --dg-text:oklch(0.92 0.005 250);
   --dg-text-muted:oklch(0.68 0.008 250);
   --dg-focus:oklch(0.72 0.14 255);
+
+  /* Position hues — taken VERBATIM from the product's tokens.css, dark scope.
+     Used only ever for the position they name. */
+  --pos-qb:oklch(0.68 0.15 300);
+  --pos-rb:oklch(0.70 0.14 170);
+  --pos-wr:oklch(0.68 0.16 340);
+  --pos-te:oklch(0.72 0.13 205);
+
+  /* The atmosphere layer (light source, elevation, glow) was measured against
+     the live app and REMOVED: the product renders 0 gradients and 0 box-shadows
+     on every surface, and one page quietly running its own visual language is a
+     liability, not a design. It survives as a separate proposal, applied to the
+     product's tokens or not at all. What stayed is what the product already
+     owns: its four position hues, its body face for prose, its type tokens for
+     figures — plus motion, which no token forbids. */
   --dg-font-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
   --dg-font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --dg-font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
@@ -30,9 +45,8 @@
   --dg-text-lg:1.125rem;    /* 18px */
   /* The product ships three steps and no display scale. These are declared
      extensions above its ceiling, on a 1.25 ratio from --dg-text-lg (18px):
-     18 → 22 → 28 → 36. Nothing is invented between the product's own steps. */
+     18 → 22 → 40. The figures use the product's own 18px token, not a new step. */
   --t-h2:22px;                       /* section heads */
-  --t-metric:28px;                   /* a figure that IS the point */
   --t-h1:clamp(30px,4vw,40px);       /* page title only */
   --t-chart:11px;                    /* SVG axis annotation ONLY — never HTML */
 
@@ -69,7 +83,8 @@
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:var(--dg-bg);color:var(--dg-text);
+  color:var(--dg-text);
+  background:var(--dg-bg);
   font-family:var(--dg-font-sans);font-size:var(--dg-text-base);line-height:1.5;
   -webkit-font-smoothing:antialiased;
   /* every figure on this page is compared to the one above it, so figures are
@@ -88,7 +103,7 @@ h1{
   font-family:var(--dg-font-display);font-weight:700;font-size:var(--t-h1);
   line-height:1.06;letter-spacing:-.022em;margin:0 0 14px;max-width:19ch;
 }
-.standfirst{color:var(--dg-text-muted);max-width:56ch;margin:0 0 10px}
+.standfirst{color:var(--dg-text-muted);max-width:56ch;margin:0 0 10px;font-size:16px;line-height:1.6}
 .standfirst strong{color:var(--dg-text);font-weight:600}
 .masthead{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}
 @media (min-width:920px){
@@ -96,9 +111,10 @@ h1{
   .masthead .sketch-note{margin-top:6px}
 }
 .sketch-note{
-  margin:20px 0 0;padding:14px 16px;border:1px solid var(--dg-border);
-  border-left:3px solid var(--dg-border-strong);background:var(--dg-surface);
-  font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:20px 0 0;padding:18px 20px;border:1px solid var(--dg-border);
+  border-radius:6px;font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  line-height:1.6;
+  background:var(--dg-surface);border-left:3px solid var(--dg-focus);
 }
 .sketch-note b{color:var(--dg-text);font-weight:600}
 
@@ -109,7 +125,7 @@ h2{
   letter-spacing:-.014em;margin:0 0 var(--sp-1);
 }
 .q{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-base);
   color:var(--dg-text-muted);margin:0 0 var(--sp-5);
 }
 .q::before{
@@ -119,13 +135,12 @@ h2{
 /* The board is the page's primary object and sits forward; the pattern panels
    are reference and recede to the page ground. Same 1px border, different
    surface — value, not weight, carries the hierarchy. */
-.panel{background:var(--dg-bg)!important}
+
 
 /* ---------- region 1: the calendar ---------- */
 .cal{
   border:1px solid var(--dg-border);background:var(--dg-surface);
-  padding:22px 20px 16px;
-  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+  padding:26px 24px 20px;border-radius:6px;
 }
 /* Season is a SMALL MULTIPLE, not a shade. One row per season, each direct-labelled
    at its left — so there is no key to memorise and no lightness to match, and the
@@ -147,12 +162,14 @@ h2{
    genuinely met: every trade has an equivalent full-width control (its card in the
    log below), and each square is a real <button>, so keyboard reaches all 39. */
 .tr{
-  height:12px;border-radius:2px;cursor:pointer;background:var(--dg-text);
-  outline:2px solid var(--dg-surface);outline-offset:-1px; /* 2px surface gap between fills */
-  border:0;padding:0;width:100%;display:block;
+  height:12px;border-radius:3px;cursor:pointer;border:0;padding:0;width:100%;display:block;
+  background:var(--dg-text);
+  outline:2px solid var(--dg-surface);outline-offset:-1px;
+  transition:transform var(--dur-2) var(--ease-standard),
+             background var(--dur-1) linear;
 }
-.tr:hover{background:var(--dg-focus)}
-.tr.sel{background:var(--dg-focus);outline-color:var(--dg-focus);outline-offset:1px}
+.tr:hover{background:var(--dg-focus);transform:scaleY(1.3)}
+.tr.sel{background:var(--dg-focus);outline-color:var(--dg-focus);transform:scaleY(1.3)}
 .unplayed{
   position:absolute;left:0;right:0;bottom:7px;top:0;
   background:repeating-linear-gradient(135deg,transparent 0 5px,var(--dg-border) 5px 6px);
@@ -177,52 +194,62 @@ h2{
 }
 .mo-label.zero .mo-count{color:var(--dg-border-strong);font-weight:400}
 .cal-foot{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  margin:12px 0 0;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:var(--sp-4) 0 0;line-height:1.55;max-width:92ch;
 }
 
 /* the "you are here" rule — labelled on the graphic, never in a key */
 .now{
-  position:absolute;top:24px;bottom:0;width:2px;background:var(--dg-border-strong);
-  pointer-events:none;
+  position:absolute;top:24px;bottom:0;width:2px;pointer-events:none;
+  background:var(--dg-focus);
 }
 .now-tag{
   position:absolute;top:0;transform:translate(-50%,-100%);white-space:nowrap;
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text);
-  background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
-  padding:2px 7px;border-radius:2px;
+  background:var(--dg-surface-raised);border:1px solid var(--dg-focus);
+  padding:3px 9px;border-radius:4px;letter-spacing:.02em;
 }
 /* the second measure gets its own strip and its own baseline — never a second y-axis */
 .strip{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--dg-border)}
 .strip-title{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  margin:0 0 10px;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 var(--sp-3);
 }
 .strip-grid{
   display:grid;grid-template-columns:52px repeat(12,1fr);gap:0 6px;align-items:end;height:56px;
 }
-.strip-bar{background:var(--dg-border-strong);border-radius:2px 2px 0 0;min-height:1px}
+.strip-bar{background:var(--dg-border-strong);border-radius:3px 2px 0 0;min-height:1px}
 
 /* ---------- region 2: the twelve managers ---------- */
 .board{
-  border:1px solid var(--dg-border);background:var(--dg-surface);overflow-x:auto;
-  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+  border:1px solid var(--dg-border);overflow-x:auto;border-radius:6px;
+  background:var(--dg-surface);
 }
 table{border-collapse:collapse;width:100%;min-width:940px}
 thead th{
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);font-weight:400;
-  color:var(--dg-text-muted);text-align:left;padding:13px 12px;
+  color:var(--dg-text-muted);text-align:left;
+  padding:var(--sp-3) var(--sp-3) var(--sp-3);
   border-bottom:1px solid var(--dg-border-strong);white-space:nowrap;
-  cursor:pointer;user-select:none;
+  cursor:pointer;user-select:none;letter-spacing:.02em;
+  transition:color var(--dur-1) linear;
 }
 thead th:hover{color:var(--dg-text)}
 thead th[aria-sort]:not([aria-sort="none"]){color:var(--dg-text)}
 thead th .car{opacity:.45;margin-left:5px}
 .lane-head{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  padding:11px 12px 0;letter-spacing:.1em;text-transform:uppercase;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-border-strong);
+  padding:var(--sp-3) var(--sp-3) 0;letter-spacing:var(--track-label);
+  text-transform:uppercase;
 }
-tbody td{padding:11px 12px;border-bottom:1px solid var(--dg-border);vertical-align:middle}
+tbody td{
+  padding:var(--sp-3);border-bottom:1px solid var(--dg-border);vertical-align:middle;
+}
+/* one height for every row: the lanes then read as a single grid rather than a
+   stack of differently-sized boxes (layout-grid.md §G — share the bands) */
+tbody tr{height:64px}
+tbody td:first-child{padding-top:var(--sp-2);padding-bottom:var(--sp-2)}
 thead th:nth-child(n+5),tbody td:nth-child(n+5){padding-left:10px;padding-right:10px}
 tbody tr{transition:background var(--dur-1) linear}
 tbody tr:hover{background:var(--dg-surface-raised)}
@@ -235,13 +262,17 @@ thead tr:first-child th:nth-child(2){border-left:1px solid var(--dg-border-stron
 /* keep the dashed zero line clear of the column edge so it never reads as a divider */
 thead th:last-child,tbody td:last-child{padding-left:30px}
 .team{font-weight:600;white-space:nowrap}
-tbody td:first-child{width:270px;max-width:270px}
+tbody td:first-child{width:250px;max-width:250px}
 .you-tag{
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  border:1px solid var(--dg-border-strong);border-radius:2px;padding:1px 5px;margin-left:8px;
+  border:1px solid var(--dg-border-strong);border-radius:3px;padding:1px 5px;margin-left:8px;
 }
-.posture,.num{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm)}
-.num{text-align:right}
+.posture{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm)}
+.num{
+  text-align:right;font-family:var(--dg-font-display);font-weight:600;
+  font-size:var(--dg-text-lg);letter-spacing:-.01em;font-variant-numeric:tabular-nums;
+}
+.num.muted{font-weight:400;font-size:var(--dg-text-base)}
 .muted{color:var(--dg-text-muted)}
 .rankcell{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);white-space:nowrap}
 .dormant{color:var(--dg-text-muted);font-style:normal}
@@ -258,7 +289,7 @@ tbody td:first-child{width:270px;max-width:270px}
 }
 /* the marks arrive along the axis, row after row — the motion teaches the axis,
    which is why it earns its place (WCAG SC 2.3.3: essential to the information) */
-tbody tr.in .tl-mark{opacity:1;transform:translateX(-50%) translateY(0)}
+tbody tr.in .tl-mark{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
 /* The band was a filled block competing with the marks for figure/ground.
    A zone delimited by hairlines reads as context and stops competing. */
 .tl-band{
@@ -270,16 +301,19 @@ tbody tr.in .tl-mark{opacity:1;transform:translateX(-50%) translateY(0)}
 .tl-mark{
   position:absolute;top:9px;width:13px;height:16px;border-radius:3px;
   background:var(--dg-text);
+  outline:2px solid var(--dg-surface);outline-offset:-1px;
   /* entrance: emphasized-decelerate — already moving when it appears, settles */
-  opacity:0;transform:translateX(-50%) translateY(7px);
+  opacity:0;transform:translateX(-50%) translateY(8px) scale(.6);
   transition:opacity var(--dur-3) var(--ease-entrance),
              transform var(--dur-3) var(--ease-entrance),
+             box-shadow var(--dur-2) var(--ease-standard),
              background var(--dur-1) linear;
   outline:2px solid var(--dg-surface);outline-offset:-1px;
   border:0;padding:0;cursor:pointer;
 }
 tbody tr:hover .tl-mark,tbody tr.you .tl-mark{outline-color:var(--dg-surface-raised)}
-.tl-mark:hover,.tl-mark.sel{background:var(--dg-focus);z-index:2}
+.tl-mark:hover,.tl-mark.sel{background:var(--dg-focus);outline-color:var(--dg-focus);z-index:2}
+tbody tr.in .tl-mark:hover{transform:translateX(-50%) scale(1.22)}
 .tl-none{
   position:absolute;left:0;top:4px;font-family:var(--dg-font-mono);
   font-size:var(--dg-text-sm);color:var(--dg-text-muted);
@@ -298,10 +332,13 @@ tbody tr:hover .tl-mark,tbody tr.you .tl-mark{outline-color:var(--dg-surface-rai
 tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-raised)}
 .former{
   display:block;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
-  color:var(--dg-text-muted);font-weight:400;margin-top:3px;
-  white-space:normal;line-height:1.35;
+  color:var(--dg-border-strong);font-weight:400;margin-top:var(--sp-1);
+  white-space:normal;line-height:1.4;letter-spacing:.01em;
 }
-.team{font-family:var(--dg-font-display);font-size:var(--dg-text-base);letter-spacing:-.005em}
+.team{
+  font-family:var(--dg-font-display);font-weight:600;font-size:var(--dg-text-base);
+  letter-spacing:-.008em;
+}
 .tl-axis{
   position:relative;width:470px;height:34px;font-family:var(--dg-font-mono);
   font-size:var(--dg-text-sm);color:var(--dg-text-muted);
@@ -312,9 +349,19 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
 /* a measured habit: bar + its number in a fixed cell, so no label can ever
    overflow the column however long the bar gets */
 .pa{display:grid;grid-template-columns:1fr 40px;gap:8px;align-items:center;width:126px}
-.pa-track{position:relative;height:10px;background:var(--dg-surface-raised);border-radius:2px}
-.pa-fill{position:absolute;left:0;top:0;height:10px;background:var(--dg-text);border-radius:2px}
-.pa-val{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);text-align:right}
+.pa-track{
+  position:relative;height:8px;border-radius:3px;
+  background:color-mix(in oklch, var(--dg-text) 8%, transparent);
+}
+.pa-fill{
+  position:absolute;left:0;top:0;height:8px;border-radius:3px;background:var(--dg-text);
+  transition:width var(--dur-3) var(--ease-standard);
+}
+.pa-val{
+  font-family:var(--dg-font-display);font-weight:600;font-size:var(--dg-text-lg);
+  color:var(--dg-text);text-align:right;letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;
+}
 /* a habit the sample cannot yet support is drawn hollow, not hidden */
 .pa-fill.thin{background:repeating-linear-gradient(135deg,var(--dg-text-muted) 0 2px,transparent 2px 4px)}
 
@@ -328,7 +375,7 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
   position:absolute;left:50%;top:-11px;bottom:-11px;width:0;
   border-left:1px dashed var(--dg-border-strong);
 }
-.np-bar{position:absolute;top:6px;height:10px;background:var(--dg-text);border-radius:2px}
+.np-bar{position:absolute;top:6px;height:10px;background:var(--dg-text);border-radius:3px}
 .np-bar.spent{background:var(--dg-text-muted)}
 .np-val{
   position:absolute;top:2px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
@@ -345,34 +392,47 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
 .habits table{min-width:840px}
 .habits td{vertical-align:top}
 .habits .hname{font-weight:600;white-space:nowrap}
-.habits .huse{color:var(--dg-text-muted);max-width:46ch}
+.habits .huse{color:var(--dg-text-muted);max-width:48ch;line-height:1.55}
 .habits .hn{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);white-space:nowrap}
 .verdict{
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);white-space:nowrap;
-  border:1px solid var(--dg-border-strong);border-radius:2px;padding:2px 8px;
+  border:1px solid var(--dg-border-strong);border-radius:3px;padding:2px 8px;
 }
 .verdict.yes{color:var(--dg-text);border-color:var(--dg-text)}
 .verdict.no{color:var(--dg-text-muted);border-style:dashed}
-.panels{display:grid;gap:16px;grid-template-columns:1fr}
-@media (min-width:900px){.panels{grid-template-columns:repeat(3,1fr)}}
+.panels{display:grid;gap:var(--sp-4);grid-template-columns:1fr}
+.panels>*{min-width:0}
+.prow{min-width:0}
+.prow>*{min-width:0}
+.ptrack{min-width:0;overflow:visible}
+@media (min-width:900px){.panels{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .panel{
-  border:1px solid var(--dg-border);background:var(--dg-surface);padding:18px 20px 20px;
-  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+  border:1px solid var(--dg-border);padding:22px 22px 24px;border-radius:6px;
+  background:var(--dg-bg);
 }
 .panel h3{
-  font-family:var(--dg-font-sans);font-size:var(--dg-text-base);font-weight:600;
-  margin:0 0 3px;
+  font-family:var(--dg-font-display);font-size:var(--dg-text-lg);font-weight:700;
+  letter-spacing:-.012em;margin:0 0 var(--sp-1);
+  min-height:2lh;                    /* two lines reserved, so all three align */
 }
+.panel .sub{min-height:2lh}
 .panel .sub{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  margin:0 0 16px;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 var(--sp-5);line-height:1.5;
 }
-.prow{display:grid;grid-template-columns:34px 1fr 46px;gap:10px;align-items:center;margin:0 0 11px}
-.prow .k{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text)}
-.prow .v{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);text-align:right}
-.ptrack{position:relative;height:14px}
-.pbar{position:absolute;left:0;top:2px;height:10px;background:var(--dg-text);border-radius:2px}
-.pci{position:absolute;top:6px;height:3px;background:var(--dg-text-muted);border-radius:2px;opacity:.9}
+.prow{display:grid;grid-template-columns:34px 1fr 46px;gap:var(--sp-3);align-items:center;margin:0 0 var(--sp-4)}
+.prow .k{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  letter-spacing:var(--track-label);text-transform:uppercase;
+}
+.prow .v{
+  font-family:var(--dg-font-display);font-weight:600;font-size:var(--dg-text-base);
+  color:var(--dg-text);text-align:right;font-variant-numeric:tabular-nums;
+  letter-spacing:-.01em;
+}
+.ptrack{position:relative;height:20px}
+.pbar{position:absolute;left:0;top:1px;height:9px;background:var(--dg-text);border-radius:3px}
+.pci{position:absolute;top:6px;height:3px;background:var(--dg-text-muted);border-radius:3px;opacity:.9}
 .pci::before,.pci::after{
   content:"";position:absolute;top:-4px;width:2px;height:11px;background:var(--dg-text-muted);
   border-radius:1px;
@@ -384,18 +444,39 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
   color:var(--dg-text-muted);white-space:nowrap;
 }
 .pax{
-  position:relative;height:16px;margin:2px 0 10px;
+  position:relative;height:16px;margin:var(--sp-1) 0 var(--sp-3);min-width:0;
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
 }
 .pax span{position:absolute;transform:translateX(-50%)}
 .pci::before{left:0}.pci::after{right:0}
 .pbase{position:absolute;top:-1px;height:16px;border-left:1px dashed var(--dg-border-strong)}
 .panel .note{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--dg-border);line-height:1.5;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:var(--sp-4) 0 0;padding-top:var(--sp-4);
+  border-top:1px solid var(--dg-border);line-height:1.6;
 }
 .panel .note b{color:var(--dg-text);font-weight:600}
 .wide{grid-column:1/-1}
+
+/* Position hues appear ONLY where the thing being coloured IS a position.
+   They come verbatim from the product's tokens; nothing here invents a hue. */
+.pos{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);font-weight:500;
+  padding:1px 6px;border-radius:4px;margin-left:5px;letter-spacing:.02em;
+  border:1px solid currentColor;
+}
+.pos[data-p="QB"]{color:var(--pos-qb);background:color-mix(in oklch,var(--pos-qb) 15%,transparent)}
+.pos[data-p="RB"]{color:var(--pos-rb);background:color-mix(in oklch,var(--pos-rb) 15%,transparent)}
+.pos[data-p="WR"]{color:var(--pos-wr);background:color-mix(in oklch,var(--pos-wr) 15%,transparent)}
+.pos[data-p="TE"]{color:var(--pos-te);background:color-mix(in oklch,var(--pos-te) 15%,transparent)}
+.prow[data-p="QB"] .pbar{background:var(--pos-qb)}
+.prow[data-p="RB"] .pbar{background:var(--pos-rb)}
+.prow[data-p="WR"] .pbar{background:var(--pos-wr)}
+.prow[data-p="TE"] .pbar{background:var(--pos-te)}
+.prow[data-p="QB"] .k{color:var(--pos-qb)}
+.prow[data-p="RB"] .k{color:var(--pos-rb)}
+.prow[data-p="WR"] .k{color:var(--pos-wr)}
+.prow[data-p="TE"] .k{color:var(--pos-te)}
 
 /* ---------- region 3: what happened ---------- */
 /* Filters, not tabs — one population, several ways in (the standing rule). Each
@@ -406,35 +487,49 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
 }
 .chip{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  background:var(--dg-surface);border:1px solid var(--dg-border);border-radius:2px;
-  padding:5px 11px;cursor:pointer;min-height:26px;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  background:var(--dg-surface);border:1px solid var(--dg-border);border-radius:999px;
+  padding:6px 14px;cursor:pointer;min-height:30px;
+  transition:color var(--dur-1) linear, background var(--dur-2) var(--ease-standard),
+             border-color var(--dur-2) var(--ease-standard),
+             box-shadow var(--dur-2) var(--ease-standard);
 }
-.chip:hover{border-color:var(--dg-border-strong);color:var(--dg-text)}
+.chip:hover{border-color:var(--dg-border-strong);color:var(--dg-text);
+}
 .chip[aria-pressed="true"]{
-  background:var(--dg-surface-raised);border-color:var(--dg-text);color:var(--dg-text);
+  color:var(--dg-bg);background:var(--dg-text);border-color:var(--dg-text);
 }
 .filter-count{
-  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
-  margin:0 0 12px;
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 var(--sp-4);line-height:1.6;
 }
 .log{display:grid;gap:1px;background:var(--dg-border);border:1px solid var(--dg-border)}
 .tradecard{
-  background:var(--dg-surface);padding:16px 20px;scroll-margin-top:24px;
+  background:var(--dg-surface);padding:18px 22px;scroll-margin-top:24px;
   transition:box-shadow var(--dur-2) var(--ease-standard),
              background var(--dur-2) var(--ease-standard);
 }
 @keyframes cardIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .log.animate .tradecard{animation:cardIn var(--dur-3) var(--ease-entrance) both}
-.tradecard.mine{background:var(--dg-surface-raised);box-shadow:inset 3px 0 0 var(--dg-text)}
-.tradecard.sel{box-shadow:inset 3px 0 0 var(--dg-focus);background:var(--dg-surface-raised)}
+.tradecard.mine{
+  background:var(--dg-surface-raised);box-shadow:inset 3px 0 0 var(--dg-focus);
+}
+.tradecard.sel{
+  background:var(--dg-surface-raised);
+  box-shadow:inset 3px 0 0 var(--dg-focus), inset 0 0 0 1px var(--dg-focus);
+}
+.tradecard .pick{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text);background:color-mix(in oklch, var(--dg-text) 8%, transparent);
+  border:1px solid var(--dg-border);border-radius:4px;padding:1px 7px;
+}
 .tradehead{
   display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:0 0 9px;
   font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
 }
 .tradehead .yr{padding:0;align-self:auto}
 .tag{
-  border:1px solid var(--dg-border-strong);border-radius:2px;padding:1px 6px;
+  border:1px solid var(--dg-border-strong);border-radius:3px;padding:1px 6px;
   color:var(--dg-text-muted);
 }
 .tradeline{margin:0 0 5px;max-width:92ch}
@@ -454,8 +549,11 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
 #tip{
   position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity .09s;
   background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
-  padding:9px 12px;font-size:var(--dg-text-sm);max-width:46ch;line-height:1.45;
-  box-shadow:0 6px 22px rgb(0 0 0 / .45);
+  padding:12px 15px;font-size:var(--dg-text-sm);max-width:46ch;line-height:1.5;
+  font-family:var(--dg-font-sans);border-radius:6px;
+  /* the product renders no box-shadow anywhere; an overlay separates on a
+     stronger border and a raised surface instead of on elevation */
+  border-color:var(--dg-text-muted);
 }
 #tip b{display:block;margin-bottom:5px;color:var(--dg-text)}
 #tip span{color:var(--dg-text-muted)}
@@ -766,11 +864,10 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
       td1.className = "team";
       td1.innerHTML = r.team + (r.is_you ? "<span class='you-tag'>you</span>" : "") +
         "<span class='former'>" +
-        (r.seasons_in_league >= 4 ? "here since the startup"
-                                  : "joined " + r.joined) +
+        (r.seasons_in_league >= 4 ? "since 2023" : "joined " + r.joined) +
         (r.former_names && r.former_names.length
           ? " · was " + r.former_names.join(", ") : "") +
-        " · <span style='color:var(--dg-text)'>" + (r.app_posture || "unclassified") +
+        " · <span style='color:var(--dg-text-muted)'>" + (r.app_posture || "unclassified") +
         "</span></span>";
       bindTip(td1, r.team,
         "In this league since " + r.joined + " — " + r.seasons_in_league +
@@ -804,6 +901,7 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
       BANDS.forEach(([a,b])=>{
         const band = document.createElement("div");
         band.className = "tl-band";
+        band.setAttribute("aria-hidden", "true");
         band.style.left = (xf(a)*100)+"%";
         band.style.width = ((xf(b)-xf(a))*100)+"%";
         tl.appendChild(band);
@@ -1028,13 +1126,14 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
   P.positions.forEach(p=>{
     const row = document.createElement("div");
     row.className = "prow";
+    row.dataset.p = p.pos;
     row.innerHTML =
       "<span class='k'>" + p.pos + "</span>" +
       "<span class='ptrack'>" +
         "<span class='pbar' style='width:" + (p.share/maxS*100) + "%'></span>" +
-        "<span class='pci' style='left:" + (p.ci95[0]/maxS*100) + "%;width:" +
+        "<span class='pci' style='top:14px;left:" + (p.ci95[0]/maxS*100) + "%;width:" +
           ((p.ci95[1]-p.ci95[0])/maxS*100) + "%'></span>" +
-        "<span class='pbase' style='left:" + (p.roster_share/maxS*100) + "%'></span>" +
+        "<span class='pbase' style='top:-2px;height:24px;left:" + (p.roster_share/maxS*100) + "%'></span>" +
       "</span>" +
       "<span class='v'>" + Math.round(p.share*100) + "%</span>";
     bindTip(row, p.pos + " — " + p.n + " of " + P.n_players_moved + " players traded",
@@ -1098,12 +1197,12 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
       "<span class='ptrack' style='height:30px'>" +
         "<span class='pci made' style='top:5px;left:" + (m.ci95[0]*100) + "%;width:" +
           ((m.ci95[1]-m.ci95[0])*100) + "%'></span>" +
-        (idx===0 ? "<span class='pci-lab' style='top:-14px;left:" + (m.ci95[0]*100) +
-           "%'>made the playoffs</span>" : "") +
+        (idx===0 ? "<span class='pci-lab' style='top:-1px;left:calc(" + (m.ci95[1]*100) +
+           "% + 10px)'>made the playoffs</span>" : "") +
         "<span class='pci' style='top:21px;left:" + (s.ci95[0]*100) + "%;width:" +
           ((s.ci95[1]-s.ci95[0])*100) + "%'></span>" +
-        (idx===0 ? "<span class='pci-lab' style='top:26px;left:" + (s.ci95[0]*100) +
-           "%'>missed</span>" : "") +
+        (idx===0 ? "<span class='pci-lab' style='top:15px;left:calc(" + (s.ci95[1]*100) +
+           "% + 10px)'>missed</span>" : "") +
       "</span>";
     bindTip(row, ph,
       "Teams that made the playoffs: " + Math.round(m.share*100) + "% of their trades " +
@@ -1114,8 +1213,10 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
     c.appendChild(row);
   });
   c.insertAdjacentHTML("beforeend",
-    "<div class='pax' style='margin-left:128px'><span style='left:0'>0%</span>" +
-    "<span style='left:50%'>50%</span><span style='left:100%'>100%</span></div>" +
+    "<div class='pax' style='margin-left:128px'>" +
+    "<span style='left:0;transform:none'>0%</span>" +
+    "<span style='left:50%'>50%</span>" +
+    "<span style='left:auto;right:0;transform:none'>100%</span></div>" +
     "<p class='note'>Each bar is a 95% interval on that group's share of trades — " +
     "bright = made the playoffs, dim = missed, labelled above. <b>Every pair overlaps.</b> " + PT.verdict +
     " Three completed seasons and " + (PT.n_per_group["made the playoffs"]||0) + "+" +
@@ -1160,7 +1261,9 @@ function renderLog(){
       "<span>" + t.n_players + " player" + (t.n_players===1?"":"s") +
       " · " + t.n_picks + " pick" + (t.n_picks===1?"":"s") + "</span></div>";
     t.sides.forEach(s=>{
-      const got = [...s.players.map(p=>p.name + " (" + p.pos + ")"), ...s.picks.map(p=>p.label)];
+      const got = [
+        ...s.players.map(p=>p.name + "<span class='pos' data-p='" + p.pos + "'>" + p.pos + "</span>"),
+        ...s.picks.map(p=>"<span class='pick'>" + p.label + "</span>")];
       html += "<p class='tradeline'><b>" + s.team + "</b> received <span class='got'>" +
               (got.length ? got.join(", ") : "nothing recorded") + "</span></p>";
     });
@@ -1229,6 +1332,9 @@ let syncChips = ()=>{};
 
   const sel = document.createElement("select");
   sel.className = "chip";
+  // found by the kit's aria-tree checker: this was the one interactive node on
+  // the page a screen reader would meet as an unlabelled "combobox"
+  sel.setAttribute("aria-label", "Filter trades to one manager");
   sel.innerHTML = "<option value='all'>any manager</option>" +
     managers.map(m=>`<option value="${m}">${m}</option>`).join("");
   sel.addEventListener("change", ()=>{ FILTER.manager = sel.value; ANIMATE_LOG = true; renderLog(); ANIMATE_LOG = false; });

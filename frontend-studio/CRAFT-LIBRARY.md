@@ -260,6 +260,80 @@ then rebuilt it from blog-post priors (4for4, Dynasty Edge, Fantasy Points) with
 - Position-by-position aging curves with **sample size and method disclosed**
 - How **survivorship bias** distorts naive aging curves, and the corrections used against it
 
+## Tier 6 — HOW AN AI AGENT BUILDS FRONT-ENDS (requested by David 2026-07-28)
+
+David, at close: *"i would be curious if there are things in your craft set that talk about how to
+build front-ends as an AI agent - things like design templates or tools - connectors, etc."*
+
+**Studio's honest audit of its own craft set, in answer: there is nothing of this kind in it.** All
+twelve files in `craft/` are *principles and critique* — how to judge an encoding, a type scale, a
+colour pair, a density. Tier 5 is domain knowledge. **Zero of it is build infrastructure**, and the
+one tool Studio owns (`tools/craft-gate.mjs`) it wrote itself, in one evening, and has already caught
+misreporting twice.
+
+**Why this gap costs more for an agent than it would for a human designer.** Three failure modes, all
+evidenced tonight:
+
+1. **Studio re-derives every primitive from scratch, every surface.** Tonight it hand-built a tooltip,
+   a chip, a pill filter, a sortable table, a bar with a track, an interval whisker with end caps, a
+   dodged timeline and a hatch pattern — in raw CSS, from nothing. 011 did the same and arrived at
+   **14 type sizes**; 012 began by repeating that. A human reaches for a kit; Studio retypes the kit,
+   badly, and reintroduces bugs it has already fixed once (the hard-coded dodge constant, the label
+   that overflowed its column, the axis label that collided).
+2. **Studio cannot see well, so it must measure.** The screenshot pass keeps catching what DOM probes
+   cannot (a `grid-row: span 2` that shifted every row; a mark overlapping a rail). Tooling that
+   *measures* is therefore worth disproportionately more to an agent than tooling that *shows* — which
+   is exactly why the density gate paid for itself in one day, and exactly why its two failures
+   (convicting chrome, losing marks that gained a gradient) matter so much.
+3. **Studio has no persistent component memory across surfaces.** Every prototype starts from an empty
+   `<style>`. That is why the same defects recur and why consistency with the product had to be
+   rediscovered by measurement tonight rather than being structurally impossible to get wrong.
+
+**The pull list, in priority order. Studio curates; Tower fetches; David does not.**
+
+### 1. A Studio component kit — **highest priority by far**
+*Not a reference to read: a file to import.* One `studio-kit.css` + a tiny JS module holding the
+primitives Studio rebuilds every time — surface, row, chip, pill filter, sortable table head, tooltip,
+bar-with-track, interval mark, unit-chart cell, hatch-for-missing-data, focus ring. **Built from the
+product's own tokens verbatim**, so consistency is structural rather than something Studio has to
+remember. This alone would have prevented most of tonight's rework.
+
+### 2. Headless accessible primitives (Radix UI, React Aria / ARIA Authoring Practices)
+*Why: Studio has now shipped WCAG 2.5.8 target-size failures on two consecutive surfaces and reasoned
+its way to an exception each time.* Headless libraries encode focus management, roving tabindex,
+listbox/dialog/tooltip semantics and hit-target conventions that Studio currently re-derives per
+surface. Even if the product hand-writes its CSS, **the behaviour spec is the transferable part.**
+
+### 3. A charting substrate, and the argument for and against one
+*Why: every mark on 012 is an absolutely-positioned `<div>` whose x is computed by hand — which is the
+direct cause of the dodge bug, the overflow bug and the collision bug.* Wanted: **Observable Plot** and
+**Visx** (scale/axis/shape primitives without a chart-template straitjacket), plus the honest
+counter-case for staying hand-rolled given the product ships **no charting dependency at all**. The
+decision matters more than the library.
+
+### 4. Design-token tooling and the token-contract discipline
+*Why: the 2026-07-25 lane-colour drift, the 2026-07-28 rival-ruler error, and tonight's 138-gradient
+divergence are all one failure — a surface authoring values the product does not own.* Wanted: Style
+Dictionary / Tokens Studio, and the practice of **generating** a prototype's token block from the
+product's `tokens.css` rather than transcribing it.
+
+### 5. Visual regression and screenshot diffing as a standing harness
+*Why: Studio's checks are all written fresh per surface, and its own gate silently changed what it was
+counting.* Wanted: Playwright's `toHaveScreenshot` workflow, perceptual diffing, and — critically —
+**how to test a measuring instrument against labelled known-good and known-bad cases**, which is the
+discipline the gate is missing. (The product ships a visual-craft audit with a baseline; Studio has
+**deliberately not read it** under the fresh-eyes covenant.)
+
+### 6. Connectors worth having, assessed not assumed
+Figma MCP (design-file → tokens/specs), and any local-first component-inspection tooling. **Studio's
+honest view: connectors rank below items 1–3.** The bottleneck is not access to more design input; it
+is that Studio rebuilds primitives from nothing and cannot see its own output well.
+
+### 7. The literature on AI-agent front-end practice, if it exists
+Studio does not know that a serious body of work here exists, and would rather be told it does not
+than be handed blog posts. **If the honest answer is "nobody has written this down yet," that is worth
+knowing** — it would make items 1–5 Studio's own to author rather than to fetch.
+
 ## Status
 
 | Tier | State |
@@ -269,3 +343,4 @@ then rebuilt it from blog-post priors (4for4, Dynasty Edge, Fantasy Points) with
 | 3 — craft captures | queued, still wanted but lower priority than Tier 4 |
 | **4 — visual search, matrices, disclosure, density** | **requested 2026-07-25** |
 | **5 — dynasty domain fluency** | **APPROVED by David 2026-07-25; list curated, Tower fetching** |
+| **6 — how an agent builds front-ends** | **REQUESTED by David 2026-07-28; list curated, nothing fetched.** Items 1–2 are things Studio could largely *author* rather than fetch. |

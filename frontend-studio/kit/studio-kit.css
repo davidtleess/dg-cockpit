@@ -1,0 +1,288 @@
+/* ============================================================================
+ * studio-kit.css — the primitives Studio rebuilds on every surface.
+ *
+ *   <link rel="stylesheet" href="../../kit/studio-kit.tokens.css">   GENERATED
+ *   <link rel="stylesheet" href="../../kit/studio-kit.css">          this file
+ *   <script type="module" src="../../kit/studio-kit.js"></script>
+ *
+ * WHAT THIS IS FOR
+ * Studio hand-rebuilds a tooltip, a chip, a sortable table, a bar-with-track, an
+ * interval mark and a hatch pattern on every prototype, from an empty <style>.
+ * 011 arrived at fourteen type sizes that way; 012 began by repeating it. Every
+ * hand-roll is a chance to reintroduce a bug already fixed once — the dodge
+ * constant tuned to a font size, the label that overflowed its column, the axis
+ * annotation that collided.
+ *
+ * WHAT THIS IS NOT
+ * Not a look. The kit carries no aesthetic of its own: every colour, type step
+ * and space step comes from studio-kit.tokens.css, which is GENERATED from the
+ * product. If the kit looks like something, that something is Dynasty Genius.
+ *
+ * THE RULES IT MAKES STRUCTURAL, each bought with a rejection:
+ *   · 24px hit targets on small marks          (WCAG 2.5.8 — shipped as a failure twice)
+ *   · nothing below the product's 13px floor   (2026-07-25, the 009 matrix)
+ *   · one visual + one number, never two       (2026-07-22, David's ruling)
+ *   · absence is hatched, never blank          (2026-07-28, "never traded in four seasons")
+ *   · a reference line labels itself           (2026-07-26, hover-tips ruling)
+ *   · green/red ONLY on rank movement          (2026-07-15 escalation ruling)
+ *   · lane hues are model=blue / market=amber  (2026-07-25, constitutional)
+ *   · motion: one curve per event, and reduced-motion SUBSTITUTES
+ *   · no gradients, no elevation shadows       (measured: the product renders zero)
+ * ========================================================================== */
+
+/* ---------------------------------------------------------------- foundation */
+.sk{
+  /* Type roles, not sizes. Address type by the job it does; the sizes are the
+     product's three steps and two declared extensions above its ceiling. */
+  --sk-t-label:var(--dg-text-sm);      /* 13px — uppercase micro-labels */
+  --sk-t-body:var(--dg-text-base);     /* 15px — reading text */
+  --sk-t-figure:var(--dg-text-lg);     /* 18px — a number that IS the point */
+  --sk-t-h2:22px;                      /* declared extension, 1.22 step */
+  --sk-t-h1:clamp(30px,4vw,40px);      /* page title only */
+  --sk-t-chart:11px;                   /* SVG axis annotation ONLY, never content */
+
+  --sk-track:.13em;                    /* uppercase label tracking */
+  --sk-radius:3px;                     /* the product's set: 3 / 4 / 6 / 999 */
+  --sk-radius-lg:6px;
+  --sk-hit:24px;                       /* WCAG 2.2 SC 2.5.8 minimum */
+
+  /* Motion: one curve per EVENT. One curve doing three jobs is the usual reason
+     an interface reads as slow while every duration is nominally short. */
+  --sk-ease-in:cubic-bezier(0.05,0.7,0.1,1);      /* emphasized-decelerate */
+  --sk-ease-move:cubic-bezier(0.2,0,0.38,0.9);    /* standard, within view */
+  --sk-ease-out:cubic-bezier(0.3,0,0.8,0.15);     /* accelerate, leaves at speed */
+  --sk-dur-1:70ms; --sk-dur-2:150ms; --sk-dur-3:240ms; --sk-dur-4:400ms;
+
+  color:var(--dg-text);
+  background:var(--dg-bg);
+  font-family:var(--dg-font-sans);
+  font-size:var(--sk-t-body);
+  line-height:1.5;
+  /* every figure here is compared to the one above it */
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;
+}
+.sk *{box-sizing:border-box}
+.sk :focus-visible{outline:2px solid var(--dg-focus);outline-offset:2px;border-radius:var(--sk-radius)}
+
+/* --------------------------------------------------------------- typography */
+.sk-h1{
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--sk-t-h1);
+  line-height:1.06;letter-spacing:-.022em;margin:0 0 14px;max-width:20ch;
+}
+.sk-h2{
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--sk-t-h2);
+  letter-spacing:-.014em;margin:0 0 4px;
+}
+.sk-h3{
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--sk-t-figure);
+  letter-spacing:-.012em;margin:0 0 4px;
+}
+/* A micro-label. NEVER used for content — the product's floor is 13px and this
+   is 13px, so a label and the smallest content are the same size on purpose. */
+.sk-label{
+  font-family:var(--dg-font-mono);font-size:var(--sk-t-label);
+  letter-spacing:var(--sk-track);text-transform:uppercase;color:var(--dg-text-muted);
+}
+/* A figure that carries the finding. One visual + one number, never two numbers
+   for the same quantity (2026-07-22). */
+.sk-figure{
+  font-family:var(--dg-font-display);font-weight:600;font-size:var(--sk-t-figure);
+  letter-spacing:-.01em;font-variant-numeric:tabular-nums;color:var(--dg-text);
+}
+.sk-figure.is-empty{font-weight:400;color:var(--dg-text-muted)}
+.sk-mono{font-family:var(--dg-font-mono);font-size:var(--sk-t-label);color:var(--dg-text-muted)}
+.sk-note{color:var(--dg-text-muted);font-size:var(--sk-t-label);line-height:1.6;max-width:88ch}
+
+/* ------------------------------------------------------------------ surfaces */
+/* Flat. The product renders zero gradients and zero box-shadows on every
+   surface; a prototype that adds them is running its own visual language. */
+.sk-surface{
+  background:var(--dg-surface);border:1px solid var(--dg-border);
+  border-radius:var(--sk-radius-lg);
+}
+.sk-surface--recessed{background:var(--dg-bg)}
+.sk-surface--raised{background:var(--dg-surface-raised)}
+.sk-scroll-x{overflow-x:auto}
+
+/* --------------------------------------------------------------------- table */
+.sk-table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+.sk-table thead th{
+  font-family:var(--dg-font-mono);font-size:var(--sk-t-label);font-weight:400;
+  color:var(--dg-text-muted);text-align:left;padding:12px;white-space:nowrap;
+  border-bottom:1px solid var(--dg-border-strong);
+  transition:color var(--sk-dur-1) linear;
+}
+.sk-table thead th[data-sort]{cursor:pointer;user-select:none}
+.sk-table thead th[data-sort]:hover{color:var(--dg-text)}
+.sk-table thead th[aria-sort]:not([aria-sort="none"]){color:var(--dg-text)}
+.sk-table thead th .sk-caret{opacity:.5;margin-left:5px}
+.sk-table tbody td{
+  padding:12px;border-bottom:1px solid var(--dg-border);vertical-align:middle;
+}
+.sk-table tbody tr{transition:background var(--sk-dur-1) linear}
+.sk-table tbody tr:hover{background:var(--dg-surface-raised)}
+/* the reader's own row: pinned by the JS sorter, marked here */
+.sk-table tbody tr.is-you td{background:var(--dg-surface-raised)}
+.sk-table tbody tr.is-you td:first-child{box-shadow:inset 3px 0 0 var(--dg-text)}
+.sk-table .sk-num{text-align:right}
+/* the seam between two lanes of meaning in one table */
+.sk-table .sk-seam{border-left:1px solid var(--dg-border-strong)}
+
+/* --------------------------------------------------------------------- chips */
+.sk-chip{
+  font-family:var(--dg-font-sans);font-size:var(--sk-t-label);color:var(--dg-text-muted);
+  background:var(--dg-surface);border:1px solid var(--dg-border);border-radius:999px;
+  padding:6px 14px;min-height:var(--sk-hit);cursor:pointer;
+  transition:color var(--sk-dur-1) linear,
+             background var(--sk-dur-2) var(--sk-ease-move),
+             border-color var(--sk-dur-2) var(--sk-ease-move);
+}
+.sk-chip:hover{border-color:var(--dg-border-strong);color:var(--dg-text)}
+.sk-chip[aria-pressed="true"]{
+  color:var(--dg-bg);background:var(--dg-text);border-color:var(--dg-text);
+}
+.sk-tag{
+  font-family:var(--dg-font-mono);font-size:var(--sk-t-label);color:var(--dg-text-muted);
+  border:1px solid var(--dg-border-strong);border-radius:4px;padding:1px 6px;
+}
+/* Position badges use the product's OWN four hues, and only ever for a position. */
+.sk-pos{
+  font-family:var(--dg-font-mono);font-size:var(--sk-t-label);font-weight:500;
+  padding:1px 6px;border-radius:4px;margin-left:5px;letter-spacing:.02em;
+  border:1px solid currentColor;
+}
+.sk-pos[data-pos="QB"]{color:var(--dg-pos-qb);background:color-mix(in oklch,var(--dg-pos-qb) 15%,transparent)}
+.sk-pos[data-pos="RB"]{color:var(--dg-pos-rb);background:color-mix(in oklch,var(--dg-pos-rb) 15%,transparent)}
+.sk-pos[data-pos="WR"]{color:var(--dg-pos-wr);background:color-mix(in oklch,var(--dg-pos-wr) 15%,transparent)}
+.sk-pos[data-pos="TE"]{color:var(--dg-pos-te);background:color-mix(in oklch,var(--dg-pos-te) 15%,transparent)}
+
+/* Rank movement is the ONLY place green/red is legal (2026-07-15 escalation:
+   "legal for rank-movement arrows only — never for value, gap, margin or tier"). */
+.sk-rankmove{font-family:var(--dg-font-mono);font-size:var(--sk-t-label)}
+.sk-rankmove[data-dir="up"]{color:oklch(0.72 0.15 145)}
+.sk-rankmove[data-dir="down"]{color:oklch(0.65 0.19 27)}
+.sk-rankmove[data-dir="flat"]{color:var(--dg-text-muted)}
+
+/* --------------------------------------------------------------------- marks */
+/* THE HIT-TARGET FIX, and it is the reason this kit exists.
+   Studio has shipped WCAG 2.5.8 target-size failures on two consecutive surfaces
+   and reasoned its way to an exception each time. A countable mark must stay
+   small — countability is its whole purpose — so the VISUAL mark stays small and
+   the TARGET is expanded by a pseudo-element. The exception stops being a
+   judgement call because the geometry is no longer a choice. */
+.sk-mark{
+  position:relative;border:0;padding:0;cursor:pointer;background:var(--dg-text);
+  border-radius:var(--sk-radius);
+  outline:2px solid var(--dg-surface);outline-offset:-1px;   /* 2px gap between fills */
+  transition:background var(--sk-dur-1) linear, transform var(--sk-dur-2) var(--sk-ease-move);
+}
+.sk-mark::after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:max(100%,var(--sk-hit));height:max(100%,var(--sk-hit));
+}
+.sk-mark:hover,.sk-mark.is-selected{background:var(--dg-focus);outline-color:var(--dg-focus)}
+.sk-mark.is-selected{z-index:2}
+/* marks arriving: entrance curve, and the stagger is set per-element by the JS */
+.sk-mark.sk-enter{opacity:0;transform:translateY(7px) scale(.7)}
+.sk-enter-done .sk-mark.sk-enter{opacity:1;transform:none;
+  transition:opacity var(--sk-dur-3) var(--sk-ease-in), transform var(--sk-dur-3) var(--sk-ease-in)}
+
+/* A bar with a track — a rate, read by LENGTH from a shared zero (tier-1 channel).
+   Number lives in its own cell so no label can ever overflow the column. */
+.sk-bar{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.sk-bar-track{position:relative;height:8px;border-radius:var(--sk-radius);
+  background:color-mix(in oklch,var(--dg-text) 8%,transparent)}
+.sk-bar-fill{position:absolute;left:0;top:0;height:8px;border-radius:var(--sk-radius);
+  background:var(--dg-text);transition:width var(--sk-dur-3) var(--sk-ease-move)}
+/* below the sample size a habit can support: shown, but hatched, never hidden */
+.sk-bar-fill.is-thin{
+  background:repeating-linear-gradient(135deg,var(--dg-text-muted) 0 2px,transparent 2px 4px);
+}
+.sk-bar-value{font-family:var(--dg-font-display);font-weight:600;font-size:var(--sk-t-figure);
+  letter-spacing:-.01em;text-align:right;min-width:3ch}
+
+/* A diverging quantity. Direction is carried by the SIDE of zero, not by hue —
+   the constitution bans verdict colouring, and a signed quantity is not a verdict. */
+.sk-diverge{position:relative;height:20px}
+.sk-diverge-zero{position:absolute;left:50%;top:-2px;bottom:-2px;width:0;
+  border-left:1px dashed var(--dg-border-strong)}   /* dashed: a reference line is
+     never the same FORM as a structural divider (the 009-matrix failure) */
+.sk-diverge-bar{position:absolute;top:5px;height:10px;border-radius:var(--sk-radius);
+  background:var(--dg-text)}
+.sk-diverge-bar.is-negative{background:var(--dg-text-muted)}
+.sk-diverge-value{position:absolute;top:1px;font-family:var(--dg-font-mono);
+  font-size:var(--sk-t-label);color:var(--dg-text-muted);white-space:nowrap}
+
+/* An interval. Uncertainty is drawn, never left in a footnote (2026-07-23). */
+.sk-interval{position:absolute;height:3px;border-radius:2px;background:var(--dg-text-muted)}
+.sk-interval::before,.sk-interval::after{
+  content:"";position:absolute;top:-4px;width:2px;height:11px;border-radius:1px;
+  background:var(--dg-text-muted);
+}
+.sk-interval::before{left:0}
+.sk-interval::after{right:0}
+.sk-interval.is-primary{background:var(--dg-text)}
+.sk-interval.is-primary::before,.sk-interval.is-primary::after{background:var(--dg-text)}
+
+/* MISSING is not ZERO. An entity that did not exist yet gets hatched, never left
+   blank — a blank stretch reads as inactivity, which is a different claim.
+   (2026-07-28: the board printed "never traded in four seasons" against a
+   manager who had been in the league two.) */
+.sk-absent{
+  position:absolute;top:0;bottom:0;
+  background:repeating-linear-gradient(135deg,transparent 0 4px,var(--dg-border) 4px 5px);
+}
+.sk-absent-label{
+  position:absolute;font-family:var(--dg-font-mono);font-size:var(--sk-t-label);
+  color:var(--dg-text-muted);background:var(--dg-surface);padding:0 6px;white-space:nowrap;
+}
+
+/* A reference line LABELS ITSELF, on the graphic, where it sits (2026-07-26).
+   Never in a column header, never in a key. */
+.sk-refline{position:absolute;width:2px;background:var(--dg-focus);pointer-events:none}
+.sk-refline-label{
+  position:absolute;top:0;transform:translate(-50%,-100%);white-space:nowrap;
+  font-family:var(--dg-font-mono);font-size:var(--sk-t-label);color:var(--dg-text);
+  background:var(--dg-surface-raised);border:1px solid var(--dg-focus);
+  padding:3px 9px;border-radius:4px;
+}
+
+/* Two boards' ranks in one row. Confirmed by David 2026-07-22 as the mechanic to
+   reuse whenever two rankings are compared: our mark, the market's mark, and the
+   connector IS the disagreement. Lane hues are constitutional — never flipped. */
+.sk-dumbbell{position:relative;height:20px}
+.sk-dumbbell-rail{position:absolute;left:0;right:0;top:9px;height:1px;background:var(--dg-border)}
+.sk-dumbbell-link{position:absolute;top:9px;height:2px;background:var(--dg-border-strong)}
+.sk-dumbbell-dot{position:absolute;top:4px;width:12px;height:12px;border-radius:50%;
+  transform:translateX(-50%);outline:2px solid var(--dg-surface)}
+.sk-dumbbell-dot[data-lane="model"]{background:var(--dg-model)}
+.sk-dumbbell-dot[data-lane="market"]{background:var(--dg-market)}
+/* CVD shape cue so the two lanes never rely on hue alone */
+.sk-dumbbell-dot[data-lane="market"]{border-radius:2px}
+
+/* ------------------------------------------------------------------- tooltip */
+/* The hover layer is STANDING on every surface (2026-07-26). Nothing lives only
+   in a tooltip — touch has no hover — so each tip restates what the row or the
+   aria-label already carries. */
+.sk-tip{
+  position:fixed;z-index:80;pointer-events:none;opacity:0;
+  transition:opacity var(--sk-dur-2) var(--sk-ease-move);
+  background:var(--dg-surface-raised);border:1px solid var(--dg-text-muted);
+  border-radius:var(--sk-radius-lg);padding:12px 15px;
+  font-family:var(--dg-font-sans);font-size:var(--sk-t-label);
+  max-width:46ch;line-height:1.5;color:var(--dg-text);
+}
+.sk-tip[data-open="true"]{opacity:1}
+.sk-tip b{display:block;margin-bottom:5px;color:var(--dg-text)}
+.sk-tip em{display:block;margin-top:6px;font-style:normal;color:var(--dg-text-muted)}
+
+/* ---------------------------------------------------- reduced motion: SUBSTITUTE */
+/* Not `animation:none !important`. That shortcut silently deletes state-change
+   feedback for exactly the readers least able to reconstruct it. The information
+   the motion carried survives; the travel goes. */
+@media (prefers-reduced-motion:reduce){
+  .sk-mark.sk-enter{transform:none}
+  .sk-enter-done .sk-mark.sk-enter{transform:none;transition:opacity var(--sk-dur-1) linear}
+  .sk *{scroll-behavior:auto}
+}

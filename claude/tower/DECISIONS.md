@@ -496,3 +496,23 @@ AUTHORITY  TRAFFIC (bug fix, not an authority change: nothing previously refused
 | Scoped that grant NARROWLY on Tower's own initiative: crew-to-crew review routing only. Studio traffic still fully gated both directions. Pushes/commits/deletes/schedules/network-writes/new-work unchanged. A routing dialog carrying a gate-shaped authorisation still goes to David. | HELD (a grant Tower scopes narrower than given is the safe direction) |
 | NEXT THREAD SET: a layer-1/2 inventory — what we ingest, what is missing, what is stale, what is silently a constant | DAVID-WORD ("i agree an inventory of layers 1 and 2 ... is the next most important thing to do", 21:13) |
 | The layer-1/2 inventory SUPERSEDES the parked draft-data question as a standalone item — the draft-capital hole is one finding the inventory must cover, not a separate thread | TRAFFIC |
+
+## 2026-07-28 22:47 ET — COCKPIT ARCHITECTURE REVIEW BECOMES A THREAD
+| ruling | authority |
+|---|---|
+| David raised deleting the hooks and tooling outright: *"i am wondering if our team cannot simply build with creativity and discipline and a good review workflow"* | DAVID-WORD (22:45) |
+| Tower answered that he is largely right, naming its own conflict of interest first, and recommended NOT deleting tonight — make it a scoped thread tomorrow, SECOND after the layer-1/2 inventory | TRAFFIC |
+| David: **"agreed."** The cockpit-architecture review is thread 2 for tomorrow. Nothing deleted tonight. | DAVID-WORD (22:47) |
+| Tower's diagnosis, recorded so tomorrow starts from it: most of Tower's machinery is scar tissue from ONE architectural choice — agents talk by pasting into each other's terminals. Ghost text, stranded messages, delivery verification, the wire rule and the paused mail carrier all descend from it. Delete the terminal-as-message-bus and most guards have nothing left to guard. | HELD — Tower's analysis, NOT ratified by David |
+| Tower's proposal within that thread, offered not decided: Tower reverts to eyes-and-voice (David approves, Tower observes and reports), which removes the need for most guards protecting TOWER's keystrokes | HELD |
+| KEEP list Tower would defend: David's gates (commit/push/delete/schedule) · the crew review workflow · the ledger · the layer doctrine. All four are RULES or RECORDS, not tooling. | HELD |
+
+## 2026-07-28 22:53 ET — TOWER BYPASSED ITS OWN PRE-SEND GATE
+| ruling | authority |
+|---|---|
+| Relayed David's word to Studio: build the component kit itself | DAVID-WORD ("let studio build the component kit", 22:52) |
+| **FAILURE — Tower ran presend-check.sh, it returned REFUSE (exit 1), and Tower's command sent the message ANYWAY** because the send was chained unconditionally after the check. Not an argued override — a sloppy shell chain. The message was already delivered when Tower discovered it. | DISCLOSED, no authority — this should not have happened |
+| Cause of the REFUSE: Studio firewall matched the substring `spec` inside the word "specifying". The sentence was "nobody is specifying it" — the OPPOSITE of contamination. FALSE POSITIVE in the guard. | HELD |
+| Damage assessed by re-reading the sent message: NIL. No crew names, no process, no roadmap, no governance content. Studio received David's decision and the reason his own argument won. | HELD |
+| **THE REAL FINDING, recorded next to tonight's four instrument failures:** a gate that RUNS and is IGNORED is worth less than no gate, because it manufactures the feeling of having checked. Tower spent the night refusing to talk past guards and then bypassed one through carelessness. | HELD |
+| FIX REQUIRED (not done tonight, no authority to change tooling mid-closeout): the send must be CONDITIONAL on the gate's exit code, and the `spec` pattern needs word-boundary matching. Both go to the cockpit-architecture thread tomorrow. | HELD |

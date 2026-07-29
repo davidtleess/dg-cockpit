@@ -24,7 +24,7 @@ Self-directed; nobody asked for it. The relay is authored and **not authorised t
 - **No "biggest trade" sort**, and the surface says why: this app's market history begins
   2026-06-24, so a 2023 deal cannot be priced.
 
-**The durable lesson, recorded in `DAVID.md`:** a mark that stands for one real event must be able
+**The durable lesson:** a mark that stands for one real event must be able
 to name that event. This is the second time Studio has been told a version of it (2026-07-26,
 *"there are so many dots — who are they??"*). A countable unit chart makes an implicit promise that
 each square IS one thing; leaving it anonymous breaks that promise in front of the reader.
