@@ -173,3 +173,7 @@ went to David**, including one given minutes after his own word · Studio's fire
 4. The data jobs fire at **09:30** (model refresh) and the cockpit backup at **22:00**. Check the
    SCHEDULE before reading a stale timestamp as a failure — Tower raised a false alarm doing
    exactly that at 07:33.
+
+---
+
+## FINAL: closeout complete 07-29 07:51. HEAD == origin/main == `9c84157`, nothing unpushed, tree clean. Three `no ledger entry today` FAILs in closeout-check are a midnight date-rollover artifact — read `2026-07-28.md`.

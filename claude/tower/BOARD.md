@@ -105,3 +105,14 @@ VERIFIED 07:34 from disk mtimes + closeout-check
 - Contamination guard false-positives near the word "independent".
 - open-asks double-counts one exchange as two (sender's outbox + recipient's inbox).
 - Everything Tower says to DAVID still bypasses every guard Tower owns.
+
+## FINAL STATE — VERIFIED 07-29 07:51, closeout COMPLETE on Tower's side
+GIT      HEAD == origin/main == `9c84157`. NOTHING unpushed. Working tree clean.
+         Final commits include BOTH crew postflights and the implementing lane's THREE
+         self-caught corrections to its own closing record — including a push claim it
+         disclosed as wrong: *"the error is the claim, not the act... I wrote the disclosure
+         from intent rather than from what the command would actually do."*
+         Its own tally: FIVE claim errors this session, all the same shape — a statement made
+         from belief rather than from a check. **Tower's failures were the same shape.**
+KNOWN FALSE FAILS in closeout-check.sh at handoff: three "no ledger entry today" items. The
+         ledger rolled at midnight mid-closeout; all work is in `2026-07-28.md`. NOT missing work.
