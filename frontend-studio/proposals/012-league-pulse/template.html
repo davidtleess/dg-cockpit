@@ -1,0 +1,1272 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your league's pulse — a sketch</title>
+<style>
+/* ---- app tokens, taken verbatim from frontend/src/styles/tokens.css ----
+   NO new hue is introduced on this surface. Model blue and market amber are
+   constitutional and mean model-lane / market-lane; neither lane appears here,
+   so neither hue is borrowed. Season is an ORDERED dimension and gets a
+   lightness ramp on the neutral ink, not four categorical hues. Everything else
+   is carried by position and length (Cleveland & McGill tier 1). */
+:root{
+  --dg-bg:oklch(0.16 0.01 250);
+  --dg-surface:oklch(0.2 0.012 250);
+  --dg-surface-raised:oklch(0.24 0.014 250);
+  --dg-border:oklch(0.32 0.012 250);
+  --dg-border-strong:oklch(0.48 0.014 250);
+  --dg-text:oklch(0.92 0.005 250);
+  --dg-text-muted:oklch(0.68 0.008 250);
+  --dg-focus:oklch(0.72 0.14 255);
+  --dg-font-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+  --dg-font-sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --dg-font-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+
+  /* type scale — the product's three steps, verbatim (tokens.css:50-52) */
+  --dg-text-sm:0.8125rem;   /* 13px */
+  --dg-text-base:0.9375rem; /* 15px */
+  --dg-text-lg:1.125rem;    /* 18px */
+  /* The product ships three steps and no display scale. These are declared
+     extensions above its ceiling, on a 1.25 ratio from --dg-text-lg (18px):
+     18 → 22 → 28 → 36. Nothing is invented between the product's own steps. */
+  --t-h2:22px;                       /* section heads */
+  --t-metric:28px;                   /* a figure that IS the point */
+  --t-h1:clamp(30px,4vw,40px);       /* page title only */
+  --t-chart:11px;                    /* SVG axis annotation ONLY — never HTML */
+
+  /* Space: one scale, 4px base, used everywhere instead of ad-hoc pixels. */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px;
+  --sp-5:24px; --sp-6:32px; --sp-7:48px; --sp-8:72px;
+
+  /* Type roles. A data surface lives or dies on these three, not on sizes. */
+  --track-label:.13em;               /* uppercase mono micro-labels */
+  --track-display:-.022em;           /* large display, optical tightening */
+
+  /* ---- MOTION, from craft/motion-easing.md §A/§B ----
+     One curve per EVENT, never one curve doing three jobs — that is the single
+     most common reason a UI reads as slow while every duration is short.
+     Material 3 md-sys-motion + Carbon @carbon/motion. */
+  --ease-entrance:cubic-bezier(0.05,0.7,0.1,1);   /* emphasized-decelerate: settles in */
+  --ease-standard:cubic-bezier(0.2,0,0.38,0.9);   /* moves within the view */
+  --ease-exit:cubic-bezier(0.3,0,0.8,0.15);       /* leaves at speed */
+  --dur-1:70ms;    /* carbon fast-01  — colour, tint, hover */
+  --dur-2:150ms;   /* moderate-01     — small state change */
+  --dur-3:240ms;   /* moderate-02     — a mark arriving */
+  --dur-4:400ms;   /* slow-01         — a whole row settling */
+
+  /* depth: a top-edge highlight is how a raised surface reads without a shadow */
+  --edge:color-mix(in oklch, var(--dg-text) 7%, transparent);
+
+  /* season ramp: ordered, one hue (the neutral), light -> bright with recency */
+  --s2023:oklch(0.40 0.010 250);
+  --s2024:oklch(0.53 0.010 250);
+  --s2025:oklch(0.68 0.008 250);
+  --s2026:oklch(0.92 0.005 250);
+}
+@property --lift{syntax:"<number>";inherits:false;initial-value:0}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--dg-bg);color:var(--dg-text);
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-base);line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  /* every figure on this page is compared to the one above it, so figures are
+     tabular by default — proportional digits make a column of numbers ragged */
+  font-variant-numeric:tabular-nums;
+  text-rendering:optimizeLegibility;
+}
+.wrap{max-width:1240px;margin:0 auto;padding:34px 24px 110px}
+
+/* ---------- masthead ---------- */
+.eyebrow{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dg-text-muted);margin:0 0 12px;
+}
+h1{
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--t-h1);
+  line-height:1.06;letter-spacing:-.022em;margin:0 0 14px;max-width:19ch;
+}
+.standfirst{color:var(--dg-text-muted);max-width:56ch;margin:0 0 10px}
+.standfirst strong{color:var(--dg-text);font-weight:600}
+.masthead{display:grid;grid-template-columns:1fr;gap:24px;align-items:start}
+@media (min-width:920px){
+  .masthead{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px}
+  .masthead .sketch-note{margin-top:6px}
+}
+.sketch-note{
+  margin:20px 0 0;padding:14px 16px;border:1px solid var(--dg-border);
+  border-left:3px solid var(--dg-border-strong);background:var(--dg-surface);
+  font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+.sketch-note b{color:var(--dg-text);font-weight:600}
+
+/* ---------- section furniture ---------- */
+section{margin:var(--sp-8) 0 0}
+h2{
+  font-family:var(--dg-font-display);font-weight:700;font-size:var(--t-h2);
+  letter-spacing:-.014em;margin:0 0 var(--sp-1);
+}
+.q{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);margin:0 0 var(--sp-5);
+}
+.q::before{
+  content:"asks";letter-spacing:var(--track-label);text-transform:uppercase;
+  color:var(--dg-border-strong);margin-right:var(--sp-3);
+}
+/* The board is the page's primary object and sits forward; the pattern panels
+   are reference and recede to the page ground. Same 1px border, different
+   surface — value, not weight, carries the hierarchy. */
+.panel{background:var(--dg-bg)!important}
+
+/* ---------- region 1: the calendar ---------- */
+.cal{
+  border:1px solid var(--dg-border);background:var(--dg-surface);
+  padding:22px 20px 16px;
+  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+}
+/* Season is a SMALL MULTIPLE, not a shade. One row per season, each direct-labelled
+   at its left — so there is no key to memorise and no lightness to match, and the
+   year-over-year repeat is read by position (Cleveland & McGill tier 1) rather than
+   by saturation (their bottom tier). Every square is the same square. */
+.cal-chart{position:relative;padding-top:26px}
+.cal-grid{display:grid;grid-template-columns:52px repeat(12,1fr);gap:0 6px;align-items:end}
+.yr{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  align-self:end;padding-bottom:8px;
+}
+.yr b{color:var(--dg-text);font-weight:400}
+.mo{
+  position:relative;display:flex;flex-direction:column-reverse;justify-content:flex-start;
+  height:92px;gap:3px;border-bottom:1px solid var(--dg-border);padding-bottom:7px;
+}
+/* WCAG 2.5.8: a 12px-tall square is under the 24px target minimum. It stays that
+   size because countability is the whole point of the mark — and the exception is
+   genuinely met: every trade has an equivalent full-width control (its card in the
+   log below), and each square is a real <button>, so keyboard reaches all 39. */
+.tr{
+  height:12px;border-radius:2px;cursor:pointer;background:var(--dg-text);
+  outline:2px solid var(--dg-surface);outline-offset:-1px; /* 2px surface gap between fills */
+  border:0;padding:0;width:100%;display:block;
+}
+.tr:hover{background:var(--dg-focus)}
+.tr.sel{background:var(--dg-focus);outline-color:var(--dg-focus);outline-offset:1px}
+.unplayed{
+  position:absolute;left:0;right:0;bottom:7px;top:0;
+  background:repeating-linear-gradient(135deg,transparent 0 5px,var(--dg-border) 5px 6px);
+  opacity:.75;
+}
+.unplayed-tag{
+  position:absolute;left:6px;top:50%;transform:translateY(-50%);
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  white-space:nowrap;background:var(--dg-surface);padding:3px 8px;
+  border:1px solid var(--dg-border);z-index:1;
+}
+.mo-label{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  text-align:center;padding-top:var(--sp-3);letter-spacing:var(--track-label);
+  text-transform:uppercase;line-height:1;
+}
+/* the count is the finding, so it is set as a figure and not as a caption */
+.mo-count{
+  display:block;margin-top:var(--sp-2);color:var(--dg-text);
+  font-family:var(--dg-font-display);font-size:var(--dg-text-lg);font-weight:700;
+  letter-spacing:-.01em;line-height:1;
+}
+.mo-label.zero .mo-count{color:var(--dg-border-strong);font-weight:400}
+.cal-foot{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:12px 0 0;
+}
+
+/* the "you are here" rule — labelled on the graphic, never in a key */
+.now{
+  position:absolute;top:24px;bottom:0;width:2px;background:var(--dg-border-strong);
+  pointer-events:none;
+}
+.now-tag{
+  position:absolute;top:0;transform:translate(-50%,-100%);white-space:nowrap;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text);
+  background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
+  padding:2px 7px;border-radius:2px;
+}
+/* the second measure gets its own strip and its own baseline — never a second y-axis */
+.strip{margin:24px 0 0;padding-top:18px;border-top:1px solid var(--dg-border)}
+.strip-title{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 10px;
+}
+.strip-grid{
+  display:grid;grid-template-columns:52px repeat(12,1fr);gap:0 6px;align-items:end;height:56px;
+}
+.strip-bar{background:var(--dg-border-strong);border-radius:2px 2px 0 0;min-height:1px}
+
+/* ---------- region 2: the twelve managers ---------- */
+.board{
+  border:1px solid var(--dg-border);background:var(--dg-surface);overflow-x:auto;
+  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+}
+table{border-collapse:collapse;width:100%;min-width:940px}
+thead th{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);font-weight:400;
+  color:var(--dg-text-muted);text-align:left;padding:13px 12px;
+  border-bottom:1px solid var(--dg-border-strong);white-space:nowrap;
+  cursor:pointer;user-select:none;
+}
+thead th:hover{color:var(--dg-text)}
+thead th[aria-sort]:not([aria-sort="none"]){color:var(--dg-text)}
+thead th .car{opacity:.45;margin-left:5px}
+.lane-head{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  padding:11px 12px 0;letter-spacing:.1em;text-transform:uppercase;
+}
+tbody td{padding:11px 12px;border-bottom:1px solid var(--dg-border);vertical-align:middle}
+thead th:nth-child(n+5),tbody td:nth-child(n+5){padding-left:10px;padding-right:10px}
+tbody tr{transition:background var(--dur-1) linear}
+tbody tr:hover{background:var(--dg-surface-raised)}
+tbody tr.you td{background:var(--dg-surface-raised)}
+tbody tr.you td:first-child{box-shadow:inset 3px 0 0 var(--dg-text)}
+tbody tr.you td{border-bottom:1px solid var(--dg-border-strong)}
+/* the seam between the app's lane and the revealed lane */
+thead th:nth-child(3),tbody td:nth-child(3){border-left:1px solid var(--dg-border-strong)}
+thead tr:first-child th:nth-child(2){border-left:1px solid var(--dg-border-strong)}
+/* keep the dashed zero line clear of the column edge so it never reads as a divider */
+thead th:last-child,tbody td:last-child{padding-left:30px}
+.team{font-weight:600;white-space:nowrap}
+tbody td:first-child{width:270px;max-width:270px}
+.you-tag{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  border:1px solid var(--dg-border-strong);border-radius:2px;padding:1px 5px;margin-left:8px;
+}
+.posture,.num{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm)}
+.num{text-align:right}
+.muted{color:var(--dg-text-muted)}
+.rankcell{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);white-space:nowrap}
+.dormant{color:var(--dg-text-muted);font-style:normal}
+
+/* THE LANE: a manager's whole trading history on one shared four-year axis.
+   One mark per trade, identical marks — the mark answers WHEN and HOW OFTEN;
+   what he takes is a separate measured column, because cramming a third
+   category into a 10px square is how the 009 matrix died. */
+.tl{position:relative;height:34px;width:470px}
+.tl-rail{
+  position:absolute;left:0;right:0;top:16px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--dg-border) 6%,
+             var(--dg-border) 94%,transparent);
+}
+/* the marks arrive along the axis, row after row — the motion teaches the axis,
+   which is why it earns its place (WCAG SC 2.3.3: essential to the information) */
+tbody tr.in .tl-mark{opacity:1;transform:translateX(-50%) translateY(0)}
+/* The band was a filled block competing with the marks for figure/ground.
+   A zone delimited by hairlines reads as context and stops competing. */
+.tl-band{
+  position:absolute;top:2px;bottom:2px;
+  background:color-mix(in oklch, var(--dg-text) 3.5%, transparent);
+  border-left:1px solid color-mix(in oklch, var(--dg-text) 11%, transparent);
+  border-right:1px solid color-mix(in oklch, var(--dg-text) 11%, transparent);
+}
+.tl-mark{
+  position:absolute;top:9px;width:13px;height:16px;border-radius:3px;
+  background:var(--dg-text);
+  /* entrance: emphasized-decelerate — already moving when it appears, settles */
+  opacity:0;transform:translateX(-50%) translateY(7px);
+  transition:opacity var(--dur-3) var(--ease-entrance),
+             transform var(--dur-3) var(--ease-entrance),
+             background var(--dur-1) linear;
+  outline:2px solid var(--dg-surface);outline-offset:-1px;
+  border:0;padding:0;cursor:pointer;
+}
+tbody tr:hover .tl-mark,tbody tr.you .tl-mark{outline-color:var(--dg-surface-raised)}
+.tl-mark:hover,.tl-mark.sel{background:var(--dg-focus);z-index:2}
+.tl-none{
+  position:absolute;left:0;top:4px;font-family:var(--dg-font-mono);
+  font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+/* Before he was in the league there is no history to read. Hatched, not blank —
+   a blank stretch reads as "he never trades", which is a different claim. */
+.tl-pre{
+  position:absolute;top:0;bottom:0;left:0;
+  background:repeating-linear-gradient(135deg,transparent 0 4px,var(--dg-border) 4px 5px);
+  opacity:.9;
+}
+.tl-pre-tag{
+  position:absolute;top:5px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);background:var(--dg-surface);padding:0 6px;white-space:nowrap;
+}
+tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-raised)}
+.former{
+  display:block;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);font-weight:400;margin-top:3px;
+  white-space:normal;line-height:1.35;
+}
+.team{font-family:var(--dg-font-display);font-size:var(--dg-text-base);letter-spacing:-.005em}
+.tl-axis{
+  position:relative;width:470px;height:34px;font-family:var(--dg-font-mono);
+  font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+.tl-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.tl-axis span.band-lab{color:var(--dg-text-muted);transform:none}
+
+/* a measured habit: bar + its number in a fixed cell, so no label can ever
+   overflow the column however long the bar gets */
+.pa{display:grid;grid-template-columns:1fr 40px;gap:8px;align-items:center;width:126px}
+.pa-track{position:relative;height:10px;background:var(--dg-surface-raised);border-radius:2px}
+.pa-fill{position:absolute;left:0;top:0;height:10px;background:var(--dg-text);border-radius:2px}
+.pa-val{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);text-align:right}
+/* a habit the sample cannot yet support is drawn hollow, not hidden */
+.pa-fill.thin{background:repeating-linear-gradient(135deg,var(--dg-text-muted) 0 2px,transparent 2px 4px)}
+
+/* net picks: one diverging quantity, direction carried by SIDE of zero, not by hue.
+   The bar occupies the middle 60% of the cell so both end labels stay inside it. */
+.np{position:relative;height:22px;width:170px}
+/* The zero line must not be confusable with the solid lane seam two columns to
+   its left — same form, different meaning is the 009-matrix failure. A reference
+   line is dashed; a structural divider is solid. */
+.np-zero{
+  position:absolute;left:50%;top:-11px;bottom:-11px;width:0;
+  border-left:1px dashed var(--dg-border-strong);
+}
+.np-bar{position:absolute;top:6px;height:10px;background:var(--dg-text);border-radius:2px}
+.np-bar.spent{background:var(--dg-text-muted)}
+.np-val{
+  position:absolute;top:2px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);white-space:nowrap;
+}
+.np-axis{
+  position:relative;width:170px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);display:flex;justify-content:space-between;padding-top:4px;
+}
+.np-axis span:nth-child(2){position:absolute;left:50%;transform:translateX(-50%)}
+
+/* ---------- region 2b: the habit ledger ---------- */
+.habits{border:1px solid var(--dg-border);background:var(--dg-surface);margin:0 0 20px}
+.habits table{min-width:840px}
+.habits td{vertical-align:top}
+.habits .hname{font-weight:600;white-space:nowrap}
+.habits .huse{color:var(--dg-text-muted);max-width:46ch}
+.habits .hn{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);white-space:nowrap}
+.verdict{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);white-space:nowrap;
+  border:1px solid var(--dg-border-strong);border-radius:2px;padding:2px 8px;
+}
+.verdict.yes{color:var(--dg-text);border-color:var(--dg-text)}
+.verdict.no{color:var(--dg-text-muted);border-style:dashed}
+.panels{display:grid;gap:16px;grid-template-columns:1fr}
+@media (min-width:900px){.panels{grid-template-columns:repeat(3,1fr)}}
+.panel{
+  border:1px solid var(--dg-border);background:var(--dg-surface);padding:18px 20px 20px;
+  box-shadow:inset 0 1px 0 var(--edge), 0 1px 2px rgb(0 0 0/.3);
+}
+.panel h3{
+  font-family:var(--dg-font-sans);font-size:var(--dg-text-base);font-weight:600;
+  margin:0 0 3px;
+}
+.panel .sub{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 16px;
+}
+.prow{display:grid;grid-template-columns:34px 1fr 46px;gap:10px;align-items:center;margin:0 0 11px}
+.prow .k{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text)}
+.prow .v{font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);text-align:right}
+.ptrack{position:relative;height:14px}
+.pbar{position:absolute;left:0;top:2px;height:10px;background:var(--dg-text);border-radius:2px}
+.pci{position:absolute;top:6px;height:3px;background:var(--dg-text-muted);border-radius:2px;opacity:.9}
+.pci::before,.pci::after{
+  content:"";position:absolute;top:-4px;width:2px;height:11px;background:var(--dg-text-muted);
+  border-radius:1px;
+}
+.pci.made{background:var(--dg-text)}
+.pci.made::before,.pci.made::after{background:var(--dg-text)}
+.pci-lab{
+  position:absolute;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  color:var(--dg-text-muted);white-space:nowrap;
+}
+.pax{
+  position:relative;height:16px;margin:2px 0 10px;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+.pax span{position:absolute;transform:translateX(-50%)}
+.pci::before{left:0}.pci::after{right:0}
+.pbase{position:absolute;top:-1px;height:16px;border-left:1px dashed var(--dg-border-strong)}
+.panel .note{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:14px 0 0;padding-top:12px;border-top:1px solid var(--dg-border);line-height:1.5;
+}
+.panel .note b{color:var(--dg-text);font-weight:600}
+.wide{grid-column:1/-1}
+
+/* ---------- region 3: what happened ---------- */
+/* Filters, not tabs — one population, several ways in (the standing rule). Each
+   control is named by the question it answers; none is an unlabelled axis. */
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
+.fgroup{
+  display:flex;gap:6px;align-items:center;padding:5px 10px 5px 0;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+.chip{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  background:var(--dg-surface);border:1px solid var(--dg-border);border-radius:2px;
+  padding:5px 11px;cursor:pointer;min-height:26px;
+}
+.chip:hover{border-color:var(--dg-border-strong);color:var(--dg-text)}
+.chip[aria-pressed="true"]{
+  background:var(--dg-surface-raised);border-color:var(--dg-text);color:var(--dg-text);
+}
+.filter-count{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:0 0 12px;
+}
+.log{display:grid;gap:1px;background:var(--dg-border);border:1px solid var(--dg-border)}
+.tradecard{
+  background:var(--dg-surface);padding:16px 20px;scroll-margin-top:24px;
+  transition:box-shadow var(--dur-2) var(--ease-standard),
+             background var(--dur-2) var(--ease-standard);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.log.animate .tradecard{animation:cardIn var(--dur-3) var(--ease-entrance) both}
+.tradecard.mine{background:var(--dg-surface-raised);box-shadow:inset 3px 0 0 var(--dg-text)}
+.tradecard.sel{box-shadow:inset 3px 0 0 var(--dg-focus);background:var(--dg-surface-raised)}
+.tradehead{
+  display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;margin:0 0 9px;
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+}
+.tradehead .yr{padding:0;align-self:auto}
+.tag{
+  border:1px solid var(--dg-border-strong);border-radius:2px;padding:1px 6px;
+  color:var(--dg-text-muted);
+}
+.tradeline{margin:0 0 5px;max-width:92ch}
+.tradeline b{font-weight:600}
+.tradeline .got{color:var(--dg-text)}
+.empty{background:var(--dg-surface);padding:22px 20px;color:var(--dg-text-muted)}
+
+/* ---------- footer ---------- */
+.provenance{
+  font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);color:var(--dg-text-muted);
+  margin:56px 0 0;padding-top:18px;border-top:1px solid var(--dg-border);max-width:86ch;
+}
+.provenance p{margin:0 0 9px}
+.provenance b{color:var(--dg-text);font-weight:600}
+
+/* ---------- tooltip ---------- */
+#tip{
+  position:fixed;z-index:50;pointer-events:none;opacity:0;transition:opacity .09s;
+  background:var(--dg-surface-raised);border:1px solid var(--dg-border-strong);
+  padding:9px 12px;font-size:var(--dg-text-sm);max-width:46ch;line-height:1.45;
+  box-shadow:0 6px 22px rgb(0 0 0 / .45);
+}
+#tip b{display:block;margin-bottom:5px;color:var(--dg-text)}
+#tip span{color:var(--dg-text-muted)}
+#tip u{text-decoration:none;color:var(--dg-text);font-weight:600}
+#tip em{display:block;margin-top:5px;font-style:normal;opacity:.75}
+/* Substitute, do not delete: the arrival still reads as a change of state, the
+   travel is removed. Blanket `animation:none` would silently drop the feedback
+   for exactly the readers least able to reconstruct it. */
+@media (prefers-reduced-motion:reduce){
+  .tl-mark{transform:translateX(-50%);transition:opacity var(--dur-1) linear}
+  tbody tr.in .tl-mark{transform:translateX(-50%)}
+  .log.animate .tradecard{animation:none;opacity:1}
+  *{scroll-behavior:auto}
+}
+:focus-visible{outline:2px solid var(--dg-focus);outline-offset:2px}
+@media (max-width:760px){
+  .wrap{padding:24px 16px 80px}
+  /* the twelve-month axis does not compress below legibility; it scrolls, the
+     same way the board does, rather than being redrawn at an unreadable size */
+  .cal{overflow-x:auto}
+  .cal-chart,.strip{min-width:620px}
+  .cal-grid,.strip-grid{gap:0 4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <p class="eyebrow">Studio · sketch 012 · not a proposal yet</p>
+      <h1>Your league has a pulse. The app has never taken it.</h1>
+      <p class="standfirst">
+        Sleeper publishes every transaction your league has ever made — <strong><span id="nMoves"></span>
+        completed moves and <span id="nTrades"></span> trades across four seasons</strong>, free, on
+        the same read-only API Dynasty Genius already calls eleven other ways. The app has never
+        called it once. Below is what is sitting there.
+      </p>
+    </div>
+    <div class="sketch-note">
+      <b>Read this as a question, not an answer.</b> Every number here is measured from the live
+      Sleeper log and the running app, but the surface is deliberately rough — its job is to let you
+      react to <b>whether your league's own activity belongs in this product at all</b> before
+      anything gets designed properly. Nothing here is filtered: all twelve managers, every
+      trade, all twelve months. The one-off 2023 startup draft is excluded throughout.
+    </div>
+  </div>
+
+  <!-- ============ REGION 1 ============ -->
+  <section>
+    <h2>When does this league actually deal?</h2>
+    <p class="q">Every trade in league history, one square each, by the month it closed.</p>
+
+    <div class="cal">
+      <div class="cal-chart">
+        <div class="cal-grid" id="calGrid"></div>
+        <div class="now" id="nowRule"><span class="now-tag" id="nowTag">today</span></div>
+      </div>
+      <p class="cal-foot" id="calFoot"></p>
+
+      <div class="strip">
+        <p class="strip-title">All other roster moves — waiver claims and free-agent adds, same four seasons, all pooled</p>
+        <div class="strip-grid" id="stripGrid"></div>
+        <div class="cal-grid" id="stripLabels" style="margin-top:2px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REGION 2 ============ -->
+  <section>
+    <h2>Does a manager have a way of trading?</h2>
+    <p class="q">All twelve. Every trade each one has ever made, on one four-year axis — beside what the app believes about him.</p>
+
+    <div class="board">
+      <table id="board">
+        <thead>
+          <tr>
+            <th colspan="2" class="lane-head">Who he is</th>
+            <th colspan="3" class="lane-head">How he actually trades</th>
+          </tr>
+          <tr id="headRow"></tr>
+        </thead>
+        <tbody id="boardBody"></tbody>
+      </table>
+    </div>
+    <p class="cal-foot" id="boardFoot"></p>
+  </section>
+
+  <!-- ============ REGION 2b — which habits are actually trackable ============ -->
+  <section>
+    <h2>Which habits you can actually use — and which ones need more seasons</h2>
+    <p class="q">Every habit worth tracking, scored on whether four seasons of data can support it yet.</p>
+    <div id="habitTable"></div>
+    <div class="panels" id="panels"></div>
+  </section>
+
+  <!-- ============ REGION 3 ============ -->
+  <section id="logSection">
+    <h2>What every one of those trades actually was</h2>
+    <p class="q">Every one, newest first, in the words a manager would use. Click any square above to jump to one.</p>
+
+    <div class="filters" id="filters"></div>
+    <p class="filter-count" id="filterCount"></p>
+    <div class="log" id="log"></div>
+  </section>
+
+  <div class="provenance" id="prov"></div>
+</div>
+
+<div id="tip" role="status" aria-live="polite"></div>
+
+<script>
+const DATA = /*__DATA__*/null;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const SEASONS = [2023,2024,2025,2026];
+const $ = (s)=>document.querySelector(s);
+const TRADE = Object.fromEntries(DATA.all_trades.map(t=>[t.id, t]));
+const FILTER = {season:"all", mine:false, picks:false, manager:"all"};
+
+/* ---------- tooltip ---------- */
+const tip = $("#tip");
+function showTip(e, title, body){
+  tip.innerHTML = "<b>"+title+"</b><span>"+body+"</span>";
+  tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = e.clientX + 14, y = e.clientY + 14;
+  if (x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+  if (y + r.height > innerHeight - 8) y = e.clientY - r.height - 14;
+  tip.style.left = x+"px"; tip.style.top = y+"px";
+}
+function hideTip(){ tip.style.opacity = 0; }
+function bindTip(el, title, body){
+  el.addEventListener("mousemove", (e)=>showTip(e,title,body));
+  el.addEventListener("mouseleave", hideTip);
+  el.setAttribute("tabindex","0");
+  el.setAttribute("aria-label", title+" — "+body.replace(/<[^>]+>/g," "));
+}
+
+$("#nMoves").textContent = DATA.totals.complete_transactions_4_seasons;
+$("#nTrades").textContent = DATA.totals.trades_4_seasons;
+
+/* ---------- region 1: calendar ---------- */
+(function calendar(){
+  const grid = $("#calGrid"), strip = $("#stripGrid"), labels = $("#stripLabels");
+  const maxMoves = Math.max(...DATA.calendar.map(c=>c.all_moves));
+  const CURRENT = 2026, PLAYED_THROUGH = 7;   // months 1..7 of 2026 are on the books
+
+  SEASONS.forEach(season=>{
+    const yr = document.createElement("div");
+    yr.className = "yr";
+    yr.innerHTML = season === CURRENT ? "<b>"+season+"</b>" : String(season);
+    grid.appendChild(yr);
+
+    DATA.calendar.forEach((c, i)=>{
+      const mo = document.createElement("div");
+      mo.className = "mo";
+      const n = c.by_season[String(season)] || 0;
+
+      if (season === CURRENT && i + 1 > PLAYED_THROUGH){
+        const hatch = document.createElement("div");
+        hatch.className = "unplayed";
+        bindTip(hatch, MONTHS[i]+" 2026 — not played yet",
+          "The 2026 season has not reached this month. Empty here means no data, "+
+          "not a quiet market.");
+        mo.appendChild(hatch);
+        if (i + 1 === PLAYED_THROUGH + 1){
+          const tag = document.createElement("span");
+          tag.className = "unplayed-tag";
+          tag.textContent = "2026 not played yet";
+          mo.appendChild(tag);
+        }
+      }
+      // one square per trade, and each square knows WHICH trade it is
+      const ids = DATA.trades_by_cell[season+"-"+(i+1)] || [];
+      ids.forEach(id=>{
+        const t = TRADE[id];
+        const sq = document.createElement("button");
+        sq.className = "tr" + (t.startup_era ? " startup" : "");
+        sq.dataset.trade = id;
+        sq.type = "button";
+        bindTip(sq, t.date + (t.involves_you ? "  ·  your trade" : ""),
+          t.sides.map(s=>"<u>"+s.team+"</u> got " +
+            ([...s.players.map(p=>p.name+" ("+p.pos+")"), ...s.picks.map(p=>p.label)]
+              .join(", ") || "nothing recorded")).join("<br>") +
+          (t.startup_era ? "<br><em>The 2023 startup draft — a one-off, not a rookie draft.</em>" : "") +
+          "<br><em>Click to open it below.</em>");
+        sq.addEventListener("click", ()=>selectTrade(id, true));
+        mo.appendChild(sq);
+      });
+      grid.appendChild(mo);
+    });
+  });
+
+  // month labels + four-season totals, once, under the small multiples
+  grid.appendChild(document.createElement("div"));
+  DATA.calendar.forEach((c,i)=>{
+    const lab = document.createElement("div");
+    lab.className = "mo-label" + (c.trades===0 ? " zero" : "");
+    lab.innerHTML = MONTHS[i] + "<span class='mo-count'>" + (c.trades||"—") + "</span>";
+    grid.appendChild(lab);
+  });
+
+  // "today" rule — labelled on the graphic, never in a key
+  const nowRule = $("#nowRule");
+  const pct = ((6 + 28/31) / 12);           // 28 July, as a fraction of the year
+  nowRule.style.left = `calc(52px + 6px + (100% - 58px) * ${pct})`;
+  $("#nowTag").textContent = "today · 28 Jul";
+
+  $("#calFoot").textContent =
+    "Counts under each month are all four seasons pooled. " +
+    DATA.calendar_summary.inseason_sep_dec_trades + " of " + DATA.totals.trades_4_seasons +
+    " trades close between September and December; " +
+    DATA.calendar_summary.zero_trade_months.join(", ") +
+    " have never produced one.";
+
+  // the second measure: its own strip, its own baseline, never a second y-axis
+  strip.appendChild(document.createElement("div"));
+  DATA.calendar.forEach((c,i)=>{
+    const bar = document.createElement("div");
+    bar.className = "strip-bar";
+    bar.style.height = Math.max(1, Math.round(c.all_moves / maxMoves * 56)) + "px";
+    bindTip(bar, MONTHS[i]+" — roster churn",
+      c.all_moves+" waiver claims and free-agent adds across four seasons. "+
+      "Churn says the league is awake. It is not the same thing as dealing — "+
+      "August is the second-busiest month here and has never produced a single trade.");
+    strip.appendChild(bar);
+  });
+  labels.appendChild(document.createElement("div"));
+  DATA.calendar.forEach((c,i)=>{
+    const l2 = document.createElement("div");
+    l2.className = "mo-label";
+    l2.textContent = MONTHS[i];
+    labels.appendChild(l2);
+  });
+})();
+
+/* ---------- region 2: the board, one lane per manager ---------- */
+(function board(){
+  const head = $("#headRow"), body = $("#boardBody");
+  const L = DATA.lanes;
+  // join the profile (four seasons of trading) onto the app's current beliefs
+  const byTeam = Object.fromEntries(DATA.managers.map(m=>[m.team, m]));
+  const rows = L.profiles.map(p=>{
+    const m = byTeam[p.team] || {};
+    return {...p,
+      app_posture: m.app_posture, app_partner_rank: m.app_partner_rank,
+      app_partner_score: m.app_partner_score, app_score_components: m.app_score_components,
+      moves_2026: m.moves_2026, trades_2026: m.trades_2026,
+    };
+  });
+
+  const maxNet = Math.max(...rows.map(r=>Math.abs(r.net_picks)), 1);
+  const YEARS = [2024, 2025, 2026];   // Jan ticks that fall inside the span
+  const spanStart = new Date(L.span[0]), spanEnd = new Date(L.span[1]);
+  const xf = (iso)=> (new Date(iso) - spanStart) / (spanEnd - spanStart);
+  // the NFL regular season + playoff weeks, the window this league actually deals in
+  const BANDS = [];
+  for (const y of [2023,2024,2025]) BANDS.push([`${y}-09-05`, `${y+1}-01-05`]);
+
+  const COLS = [
+    {k:"team",     label:"Manager",              type:"txt"},
+    {k:"app_partner_rank", label:"The app's read", type:"num"},
+    {k:"__lane", label:"Every trade he has made", type:"none"},
+    {k:"trades", label:"Trades",                 type:"num"},
+    {k:"__engage", label:"Moves a season", type:"num",
+     sub:"<div class='np-axis' style='width:126px'><span>0</span><span></span><span>30</span></div>"},
+  ];
+
+  let sortKey = "trades", sortDir = -1;
+  let ENTERED = false;   // the arrival animation plays once, not on every re-sort
+
+  COLS.forEach(c=>{
+    const th = document.createElement("th");
+    th.innerHTML = c.label + "<span class='car'></span>" + (c.sub || "");
+    th.setAttribute("aria-sort","none");
+    th.addEventListener("click", ()=>{
+      if (sortKey === c.k) sortDir = -sortDir; else { sortKey = c.k; sortDir = 1; }
+      render();
+    });
+    head.appendChild(th);
+  });
+
+  function render(){
+    [...head.children].forEach((th,i)=>{
+      const active = COLS[i].k === sortKey;
+      th.setAttribute("aria-sort", active ? (sortDir===1?"ascending":"descending") : "none");
+      th.querySelector(".car").textContent = active ? (sortDir===1?"▲":"▼") : "";
+    });
+
+    rows.sort((a,b)=>{
+      // your own row is the reference every other row is read against — it is
+      // pinned to the top under every sort, the way every team page in the
+      // category puts your team first.
+      if (a.is_you !== b.is_you) return a.is_you ? -1 : 1;
+      let x = a[sortKey], y = b[sortKey];
+      if (x === null || x === undefined) x = sortDir===1 ? Infinity : -Infinity;
+      if (y === null || y === undefined) y = sortDir===1 ? Infinity : -Infinity;
+      if (typeof x === "string") return sortDir * x.localeCompare(y);
+      return sortDir * (x - y);
+    });
+
+    body.innerHTML = "";
+    rows.forEach(r=>{
+      const tr = document.createElement("tr");
+      if (r.is_you) tr.className = "you";
+
+      const td1 = document.createElement("td");
+      td1.className = "team";
+      td1.innerHTML = r.team + (r.is_you ? "<span class='you-tag'>you</span>" : "") +
+        "<span class='former'>" +
+        (r.seasons_in_league >= 4 ? "here since the startup"
+                                  : "joined " + r.joined) +
+        (r.former_names && r.former_names.length
+          ? " · was " + r.former_names.join(", ") : "") +
+        " · <span style='color:var(--dg-text)'>" + (r.app_posture || "unclassified") +
+        "</span></span>";
+      bindTip(td1, r.team,
+        "In this league since " + r.joined + " — " + r.seasons_in_league +
+        " season" + (r.seasons_in_league===1?"":"s") + "." +
+        (r.former_names && r.former_names.length
+          ? " Same manager, previously named " + r.former_names.join(", ") +
+            "; his history follows him through the rename."
+          : "") +
+        "<em>History is joined on the Sleeper account, never the roster slot — three managers " +
+        "have left this league and their trades stay with them, not with whoever took the roster.</em>");
+      tr.appendChild(td1);
+
+      const td3 = document.createElement("td");
+      td3.className = "rankcell";
+      td3.innerHTML = r.app_partner_rank
+        ? "#"+r.app_partner_rank
+        : "<span class='muted'>— you</span>";
+      if (r.app_score_components) {
+        const c = r.app_score_components;
+        bindTip(td3, "Partner score "+r.app_partner_score.toFixed(3),
+          "complementarity "+c.complementarity_score+" · divergence density "+c.divergence_density_score+
+          " · activity recency "+c.activity_recency_score+" · posture alignment "+c.posture_alignment_score+
+          ". Two of those four are the same number for every team in the league.");
+      }
+      tr.appendChild(td3);
+
+      // ---- the lane: every trade this manager has ever made ----
+      const td4 = document.createElement("td");
+      const tl = document.createElement("div");
+      tl.className = "tl";
+      BANDS.forEach(([a,b])=>{
+        const band = document.createElement("div");
+        band.className = "tl-band";
+        band.style.left = (xf(a)*100)+"%";
+        band.style.width = ((xf(b)-xf(a))*100)+"%";
+        tl.appendChild(band);
+      });
+      tl.insertAdjacentHTML("beforeend", "<div class='tl-rail'></div>");
+      // he cannot have traded before he arrived; that stretch is not "quiet", it is absent
+      if (r.joined && r.joined > 2023){
+        const pre = document.createElement("div");
+        pre.className = "tl-pre";
+        pre.style.width = (xf(r.joined + "-08-15")*100)+"%";
+        bindTip(pre, r.team + " joined in " + r.joined,
+          "Not in the league before this. The blank is missing history, not inactivity.");
+        tl.appendChild(pre);
+        const tag = document.createElement("span");
+        tag.className = "tl-pre-tag";
+        tag.style.left = "2px";
+        tag.textContent = "joined " + r.joined;
+        tl.appendChild(tag);
+      }
+      if (!r.events.length){
+        const none = document.createElement("span");
+        none.className = "tl-none";
+        none.style.left = (xf((r.joined||2023) + "-08-15")*100)+"%";
+        none.style.paddingLeft = "8px";
+        none.style.whiteSpace = "nowrap";
+        none.textContent = "no trades yet";
+        bindTip(none, r.team + " — no trades",
+          "Not one trade in " + r.seasons_in_league + " season" +
+          (r.seasons_in_league===1?"":"s") + " in this league. He joined in " + r.joined + ".");
+        tl.appendChild(none);
+      }
+      // Dodge: two trades days apart would render as one mark, and the gate
+      // measured a minimum neighbour distance of 0px. Marks are nudged right
+      // until they clear one mark-width, computed from the lane's real pixel
+      // width rather than a magic constant (the 2026-07-28 defect class).
+      const LANE_PX = 470, MARK_PX = 15;
+      let lastX = -Infinity;
+      const placed = r.events.map(e=>{
+        let x = xf(e.date) * LANE_PX;
+        if (x - lastX < MARK_PX) x = lastX + MARK_PX;
+        lastX = x;
+        return {e, x: Math.min(x, LANE_PX - MARK_PX / 2)};
+      });
+      placed.forEach(({e, x})=>{
+        const mk = document.createElement("button");
+        mk.type = "button";
+        mk.className = "tl-mark" + (e.startup ? " startup" : "");
+        mk.dataset.trade = e.id;
+        mk.style.left = (x / LANE_PX * 100)+"%";
+        bindTip(mk, e.date + " — with " + (e.with || "?"),
+          e.summary.split("; ").map(s=>"<u>"+s.split(" got ")[0]+"</u> got " +
+            s.split(" got ").slice(1).join(" got ")).join("<br>") +
+          (e.startup ? "<br><em>The 2023 startup draft — a one-off.</em>" : "") +
+          "<br><em>Click to open it below.</em>");
+        mk.addEventListener("click", ()=>selectTrade(e.id, true));
+        tl.appendChild(mk);
+      });
+      td4.appendChild(tl);
+      tr.appendChild(td4);
+
+      const td5 = document.createElement("td");
+      td5.className = "num"; td5.textContent = r.trades || "—";
+      if (!r.trades) td5.classList.add("muted");
+      bindTip(td5, r.team + " — " + r.trades + " trades in " + r.seasons_in_league +
+        " season" + (r.seasons_in_league===1?"":"s"),
+        "That is " + (r.trades_per_season ?? "—") + " a season. Comparing raw counts across " +
+        "managers who joined in different years would be unfair, so tenure is printed under " +
+        "every name. The median manager here has made " + L.limits.trades_per_manager_median +
+        " trades in total.");
+      tr.appendChild(td5);
+
+      // ---- H5 engagement: the one habit with a big enough sample to trust ----
+      const h = r.habit || {};
+      const td6 = document.createElement("td");
+      const en = document.createElement("div");
+      en.className = "pa";
+      en.innerHTML = "<div class='pa-track'><div class='pa-fill' style='width:" +
+        Math.min(100, (h.moves_per_season||0)/30*100) + "%'></div></div>" +
+        "<span class='pa-val'>" + (h.moves_per_season ?? "—") + "</span>";
+      bindTip(en, r.team + " — " + (h.moves_per_season ?? "—") + " roster moves a season",
+        (h.roster_moves||0) + " waiver claims and free-agent adds across " +
+        (h.seasons||0) + " seasons, plus " + (h.faab||0) + " of waiver budget spent. " +
+        "<em>This is the one habit here with a big sample — 641 moves league-wide against " +
+        "38 trades — so it is the only one that separates managers cleanly.</em>");
+      td6.appendChild(en);
+      tr.appendChild(td6);
+
+      tr.style.setProperty("--i", body.children.length);
+      [...tr.querySelectorAll(".tl-mark")].forEach((m,k)=>{
+        m.style.transitionDelay =
+          `calc(var(--i,0) * 45ms + ${k*22}ms)`.replace("var(--i,0)", body.children.length);
+      });
+      body.appendChild(tr);
+      if (ENTERED) tr.classList.add("in");
+      else requestAnimationFrame(()=>requestAnimationFrame(()=>tr.classList.add("in")));
+    });
+
+    // one shared time axis under the lanes, direct-labelled — never a key
+    const axRow = document.createElement("tr");
+    axRow.innerHTML = "<td colspan='2'></td>";
+    const axTd = document.createElement("td");
+    const ax = document.createElement("div");
+    ax.className = "tl-axis";
+    YEARS.forEach(y=>{
+      const s = document.createElement("span");
+      s.style.left = (xf(y+"-01-01")*100)+"%";
+      s.textContent = "Jan " + y;
+      ax.appendChild(s);
+    });
+    const bandLab = document.createElement("span");
+    bandLab.className = "band-lab";
+    bandLab.style.left = (xf("2023-09-08")*100)+"%";
+    bandLab.style.top = "15px";
+    bandLab.textContent = "shaded = NFL season";
+    ax.appendChild(bandLab);
+    axTd.appendChild(ax);
+    axRow.appendChild(axTd);
+    axRow.innerHTML += "<td colspan='2'></td>";
+    body.appendChild(axRow);
+  }
+  render();
+  setTimeout(()=>{ ENTERED = true; }, 1400);
+
+  $("#boardFoot").textContent =
+    "Sorted by trades, most first; click any column to re-sort, any mark to open that trade. " +
+    "The median manager here has made " + L.limits.trades_per_manager_median +
+    " trades in four seasons (range " + L.limits.trades_per_manager_min + "–" +
+    L.limits.trades_per_manager_max + ") — enough to see a leaning, not enough to call it a law.";
+})();
+
+/* ---------- region 2b: the habit ledger ---------- */
+(function habitLedger(){
+  const V = DATA.lanes.habit_verdicts;
+  const T = DATA.totals.trades_4_seasons;
+  const INSEASON = Math.round(DATA.calendar_summary.inseason_share * 100);
+  // Each row: the habit in plain English, what knowing it would let David do,
+  // the sample behind it, and whether that sample can support it YET.
+  const H = [
+    {name:"Who is actually engaged",
+     use:"Roster moves and waiver spend per season. Tells you who reads his messages before you " +
+         "spend a pitch — three managers have not spent a penny of waiver budget in four years.",
+     n:"641 moves, 4 seasons", ok:true,
+     why:"The biggest sample on this page by 17×, and it spreads 4.5 to 29.5 moves a season."},
+    {name:"What he takes home",
+     use:"Whether he accepts picks or insists on players. If you are converting veterans into " +
+         "futures you need the manager who takes the player and pays the pick.",
+     n:T + " trades, ~6 per manager", ok:false,
+     why:"Only 1 of 55 manager pairs separates at 95%. The extremes are still facts about what " +
+         "he has done — Kissane's Team has accepted zero picks in three trades — but four " +
+         "seasons cannot yet call it a habit."},
+    {name:"What he pays in",
+     use:"The mirror of the above: does he part with picks or with players?",
+     n:T + " trades", ok:false,
+     why:"0 of 55 pairs separate. Not measurable yet."},
+    {name:"When he will deal",
+     use:"Timing your approach. A manager who has never traded outside the season is not worth " +
+         "a July message.",
+     n:T + " trades", ok:false,
+     why:"0 of 55 pairs separate. The 0%–100% range looks dramatic and is mostly managers with " +
+         "one or two trades."},
+    {name:"Which position he collects",
+     use:"Knowing who is short at your surplus position before you ask.",
+     n:"median 6 players seen per manager", ok:false,
+     why:"Too thin to claim a lean. Six observations cannot distinguish a preference from a run " +
+         "of luck."},
+    {name:"When the LEAGUE deals",
+     use:"Not a personal habit but the strongest timing signal here — " + INSEASON +
+         "% of all trades close September to December, and this league has no trade deadline.",
+     n:T + " trades, 4 seasons", ok:true,
+     why:"Pooled across all twelve managers, so it carries roughly twelve times the sample any " +
+         "individual habit does."},
+  ];
+
+  const box = document.createElement("div");
+  box.className = "board habits";
+  let html = "<table><thead><tr>" +
+    "<th>Habit</th><th>What it would let you do</th><th>Sample</th><th>Usable today?</th>" +
+    "</tr></thead><tbody>";
+  H.forEach(h=>{
+    html += "<tr><td class='hname'>" + h.name + "</td>" +
+      "<td class='huse'>" + h.use + "</td>" +
+      "<td class='hn'>" + h.n + "</td>" +
+      "<td><span class='verdict " + (h.ok?"yes":"no") + "'>" +
+      (h.ok ? "yes" : "not yet") + "</span></td></tr>";
+  });
+  html += "</tbody></table>";
+  box.innerHTML = html;
+  $("#habitTable").appendChild(box);
+
+  // hover carries the reason, so the verdict is never an assertion without evidence
+  [...box.querySelectorAll("tbody tr")].forEach((tr,i)=>{
+    bindTip(tr, H[i].name + " — " + (H[i].ok ? "usable" : "not yet"), H[i].why);
+  });
+
+  const note = document.createElement("p");
+  note.className = "cal-foot";
+  note.style.margin = "0 0 26px";
+  note.textContent =
+    "The honest headline: at " + T + " trades over four seasons, almost no individual trading habit " +
+    "separates one manager from another. What does separate them is how often they touch their " +
+    "roster at all — and that runs on 641 observations instead of 6. Every trading habit here " +
+    "gets stronger with each season played; none of them is worth acting on alone today.";
+  $("#habitTable").appendChild(note);
+})();
+
+/* ---------- region 2b: what actually changes hands ---------- */
+(function panels(){
+  const box = $("#panels"), P = DATA.lanes.patterns, PT = DATA.lanes.playoff_timing;
+
+  function panel(title, sub){
+    const p = document.createElement("div");
+    p.className = "panel";
+    p.innerHTML = "<h3>" + title + "</h3><p class='sub'>" + sub + "</p>";
+    box.appendChild(p);
+    return p;
+  }
+
+  // --- positions, against the share of rosters they occupy ---
+  const a = panel("Which positions move",
+    "share of the " + P.n_players_moved + " players traded, with 95% interval");
+  const maxS = Math.max(...P.positions.map(p=>Math.max(p.ci95[1], p.roster_share)));
+  P.positions.forEach(p=>{
+    const row = document.createElement("div");
+    row.className = "prow";
+    row.innerHTML =
+      "<span class='k'>" + p.pos + "</span>" +
+      "<span class='ptrack'>" +
+        "<span class='pbar' style='width:" + (p.share/maxS*100) + "%'></span>" +
+        "<span class='pci' style='left:" + (p.ci95[0]/maxS*100) + "%;width:" +
+          ((p.ci95[1]-p.ci95[0])/maxS*100) + "%'></span>" +
+        "<span class='pbase' style='left:" + (p.roster_share/maxS*100) + "%'></span>" +
+      "</span>" +
+      "<span class='v'>" + Math.round(p.share*100) + "%</span>";
+    bindTip(row, p.pos + " — " + p.n + " of " + P.n_players_moved + " players traded",
+      Math.round(p.share*100) + "% of players traded (95% interval " +
+      Math.round(p.ci95[0]*100) + "–" + Math.round(p.ci95[1]*100) + "%) against " +
+      Math.round(p.roster_share*100) + "% of the players currently rostered — the dashed line. " +
+      (p.separated ? "The interval clears the line, so this is a real difference."
+                   : "The interval covers the line, so this is not a difference at this sample size."));
+    a.appendChild(row);
+  });
+  const sep = P.positions.filter(p=>p.separated).map(p=>p.pos);
+  a.insertAdjacentHTML("beforeend",
+    "<p class='note'>Dashed line = that position's share of players currently rostered. " +
+    (sep.length
+      ? "<b>Only " + sep.join(" and ") + " clears it</b> — quarterbacks change hands more often than " +
+        "their share of rosters, which is what a superflex league should look like. Every other " +
+        "position is inside the noise."
+      : "<b>No position clears it.</b>") + "</p>");
+
+  // --- the shape of a deal ---
+  const b = panel("The shape of a deal", "all " + Object.values(P.shapes).reduce((x,y)=>x+y,0) +
+    " two-sided trades, startup swap excluded");
+  const tot = Object.values(P.shapes).reduce((x,y)=>x+y,0);
+  const maxSh = Math.max(...Object.values(P.shapes));
+  Object.entries(P.shapes).sort((x,y)=>y[1]-x[1]).forEach(([k,v])=>{
+    const row = document.createElement("div");
+    row.className = "prow";
+    row.style.gridTemplateColumns = "1fr 92px 46px";
+    row.innerHTML =
+      "<span class='k' style='white-space:nowrap'>" + k + "</span>" +
+      "<span class='ptrack'><span class='pbar' style='width:" + (v/maxSh*100) + "%'></span></span>" +
+      "<span class='v'>" + v + "</span>";
+    bindTip(row, k, v + " of " + tot + " trades (" + Math.round(v/tot*100) + "%).");
+    b.appendChild(row);
+  });
+  const horizon = Object.entries(P.pick_horizon).map(([k,v])=>k+"yr out: "+v).join(" · ");
+  b.insertAdjacentHTML("beforeend",
+    "<p class='note'><b>Nearly two thirds of trades here are players for picks.</b> " +
+    "Of the picks that moved — round 1: " + (P.pick_rounds[1]||0) + ", round 2: " +
+    (P.pick_rounds[2]||0) + ", round 3: " + (P.pick_rounds[3]||0) + "; by how far out, " +
+    horizon + ". This league has <b>no trade deadline</b> (setting " + P.trade_deadline_setting +
+    "), which is why December is its busiest month rather than its last.</p>");
+
+  // --- the honest negative ---
+  const c = panel("Do playoff teams trade at a different time?",
+    "the answer the data will actually support");
+  const phases = ["rookie-draft season","in-season","playoff weeks","dead offseason"];
+  const gm = PT.groups["made the playoffs"], gs = PT.groups["missed the playoffs"];
+  phases.forEach((ph,idx)=>{
+    if (!gm[ph] && !gs[ph]) return;
+    const row = document.createElement("div");
+    row.className = "prow";
+    row.style.gridTemplateColumns = "128px 1fr";
+    row.style.marginBottom = idx===0 ? "22px" : "16px";
+    const m = gm[ph] || {share:0,ci95:[0,0],n:0}, s = gs[ph] || {share:0,ci95:[0,0],n:0};
+    // identity is direct-labelled on the first pair, never in a key (Okabe & Ito)
+    const lab = (cls, txt, top)=> idx===0
+      ? "<span class='pci-lab' style='top:" + top + "px;left:calc(100% + 0px);'></span>" : "";
+    row.innerHTML =
+      "<span class='k' style='white-space:nowrap'>" + ph + "</span>" +
+      "<span class='ptrack' style='height:30px'>" +
+        "<span class='pci made' style='top:5px;left:" + (m.ci95[0]*100) + "%;width:" +
+          ((m.ci95[1]-m.ci95[0])*100) + "%'></span>" +
+        (idx===0 ? "<span class='pci-lab' style='top:-14px;left:" + (m.ci95[0]*100) +
+           "%'>made the playoffs</span>" : "") +
+        "<span class='pci' style='top:21px;left:" + (s.ci95[0]*100) + "%;width:" +
+          ((s.ci95[1]-s.ci95[0])*100) + "%'></span>" +
+        (idx===0 ? "<span class='pci-lab' style='top:26px;left:" + (s.ci95[0]*100) +
+           "%'>missed</span>" : "") +
+      "</span>";
+    bindTip(row, ph,
+      "Teams that made the playoffs: " + Math.round(m.share*100) + "% of their trades " +
+      "(interval " + Math.round(m.ci95[0]*100) + "–" + Math.round(m.ci95[1]*100) + "%, upper bar). " +
+      "Teams that missed: " + Math.round(s.share*100) + "% (" +
+      Math.round(s.ci95[0]*100) + "–" + Math.round(s.ci95[1]*100) + "%, lower bar). " +
+      "The two intervals overlap, so the difference is not measurable here.");
+    c.appendChild(row);
+  });
+  c.insertAdjacentHTML("beforeend",
+    "<div class='pax' style='margin-left:128px'><span style='left:0'>0%</span>" +
+    "<span style='left:50%'>50%</span><span style='left:100%'>100%</span></div>" +
+    "<p class='note'>Each bar is a 95% interval on that group's share of trades — " +
+    "bright = made the playoffs, dim = missed, labelled above. <b>Every pair overlaps.</b> " + PT.verdict +
+    " Three completed seasons and " + (PT.n_per_group["made the playoffs"]||0) + "+" +
+    (PT.n_per_group["missed the playoffs"]||0) + " trade-sides is not enough — and the two " +
+    "groups are not independent, because most trades have one team from each. " +
+    "This one gets answered by waiting, not by drawing it differently.</p>");
+})();
+
+/* ---------- region 3: every trade, filterable ---------- */
+function renderLog(){
+  const el = $("#log");
+  el.innerHTML = "";
+  const shown = DATA.all_trades.filter(t =>
+    (FILTER.season === "all" || t.season === FILTER.season) &&
+    (!FILTER.mine || t.involves_you) &&
+    (!FILTER.picks || t.sides.some(s=>s.picks.some(p=>p.round === 1))) &&
+    (FILTER.manager === "all" || t.parties.includes(FILTER.manager))
+  );
+
+  $("#filterCount").innerHTML =
+    shown.length + " of " + DATA.all_trades.length + " trades" +
+    (shown.length === DATA.all_trades.length ? " — every one this league has made" : "") +
+    "<br>No “biggest trade” sort: this app's market history reaches back only to " +
+    "2026-06-24, so a 2023 deal cannot be priced. Ordered by date.";
+
+  if (!shown.length){
+    el.innerHTML = "<div class='empty'>No trade matches that combination. " +
+      "Widen a filter to see the rest.</div>";
+    return;
+  }
+
+  el.classList.remove("animate");
+  void el.offsetWidth;                 // restart the entrance cleanly
+  if (ANIMATE_LOG) el.classList.add("animate");
+  shown.forEach(t=>{
+    const card = document.createElement("div");
+    card.className = "tradecard" + (t.involves_you ? " mine" : "");
+    card.id = "trade-" + t.id;
+    let html = "<div class='tradehead'><span>" + t.date + "</span>" +
+      (t.involves_you ? "<span class='tag'>your trade</span>" : "") +
+      (t.startup_era ? "<span class='tag'>2023 startup draft — a one-off</span>" : "") +
+      "<span>" + t.n_players + " player" + (t.n_players===1?"":"s") +
+      " · " + t.n_picks + " pick" + (t.n_picks===1?"":"s") + "</span></div>";
+    t.sides.forEach(s=>{
+      const got = [...s.players.map(p=>p.name + " (" + p.pos + ")"), ...s.picks.map(p=>p.label)];
+      html += "<p class='tradeline'><b>" + s.team + "</b> received <span class='got'>" +
+              (got.length ? got.join(", ") : "nothing recorded") + "</span></p>";
+    });
+    card.innerHTML = html;
+    el.appendChild(card);
+  });
+
+  if (SELECTED && document.getElementById("trade-" + SELECTED))
+    document.getElementById("trade-" + SELECTED).classList.add("sel");
+}
+
+let SELECTED = null;
+let ANIMATE_LOG = false;
+function selectTrade(id, scroll){
+  SELECTED = id;
+  const t = TRADE[id];
+  // a click on a square must always be able to reach its trade — widen any
+  // filter that would have hidden it rather than silently doing nothing
+  if (FILTER.season !== "all" && FILTER.season !== t.season) FILTER.season = "all";
+  if (FILTER.mine && !t.involves_you) FILTER.mine = false;
+  if (FILTER.picks && !t.sides.some(s=>s.picks.some(p=>p.round === 1))) FILTER.picks = false;
+  if (FILTER.manager !== "all" && !t.parties.includes(FILTER.manager)) FILTER.manager = "all";
+  syncChips();
+  renderLog();
+  document.querySelectorAll(".tr.sel").forEach(e=>e.classList.remove("sel"));
+  document.querySelectorAll('.tr[data-trade="'+id+'"]').forEach(e=>e.classList.add("sel"));
+  if (scroll){
+    const card = document.getElementById("trade-" + id);
+    if (card) card.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion:reduce)").matches
+      ? "auto" : "smooth", block: "center"});
+  }
+}
+
+let syncChips = ()=>{};
+(function filters(){
+  const box = $("#filters");
+  const managers = [...new Set(DATA.all_trades.flatMap(t=>t.parties))].sort();
+  const chips = [];
+
+  function group(label, opts){
+    const g = document.createElement("div");
+    g.className = "fgroup";
+    g.textContent = label;
+    box.appendChild(g);
+    opts.forEach(o=>{
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = o.label;
+      b.addEventListener("click", ()=>{ o.on(); syncChips(); ANIMATE_LOG = true; renderLog(); ANIMATE_LOG = false; });
+      b._state = o.state;
+      chips.push(b);
+      box.appendChild(b);
+    });
+  }
+
+  group("season", [
+    {label:"all", state:()=>FILTER.season==="all", on:()=>FILTER.season="all"},
+    ...[2023,2024,2025,2026].map(s=>({
+      label:String(s), state:()=>FILTER.season===s, on:()=>FILTER.season=s}))
+  ]);
+  group("", [
+    {label:"only mine", state:()=>FILTER.mine, on:()=>FILTER.mine=!FILTER.mine},
+    // a first-round pick is the currency in this hobby; "moved any pick" would
+    // have caught 34 of 39 and answered nothing
+    {label:"moved a 1st", state:()=>FILTER.picks, on:()=>FILTER.picks=!FILTER.picks},
+  ]);
+
+  const sel = document.createElement("select");
+  sel.className = "chip";
+  sel.innerHTML = "<option value='all'>any manager</option>" +
+    managers.map(m=>`<option value="${m}">${m}</option>`).join("");
+  sel.addEventListener("change", ()=>{ FILTER.manager = sel.value; ANIMATE_LOG = true; renderLog(); ANIMATE_LOG = false; });
+  const g = document.createElement("div");
+  g.className = "fgroup"; g.textContent = "involving";
+  box.appendChild(g); box.appendChild(sel);
+
+  syncChips = ()=>{
+    chips.forEach(b=>b.setAttribute("aria-pressed", String(!!b._state())));
+    sel.value = FILTER.manager;
+  };
+  syncChips();
+  renderLog();
+})();
+
+/* ---------- provenance ---------- */
+(function prov(){
+  const a = DATA.app_state, c = DATA.calendar_summary, t = DATA.totals;
+  $("#prov").innerHTML =
+    "<p><b>Where these numbers come from.</b> Sleeper's public transaction log for this league, " +
+    "four seasons, pulled " + DATA.measured_at + ": <b>" + t.complete_transactions_4_seasons +
+    "</b> completed transactions, <b>" + t.trades_4_seasons + "</b> of them trades, <b>" +
+    t.trades_with_at_least_one_pick + "</b> of those involving at least one draft pick. " +
+    "Posture and partner rankings are read live from the running app's <code>/api/league/pulse</code>.</p>" +
+    "<p><b>What the app currently believes.</b> Its posture artifact was captured <b>" +
+    a.team_posture_artifact_captured.slice(0,10) + "</b>; its opportunity artifact <b>" +
+    a.league_opportunity_artifact_captured.slice(0,10) + "</b>; the endpoint reports status <b>" +
+    a.pulse_status + "</b>. Of the four components in its partner score, " +
+    "<b>activity recency is " + a.activity_recency_distinct_values.join("/") +
+    " for every team</b> and <b>divergence density is " + a.divergence_density_distinct_values.join("/") +
+    " for every team</b>. Only two of the four carry any information.</p>" +
+    "<p><b>What this cannot tell you.</b> " + DATA.caveats.join(" ") +
+    " Sep–Dec accounts for " + c.inseason_sep_dec_trades + " of " + t.trades_4_seasons +
+    " trades (" + Math.round(c.inseason_share*100) + "%, 95% interval " +
+    Math.round(c.inseason_ci95[0]*100) + "–" + Math.round(c.inseason_ci95[1]*100) +
+    "%) — the direction is solid, the monthly detail is not. " +
+    "And a manager's transaction record says what he has done, never what he intends next.</p>";
+})();
+</script>
+</body>
+</html>

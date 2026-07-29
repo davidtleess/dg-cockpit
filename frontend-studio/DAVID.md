@@ -1263,3 +1263,121 @@ earlier one, mark the old one superseded and link them.
   a finding before checking the instrument that produced it — the Carbon ruler and the "97.9% distinct"
   reading. Both were caught by Studio, one only just. **Check the instrument before reporting the
   reading.**
+
+- **2026-07-28 (evening) — A MARK THAT STANDS FOR A REAL EVENT MUST BE ABLE TO NAME IT. Told to
+  Studio for the second time.** David, on the 012 league-pulse calendar: *"cool data - i would like
+  to know what the trades were not just see a square. i like this league pulse idea - the data is
+  interesting."* Studio had drawn every trade in league history as a countable unit chart — 39
+  squares, one per trade — and given each square a **generic** tooltip ("one completed trade; N
+  closed in December") instead of the trade itself. The detail existed only for the 7 trades of the
+  current season, in a separate region below.
+  **Why this is the same criticism as 2026-07-26** (*"there are so many dots on the my team scale —
+  who are they??"*): Studio keeps building marks that are individually meaningful and then leaving
+  them anonymous. A countable unit chart makes an implicit promise — this square IS one thing — and
+  breaking that promise is worse than a bar, because the reader can see there is a specific thing
+  there and cannot reach it. **How to apply: if a mark stands for one real entity or event, the
+  reader must be able to get that entity's identity from the mark itself — name, date, participants,
+  what moved — not from a summary of its neighbours. Anonymity is only acceptable when the mark
+  genuinely stands for an aggregate.** Fixed same session: all 39 squares resolve on hover to the
+  full trade in the hobby's own words, click opens it in a filterable log of all 39 (was 7).
+  **Direction checkpoint, NOT an approval** — "i like this idea" and "the data is interesting" are
+  reactions to the concept; nothing is signed off, and the 012 relay is authored but unauthorised.
+  His original question — does league activity belong in this product — was answered warmly but not
+  in the words of a ruling.
+  **The finding underneath it, which is what earned the reaction:** the app has never called
+  Sleeper's transactions endpoint (0 grep matches), so its partner score carries
+  `activity_recency_score = 0.0` hardcoded and `divergence_density_score = 1.0` saturated — **two of
+  four displayed components are constants**, and the two lowest-ranked partners score *entirely* the
+  constant. Free data, four seasons, 746 transactions, 39 trades.
+
+- **2026-07-28 (evening) — LEAGUE TRADE HISTORY IS IN SCOPE, AND THE ASK IS BEHAVIOURAL, NOT
+  ARCHIVAL.** David, escalating the 012 sketch twice in one sitting: *"no the trade history is
+  important. i like the time series - perhaps theres a better way to viz it - but more importantly
+  the data could be used to spot manager trends - are there patterns we can vizualize? do teams in
+  the playoffs trade a lot at a certain time? what do they normally give up? does a manager have a
+  history of trading a certain way? are their positions that get traded the most? etc etc etc"* and
+  then: *"people are creature's of habit, right? what kind of habits can we track and use to our
+  advantage??"*
+  **What this settles:** the transaction log is not a curiosity and not a feed. Its value is
+  **opponent modelling** — turning four seasons of behaviour into knowledge about the eleven people
+  he negotiates with. That is a genuinely new region of the product; nothing in the app models the
+  *manager*, only the roster. **How to apply:** treat league-behaviour work as answering "what do I
+  know about this person that they don't know I know," and always terminate in something that
+  changes how David approaches them.
+
+- **2026-07-28 (evening) — CAPABILITY FACT, measured: AT FOUR SEASONS, ALMOST NO INDIVIDUAL TRADING
+  HABIT IS DISTINGUISHABLE BETWEEN MANAGERS. Engagement is the exception, and it is the exception
+  because of sample size.** Studio scored every habit David named by asking how many of the 55
+  manager-pairs have non-overlapping 95% intervals:
+  - **"what he takes home" (accepts picks vs players): 1 of 55 pairs separate.** Range looks
+    dramatic (0%–70%) and is mostly small-n noise.
+  - **"what he pays in": 0 of 55.** **"when he will deal": 0 of 55** — the 0%–100% range is
+    managers with one or two trades.
+  - **"which position he collects": median 6 players observed per manager** — too thin to claim a
+    lean at all.
+  - **"who is actually engaged": USABLE** — 641 waiver/free-agent moves and four seasons of waiver
+    budget, spreading 4.5 to 29.5 moves a season, with three managers who have spent nothing in
+    four years. **17× the sample of the trade log**, which is the whole reason it works.
+  - **"when the LEAGUE deals": USABLE** — pooled across twelve managers, so ~12× any individual
+    habit. 69% of trades close Sep–Dec; **this league has no trade deadline** (`trade_deadline: 99`),
+    which is why December is its busiest month rather than its last.
+  - The one league-level position finding that clears its baseline: **QB changes hands more often
+    than its share of rosters (27% of players traded vs 17% rostered)** — the superflex signature.
+    RB, WR and TE are all inside the noise.
+  **How to apply:** a habit surface must print the sample beside every habit and mark which ones the
+  data can support *yet*. The honest headline is that individual trading habits need more seasons,
+  and the behaviour that is measurable today is engagement — who touches his roster at all. Never
+  let a 0%–100% range on six observations look like a personality. **This is the 2026-07-21 rule
+  (measure where the variance lives before choosing an axis) applied to people instead of players,
+  and it killed three of the five columns Studio had already built.**
+
+- **2026-07-28 (evening) — IDENTITY FOLLOWS THE HUMAN, NEVER THE ROSTER SLOT AND NEVER THE TEAM
+  NAME. And drop the startup draft.** David: *"you don't need to include startup draft data. but
+  you do need to make sure the actual league manager is still with the team. some managers have
+  changed. some team names have changed but have the same manager."*
+  **Measured against the league's own four seasons, and he is right on both counts:**
+  - **Three managers have LEFT** (Khargreav9, Mike Rochichez "Scratch", Baynesy Beluga). Their
+    trades must never attach to whoever inherited the roster slot.
+  - **Free Kelly was formerly "All Gas No Brake"** — same Sleeper account, renamed team, and his
+    history has to travel through the rename as one continuous record.
+  - **Tenure is uneven:** nine managers since the 2023 startup, MDEF from 2024, jgil96 from 2025,
+    jkazzz from 2026.
+  **The defect this caught in Studio's own surface:** the board printed *"never traded in four
+  seasons"* against jgil96, who has been in the league **two**. A blank stretch of timeline read as
+  inactivity when it was actually absence. Fixed by hatching every lane before the manager joined,
+  printing tenure under every name, and stating any former name inline. **How to apply: whenever a
+  surface aggregates behaviour over time, resolve the actor to a stable identity (here Sleeper's
+  `user_id`) and render the period before they existed as MISSING, never as ZERO. A count compared
+  across actors with different tenure is not a comparison.**
+  **Startup draft: dropped at source**, not flagged — 38 trades, not 39. It moved picks in rounds up
+  to 18 against this league's three-round rookie draft and cannot recur. Its removal *strengthened*
+  the calendar finding: **five months (Jan, Feb, Apr, Jul, Aug) have never produced a trade in four
+  years**, and 27 of 38 close September–December.
+
+- **2026-07-28 (evening) — "HAVE YOU BEEN WORKING ON YOUR CRAFT?" — a fair challenge, and the honest
+  answer was NO.** David, on the 012 board: *"cool the data is getting better the viz could use some
+  work. have you been working on your craft? there are lots of really good front end design tools you
+  can hone your craft using."*
+  **Studio's honest self-assessment, given unprompted:** the previous 24 hours were spent building a
+  *measuring* instrument (the density gate) and applying *rules* from the craft library. That is
+  discipline, not craft. The library carries a full motion reference (`craft/motion-easing.md`,
+  Material 3 + Carbon tokens, spring `linear()`, the reduced-motion substitute rule) that Studio had
+  curated and **applied zero frames of.** Every surface this engagement has produced is static.
+  **What the criticism was actually pointing at, measured:** the best object on the board — a
+  manager's whole four-year trading history — was a **312px lane with 10px marks squeezed into a
+  table cell**, while the two least useful columns took 220px. Giving the lane its room (470px,
+  13×16px marks, legible season bands) also dropped the density gate's C1 from **2.74 to 1.71 per
+  10k px²** — level with the approved 006 front door — because density is measured per unit *area*,
+  and the fix for "too dense" was **more room, not fewer marks.** That is a genuinely useful
+  discovery and it inverts the instinct.
+  **How to apply, standing:** (1) craft time is not optional and does not mean reading — it means
+  applying technique to a live surface; (2) when a region is the most interesting thing on a page,
+  give it the most space, and check what is stealing that space; (3) motion is four decisions made
+  before any CSS — event (entrance / standard / exit), register, duration rung, reduced-motion
+  substitute — never one curve doing three jobs; (4) `prefers-reduced-motion` **substitutes**
+  (opacity, no travel), it never deletes; verified here at 72/72 marks opaque with zero transforms.
+  **Shipped this session:** motion tokens from the curated reference, a staggered mark entrance that
+  teaches the timeline axis (WCAG SC 2.3.3 — motion that *is* the information), state-driven filter
+  transitions, top-edge highlights via `color-mix()` for depth, `@property` for an animatable custom
+  property, and the display face finally doing work on manager names. **Direction checkpoint only —
+  David has not seen the result.**

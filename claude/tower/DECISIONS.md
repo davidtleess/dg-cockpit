@@ -456,3 +456,43 @@ REAL GAP FOUND WHILE TESTING THE FIX — the more important half:
 LESSON     Testing a narrowing change is what exposed a hole that had been open the whole time.
            Do not test only the case you are fixing — test the neighbours.
 AUTHORITY  TRAFFIC (bug fix, not an authority change: nothing previously refused is now allowed)
+
+## 2026-07-28 17:22 ET — evening session, TW28-EVE-1
+| ruling | authority |
+|---|---|
+| Woke ONLY the implementing lane (dynasty:1.1) on the 113 MODEL_UNCERTAIN rows; Codex, Gemini and Studio left stopped | DAVID-WORD ("start a lane on the 113 rows", 17:21) |
+| Framed it as releasing the crew's own escalated item framing v4 §0.1, not as new scope | TRAFFIC (the lane's own ledger record is the source) |
+| Held §0.2 partial-coverage threshold OUT of tonight's scope — his word named the 113 rows only | HELD (narrower reading wins when scope is ambiguous) |
+| Told the lane on-screen wording is David's and it must bring OPTIONS, not a chosen sentence | DAVID-STANDING (product copy is his gate) |
+| Told the lane commit AND push require his separate fresh word; Tower authorises neither | DAVID-STANDING (2026-07-28 charter: push only inside an ordered closeout, never authored by Tower) |
+| Sent with presend WARN=contamination-shape, not stripped: the 113/581 figures are the LANE'S OWN, quoted back. Message states this explicitly and says the lane's fresh measurement wins. | TRAFFIC — recorded because the guard fired and Tower overrode it deliberately |
+
+## 2026-07-28 19:33 ET — TW28-EVE-2 / EVE-3
+| ruling | authority |
+|---|---|
+| Framing + Codex challenge + wording options proceed tonight | DAVID-WORD ("do the framing and wording options tonight", 19:31) |
+| WOKE the review lane (dynasty:1.2) — a challenge is part of what David approved | DAVID-WORD (same); Gemini and Studio stay stopped |
+| Read "perhaps we can build as well" as APPETITE, not a commit/push authorisation; told BOTH lanes so explicitly | HELD — the narrower reading wins until David says otherwise (standing rule, 2026-07-28) |
+| Sequenced it framing -> challenge -> options -> DAVID'S PICK -> build, and told the lane to send options immediately rather than batching them behind build prep | TRAFFIC |
+| Sent the review lane a wake message carrying ZERO figures from the implementing lane's measurement, and said so in the message | DAVID-STANDING (independence cannot be bought back after handing over the answer) |
+| Relayed the lane's first return to David LABELLED unreviewed | DAVID-STANDING (unreviewed findings reach David labelled or not at all) |
+
+## 2026-07-28 21:04 ET — THE SIX LAYERS (TW28-LAYERS-1)
+| ruling | authority |
+|---|---|
+| Captured David's six-layer doctrine VERBATIM to ~/.claude/tower/LAYERS.md before doing anything else | DAVID-WORD ("nothing is of higher priority than the memorialization of these rules", 21:04) |
+| Ordered the crew to memorialise it into the governance corpus in HIS words, then wire the ritual — memorialise FIRST, ritualise SECOND | DAVID-WORD (his explicit ordering) |
+| Told the crew the ritual DESIGN is theirs — they own the operating loop; Tower offered its read as input, not instruction | TRAFFIC |
+| Recorded tonight's failure alongside the rule: 3.5h of layer-6 wording work over a layer-1 hole (501/501 modeled players missing nfl_draft_round), caught by DAVID not by the cockpit | DAVID-STANDING (a rule without its originating failure decays into a poster) |
+| Bound Tower itself: layer stamp on every relayed order · the foundation question before any layer 3-6 work · layer position reported to David unprompted when it changes his thinking · checked at boot and closeout | DAVID-WORD ("TOWER to fortify this for itself") |
+| Studio EXCLUDED from the doctrine — it is our internal architecture | DAVID-STANDING (inversion rule, 2026-07-21) |
+| Did NOT authorise a commit of the doctrine despite its importance; flagged to David that it is the file that most needs his commit word tonight | HELD (commit is his word; importance does not create authority) |
+
+## 2026-07-28 21:13 ET — CHARTER EDIT + NEXT THREAD
+| ruling | authority |
+|---|---|
+| Released the doctrine->Codex cross-lane send | DAVID-WORD ("release it", 21:13) |
+| CHARTER EDIT: review routing between CREW lanes granted PERMANENTLY; written into ~/.claude/agents/tower.md as delegated authority 4 | DAVID-WORD ("yes i grant you review routinng permanently", 21:13) |
+| Scoped that grant NARROWLY on Tower's own initiative: crew-to-crew review routing only. Studio traffic still fully gated both directions. Pushes/commits/deletes/schedules/network-writes/new-work unchanged. A routing dialog carrying a gate-shaped authorisation still goes to David. | HELD (a grant Tower scopes narrower than given is the safe direction) |
+| NEXT THREAD SET: a layer-1/2 inventory — what we ingest, what is missing, what is stale, what is silently a constant | DAVID-WORD ("i agree an inventory of layers 1 and 2 ... is the next most important thing to do", 21:13) |
+| The layer-1/2 inventory SUPERSEDES the parked draft-data question as a standalone item — the draft-capital hole is one finding the inventory must cover, not a separate thread | TRAFFIC |

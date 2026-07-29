@@ -1,0 +1,2080 @@
+{
+ "you": "Woodbury Riders",
+ "trades": [
+  {
+   "id": "1369143958256504832",
+   "season": 2026,
+   "date": "2026-06-07",
+   "month": 6,
+   "parties": [
+    "Woodbury Riders",
+    "jspringe88"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [],
+     "picks": [
+      {
+       "label": "2027 3rd",
+       "season": "2027",
+       "round": 3,
+       "origin": "jspringe88"
+      },
+      {
+       "label": "2028 3rd",
+       "season": "2028",
+       "round": 3,
+       "origin": "jspringe88"
+      }
+     ]
+    },
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "Tyrone Tracy",
+       "pos": "RB",
+       "id": "11655"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "Woodbury Riders got 2027 3rd, 2028 3rd; jspringe88 got Tyrone Tracy"
+  },
+  {
+   "id": "1366803088559607808",
+   "season": 2026,
+   "date": "2026-06-01",
+   "month": 6,
+   "parties": [
+    "MDEF",
+    "jkazzz"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Drake Maye",
+       "pos": "QB",
+       "id": "11564"
+      },
+      {
+       "name": "Malachi Fields",
+       "pos": "WR",
+       "id": "13285"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "jkazzz",
+     "players": [
+      {
+       "name": "Jonathon Brooks",
+       "pos": "RB",
+       "id": "11583"
+      },
+      {
+       "name": "Jaxon Smith-Njigba",
+       "pos": "WR",
+       "id": "9488"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2028 1st",
+       "season": "2028",
+       "round": 1,
+       "origin": "MDEF"
+      },
+      {
+       "label": "2028 2nd",
+       "season": "2028",
+       "round": 2,
+       "origin": "MDEF"
+      }
+     ]
+    }
+   ],
+   "n_players": 4,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "MDEF got Drake Maye, Malachi Fields; jkazzz got Jonathon Brooks, Jaxon Smith-Njigba, 2028 1st, 2028 2nd"
+  },
+  {
+   "id": "1365162652438921216",
+   "season": 2026,
+   "date": "2026-05-27",
+   "month": 5,
+   "parties": [
+    "Free Kelly",
+    "Drew P. Bauls"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Josh Allen",
+       "pos": "QB",
+       "id": "4984"
+      },
+      {
+       "name": "DK Metcalf",
+       "pos": "WR",
+       "id": "5846"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Drew P. Bauls",
+     "players": [],
+     "picks": [
+      {
+       "label": "2028 1st (Kissane\u2019s Team)",
+       "season": "2028",
+       "round": 1,
+       "origin": "Kissane\u2019s Team"
+      },
+      {
+       "label": "2027 1st",
+       "season": "2027",
+       "round": 1,
+       "origin": "Free Kelly"
+      },
+      {
+       "label": "2028 1st",
+       "season": "2028",
+       "round": 1,
+       "origin": "Free Kelly"
+      },
+      {
+       "label": "his own 2027 1st",
+       "season": "2027",
+       "round": 1,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 4,
+   "startup_era": false,
+   "headline": "Free Kelly got Josh Allen, DK Metcalf; Drew P. Bauls got 2028 1st (Kissane\u2019s Team), 2027 1st, 2028 1st, his own 2027 1st"
+  },
+  {
+   "id": "1362229921669222400",
+   "season": 2026,
+   "date": "2026-05-18",
+   "month": 5,
+   "parties": [
+    "Free Kelly",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Jalen Milroe",
+       "pos": "QB",
+       "id": "12510"
+      },
+      {
+       "name": "Aaron Rodgers",
+       "pos": "QB",
+       "id": "96"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [],
+     "picks": [
+      {
+       "label": "2026 3rd",
+       "season": "2026",
+       "round": 3,
+       "origin": "Free Kelly"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got Jalen Milroe, Aaron Rodgers; YippeKiYay MarshalFaulker got 2026 3rd"
+  },
+  {
+   "id": "1359931719590879232",
+   "season": 2026,
+   "date": "2026-05-13",
+   "month": 5,
+   "parties": [
+    "MDEF",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "MDEF",
+     "players": [],
+     "picks": [
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Derrick Henry",
+       "pos": "RB",
+       "id": "3198"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "MDEF got 2026 1st; YippeKiYay MarshalFaulker got Derrick Henry"
+  },
+  {
+   "id": "1360006902309744640",
+   "season": 2026,
+   "date": "2026-05-12",
+   "month": 5,
+   "parties": [
+    "rzalika",
+    "jkazzz"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "rzalika",
+     "players": [],
+     "picks": [
+      {
+       "label": "2028 2nd",
+       "season": "2028",
+       "round": 2,
+       "origin": "jkazzz"
+      },
+      {
+       "label": "2026 1st (Drew P. Bauls)",
+       "season": "2026",
+       "round": 1,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    },
+    {
+     "team": "jkazzz",
+     "players": [
+      {
+       "name": "Brock Purdy",
+       "pos": "QB",
+       "id": "8183"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 2nd (YippeKiYay MarshalFaulker)",
+       "season": "2026",
+       "round": 2,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 3,
+   "startup_era": false,
+   "headline": "rzalika got 2028 2nd, 2026 1st (Drew P. Bauls); jkazzz got Brock Purdy, 2026 2nd (YippeKiYay MarshalFaulker)"
+  },
+  {
+   "id": "1358249456637587456",
+   "season": 2026,
+   "date": "2026-05-07",
+   "month": 5,
+   "parties": [
+    "Free Kelly",
+    "Kissane\u2019s Team"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [],
+     "picks": [
+      {
+       "label": "2028 1st",
+       "season": "2028",
+       "round": 1,
+       "origin": "Kissane\u2019s Team"
+      }
+     ]
+    },
+    {
+     "team": "Kissane\u2019s Team",
+     "players": [
+      {
+       "name": "Baker Mayfield",
+       "pos": "QB",
+       "id": "4892"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got 2028 1st; Kissane\u2019s Team got Baker Mayfield"
+  },
+  {
+   "id": "1306804768248692736",
+   "season": 2025,
+   "date": "2025-12-16",
+   "month": 12,
+   "parties": [
+    "rzalika",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "rzalika",
+     "players": [],
+     "picks": [
+      {
+       "label": "2026 2nd",
+       "season": "2026",
+       "round": 2,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Kirk Cousins",
+       "pos": "QB",
+       "id": "1166"
+      },
+      {
+       "name": "Aaron Rodgers",
+       "pos": "QB",
+       "id": "96"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "rzalika got 2026 2nd; YippeKiYay MarshalFaulker got Kirk Cousins, Aaron Rodgers"
+  },
+  {
+   "id": "1303540201607413760",
+   "season": 2025,
+   "date": "2025-12-10",
+   "month": 12,
+   "parties": [
+    "Free Kelly",
+    "Florida Man"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Baker Mayfield",
+       "pos": "QB",
+       "id": "4892"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 2nd",
+       "season": "2026",
+       "round": 2,
+       "origin": "Florida Man"
+      }
+     ]
+    },
+    {
+     "team": "Florida Man",
+     "players": [
+      {
+       "name": "Kaleb Johnson",
+       "pos": "RB",
+       "id": "12504"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 1st (rzalika)",
+       "season": "2026",
+       "round": 1,
+       "origin": "rzalika"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "Free Kelly got Baker Mayfield, 2026 2nd; Florida Man got Kaleb Johnson, 2026 1st (rzalika)"
+  },
+  {
+   "id": "1301798846308835328",
+   "season": 2025,
+   "date": "2025-12-03",
+   "month": 12,
+   "parties": [
+    "Free Kelly",
+    "rzalika"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Travis Etienne",
+       "pos": "RB",
+       "id": "7543"
+      },
+      {
+       "name": "Kenneth Walker",
+       "pos": "RB",
+       "id": "8151"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "rzalika"
+      }
+     ]
+    },
+    {
+     "team": "rzalika",
+     "players": [
+      {
+       "name": "Travis Hunter",
+       "pos": "WR",
+       "id": "12530"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "Free Kelly"
+      },
+      {
+       "label": "his own 2026 2nd",
+       "season": "2026",
+       "round": 2,
+       "origin": "rzalika"
+      }
+     ]
+    }
+   ],
+   "n_players": 3,
+   "n_picks": 3,
+   "startup_era": false,
+   "headline": "Free Kelly got Travis Etienne, Kenneth Walker, 2026 1st; rzalika got Travis Hunter, 2026 1st, his own 2026 2nd"
+  },
+  {
+   "id": "1301742918767222784",
+   "season": 2025,
+   "date": "2025-12-03",
+   "month": 12,
+   "parties": [
+    "MDEF",
+    "rzalika"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Hunter Henry",
+       "pos": "TE",
+       "id": "3214"
+      },
+      {
+       "name": "Jonathan Taylor",
+       "pos": "RB",
+       "id": "6813"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 3rd",
+       "season": "2026",
+       "round": 3,
+       "origin": "rzalika"
+      }
+     ]
+    },
+    {
+     "team": "rzalika",
+     "players": [
+      {
+       "name": "Harold Fannin",
+       "pos": "TE",
+       "id": "12506"
+      },
+      {
+       "name": "C.J. Stroud",
+       "pos": "QB",
+       "id": "9758"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 4,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "MDEF got Hunter Henry, Jonathan Taylor, 2026 3rd; rzalika got Harold Fannin, C.J. Stroud"
+  },
+  {
+   "id": "1298455802905911296",
+   "season": 2025,
+   "date": "2025-11-24",
+   "month": 11,
+   "parties": [
+    "Woodbury Riders",
+    "Kissane\u2019s Team"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "AJ Barner",
+       "pos": "TE",
+       "id": "11603"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2027 1st",
+       "season": "2027",
+       "round": 1,
+       "origin": "Kissane\u2019s Team"
+      }
+     ]
+    },
+    {
+     "team": "Kissane\u2019s Team",
+     "players": [
+      {
+       "name": "Khalil Shakir",
+       "pos": "WR",
+       "id": "8134"
+      },
+      {
+       "name": "Jameson Williams",
+       "pos": "WR",
+       "id": "8148"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 3,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Woodbury Riders got AJ Barner, 2027 1st; Kissane\u2019s Team got Khalil Shakir, Jameson Williams"
+  },
+  {
+   "id": "1298374694449197056",
+   "season": 2025,
+   "date": "2025-11-23",
+   "month": 11,
+   "parties": [
+    "Woodbury Riders",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [],
+     "picks": [
+      {
+       "label": "2027 3rd",
+       "season": "2027",
+       "round": 3,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Sean Tucker",
+       "pos": "RB",
+       "id": "9506"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Woodbury Riders got 2027 3rd; YippeKiYay MarshalFaulker got Sean Tucker"
+  },
+  {
+   "id": "1271979962475241472",
+   "season": 2025,
+   "date": "2025-09-11",
+   "month": 9,
+   "parties": [
+    "MDEF",
+    "jspringe88"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Derrick Henry",
+       "pos": "RB",
+       "id": "3198"
+      },
+      {
+       "name": "Marquise Brown",
+       "pos": "WR",
+       "id": "5848"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "A.J. Brown",
+       "pos": "WR",
+       "id": "5859"
+      },
+      {
+       "name": "Jordan Mason",
+       "pos": "RB",
+       "id": "8408"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 4,
+   "n_picks": 0,
+   "startup_era": false,
+   "headline": "MDEF got Derrick Henry, Marquise Brown; jspringe88 got A.J. Brown, Jordan Mason"
+  },
+  {
+   "id": "1225284716819656704",
+   "season": 2025,
+   "date": "2025-05-06",
+   "month": 5,
+   "parties": [
+    "Drew P. Bauls",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Drew P. Bauls",
+     "players": [
+      {
+       "name": "Noah Gray",
+       "pos": "TE",
+       "id": "7828"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [],
+     "picks": [
+      {
+       "label": "2025 3rd",
+       "season": "2025",
+       "round": 3,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Drew P. Bauls got Noah Gray; YippeKiYay MarshalFaulker got 2025 3rd"
+  },
+  {
+   "id": "1224524567880400896",
+   "season": 2025,
+   "date": "2025-05-04",
+   "month": 5,
+   "parties": [
+    "YippeKiYay MarshalFaulker",
+    "Florida Man"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [],
+     "picks": [
+      {
+       "label": "2025 1st",
+       "season": "2025",
+       "round": 1,
+       "origin": "Florida Man"
+      }
+     ]
+    },
+    {
+     "team": "Florida Man",
+     "players": [
+      {
+       "name": "Courtland Sutton",
+       "pos": "WR",
+       "id": "5045"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 1st",
+       "season": "2025",
+       "round": 1,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "YippeKiYay MarshalFaulker got 2025 1st; Florida Man got Courtland Sutton, 2025 1st"
+  },
+  {
+   "id": "1170218515723436032",
+   "season": 2024,
+   "date": "2024-12-05",
+   "month": 12,
+   "parties": [
+    "Woodbury Riders",
+    "MDEF"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Tank Dell",
+       "pos": "WR",
+       "id": "9502"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 2nd",
+       "season": "2025",
+       "round": 2,
+       "origin": "MDEF"
+      },
+      {
+       "label": "2025 3rd (Free Kelly)",
+       "season": "2025",
+       "round": 3,
+       "origin": "Free Kelly"
+      }
+     ]
+    },
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Sam Darnold",
+       "pos": "QB",
+       "id": "4943"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Tank Dell, 2025 2nd, 2025 3rd (Free Kelly); MDEF got Sam Darnold"
+  },
+  {
+   "id": "1170032265276260352",
+   "season": 2024,
+   "date": "2024-12-04",
+   "month": 12,
+   "parties": [
+    "Free Kelly",
+    "rzalika"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Trey Benson",
+       "pos": "RB",
+       "id": "11589"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 2nd",
+       "season": "2026",
+       "round": 2,
+       "origin": "rzalika"
+      }
+     ]
+    },
+    {
+     "team": "rzalika",
+     "players": [
+      {
+       "name": "Travis Etienne",
+       "pos": "RB",
+       "id": "7543"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got Trey Benson, 2026 2nd; rzalika got Travis Etienne"
+  },
+  {
+   "id": "1160997969781473280",
+   "season": 2024,
+   "date": "2024-11-14",
+   "month": 11,
+   "parties": [
+    "Woodbury Riders",
+    "Seidmans Sasquatches"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Rome Odunze",
+       "pos": "WR",
+       "id": "11620"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Seidmans Sasquatches",
+     "players": [
+      {
+       "name": "Austin Ekeler",
+       "pos": "RB",
+       "id": "4663"
+      },
+      {
+       "name": "Mark Andrews",
+       "pos": "TE",
+       "id": "5012"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 3,
+   "n_picks": 0,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Rome Odunze; Seidmans Sasquatches got Austin Ekeler, Mark Andrews"
+  },
+  {
+   "id": "1159531958150651904",
+   "season": 2024,
+   "date": "2024-11-05",
+   "month": 11,
+   "parties": [
+    "Woodbury Riders",
+    "Drew P. Bauls"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [],
+     "picks": [
+      {
+       "label": "2027 2nd",
+       "season": "2027",
+       "round": 2,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    },
+    {
+     "team": "Drew P. Bauls",
+     "players": [
+      {
+       "name": "DeAndre Hopkins",
+       "pos": "WR",
+       "id": "1426"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Woodbury Riders got 2027 2nd; Drew P. Bauls got DeAndre Hopkins"
+  },
+  {
+   "id": "1159526489436712960",
+   "season": 2024,
+   "date": "2024-11-05",
+   "month": 11,
+   "parties": [
+    "Drew P. Bauls",
+    "Baynesy Beluga"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Drew P. Bauls",
+     "players": [
+      {
+       "name": "Davante Adams",
+       "pos": "WR",
+       "id": "2133"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Baynesy Beluga",
+     "players": [
+      {
+       "name": "Brandon Aiyuk",
+       "pos": "WR",
+       "id": "6803"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Drew P. Bauls got Davante Adams; Baynesy Beluga got Brandon Aiyuk, 2026 1st"
+  },
+  {
+   "id": "1159516423757123584",
+   "season": 2024,
+   "date": "2024-11-05",
+   "month": 11,
+   "parties": [
+    "Free Kelly",
+    "Drew P. Bauls"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Rashee Rice",
+       "pos": "WR",
+       "id": "10229"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2027 1st",
+       "season": "2027",
+       "round": 1,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    },
+    {
+     "team": "Drew P. Bauls",
+     "players": [
+      {
+       "name": "DK Metcalf",
+       "pos": "WR",
+       "id": "5846"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got Rashee Rice, 2027 1st; Drew P. Bauls got DK Metcalf"
+  },
+  {
+   "id": "1150300584001675264",
+   "season": 2024,
+   "date": "2024-10-11",
+   "month": 10,
+   "parties": [
+    "jspringe88",
+    "Baynesy Beluga"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "Derrick Henry",
+       "pos": "RB",
+       "id": "3198"
+      },
+      {
+       "name": "Joe Mixon",
+       "pos": "RB",
+       "id": "4018"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd",
+       "season": "2025",
+       "round": 3,
+       "origin": "Baynesy Beluga"
+      }
+     ]
+    },
+    {
+     "team": "Baynesy Beluga",
+     "players": [],
+     "picks": [
+      {
+       "label": "2025 1st",
+       "season": "2025",
+       "round": 1,
+       "origin": "jspringe88"
+      },
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "jspringe88"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 3,
+   "startup_era": false,
+   "headline": "jspringe88 got Derrick Henry, Joe Mixon, 2025 3rd; Baynesy Beluga got 2025 1st, 2026 1st"
+  },
+  {
+   "id": "1150293201275940864",
+   "season": 2024,
+   "date": "2024-10-11",
+   "month": 10,
+   "parties": [
+    "Woodbury Riders",
+    "MDEF"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Braelon Allen",
+       "pos": "RB",
+       "id": "11576"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2026 1st",
+       "season": "2026",
+       "round": 1,
+       "origin": "MDEF"
+      },
+      {
+       "label": "2027 1st",
+       "season": "2027",
+       "round": 1,
+       "origin": "MDEF"
+      },
+      {
+       "label": "2027 2nd",
+       "season": "2027",
+       "round": 2,
+       "origin": "MDEF"
+      }
+     ]
+    },
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "A.J. Brown",
+       "pos": "WR",
+       "id": "5859"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd (YippeKiYay MarshalFaulker)",
+       "season": "2025",
+       "round": 3,
+       "origin": "YippeKiYay MarshalFaulker"
+      },
+      {
+       "label": "2026 3rd (YippeKiYay MarshalFaulker)",
+       "season": "2026",
+       "round": 3,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 5,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Braelon Allen, 2026 1st, 2027 1st, 2027 2nd; MDEF got A.J. Brown, 2025 3rd (YippeKiYay MarshalFaulker), 2026 3rd (YippeKiYay MarshalFaulker)"
+  },
+  {
+   "id": "1144463593514090496",
+   "season": 2024,
+   "date": "2024-09-25",
+   "month": 9,
+   "parties": [
+    "Woodbury Riders",
+    "MDEF"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [],
+     "picks": [
+      {
+       "label": "2025 1st",
+       "season": "2025",
+       "round": 1,
+       "origin": "MDEF"
+      }
+     ]
+    },
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Jordan Mason",
+       "pos": "RB",
+       "id": "8408"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 2nd (Drew P. Bauls)",
+       "season": "2025",
+       "round": 2,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 2,
+   "startup_era": false,
+   "headline": "Woodbury Riders got 2025 1st; MDEF got Jordan Mason, 2025 2nd (Drew P. Bauls)"
+  },
+  {
+   "id": "1098042249524482048",
+   "season": 2024,
+   "date": "2024-05-19",
+   "month": 5,
+   "parties": [
+    "MDEF",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "MDEF",
+     "players": [
+      {
+       "name": "Matthew Stafford",
+       "pos": "QB",
+       "id": "421"
+      },
+      {
+       "name": "Kyren Williams",
+       "pos": "RB",
+       "id": "8150"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd (Free Kelly)",
+       "season": "2025",
+       "round": 3,
+       "origin": "Free Kelly"
+      }
+     ]
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Jahmyr Gibbs",
+       "pos": "RB",
+       "id": "9221"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 3,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "MDEF got Matthew Stafford, Kyren Williams, 2025 3rd (Free Kelly); YippeKiYay MarshalFaulker got Jahmyr Gibbs"
+  },
+  {
+   "id": "1077055935450910720",
+   "season": 2024,
+   "date": "2024-03-23",
+   "month": 3,
+   "parties": [
+    "jspringe88",
+    "Florida Man"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "Justin Jefferson",
+       "pos": "WR",
+       "id": "6794"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Florida Man",
+     "players": [],
+     "picks": [
+      {
+       "label": "2024 1st",
+       "season": "2024",
+       "round": 1,
+       "origin": "jspringe88"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "jspringe88 got Justin Jefferson; Florida Man got 2024 1st"
+  },
+  {
+   "id": "1047291755177664512",
+   "season": 2023,
+   "date": "2023-12-31",
+   "month": 12,
+   "parties": [
+    "Free Kelly",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Will Levis",
+       "pos": "QB",
+       "id": "9999"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Matthew Stafford",
+       "pos": "QB",
+       "id": "421"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd",
+       "season": "2025",
+       "round": 3,
+       "origin": "Free Kelly"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got Will Levis; YippeKiYay MarshalFaulker got Matthew Stafford, 2025 3rd"
+  },
+  {
+   "id": "1044348144487604224",
+   "season": 2023,
+   "date": "2023-12-23",
+   "month": 12,
+   "parties": [
+    "Mike Rochichez \u201cScratch\u201d",
+    "jspringe88"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Mike Rochichez \u201cScratch\u201d",
+     "players": [
+      {
+       "name": "Michael Pittman",
+       "pos": "WR",
+       "id": "6819"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "T.J. Hockenson",
+       "pos": "TE",
+       "id": "5844"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 0,
+   "startup_era": false,
+   "headline": "Mike Rochichez \u201cScratch\u201d got Michael Pittman; jspringe88 got T.J. Hockenson"
+  },
+  {
+   "id": "1043724278879424512",
+   "season": 2023,
+   "date": "2023-12-22",
+   "month": 12,
+   "parties": [
+    "Free Kelly",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Matthew Stafford",
+       "pos": "QB",
+       "id": "421"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [
+      {
+       "name": "Will Levis",
+       "pos": "QB",
+       "id": "9999"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 0,
+   "startup_era": false,
+   "headline": "Free Kelly got Matthew Stafford; YippeKiYay MarshalFaulker got Will Levis"
+  },
+  {
+   "id": "1043704307285848064",
+   "season": 2023,
+   "date": "2023-12-21",
+   "month": 12,
+   "parties": [
+    "Mike Rochichez \u201cScratch\u201d",
+    "rzalika"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Mike Rochichez \u201cScratch\u201d",
+     "players": [
+      {
+       "name": "DJ Moore",
+       "pos": "WR",
+       "id": "4983"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "rzalika",
+     "players": [
+      {
+       "name": "Keenan Allen",
+       "pos": "WR",
+       "id": "1479"
+      },
+      {
+       "name": "Aaron Rodgers",
+       "pos": "QB",
+       "id": "96"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2024 2nd",
+       "season": "2024",
+       "round": 2,
+       "origin": "Mike Rochichez \u201cScratch\u201d"
+      }
+     ]
+    }
+   ],
+   "n_players": 3,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Mike Rochichez \u201cScratch\u201d got DJ Moore; rzalika got Keenan Allen, Aaron Rodgers, 2024 2nd"
+  },
+  {
+   "id": "1042457281406849024",
+   "season": 2023,
+   "date": "2023-12-19",
+   "month": 12,
+   "parties": [
+    "Woodbury Riders",
+    "Drew P. Bauls"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [],
+     "picks": [
+      {
+       "label": "2025 1st",
+       "season": "2025",
+       "round": 1,
+       "origin": "Drew P. Bauls"
+      },
+      {
+       "label": "2025 2nd",
+       "season": "2025",
+       "round": 2,
+       "origin": "Drew P. Bauls"
+      }
+     ]
+    },
+    {
+     "team": "Drew P. Bauls",
+     "players": [
+      {
+       "name": "Alvin Kamara",
+       "pos": "RB",
+       "id": "4035"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd",
+       "season": "2025",
+       "round": 3,
+       "origin": "Woodbury Riders"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 3,
+   "startup_era": false,
+   "headline": "Woodbury Riders got 2025 1st, 2025 2nd; Drew P. Bauls got Alvin Kamara, 2025 3rd"
+  },
+  {
+   "id": "1041187070271877120",
+   "season": 2023,
+   "date": "2023-12-15",
+   "month": 12,
+   "parties": [
+    "Woodbury Riders",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Alvin Kamara",
+       "pos": "RB",
+       "id": "4035"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2025 3rd",
+       "season": "2025",
+       "round": 3,
+       "origin": "YippeKiYay MarshalFaulker"
+      },
+      {
+       "label": "2026 3rd",
+       "season": "2026",
+       "round": 3,
+       "origin": "YippeKiYay MarshalFaulker"
+      }
+     ]
+    },
+    {
+     "team": "YippeKiYay MarshalFaulker",
+     "players": [],
+     "picks": [
+      {
+       "label": "2024 1st",
+       "season": "2024",
+       "round": 1,
+       "origin": "Woodbury Riders"
+      }
+     ]
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 3,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Alvin Kamara, 2025 3rd, 2026 3rd; YippeKiYay MarshalFaulker got 2024 1st"
+  },
+  {
+   "id": "1033104081201541120",
+   "season": 2023,
+   "date": "2023-11-22",
+   "month": 11,
+   "parties": [
+    "Free Kelly",
+    "Florida Man"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [
+      {
+       "name": "Dak Prescott",
+       "pos": "QB",
+       "id": "3294"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Florida Man",
+     "players": [
+      {
+       "name": "Baker Mayfield",
+       "pos": "QB",
+       "id": "4892"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2024 2nd (jspringe88)",
+       "season": "2024",
+       "round": 2,
+       "origin": "jspringe88"
+      }
+     ]
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got Dak Prescott; Florida Man got Baker Mayfield, 2024 2nd (jspringe88)"
+  },
+  {
+   "id": "1032748233665196032",
+   "season": 2023,
+   "date": "2023-11-21",
+   "month": 11,
+   "parties": [
+    "Woodbury Riders",
+    "Kissane\u2019s Team"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Russell Wilson",
+       "pos": "QB",
+       "id": "1234"
+      }
+     ],
+     "picks": [
+      {
+       "label": "2024 1st",
+       "season": "2024",
+       "round": 1,
+       "origin": "Kissane\u2019s Team"
+      }
+     ]
+    },
+    {
+     "team": "Kissane\u2019s Team",
+     "players": [
+      {
+       "name": "D'Andre Swift",
+       "pos": "RB",
+       "id": "6790"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Russell Wilson, 2024 1st; Kissane\u2019s Team got D'Andre Swift"
+  },
+  {
+   "id": "1022218793621250048",
+   "season": 2023,
+   "date": "2023-10-25",
+   "month": 10,
+   "parties": [
+    "Free Kelly",
+    "jspringe88"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "Free Kelly",
+     "players": [],
+     "picks": [
+      {
+       "label": "2024 2nd",
+       "season": "2024",
+       "round": 2,
+       "origin": "jspringe88"
+      }
+     ]
+    },
+    {
+     "team": "jspringe88",
+     "players": [
+      {
+       "name": "Michael Pittman",
+       "pos": "WR",
+       "id": "6819"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "Free Kelly got 2024 2nd; jspringe88 got Michael Pittman"
+  },
+  {
+   "id": "1011120165664485376",
+   "season": 2023,
+   "date": "2023-09-23",
+   "month": 9,
+   "parties": [
+    "jspringe88",
+    "Florida Man"
+   ],
+   "involves_you": false,
+   "sides": [
+    {
+     "team": "jspringe88",
+     "players": [],
+     "picks": [
+      {
+       "label": "2024 2nd",
+       "season": "2024",
+       "round": 2,
+       "origin": "Florida Man"
+      }
+     ]
+    },
+    {
+     "team": "Florida Man",
+     "players": [
+      {
+       "name": "Roschon Johnson",
+       "pos": "RB",
+       "id": "10235"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 1,
+   "n_picks": 1,
+   "startup_era": false,
+   "headline": "jspringe88 got 2024 2nd; Florida Man got Roschon Johnson"
+  },
+  {
+   "id": "1010625630267936768",
+   "season": 2023,
+   "date": "2023-09-21",
+   "month": 9,
+   "parties": [
+    "Woodbury Riders",
+    "Florida Man"
+   ],
+   "involves_you": true,
+   "sides": [
+    {
+     "team": "Woodbury Riders",
+     "players": [
+      {
+       "name": "Khalil Herbert",
+       "pos": "RB",
+       "id": "7608"
+      }
+     ],
+     "picks": []
+    },
+    {
+     "team": "Florida Man",
+     "players": [
+      {
+       "name": "Michael Thomas",
+       "pos": "WR",
+       "id": "3199"
+      }
+     ],
+     "picks": []
+    }
+   ],
+   "n_players": 2,
+   "n_picks": 0,
+   "startup_era": false,
+   "headline": "Woodbury Riders got Khalil Herbert; Florida Man got Michael Thomas"
+  }
+ ],
+ "tenure": {
+  "Woodbury Riders": {
+   "owner_id": "827345221493850112",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Woodbury Riders",
+   "former_names": [],
+   "roster_slots_held": [
+    1
+   ]
+  },
+  "Khargreav9": {
+   "owner_id": "978702566609444864",
+   "first_season": 2023,
+   "last_season": 2024,
+   "seasons": [
+    2023,
+    2024
+   ],
+   "still_in_league": false,
+   "current_name": "Khargreav9",
+   "former_names": [],
+   "roster_slots_held": [
+    2
+   ]
+  },
+  "Mike Rochichez \u201cScratch\u201d": {
+   "owner_id": "727609206567428096",
+   "first_season": 2023,
+   "last_season": 2023,
+   "seasons": [
+    2023
+   ],
+   "still_in_league": false,
+   "current_name": "Mike Rochichez \u201cScratch\u201d",
+   "former_names": [],
+   "roster_slots_held": [
+    3
+   ]
+  },
+  "Free Kelly": {
+   "owner_id": "913546847858470912",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Free Kelly",
+   "former_names": [
+    "All Gas No Brake "
+   ],
+   "roster_slots_held": [
+    4
+   ]
+  },
+  "rzalika": {
+   "owner_id": "913634756779212800",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "rzalika",
+   "former_names": [],
+   "roster_slots_held": [
+    5
+   ]
+  },
+  "Drew P. Bauls": {
+   "owner_id": "919611510605852672",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Drew P. Bauls",
+   "former_names": [],
+   "roster_slots_held": [
+    6
+   ]
+  },
+  "YippeKiYay MarshalFaulker": {
+   "owner_id": "923413316708466688",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "YippeKiYay MarshalFaulker",
+   "former_names": [],
+   "roster_slots_held": [
+    7
+   ]
+  },
+  "jspringe88": {
+   "owner_id": "924053611846397952",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "jspringe88",
+   "former_names": [],
+   "roster_slots_held": [
+    8
+   ]
+  },
+  "Seidmans Sasquatches": {
+   "owner_id": "924757837283254272",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Seidmans Sasquatches",
+   "former_names": [],
+   "roster_slots_held": [
+    9
+   ]
+  },
+  "Kissane\u2019s Team": {
+   "owner_id": "925054003463999488",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Kissane\u2019s Team",
+   "former_names": [],
+   "roster_slots_held": [
+    10
+   ]
+  },
+  "Baynesy Beluga": {
+   "owner_id": "928767555920064512",
+   "first_season": 2023,
+   "last_season": 2025,
+   "seasons": [
+    2023,
+    2024,
+    2025
+   ],
+   "still_in_league": false,
+   "current_name": "Baynesy Beluga",
+   "former_names": [],
+   "roster_slots_held": [
+    11
+   ]
+  },
+  "Florida Man": {
+   "owner_id": "930700626709893120",
+   "first_season": 2023,
+   "last_season": 2026,
+   "seasons": [
+    2023,
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "Florida Man",
+   "former_names": [],
+   "roster_slots_held": [
+    12
+   ]
+  },
+  "MDEF": {
+   "owner_id": "1049829521757237248",
+   "first_season": 2024,
+   "last_season": 2026,
+   "seasons": [
+    2024,
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "MDEF",
+   "former_names": [],
+   "roster_slots_held": [
+    3
+   ]
+  },
+  "jgil96": {
+   "owner_id": "1124744818174812160",
+   "first_season": 2025,
+   "last_season": 2026,
+   "seasons": [
+    2025,
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "jgil96",
+   "former_names": [],
+   "roster_slots_held": [
+    2
+   ]
+  },
+  "jkazzz": {
+   "owner_id": "1005290797896036352",
+   "first_season": 2026,
+   "last_season": 2026,
+   "seasons": [
+    2026
+   ],
+   "still_in_league": true,
+   "current_name": "jkazzz",
+   "former_names": [],
+   "roster_slots_held": [
+    11
+   ]
+  }
+ },
+ "dropped_startup_trades": 1
+}

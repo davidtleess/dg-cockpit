@@ -1,0 +1,468 @@
+{
+ "n_trades": 39,
+ "n_trade_sides": 78,
+ "A_positions": {
+  "n_players_moved": 73,
+  "rows": [
+   {
+    "pos": "QB",
+    "traded": 20,
+    "traded_share": 0.274,
+    "traded_ci95": [
+     0.185,
+     0.386
+    ],
+    "rostered_share": 0.169,
+    "lift": 1.62
+   },
+   {
+    "pos": "RB",
+    "traded": 24,
+    "traded_share": 0.329,
+    "traded_ci95": [
+     0.232,
+     0.443
+    ],
+    "rostered_share": 0.298,
+    "lift": 1.1
+   },
+   {
+    "pos": "WR",
+    "traded": 23,
+    "traded_share": 0.315,
+    "traded_ci95": [
+     0.22,
+     0.429
+    ],
+    "rostered_share": 0.382,
+    "lift": 0.82
+   },
+   {
+    "pos": "TE",
+    "traded": 6,
+    "traded_share": 0.082,
+    "traded_ci95": [
+     0.038,
+     0.168
+    ],
+    "rostered_share": 0.151,
+    "lift": 0.55
+   }
+  ],
+  "other_positions": {}
+ },
+ "B_phase_by_strength": {
+  "playoffs_team": {
+   "n": 32,
+   "by_phase": {
+    "playoffs": 8,
+    "in-season": 17,
+    "draft-season": 5,
+    "dead-offseason": 2
+   },
+   "shares": {
+    "playoffs": 0.25,
+    "in-season": 0.531,
+    "draft-season": 0.156,
+    "dead-offseason": 0.062
+   }
+  },
+  "missed_team": {
+   "n": 32,
+   "by_phase": {
+    "playoffs": 6,
+    "in-season": 23,
+    "draft-season": 1,
+    "dead-offseason": 2
+   },
+   "shares": {
+    "playoffs": 0.188,
+    "in-season": 0.719,
+    "draft-season": 0.031,
+    "dead-offseason": 0.062
+   }
+  }
+ },
+ "C_manager_signatures": [
+  {
+   "team": "Woodbury Riders",
+   "trades": 12,
+   "seasons": 4,
+   "net_picks": 11,
+   "pick_appetite": 0.696,
+   "in_season_share": 0.917,
+   "distinct_partners": 7,
+   "partner_concentration": 0.214,
+   "top_partner": [
+    "MDEF",
+    3
+   ],
+   "pos_in": {
+    "TE": 1,
+    "WR": 2,
+    "RB": 3,
+    "QB": 1
+   },
+   "pos_out": {
+    "RB": 6,
+    "WR": 5,
+    "QB": 1,
+    "TE": 1
+   }
+  },
+  {
+   "team": "Free Kelly",
+   "trades": 11,
+   "seasons": 4,
+   "net_picks": -4,
+   "pick_appetite": 0.333,
+   "in_season_share": 0.727,
+   "distinct_partners": 6,
+   "partner_concentration": 0.197,
+   "top_partner": [
+    "YippeKiYay MarshalFaulker",
+    3
+   ],
+   "pos_in": {
+    "QB": 7,
+    "WR": 2,
+    "RB": 3
+   },
+   "pos_out": {
+    "QB": 4,
+    "RB": 2,
+    "WR": 3
+   }
+  },
+  {
+   "team": "YippeKiYay MarshalFaulker",
+   "trades": 10,
+   "seasons": 4,
+   "net_picks": -2,
+   "pick_appetite": 0.417,
+   "in_season_share": 0.5,
+   "distinct_partners": 6,
+   "partner_concentration": 0.233,
+   "top_partner": [
+    "Free Kelly",
+    3
+   ],
+   "pos_in": {
+    "RB": 3,
+    "QB": 4
+   },
+   "pos_out": {
+    "QB": 5,
+    "TE": 1,
+    "WR": 1,
+    "RB": 2
+   }
+  },
+  {
+   "team": "MDEF",
+   "trades": 8,
+   "seasons": 3,
+   "net_picks": -2,
+   "pick_appetite": 0.353,
+   "in_season_share": 0.625,
+   "distinct_partners": 5,
+   "partner_concentration": 0.25,
+   "top_partner": [
+    "Woodbury Riders",
+    3
+   ],
+   "pos_in": {
+    "QB": 3,
+    "WR": 3,
+    "TE": 1,
+    "RB": 4
+   },
+   "pos_out": {
+    "RB": 5,
+    "WR": 3,
+    "TE": 1,
+    "QB": 1
+   }
+  },
+  {
+   "team": "jspringe88",
+   "trades": 7,
+   "seasons": 4,
+   "net_picks": -4,
+   "pick_appetite": 0.2,
+   "in_season_share": 0.714,
+   "distinct_partners": 6,
+   "partner_concentration": 0.119,
+   "top_partner": [
+    "Florida Man",
+    2
+   ],
+   "pos_in": {
+    "RB": 4,
+    "WR": 3,
+    "TE": 1
+   },
+   "pos_out": {
+    "RB": 2,
+    "WR": 2
+   }
+  },
+  {
+   "team": "Drew P. Bauls",
+   "trades": 6,
+   "seasons": 4,
+   "net_picks": -1,
+   "pick_appetite": 0.5,
+   "in_season_share": 0.667,
+   "distinct_partners": 4,
+   "partner_concentration": 0.167,
+   "top_partner": [
+    "Free Kelly",
+    2
+   ],
+   "pos_in": {
+    "TE": 1,
+    "WR": 3,
+    "RB": 1
+   },
+   "pos_out": {
+    "QB": 1,
+    "WR": 3
+   }
+  },
+  {
+   "team": "rzalika",
+   "trades": 6,
+   "seasons": 4,
+   "net_picks": 2,
+   "pick_appetite": 0.5,
+   "in_season_share": 0.833,
+   "distinct_partners": 5,
+   "partner_concentration": 0.133,
+   "top_partner": [
+    "Free Kelly",
+    2
+   ],
+   "pos_in": {
+    "WR": 2,
+    "TE": 1,
+    "QB": 2,
+    "RB": 1
+   },
+   "pos_out": {
+    "QB": 3,
+    "RB": 4,
+    "TE": 1,
+    "WR": 1
+   }
+  },
+  {
+   "team": "Florida Man",
+   "trades": 6,
+   "seasons": 3,
+   "net_picks": 1,
+   "pick_appetite": 0.444,
+   "in_season_share": 0.667,
+   "distinct_partners": 4,
+   "partner_concentration": 0.167,
+   "top_partner": [
+    "Free Kelly",
+    2
+   ],
+   "pos_in": {
+    "RB": 2,
+    "WR": 2,
+    "QB": 1
+   },
+   "pos_out": {
+    "QB": 2,
+    "WR": 1,
+    "RB": 1
+   }
+  },
+  {
+   "team": "Kissane\u2019s Team",
+   "trades": 3,
+   "seasons": 3,
+   "net_picks": -3,
+   "pick_appetite": 0.0,
+   "in_season_share": 0.667,
+   "distinct_partners": 2,
+   "partner_concentration": 0.167,
+   "top_partner": [
+    "Woodbury Riders",
+    2
+   ],
+   "pos_in": {
+    "QB": 1,
+    "WR": 2,
+    "RB": 1
+   },
+   "pos_out": {
+    "TE": 1,
+    "QB": 1
+   }
+  },
+  {
+   "team": "jkazzz",
+   "trades": 2,
+   "seasons": 1,
+   "net_picks": 1,
+   "pick_appetite": 0.5,
+   "in_season_share": 0.0,
+   "distinct_partners": 2,
+   "partner_concentration": 0.0,
+   "top_partner": [
+    "MDEF",
+    1
+   ],
+   "pos_in": {
+    "RB": 1,
+    "WR": 1,
+    "QB": 1
+   },
+   "pos_out": {
+    "QB": 1,
+    "WR": 1
+   }
+  },
+  {
+   "team": "Baynesy Beluga",
+   "trades": 2,
+   "seasons": 1,
+   "net_picks": 2,
+   "pick_appetite": 0.75,
+   "in_season_share": 1.0,
+   "distinct_partners": 2,
+   "partner_concentration": 0.0,
+   "top_partner": [
+    "Drew P. Bauls",
+    1
+   ],
+   "pos_in": {
+    "WR": 1
+   },
+   "pos_out": {
+    "WR": 1,
+    "RB": 2
+   }
+  },
+  {
+   "team": "Mike Rochichez \u201cScratch\u201d",
+   "trades": 2,
+   "seasons": 1,
+   "net_picks": -1,
+   "pick_appetite": 0.0,
+   "in_season_share": 1.0,
+   "distinct_partners": 2,
+   "partner_concentration": 0.0,
+   "top_partner": [
+    "jspringe88",
+    1
+   ],
+   "pos_in": {
+    "WR": 2
+   },
+   "pos_out": {
+    "TE": 1,
+    "WR": 1,
+    "QB": 1
+   }
+  },
+  {
+   "team": "Seidmans Sasquatches",
+   "trades": 1,
+   "seasons": 1,
+   "net_picks": 0,
+   "pick_appetite": 0.0,
+   "in_season_share": 1.0,
+   "distinct_partners": 1,
+   "partner_concentration": 0.0,
+   "top_partner": [
+    "Woodbury Riders",
+    1
+   ],
+   "pos_in": {
+    "RB": 1,
+    "TE": 1
+   },
+   "pos_out": {
+    "WR": 1
+   }
+  }
+ ],
+ "C_dispersion": {
+  "trades": {
+   "n": 13,
+   "min": 1,
+   "max": 12,
+   "mean": 5.846,
+   "sd": 3.548,
+   "cv": 0.607
+  },
+  "net_picks": {
+   "n": 13,
+   "min": -4,
+   "max": 11,
+   "mean": 0,
+   "sd": 3.742,
+   "cv": null
+  },
+  "pick_appetite": {
+   "n": 13,
+   "min": 0.0,
+   "max": 0.75,
+   "mean": 0.361,
+   "sd": 0.24,
+   "cv": 0.665
+  },
+  "in_season_share": {
+   "n": 13,
+   "min": 0.0,
+   "max": 1.0,
+   "mean": 0.717,
+   "sd": 0.259,
+   "cv": 0.361
+  },
+  "distinct_partners": {
+   "n": 13,
+   "min": 1,
+   "max": 7,
+   "mean": 4,
+   "sd": 1.922,
+   "cv": 0.48
+  },
+  "partner_concentration": {
+   "n": 13,
+   "min": 0.0,
+   "max": 0.25,
+   "mean": 0.127,
+   "sd": 0.091,
+   "cv": 0.72
+  }
+ },
+ "D_picks": {
+  "by_round": {
+   "3": 15,
+   "1": 25,
+   "2": 16
+  },
+  "by_years_out": {
+   "1": 24,
+   "2": 19,
+   "0": 8,
+   "3": 5
+  }
+ },
+ "D_trade_kinds": {
+  "players for picks": 24,
+  "mixed": 9,
+  "players for players": 5
+ },
+ "E_phase": {
+  "draft-season": 10,
+  "playoffs": 7,
+  "in-season": 20,
+  "dead-offseason": 1
+ }
+}

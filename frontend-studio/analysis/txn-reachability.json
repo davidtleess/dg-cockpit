@@ -1,0 +1,129 @@
+{
+ "rows": [
+  {
+   "app_partner_rank": 1,
+   "app_partner_score": 2.168,
+   "roster_id": 10,
+   "team": "Kissane\u2019s Team",
+   "moves_2026": 10,
+   "trades_2026": 1,
+   "career_moves": 68,
+   "career_trades": 3,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 2,
+   "app_partner_score": 2.084,
+   "roster_id": 7,
+   "team": "YippeKiYay MarshalFaulker",
+   "moves_2026": 4,
+   "trades_2026": 2,
+   "career_moves": 75,
+   "career_trades": 11,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 3,
+   "app_partner_score": 2.0,
+   "roster_id": 8,
+   "team": "jspringe88",
+   "moves_2026": 5,
+   "trades_2026": 1,
+   "career_moves": 86,
+   "career_trades": 7,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 4,
+   "app_partner_score": 1.885,
+   "roster_id": 9,
+   "team": "Seidmans Sasquatches",
+   "moves_2026": 0,
+   "trades_2026": 0,
+   "career_moves": 19,
+   "career_trades": 1,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 5,
+   "app_partner_score": 1.745,
+   "roster_id": 4,
+   "team": "Free Kelly",
+   "moves_2026": 6,
+   "trades_2026": 3,
+   "career_moves": 94,
+   "career_trades": 11,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 6,
+   "app_partner_score": 1.69,
+   "roster_id": 6,
+   "team": "Drew P. Bauls",
+   "moves_2026": 5,
+   "trades_2026": 1,
+   "career_moves": 34,
+   "career_trades": 6,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 7,
+   "app_partner_score": 1.584,
+   "roster_id": 12,
+   "team": "Florida Man",
+   "moves_2026": 2,
+   "trades_2026": 0,
+   "career_moves": 51,
+   "career_trades": 6,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 8,
+   "app_partner_score": 1.1,
+   "roster_id": 3,
+   "team": "MDEF",
+   "moves_2026": 5,
+   "trades_2026": 2,
+   "career_moves": 47,
+   "career_trades": 8,
+   "seasons_in_league": 3
+  },
+  {
+   "app_partner_rank": 9,
+   "app_partner_score": 1.05,
+   "roster_id": 5,
+   "team": "rzalika",
+   "moves_2026": 8,
+   "trades_2026": 1,
+   "career_moves": 124,
+   "career_trades": 6,
+   "seasons_in_league": 4
+  },
+  {
+   "app_partner_rank": 10,
+   "app_partner_score": 1.0,
+   "roster_id": 2,
+   "team": "jgil96",
+   "moves_2026": 2,
+   "trades_2026": 0,
+   "career_moves": 13,
+   "career_trades": 0,
+   "seasons_in_league": 2
+  },
+  {
+   "app_partner_rank": 11,
+   "app_partner_score": 1.0,
+   "roster_id": 11,
+   "team": "jkazzz",
+   "moves_2026": 15,
+   "trades_2026": 2,
+   "career_moves": 15,
+   "career_trades": 2,
+   "seasons_in_league": 1
+  }
+ ],
+ "spearman_apprank_vs_moves2026": 0.115,
+ "spearman_apprank_vs_trades2026": -0.052,
+ "spearman_apprank_vs_careertrades": -0.363,
+ "note": "app rank 1 = best partner. A POSITIVE spearman here means the app ranks ACTIVE managers WORSE (rank number rises with activity)."
+}

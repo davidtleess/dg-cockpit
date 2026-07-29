@@ -1,0 +1,33 @@
+{
+ "pulled_at": "2026-07-28T19:43:33-0400",
+ "seasons": {
+  "2023": {
+   "league_id": "912589367620100096",
+   "league": null,
+   "users": null,
+   "rosters": null,
+   "transactions": {}
+  },
+  "2024": {
+   "league_id": "1049152209134424064",
+   "league": null,
+   "users": null,
+   "rosters": null,
+   "transactions": {}
+  },
+  "2025": {
+   "league_id": "1183088915091423232",
+   "league": null,
+   "users": null,
+   "rosters": null,
+   "transactions": {}
+  },
+  "2026": {
+   "league_id": "1314363401744416768",
+   "league": null,
+   "users": null,
+   "rosters": null,
+   "transactions": {}
+  }
+ }
+}

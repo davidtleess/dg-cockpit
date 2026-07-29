@@ -1,0 +1,6018 @@
+{
+ "trades_total": 39,
+ "by_month_trades": {
+  "Jan": 0,
+  "Feb": 0,
+  "Mar": 1,
+  "Apr": 0,
+  "May": 8,
+  "Jun": 2,
+  "Jul": 1,
+  "Aug": 0,
+  "Sep": 4,
+  "Oct": 3,
+  "Nov": 8,
+  "Dec": 12
+ },
+ "by_month_all_moves": {
+  "Jan": 9,
+  "Feb": 12,
+  "Mar": 29,
+  "Apr": 18,
+  "May": 130,
+  "Jun": 8,
+  "Jul": 8,
+  "Aug": 65,
+  "Sep": 107,
+  "Oct": 135,
+  "Nov": 127,
+  "Dec": 98
+ },
+ "picks_moved_by_month": {
+  "Jan": 0,
+  "Feb": 0,
+  "Mar": 1,
+  "Apr": 0,
+  "May": 14,
+  "Jun": 4,
+  "Jul": 36,
+  "Aug": 0,
+  "Sep": 3,
+  "Oct": 9,
+  "Nov": 7,
+  "Dec": 18
+ },
+ "inseason_trades_sep_dec": 27,
+ "offseason_trades_jan_aug": 12,
+ "trades_with_picks": 34,
+ "events": [
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2023-08-25",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 8,
+   "date": "2023-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 7,
+   "date": "2023-07-26",
+   "picks": 36,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-23",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 9,
+   "date": "2023-09-23",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 9,
+   "date": "2023-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 9,
+   "date": "2023-09-21",
+   "picks": 0,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2023-09-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-05",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2023-10-25",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 11,
+   "date": "2023-11-21",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-28",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-23",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 11,
+   "date": "2023-11-22",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2023-11-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-12",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-12",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-19",
+   "picks": 3,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-15",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-15",
+   "picks": 3,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "waiver",
+   "month": 12,
+   "date": "2023-12-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-23",
+   "picks": 0,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-22",
+   "picks": 0,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-21",
+   "picks": 1,
+   "players": 3
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "trade",
+   "month": 12,
+   "date": "2023-12-31",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2023,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2023-12-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2024-08-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2024-08-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 8,
+   "date": "2024-08-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 7,
+   "date": "2024-07-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 7,
+   "date": "2024-07-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 7,
+   "date": "2024-07-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 6,
+   "date": "2024-06-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-29",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-29",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-29",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 1,
+   "players": 3
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 5,
+   "date": "2024-05-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-18",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-15",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-15",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-15",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-06",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2024-05-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2024-04-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2024-04-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 4,
+   "date": "2024-04-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2024-04-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2024-04-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-23",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 3,
+   "date": "2024-03-23",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-18",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-18",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 3,
+   "date": "2024-03-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 3,
+   "date": "2024-03-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 3,
+   "date": "2024-03-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 3,
+   "date": "2024-03-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-01",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2024-03-01",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 3,
+   "date": "2024-03-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-24",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 2,
+   "date": "2024-02-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2024-02-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 2,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2024-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 9,
+   "date": "2024-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-06",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-05",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 3,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 5,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 10,
+   "date": "2024-10-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-24",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 11,
+   "date": "2024-11-05",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2024-10-30",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 3
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "commissioner",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "commissioner",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "commissioner",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "commissioner",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-15",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 11,
+   "date": "2024-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2024-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 12,
+   "date": "2024-12-05",
+   "picks": 2,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "trade",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 12,
+   "date": "2024-12-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2024-12-18",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 1,
+   "date": "2025-01-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2024,
+   "type": "waiver",
+   "month": 1,
+   "date": "2025-01-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-04",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-02",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2025-08-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2025-08-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2025-08-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2025-08-20",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 8,
+   "date": "2025-08-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-05",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 8,
+   "date": "2025-08-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 7,
+   "date": "2025-07-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 7,
+   "date": "2025-07-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 6,
+   "date": "2025-06-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 6,
+   "date": "2025-06-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 6,
+   "date": "2025-06-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 6,
+   "date": "2025-06-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 6,
+   "date": "2025-06-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "commissioner",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "commissioner",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "commissioner",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 5,
+   "date": "2025-05-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-07",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 5,
+   "date": "2025-05-06",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-06",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-05",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-04",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-04",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-04",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 5,
+   "date": "2025-05-04",
+   "picks": 2,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-03",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-03",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2025-05-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-30",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-29",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2025-04-08",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2025-03-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2025-03-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2025-03-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2025-01-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2025-01-15",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2025-01-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2025-01-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2025-01-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 9,
+   "date": "2025-09-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 9,
+   "date": "2025-09-11",
+   "picks": 0,
+   "players": 4
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-26",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 9,
+   "date": "2025-09-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-05",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-04",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-03",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-02",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-09",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-10",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-17",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-24",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-31",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 10,
+   "date": "2025-10-30",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 10,
+   "date": "2025-10-30",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-09",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-08",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-07",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-20",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-16",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-13",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2025-11-25",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 11,
+   "date": "2025-11-24",
+   "picks": 1,
+   "players": 3
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2025-11-23",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 11,
+   "date": "2025-11-23",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-21",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 12,
+   "date": "2025-12-03",
+   "picks": 3,
+   "players": 3
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 12,
+   "date": "2025-12-03",
+   "picks": 1,
+   "players": 4
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2025-11-29",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 11,
+   "date": "2025-11-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 11,
+   "date": "2025-11-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 12,
+   "date": "2025-12-10",
+   "picks": 2,
+   "players": 2
+  },
+  {
+   "season": 2025,
+   "type": "commissioner",
+   "month": 12,
+   "date": "2025-12-06",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-06",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-06",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-05",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-04",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-03",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-03",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "trade",
+   "month": 12,
+   "date": "2025-12-16",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-14",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-12",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-11",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-19",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "free_agent",
+   "month": 12,
+   "date": "2025-12-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-18",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 1,
+   "date": "2026-01-01",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2025,
+   "type": "waiver",
+   "month": 12,
+   "date": "2025-12-25",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 7,
+   "date": "2026-07-28",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 7,
+   "date": "2026-07-26",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 6,
+   "date": "2026-06-07",
+   "picks": 2,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 6,
+   "date": "2026-06-01",
+   "picks": 2,
+   "players": 4
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-30",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-30",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-29",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 5,
+   "date": "2026-05-27",
+   "picks": 4,
+   "players": 2
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-24",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-23",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "commissioner",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "commissioner",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "waiver",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-22",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-19",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 5,
+   "date": "2026-05-18",
+   "picks": 1,
+   "players": 2
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 5,
+   "date": "2026-05-12",
+   "picks": 3,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 5,
+   "date": "2026-05-13",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-12",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 5,
+   "date": "2026-05-09",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "trade",
+   "month": 5,
+   "date": "2026-05-07",
+   "picks": 1,
+   "players": 1
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2026-04-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 4,
+   "date": "2026-04-17",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-21",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-10",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 3,
+   "date": "2026-03-09",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2026-02-28",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 2,
+   "date": "2026-02-13",
+   "picks": 0,
+   "players": 0
+  },
+  {
+   "season": 2026,
+   "type": "free_agent",
+   "month": 1,
+   "date": "2026-01-09",
+   "picks": 0,
+   "players": 0
+  }
+ ]
+}

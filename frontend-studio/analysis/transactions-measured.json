@@ -1,0 +1,447 @@
+{
+ "seasons": {
+  "2023": {
+   "league_id": "912589367620100096",
+   "league_name": "Redzone Champions League",
+   "status": "complete",
+   "raw_rows": 243,
+   "complete": 190,
+   "by_type": {
+    "waiver": 83,
+    "free_agent": 95,
+    "trade": 12
+   },
+   "by_status": {
+    "failed": 53,
+    "complete": 190
+   },
+   "trades": 12,
+   "date_span": [
+    "2023-07-26",
+    "2023-12-31"
+   ],
+   "activity_per_manager": {
+    "All Gas No Brake ": {
+     "moves": 32,
+     "trades": 4,
+     "picks_acquired": 1,
+     "picks_traded_away": 2
+    },
+    "Mike Rochichez \u201cScratch\u201d": {
+     "moves": 26,
+     "trades": 3,
+     "picks_acquired": 18,
+     "picks_traded_away": 19
+    },
+    "Woodbury Riders": {
+     "moves": 23,
+     "trades": 4,
+     "picks_acquired": 5,
+     "picks_traded_away": 2
+    },
+    "jspringe88": {
+     "moves": 23,
+     "trades": 3,
+     "picks_acquired": 1,
+     "picks_traded_away": 1
+    },
+    "YippeKiYay MarshalFaulker": {
+     "moves": 22,
+     "trades": 4,
+     "picks_acquired": 20,
+     "picks_traded_away": 20
+    },
+    "rzalika": {
+     "moves": 21,
+     "trades": 1,
+     "picks_acquired": 1,
+     "picks_traded_away": 0
+    },
+    "Florida Man": {
+     "moves": 18,
+     "trades": 3,
+     "picks_acquired": 1,
+     "picks_traded_away": 1
+    },
+    "Kissane\u2019s Team": {
+     "moves": 12,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    },
+    "Drew P. Bauls": {
+     "moves": 10,
+     "trades": 1,
+     "picks_acquired": 1,
+     "picks_traded_away": 2
+    },
+    "Baynesy Beluga": {
+     "moves": 8,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Seidmans Sasquatches": {
+     "moves": 4,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Khargreav9": {
+     "moves": 3,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    }
+   },
+   "owner_by_roster": {
+    "1": "Woodbury Riders",
+    "2": "Khargreav9",
+    "3": "Mike Rochichez \u201cScratch\u201d",
+    "4": "All Gas No Brake ",
+    "5": "rzalika",
+    "6": "Drew P. Bauls",
+    "7": "YippeKiYay MarshalFaulker",
+    "8": "jspringe88",
+    "9": "Seidmans Sasquatches",
+    "10": "Kissane\u2019s Team",
+    "11": "Baynesy Beluga",
+    "12": "Florida Man"
+   }
+  },
+  "2024": {
+   "league_id": "1049152209134424064",
+   "league_name": "Redzone Champions League",
+   "status": "complete",
+   "raw_rows": 323,
+   "complete": 275,
+   "by_type": {
+    "waiver": 95,
+    "free_agent": 165,
+    "trade": 11,
+    "commissioner": 4
+   },
+   "by_status": {
+    "failed": 48,
+    "complete": 275
+   },
+   "trades": 11,
+   "date_span": [
+    "2024-02-13",
+    "2025-01-01"
+   ],
+   "activity_per_manager": {
+    "rzalika": {
+     "moves": 55,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    },
+    "jspringe88": {
+     "moves": 34,
+     "trades": 2,
+     "picks_acquired": 1,
+     "picks_traded_away": 3
+    },
+    "Woodbury Riders": {
+     "moves": 33,
+     "trades": 5,
+     "picks_acquired": 7,
+     "picks_traded_away": 3
+    },
+    "All Gas No Brake ": {
+     "moves": 32,
+     "trades": 2,
+     "picks_acquired": 2,
+     "picks_traded_away": 0
+    },
+    "MDEF": {
+     "moves": 25,
+     "trades": 4,
+     "picks_acquired": 4,
+     "picks_traded_away": 6
+    },
+    "YippeKiYay MarshalFaulker": {
+     "moves": 22,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    },
+    "Baynesy Beluga": {
+     "moves": 20,
+     "trades": 2,
+     "picks_acquired": 3,
+     "picks_traded_away": 1
+    },
+    "Kissane\u2019s Team": {
+     "moves": 18,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Drew P. Bauls": {
+     "moves": 15,
+     "trades": 3,
+     "picks_acquired": 0,
+     "picks_traded_away": 3
+    },
+    "Florida Man": {
+     "moves": 13,
+     "trades": 1,
+     "picks_acquired": 1,
+     "picks_traded_away": 0
+    },
+    "Seidmans Sasquatches": {
+     "moves": 10,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Khargreav9": {
+     "moves": 9,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    }
+   },
+   "owner_by_roster": {
+    "1": "Woodbury Riders",
+    "2": "Khargreav9",
+    "3": "MDEF",
+    "4": "All Gas No Brake ",
+    "5": "rzalika",
+    "6": "Drew P. Bauls",
+    "7": "YippeKiYay MarshalFaulker",
+    "8": "jspringe88",
+    "9": "Seidmans Sasquatches",
+    "10": "Kissane\u2019s Team",
+    "11": "Baynesy Beluga",
+    "12": "Florida Man"
+   }
+  },
+  "2025": {
+   "league_id": "1183088915091423232",
+   "league_name": "Redzone Champions League",
+   "status": "complete",
+   "raw_rows": 299,
+   "complete": 225,
+   "by_type": {
+    "waiver": 126,
+    "free_agent": 86,
+    "commissioner": 4,
+    "trade": 9
+   },
+   "by_status": {
+    "failed": 74,
+    "complete": 225
+   },
+   "trades": 9,
+   "date_span": [
+    "2025-01-13",
+    "2026-01-01"
+   ],
+   "activity_per_manager": {
+    "rzalika": {
+     "moves": 40,
+     "trades": 3,
+     "picks_acquired": 3,
+     "picks_traded_away": 2
+    },
+    "Woodbury Riders": {
+     "moves": 31,
+     "trades": 2,
+     "picks_acquired": 2,
+     "picks_traded_away": 0
+    },
+    "Kissane\u2019s Team": {
+     "moves": 28,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    },
+    "YippeKiYay MarshalFaulker": {
+     "moves": 27,
+     "trades": 4,
+     "picks_acquired": 2,
+     "picks_traded_away": 3
+    },
+    "Free Kelly": {
+     "moves": 24,
+     "trades": 2,
+     "picks_acquired": 2,
+     "picks_traded_away": 3
+    },
+    "jspringe88": {
+     "moves": 24,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Florida Man": {
+     "moves": 18,
+     "trades": 2,
+     "picks_acquired": 2,
+     "picks_traded_away": 2
+    },
+    "MDEF": {
+     "moves": 17,
+     "trades": 2,
+     "picks_acquired": 1,
+     "picks_traded_away": 0
+    },
+    "jgil96": {
+     "moves": 11,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Baynesy Beluga": {
+     "moves": 5,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Seidmans Sasquatches": {
+     "moves": 5,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Drew P. Bauls": {
+     "moves": 4,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    }
+   },
+   "owner_by_roster": {
+    "1": "Woodbury Riders",
+    "2": "jgil96",
+    "3": "MDEF",
+    "4": "Free Kelly",
+    "5": "rzalika",
+    "6": "Drew P. Bauls",
+    "7": "YippeKiYay MarshalFaulker",
+    "8": "jspringe88",
+    "9": "Seidmans Sasquatches",
+    "10": "Kissane\u2019s Team",
+    "11": "Baynesy Beluga",
+    "12": "Florida Man"
+   }
+  },
+  "2026": {
+   "league_id": "1314363401744416768",
+   "league_name": "Redzone Champions League",
+   "status": "in_season",
+   "raw_rows": 62,
+   "complete": 56,
+   "by_type": {
+    "waiver": 14,
+    "free_agent": 33,
+    "trade": 7,
+    "commissioner": 2
+   },
+   "by_status": {
+    "failed": 6,
+    "complete": 56
+   },
+   "trades": 7,
+   "date_span": [
+    "2026-01-09",
+    "2026-07-28"
+   ],
+   "activity_per_manager": {
+    "jkazzz": {
+     "moves": 15,
+     "trades": 2,
+     "picks_acquired": 3,
+     "picks_traded_away": 2
+    },
+    "Kissane\u2019s Team": {
+     "moves": 10,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 1
+    },
+    "rzalika": {
+     "moves": 8,
+     "trades": 1,
+     "picks_acquired": 2,
+     "picks_traded_away": 1
+    },
+    "Free Kelly": {
+     "moves": 6,
+     "trades": 3,
+     "picks_acquired": 1,
+     "picks_traded_away": 5
+    },
+    "jspringe88": {
+     "moves": 5,
+     "trades": 1,
+     "picks_acquired": 0,
+     "picks_traded_away": 2
+    },
+    "MDEF": {
+     "moves": 5,
+     "trades": 2,
+     "picks_acquired": 1,
+     "picks_traded_away": 2
+    },
+    "Drew P. Bauls": {
+     "moves": 5,
+     "trades": 1,
+     "picks_acquired": 4,
+     "picks_traded_away": 0
+    },
+    "YippeKiYay MarshalFaulker": {
+     "moves": 4,
+     "trades": 2,
+     "picks_acquired": 1,
+     "picks_traded_away": 1
+    },
+    "jgil96": {
+     "moves": 2,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Florida Man": {
+     "moves": 2,
+     "trades": 0,
+     "picks_acquired": 0,
+     "picks_traded_away": 0
+    },
+    "Woodbury Riders": {
+     "moves": 1,
+     "trades": 1,
+     "picks_acquired": 2,
+     "picks_traded_away": 0
+    }
+   },
+   "owner_by_roster": {
+    "1": "Woodbury Riders",
+    "2": "jgil96",
+    "3": "MDEF",
+    "4": "Free Kelly",
+    "5": "rzalika",
+    "6": "Drew P. Bauls",
+    "7": "YippeKiYay MarshalFaulker",
+    "8": "jspringe88",
+    "9": "Seidmans Sasquatches",
+    "10": "Kissane\u2019s Team",
+    "11": "jkazzz",
+    "12": "Florida Man"
+   }
+  }
+ },
+ "totals": {
+  "complete_transactions_all_seasons": 746,
+  "trades_all_seasons": 39,
+  "by_type": {
+   "waiver": 318,
+   "free_agent": 379,
+   "trade": 39,
+   "commissioner": 10
+  }
+ }
+}

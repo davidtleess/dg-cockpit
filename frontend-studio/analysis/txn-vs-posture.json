@@ -1,0 +1,265 @@
+{
+ "rows": [
+  {
+   "roster_id": 1,
+   "team": "Woodbury Riders",
+   "app_posture": "REBUILDING",
+   "app_partner_rank": null,
+   "app_partner_score": null,
+   "moves_2026": 1,
+   "trades_2026": 1,
+   "picks_acquired": 2,
+   "picks_spent": 0,
+   "net_picks": 2,
+   "last_move": "2026-06-07"
+  },
+  {
+   "roster_id": 2,
+   "team": "jgil96",
+   "app_posture": "ASCENDING",
+   "app_partner_rank": 10,
+   "app_partner_score": 1.0,
+   "moves_2026": 2,
+   "trades_2026": 0,
+   "picks_acquired": 0,
+   "picks_spent": 0,
+   "net_picks": 0,
+   "last_move": "2026-05-30"
+  },
+  {
+   "roster_id": 3,
+   "team": "MDEF",
+   "app_posture": "BALANCED",
+   "app_partner_rank": 8,
+   "app_partner_score": 1.1,
+   "moves_2026": 5,
+   "trades_2026": 2,
+   "picks_acquired": 1,
+   "picks_spent": 2,
+   "net_picks": -1,
+   "last_move": "2026-06-01"
+  },
+  {
+   "roster_id": 4,
+   "team": "Free Kelly",
+   "app_posture": "BALANCED",
+   "app_partner_rank": 5,
+   "app_partner_score": 1.745,
+   "moves_2026": 6,
+   "trades_2026": 3,
+   "picks_acquired": 1,
+   "picks_spent": 5,
+   "net_picks": -4,
+   "last_move": "2026-05-27"
+  },
+  {
+   "roster_id": 5,
+   "team": "rzalika",
+   "app_posture": "REBUILDING",
+   "app_partner_rank": 9,
+   "app_partner_score": 1.05,
+   "moves_2026": 8,
+   "trades_2026": 1,
+   "picks_acquired": 2,
+   "picks_spent": 1,
+   "net_picks": 1,
+   "last_move": "2026-05-29"
+  },
+  {
+   "roster_id": 6,
+   "team": "Drew P. Bauls",
+   "app_posture": "BALANCED",
+   "app_partner_rank": 6,
+   "app_partner_score": 1.69,
+   "moves_2026": 5,
+   "trades_2026": 1,
+   "picks_acquired": 4,
+   "picks_spent": 0,
+   "net_picks": 4,
+   "last_move": "2026-05-27"
+  },
+  {
+   "roster_id": 7,
+   "team": "YippeKiYay MarshalFaulker",
+   "app_posture": "CONTENDER",
+   "app_partner_rank": 2,
+   "app_partner_score": 2.084,
+   "moves_2026": 4,
+   "trades_2026": 2,
+   "picks_acquired": 1,
+   "picks_spent": 1,
+   "net_picks": 0,
+   "last_move": "2026-05-22"
+  },
+  {
+   "roster_id": 8,
+   "team": "jspringe88",
+   "app_posture": "ASCENDING",
+   "app_partner_rank": 3,
+   "app_partner_score": 2.0,
+   "moves_2026": 5,
+   "trades_2026": 1,
+   "picks_acquired": 0,
+   "picks_spent": 2,
+   "net_picks": -2,
+   "last_move": "2026-07-26"
+  },
+  {
+   "roster_id": 9,
+   "team": "Seidmans Sasquatches",
+   "app_posture": "ASCENDING",
+   "app_partner_rank": 4,
+   "app_partner_score": 1.885,
+   "moves_2026": 0,
+   "trades_2026": 0,
+   "picks_acquired": 0,
+   "picks_spent": 0,
+   "net_picks": 0,
+   "last_move": null
+  },
+  {
+   "roster_id": 10,
+   "team": "Kissane\u2019s Team",
+   "app_posture": "CONTENDER",
+   "app_partner_rank": 1,
+   "app_partner_score": 2.168,
+   "moves_2026": 10,
+   "trades_2026": 1,
+   "picks_acquired": 0,
+   "picks_spent": 1,
+   "net_picks": -1,
+   "last_move": "2026-05-27"
+  },
+  {
+   "roster_id": 11,
+   "team": "jkazzz",
+   "app_posture": "ASCENDING",
+   "app_partner_rank": 11,
+   "app_partner_score": 1.0,
+   "moves_2026": 15,
+   "trades_2026": 2,
+   "picks_acquired": 3,
+   "picks_spent": 2,
+   "net_picks": 1,
+   "last_move": "2026-07-28"
+  },
+  {
+   "roster_id": 12,
+   "team": "Florida Man",
+   "app_posture": "ASCENDING",
+   "app_partner_rank": 7,
+   "app_partner_score": 1.584,
+   "moves_2026": 2,
+   "trades_2026": 0,
+   "picks_acquired": 0,
+   "picks_spent": 0,
+   "net_picks": 0,
+   "last_move": "2026-05-21"
+  }
+ ],
+ "trade_log": [
+  {
+   "date": "2026-06-07",
+   "parties": [
+    "Woodbury Riders",
+    "jspringe88"
+   ],
+   "player_ids_moved": [
+    "11655"
+   ],
+   "picks_moved": [
+    "2027 R3 (jspringe88) jspringe88\u2192Woodbury Riders",
+    "2028 R3 (jspringe88) jspringe88\u2192Woodbury Riders"
+   ]
+  },
+  {
+   "date": "2026-06-01",
+   "parties": [
+    "MDEF",
+    "jkazzz"
+   ],
+   "player_ids_moved": [
+    "11564",
+    "11583",
+    "13285",
+    "9488"
+   ],
+   "picks_moved": [
+    "2028 R1 (MDEF) MDEF\u2192jkazzz",
+    "2028 R2 (MDEF) MDEF\u2192jkazzz"
+   ]
+  },
+  {
+   "date": "2026-05-27",
+   "parties": [
+    "Free Kelly",
+    "Drew P. Bauls"
+   ],
+   "player_ids_moved": [
+    "4984",
+    "5846"
+   ],
+   "picks_moved": [
+    "2028 R1 (Kissane\u2019s Team) Free Kelly\u2192Drew P. Bauls",
+    "2027 R1 (Free Kelly) Free Kelly\u2192Drew P. Bauls",
+    "2028 R1 (Free Kelly) Free Kelly\u2192Drew P. Bauls",
+    "2027 R1 (Drew P. Bauls) Free Kelly\u2192Drew P. Bauls"
+   ]
+  },
+  {
+   "date": "2026-05-18",
+   "parties": [
+    "Free Kelly",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "player_ids_moved": [
+    "12510",
+    "96"
+   ],
+   "picks_moved": [
+    "2026 R3 (Free Kelly) Free Kelly\u2192YippeKiYay MarshalFaulker"
+   ]
+  },
+  {
+   "date": "2026-05-13",
+   "parties": [
+    "MDEF",
+    "YippeKiYay MarshalFaulker"
+   ],
+   "player_ids_moved": [
+    "3198"
+   ],
+   "picks_moved": [
+    "2026 R1 (YippeKiYay MarshalFaulker) YippeKiYay MarshalFaulker\u2192MDEF"
+   ]
+  },
+  {
+   "date": "2026-05-12",
+   "parties": [
+    "rzalika",
+    "jkazzz"
+   ],
+   "player_ids_moved": [
+    "8183"
+   ],
+   "picks_moved": [
+    "2028 R2 (jkazzz) jkazzz\u2192rzalika",
+    "2026 R1 (Drew P. Bauls) jkazzz\u2192rzalika",
+    "2026 R2 (YippeKiYay MarshalFaulker) rzalika\u2192jkazzz"
+   ]
+  },
+  {
+   "date": "2026-05-07",
+   "parties": [
+    "Free Kelly",
+    "Kissane\u2019s Team"
+   ],
+   "player_ids_moved": [
+    "4892"
+   ],
+   "picks_moved": [
+    "2028 R1 (Kissane\u2019s Team) Kissane\u2019s Team\u2192Free Kelly"
+   ]
+  }
+ ]
+}

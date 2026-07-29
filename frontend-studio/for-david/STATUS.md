@@ -1,5 +1,182 @@
 # Studio proposals — status
 
+## EVENING 2026-07-28 — 012, self-directed: the transaction log nobody has ever read
+
+**Not requested. Not shown to David. Nothing relayed.**
+
+**The finding.** Sleeper publishes this league's full transaction history on the same free,
+no-auth, read-only API the product already calls eleven other ways — **746 completed transactions
+and 39 trades across four seasons**. `grep -rn "transactions" src/ app/ scripts/` returns **zero
+matches**. The product has never called it.
+
+**Why it matters beyond a missing feature.** The app's trade-partner score is presented as a
+four-component composite with evidence. Measured live across all 11 counterparties:
+`activity_recency_score` is **0.0 for every team** (hardcoded, `league_opportunity_map.py:185`),
+and `divergence_density_score` is **1.0 for every team** (saturates, line 184 divides by 5).
+**Two of the four components are constants.** The two lowest-ranked partners score exactly 1.000,
+which is *entirely* the dead constant. The missing input for the dead one is the endpoint above.
+
+**Four named contradictions between what the app says and what managers did (2026):**
+Seidmans Sasquatches — app `ASCENDING`, **partner rank #4**, **zero transactions all year**, 1
+trade in 4 seasons. jkazzz — app `ASCENDING`, **rank #11 (last)**, most active manager in the
+league, traded **today**. Free Kelly — app `BALANCED`, spent **four future firsts** in May for
+Josh Allen + DK Metcalf. Drew P. Bauls — app `BALANCED`, **net +4 picks**.
+
+**The calendar the app has no concept of.** 27 of 39 trades (69%, Wilson CI 54–81%) close
+Sep–Dec; December alone is 12; May is the offseason peak at 8; **Jan, Feb, Apr and Aug have never
+produced a trade in four years.** Today is 28 July — the last trade in this league was **51 days
+ago and it was David's own**. August is the second-busiest month for roster churn and the deadest
+for dealing.
+
+**What I did NOT do, deliberately.** No surface is proposed. The 2026-07-25 hard rule — confirm
+the question in one line before building anything that answers a new one — applies squarely, and
+this is a new question. The prototype is a sketch whose only job is to let David react to
+*whether league activity belongs in the product at all.*
+
+### SHOWN TO DAVID — direction checkpoint, NOT an approval
+
+> *"cool data - i would like to know what the trades were not just see a square. i like this league
+> pulse idea - the data is interesting"*
+
+**He liked the idea and the data; he did not rule.** Nothing approved, relay still unauthorised.
+The one criticism was real and was fixed the same session: **all 39 squares now name their own
+trade** (hover = date, both managers, exactly what each received, in the hobby's words; click
+opens it below and highlights both — verified 39/39). The log went **7 trades → all 39** with four
+filters over one population; a click on a trade a filter would hide **widens the filter** rather
+than doing nothing. The 2023 startup-draft deal is marked as a one-off so a single square cannot
+imply July is a trading month. No "biggest trade" sort exists and the surface says why (market
+history starts 2026-06-24).
+
+**The durable lesson, in `DAVID.md`: a mark that stands for one real event must be able to name
+it — second time Studio has been told a version of this** (2026-07-26, *"so many dots — who are
+they??"*). A countable unit chart promises each square IS one thing; anonymity breaks that promise
+in front of the reader.
+
+### THEN DAVID ESCALATED IT TWICE — the ask is opponent modelling, not an archive
+
+> *"no the trade history is important. i like the time series - perhaps theres a better way to viz
+> it - but more importantly the data could be used to spot manager trends… do teams in the playoffs
+> trade a lot at a certain time? what do they normally give up? does a manager have a history of
+> trading a certain way? are their positions that get traded the most?"*
+> *"people are creature's of habit, right? what kind of habits can we track and use to our
+> advantage??"*
+
+**Studio ran a measurement pass BEFORE redrawing** (the 2026-07-21 rule, applied to people instead
+of players) and the result cut against work already built. Scoring each habit on how many of the 55
+manager-pairs separate at 95%:
+
+| habit | sample | separating pairs | verdict |
+|---|---|---|---|
+| who is actually engaged | **641 moves** | range 4.5–29.5/season | **usable** |
+| when the LEAGUE deals | 39 trades pooled | 69% Sep–Dec, CI 54–81% | **usable** |
+| what he takes home | 38 trades (~6 each) | **1 of 55** | not yet |
+| what he pays in | 38 trades | **0 of 55** | not yet |
+| when he will deal | 38 trades | **0 of 55** | not yet |
+| position he collects | median **6** players seen | — | too thin |
+
+**Three of the five columns Studio had just built came back out**, including a "takes picks" bar the
+page's own ledger declared unusable — keeping it would have been the exact "options that answer
+nothing" David rejected on 2026-07-26.
+
+**Also measured and now on the surface:** only **QB** clears its share of rosters among traded
+positions (27% traded vs 17% rostered — the superflex signature; RB/WR/TE inside the noise);
+**63% of trades are players-for-picks**; this league has **no trade deadline** (`trade_deadline: 99`),
+which is why December is its busiest month rather than its last; and the playoff-timing question
+David asked is **not answerable** — every interval overlaps, on 31+31 non-independent trade-sides.
+
+**Rebuilt:** the manager board IS the time series now — each row is that manager's whole four-year
+trading history on one shared axis, NFL-season windows shaded behind, every mark naming its trade
+and opening it below, colliding marks dodged by measured extent. Plus a habit ledger in David's own
+framing (habit / what it would let you do / sample / usable today?) and three league-level panels.
+
+**Gate after the subtraction:** density 3.26 → **2.74** (warn, below the 3.0 fail line; approved 006
+is 1.4, rejected 009 matrix 3.6). **One documented deviation stands: WCAG 2.5.8** — the trade marks
+are 10–12px, under the 24px minimum. Kept deliberately because countability is the mark's whole
+purpose, and the standard's equivalent-control exception is genuinely met (every trade is also a
+full-width card in the log, and every mark is a real focusable `<button>`). **Stated, not tuned
+away.**
+
+### FOURTH CORRECTION — and it caught a FALSE STATEMENT already on Studio's board
+
+> *"you don't need to include startup draft data. but you do need to make sure the actual league
+> manager is still with the team. some managers have changed. some team names have changed but have
+> the same manager."*
+
+**Measured, and he is right on both counts.** Three managers have **left** (Khargreav9, Mike
+Rochichez "Scratch", Baynesy Beluga) — their trades must never attach to a successor. **Free Kelly
+was formerly "All Gas No Brake"** — same Sleeper account, renamed team, one continuous history.
+Tenure is uneven: nine since the 2023 startup, MDEF 2024, jgil96 2025, jkazzz 2026.
+
+**The defect this exposed:** the board printed *"never traded in four seasons"* against **jgil96,
+who has been here two.** A blank stretch of lane was reading as inactivity when it was absence, and
+jkazzz's 2 trades looked like a low rate when they are 2 in one season. **Fixed:** pre-tenure
+hatched on every lane, tenure printed under every name, former names inline, per-season rate in the
+tooltip. The durable rule is in `DAVID.md`: **resolve the actor to a stable identity and render the
+period before they existed as MISSING, never as ZERO.**
+
+**Startup draft dropped at source** (38 trades, not 39) — and its removal *strengthened* the
+calendar finding: **five months (Jan, Feb, Apr, Jul, Aug) have never produced a trade in four
+years**; 27 of 38 close Sep–Dec (71%, CI 55–83%). Every prose figure on the surface is now read from
+the data rather than typed, so it cannot drift again.
+
+**Verified after all four corrections:** 38/38 squares resolve on hover, click-to-open works,
+filters widen rather than dead-end, 0 console errors, no overflow at 1440 or 390, no sub-13px
+content.
+
+### FIFTH — "have you been working on your craft?" Answer given honestly: NO.
+
+> *"cool the data is getting better the viz could use some work. have you been working on your
+> craft? there are lots of really good front end design tools you can hone your craft using."*
+
+**Studio conceded unprompted:** the last 24h went into a *measuring* instrument (the density gate)
+and into *applying rules*. That is discipline, not craft. `craft/motion-easing.md` — Material 3 +
+Carbon tokens, spring `linear()`, the reduced-motion substitute rule — had been curated and **zero
+frames of it ever applied.** Every Studio surface to date is static.
+
+**The measured diagnosis:** the best object on the board — a manager's whole four-year history —
+was a **312px lane with 10px marks in a table cell**, while two low-value columns held 220px.
+Giving it room (**470px, 13×16px marks**, legible season bands) dropped the gate's C1 density from
+**2.74 → 1.71 per 10k px²**, level with the approved 006 front door. **The fix for "too dense" was
+more room, not fewer marks** — density is per unit *area*. That inverts the instinct and is now in
+`DAVID.md`.
+
+**Craft shipped:** motion tokens by event (entrance/standard/exit) rather than one curve doing three
+jobs; a **staggered mark entrance that teaches the timeline axis** (verified 9 → 36 → 63 → 72 marks
+over ~600ms; WCAG SC 2.3.3 — motion that *is* the information); state-driven filter transitions;
+top-edge highlights via `color-mix()` for depth; `@property` for an animatable custom prop; display
+face on manager names. **Reduced-motion path verified: 72/72 marks opaque, 0 travel transforms** —
+substituted, not deleted, per the curated rule.
+
+**Final gate: 1 fail, 1 warn, 3 pass.** The single fail is the documented WCAG 2.5.8 target-size
+deviation (marks 13×16px, exception met via the equivalent full-width card + real `<button>`s).
+Nearest-neighbour spacing improved 11 → 15px.
+
+**On disk:**
+- `proposals/012-league-pulse.md` — the sketch write-up, costs, open questions
+- `proposals/012-RELAY.md` — **authored, NOT authorised.** T1–T5 (two dead score components, the
+  uncalled endpoint, the 35-day-stale posture artifact restating 003, the constant-only ranks)
+- `proposals/012-league-pulse/{template.html,build.py,prototype.html}` — self-contained sketch
+- `analysis/league-activity.json` + `build-activity-data.py`, `txn-measure.py`,
+  `txn-vs-posture.py`, `txn-reachability.py`, `txn-calendar.py`, `txn-raw/` (the curl pull)
+- `tools/shot012.mjs` — screenshot + structural probe harness
+
+**Unverified register for this thread — nobody but Studio has checked any of it.** All transaction
+counts, the Spearman figures (app rank vs career trades **−0.363**, vs 2026 activity **+0.115 /
+−0.052**, n=11 — weak, *not* an inversion, and I say so in the proposal), the Wilson intervals,
+and the four posture contradictions. The code-level claims (T1, T2) are the most solid — they are
+two literal lines of source plus a one-line curl that anyone can re-run.
+
+**Craft tools loaded: `dataviz` AND `frontend-design`.** The density gate caught a real defect
+mid-build — a four-entry season key re-applied across the calendar (C2, Okabe & Ito). Rebuilt as
+season small-multiples, which removed the key entirely and reads better. Final gate: **0 fail,
+2 warn**, 0 console errors, no overflow at 1440 or 390, no sub-13px content.
+
+**Fresh-eyes covenant: intact.** Read only `league_opportunity_map.py`, `sleeper.py`, `tokens.css`
+values, and the league-pulse component's rendered field list. No governance, doctrine, spec or
+sync document opened.
+
+---
+
 ## CLOSEOUT 2026-07-28
 
 **Two threads, both self-directed, nothing requested.** (1) Built the pre-flight density gate and
