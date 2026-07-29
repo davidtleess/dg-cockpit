@@ -155,8 +155,21 @@ went to David**, including one given minutes after his own word · Studio's fire
   "independent". `open-asks` double-counts one exchange as two.
 - Sends must be CONDITIONAL on the pre-send gate's exit code.
 
+## ✅ CLOSEOUT COMPLETED 07-29 07:41 — what was actually verified
+- **BOTH crew postflights filed AND COMMITTED:** `8807eda` (Claude lane postflight, PUSHED) and
+  `90e1c17` (Codex session-end flush, **LOCAL ONLY — needs a push keystroke from David**).
+  Both written into `docs/agent-ledger/2026-07-28.md`, the day the work happened.
+- **⚠ `closeout-check.sh` reports three FAILs for "no ledger entry today."** There is no
+  `2026-07-29.md` because the ledger rolled at midnight mid-closeout. **DATE-BOUNDARY ARTIFACT,
+  not missing work.** Read 07-28's ledger before believing the check.
+- **Studio closed and durable from disk**: `DAVID.md` 23:30 · `for-david/STATUS.md` 23:34.
+- **Cockpit backed up three times** (07:34, 07:40, 07:41), each AFTER the writes it covers,
+  coverage verified byte-for-byte — because the 22:00 run had fired before the doctrine existed.
+
 ## 🔁 IMMEDIATE, NEXT TOWER
-1. `git status` and `git rev-parse HEAD origin/main` — was it clean at handoff? It was.
-2. CI result on `cc82192` — it was still running at 07:36.
-3. Both crew postflights + Codex's — were they written? Codex's wire was intermittent.
-4. **Do NOT open thread 1 or 2 without David's word.**
+1. `git rev-parse HEAD origin/main` — is `90e1c17` pushed yet? It was NOT at handoff.
+2. CI result on `cc82192` — still running at 07:36; and on anything pushed after.
+3. **Do NOT open thread 1 or 2 without David's word.**
+4. The data jobs fire at **09:30** (model refresh) and the cockpit backup at **22:00**. Check the
+   SCHEDULE before reading a stale timestamp as a failure — Tower raised a false alarm doing
+   exactly that at 07:33.
