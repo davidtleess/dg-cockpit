@@ -171,10 +171,61 @@ accessible name**: the manager-filter `<select>` Studio had built hours earlier,
 reader would meet as a bare "combobox". Fixed the same hour. **132 interactive nodes, 0 unnamed,
 0 keyboard-unreachable** now.
 
-**Still open, and now ranked HIGH rather than last.** Playwright MCP proper (the driver-level
-integration, beyond the one API), Chrome DevTools MCP, and Figma MCP → the A3 token generator.
-Installing an MCP server changes David's machine, so those are **his to authorise, not Studio's to
-add.**
+**AUTHORISED 2026-07-28 late — David: "do it tomorrow."** Playwright MCP and Chrome DevTools MCP are
+approved for install in the next session. **Figma MCP is NOT included** and remains unassessed; its
+value would be design → tokens → the A3 generator, and that case has not been made yet.
+**Verify each server connects before reporting it installed** — "installed" and "working" are
+different claims.
+
+### INSTALLED AND FUNCTIONALLY VERIFIED — 2026-07-29 (David: "yea studio can do it today")
+
+**Registered at LOCAL scope for `~/frontend-studio` only** (`claude mcp add --scope local`), not user
+scope. Studio's call: user scope would load both servers into every lane on this machine including
+the product repo's cockpit; nothing outside this directory needed changing.
+
+```
+playwright       npx @playwright/mcp@latest --isolated --output-dir ~/frontend-studio/.mcp-artifacts
+chrome-devtools  npx chrome-devtools-mcp@latest --isolated --no-usage-statistics --no-performance-crux
+```
+
+**Install path was re-confirmed at the time, not taken from the night-before note** — both READMEs
+fetched fresh (`microsoft/playwright-mcp`, `ChromeDevTools/chrome-devtools-mcp`), both packages
+current on the registry (`@playwright/mcp` 0.0.78, `chrome-devtools-mcp` 1.6.0). The Chrome DevTools
+README now offers a *plugin* install (MCP + skills) alongside the CLI one; CLI was chosen because the
+plugin path is user-scoped and pulls skills that were never assessed.
+
+**Flags are deliberate, all four.** `--isolated` on both keeps David's real Chrome profile untouched
+(temporary user-data-dir, cleaned up on close). `--no-usage-statistics` stops Google telemetry, on by
+default. `--no-performance-crux` stops the performance tools sending trace URLs to Google's CrUX API
+— useless for `127.0.0.1` and a pointless egress of a private product's URLs. `--output-dir` keeps
+snapshot files out of whatever directory happens to be cwd; `.mcp-artifacts/` is gitignored.
+
+**Verification went past "Connected," because the CLI health check only proves a process starts.**
+Both servers were driven directly over stdio (`scratchpad/mcp-probe.mjs`, a 50-line JSON-RPC client)
+against the running app:
+- **Playwright MCP — 24 tools.** `browser_navigate` to `127.0.0.1:8000` returned a real aria tree of
+  the front door: ten named surface buttons, the trust strip, `main`, the inspector complementary.
+  This is the sense the kit's `semantics` checker has, driveable and interactive.
+- **Chrome DevTools MCP — 29 tools**, including `lighthouse_audit`, `performance_start_trace` and
+  `take_heapsnapshot`, none of which Studio has any equivalent for.
+- **Positive control, per the rule an instrument must prove it can see anything at all:** a planted
+  `console.warn` / `console.error` pair was emitted via `evaluate_script` and both came back through
+  `list_console_messages` with the right levels. It convicts its own specimen.
+
+**And Studio's own probe reproduced the exact failure this kit exists to prevent.** The first
+console read returned a 404 repeated **31 times**; chasing it, the network list looked empty of 404s
+— because the *probe script* truncated every tool result at 1200 characters. The instrument narrowed
+its own population, in the very session installed to stop that happening. Fixed, then re-run.
+
+**One live observation, deliberately NOT relayed.** Reproducible on every load: `GET /favicon.ico`
+→ **404**, the app's only console error on the front door — trivial, cosmetic, real. The 31× burst
+seen once has **not** reproduced across four subsequent loads (that load fetched 65 requests
+including headshot assets; later loads fetched 12). **Unconfirmed, therefore unclaimed** — it needs a
+run against a warm surface before it is anything.
+
+**Not usable in the session that installed them.** MCP servers load at session start, so the
+`mcp__playwright__*` / `mcp__chrome-devtools__*` tools appear in the NEXT session. Verified working;
+not yet worked with.
 
 **The meta-lesson, and it is the real one:** Studio wrote a good test for connectors and then ranked
 them without running it. **A criterion you do not apply is a rationalisation.**

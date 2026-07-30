@@ -1645,3 +1645,152 @@ earlier one, mark the old one superseded and link them.
   verification, instruments and adoption reasoning accumulate forever. Conclusions about what looks
   good are re-derived every time, because an agent inheriting the last agent's aesthetic conclusions
   rebuilds the shared blind spot this engagement exists to break.
+
+- **2026-07-28 (late) — AUTHORISED: install Playwright MCP and Chrome DevTools MCP.** Studio asked
+  whether to; David: **"do it tomorrow."** Not to be re-litigated — the reasoning is settled and
+  recorded in `kit/ADOPTIONS.md` A5. **The reason it matters beyond the two servers:** Studio had
+  ranked connectors LAST and was wrong **by a test Studio itself had written and then failed to
+  run** — *a connector that helps Studio SEE ranks high; one that feeds it more input does not.*
+  Both of these are "help Studio see," which is the bottleneck named in every closeout.
+  **How to apply when doing it:** these modify David's machine, so confirm the install path at the
+  time rather than trusting a command written the night before, and **verify each server connects
+  before reporting it installed.** "Installed" and "working" are different claims — the same
+  distinction Studio got wrong the same evening with *"the kit is running."*
+
+- **2026-07-29 — DONE: both browser servers installed, and the install session repeated the kit's own
+  named failure.** David: *"yea studio can do it today."* Playwright MCP and Chrome DevTools MCP are
+  registered at **local scope for `~/frontend-studio` only** and were each **driven over stdio against
+  the running app** before being called installed — not merely reported "Connected" by the CLI health
+  check, which only proves a process starts. Playwright MCP returned a real aria tree of the front
+  door; Chrome DevTools MCP read back a **planted** `console.warn`/`console.error` pair, so it is
+  trusted in both directions. Isolated browser profiles (David's own Chrome profile untouched), Google
+  usage telemetry and CrUX URL egress both switched off. Full record: `kit/ADOPTIONS.md` A5.
+  **The learning, and it is a REPEAT not a new one — which is the success test failing again.** Chasing
+  a 404 the console reported 31 times, the network list came back apparently clean; the cause was
+  Studio's own probe script **truncating every tool result at 1200 characters**. *The instrument
+  narrowed its own population* — the exact failure recorded on 2026-07-28 (CORS-blocked fixtures) and
+  encoded as principle #12 — recurred inside the session installed to prevent it, in Studio's
+  throwaway harness rather than its checked-in one. **How to apply: the "can it see anything at all"
+  proof applies to one-off probe scripts too, not just to kit checkers.** A five-minute script is
+  where the check gets skipped, and a truncating harness reports clean for the same reason a
+  CORS-blocked one does.
+  **One observation held back deliberately:** `GET /favicon.ico` → 404 reproduces on every load (the
+  front door's only console error; trivial). The 31× burst has **not** reproduced in four subsequent
+  loads and is therefore **unclaimed, not relayed** — it needs a warm-surface run before it is
+  anything.
+
+- **2026-07-29 — THE GATE WAS NEVER RUN TWICE ON THE SAME FILE. Four runs, four answers.**
+  Self-directed instrument work, nothing shown to David. Running `tools/craft-gate.mjs` over an
+  unchanged 012 four times returned **84, 108, 93 and 96 marks — density 3.44 to 5.63**, and C6 named
+  a different mark type run to run. Cause: `visible()` requires opacity > 0.02 and the gate sampled
+  **400ms after load while the staggered entrance shipped the night before was still fading marks
+  in.** It counted whichever marks had arrived. **Every density figure this gate ever printed was a
+  frame of an animation** — including the "3.26 → 2.74 → 2.10" improvement trend in the 012 record,
+  which measured nothing.
+  **The durable rule, and it is new: an instrument must be checked for DETERMINISM, not only for
+  correctness.** Studio validated the gate's *logic* against labelled cases on 2026-07-28 and never
+  asked the cheaper question — does it give the same answer twice? A checker can be perfectly
+  reasoned and still report a coin toss. **Run it twice before quoting it once.**
+  **Four defects found, all of the same family — the instrument deciding its own population:**
+  1. **Time.** Fixed by emulating `prefers-reduced-motion` (a surface built to the kit's rule already
+     substitutes its entrance with the final frame, so this measures what a reader ends up seeing)
+     plus a settle loop that re-runs the whole census until it repeats. **If it never repeats the
+     gate now REFUSES** — C1/C5/C6 report `REFUSED`, while type/hue/legend still speak because they
+     do not depend on the mark population.
+  2. **Paint.** `isCssMark` required an opaque background *colour*, so a mark painted with a gradient
+     left the population entirely. This is the 2026-07-28 false pass, now reproducible on demand:
+     `kit/gate-fixtures/paint-{flat,gradient}.html` differ in paint and nothing else, and the old gate
+     scored them **72 sub-24px targets vs 0**. Both now emit an identical census hash.
+  3. **Role.** Chrome-vs-data was inferred from variance, and it is not derivable — a season band and
+     a trade mark can be geometrically identical and mean opposite things. Left to the heuristic it
+     inverted **both** roles: it called 72 real trade marks chrome and reported on the 48 bands.
+     **Role is now DECLARED** (`data-sk-role`, `aria-hidden`) and 012's own declarations — which it
+     made last night and the gate could not read — are finally honoured.
+  4. **Axis.** The channel test picked the axis from the mark's aspect ratio, so a 13×16px mark laid
+     out left-to-right was measured on its Y axis, found not to vary, and dismissed. Position now
+     runs along whichever axis the marks actually spread on.
+  **And the known-bad specimen convicted STUDIO'S OWN FIX, which is the whole argument for keeping
+  one.** The first settle guard compared mark *counts*; the never-settles fixture flickers alternating
+  halves, so 36 marks are visible at every instant but never the same 36 — it reported "settled".
+  **Count identity, not cardinality.** A guard that has not met a specimen designed to beat it is a
+  guess. This is the third time in two days a checker passed by measuring the wrong population, and
+  the first time the harness caught it instead of David.
+  **A threshold transcribed from an instrument's output inherits that instrument's bugs.** The gate's
+  density thresholds were "fitted to" 006 ≈1.4 and 009 ≈3.6 — both produced by the broken census. Re-
+  measured settled and complete they are **2.13 and 3.95**. Calibration is now *generated* by
+  `tools/gate-selftest.mjs --write` from the two surfaces David actually ruled on, not typed.
+  **THE COST, AND IT IS NOT COMFORTABLE.** Honestly measured, **012 sits at density 4.38 — ABOVE the
+  3.95 of the 009 matrix David rejected as "extremely confusing"**, and roughly double the approved
+  006 front door. The record claiming it had improved to 2.10 and was "level with the approved front
+  door" is retracted in the proposal file. The lane is genuinely dense; whether that is wrong is now
+  an open design question rather than a settled one.
+
+- **2026-07-29 (afternoon) — "PASS" meant "I did not look" on ten of eleven surfaces.** Self-directed
+  follow-through: with the gate finally trustworthy, every surface in the engagement was re-measured,
+  because every figure ever quoted came out of the broken instrument. **Four more defects of the same
+  family fell out — the checker reporting on a population it never had.**
+  1. **A vacuous pass.** C5 reported "0 interactive marks, none under 24px" — a claim about nothing —
+     on **ten of eleven surfaces**. An empty population is a SKIP, never a PASS.
+  2. **A checker that could only see one shape of failure.** C5 was scoped to data marks, so a small
+     control that was not a mark was structurally invisible to it. A page-wide sweep found **two real
+     failures**: 005's five column-sort buttons at **17px tall**, and ten controls on 001.
+  3. **`aria-label` was treated as interactivity.** It names; it does not activate — Studio's own
+     tooltip helper puts one on inert marks, so the new sweep would have convicted every labelled
+     decoration on sight.
+  4. **The gate loaded pages over `file://`, where a module `<script>` is CORS-blocked**, so such a
+     page renders nothing and every check reports clean. Over the kit's own fixtures it reported "0
+     controls, C5 SKIP" — **a verdict on a document that never executed.** This is the EXACT failure
+     `verify.mjs` was built around on 2026-07-28, in a second tool that never learned it.
+  **The rule that generalises, and it is the afternoon's real lesson: a lesson that lives in one file
+  is not learned.** Studio wrote "serve, never file://" into `verify.mjs`'s header, then ran a
+  different instrument against `file://` for a day. Fixing the tool that failed is not the same as
+  fixing the class. **Ask which OTHER tool has the same hole before writing the postmortem.**
+  **And the mirror-image discipline: a false conviction costs what a false pass costs.** Adding the
+  page-wide sweep immediately convicted a prose link on the evidence card David APPROVED, because
+  WCAG 2.5.8's inline exception was missing. A check that cries wolf stops being acted on. Both
+  directions were specified before the sweep was trusted; the self-test is now 12 specimens.
+  **Two things found and deliberately NOT actioned, because they are David's call, not Studio's:**
+  **010 measures 4.71 — above the 3.95 of the matrix he rejected — and it has already been relayed to
+  the engineers**; 009's prototype is 6.68. And **C4 fails on nine of eleven surfaces**, but the gate's
+  own caveat says its content-vs-label split is unreliable without a repeating unit, so **that number
+  is not being quoted until the split is proved in both directions.** Naming an untrusted number as
+  untrusted is the whole point of the morning's work.
+
+- **2026-07-29 (closeout) — THE DAY'S SEQUENCE, and it is the shape worth keeping.** David's words
+  today were few and both were instructions: **"yea studio can do it today"** (the two browser
+  servers) and **"fix the density on the lane."** No taste feedback was given; one question is still
+  outstanding and unanswered — whether the rebuilt lane reads at a glance and whether the upward
+  stacks land as "several trades at once" or as noise. **Do not treat silence as approval.**
+  **The sequence:** an instrument gave **four different answers to identical input** (84/108/93/96
+  marks on one unchanged file) → fixed by measuring the settled end state and **refusing** when the
+  population will not stop moving → **proved it can still convict a known-bad sample** (12 specimens,
+  including a paint-invariance pair and a page that must be refused) → the corrected sweep then
+  **failed Studio's own surfaces**: 012 at 4.38 where the record claimed 2.10 and improving, plus real
+  target-size failures on 001 and 005 that the old check was structurally unable to see.
+  **What makes it worth keeping is the direction of the last step.** A tool Studio built, then
+  corrected, then used to convict Studio. That is the only configuration in which a self-built
+  instrument is worth anything, and it is the answer to why the both-directions rule is not ceremony.
+  **The two rules promoted out of today, both new:**
+  1. **Check an instrument for DETERMINISM before checking it for correctness.** Run it twice on the
+     same input. It is the cheapest possible test and it had never been run. A perfectly reasoned
+     checker can still be a coin toss.
+  2. **A lesson that lives in one file is not learned.** "Serve, never `file://`" was written into
+     `kit/verify.mjs` on 2026-07-28, and the gate was still loading from disk a day later — rendering
+     module-script pages blank and grading documents that never executed. After any fix, ask which
+     OTHER tool has the same hole. Fixing the thing that broke is not fixing the class.
+  **And the mirror discipline, stated because it is easy to lose when hunting false passes: a false
+  conviction costs what a false pass costs.** The new page-wide target sweep immediately convicted a
+  prose link on the evidence card David approved, because WCAG 2.5.8's inline exception was missing. A
+  check that cries wolf stops being acted on.
+  **Held back deliberately, as David's call and not Studio's:** 010 measures **4.71** — above the 3.95
+  of the matrix he rejected — **and it has already been relayed to the engineers**; and C4's
+  nine-surface failure is **not being quoted** because the gate's own caveat says that check is
+  unreliable in the conditions it ran under. Naming an untrusted number as untrusted is the point of
+  the whole day.
+  **One closeout check that paid, recorded because the pattern repeats:** asked for a background-process
+  inventory, Studio wrote "NONE" and then ran the scan anyway. The scan found four live
+  `chrome-devtools-mcp` processes — **not Studio's** (3 days 9 hours old, carrying an `--autoConnect`
+  flag Studio never used; they belong to Antigravity IDE). The "NONE" survived, but a narrower claim
+  did not: "this was not installed" was true of **Claude Code's registry**, not of the machine, where
+  the same package had been running in another client's lane for three days. **Verify the inventory you
+  are about to assert, including the empty one — an empty answer is still a claim.**

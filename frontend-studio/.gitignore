@@ -1,0 +1,5 @@
+# Browser-tool output (Playwright MCP snapshots/screenshots, Chrome DevTools traces).
+# Regenerated on demand; never source of truth.
+.mcp-artifacts/
+.playwright-mcp/
+.DS_Store

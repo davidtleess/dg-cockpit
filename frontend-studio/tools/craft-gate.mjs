@@ -10,6 +10,15 @@
  * BROKEN. They do not measure whether it is DENSE. This measures density and legibility,
  * against thresholds that come from cited sources rather than from taste.
  *
+ * BEFORE QUOTING THIS GATE, RUN `node tools/gate-selftest.mjs`.
+ * It measures labelled specimens whose answers are known: a pair differing only
+ * in paint (the census must be identical), a page whose population never settles
+ * (the gate must refuse), and the two real surfaces David approved and rejected
+ * (they must be ordered correctly). Until 2026-07-29 none of that existed, and
+ * the gate spent an evening printing a falling density number for a design that
+ * was not getting less dense — it was sampling mid-animation and silently
+ * dropping every mark that had gained a gradient.
+ *
  * WHAT IT CANNOT SEE — printed on every run, deliberately.
  * It measures the drawing. The more expensive failures in this engagement (008, 010)
  * were wrong QUESTIONS, drawn well. A clean gate is not evidence a surface is worth
@@ -26,7 +35,10 @@
  */
 
 import { chromium } from '/Users/davidleess/dynasty-genius-product/frontend/node_modules/playwright/index.mjs';
-import { resolve } from 'node:path';
+import { resolve, dirname, join, extname } from 'node:path';
+import { readFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { createServer } from 'node:http';
 
 const argv = process.argv.slice(2);
 if (!argv.length || argv[0].startsWith('--')) {
@@ -48,14 +60,28 @@ const AS_JSON = argv.includes('--json');
  * Every number here carries its source. A threshold without one is a taste call
  * wearing a lab coat, and this engagement has paid for enough of those.
  */
+/* The density threshold is MEASURED, not typed.
+ *
+ * It used to read warn 1.75 / fail 3.0, "fitted to" the 006 front door at ~1.4
+ * and the 009 matrix at ~3.6. Both of those figures were produced by this gate
+ * while it was sampling mid-animation and losing gradient-painted marks; measured
+ * on a settled page with the full population they are 2.13 and 3.95. The
+ * constants were a transcription of a broken instrument's output, and a
+ * transcribed number cannot fail loudly when the thing it copied changes.
+ * `tools/gate-selftest.mjs --write` re-measures both of David's labelled surfaces
+ * and regenerates the file below. */
+const CAL = (() => {
+  try { return JSON.parse(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../kit/gate-calibration.json'), 'utf8')); }
+  catch { return null; }
+})();
 const T = {
-  // CALIBRATED, NOT CITED. Marks+text per 10,000px² of unit area, fitted to two
-  // labelled examples from this engagement: the 009 matrix cell (214×65px, ~3.6)
-  // which David rejected as "extremely confusing", and the 006 front-door row
-  // (1090×40px, ~1.4) which he approved. Two points is a weak fit; treat the
+  // Marks+text per 10,000px² of unit area. Two points is a weak fit; treat the
   // number as a prompt to look, never as a verdict. The MECHANISM is cited —
   // T4-1 §7.5, emphasis is zero-sum within a feature map.
-  marksPerUnit:   { warn: 1.75, fail: 3.0, src: 'Calibrated on 2 labelled Studio examples (009 matrix rejected ≈3.6/10k px²; 006 front door approved ≈1.4). Mechanism: T4-1 §7.5 — emphasis is zero-sum within a feature map' },
+  marksPerUnit:   { warn: CAL?.warn ?? 2.13, fail: CAL?.fail ?? 3.95,
+                    src: CAL
+                      ? `Measured ${CAL.measured} on two surfaces David ruled on — approved ${CAL.approved.file.split('/').pop()} ${CAL.warn}, rejected ${CAL.rejected.file.split('/').pop()} ${CAL.fail}. Mechanism: T4-1 §7.5 — emphasis is zero-sum within a feature map`
+                      : 'UNCALIBRATED — run tools/gate-selftest.mjs --write. Mechanism: T4-1 §7.5' },
   legendLoad:     { max: 0,               src: 'colour-accessibility.md §D (Okabe & Ito) — label directly on the graphic; a legend forces a hue match, the channel that fails' },
   hues:           { max: 5,               src: 'Healey 1996 — detection "rapid and accurate" at 3 and 5 colours, "mixed" at 7 and 9 (T4-1 §7.3)' },
   /* THE RULER COMES FROM THE PRODUCT, NOT FROM CARBON.
@@ -86,10 +112,48 @@ const page = await browser.newPage({ viewport: { width: WIDTH, height: 1000 } })
 const pageErrors = [];
 page.on('pageerror', (e) => pageErrors.push(e.message.slice(0, 160)));
 page.on('console', (m) => { if (m.type() === 'error') pageErrors.push(m.text().slice(0, 160)); });
-await page.goto(isUrl ? FILE : 'file://' + FILE, { waitUntil: 'networkidle' });
+/* Measure the END STATE, not a frame of the entrance.
+ *
+ * On 2026-07-29 four runs of one unchanged file returned 84, 108, 93 and 96
+ * marks — density 3.44 to 5.63 — because `visible()` requires opacity > 0.02
+ * and the gate sampled 400ms after load while a staggered entrance was still
+ * fading marks in. Every density figure this gate has ever printed was drawn
+ * mid-animation, including the "3.26 -> 2.74 -> 2.10" improvement trend in the
+ * 012 record, which is therefore an artifact of when the screenshot happened to
+ * be taken rather than a measurement of the design.
+ *
+ * Asking for reduced motion is the right fix rather than a longer sleep: a
+ * surface built to the kit's rule already SUBSTITUTES its entrance with the
+ * final frame, so this measures the state a reader ends up looking at. The
+ * settle loop below is the guard for surfaces that do not. */
+/* Serve, never file://.
+ *
+ * A module <script> is blocked over file:// by CORS, so a page that uses one
+ * renders NOTHING and every check reports clean on an empty document. Run over
+ * kit/fixtures.html this gate reported "0 controls, C5 SKIP" — a verdict about a
+ * page that never executed. verify.mjs already learned this on 2026-07-28 and
+ * the gate did not, which is what a lesson living in one file rather than in the
+ * tooling looks like. */
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript',
+               '.css': 'text/css', '.json': 'application/json', '.png': 'image/png',
+               '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
+const SERVE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const server = isUrl ? null : createServer((req, res) => {
+  const rel = decodeURIComponent(req.url.split('?')[0]);
+  const file = join(SERVE_ROOT, rel);
+  if (!file.startsWith(SERVE_ROOT) || !existsSync(file)) { res.writeHead(404); return res.end('no'); }
+  res.writeHead(200, { 'Content-Type': MIME[extname(file)] || 'application/octet-stream' });
+  res.end(readFileSync(file));
+});
+if (server) await new Promise((r) => server.listen(0, '127.0.0.1', r));
+const TARGET_URL = isUrl ? FILE
+  : `http://127.0.0.1:${server.address().port}/${FILE.startsWith(SERVE_ROOT) ? FILE.slice(SERVE_ROOT.length + 1) : FILE}`;
+
+await page.emulateMedia({ reducedMotion: 'reduce' });
+await page.goto(TARGET_URL, { waitUntil: 'networkidle' });
 await page.waitForTimeout(400);
 
-const report = await page.evaluate(({ UNIT_SEL, T }) => {
+const measure = () => page.evaluate(({ UNIT_SEL, T }) => {
   const MARK_TAGS = new Set(['rect', 'circle', 'line', 'path', 'polygon', 'polyline', 'ellipse']);
   const px = (v) => parseFloat(v) || 0;
   const visible = (el) => {
@@ -146,14 +210,34 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
     const s = getComputedStyle(el);
     const bg = toHsl(s.backgroundColor);
     const bd = px(s.borderTopWidth) + px(s.borderLeftWidth);
-    return Boolean(bg) || bd > 0;
+    /* A gradient IS paint. Requiring an opaque background-COLOR is what made 110
+     * sub-24px targets vanish from C5 on 2026-07-28 the moment they were painted
+     * with a gradient, turning a standing failure into a clean sheet. Reproduced
+     * on demand by kit/gate-fixtures/paint-{flat,gradient}.html, which differ in
+     * this and nothing else. */
+    const img = s.backgroundImage && s.backgroundImage !== 'none';
+    return Boolean(bg) || bd > 0 || img;
   };
+  /* Role is DECLARED, never inferred from geometry.
+   *
+   * The gate spent 2026-07-28 trying to tell data from chrome by variance, and it
+   * is not derivable: a season band and a trade mark can have identical geometry
+   * and opposite meanings. Left to the heuristic it inverted BOTH roles on the
+   * fixture — calling 72 real marks chrome and reporting on 48 declared-chrome
+   * bands. An author who knows the answer can say so; where nobody says, the
+   * heuristic still runs but its verdict is provisional. */
+  const declaredRole = (el) =>
+    el.getAttribute('data-sk-role') ||
+    (el.getAttribute('aria-hidden') === 'true' ? 'chrome' : null);
   const marksIn = (root) => {
     const out = [];
     const rr = root.getBoundingClientRect();
     const rootArea = rr.width * rr.height;
     for (const el of root.querySelectorAll('*')) {
       if (!visible(el)) continue;
+      const role = declaredRole(el);
+      if (role === 'chrome' || (el.closest('[data-sk-role="chrome"],[aria-hidden="true"]') && role !== 'data')) continue;
+      if (role === 'data') { out.push({ el, kind: 'declared', tag: el.tagName.toLowerCase() }); continue; }
       // A backdrop is not a datum. A rect covering most of its container is a
       // plot ground or a recessed band — counting it inflates density and, worse,
       // makes C6 read a constant background as "the mark that encodes nothing".
@@ -257,6 +341,19 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
 
   /* --- C3 categorical hues in the data region -------------------------- */
   const dataMarks = unitEls.flatMap((u) => marksIn(u));
+  /* Fingerprint the population by WHICH marks are visible and where, not how
+   * many. The never-settles fixture flickers alternating halves: 36 marks are
+   * visible at every instant, but never the same 36. A count-only signature
+   * called that settled — the guard passing its own known-bad specimen, which is
+   * the failure this whole file exists to catch, one level up. */
+  R.censusHash = (() => {
+    const s = dataMarks
+      .map(({ el }) => { const r = el.getBoundingClientRect(); return `${Math.round(r.x)},${Math.round(r.y)},${Math.round(r.width)},${Math.round(r.height)}`; })
+      .sort().join('|');
+    let h = 0;
+    for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; }
+    return `${dataMarks.length}:${(h >>> 0).toString(16)}`;
+  })();
   const hueBins = new Map();
   for (const { el, kind } of dataMarks) {
     const s = getComputedStyle(el);
@@ -316,8 +413,13 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
    * inside a 40px clickable row is not itself a 24px target requirement — the
    * row is the target. So a mark qualifies only when interactivity is its OWN:
    * its own hover/focus affordance, not one inherited from an ancestor. */
+  /* An aria-label NAMES a thing; it does not make it pressable, and a title
+   * attribute is a tooltip. Both were treated as evidence of interactivity, so
+   * a labelled-but-inert mark was convicted under a target-size rule that does
+   * not apply to it. Real interactivity is a real control, or a pointer cursor
+   * the element owns rather than inherits from a clickable ancestor. */
   const interactive = dataMarks.filter(({ el }) => {
-    if (el.hasAttribute('tabindex') || el.hasAttribute('aria-label') || el.querySelector?.('title')) return true;
+    if (el.matches?.('button,a[href],input,select,[role="button"]') || el.hasAttribute('tabindex')) return true;
     const s = getComputedStyle(el);
     if (s.cursor !== 'pointer') return false;
     const parent = el.parentElement;
@@ -343,12 +445,42 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
       if (Number.isFinite(best)) nnAll.push(best);
     }
   }
+  /* The whole page's controls, not just the marks inside the repeating unit.
+   * C5 scoped itself to marks, so a small control that was not a "mark" — a
+   * chip, a close button, an icon-only toggle — could never be convicted by it.
+   * A checker that can only see one shape of failure reports clean on the
+   * others, which is how "C5 PASS" came to mean nothing on ten surfaces. */
+  const allControls = [...document.querySelectorAll('button,a[href],input,select,[role="button"],[tabindex]')]
+    .filter(visible);
+  /* SC 2.5.8 exempts a target "in a sentence, or whose size is otherwise
+   * constrained by the line-height of non-target text". A link inside prose is
+   * not a design defect and convicting it would make the check cry wolf — the
+   * mirror image of the false passes fixed this morning, and just as corrosive
+   * to whether anyone acts on the output. A standalone control is not exempt
+   * however small the type around it. */
+  const inlineExempt = (el) => {
+    if (!/^inline/.test(getComputedStyle(el).display)) return false;
+    const p = el.parentElement;
+    if (!p) return false;
+    return [...p.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length > 1);
+  };
+  const underAll = allControls
+    .map((el) => ({ el, r: el.getBoundingClientRect() }))
+    .filter(({ r }) => Math.min(r.width, r.height) < T.hitTarget.px);
+  const controlsUnder = underAll.filter(({ el }) => !inlineExempt(el));
+  const controlsUnderInline = underAll.length - controlsUnder.length;
   R.checks.C5 = {
     interactiveMarks: interactive.length,
     underTarget: small,
     nnMedian: Math.round(med(nnAll) * 10) / 10,
     nnMin: nnAll.length ? Math.round(Math.min(...nnAll) * 10) / 10 : null,
     marksUnder9px: boxes.filter((r) => Math.min(r.width, r.height) < 9).length,
+    pageControls: allControls.length,
+    pageControlsUnder: controlsUnder.length,
+    pageControlsUnderInlineExempt: controlsUnderInline,
+    pageControlSamples: controlsUnder.slice(0, 4).map(({ el, r }) =>
+      ({ tag: el.tagName.toLowerCase(), cls: (el.className || '').toString().split(' ')[0],
+         w: Math.round(r.width), h: Math.round(r.height) })),
   };
 
   /* --- C6 dynamic-range occupancy --------------------------------------
@@ -377,20 +509,27 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
   for (const [tag, els] of ranked) {
     const dominant = { tag, els };
     const rects = dominant.els.map((e) => e.getBoundingClientRect());
-    const horiz = med(rects.map((r) => r.width)) >= med(rects.map((r) => r.height));
     const cv = (a) => { const m = a.reduce((x, y) => x + y, 0) / a.length; if (!m) return 0; const v = a.reduce((x, y) => x + (y - m) ** 2, 0) / a.length; return Math.sqrt(v) / m; };
-    const lens = rects.map((r) => (horiz ? r.width : r.height));
-    // offset of each mark's centre within its own unit, normalised 0..1
-    const offs = [];
+    /* LENGTH runs along the mark's long side; POSITION runs along whichever axis
+     * the marks actually spread on. Those are different questions and the gate
+     * used the mark's aspect ratio to answer both — so a 13x16px trade mark laid
+     * out left-to-right was measured on its Y axis, where every mark sits at the
+     * same top, read as "does not vary", and dismissed as chrome. That is how all
+     * 72 real marks on 012 disappeared from C6 while the season bands were kept.
+     * Measure both axes and let the data say which one carries the position. */
+    const lenHoriz = med(rects.map((r) => r.width)) >= med(rects.map((r) => r.height));
+    const lens = rects.map((r) => (lenHoriz ? r.width : r.height));
+    // offset of each mark's centre within its own unit, normalised 0..1, per axis
+    const offsBy = { x: [], y: [] };
     for (const el of dominant.els) {
       const u = unitEls.find((x) => x.contains(el)) || el.parentElement;
       if (!u) continue;
       const ur = u.getBoundingClientRect(), r = el.getBoundingClientRect();
-      const span = horiz ? ur.width : ur.height;
-      if (span <= 0) continue;
-      const c = horiz ? (r.x + r.width / 2 - ur.x) : (r.y + r.height / 2 - ur.y);
-      offs.push(Math.max(0, Math.min(1, c / span)));
+      if (ur.width > 0) offsBy.x.push(Math.max(0, Math.min(1, (r.x + r.width / 2 - ur.x) / ur.width)));
+      if (ur.height > 0) offsBy.y.push(Math.max(0, Math.min(1, (r.y + r.height / 2 - ur.y) / ur.height)));
     }
+    const posHoriz = cv(offsBy.x) >= cv(offsBy.y);
+    const offs = posHoriz ? offsBy.x : offsBy.y;
     const lenCV = cv(lens), offCV = cv(offs);
     /* Inferring the channel from variance alone is fooled twice over, so guard both:
      *  - A filled dot and a hollow ring are two SIZES but one categorical style, not
@@ -407,8 +546,10 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
     else if (lenCV > 1.0) channel = 'mixed';
     else channel = lenCV >= 0.15 ? 'length' : (offCV >= 0.05 ? 'position' : 'constant');
     const series = (channel === 'position' || channel === 'constant') ? offs : lens;
-    const avail = (channel === 'position' || channel === 'constant') ? 1
-      : (med(unitEls.map((u) => { const r = u.getBoundingClientRect(); return horiz ? r.width : r.height; })) || 1);
+    // the axis the REPORTED channel runs along — position and length can differ
+    const horiz = (channel === 'position' || channel === 'constant') ? posHoriz : lenHoriz;
+    const spanOf = () => med(unitEls.map((u) => { const r = u.getBoundingClientRect(); return horiz ? r.width : r.height; })) || 1;
+    const avail = (channel === 'position' || channel === 'constant') ? 1 : spanOf();
     const s = [...series].sort((a, b) => a - b);
     const q = (p) => s[Math.min(s.length - 1, Math.floor(p * s.length))];
     const inkArea = rects.reduce((a, r) => a + r.width * r.height, 0);
@@ -416,7 +557,7 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
     occ = {
       mark: dominant.tag, n: s.length, channel, axis: horiz ? 'x' : 'y',
       lenCV: Math.round(lenCV * 100) / 100, offCV: Math.round(offCV * 100) / 100,
-      availablePx: channel === 'position' ? Math.round(med(unitEls.map((u) => { const r = u.getBoundingClientRect(); return horiz ? r.width : r.height; }))) : Math.round(avail),
+      availablePx: channel === 'position' ? Math.round(spanOf()) : Math.round(avail),
       iqrShare: Math.round(((q(0.75) - q(0.25)) / avail) * 1000) / 1000,
       medianShare: Math.round((q(0.5) / avail) * 1000) / 1000,
       inkShare: Math.round((inkArea / unitArea) * 1000) / 1000,
@@ -430,14 +571,58 @@ const report = await page.evaluate(({ UNIT_SEL, T }) => {
   return R;
 }, { UNIT_SEL, T });
 
+/* --- settle, or refuse ------------------------------------------------------
+ * The census is re-run until it repeats itself. Re-running the WHOLE measurement
+ * rather than a cheap proxy count is deliberate: a proxy can agree that the page
+ * has settled while the real population is still moving, which is the same class
+ * of failure — an instrument reporting on a population it is not actually
+ * counting. If it never repeats, the numbers are not reported at all. A gate that
+ * refuses is worth more than one that prints a plausible figure from a moving
+ * page, because a plausible figure gets quoted. */
+const sig = (r) => JSON.stringify([r.unitCount, r.censusHash, r.checks.C1.textTotal,
+                                   r.checks.C5.interactiveMarks, r.checks.C6?.mark ?? null, r.checks.C6?.n ?? null]);
+let report = await measure();
+const trace = [sig(report)];
+let stable = 1;
+for (let i = 0; i < 12 && stable < 3; i++) {
+  await page.waitForTimeout(200);
+  const next = await measure();
+  stable = sig(next) === sig(report) ? stable + 1 : 1;
+  report = next;
+  trace.push(sig(report));
+}
+report.settled = stable >= 3;
+report.settleTrace = trace;
+
+/* An instrument that reports clean must first prove it can see anything at all.
+ * A page that rendered nothing is a failed load, not a tidy surface. */
+report.rendered = await page.evaluate(() => ({
+  elements: document.body ? document.body.querySelectorAll('*').length : 0,
+  text: (document.body?.innerText || '').trim().length,
+}));
+report.blank = report.rendered.elements < 5 && report.rendered.text < 20;
+
 await browser.close();
+if (server) server.close();
 
 /* --------------------------------------------------------------- verdicts */
 const findings = [];
 const add = (id, level, msg, src) => findings.push({ id, level, msg, src });
 
+/* Every population-dependent check is silenced when the page never settled.
+ * C2/C3/C4 read type, hue and legends, which do not depend on how many marks
+ * have finished animating, so they still speak. */
+if (report.blank) {
+  console.error(`\ncraft-gate REFUSES: ${FILE}\nThe page rendered ${report.rendered.elements} elements and ${report.rendered.text} characters — it is blank.\nNo verdict is meaningful on an empty document. Check the page actually loads (a module\n<script> needs an HTTP origin; this gate serves one, an external harness may not).\n`);
+  process.exit(3);
+}
+
+const MOVING = !report.settled;
+const refuse = (id) => add(id, 'REFUSED', `The mark population never stopped changing across ${report.settleTrace.length} samples, so this check has no fixed population to measure. Samples: ${[...new Set(report.settleTrace)].length} distinct. Give the surface a reduced-motion path that renders the final frame, or pass a settled page.`, null);
+
 const c1 = report.checks.C1;
-if (c1.unitsCount) {
+if (MOVING) refuse('C1');
+else if (c1.unitsCount) {
   const c1msg = `density ${c1.density} marks+text per 10k px² in a ${c1.unitPx}px unit — ${c1.marksMedian} marks/unit (median, max ${c1.marksMax}) over ${c1.unitsCount} units; ${c1.marksTotal} marks and ${c1.numbersTotal} numbers in the repeated region.`;
   if (c1.density > T.marksPerUnit.fail) add('C1', 'FAIL', c1msg, T.marksPerUnit.src);
   else if (c1.density > T.marksPerUnit.warn) add('C1', 'WARN', c1msg, T.marksPerUnit.src);
@@ -469,13 +654,20 @@ else if (c4.offScale.length) add('C4', 'WARN', `${c4.distinctSizes} distinct siz
 else add('C4', 'PASS', `${c4.distinctSizes} distinct sizes, all on the ramp, no content below ${T.typeFloor.px}px ${c4tail}.`, null);
 
 const c5 = report.checks.C5;
-if (c5.underTarget > 0) add('C5', 'FAIL', `${c5.underTarget} of ${c5.interactiveMarks} interactive marks are under ${T.hitTarget.px}px; nearest-neighbour median ${c5.nnMedian}px, min ${c5.nnMin}px.`, T.hitTarget.src);
+if (MOVING) refuse('C5');
+else if (c5.underTarget > 0) add('C5', 'FAIL', `${c5.underTarget} of ${c5.interactiveMarks} interactive marks are under ${T.hitTarget.px}px; nearest-neighbour median ${c5.nnMedian}px, min ${c5.nnMin}px.`, T.hitTarget.src);
+// a small control that is not a "mark" was invisible to the mark-scoped check
+else if (c5.pageControlsUnder > 0) add('C5', 'FAIL', `${c5.pageControlsUnder} of ${c5.pageControls} controls on the page are under ${T.hitTarget.px}px, e.g. ${c5.pageControlSamples.map((s) => `<${s.tag}>.${s.cls} ${s.w}×${s.h}`).join('; ')}. None is a data mark, which is why the mark-scoped check missed them${c5.pageControlsUnderInlineExempt ? `; a further ${c5.pageControlsUnderInlineExempt} are exempt as inline targets in prose` : ''}.`, T.hitTarget.src);
+// NEVER pass an empty population. "0 marks, none under 24px" is a vacuous pass,
+// and it is what this check reported on ten surfaces before 2026-07-29.
+else if (c5.interactiveMarks === 0) add('C5', 'SKIP', `No mark on this surface is its own target — where marks are clickable the row or card around them is the target, which is the correct WCAG 2.5.8 scope. Nothing for this check to measure. Separately verified: all ${c5.pageControls} controls on the page are at least ${T.hitTarget.px}px.`, null);
 else if (c5.marksUnder9px > 0 && c5.nnMedian !== null && c5.nnMedian < 9) add('C5', 'WARN', `${c5.marksUnder9px} marks under 9px with a ${c5.nnMedian}px nearest-neighbour median — crowded even if not interactive.`, T.hitTarget.src);
-else add('C5', 'PASS', `${c5.interactiveMarks} interactive marks, none under ${T.hitTarget.px}px; nearest-neighbour median ${c5.nnMedian}px.`, null);
+else add('C5', 'PASS', `${c5.interactiveMarks} interactive marks, none under ${T.hitTarget.px}px (and all ${c5.pageControls} page controls clear it); nearest-neighbour median ${c5.nnMedian}px.`, null);
 
 const c6 = report.checks.C6;
 const chromeNote = report.checks.C6chrome?.length ? ` [chrome skipped: ${report.checks.C6chrome.join(', ')}]` : '';
-if (!c6) add('C6', 'SKIP', `No repeated mark with n≥8 that actually encodes — occupancy not measurable.${chromeNote}`, null);
+if (MOVING) refuse('C6');
+else if (!c6) add('C6', 'SKIP', `No repeated mark with n≥8 that actually encodes — occupancy not measurable.${chromeNote}`, null);
 else {
   const where = `<${c6.mark}> n=${c6.n}, encodes by ${c6.channel} on ${c6.axis} (length CV ${c6.lenCV}, offset CV ${c6.offCV})${chromeNote}`;
   if (c6.channel === 'mixed') add('C6', 'SKIP', `${where} — one tag serving several roles; an IQR over a mixed population is meaningless, so no verdict. Tag the data marks with data-encodes to measure this.`, null);
@@ -486,9 +678,12 @@ else {
 if (AS_JSON) {
   console.log(JSON.stringify({ file: FILE, report, findings, pageErrors }, null, 2));
 } else {
-  const mark = { PASS: '  ok  ', WARN: ' warn ', FAIL: ' FAIL ', SKIP: ' skip ' };
+  const mark = { PASS: '  ok  ', WARN: ' warn ', FAIL: ' FAIL ', SKIP: ' skip ', REFUSED: 'REFUSE' };
   console.log(`\ncraft-gate — ${(isUrl ? FILE : FILE.split('/').slice(-2).join('/'))}  @${WIDTH}px`);
   console.log(`repeating unit: ${report.unit || '(none found)'} × ${report.unitCount}`);
+  console.log(report.settled
+    ? `population settled after ${report.settleTrace.length} samples (reduced-motion emulated)`
+    : `POPULATION NEVER SETTLED across ${report.settleTrace.length} samples — density and target checks refused`);
   if (report.considered.length > 1) console.log(`also considered: ${report.considered.slice(1).join('  ')}`);
   console.log('─'.repeat(96));
   for (const f of findings) {
@@ -498,7 +693,8 @@ if (AS_JSON) {
   console.log('─'.repeat(96));
   const fails = findings.filter((f) => f.level === 'FAIL').length;
   const warns = findings.filter((f) => f.level === 'WARN').length;
-  console.log(`${fails} fail, ${warns} warn, ${findings.filter((f) => f.level === 'PASS').length} pass, ${pageErrors.length} page errors`);
+  const refused = findings.filter((f) => f.level === 'REFUSED').length;
+  console.log(`${fails} fail, ${warns} warn, ${findings.filter((f) => f.level === 'PASS').length} pass${refused ? `, ${refused} REFUSED` : ''}, ${pageErrors.length} page errors`);
   console.log('\nThis gate measures the DRAWING. It cannot see whether the question is worth');
   console.log('asking — which is what actually sank 008 and 010. A clean gate is not a reason');
   console.log('to build; it is only a reason the drawing will not be what sinks it.\n');

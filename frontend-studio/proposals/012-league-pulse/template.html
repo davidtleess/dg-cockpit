@@ -281,9 +281,21 @@ tbody td:first-child{width:250px;max-width:250px}
    One mark per trade, identical marks — the mark answers WHEN and HOW OFTEN;
    what he takes is a separate measured column, because cramming a third
    category into a 10px square is how the 009 matrix died. */
-.tl{position:relative;height:34px;width:470px}
+/* The lane takes the whole height its row already pays for. It was 34px inside a
+   64px row — half the area the layout had allocated to the best object on the
+   page was going unused, and density is marks per AREA. The extra room is not
+   decoration: it is what lets two trades a week apart dodge VERTICALLY and keep
+   their true dates. Width is no longer fixed either, so the axis grows with the
+   column instead of stopping at a hardcoded 470px. */
+/* --rail is the single source of truth for the baseline: the CSS draws the axis
+   on it and layoutLanes() stacks marks from it. Two constants would drift. */
+.tl{position:relative;height:56px;width:100%;min-width:470px;--rail:45px}
+/* The four-year history is the widest thing on this board on purpose. Left to
+   auto-layout the table handed its space to three small numeric columns and the
+   lane came out at 307px — the page's best object paying for its neighbours. */
+thead th:nth-child(3),tbody td:nth-child(3){width:52%}
 .tl-rail{
-  position:absolute;left:0;right:0;top:16px;height:1px;
+  position:absolute;left:0;right:0;top:var(--rail);height:1px;
   background:linear-gradient(90deg,transparent,var(--dg-border) 6%,
              var(--dg-border) 94%,transparent);
 }
@@ -299,7 +311,7 @@ tbody tr.in .tl-mark{opacity:1;transform:translateX(-50%) translateY(0) scale(1)
   border-right:1px solid color-mix(in oklch, var(--dg-text) 11%, transparent);
 }
 .tl-mark{
-  position:absolute;top:9px;width:13px;height:16px;border-radius:3px;
+  position:absolute;top:29px;width:13px;height:16px;border-radius:3px;
   background:var(--dg-text);
   outline:2px solid var(--dg-surface);outline-offset:-1px;
   /* entrance: emphasized-decelerate — already moving when it appears, settles */
@@ -315,7 +327,7 @@ tbody tr:hover .tl-mark,tbody tr.you .tl-mark{outline-color:var(--dg-surface-rai
 .tl-mark:hover,.tl-mark.sel{background:var(--dg-focus);outline-color:var(--dg-focus);z-index:2}
 tbody tr.in .tl-mark:hover{transform:translateX(-50%) scale(1.22)}
 .tl-none{
-  position:absolute;left:0;top:4px;font-family:var(--dg-font-mono);
+  position:absolute;left:0;top:34px;font-family:var(--dg-font-mono);
   font-size:var(--dg-text-sm);color:var(--dg-text-muted);
 }
 /* Before he was in the league there is no history to read. Hatched, not blank —
@@ -326,7 +338,7 @@ tbody tr.in .tl-mark:hover{transform:translateX(-50%) scale(1.22)}
   opacity:.9;
 }
 .tl-pre-tag{
-  position:absolute;top:5px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
+  position:absolute;top:35px;font-family:var(--dg-font-mono);font-size:var(--dg-text-sm);
   color:var(--dg-text-muted);background:var(--dg-surface);padding:0 6px;white-space:nowrap;
 }
 tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-raised)}
@@ -340,7 +352,7 @@ tbody tr:hover .tl-pre-tag,tbody tr.you .tl-pre-tag{background:var(--dg-surface-
   letter-spacing:-.008em;
 }
 .tl-axis{
-  position:relative;width:470px;height:34px;font-family:var(--dg-font-mono);
+  position:relative;width:100%;height:34px;font-family:var(--dg-font-mono);
   font-size:var(--dg-text-sm);color:var(--dg-text-muted);
 }
 .tl-axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
@@ -906,7 +918,9 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
         band.style.width = ((xf(b)-xf(a))*100)+"%";
         tl.appendChild(band);
       });
-      tl.insertAdjacentHTML("beforeend", "<div class='tl-rail'></div>");
+      // the rail is the axis it draws on, not a datum — declared, so the craft
+      // gate counts it as the scaffolding it is (same as the season bands)
+      tl.insertAdjacentHTML("beforeend", "<div class='tl-rail' aria-hidden='true'></div>");
       // he cannot have traded before he arrived; that stretch is not "quiet", it is absent
       if (r.joined && r.joined > 2023){
         const pre = document.createElement("div");
@@ -933,24 +947,20 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
           (r.seasons_in_league===1?"":"s") + " in this league. He joined in " + r.joined + ".");
         tl.appendChild(none);
       }
-      // Dodge: two trades days apart would render as one mark, and the gate
-      // measured a minimum neighbour distance of 0px. Marks are nudged right
-      // until they clear one mark-width, computed from the lane's real pixel
-      // width rather than a magic constant (the 2026-07-28 defect class).
-      const LANE_PX = 470, MARK_PX = 15;
-      let lastX = -Infinity;
-      const placed = r.events.map(e=>{
-        let x = xf(e.date) * LANE_PX;
-        if (x - lastX < MARK_PX) x = lastX + MARK_PX;
-        lastX = x;
-        return {e, x: Math.min(x, LANE_PX - MARK_PX / 2)};
-      });
+      // Every mark sits at its TRUE date. The previous version dodged sideways —
+      // nudging a colliding mark right until it cleared — which moves a trade to
+      // a day it did not happen on, on an axis whose whole job is when. Marks now
+      // dodge VERTICALLY in layoutLanes() below, using the room the taller lane
+      // provides, so x stays honest. Position is also left in PERCENT here rather
+      // than resolved against a hardcoded 470px lane: the old constant contradicted
+      // its own comment and broke the moment the column changed width.
+      const placed = r.events.map(e=>({e, x: xf(e.date) * 100}));
       placed.forEach(({e, x})=>{
         const mk = document.createElement("button");
         mk.type = "button";
         mk.className = "tl-mark" + (e.startup ? " startup" : "");
         mk.dataset.trade = e.id;
-        mk.style.left = (x / LANE_PX * 100)+"%";
+        mk.style.left = x+"%";
         bindTip(mk, e.date + " — with " + (e.with || "?"),
           e.summary.split("; ").map(s=>"<u>"+s.split(" got ")[0]+"</u> got " +
             s.split(" got ").slice(1).join(" got ")).join("<br>") +
@@ -1021,7 +1031,54 @@ $("#nTrades").textContent = DATA.totals.trades_4_seasons;
     axRow.appendChild(axTd);
     axRow.innerHTML += "<td colspan='2'></td>";
     body.appendChild(axRow);
+    layoutLanes();
   }
+
+  /* Vertical dodge, measured — never a magic lane width.
+     Two trades a week apart overlap at any readable mark size. Shoving one
+     sideways until it clears is the cheap fix and it corrupts the only variable
+     the axis encodes: measured against the old logic, 29 of 72 marks (40%) were
+     displaced, one of them by 72 days. Marks now stack UP from the rail, so x
+     stays exactly the trade's date.
+     Stacking upward rather than symmetrically is the difference between a
+     direction that means something and one that does not: height above the rail
+     is the number of trades at that moment (a Wilkinson dot plot), where
+     alternating above/below drew a zigzag through runs of nearby trades and
+     implied an alternation the data does not contain.
+     Where even three rows cannot separate a cluster the marks are allowed to
+     OVERLAP rather than move: overlapping reads as "several at once", which is
+     true, whereas a displaced mark reads as a date that never happened. */
+  function layoutLanes(){
+    const MARK_W = 13, GAP = 2, PITCH = 17, H = 16, ROWS = 3;
+    document.querySelectorAll(".tl").forEach(tl=>{
+      const W = tl.clientWidth;
+      if (!W) return;
+      const rail = parseFloat(getComputedStyle(tl).getPropertyValue("--rail")) || 45;
+      const halfPct = (MARK_W / 2) / W * 100;
+      const marks = [...tl.querySelectorAll(".tl-mark")]
+        .map(mk=>({ mk, pct: parseFloat(mk.style.left) || 0 }))
+        .sort((a,b)=>a.pct - b.pct);
+      const lastInRow = [];                        // px of the last mark placed per row
+      for (const { mk, pct } of marks){
+        const clamped = Math.min(Math.max(pct, halfPct), 100 - halfPct);
+        const x = clamped / 100 * W;
+        let row = 0;
+        while (row < ROWS && lastInRow[row] !== undefined && x - lastInRow[row] < MARK_W + GAP) row++;
+        if (row === ROWS){                         // every row occupied — overlap, do not move
+          row = lastInRow.indexOf(Math.min(...lastInRow.slice(0, ROWS)));
+        }
+        lastInRow[row] = x;
+        mk.style.left = clamped + "%";
+        mk.style.top = (rail - H / 2 - row * PITCH) + "px";
+      }
+    });
+  }
+  let laneRelayout;
+  addEventListener("resize", ()=>{
+    clearTimeout(laneRelayout);
+    laneRelayout = setTimeout(layoutLanes, 120);
+  });
+
   render();
   setTimeout(()=>{ ENTERED = true; }, 1400);
 

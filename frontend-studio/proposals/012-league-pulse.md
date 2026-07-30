@@ -126,9 +126,45 @@ direction. He has not seen the habit work, and nothing is approved.
 `tools/craft-gate.mjs` fails this surface on **WCAG 2.2 SC 2.5.8 (24px target minimum)**: the trade
 marks are 10–12px. Kept deliberately — countability is the mark's entire purpose, and the standard's
 *equivalent control* exception is genuinely met (every trade is also a full-width card in the log,
-and every mark is a real focusable `<button>`, so keyboard reaches all 38). Density warns at 2.74
-per 10k px² — between the approved 006 front door (1.4) and the rejected 009 matrix (3.6) — after
-three columns were cut. Type carries two declared extensions above the product's three tokens.
+and every mark is a real focusable `<button>`, so keyboard reaches all 38). Type carries two declared
+extensions above the product's three tokens.
+
+**CORRECTION, 2026-07-29 — every density figure previously in this file was void, and the honest one
+is worse.** The gate that produced them sampled the page 400ms after load, while a staggered entrance
+was still fading marks in, and it dropped any mark painted with a gradient rather than a background
+colour. Four consecutive runs of this unchanged prototype returned 84, 108, 93 and 96 marks — density
+3.44 to 5.63. The gate now measures a settled page under emulated reduced motion, counts
+gradient-painted marks, honours this surface's own `aria-hidden` chrome declarations, and refuses to
+report at all when a population will not stop changing; it is proved against labelled specimens by
+`tools/gate-selftest.mjs`. Re-measured, this surface was **density 4.38 per 10k px², repeatable to the
+mark** — **above the 3.95 measured on the 009 matrix David rejected as "extremely confusing"**, and
+roughly double the 2.13 of the 006 front door he approved. The earlier "2.74, between the two" was an
+artifact of when the measurement happened to be taken.
+
+**FIXED the same day, on David's instruction ("fix the density on the lane") — now 2.17, level with
+the approved front door, with no trade removed.** What changed, and the first item is a correctness
+fix that happened to buy most of the density:
+
+1. **Marks dodge upward instead of sideways.** The old lane nudged a colliding mark right until it
+   cleared, which moves a trade to a date it did not happen on — measured against the shipped logic,
+   **29 of 72 marks (40%) were displaced, one of them by 72 days**, on David's own lane. Marks now
+   stack up from the rail, so height above the line is the number of trades at that moment (a
+   Wilkinson dot plot) and x is exactly the date. Verified: **72/72 marks at 0% positional error**
+   against the dataset's own span. An unseparable cluster is allowed to overlap rather than move.
+2. **The lane takes the height its row already paid for** — 34px inside a 64px row became 56px. The
+   area was already allocated and going unused.
+3. **The lane takes the width back.** Left to auto-layout the table gave the four-year history 307px
+   and spent the rest on three small numeric columns; it is now explicitly the widest column at
+   494px, up from 470.
+4. **The rail is declared chrome** (`aria-hidden`), like the season bands already were — it is the
+   axis it draws on, not a datum.
+
+Nearest-neighbour spacing went from **1px (marks touching) to 17px**. Re-verified after the change:
+72/72 marks resolve, named and focusable; hover resolves a trade; click opens it in the log;
+reduced-motion 72/72 opaque with zero travel; no overflow at 1440 or 390; zero console errors; gate
+output identical across repeated runs. **C5 still fails and is unchanged** — the 13×16px marks remain
+the documented WCAG 2.5.8 deviation, kept because countability is the mark's purpose and the
+equivalent-control exception is met.
 
 ---
 
@@ -276,8 +312,11 @@ Three regions, deliberately rough, nothing filtered by default:
 - **The dashed zero line** in the pick column is dashed specifically so it is not confusable with
   the solid lane seam three columns to its left — same form, different meaning is the 009-matrix
   failure.
-- Gate result: **0 fail, 2 warn** (density 2.22/10k px², between the approved 006 front door at
-  1.4 and the rejected 009 matrix at 3.6; and the two declared type extensions).
+- ~~Gate result: **0 fail, 2 warn** (density 2.22/10k px², between the approved 006 front door at
+  1.4 and the rejected 009 matrix at 3.6; and the two declared type extensions).~~
+  **Retracted 2026-07-29 — measured on a moving page by a gate that also lost gradient-painted
+  marks. Honest result on a settled page: 2 fail, 1 warn — density 4.38 (above the rejected 009
+  matrix at 3.95), 72 of 73 interactive marks under the 24px target. See the correction above.**
 
 ---
 
