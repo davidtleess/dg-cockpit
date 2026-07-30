@@ -1899,6 +1899,75 @@ earlier one, mark the old one superseded and link them.
   palette until the domain was enumerated. **Same designer, same day, same craft tools — the difference
   was the order of operations.**
 
+- **2026-07-30 — REACTED to 014 "What you hold": *"this is some good progress. solid"*. A direction
+  checkpoint, warmer than 013's *"not bad, not awesome"* — and NOT an approval.** Nothing is signed
+  off and no relay is authorised. **He did not answer the question that was put to him** (does the
+  gap between the blue and amber marks read at a glance across twelve receiver rows), so that stays
+  open and silence is not consent.
+  **What appears to have earned it, held loosely because he did not say:** the thread was the colour
+  and encoding system's **first contact with real data** — he flagged mid-session that the *end* of
+  the previous session was the strong work, which redirected Studio off a fresh instrument thread and
+  onto finishing the strong one. **The durable lesson is the redirect itself: a system demonstrated on
+  abstract rows is a set of claims, and Studio had recorded it as delivered.** Applying it is what
+  makes it real, and that step was nearly skipped in favour of starting something new.
+  **The measurement that preceded the build, kept because it refuted Studio's own hypothesis:**
+  Sofascore runs a **flatter** type scale (1.29x) than this app (1.85x), **less** chromatic text, and
+  the same chromatic fill as the surface David parked — so no token mechanism separates the category
+  from this product, and the *"not awesome"* deficit is **composition, not ingredients**. That is
+  evidence-backed permission to stay inside the product's visual contract rather than caution.
+
+- **2026-07-30 — METHOD LESSONS, self-directed session. Five, and three of them are Studio catching
+  Studio.**
+  1. **A system demonstrated on abstract rows is a set of claims, not a system — and Studio had
+     recorded it as delivered.** The colour and encoding system was "best work of the day" on 2026-07-29
+     and had never touched a real player name, a real tie, or a real rank. Studio opened 2026-07-30 on a
+     *new* instrument thread and was redirected by David's flag that the end of the last session was the
+     strong work. **The generalisation: finishing beats starting, and "delivered" is a claim that needs
+     the same both-directions test as any other.** Applying it changed the system materially — position
+     hue collapsed from every row to once per group header, because the rows were already busy carrying
+     the lane comparison.
+  2. **Measure which lever is missing before pulling one.** Studio's hypothesis was that the deficit
+     behind two *"not awesome"* surfaces was type-scale contrast (the product ships 13/15/18 and no
+     display scale). `tools/craft-profile.mjs` **refuted it, and not narrowly**: Sofascore runs a
+     *flatter* scale (1.29x vs this app's 1.85x), *less* chromatic text, and the same chromatic fill as
+     the surface David parked — while Studio's two least-liked surfaces carry MORE scale contrast than
+     every category leader. **No token mechanism separates the category from this product.** The deficit
+     is composition. **The payoff is not the refutation, it is that staying inside the product's visual
+     contract is now evidence rather than caution.**
+  3. **A new instrument class: the squint test** (`tools/squint.mjs`). Blur until type dissolves;
+     whatever survives is the focal point. **It sees a defect neither craft-gate nor craft-profile can —
+     the brightest object being the least important one.** On 014 it found the position badge (letters
+     "QB" beside the word "Quarterback") was the most saturated mark on the page while the connector
+     carrying the entire argument dissolved completely. Both fixed, **verified by re-running the test
+     rather than by looking once.**
+  4. **STUDIO SUBSTITUTED A COUNTER FOR THE LOOKING, which is the one thing a squint test exists to
+     prevent.** It generated blurred renders of every live surface, then ran a hue counter over them and
+     never opened the images. Going back to actually *look* is what found that the shipped front door is,
+     at a glance, a single column of amber sparklines — and that led to the day's two best findings.
+     **How to apply: when an instrument's output is an image, looking at the image is the measurement.
+     A number computed from it is a second, weaker thing.**
+  5. **Kill your own hypothesis before it reaches an engineer.** Studio found `baseline_roster_rows`
+     shipping `model_lane_value: 0` / `market_lane_value: 0` hardcoded for all 27 players and expected a
+     user-facing zeros defect. Checked first: the component never reads those fields and renders neutral
+     dashes. **Filed low-severity for the next consumer instead of shipped as the defect it looked
+     like.** The check cost two minutes and would have cost credibility.
+  **Three probe-harness failures, all the same family — the tool choosing its own population, all caught
+  before any number was quoted:** `timeout` does not exist on macOS, so a compound command ate an entire
+  category run and returned **empty output that looked like a clean run**; a local server wrote headers
+  before reading the file, killing two of seven runs inside a loop; and a fixed 2.2s wait measured Roster
+  Audit's **loading screen** and reported lane counts for 23 elements that were not the surface.
+  **This is CLAUDE.md principle 11's population clause, and it keeps recurring in throwaway scripts
+  rather than in checked-in tools — which is exactly where the check gets skipped.**
+  **A sixth, caught only at closeout and worth more than the five above because it is about
+  DISCLOSURE rather than about a bug:** Studio measured KeepTradeCut with a modal dialog covering the
+  page, **noticed it on the squint run and said so**, then tabulated the *craft-profile* numbers for
+  the same page — a separate load, almost certainly also covered — **without repeating the caveat.**
+  The contaminated row sat in a comparison table for a whole day. **How to apply: a caveat belongs to
+  the SOURCE, not to the run that happened to surface it. When one measurement of a source is
+  disclosed as compromised, every other measurement of that source inherits the disclosure until it is
+  re-taken.** Corrected in `craft/craft-profile-findings.md` rather than deleted, and the argument
+  never rested on that row.
+
 - **2026-07-29 (evening) — the two verbatim reactions that bracket the craft thread, recorded as said
   rather than as read.**
   **On the depth/hierarchy lab (lab-001):** *"better for sure - but we need colors a color scheme that

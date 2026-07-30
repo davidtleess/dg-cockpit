@@ -77,11 +77,40 @@ else
 fi
 
 # ---- Busy ---------------------------------------------------------------------
+# TWO independent signals, because ONE was not enough (found 2026-07-30).
+#
+#   (a) the footer interrupt hint — 'esc to interrupt'. Present on dynasty:1.1 while
+#       working, ABSENT on dynasty:2.1 while working: that pane's footer carries a
+#       custom banner line instead. The single-signal detector therefore reported
+#       BUSY=no for Studio while its spinner read "Undulating… (1m 7s · ↓ 3.0k
+#       tokens · still thinking with high effort)". That is the exact shape of the
+#       error David caught on 2026-07-29 ("studio is NOT at rest") and it would have
+#       let say-clear.sh and closeout-check.sh call a working lane at rest.
+#
+#   (b) the SPINNER line itself — an elapsed timer in parentheses followed, inside
+#       the same parentheses, by a token count or a thinking phrase. This is what a
+#       working Claude Code / Antigravity pane always renders, whatever the footer says.
+#
+# Signal (b) matches the ELLIPSIS-then-elapsed-timer shape ("Undulating… (2m 24s"),
+# which is what makes it safe to read across the whole visible screen: ordinary prose
+# does not put a running clock immediately after an ellipsis. It is NOT restricted to
+# the bottom rows — the first version of this fix was, and it MISSED, because queued
+# messages had pushed the spinner 11 rows up from the last content line. Position in a
+# pane is not a reliable anchor; shape is.
+#
+# $plain is the VISIBLE screen only (capture-pane with no -S), so scrollback prose
+# cannot reach this test at all.
+busy=no
+busy_signal=
 if printf '%s\n' "$plain" | grep -qE 'esc to interrupt|esc to cancel|Working \(|Generating\.\.\.|Loading\.\.\.'; then
-  echo "BUSY=yes"
-else
-  echo "BUSY=no"
+  busy=yes
+  busy_signal=footer-interrupt-hint
+elif printf '%s\n' "$plain" | grep -qE '…[[:space:]]*\([0-9]+[ms]'; then
+  busy=yes
+  busy_signal=spinner-elapsed
 fi
+echo "BUSY=$busy"
+echo "BUSY_SIGNAL=$busy_signal"
 
 # ---- Approval dialog ----------------------------------------------------------
 # Content-keyed, NOT state-keyed. TOWER-1 failure 7: a watcher that de-duplicated

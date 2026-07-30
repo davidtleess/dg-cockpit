@@ -79,6 +79,36 @@ ctx=$(printf '%s\n' "$prompt" | awk '
 # For an edit dialog the question line ALONE is the command context. The diff above it
 # is content and must never be scanned for command shapes.
 [ -n "$edit_q" ] && ctx="$edit_q"
+
+# ---- HEREDOC PAYLOAD IS CONTENT, NOT COMMAND (2026-07-30) --------------------
+# Same principle as the diff-body rule above, learned the same way. A ledger-append
+# dialog renders as:
+#     python scripts/gemini_ledger_append.py << 'EOF'
+#     - **Governance read:** 05 §1 David-verbatim in force ...
+# and the guard refused it on the word "force" inside that PROSE. It would equally
+# refuse any ledger entry describing a commit, a push or a deleted file — which is
+# most of them. Writing "force" into a markdown record does not force anything.
+#
+# So the payload between a heredoc opener and its delimiter is excluded from the
+# command scan — UNLESS the payload is itself executable, i.e. the command is a shell
+# or an interpreter taking code on stdin. Then the payload IS the command and every
+# pattern must still see it.
+#
+# Note what is NOT relaxed: the command line itself, the chosen option, edit targets
+# and credential paths are all still judged exactly as before. A guard that fires on
+# prose teaches Tower to route around it, and that is how guards die.
+hd_open=$(printf '%s\n' "$ctx" | grep -nE "<<-?[[:space:]]*['\"]?[A-Za-z_][A-Za-z0-9_]*" | head -1)
+if [ -n "$hd_open" ]; then
+  hd_line=${hd_open%%:*}
+  hd_head=$(printf '%s\n' "$ctx" | sed -n "1,${hd_line}p")
+  # Does the payload get EXECUTED? Shells, and interpreters reading code from stdin.
+  if printf '%s' "$hd_head" | grep -qiE '(^|[[:space:]/|;&(])(ba|z|k|c|da|fi)?sh([[:space:]]|$)|(^|[[:space:]/|;&(])(eval|xargs|source)([[:space:]]|$)|-c[[:space:]]*$|-e[[:space:]]*$|(python[0-9.]*|node|perl|ruby)[[:space:]]+(-[a-z]+[[:space:]]+)*<<|(python[0-9.]*|node|perl|ruby)[[:space:]]*<<'; then
+    heredoc_note="heredoc payload RETAINED in scope — the command would execute it"
+  else
+    ctx="$hd_head"
+    heredoc_note="heredoc payload excluded from the command scan (it is data written by the command, not executed); command line and chosen option still fully scanned"
+  fi
+fi
 optblk=$(printf '%s\n' "$prompt" | awk -v d="$digit" '
   BEGIN{ inopt=0; seen=0 }
   { t=$0; sub(/^[[:space:]]+/,"",t); sub(/^[^0-9[:space:]]+[[:space:]]+/,"",t)
@@ -91,6 +121,7 @@ if [ $? -eq 9 ] || [ -z "$optblk" ]; then
 else
   scope=$(printf '%s\n%s' "$ctx" "$optblk" | tr '\n' ' ' | tr -s ' ')
   scope_note="the command plus option $digit only"
+  [ -n "${heredoc_note:-}" ] && scope_note="$scope_note ($heredoc_note)"
 fi
 
 # Under --closeout-push, a plain `git push` is permitted; force/non-ff/other-branch never is.
@@ -141,6 +172,23 @@ if [ "$CLOSEOUT_PUSH" = 1 ]; then
   gate_re='rm -rf|crontab|npm publish|persist to settings'
   echo "NOTE=closeout-push authority asserted (charter 2026-07-28). Verify commits on the remote afterwards and log it in DECISIONS.md."
 fi
+# ---- EXECUTABLE PAYLOADS ARE JUDGED STRICTLY (2026-07-30) --------------------
+# The patterns above look for LITERAL command lines: `git push`, `git commit`. Code does
+# not have to spell it that way. A retained (executable) heredoc payload calling
+#     subprocess.run(["git","commit","-am","x"])
+# passed every pattern, because "git","commit" is not "git commit". Found by a test built
+# to check something else, which is the only reason it was found at all.
+# For executable payloads the standard is therefore ADJACENCY, not syntax: git mentioned
+# anywhere near a gate verb is David's. Prose keeps the relaxed treatment; code does not.
+if [ "${heredoc_note:-}" = "heredoc payload RETAINED in scope — the command would execute it" ]; then
+  if printf '%s' "$scope" | grep -qiE 'git' && \
+     printf '%s' "$scope" | grep -qiE 'push|commit|reset|clean|checkout|branch|tag|remote|rebase|filter.branch'; then
+    echo "VERDICT=REFUSED"
+    echo "REASON=GATE-SHAPED CODE — this dialog would EXECUTE a payload that reaches git. Tower judges executable payloads by adjacency, not by literal syntax, because code need not spell the command out. David's."
+    printf '%s' "$scope" | grep -oiE 'git[^ ]{0,3}|push|commit|reset' | head -4
+    exit 4
+  fi
+fi
 if printf '%s' "$scope" | grep -qiE "$gate_re"; then
   echo "VERDICT=REFUSED"
   echo "REASON=GATE-SHAPED (push / commit / delete / schedule / persisted settings) within $scope_note. Not Tower's to approve under any standing authority. Take it to David."
@@ -174,4 +222,9 @@ fi
 
 echo "VERDICT=APPROVED"
 echo "REASON=option $digit sent to $pane; the prompt is no longer present and no stray text entered the composer"
+# An APPROVAL must disclose what it judged, not only a refusal. If part of the prompt was
+# excluded from the scan as content, Tower sees that on the approval too — otherwise the
+# only way to learn the guard narrowed its own input is to read the source.
+[ -n "${heredoc_note:-}" ] && echo "SCOPE_NOTE=$heredoc_note"
+echo "SCOPE_JUDGED=$scope_note"
 exit 0

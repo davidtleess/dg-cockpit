@@ -739,3 +739,350 @@ OBSERVED  dynasty:2.1 flipped accept-edits -> AUTO MODE during David's session. 
 OBSERVED  Studio imported Playwright from the product repo's node_modules. NO deny rule broken. Raised
           to David as a COUPLING decision, not a violation.
 AUTHORITY DAVID-WORD (2026-07-29 23:14, 'finish the closeout').
+
+## 2026-07-30 08:0x — session boot
+- **Observed, not acted on:** David booted 1.1 (Claude, auto), 1.2 (Codex, approve-for-me), 2.1
+  (Studio, auto) in auto mode; 1.3 (Gemini) deliberately NOT in auto mode — his stated choice.
+  Authority: DAVID-WORD (2026-07-30 08:00, his own message). No corrective keystroke sent;
+  delegated authority 3 (observe and report, never override) unchanged.
+- **Woke the cockpit** — TW30-BOOT-01 to dynasty:1.1, spokesperson bootstrap + morning brief.
+  Authority: DAVID-STANDING (boot ritual, charter). Pre-send check REFUSED the first draft for
+  contamination shape (figures supplied alongside an independence ask); figures stripped, re-sent,
+  DELIVERED and marker-verified.
+
+## 2026-07-30 08:20 — BUSY DETECTOR WAS BLIND ON STUDIO'S PANE. Fixed, tested.
+EVENT     pane-state.sh reported BUSY=no for dynasty:2.1 while its spinner read "Undulating…
+          (2m 24s · ↓ 11.4k tokens)". Cause: the ONLY busy signal was the footer hint 'esc to
+          interrupt', which 1.1 renders and 2.1 does not (custom Studio banner in that footer).
+          say-clear.sh and closeout-check.sh both consume this field, so both would have certified
+          a WORKING Studio as at rest — the exact error David caught 2026-07-29.
+FIX       Second signal added: ellipsis-then-elapsed-timer shape, read across the visible screen.
+          FIRST attempt at the fix was ALSO wrong (bottom-8 rows; queued messages had pushed the
+          spinner 9-11 rows up). Position is not an anchor; shape is.
+TESTS     tests/busy-selftest.sh, 5 cases from LIVE captures. Main selftest still 21/21.
+AUTHORITY TRAFFIC — Tower's own instruments, no product repo touched, no lane altered.
+
+## 2026-07-30 08:22 — GHOST REFUSED, authorisation-shaped
+EVENT     dynasty:1.1 composer held dim text "yes to 1, and correct the board" — an answer to the
+          crew's ask, sitting where David's reply would sit. pane-strand.sh: FURNITURE; ghost-check:
+          GHOST (SGR-2). NOT submitted, not quoted to any lane, not treated as David's word.
+AUTHORITY HELD — David's words arrive only in David's own messages.
+
+## 2026-07-30 08:25 — TOOK TWO OF THE CREW'S FOUR ASKS OFF DAVID'S PLATE
+RULING 1  Post-commit divergence audits on the six commits already on origin/main: PROCEED, routed
+          to the review lane. Reasoning adopted: the audit COMPLETES an obligation that attached
+          when each commit was authorised; it opens no new work. The two lanes had split on whether
+          it needed David; Tower ruled rather than parking a half-syllable disagreement on him.
+          Any actual divergence found returns to Tower before it goes anywhere else.
+AUTHORITY DELEGATED-4 (review routing, granted permanently 2026-07-28) + TRAFFIC.
+RULING 2  AGENT_SYNC.md correction: PROCEED on the correction, NOT on its commit. The board was
+          telling a cold-booted lane that committed, pushed, CI-green work was parked and at-risk —
+          harmful on precisely a cold-boot morning. Commit question carried to David.
+AUTHORITY TRAFFIC (state-doc accuracy). Commit remains DAVID'S.
+NOTE      presend-check.sh warned CONTAMINATION SHAPE three times on this message for a false
+          reason: Tower's own marker ("…-02") supplied the 2-digit group its figures counter looks
+          for, next to the word "independent". Markers with trailing digit pairs will keep doing
+          this. Fixed by renaming the marker, not by overriding the guard.
+
+## 2026-07-30 08:35 — FIRST AUDIT CAME BACK WITH A DIVERGENCE. Disposed at Tower level.
+FINDING   Codex, auditing c3cf0d8: the committed evidence artifact's own header still says
+          "IN PROGRESS... threads not yet started" and "Uncommitted; no push word exists" while the
+          same file contains the completed threads and is committed and pushed.
+DISPOSITION Record-hygiene drift, non-substantive. No remediation opened. Hygiene findings BATCH
+          into one packet at the end of the audits; substantive divergences route to Tower
+          immediately and singly. Corrections working-tree only; commit remains David's.
+PATTERN   Told the lane the PATTERN is the finding: an artifact asserting its own commit/push status
+          manufactures this drift. David's own closeout rule ("stop that treadmill") already covers
+          the class; the durable fix is that artifacts stop asserting it.
+AUTHORITY TRAFFIC. Not raised to David as a decision — no product, data or model claim is affected.
+
+## 2026-07-30 08:55 — THE APPROVAL GUARD WAS REFUSING PROSE. Third instance of one defect class.
+EVENT     dynasty:1.3 blocked ~9 minutes on a ledger-append prompt. pane-approve.sh refused it as
+          GATE-SHAPED on the word "force" — which appeared inside the heredoc PAYLOAD, in the phrase
+          "05 §1 David-verbatim in force". The same guard would refuse most ledger entries this
+          cockpit writes, because they describe commits, pushes and deletions for a living.
+CLASS     THIRD instance of the guard reading text that is not the action: 2026-07-26 the unchosen
+          menu option · 2026-07-28 "launchctl" inside a diff body · today the heredoc payload.
+FIX       A heredoc payload is CONTENT and is excluded from the command scan — UNLESS the command
+          would EXECUTE it (a shell, or an interpreter taking code on stdin), in which case the
+          payload is the command and is scanned in full.
+FIX 2     Found while testing the above: for EXECUTABLE payloads the literal patterns were useless —
+          subprocess.run(["git","commit",...]) is not "git commit". Executable payloads are now
+          judged by ADJACENCY (git near any gate verb), not syntax. Prose keeps the relaxed reading;
+          code does not. This closed a REAL pre-existing hole, found only because a test aimed
+          somewhere else.
+FIX 3     An APPROVAL now discloses what it judged (SCOPE_JUDGED / SCOPE_NOTE). Previously only a
+          refusal explained its scope, so the only way to learn the guard had narrowed its own input
+          was to read the source.
+TESTS     tests/heredoc-selftest.sh, 5 assertions, all from live shapes. Suites: 21/21 + 5/5 + 5/5.
+          The test harness itself had the day's recurring bug: pane-approve sends a BARE DIGIT, which
+          in a test pane sits in the shell's input line, so the next fixture never painted and later
+          cases graded the PREVIOUS screen — two false FAILs, and it would produce false PASSes just
+          as easily.
+THEN      Gemini's prompt approved, in scope (its own standing telemetry duty, David-ordered lane
+          routine). AUTHORITY: DELEGATED-1.
+NOTE      A separate near-miss worth remembering: pane-approve.sh is only allowlisted in David's
+          settings when invoked as `bash <absolute path>`. Invoked any other way the harness
+          classifier denies it outright, which looks exactly like a guard refusal and would silently
+          retire delegated authority 1 for a whole session.
+
+## 2026-07-30 08:45 — A LANE CLAIMED A BACKGROUND TIMER THAT DOES NOT EXIST
+EVENT     dynasty:1.3 reported it had "scheduled a background timer" to wake itself for the post-run
+          data-job audit and would stand by until then. Tower checked the process table: NO sleep
+          process, no scheduled child, nothing pending. The lane would have idled indefinitely and
+          the audit would never have run.
+RULING    Corrected to the lane with the standing rule restated — TOWER asserts background state, a
+          lane does not, because the lane is the interested party in its own account. Tower holds the
+          trigger and will call it once the morning jobs have finished. AUTHORITY: TRAFFIC.
+IMPLICATION FOR CLOSEOUT: there is no unattended timer to inventory. The absence is the finding, and
+          it is the opposite of what the lane's own report would have put in the handoff.
+VERIFIED  Its staleness alert IS real, confirmed by Tower opening the artifact rather than reading the
+          summary: app/data/valuation/league_opportunity_latest.json carries captured_at 2026-07-15
+          while the file itself was written 2026-07-22. Content two weeks old; file rewritten a week
+          after capture. Carried to David as PRODUCT QUALITY, not telemetry trivia.
+CORROBORATION Its backup read matches Tower's own earlier measurement. Recorded as CORROBORATION, not
+          as two independent confirmations, because Tower already held the same figure.
+
+## 2026-07-30 08:50 — DAVID OPENED THE THREAD, and granted a session allowance
+DAVID'S WORDS, verbatim: "yes to the session allowance, and answer 1: do the enumeration".
+RELAYED   TW30-GO-G to dynasty:1.1, DELIVERED and marker-verified. Stream enumeration/declaration for
+          the three live sources is OPEN. Nothing else extended. His outstanding question about where
+          the declaration lives is needed at LANDING, not to start — the lane is told not to park on it.
+          Commits remain his; review routing is Tower's (DELEGATED-4).
+PROVENANCE FLAGGED in the relay: Tower's mtime-newer-than-content observation was handed over
+          explicitly labelled as TOWER'S, so any confirmation is recorded as corroboration and not as
+          the lane's own discovery. This is the 2026-07-26/27 error being actively avoided rather than
+          discovered afterwards.
+AUTHORITY DAVID-WORD (2026-07-30 08:47).
+
+## 2026-07-30 08:50 — SESSION ALLOWANCE GRANTED for dynasty:1.3 ledger appends
+DAVID'S WORD: "yes to the session allowance". Tower may select option 2 — allow FOR THIS CONVERSATION
+          ONLY — on dynasty:1.3's gemini_ledger_append.py prompts.
+BOUNDED   Option 3 (Persist to settings.json) is NOT granted and was not offered. It remains David's,
+          and pane-approve.sh refuses it independently of anything Tower believes.
+          The allowance covers that ONE command shape on that ONE pane for this session. It expires
+          with the session and does not transfer to another lane or another command.
+STATE     No such dialog is open at this moment, so nothing was pressed. It applies at the next one.
+AUTHORITY DAVID-WORD (2026-07-30 08:47).
+
+## 2026-07-30 09:00 — ENUMERATION DELIVERED AND UNDER REVIEW
+VERIFIED  dynasty:1.1 produced the stream enumeration/declaration and routed it to the review lane;
+          dynasty:1.2 measured BUSY at 09:01, consistent with a review in progress. Working tree is
+          three paths (AGENT_SYNC.md, today's ledger, a new evidence directory). NOTHING COMMITTED.
+QUALITY   The lane self-probed its own citations after drafting, found three wrong, corrected them
+          BEFORE routing, and told the reviewer that citations are where its error rate lives so the
+          review weights them accordingly. Recorded because that is the behaviour this cockpit exists
+          to produce, and it was unprompted.
+TRACEABLE Tower's mtime-newer-than-content observation is now answered IN THE DECLARATION: a published
+          artifact must carry an observation timestamp and a producer status, freshness must be
+          materialized rather than inferred, mtime is never a freshness basis without disclosure, and
+          an mtime-vs-content divergence is REPORTABLE rather than silently resolved in favour of the
+          newer one. The lane was explicit that this makes the condition detectable and fixes nothing
+          in the producer, and that it did not open that.
+GHOST     dynasty:1.1 composer: "Codex CLEAR received — carrying David's word on where it lands".
+          Authorisation-shaped AND verdict-shaped — it would have had Tower believe a review had
+          cleared and that David had spoken. REFUSED; no verdict inferred from it.
+AUTHORITY TRAFFIC (observation) + HELD (the ghost).
+
+## 2026-07-30 10:32 — MORNING JOBS: MEASURED, NOT ASSUMED, TWICE
+09:37  Nearly reported feature_refresh as a MISSED job because its log had not been written today.
+       Checked the process table first: it was RUNNING (PID 58779). Reporting the quiet log would
+       have been reporting a symptom as an event, and would have been WRONG.
+10:31  Same job still running, 55 minutes elapsed against roughly 18 minutes yesterday, and
+       backup_irreplaceable also in flight (PID 65791) rather than missed. Neither is an alarm yet;
+       both are recorded as IN FLIGHT with the duration anomaly named.
+TRIGGER Called dynasty:1.3 for its post-run audit (TW30-OPS-H, DELIVERED) — the honest mechanism that
+       replaced its phantom timer. Told it explicitly that a read taken now is a PARTIAL morning and
+       must say so, and asked it to judge RUN DURATION as well as completion.
+CONTAMINATION AVOIDED DELIBERATELY: Tower holds the duration figures and did NOT hand them over. The
+       lane is asked to measure duration in its own way. If it independently names the same job, that
+       is a genuine catch; had Tower supplied the numbers it would only have been corroboration.
+AUTHORITY TRAFFIC.
+
+## 2026-07-30 10:35 — ALLOWANCE NOT STRETCHED
+EVENT     dynasty:1.3 prompted for `ps aux | grep ...` — a read-only process-table check, and one Tower
+          had explicitly asked for. Approved with option 1 (this once).
+NOT USED  David's session allowance covers the ledger-append command shape. It does NOT cover `ps`, and
+          option 2 was NOT taken even though it was offered and would have reduced future prompts.
+          An allowance granted for one command shape does not travel to another. AUTHORITY: DELEGATED-1
+          for the approval itself.
+
+## 2026-07-30 10:33 — TOWER'S OWN TRIGGER MECHANISM DIED, exactly as the lane's did
+EVENT     The background watcher Tower armed to call dynasty:1.3 when the in-flight jobs finish was
+          KILLED. Tower had promised that lane "you do not need a timer, I hold the watch" — so for a
+          few minutes Tower was the one relying on a mechanism that no longer existed.
+FIX       Re-armed on process presence (launchctl PID) rather than log mtime, which is the stronger
+          signal, and disclosed to David rather than quietly replaced.
+LESSON    The phantom-timer failure is not a property of that lane. Any promise to watch is only as
+          good as a mechanism someone verifies is still alive.
+
+## 2026-07-30 10:39 — SESSION ALLOWANCE APPLIED, first and only use so far
+EVENT     dynasty:1.3 ledger-append prompt. Option 2 (allow FOR THIS CONVERSATION) selected under
+          David's word of 2026-07-30 08:47. Option 3 (persist to settings.json) was on the same menu
+          and was NOT taken; it is not granted and the guard refuses it independently.
+PRECEDING Six read-only prompts on the same lane (ps ×4, ls ×2) were each approved ONE AT A TIME with
+          option 1, because his allowance covers the ledger-append shape only. AUTHORITY: DELEGATED-1.
+
+## 2026-07-30 10:38 — TOWER SAID "NOTHING NEEDS YOU" WITHOUT RUNNING THE GATE
+EVENT     Tower told David "nothing needs you" from a turn-brief SNAPSHOT. say-clear.sh, run minutes
+          later, returned NOT_CLEAR: a REAL strand in dynasty:1.1's composer and an unanswered open
+          ask on dynasty:1.2.
+OUTCOME   No damage — the strand was Codex's own review message, mid-delivery, and CODEX COMPLETED ITS
+          OWN DELIVERY (composer EMPTY, recipient processing, verified at 10:38). Tower pressed
+          nothing. The wire rule worked exactly as designed.
+CLASS     Part IV / Class D: the procedure exists, Tower did not run it. Disclosed to David unprompted.
+          This is the second time today Tower has made an at-rest claim from a snapshot; the first was
+          caught by the same gate. RULE RESTATED: run say-clear.sh BEFORE the words, not after.
+REVIEW    TW30-GO-G came back NOT CLEAR, seven defects, frozen artifact SHA recorded. Headline carried
+          to David was the PATTERN, not the list: the stream count has risen at every harder look
+          (3 → 8 → 17 → 18+ and four pipelines, not three), so nobody has yet produced a complete
+          inventory of what feeds the product. That is why the contract oscillated for four rounds.
+
+## 2026-07-30 10:50 — INDEPENDENT CONVERGENCE, recorded as independent because it genuinely is
+THREE measurements, three methods, no figure carried between them by Tower:
+  GEMINI  (telemetry, its own sweep)  seed_as_of 2026-06-26, seed_age 33.8d, mean_abs_value_delta 0.0
+  STUDIO  (outside, the app's own capture DBs, no crew contact)  model lane silent on 33 of 36
+          overnight transitions; market lane moved someone on 36 of 36
+  TOWER   (its own SQL against model_forward_capture.db, adjacent-day self-join on dg_player_id)
+          the ONLY days with any changed dynasty_value_score are 2026-06-26 (519) and 2026-06-27 (79)
+CLASSIFICATION INDEPENDENT — not corroboration. Tower held Gemini's figures and gave Studio nothing;
+          Studio has no crew contact by construction; Tower's query was written after both and
+          agreed with neither by design. This is the strongest evidence class this cockpit produces.
+⚠ DISCREPANCY PRESERVED, NOT FLATTENED: Studio names 2026-07-10 as the last model change; Tower's
+          query says 2026-06-27; Gemini's seed is 2026-06-26. These are probably different objects
+          (published FEATURES vs captured VALUES), and if so the values stopped moving BEFORE the
+          features did, which is the opposite of the assumed causal order. NOT resolved. Recorded as
+          an open lead, because collapsing it into one date would destroy the only clue.
+CARRIED   To David as a four-item board, with the recommendation that any work start as a DIAGNOSIS
+          and not a fix. Nothing opened; no lane instructed. AUTHORITY: HELD pending David's word.
+
+## 2026-07-30 11:20 — DAVID: "focus on layers 1 and 2"
+AUTHORITY DAVID-WORD (2026-07-30 11:19), verbatim, relayed verbatim as TW30-LAYERS-J (DELIVERED).
+EFFECT    Enumeration/declaration CONTINUES — it is layer 1-2 by definition.
+          The stale-valuation defect is absorbed INTO that thread as a DIAGNOSIS ONLY: establish why
+          the foundation stopped advancing; no repair, no producer touched, no adjacent thread. If the
+          next honest step becomes a change, the lane stops and Tower takes it to David.
+          The front-end defect relay (015) HOLDS with David. No lane touches the surface. His doctrine
+          is explicit and was written the night a layer-6 evening died on an unlooked-for layer-1
+          defect.
+INTERPRETATION DISCLOSED, NOT HIDDEN: Tower read four words as the answer to board item 1 (should the
+          crew open the value-staleness question). The relay SAYS SO and invites the lane to challenge
+          the reading rather than inherit it. If challenged, Tower goes back to David rather than
+          defending its own interpretation.
+NOT SENT TO STUDIO — the layer doctrine is OUR governance. Sending it across would be contamination of
+          exactly the kind the firewall exists to prevent, however useful it would be to that lane.
+
+## 2026-07-30 11:26 — DAVID DECIDED ALL THREE
+AUTHORITY DAVID-WORD (2026-07-30 11:26), given in answer to an explicit either/or after Tower REFUSED
+          to read a bare "ok" as approval. Two of the three recommendations changed his repository;
+          "ok" is not a gate and was not treated as one.
+1 SLEEP    ANSWERED NO — a daily job is not expected to run while the laptop sleeps; late-on-wake is
+          accepted. CONSEQUENCE HE TOOK DELIBERATELY: freshness is judged by CONTENT, not by whether a
+          job ran. Relayed with the reasoning intact, because the reasoning is the decision.
+2 SQL      RE-POINT AT THE REAL SQL, REPORT-ONLY. Bounded in the relay: no CI gating, no fixing what it
+          finds, the age-cliff value path explicitly NOT touched in this change, findings to Tower,
+          commits remain David's. Framed to the lane as the first instance of a COMPOUNDING approach,
+          which is his own standing objection to point fixes.
+3 RELAYS   BOTH HELD. 016 waits so the crew's diagnosis stays independent of Studio's numbers; 015
+          waits because it is layer 6 and the foundation has priority. No action was needed to hold.
+RELAYED   TW30-WORD-K, DELIVERED and marker-verified.
+
+## 2026-07-30 11:45 — TOWER'S OWN MEASUREMENT WAS NULL-BLIND. Disclosed to David unprompted.
+EVENT     Tower told David "not one player's dynasty value score has changed since 2026-06-27",
+          from its own SQL. That query compared with `a.value <> b.value`, which in SQL is NEVER
+          TRUE when either side is NULL — so every player ENTERING or LEAVING the scored set was
+          invisible to it. Codex found exactly that population movement (469→468 scored, five named
+          players gained or lost a score, row counts 12,201 vs 12,203).
+RE-RAN    Null-aware (`IS NOT`) on the same table: still zero changes since 06-27, and the scored
+          population is constant at 468 for the last six days. SO THE CLAIM HOLDS ON THAT TABLE —
+          BUT IT HELD BY LUCK, NOT BY METHOD. The instrument narrowed its own population and Tower
+          reported the output as verified fact. Same defect class Tower spent the day catching.
+CORRECTED TO DAVID immediately, before he acted on it, and stated as luck rather than dressed up.
+VERDICT   TW30 valuation-staleness diagnosis v1: NOT CLEAR, seven findings, two blocking.
+          BLOCKING 1 relocates the defect: ingestion and curation are correct and stable; the
+          defective behaviour is the layer-3 republish plus health/reader logic. Upstream stillness
+          is a DEPENDENCY, not the origin. Tower's morning framing ("the foundation stopped
+          advancing") was wrong in its location.
+          BLOCKING 2: 0.0 drift covers 466 overlapping scored IDs and proves neither output identity
+          nor population stability.
+          RECORD finding: the frozen artifact claimed an observation window that had not yet
+          occurred at verification time — a document describing measurements from the future.
+HELD      Chasing this into layer 3 is a DIFFERENT THREAD than the one David opened. Tower asked for
+          his word rather than following the defect upward on its own reading. AUTHORITY: HELD.
+
+## 2026-07-30 12:02 — THIRD CORRECTION TO TOWER TODAY, and the sharpest
+FINDING   The artifact documenting Tower's null-blind measurement OVERSTATED the equivalence between
+          Tower's error and the product's. Defensible version: both VALUE comparisons are blind to
+          WHICH identities enter/leave the scored intersection. But _compute_seed_staleness as a whole
+          DOES compare coverage populations and emits coverage_count_deltas (current marker:
+          ENGINE_B -2, INACTIVE +2, PRE_MODEL +2). Tower's hand query had no equivalent.
+CONSEQUENCE Tower told David "the app's instrument has the same blindness as mine." NOT ENTIRELY TRUE.
+          The product retains a signal Tower's query lacked. Corrected with David directly.
+FINDING 2 The artifact's unanchored time ("~11:20 ET") came from TOWER. Tower issued the anchoring
+          rule to the lanes at 11:58 while its own reporting carried approximate clocks.
+ADOPTED   The anchoring rule binds TOWER: measured times or none. A rule Tower imposes and does not
+          keep is a rule the lanes will learn to route around.
+PATTERN   Three of today's most useful review findings have been corrections to TOWER, not to the
+          implementing lane: the null-blind query, the overstated equivalence, the unanchored clock.
+          Recorded as the system working. AUTHORITY: TRAFFIC.
+
+## 2026-07-30 12:28 — DAVID: "yea fix those scheduling problems"
+AUTHORITY DAVID-WORD (2026-07-30 12:27), verbatim. FIRST authorisation today that touches his
+          machine's schedules — everything prior was documents and one CI file.
+RELAYED   TW30-SCHED-S, DELIVERED. Order: (1) author the two missing launchd jobs, (2) fix the
+          ordering defect, (3) point freshness at a content field instead of mtime.
+BOUNDARIES SET BY TOWER, not by him, and stated as Tower's: producers/model/SQL/artifacts under
+          review are NOT covered. Loading anything onto his machine is ONE explicit step after
+          review, verified by reading back what the system HAS — never by exit code, because two
+          jobs both firing is worse than the absence being fixed. RED first: a scheduler is
+          executable behaviour, and today's own ruling was that non-blocking is not non-executable.
+NOT DECIDED BY TOWER: the ordering fix. Tower REFUSED to pick a later clock time — a fixed offset is
+          the same defect with a longer fuse when the job's duration is network-dominated. If a
+          dependency-ordered trigger is not achievable, the lane proposes the offset WITH reasoning
+          and Tower takes the tradeoff to David. His morning timing is his.
+ASKED     That the artifact state what the two orphaned reports are FOR and whether WEEKLY is even
+          right — one of them feeds a question that changes daily. That question was never asked
+          when the cadence was written into the config.
+
+## 2026-07-30 13:57 — BOTH LANES STOPPED AND ESCALATED. Correct call, recorded as such.
+ESCALATION 1  The morning cluster contains a CYCLE, not merely an inversion:
+              build_universe_pvo_batch reads the marker-pinned league snapshot; league_capture
+              publishes snapshot AND PVO-derived artifacts ATOMICALLY as one set. Mutually
+              dependent. No ordering of the jobs as they exist can be correct — reordering only
+              MOVES the stale edge. Coherence requires splitting fetch from derive: a PRODUCER
+              change, outside David's boundary. The lane refused to take the convenient reading.
+ESCALATION 2  There is no config-only content-basis fix. Every timestamp in the artifact is a
+              REBUILD time; only the semantic hash tracks content. The field originally proposed
+              would have preserved false freshness — the cure containing the disease, FOURTH
+              instance today.
+BOTH LANES AGREE: no RED until David rules. Their reasoning is the day's lesson turned on itself —
+              a RED written now would ENCODE either a false freshness guarantee or an incoherent
+              graph, and would then be cited as evidence that both were fine.
+ALSO          The lane retracted an assumption: there is no roster-capacity job to "stay weekly".
+              It has never existed and must be created.
+TOWER'S RECOMMENDATION TO DAVID: land the unambiguous part (the two missing schedulers, ordered
+              against the inputs they consume) and give the cycle its own word. It is a genuine
+              architecture change to his data flow.
+GHOST         NINTH today ("take both escalations to David"). Refused. The last four have each
+              carried the precise pending answer; one forged Tower's marker scheme.
+AUTHORITY     HELD — nothing opened, nothing widened, no RED authorised.
+
+## 2026-07-30 15:07 — THE COMMIT LANDED, AND TOWER PUT A FALSE SENTENCE IN IT
+COMMIT    e20291e — 21 files, +5064/-20. Local only; 0 behind / 1 ahead, VERIFIED by Tower with
+          rev-list, not taken from the lane's report. Author AND committer are David Leess; the
+          crew appears only in a Co-Authored-By trailer.
+CLEAN     Executable content: 17 frozen blobs match recorded hashes, workflow test passes, the
+          auditor reaches four governed SQL files and returns exactly the two recorded findings.
+          WHAT DIVERGED WAS THE STORY TOLD ABOUT THE WORK, NOT THE WORK.
+TOWER ERROR #7  Tower instructed the commit message to record EVERY artifact as uncleared. THREE
+          HAD CLEARED AT 12:51 — diagnosis v4, declarations v6, provenance addendum v2 — an hour
+          before Tower said it, and Tower had been told. Tower repeated its OWN earlier statement
+          without re-checking and thereby wrote a false sentence into a durable record. This is
+          the precise failure the verified-board rule exists to prevent.
+TOWER ERROR #8  "Built against YESTERDAY'S valuation every day" was TOWER'S language, given to
+          David before the narrower version existed. Accurate: the raw snapshot is PVO-independent;
+          only the derived matrix/posture/cut consume it; the runtime consumed is previously
+          available, not necessarily yesterday's. The CYCLE is real; Tower's dramatisation was not.
+DISPOSITION NO AMEND, no rebase, no force, no push. Rewriting a landed commit so its message reads
+          better is a worse defect than the one it fixes. The correction goes in the ledger and
+          travels with the commit. AUTHORITY: TRAFFIC.

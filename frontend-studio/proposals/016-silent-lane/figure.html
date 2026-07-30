@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The silent lane — 016</title>
+<style>
+/* Product tokens only: no gradients, no elevation shadows, radii from the app's own
+   set, type 13/15/18 plus the 24px the live app already renders. This surface IS
+   about our lane versus the market's, so under the scarcity rule the two
+   constitutional lane hues carry the marks and nothing else takes hue. */
+:root{
+  --bg:oklch(0.16 0.01 250); --surface:oklch(0.2 0.012 250);
+  --border:oklch(0.32 0.012 250); --border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250);
+  --model:oklch(0.72 0.11 255); --market:oklch(0.76 0.13 75);
+  --f-display:"Archivo",system-ui,sans-serif; --f-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --t-sm:13px; --t-base:15px; --t-lg:18px; --t-display:24px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-sans);
+  font-size:var(--t-sm);line-height:1.5;font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 28px 72px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 12px}
+h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;letter-spacing:-.015em;margin:0 0 8px}
+.lede{font-size:var(--t-base);color:var(--muted);max-width:70ch;margin:0 0 4px}
+.lede b{color:var(--text);font-weight:600}
+
+.chart{margin-top:36px;border-top:1px solid var(--border);padding-top:20px}
+.lane{display:grid;grid-template-columns:132px 1fr 116px;gap:16px;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--border)}
+.lname{font-family:var(--f-mono);font-size:var(--t-sm)}
+.lname.o{color:var(--model)} .lname.k{color:var(--market)}
+.lname small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.bars{display:flex;align-items:flex-end;gap:2px;height:74px}
+.bar{flex:1;min-width:0;border-radius:2px 2px 0 0;position:relative}
+.bar.o{background:var(--model)} .bar.k{background:var(--market)}
+/* A measured zero is a real reading, not missing data — it renders as a visible
+   baseline tick rather than as nothing, so "silent" cannot be mistaken for "no capture". */
+.bar.zero{background:var(--border-strong);height:2px!important;border-radius:0}
+.tally{font-family:var(--f-display);font-size:var(--t-lg);font-weight:600;text-align:right}
+.tally small{display:block;font-family:var(--f-sans);font-size:11px;font-weight:400;
+  color:var(--muted);letter-spacing:0;margin-top:2px;line-height:1.35}
+.axis{display:grid;grid-template-columns:132px 1fr 116px;gap:16px;margin-top:8px}
+.axdates{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.note{margin-top:28px;color:var(--muted);max-width:78ch}
+.note b{color:var(--text);font-weight:500}
+.note p{margin:0 0 10px}
+#tip{position:fixed;z-index:9;pointer-events:none;opacity:0;background:var(--surface);
+  border:1px solid var(--border-strong);border-radius:4px;padding:6px 10px;font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Dynasty Genius · measured 2026-07-30</p>
+  <h1>One of these lanes speaks every morning. The other speaks eight times in a hundred.</h1>
+  <p class="lede">Each bar is one overnight transition — how many players changed value between two
+    consecutive daily captures, <b>2026-06-24 to 2026-07-30</b>, read from the app's own capture
+    databases.</p>
+
+  <div class="chart" id="chart"></div>
+
+  <div class="note">
+    <p><b>Why this decides what belongs on the front door.</b> The app's default screen splits into
+    "Model output changes" and "Market movement". Measured live today, the model region renders
+    <b>0 rows in 71 pixels</b> — its copy reads <i>"Projections held steady — no player movement on
+    this tape"</i> — while the market region renders <b>36 rows in 1,401 pixels</b>. That is a 20:1
+    split of the page, and it is not a layout choice: it is what the data does.</p>
+    <p><b>The consequence is that the product's whole thesis is absent from its own front door on most
+    mornings.</b> A surface keyed to model <i>change</i> can only show our view on the 8% of days the
+    model moves. A surface keyed to model <i>position</i> — our rank beside the market's — has
+    something to say every single day, because a rank exists whether or not it moved.</p>
+    <p><b>What this is not.</b> It is not evidence the model is broken; a dynasty valuation SHOULD be
+    stable, and a model that churned daily would be the more worrying artifact. It is evidence that
+    <i>change</i> is the wrong quantity to build the opening screen on.</p>
+  </div>
+</div>
+<div id="tip"></div>
+
+<script>
+fetch('lanes.json').then(r=>r.json()).then(D=>{
+  const el = document.getElementById('chart');
+  const tip = document.getElementById('tip');
+  const lanes = [
+    {k:'model',  cls:'o', name:'our model',  sub:'dynasty value score'},
+    {k:'market', cls:'k', name:'the market', sub:'FantasyCalc value'}
+  ];
+  const all = lanes.flatMap(l => D[l.k].filter(x=>x.moved!==null).map(x=>x.moved));
+  const max = Math.max(...all);
+
+  for (const l of lanes) {
+    const t = D[l.k].filter(x=>x.moved!==null);
+    const silent = t.filter(x=>x.moved===0).length;
+    const row = document.createElement('div');
+    row.className = 'lane';
+    row.innerHTML =
+      `<div class="lname ${l.cls}">${l.name}<small>${l.sub}</small></div>
+       <div class="bars"></div>
+       <div class="tally">${silent} / ${t.length}<small>mornings with nothing to report</small></div>`;
+    const bars = row.querySelector('.bars');
+    for (const d of t) {
+      const b = document.createElement('div');
+      b.className = 'bar ' + l.cls + (d.moved===0 ? ' zero' : '');
+      b.style.height = d.moved===0 ? '2px' : Math.max(3, (d.moved/max)*74) + 'px';
+      /* Every mark names its own day and count — a mark standing for one real
+         event must be able to identify it. */
+      b.addEventListener('mousemove', e=>{
+        tip.textContent = `${d.date} — ${d.moved===0 ? 'no player changed value' : d.moved + ' players moved'}`;
+        tip.style.opacity = 1;
+        tip.style.left = Math.min(e.clientX+14, innerWidth-260) + 'px';
+        tip.style.top = (e.clientY+16) + 'px';
+      });
+      b.addEventListener('mouseleave', ()=>{ tip.style.opacity = 0; });
+      bars.append(b);
+    }
+    el.append(row);
+  }
+  const t0 = D.market.filter(x=>x.moved!==null);
+  const ax = document.createElement('div');
+  ax.className = 'axis';
+  ax.innerHTML = `<div></div><div class="axdates"><span>${t0[0].date}</span>
+    <span>one bar = one overnight transition</span><span>${t0[t0.length-1].date}</span></div><div></div>`;
+  el.append(ax);
+});
+</script>
+</body>
+</html>

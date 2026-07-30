@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What you hold — 014</title>
+<link rel="preconnect" href="/">
+<style>
+/* ============================================================================
+   014 · WHAT YOU HOLD
+   First application of the colour and encoding system (craft/colour-encoding-system.md)
+   to a real surface with real data.
+
+   TOKEN DISCIPLINE — every value below is the product's own, taken verbatim from
+   frontend/src/styles/tokens.css. Zero gradients, zero elevation shadows, radii
+   drawn only from the app's own set (3/4/6/999), type only 13/15/18 plus the 24px
+   the live app already renders on its masthead. There is no divergence to justify,
+   and that is now evidence-backed rather than cautious: tools/craft-profile.mjs
+   measured Sofascore — the best-crafted product in the comparison — at a FLATTER
+   type scale (1.29x) and LOWER chromatic fill (0.3%) than this product. The craft
+   gap is not in the mechanisms.
+
+   HUE ASSIGNMENT — the scarcity rule doing real work. This surface COMPARES our
+   lane to the market's on every row, so the two constitutional lane hues carry the
+   marks and POSITION SPENDS ITS HUE EXACTLY ONCE PER GROUP, in the header badge
+   where no lane mark competes with it. No position badge appears in any row: the
+   group already names the position, so the badge would be a hue with nothing to say.
+   ========================================================================== */
+:root{
+  --bg:oklch(0.16 0.01 250);
+  --surface:oklch(0.2 0.012 250);
+  --raised:oklch(0.24 0.014 250);
+  --border:oklch(0.32 0.012 250);
+  --border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250);
+  --muted:oklch(0.68 0.008 250);
+  --focus:oklch(0.72 0.14 255);
+
+  /* Layer 1 — CONSTITUTIONAL. Never reassigned, on any surface. */
+  --model:oklch(0.72 0.11 255);
+  --market:oklch(0.76 0.13 75);
+
+  /* Layer 2 — position identity, the re-stepped set (deutan ΔE 8.4 / normal 15.8;
+     the shipped set measures 4.0 / 8.0 and fails). Always co-labelled. */
+  --qb:oklch(0.60 0.15 300);
+  --rb:oklch(0.64 0.15 130);
+  --wr:oklch(0.52 0.15 5);
+  --te:oklch(0.58 0.13 200);
+
+  --f-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --t-sm:13px; --t-base:15px; --t-lg:18px; --t-display:24px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px;
+
+  /* Motion — one curve per event, from craft/motion-easing.md. */
+  --e-standard:cubic-bezier(.2,0,0,1);
+  --d-fast:120ms; --d-std:220ms;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--f-sans);font-size:var(--t-sm);line-height:1.5;
+  font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 28px 96px}
+
+/* ---------------------------------------------------------------- masthead */
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 var(--s3)}
+h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;
+  letter-spacing:-.015em;margin:0 0 var(--s2)}
+.lede{font-size:var(--t-base);color:var(--muted);max-width:62ch;margin:0}
+.lede b{color:var(--text);font-weight:600}
+.provenance{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;gap:var(--s4);font-family:var(--f-mono);font-size:var(--t-sm);color:var(--muted)}
+.provenance span b{color:var(--text);font-weight:500}
+
+/* ------------------------------------------------------------------ groups */
+.group{margin-top:44px}
+.ghead{display:flex;align-items:flex-start;gap:var(--s3);margin-bottom:var(--s3)}
+/* SIZED BY THE SQUINT TEST, not by taste. At 34×24 the badge was the single
+   brightest object on the blurred page — the most saturated mark on the surface was
+   the two letters "QB" sitting beside the word "Quarterback". Dominance was going to
+   the most redundant thing on screen. Halved in area; it still marks the group for
+   scanning, it no longer outranks the data. Fill kept solid rather than outlined
+   because the label's contrast depends on it (WR measures 3.22:1 against the page —
+   fine for a block, below the 4.5:1 that coloured TEXT would need). */
+.badge{flex:none;width:24px;height:16px;border-radius:3px;display:grid;place-items:center;
+  font-family:var(--f-mono);font-size:10px;font-weight:600;letter-spacing:.02em;
+  margin-top:3px;color:oklch(0.16 0.01 250)}
+.badge.QB{background:var(--qb)} .badge.RB{background:var(--rb)}
+.badge.WR{background:var(--wr);color:oklch(0.97 0.005 250)} .badge.TE{background:var(--te)}
+.gname{font-family:var(--f-display);font-size:var(--t-lg);font-weight:600;letter-spacing:-.01em;
+  margin:0;line-height:1.35}
+.gname em{font-style:normal;color:var(--muted);font-weight:400}
+.gthesis{margin:3px 0 0;color:var(--muted);max-width:80ch}
+.gthesis b{color:var(--text);font-weight:500}
+.gthesis .o{color:var(--model)} .gthesis .k{color:var(--market)}
+/* The holdings sentence is the argument; the structural one is its setting. */
+.gthesis.hold{color:var(--text);font-size:var(--t-base);margin-top:var(--s2);max-width:74ch}
+.gthesis.hold b{font-weight:600}
+
+/* -------------------------------------------------------------------- rows */
+.rows{border-top:1px solid var(--border)}
+/* ONE row height for the whole page, so twelve receivers read as one grid rather
+   than a stack of differently-sized boxes. */
+.row{display:grid;grid-template-columns:66px minmax(148px,1fr) minmax(300px,2.2fr) 172px;
+  align-items:center;gap:var(--s3);width:100%;min-height:56px;text-align:left;
+  background:none;border:0;border-bottom:1px solid var(--border);
+  color:inherit;font:inherit;padding:var(--s2);cursor:pointer}
+.row:hover{background:var(--surface)}
+.row:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.rank{font-family:var(--f-display);font-size:var(--t-lg);font-weight:600;
+  color:var(--model);text-align:right;letter-spacing:-.01em}
+/* A TIED rank is rendered as its RANGE, never as its first number. Printing "1"
+   for a player the model places somewhere in 1–11 is a precision claim the model
+   does not make, and it was sitting in the highest-authority cell on the row. */
+.rank.tied{font-size:var(--t-base)}
+.who .nm{display:block;font-size:var(--t-base);font-weight:500;line-height:1.3}
+/* CONTENT sits at the product's 13px floor. Age and market value are values, not
+   labels, and were the reason 96 nodes were lifted on 011 for the same reason. */
+.who .meta{display:block;font-family:var(--f-mono);font-size:var(--t-sm);color:var(--muted);margin-top:1px}
+/* Two aligned rows, ours first (the product's mission order), so the two tier
+   reads sit in the same columns and the difference is what the eye catches. */
+.tiers{display:grid;grid-template-columns:auto 1fr;gap:1px var(--s2);
+  font-family:var(--f-mono);font-size:var(--t-sm);line-height:1.45;align-content:center}
+.tiers dt{font-size:11px;color:var(--muted);align-self:center}
+.tiers dd{margin:0;white-space:nowrap}
+.tiers .o{color:var(--model)} .tiers .k{color:var(--market)}
+.tiers .g{color:var(--muted)}
+
+/* ------------------------------------------------------------------ track */
+/* The track is the most interesting object on the row, so it gets the most room —
+   and "the fix for too dense is more room, not fewer marks" (2026-07-28). */
+.track{position:relative;height:34px}
+.dens{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.repl{position:absolute;top:0;bottom:16px;width:1px;background:var(--border-strong)}
+/* The connector IS the argument of this page, and under the squint test it was the
+   first thing to dissolve — two coloured dots survived, the disagreement between
+   them did not. Brightened and thickened so the quantity already encoded by its
+   LENGTH is actually legible. This adds no channel: length still carries the
+   magnitude, it is simply visible now. */
+.conn{position:absolute;top:6.5px;height:3px;background:oklch(0.60 0.012 250);border-radius:999px}
+.dot{position:absolute;top:1px;width:14px;height:14px;border-radius:999px;margin-left:-7px;
+  border:1.5px solid var(--bg)}
+.dot.m{background:var(--model)} .dot.k{background:var(--market)}
+.tiebar{position:absolute;top:2.5px;height:11px;border-radius:999px;background:var(--model);
+  border:1.5px solid var(--bg)}
+.klabel{position:absolute;top:17px;font-family:var(--f-mono);font-size:var(--t-sm);color:var(--market);
+  transform:translateX(-50%);white-space:nowrap;line-height:1.2}
+/* The axis and the replacement line label THEMSELVES, once per group, on the
+   graphic — never in a column header, which is a key (Okabe & Ito). */
+.axis{position:relative;height:18px;margin:0 0 2px;font-family:var(--f-mono);font-size:11px;
+  color:var(--muted)}
+.axis .l{position:absolute;left:0}.axis .r{position:absolute;right:0}
+.axis .rl{position:absolute;transform:translateX(-50%);white-space:nowrap;color:var(--border-strong)}
+.axis .rl b{color:var(--muted);font-weight:400}
+
+/* -------------------------------------------------------------- expansion */
+.exp{grid-column:1/-1;overflow:hidden;background:var(--surface);border-bottom:1px solid var(--border)}
+.expin{padding:var(--s4) var(--s4) var(--s4) 62px;display:grid;
+  grid-template-columns:minmax(280px,1.4fr) minmax(240px,1fr);gap:var(--s4) 32px}
+.read{font-size:var(--t-base);line-height:1.6;margin:0}
+.read .ours{color:var(--model);font-weight:600}
+.read .mkt{color:var(--market);font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3) var(--s4);margin:0}
+.fact dt{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 1px}
+.fact dd{margin:0;font-family:var(--f-display);font-size:var(--t-lg);font-weight:600;letter-spacing:-.01em}
+.fact small{display:block;font-family:var(--f-sans);font-size:11px;font-weight:400;color:var(--muted);
+  letter-spacing:0;margin-top:1px;line-height:1.4}
+.nbs{margin-top:var(--s4)}
+.nbhead{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 var(--s2)}
+.nbrow{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--s2) var(--s3);margin-bottom:var(--s1)}
+.nblab{font-family:var(--f-mono);font-size:11px;min-width:104px}
+.nblab.o{color:var(--model)} .nblab.k{color:var(--market)}
+.nb{font-size:var(--t-sm);color:var(--muted)}
+.nb.own{color:var(--text)}
+.nb em{font-style:normal;color:var(--muted)}
+.caveat{grid-column:1/-1;margin:0;padding-top:var(--s3);border-top:1px solid var(--border);
+  color:var(--muted);font-size:var(--t-sm)}
+.caveat b{color:var(--text);font-weight:500}
+
+/* ------------------------------------------------------------------- tips */
+#tip{position:fixed;z-index:40;pointer-events:none;opacity:0;max-width:280px;
+  background:var(--raised);border:1px solid var(--border-strong);border-radius:4px;
+  padding:var(--s2) var(--s3);font-size:12px;line-height:1.45;color:var(--text)}
+#tip b{font-weight:600}
+#tip .k{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:2px}
+
+.foot{margin-top:56px;padding-top:var(--s4);border-top:1px solid var(--border);
+  color:var(--muted);max-width:80ch}
+.foot p{margin:0 0 var(--s2)}
+
+@media (prefers-reduced-motion:no-preference){
+  .exp{transition:height var(--d-std) var(--e-standard)}
+  .row{transition:background var(--d-fast) var(--e-standard)}
+  .dot,.tiebar{transition:transform var(--d-fast) var(--e-standard)}
+  .row:hover .dot,.row:hover .tiebar{transform:scale(1.12)}
+}
+@media (max-width:860px){
+  .row{grid-template-columns:40px 1fr;row-gap:var(--s2)}
+  .track{grid-column:1/-1}.tiers{grid-column:1/-1}
+  .expin{grid-template-columns:1fr;padding-left:var(--s4)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Dynasty Genius · your roster</p>
+  <h1>What you hold</h1>
+  <p class="lede" id="lede"></p>
+  <div class="provenance" id="prov"></div>
+  <div id="groups"></div>
+
+  <div class="foot">
+    <p><b>How to read a row.</b> The track is the whole position, worst on the left, <b>#1 at the far
+    right</b>. The blue mark is where our model ranks him; the amber mark is where the market ranks him.
+    The line between them is the disagreement — that is the only thing on this page you cannot get
+    anywhere else.</p>
+    <p><b>Where our model cannot separate players, it says so.</b> A blue bar instead of a dot means the
+    model gives every player it spans the identical score, so the order inside it is not ours to claim.</p>
+    <p id="limits"></p>
+  </div>
+</div>
+<div id="tip" role="status" aria-live="off"></div>
+
+<script src="data.js"></script>
+<script>
+const H = window.HOLD;
+const POSNAME = {QB:'Quarterback', RB:'Running back', WR:'Wide receiver', TE:'Tight end'};
+/* Structural clauses about THIS league's lineup (QB1 RB2 WR2 TE1 FLEX2 SF1, 12 teams).
+   Every number in them is injected from the data, never typed. */
+const CLAUSE = {
+  QB:'the superflex slot makes a second quarterback a starting job',
+  RB:'two starting slots a team, plus the flex',
+  WR:'two starting slots a team, plus the flex — which is why quantity here is cheap',
+  TE:'one starting slot a team, and the shallowest room in the league'
+};
+const fmt = n => n.toLocaleString('en-US');
+
+/* The thesis sentence. Fixed SHAPE every day — same clauses, same order, only the
+   numbers move — so a quiet position and a loud one are rendered identically and
+   the reader finds the anomaly rather than being told it (2026-07-21). */
+function thesisLine(g){
+  const t = g.thesis;
+  if (!t) return '';
+  const best = t.bestTied
+    ? `<b>${t.bestName}</b>, whom our model can only place inside ${g.pos}1–${t.bestTied}`
+    : `<b>${t.bestName}</b> at <span class="o">${g.pos}${t.bestOurs}</span> ours,
+       <span class="k">${g.pos}${t.bestMkt}</span> market`;
+  return `Of the ${g.held} you hold, <b>${t.insideStartsOurs}</b>
+    ${t.insideStartsOurs === 1 ? 'is' : 'are'} inside that starting ${g.weeklyStarts} on our board and
+    <b>${t.insideStartsMkt}</b> on the market's; <b>${t.aboveReplOurs}</b> and <b>${t.aboveReplMkt}</b>
+    clear replacement. Your best is ${best}.`;
+}
+
+/* A rank is an abstraction; the players either side of it are not. This is the
+   comparable-names device, and it is the answer to "what does the expansion let
+   him conclude that the row didn't?" — the row already carried age and value, so
+   those were restatement and were cut. */
+function nbBlock(p, g){
+  const line = (label, lane, list) => {
+    if (!list.length) return '';
+    const parts = list.map(nb =>
+      `<span class="nb${nb.mine ? ' own' : ''}">${nb.above ? '▲' : '▼'} ${g.pos}${nb.rank}
+         ${nb.name}${nb.mine ? ' <em>(yours)</em>' : ''}</span>`).join('');
+    return `<div class="nbrow"><span class="nblab ${lane}">${label}</span>${parts}</div>`;
+  };
+  return `<div class="nbs">
+    <p class="nbhead">Who he sits between</p>
+    ${line('on our board','o', p.nbOurs)}
+    ${line('on the market’s','k', p.nbMkt)}
+  </div>`;
+}
+
+/* best = RIGHT (#1 at the far right) — David's ruling, 2026-07-23. */
+const x = (rank, n) => (1 - (rank - 1) / (n - 1)) * 100;
+
+const tip = document.getElementById('tip');
+let tipT;
+function showTip(e, html){
+  tip.innerHTML = html;
+  tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let L = e.clientX + 14, T = e.clientY + 16;
+  if (L + r.width > innerWidth - 8) L = e.clientX - r.width - 14;
+  if (T + r.height > innerHeight - 8) T = e.clientY - r.height - 14;
+  tip.style.left = L + 'px'; tip.style.top = T + 'px';
+}
+const hideTip = () => { tip.style.opacity = 0; };
+
+document.getElementById('lede').innerHTML =
+  `<b>${H.held} of your ${H.rosterSize} players</b> can be compared at all. Both boards are ranked over ` +
+  `only the <b>${H.shared} players they share</b>, because a rank from a list of ${H.shared + H.modelOnly} ` +
+  `and a rank from a list of ${H.shared + H.marketOnly} are not the same measurement. ` +
+  `The other ${H.absent} appear on one board only and are named at the foot of this page.`;
+
+document.getElementById('prov').innerHTML =
+  `<span>market <b>${H.generated_from.market.slice(0,10)}</b></span>` +
+  `<span>our model <b>${H.generated_from.model}</b></span>` +
+  `<span>league snapshot <b>${H.generated_from.snapshot.slice(0,10)}</b></span>` +
+  `<span>${H.league.teams} teams · superflex · full PPR</span>`;
+
+document.getElementById('limits').innerHTML =
+  `<b>What this page is not.</b> It is descriptive. It renders no buy, sell, hold or cut call, and the ` +
+  `disagreement between the two marks is not evidence that either board is right. Our model's values ` +
+  `changed on only 3 of the 33 capture days to 27 July, so a disagreement here is a standing difference ` +
+  `of opinion, never news.`;
+
+const root = document.getElementById('groups');
+
+for (const g of H.groups){
+  const sec = document.createElement('section');
+  sec.className = 'group';
+
+  const replPct = x(g.replacement, g.n);
+  sec.innerHTML =
+    `<div class="ghead">
+       <span class="badge ${g.pos}" aria-hidden="true">${g.pos}</span>
+       <div>
+         <h2 class="gname">${POSNAME[g.pos]} <em>— you hold ${g.held} of ${g.n}</em></h2>
+         <p class="gthesis"><b>${g.weeklyStarts}</b> of the ${g.n} start in a given week
+           (${CLAUSE[g.pos]}). Replacement level sits at <b>${g.pos}${Math.round(g.replacement)}</b>.
+           ${g.ceilingTies > 1
+             ? `Our model gives its top <b>${g.ceilingTies}</b> ${g.pos}s the identical score, so it
+                cannot rank inside that block.`
+             : ''}</p>
+         <p class="gthesis hold">${thesisLine(g)}</p>
+       </div>
+     </div>
+     <div class="axis" aria-hidden="true">
+       <span class="l">${g.pos}${g.n}</span>
+       <span class="rl" style="left:${replPct}%"><b>replacement ${g.pos}${Math.round(g.replacement)}</b></span>
+       <span class="r">${g.pos}1</span>
+     </div>
+     <div class="rows"></div>`;
+
+  const rows = sec.querySelector('.rows');
+
+  g.players.forEach(p => {
+    const ourX = p.tieSpan ? x(p.tieSpan.hi, g.n) : x(p.drank, g.n);
+    const ourX2 = p.tieSpan ? x(p.tieSpan.lo, g.n) : ourX;
+    const mktX = x(p.mrank, g.n);
+    const lo = Math.min(ourX, mktX), hi = Math.max(ourX2, mktX);
+
+    /* CUT, and the reason is worth keeping: this was a DENSITY of rank, and the
+       density of rank is UNIFORM BY CONSTRUCTION — ranks 1..n contain exactly one
+       player each. It was 60 marks a row encoding a quantity that cannot vary,
+       which is the 2026-07-21 failure in a new costume, and it rendered as a
+       dashed bar because the only thing it could ever show was noise.
+       What the rail legitimately carries is the SPAN of the position: one flat
+       rule, no data, declared chrome. */
+    const dens = `<rect x="0" y="6.5" width="100" height="3" rx="1.5"
+                    fill="var(--border)" opacity="0.55"/>`;
+
+    const btn = document.createElement('button');
+    btn.className = 'row';
+    btn.setAttribute('aria-expanded','false');
+    btn.innerHTML =
+      `<span class="rank${p.tieSpan ? ' tied' : ''}">${p.tieSpan ? `${p.tieSpan.lo}–${p.tieSpan.hi}` : p.drank}</span>
+       <span class="who">
+         <span class="nm">${p.name}</span>
+         <span class="meta">${p.age.toFixed(1)} yrs · ${fmt(p.value)}</span>
+       </span>
+       <span class="track">
+         <svg class="dens" viewBox="0 0 100 34" preserveAspectRatio="none" aria-hidden="true">${dens}</svg>
+         <span class="repl" style="left:${replPct}%"></span>
+         <span class="conn" style="left:${lo}%;width:${Math.max(hi-lo,0)}%"></span>
+         ${p.tieSpan
+            ? `<span class="tiebar" data-mark="ours" style="left:${ourX}%;width:${(ourX2-ourX).toFixed(2)}%"></span>`
+            : `<span class="dot m" data-mark="ours" style="left:${ourX}%"></span>`}
+         <span class="dot k" data-mark="mkt" style="left:${mktX}%"></span>
+         <span class="klabel" style="left:${mktX}%">${p.mrank}</span>
+       </span>
+       <dl class="tiers">
+         <dt>ours</dt><dd><span class="o">${p.dtier}</span> <span class="g">${p.dgrade}</span></dd>
+         <dt>market</dt><dd><span class="k">${p.mtier}</span> <span class="g">${p.mgrade}</span></dd>
+       </dl>`;
+
+    /* Every mark answers "what is this?" — and nothing lives ONLY in a tooltip,
+       because touch has no hover: the expansion below restates all of it. */
+    btn.querySelectorAll('[data-mark]').forEach(el => {
+      el.addEventListener('mousemove', e => {
+        e.stopPropagation();
+        const ours = el.dataset.mark === 'ours';
+        showTip(e, ours
+          ? `<span class="k">our model</span><b>${p.name}</b> — ${p.dgrade} ${p.dtier}` +
+            (p.tieSpan
+              ? `<br>tied with ${p.tieSpan.n - 1} other${p.tieSpan.n>2?'s':''} at ${p.pos||g.pos}${p.tieSpan.lo}–${p.tieSpan.hi}; the model scores them identically.`
+              : `<br>${g.pos}${p.drank} of ${g.n} on our board.`)
+          : `<span class="k">the market</span><b>${p.name}</b> — ${p.mgrade} ${p.mtier}` +
+            `<br>${g.pos}${p.mrank} of ${g.n}, ${fmt(p.value)} on FantasyCalc.`);
+      });
+      el.addEventListener('mouseleave', hideTip);
+    });
+    btn.addEventListener('mouseleave', hideTip);
+
+    const exp = document.createElement('div');
+    exp.className = 'exp';
+    exp.style.height = '0px';
+
+    const agree = p.dtier === p.mtier && p.dgrade === p.mgrade;
+    const readTxt = agree
+      ? `Both boards land in the same place: a <span class="ours">${p.dgrade} ${p.dtier}</span>. There is
+         no disagreement here to trade on.`
+      : `The market prices him a <span class="mkt">${p.mgrade} ${p.mtier}</span>; our model sees a
+         <span class="ours">${p.dgrade} ${p.dtier}</span>.`;
+
+    const tieNote = p.tieSpan
+      ? `<p class="caveat"><b>Our rank for him is a tie, not a placement.</b> The model gives
+         ${p.tieSpan.n} ${g.pos}s the identical score, so it places him somewhere in
+         ${g.pos}${p.tieSpan.lo}–${p.tieSpan.hi} and cannot say where. Read the bar, not a number.</p>`
+      : '';
+
+    exp.innerHTML =
+      `<div class="expin">
+         <div>
+           <p class="read">${readTxt}</p>
+           ${nbBlock(p, g)}
+         </div>
+         <dl class="facts">
+           <div class="fact"><dt>30-day move</dt>
+             <dd>${p.trend30 > 0 ? '+' : ''}${fmt(p.trend30)}<small>market value, 30 days</small></dd></div>
+           <div class="fact"><dt>our score</dt>
+             <dd>${p.dvs.toFixed(1)}<small>DVS, 0–100${p.dvs >= 100 ? ' — at the ceiling' : ''}</small></dd></div>
+         </dl>
+         ${tieNote}
+       </div>`;
+
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      exp.style.height = open ? '0px' : exp.firstElementChild.offsetHeight + 'px';
+    });
+
+    rows.append(btn, exp);
+  });
+
+  root.append(sec);
+}
+</script>
+</body>
+</html>

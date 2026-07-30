@@ -29,6 +29,25 @@ session start.
   market-amber, so one categorical dimension carries hue per surface. Five layers plus an explicit
   no-hue layer. Demo: `craft/lab-002-colour-encoding.html`.
 
+- **`craft/craft-profile-findings.md`** (2026-07-30) — **a failed search, kept because the failure is
+  the finding.** `tools/craft-profile.mjs` profiles any page on mechanisms (type-size distribution
+  weighted by characters carried, scale contrast, weight set, chromatic text/fill share, shadows,
+  gradients, radii, spacing), deterministically. Run against this product and three category leaders it
+  **refuted Studio's own hypothesis**: Sofascore has a *flatter* type scale (1.29x vs our 1.85x), *less*
+  chromatic text (5.1% vs 9.2%), the same chromatic fill as the surface David parked — and Studio's two
+  least-liked surfaces carry MORE scale contrast than every category leader. **No token mechanism
+  separates the category from this product**, so the deficit is composition. Turns "stay inside the
+  product's visual contract" from caution into evidence.
+
+- **`craft/composition-and-hierarchy.md`** (2026-07-30) — the follow-on, and the technique Studio was
+  missing. **The squint test, mechanised** (`tools/squint.mjs`): blur until type dissolves; whatever you
+  still recognise is the focal point. It sees a defect class no other instrument here can — *the
+  brightest object being the least important one*. Found exactly that on 014 within the hour (the
+  position badge outranked the data; the connector carrying the page's whole argument dissolved
+  entirely), both fixed and **verified by re-running the test rather than by looking once**. Also
+  carries NN/G's *proximity before borders*, recorded as **untested against 014's 23 row rules** rather
+  than applied on faith.
+
 - **`craft/premium-surface-technique.md`** (2026-07-29) — the gap that caused 012 and 013 to land at
   "not awesome" with every check passing: Studio's surfaces are flat because it concluded "the product
   has no gradients" means "use no depth." Eight techniques with the boundary attached (elevation by

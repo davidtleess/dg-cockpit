@@ -1,5 +1,286 @@
 # Studio proposals — status
 
+## ══ CLOSEOUT 2026-07-30 ══
+
+**Four threads, all self-directed, none requested.** (1) `tools/craft-profile.mjs` — measured which
+craft lever the category actually differs on and **refuted Studio's own hypothesis**. (2) **014 "What
+you hold"** — the colour and encoding system's first contact with real data; David: *"this is some good
+progress. solid"*, then *"cool thats fine"* — **a checkpoint, not an approval**. (3) `tools/squint.mjs`
+— a new instrument class; convicted 014, then the live app. (4) **015 and 016** — two relays authored,
+both with David, **neither authorised**.
+
+### (a) FIGURES NOBODY BUT STUDIO HAS CHECKED
+
+**Relay-grade — these would reach engineers, and they are reproducible but NOT reviewed.**
+
+| figure | value | where |
+|---|---|---|
+| player card model lane | **8 bare `<span>`, 0 `<dt>`**; renders `ENGINE_BACTIVE_B9948.23——19.901—` | 015 P1 |
+| player card market lane | **7 bare `<span>`, 0 `<dt>`** | 015 P1 |
+| reproduced on | **3 players** (Allen, Jeanty, Odunze) — not a degraded-record artifact | 015 P1 |
+| internal identifiers rendered as user copy | **13 distinct** across two surfaces | 015 P2 |
+| model lane silent | **33 of 36 transitions (92%)**, median 0 moved, last change 2026-07-10 | 016 |
+| market lane silent | **0 of 36**, median **456** moved | 016 |
+| front-door region split | model **0 rows / 71px** vs market **36 rows / 1,401px** | 016 |
+| quiet-day gate today | `moveCount` **51** → `quietDay` false; **27 rows supplied, 0 rendered** | 016 Q1 |
+
+**Design-grade, weaker, and one is contaminated:**
+
+- **craft-profile scale-contrast and colour shares** (app 1.85x · 006 2.58x · 013 3.38x · Sofascore
+  **1.29x** · KTC 2.46x · FantasyCalc 2.67x). One viewport, one load, one day, on live third-party
+  sites that change constantly. **These are snapshots, not stable facts.**
+- **KTC's figures are contaminated and Studio only half-caught it.** A modal was covering the page on
+  the *squint* run and was disclosed there — but the *craft-profile* run was a separate load of the
+  same page and was almost certainly covered too, and that was **not** disclosed at the time. Treat
+  KTC's row as unusable. The argument does not depend on it (Sofascore carries it), but the row should
+  not have been tabulated without the same caveat.
+- **014's gate figures** — density **1.52**, 12/12 verification, badge contrast 4.62–6.01:1.
+- **Palette validator** deutan 8.4 / normal 15.8 — from `kit/palette-check.mjs`, a checked-in tool
+  validated in both directions, but still only ever run by Studio.
+
+### (b) ASSERTED TODAY, THEN RETRACTED OR REVERSED
+
+1. **The counter instead of the looking.** Studio generated blurred renders of every live surface, ran
+   a hue counter over them, and **never opened the images**. Volunteered unprompted. Going back to
+   look produced both of the day's best findings.
+2. **The whole opening hypothesis — refuted by Studio's own instrument.** Studio expected the
+   *"not awesome"* deficit to be type-scale contrast. Sofascore is **flatter** than this app, uses
+   **less** colour, and reads better. The lever was wrong.
+3. **A share that read 140.5%.** Two colour counters divided by two different denominators. Caught
+   only because the value was impossible — fixed before it was quoted anywhere.
+4. **"Roster Audit: zero lane hue across 328 elements."** The first run measured its **loading
+   screen** (23 elements). Fixed to poll until settled.
+5. **A constant "14 model / 2 market" tabulated as per-surface content.** It was the **nav rail and
+   status pill** — shell chrome on every screen.
+6. **Nearly convicted three innocent surfaces.** Roster Audit, Roster Capacity and Model Trust are
+   **model-only by construction**, so zero market hue is correct. Narrowed before claiming.
+7. **"`baseline_roster_rows` zeros are a user-facing defect."** Expected it; checked; **killed it** —
+   nothing reads those fields. Filed low-severity instead of shipped as the defect it resembled.
+8. **A region built and then cut inside 014** — the 60-bin pool density rail. The density of *rank* is
+   **uniform by construction**, so it was 60 marks a row encoding a quantity that cannot vary.
+9. **"That's the day."** Declared the working day over at **08:54**, then rested. Reversed on Tower's
+   calibration.
+
+**Stated rather than tuned away:** the craft gate **FAILS C4** on 014 — 46 content nodes under 13px,
+all of them the words *"ours"* / *"market"* once per row. They are labels, which the product's rule
+permits; the gate cannot classify a `<dt>`. Design not bent around a misclassification. **Open
+instrument item.**
+
+### (c) HALF-DONE, AND WHERE IT SITS
+
+| thread | state | sits with |
+|---|---|---|
+| **015 relay** (6 items, player card unreadable) | authored, **NOT authorised** | **David** |
+| **016 relay** (quiet-day gate unreachable) | authored, **NOT authorised**, queued behind 015 | **David** |
+| **014 "What you hold"** | built, verified 12/12, shown twice. *"good progress. solid"* / *"cool thats fine"* — **checkpoint, not approval.** **His one question is unanswered:** does the disagreement read at a glance across twelve receiver rows? | **David** |
+| proximity-before-borders vs 014's **23 row rules** | NN/G says space before lines; **untested** against a wide-row tracking case. Candidate, not applied. | Studio |
+| C4 label-vs-content in the gate | cannot classify `<dt>`; convicts legitimate labels | Studio |
+| **Playwright + Chrome DevTools MCP** | **registered, running ~9h today, and STILL never used for real work — second session running.** Studio drove Playwright directly via the product's vendored copy instead. | Studio |
+| 013 / 012 relay | unchanged from 2026-07-29 — parked / unauthorised | David |
+
+### (d) PROCESS INVENTORY — scanned at closeout, not recalled
+
+**One genuine leftover, found and killed.** `python3 -m http.server 8777`, PID 11279, **8h11m old** —
+started this morning to open the 014 prototype in David's browser and never stopped. Killed;
+port verified closed.
+
+**This session's MCP servers, running since session start (~9h), now expected to end with it:**
+playwright-mcp (53494/53942, `--isolated --output-dir ~/frontend-studio/.mcp-artifacts`) and
+chrome-devtools-mcp (53495/53954, `--isolated`). `.mcp-artifacts` is **empty** — consistent with them
+never having been used.
+
+**NOT Studio's, deliberately untouched:** four `chrome-devtools-mcp` processes carrying `--autoConnect`
+(42086/42165/42589/42712), now **4 days 7 hours** old — Antigravity IDE's, the same ones identified on
+2026-07-29 at 3d14h, aging consistently.
+
+**Zero chromium or headless_shell survive** — every browser Studio launched today was closed in the
+script that opened it.
+
+
+
+## ══ 2026-07-30 ══ 014 "What you hold" — the colour system's first contact with real data
+
+**Self-directed. Built, verified, SHOWN to David. Nothing approved, nothing relayed.**
+
+**The redirect that shaped the day.** Studio opened on a craft-instrument thread; David flagged that
+the *end* of the last session was the strong work. Correct — the colour and encoding system he called
+*"best work of the day"* was demonstrated on a lab page of **abstract rows** and had never met real
+data. That is the gap, and 014 closes it.
+
+**The measurement first, and it refuted Studio's own hypothesis.** Built `tools/craft-profile.mjs` to
+find which craft lever the category actually differs on, expecting type scale (the product ships
+13/15/18 and **no display scale**). Result: **Sofascore runs a FLATTER scale (1.29x) than this app
+(1.85x), less chromatic text (5.1% vs 9.2%), and the same chromatic fill as the surface David
+parked.** Studio's two least-liked surfaces carry **more** scale contrast than every category leader.
+**No mechanism in the set separates the category from this product** — so the deficit is composition,
+not tokens. Recorded in `craft/craft-profile-findings.md`. **What it bought:** evidence-backed
+permission to stay inside the product's contract — 014 ships zero gradients, zero elevation shadows,
+app-only radii, nothing above the 24px the live app already renders.
+
+**The surface.** Roster in position groups QB→RB→WR→TE; every row a dumbbell on the position's rank
+scale, **#1 at the far right**, blue = our rank, amber = market, connector = the disagreement. The
+scarcity rule does real work: because the surface *compares the two lanes*, the lanes carry hue and
+**position spends its hue once per group header** — no position badge in any row.
+
+**Three things worth keeping from the build:**
+- **A tie renders as a tie in the highest-authority cell.** DVS saturates; Tucker Kraft is one of 11
+  TEs scored identically, so the rank column reads **`1–11`**, not `1`. Printing `1` was a precision
+  claim the model does not make, sitting in the most authoritative cell on the row.
+- **The thesis is computed, with a fixed shape every day.** It turned up the real finding: **twelve
+  receivers, and on our board not one is inside the 24 that start weekly** (market puts 2 inside).
+- **A region was cut after being built.** The pool was drawn as a 60-bin density rail — but the
+  density of *rank* is **uniform by construction**, so it was 60 marks a row encoding a quantity that
+  cannot vary. It rendered as a dashed bar because noise was all it could show.
+
+**Verified:** `tools/verify014.mjs` **12/12** (keyboard, 0 unnamed controls, hover tips in *both*
+directions, reduced motion 46/46 opaque, no overflow at 1440 or 390, tie renders as a range).
+Craft gate **density 1.52** vs 2.13 approved / 3.95 rejected, **identical across two runs**. Palette
+validator passes (deutan 8.4 / normal 15.8); badge labels 4.62–6.01:1, all above AA.
+
+**Stated, not silenced:** the gate **FAILS C4** — 46 content nodes under 13px, all of them the words
+*"ours"* / *"market"* once per row. They are labels, which the product's rule permits, but the gate
+cannot classify a `<dt>`. Design not tuned around a misclassification. **Open instrument item.**
+
+**Data is 3 days old** (market/model 2026-07-27, snapshot 2026-07-26), reused from 011 because that
+build already rebases both lanes onto the 337 shared players — mandatory before any comparison is
+drawn. Dates are on the surface.
+
+**Probe failures caught, all before any number was quoted:** a chromatic-share that read **140.5%**
+(two counters, two different denominators); a local server writing headers before reading the file;
+and `timeout` not existing on macOS, which ate an entire category run as *empty output that looked
+like a clean run*.
+
+**DAVID REACTED: *"this is some good progress. solid"*** — a direction checkpoint, warmer than 013's
+*"not bad, not awesome"*, **not an approval**. He did **not** answer the question put to him, so it
+stays open and silence is not consent.
+
+**Then Studio self-audited and found it was violating a standing ruling.** The row expansion carried
+**age and market value — both already on the row**, so half of it was restatement dressed as depth
+(*"detail space must earn its keep"*, 2026-07-15). Cut, and replaced with **named neighbours**: who he
+sits between on our board and on the market's. Mendoza reads *ours: between Stafford and Trevor
+Lawrence; market: between Dak Prescott and Cam Ward*. That is the 010 closeout lesson — **check the
+units** — applied to a rank: "QB7 vs QB15" is an optimiser's output, two names he already has opinions
+about is the hobby's language. Re-verified **12/12**, 0 console errors, no overflow.
+
+**Then David: *"cool thats fine"*** — acknowledgment, no new direction. Studio did not ping him again
+and carried on self-directed.
+
+### THE CRAFT STRAND — the squint test, and it convicted 014 inside the hour
+
+**The measurement said the gap is composition, not tokens — so composition is what got studied.**
+Nothing in `craft/` covered it (`layout-grid.md` is responsive *mechanics*, which is plumbing).
+Built `tools/squint.mjs` — the Nielsen Norman squint test mechanised: blur the page until type
+dissolves; whatever survives is the focal point. **It sees a defect class neither craft-gate nor
+craft-profile can: the brightest object being the least important one.**
+
+**What it found on 014, first run.** The single brightest object on the blurred page was the
+**position badge** — the letters "QB" sitting beside the word "Quarterback." *The most saturated mark
+on the surface was its most redundant information.* Meanwhile the **connector between the two dots —
+the disagreement, the page's entire argument and the only thing on it unavailable from any other
+product — dissolved completely.**
+
+**Fixed, and verified by re-running the test rather than by looking once:** badge 34×24 → 24×16
+(halved in area, still marks the group for scanning); connector 2px at L.48 → 3px at L.60. The
+disagreement now survives the blur as a segment whose **length** is the magnitude. **No channel was
+added** — length always carried the quantity, it simply was not legible.
+
+**Recorded honestly as NOT applied:** NN/G's *proximity before borders* ("before adding lines, add
+space") against 014's **23 horizontal row rules**. There is a real argument both ways for tracking a
+value across a wide row, and applying a principle without testing it on the surface is how the Carbon
+type ramp got imposed on a product that already shipped one. Candidate, untested.
+
+**The one question put to David, still open and NOT re-asked:** does the disagreement read at a glance
+across twelve receiver rows? Studio now has partial evidence of its own — it did **not** survive a
+squint before the fix, and does after.
+
+### 016 — THE SILENT LANE. Measured proof for a ruling David already made by instinct.
+
+**Built while 015 sat in David's queue. Nothing relayed, nothing shown to him yet — parked with Tower
+behind 015 rather than spending his attention twice.** `proposals/016-the-silent-lane.md`, figure at
+`proposals/016-silent-lane/figure.html`.
+
+**How it was found:** Studio generated blurred renders of every live surface in the morning and then
+**never looked at them** — it substituted a hue counter for the looking, which is the whole point of a
+squint test. Going back to actually look is what found this.
+
+**Blurred, the app's front door is a single column of amber sparklines.** No blue anywhere in the row
+area. The market lane does all the visual work on the product's opening screen.
+
+**Measured, and it is structural rather than cosmetic.** Live today the default screen renders
+**"Model output changes" as 0 rows in 71px** (*"Projections held steady — no player movement on this
+tape"*) against **"Market movement" at 36 rows in 1,401px** — a **20:1** split of the page. Read from
+the app's own capture DBs across **36 overnight transitions**: our model is silent on **33 of 36
+(92%)**, median players moved **0**, last change **2026-07-10, twenty days ago**. The market is silent
+on **0 of 36**, median **456**.
+
+**Why it matters:** David's twice-stated doctrine is that *the juxtaposition is the product* and that a
+market-only panel does not leave this lane. **The shipped front door cannot satisfy that on 92% of
+mornings by construction** — a region keyed to model *change* can only speak when the model moves.
+Model *position* (our rank beside the market's) is available every day, which is exactly what 006 and
+014 are built on.
+
+**Stated against Studio's own interest:** two of the three model changes fall in the first four days of
+capture and may be initialisation, not revision — which would make it **1 in 36**, not 3. The headline
+deliberately quotes the **weaker** figure. And this is explicitly **not** evidence the model is broken;
+a dynasty valuation should be stable.
+
+**THE FOLLOW-ON — and it is the better finding. `016-RELAY.md` authored, NOT authorised.**
+Studio asked itself "is anything else on this screen keyed to a quantity that is usually zero?" and
+found something sharper: **a condition that is never true.**
+
+The front door already ships a component built for exactly the quiet case — `BaselineRosterRows`,
+comment: *"Quiet-day baseline (spec v3 key-state 1): David's roster locked flat"* — which renders his
+27 players when the model has nothing to say. **It cannot fire.** Its gate is `moveCount === 0`, and
+`moveCount` sums the two **market** lists plus the model list (`DailyWhatChanged.tsx:304, :324, :360`).
+Firing it therefore requires **the market** to have moved nobody — which has happened on **0 of 36
+mornings**. Live today the producer supplied all **27 rows** and `moveCount` was **51**; none rendered.
+
+**This makes 016 a far cheaper ask.** It was "the front door is keyed to the wrong quantity," which
+implies a redesign. It is now "the team already built the right thing for the common case and gated it
+on the wrong condition."
+
+**A hypothesis Studio killed before it reached the relay:** those same rows ship `model_lane_value: 0`
+and `market_lane_value: 0` hardcoded in the producer for all 27 players, and Studio expected a
+user-facing zeros defect. **It is not one** — the component never reads those fields and renders
+neutral dashes. Filed low-severity for the next consumer instead of shipped as the defect it looked
+like.
+
+### 015 — THE INSTRUMENT GENERALISED, AND WALKED INTO A CRITICAL DEFECT IN THE SHIPPED APP
+
+**Relay authored, NOT authorised. Needs David's word, then Tower.** `proposals/015-RELAY.md`.
+
+**The step that mattered:** if the model-vs-market comparison was the first thing to dissolve at a
+glance on *Studio's* page, what happens on the ones David opens every morning? Running that question
+across the live app found this:
+
+**The player evidence card — the product's flagship two-lane view — renders both lanes as unlabelled
+values run together.** Josh Allen, the most valuable player in the league:
+`ENGINE_BACTIVE_B9948.23——19.901—`. Measured: `.dg-two-lane__facts` holds **8 bare `<span>`s in the
+model lane, 7 in the market lane, `display:inline`, and ZERO `<dt>` elements.** The labels are not
+hidden — they are not in the DOM. **Reproduced on three players including a fully-modelled one**, so it
+is not a degraded-record artifact. `9948.23` is really `99`, `48.2`, `3` with the separators missing.
+
+Six items, severity-ranked: P1 above (critical) · **13 internal snake_case identifiers rendered as user
+copy**, including `decision_supported_false`, the product's own doctrine shown as a field name (high) ·
+a raw ISO timestamp with **microseconds** as the market's freshness, on a value whose own caveat says it
+is fetch time not publish time (high) · `Ashton JeantyInside band` concatenation (medium) · the
+divergence strip juxtaposing `31.3` and `-7143`, two scales the payload itself says are incompatible
+(medium) · a `<dl>` with no `<dt>`/`<dd>` (low).
+
+**Deliberately NOT done:** no replacement card was designed. The fix is engineering's to choose, and
+bundling a taste argument into a defect that stands on its own would weaken both.
+
+**Two instrument defects caught on the way, both Studio's, both the same family — the tool choosing its
+own population:** a fixed 2.2s wait measured Roster Audit's **loading screen** and reported lane counts
+for 23 elements that were not the surface; and a constant "14 model / 2 market" across five different
+screens was the **nav rail and status pill**, not content. Both fixed before any number was quoted.
+
+**Also narrowed rather than overclaimed:** Roster Audit, Roster Capacity and Model Trust are
+**model-only surfaces by construction**, so zero market hue on them is correct — counting it as a
+deficit would have been a false conviction, and they are excluded from the comparison.
+
+---
+
 ## ══ CLOSEOUT 2026-07-29 ══ read this first if you are coming to this board cold
 
 ### DAVID'S PROCESS RULING — "best work of the day… teach Studio to think like u just did"
