@@ -101,16 +101,50 @@ being failed: anonymous marks twice, parallel lists three times, over-narrow boa
 
 10. **Measure where the variance lives before choosing an axis.** Compute the dispersion of every
     candidate dimension first; report a flat one in a sentence instead of plotting it repeatedly.
-11. **An instrument is an opinion generator until it has been tested against known-good AND
-    known-bad cases, in both directions.** One that cannot convict its own bad specimen does not get
-    to speak. Build in the refusal.
-12. **Check the instrument before reporting the reading** — especially when a metric improves sharply
-    right after an unrelated change. A tool that silently narrows its own population flatters.
-13. **Tokens are generated from source, never transcribed.** Transcription is the defect.
+11. **An instrument does not get to speak until it has been checked three ways** (merged from the old
+    11 and 12, plus the 2026-07-29 finding): **both directions** — it must convict a known-bad
+    specimen, not merely clear a known-good one; **population** — it must prove it can see anything at
+    all, and a sharp improvement right after an unrelated change means verify what it is counting
+    before reporting the reading; **determinism** — run it twice on the same input before quoting it
+    once. A perfectly reasoned checker can still be a coin toss, and this is the cheapest test there
+    is. **A pass on an empty population is a claim about something never examined.**
+12. **A lesson that lives in one file is not learned.** After any fix, ask which OTHER tool has the
+    same hole. Fixing the thing that broke is not fixing the class.
+13. **Tokens are generated from source, never transcribed.** Transcription is the defect — and a
+    threshold transcribed from an instrument's output inherits that instrument's bugs.
 14. **Speak the domain's own units.** If a number on the surface is one no practitioner would say out
     loud, it will not land however well it is drawn.
 15. **Confirm the question in one line before building anything that answers a new one.** Craft cannot
     rescue a wrong question.
+
+### The sequence — run it in this order
+
+**Status: David's instruction, 2026-07-29** — *"try to teach Studio to think like u just did as we move
+forward - that effort and reasoning and steps taken and execution would be great to stack session over
+session."* Distilled from the one piece of work he called the best of the day (the colour and encoding
+system), and it is the deliberate inverse of the two he rejected the same day, where the drawing was
+polished before the question was understood.
+
+16. **Name what the ask is really asking, and enumerate the domain before touching form.** "We need
+    colours" is not answered by a palette; it is answered by *what needs representing*, listed and
+    ranked by how often the user asks it. Jumping to form is what sank 008, 012 and 013.
+17. **Check the category before inventing anything.** If a convention already exists in the products
+    the user opens daily, copy it and spend the originality budget on the juxtaposition instead.
+18. **Measure what already exists before proposing a replacement.** The strongest argument available
+    is usually a conviction of the status quo, it is nearly free, and it converts a preference into a
+    defect report. (The whole colour proposal rests on the shipped hues failing.)
+19. **Compute the choice; let the instrument arbitrate.** Search the space with a script rather than
+    picking a candidate and defending it afterwards.
+20. **A failed search is a finding, not a dead end.** When nothing in the space clears the bar, that
+    constraint becomes the design's organising rule. **Never weaken the test to obtain an answer** —
+    say what does not fit and design around it.
+21. **Design the refusal.** What deliberately gets *none* of the new thing is the part that stops it
+    becoming decoration, and it is usually the most valuable section to write.
+22. **Name the one real cost, having tested the alternative.** "I tried X, it fails because Y, so I
+    accepted Z" is the sentence that makes a proposal credible. An unnamed cost reads as one not
+    looked for.
+23. **Ship the picture, with the commands to reproduce every number.** A figure nobody else can re-run
+    is a claim, not a measurement.
 
 ### The product's current state — dated observations, not doctrine
 

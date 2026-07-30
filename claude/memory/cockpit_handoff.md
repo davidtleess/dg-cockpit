@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: d653c315-9487-4431-9ede-04fe534a74ce
-  modified: 2026-07-30T02:40:29.208Z
+  modified: 2026-07-30T03:15:24.456Z
 ---
 
 # Cockpit handoff — 2026-07-29 EVENING → 07-30. THE DAY THE INSTRUMENTS WERE CAUGHT LYING.
@@ -153,6 +153,28 @@ Four rounds, all NOT CLEAR — **read the trend, not the count.**
   **version-bound**, and an unproved REQUIRED check **must not authorise green** rather than simply
   being dropped from gating.
 
+## 🎨 STUDIO — A SECOND WORK SESSION HAPPENED AFTER THE CLOSEOUT BEGAN. Read this before its board.
+David worked Studio DIRECTLY, in its pane, after the crew had already closed. Sequence, by timestamp:
+- **013 — "Who do I call, and is now the time"** built ~22:34–22:41. `proposals/013-who-do-i-call/`
+  (`build.mjs`, `template.html`, `prototype.html`). Status on its own board: **PARKED by David**, his
+  words *"not bad, not awesome"*, after his judgement on 012: *"you have the data analysis that could
+  be a valuable foundation for this page but you are really missing the mark when it comes to the
+  UI/UX."*
+- **David then typed into Studio's pane directly: "better for sure - but we need colors."** It sat as a
+  REAL STRAND in that composer and Tower correctly refused to submit it. **A real strand in 2.1 is
+  usually David typing. Stay out of that window.**
+- Colour work followed, treating it as a **discrimination** problem, not decoration: keep the shipped
+  QB hue, vary LIGHTNESS per hue as a second channel so positions stay separable under deuteranopia.
+- **Final writes: `DAVID.md` and `for-david/STATUS.md` both 23:13:27.** Prototype unchanged since
+  22:39:43 — the later writes are record, not rebuild.
+- **⚠ Its pane flipped from accept-edits to AUTO MODE** during this session. Observed and reported per
+  delegated authority 3; Tower sent no corrective keystroke. Not diagnosed.
+- **⚠ COUPLING DAVID SHOULD DECIDE ON:** Studio imported Playwright from
+  `dynasty-genius-product/frontend/node_modules/`. **No rule was broken** — its deny list covers writes
+  anywhere in the repo and reads of governance/specs/strategies/ledger/agent docs, and node_modules is
+  none of those. But its instruments now depend on the crew's dependency tree, which is a coupling the
+  independence of that lane did not ask for. Either give it its own install or accept it knowingly.
+
 ## 🎨 STUDIO — fresh eyes INTACT. Do NOT hand it our roadmap.
 Self-directed all day. Flushed and durable **from DISK**: `DAVID.md` and `for-david/STATUS.md` both
 18:25, with later writes after that (pane 2.1 retains NO scrollback — disk is the only truth). Its own
@@ -171,6 +193,18 @@ freshness review stays LIVE.** Its board still names: the kit is BUILT BUT UNUSE
 6. A stray backtick caused shell substitution that dropped a reference from a lane message.
 7. One cross-lane packet sent without Tower's pre-send check (written+sent in one command);
    retro-checked afterwards, clean.
+8. **SAID "SAFE TO WALK AWAY" WHILE STUDIO WAS ACTIVELY WORKING.** David caught it: *"studio is NOT at
+   rest."* Tower had read one snapshot and spoken about an ongoing state — the precise error Part IV
+   exists to prevent, committed inside the most careful message of the day. Both that and "nothing runs
+   unattended" were withdrawn. **Fix adopted: sample the pane repeatedly (6 samples/90s) before any
+   at-rest claim, and check the PROCESS TABLE yourself.**
+9. **Took a lane's word on background state.** Studio reported "zero headless processes"; Tower's own
+   check found FOUR headless Chromium plus its gate running. The lane's claim was true when made and
+   false seconds later — its own next command spawned them. **The rule exists for this: Tower asserts
+   background state, the lane never does.** Verified cleared at 23:14:53.
+10. **A `find -newermt "-10 minutes"` sweep returned EMPTY while Studio had written 20 seconds earlier.**
+    Tower nearly reported the cockpit quiet on it. **Use direct `stat` timestamps, not relative sweeps.**
+    Third instrument in one night to report nothing-happening while something happened.
 **WHAT HELD:** **NINE** authorisation-shaped ghosts refused, **at least four forging Tower's own
 marker scheme** · no foreign keystroke ever submitted · every commit and push dialog went to David ·
 the **Studio firewall refused Tower's OWN message** ("specimen" contains "spec") and Tower reworded

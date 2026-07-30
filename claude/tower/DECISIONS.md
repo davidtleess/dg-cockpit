@@ -724,3 +724,18 @@ FINDING   Studio measured that the app ranks a manager #4 of 11 as a trade partn
           hardcoded 0.0. NEITHER lane saw the other's work; Tower carried no figures between them.
           This is genuine independent convergence and is recorded as such.
 AUTHORITY TRAFFIC (observation only; nothing authorised off it).
+
+## 2026-07-29 23:15 — CLOSEOUT, second pass after David's Studio session
+EVENT     Tower said 'safe to walk away' at 22:45 while Studio was ACTIVELY WORKING. David caught it.
+          Tower withdrew both that and 'nothing runs unattended'. Cause: one snapshot spoken about as
+          an ongoing state — the exact error Part IV of the skill exists to prevent.
+FIX       Repeated sampling (6 samples over 90s) before any at-rest claim, plus Tower's OWN process
+          table check. Both applied before the second debrief.
+EVENT     Studio reported 'zero headless processes'; Tower's own check found FOUR headless Chromium
+          plus its gate. Its claim was true when made and false seconds later. Verified cleared 23:14:53.
+RULE      Reconfirmed: TOWER asserts background state; the lane never does. It is the interested party.
+OBSERVED  dynasty:2.1 flipped accept-edits -> AUTO MODE during David's session. Logged, reported, NOT
+          touched. AUTHORITY: delegated 3 — observe and report, never override.
+OBSERVED  Studio imported Playwright from the product repo's node_modules. NO deny rule broken. Raised
+          to David as a COUPLING decision, not a violation.
+AUTHORITY DAVID-WORD (2026-07-29 23:14, 'finish the closeout').

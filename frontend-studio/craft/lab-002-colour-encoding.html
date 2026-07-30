@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Craft lab 002 — a colour scheme that represents things</title>
+<style>
+/* ===========================================================================
+   CRAFT LAB 002 — the colour and encoding system, applied.
+   Written up in craft/colour-encoding-system.md. Nothing here ships.
+
+   Every hue below was chosen by running the dataviz validator, not by eye. The
+   product's four shipped position hues FAIL it — TE↔WR ΔE 4.0 for deuteranopes,
+   and TE↔RB ΔE 8.0 in NORMAL vision, which is below the 15 floor. The set here
+   measures 8.4 CVD / 15.8 normal in both themes.
+
+   The organising constraint is not taste. Searching 64 candidate sets, NO four
+   position hues clear the ΔE≥8 target while sitting beside model-blue and
+   market-amber as one categorical set. Six simultaneous categorical hues do not
+   fit. So: ONE categorical dimension carries hue per surface. That rule is
+   forced, and §4 below demonstrates it.
+   =========================================================================== */
+
+@font-face{font-family:"Archivo";src:url("../proposals/006-state-of-franchise/fonts/archivo-latin-700-normal-D9cHMWGj.woff2")format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Archivo";src:url("../proposals/006-state-of-franchise/fonts/archivo-latin-600-normal-3BBy0ZsW.woff2")format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../proposals/006-state-of-franchise/fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2")format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../proposals/006-state-of-franchise/fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2")format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("../proposals/006-state-of-franchise/fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2")format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("../proposals/006-state-of-franchise/fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2")format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  /* layer 0 — the ground. encodes nothing. */
+  --e0:oklch(0.17 0.013 258); --e1:oklch(0.21 0.014 258); --e2:oklch(0.245 0.015 258);
+  --e3:oklch(0.28 0.016 258); --e4:oklch(0.32 0.017 258);
+  --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250);
+  --hair:color-mix(in oklch, white 8%, transparent);
+  --hair-strong:color-mix(in oklch, white 14%, transparent);
+  --lit:color-mix(in oklch, white 6%, transparent);
+
+  /* layer 1 — CONSTITUTIONAL. never reassigned, ever. */
+  --model:oklch(0.72 0.11 255);
+  --market:oklch(0.76 0.13 75);
+
+  /* layer 2 — IDENTITY. measured: CVD 8.4, normal 15.8, both themes. */
+  --qb:oklch(0.60 0.15 300);
+  --rb:oklch(0.64 0.15 130);
+  --wr:oklch(0.52 0.15 5);
+  --te:oklch(0.58 0.13 200);
+  /* the product's failing set, kept only to draw the comparison in §2 */
+  --old-qb:oklch(0.6 0.14 300); --old-rb:oklch(0.62 0.13 170);
+  --old-wr:oklch(0.6 0.15 340); --old-te:oklch(0.64 0.12 205);
+
+  /* layer 4 — DIRECTIONAL. arrows only, per the 2026-07-15 ruling. */
+  --up:oklch(0.72 0.16 145);
+  --down:oklch(0.62 0.17 25);
+
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --ease-standard:cubic-bezier(.2,0,0,1);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--e0);color:var(--text);font-family:var(--font-body);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.wrap{max-width:1140px;margin:0 auto;padding:44px 24px 140px}
+.eyebrow{font-family:var(--font-mono);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:0 0 16px}
+h1{font-family:var(--font-display);font-weight:700;font-size:44px;line-height:1.02;letter-spacing:-.03em;margin:0 0 14px;max-width:24ch}
+.lede{font-size:18px;max-width:70ch;margin:0 0 8px}
+.sub{font-size:13px;color:var(--muted);max-width:80ch;margin:0 0 44px}
+h2{font-family:var(--font-display);font-weight:600;font-size:26px;letter-spacing:-.018em;margin:56px 0 6px}
+h2 .n{display:block;font-family:var(--font-mono);font-size:13px;color:var(--muted);font-weight:400;letter-spacing:.1em;margin-bottom:6px}
+.claim{max-width:78ch;margin:0 0 18px}
+.mono-note{font-family:var(--font-mono);font-size:13px;color:var(--muted);max-width:80ch;margin:0 0 18px}
+
+.panel{background:var(--e1);border-radius:10px;padding:20px;box-shadow:0 0 0 1px var(--hair), inset 0 1px 0 var(--lit)}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:900px){.ab{grid-template-columns:1fr}}
+.tag{font-family:var(--font-mono);font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);display:block;margin:0 0 14px}
+.tag.bad::before{content:"✕ ";color:var(--text)} .tag.good::before{content:"✓ ";color:var(--text)}
+.note{font-size:13px;color:var(--muted);margin:14px 0 0}
+
+/* ---- the position badge: hue ALWAYS carries its two letters. That label is the
+        secondary encoding that makes cross-layer hue legal. ---- */
+.pos{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:30px;height:20px;padding:0 6px;border-radius:4px;
+  font-family:var(--font-mono);font-size:13px;font-weight:500;letter-spacing:.02em;
+  color:oklch(0.16 0.01 250);
+}
+.pos.QB{background:var(--qb)} .pos.RB{background:var(--rb)}
+.pos.WR{background:var(--wr);color:oklch(0.97 0 0)} .pos.TE{background:var(--te)}
+.pos.old-QB{background:var(--old-qb)} .pos.old-RB{background:var(--old-rb)}
+.pos.old-WR{background:var(--old-wr)} .pos.old-TE{background:var(--old-te)}
+/* the scarcity rule in one class: when a surface is not ABOUT position, the badge
+   keeps its shape and loses its hue */
+.neutral .pos{background:var(--e3);color:var(--text)}
+
+/* ---- roster row ---- */
+.row{display:grid;grid-template-columns:28px 44px 1fr 120px 64px;gap:12px;align-items:center;
+  padding:10px 12px;border-radius:6px}
+.row + .row{box-shadow:inset 0 1px 0 var(--hair)}
+.rk{font-family:var(--font-mono);font-size:13px;color:var(--muted);text-align:right}
+.nm{font-family:var(--font-display);font-weight:600;font-size:15px;letter-spacing:-.008em}
+.nm small{display:block;font-family:var(--font-mono);font-size:13px;color:var(--muted);font-weight:400;letter-spacing:0}
+.mv{font-family:var(--font-mono);font-size:13px;text-align:right;white-space:nowrap}
+.mv .u{color:var(--up)} .mv .d{color:var(--down)}
+.val{font-family:var(--font-mono);font-size:15px;text-align:right}
+
+/* ---- the two lanes: our rank vs the market's, on one track ---- */
+.dumb{position:relative;height:22px}
+.dumb .rail{position:absolute;left:0;right:0;top:10px;height:1px;background:var(--hair-strong)}
+.dumb .conn{position:absolute;top:10px;height:2px;background:var(--e4)}
+.dumb .dot{position:absolute;top:5px;width:12px;height:12px;border-radius:999px;transform:translateX(-50%);
+  outline:2px solid var(--e1);outline-offset:-1px}
+.dumb .dot.m{background:var(--model)} .dumb .dot.k{background:var(--market)}
+.lanekey{font-family:var(--font-mono);font-size:13px;color:var(--muted);margin:0 0 10px}
+.lanekey b{font-weight:400}
+.lanekey .sm{color:var(--model)} .lanekey .sk{color:var(--market)}
+
+/* ---- pick chips: FORM says asset class, LIGHTNESS says horizon ---- */
+.chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.chip{font-family:var(--font-mono);font-size:13px;padding:2px 8px;border-radius:3px;
+  box-shadow:0 0 0 1px var(--hair);color:var(--text)}
+.chip.y26{background:var(--e4)} .chip.y27{background:var(--e3)}
+.chip.y28{background:var(--e2)} .chip.y29{background:var(--e1);color:var(--muted)}
+.chip.player{border-radius:999px;background:var(--e3);padding:2px 10px}
+.ramp-lab{display:flex;gap:8px;font-family:var(--font-mono);font-size:13px;color:var(--muted);margin-top:8px}
+
+/* ---- no-hue layer ---- */
+.posture{font-family:var(--font-mono);font-size:13px;color:var(--muted);
+  box-shadow:0 0 0 1px var(--hair-strong);border-radius:4px;padding:1px 7px;text-transform:uppercase;letter-spacing:.04em}
+.absent{display:inline-block;width:60px;height:12px;border-radius:3px;
+  background:repeating-linear-gradient(135deg,transparent 0 3px,var(--hair-strong) 3px 4px);
+  box-shadow:0 0 0 1px var(--hair)}
+.thin-mark{display:inline-block;width:14px;height:14px;border-radius:4px;
+  background:repeating-linear-gradient(135deg,var(--muted) 0 2px,transparent 2px 4px);
+  border:1px solid var(--muted)}
+
+table.led{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+.led th,.led td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--hair);vertical-align:top}
+.led th{font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:400}
+.led td:first-child{font-family:var(--font-mono);white-space:nowrap}
+.led .no{color:var(--muted)}
+.measure{font-family:var(--font-mono);font-size:13px;margin:10px 0 0;color:var(--muted)}
+.measure b{color:var(--text);font-weight:500}
+@media (prefers-reduced-motion:reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Craft lab 002 · the encoding system · nothing here ships</p>
+  <h1>A colour scheme that represents things.</h1>
+  <p class="lede">Six meanings compete for hue on this product and only about five fit. So the system
+     starts by deciding what <b>doesn't</b> get colour.</p>
+  <p class="sub">Every value here came out of the dataviz validator. The product's four shipped position
+     hues fail it — and not only for colourblind readers.</p>
+
+  <!-- 1 -->
+  <h2><span class="n">01 · the finding</span>The shipped position hues fail, for everyone</h2>
+  <p class="claim">They have never been used, so nothing has been drawn wrong yet. The moment position
+     hue is used they would be.</p>
+  <div class="ab">
+    <div class="panel">
+      <span class="tag bad">shipped today</span>
+      <div class="chips" style="gap:10px">
+        <span class="pos old-QB">QB</span><span class="pos old-RB">RB</span>
+        <span class="pos old-WR">WR</span><span class="pos old-TE">TE</span>
+      </div>
+      <p class="measure">TE↔WR <b>ΔE 4.0</b> deutan — below the floor of 6.<br>
+         TE↔RB <b>ΔE 8.0</b> in <b>normal vision</b> — below the floor of 15.</p>
+      <p class="note">Cyan TE against teal RB is the pair that breaks: hard to separate even with full
+         colour vision, and impossible for a deuteranope against pink WR.</p>
+    </div>
+    <div class="panel">
+      <span class="tag good">proposed</span>
+      <div class="chips" style="gap:10px">
+        <span class="pos QB">QB</span><span class="pos RB">RB</span>
+        <span class="pos WR">WR</span><span class="pos TE">TE</span>
+      </div>
+      <p class="measure">worst pair <b>ΔE 8.4</b> CVD, <b>15.8</b> normal — clears both, in
+         <b>light and dark</b>.</p>
+      <p class="note">QB keeps the product's own violet. Lightness varies deliberately (.52–.64) because
+         deuteranopes separate by lightness — hue alone did not clear the target at any rotation tested.</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <h2><span class="n">02 · the constraint</span>Six categorical hues do not fit, and that is measured</h2>
+  <p class="claim">I searched 64 candidate position sets across every legal hue arc, varying lightness as
+     a second channel, scoring each as one categorical set <b>alongside model-blue and market-amber</b>.</p>
+  <p class="mono-note">Result: no set clears ΔE ≥ 8 across all six. → <b style="color:var(--text)">One
+     categorical dimension carries hue per surface.</b> Forced, not preferred.</p>
+
+  <!-- 3 -->
+  <h2><span class="n">03 · identity</span>Position carries hue, and always carries its letters</h2>
+  <p class="claim">The two-letter badge is not redundancy — it is the secondary encoding that makes hue
+     legal across layers. Colour never carries identity alone.</p>
+  <div class="panel">
+    <div class="row"><span class="rk">1</span><span class="pos QB">QB</span>
+      <span class="nm">Jayden Daniels<small>24 · your QB1</small></span>
+      <span class="mv"><span class="u">▲ 3</span></span><span class="val">9,100</span></div>
+    <div class="row"><span class="rk">2</span><span class="pos RB">RB</span>
+      <span class="nm">Ashton Jeanty<small>22 · pick 1.03, 2025</small></span>
+      <span class="mv"><span class="u">▲ 1</span></span><span class="val">8,400</span></div>
+    <div class="row"><span class="rk">3</span><span class="pos WR">WR</span>
+      <span class="nm">Garrett Wilson<small>25 · your best WR</small></span>
+      <span class="mv"><span class="d">▼ 2</span></span><span class="val">7,850</span></div>
+    <div class="row"><span class="rk">4</span><span class="pos TE">TE</span>
+      <span class="nm">Brock Bowers<small>23 · the only TE that matters</small></span>
+      <span class="mv">—</span><span class="val">7,200</span></div>
+  </div>
+  <p class="note">The movement arrows are green and red <em>in the same rows as green RB and crimson WR
+     badges</em>. That collision is real and it is resolved by <b>form and place</b>: a position hue is
+     always a filled badge containing text; a movement hue is always a bare triangle beside the rank.
+     Sleeper does exactly this, in the app this league runs on.</p>
+
+  <!-- 4 -->
+  <h2><span class="n">04 · the rule, demonstrated</span>The same rows, with hue spent differently</h2>
+  <p class="claim">Left: the surface is <b>about positions</b>, so positions hold hue and the lanes go
+     neutral. Right: the surface is <b>about our view versus the market's</b>, so the lanes hold hue and
+     the position badges de-saturate. Neither surface asks the eye to hold six categories at once.</p>
+  <div class="ab">
+    <div class="panel">
+      <span class="tag">hue on identity</span>
+      <div class="row"><span class="rk">2</span><span class="pos RB">RB</span>
+        <span class="nm">Ashton Jeanty<small>22</small></span>
+        <span class="dumb"><span class="rail"></span><span class="conn" style="left:38%;width:22%"></span>
+          <span class="dot m" style="left:38%;background:var(--e4)"></span>
+          <span class="dot k" style="left:60%;background:var(--e4)"></span></span>
+        <span class="val">8,400</span></div>
+      <div class="row"><span class="rk">3</span><span class="pos WR">WR</span>
+        <span class="nm">Garrett Wilson<small>25</small></span>
+        <span class="dumb"><span class="rail"></span><span class="conn" style="left:52%;width:12%"></span>
+          <span class="dot m" style="left:52%;background:var(--e4)"></span>
+          <span class="dot k" style="left:64%;background:var(--e4)"></span></span>
+        <span class="val">7,850</span></div>
+      <p class="note">The rank comparison is still readable — the connector's length carries the
+         disagreement — but it is not competing for hue.</p>
+    </div>
+    <div class="panel neutral">
+      <span class="tag">hue on the two lanes</span>
+      <p class="lanekey"><b><span class="sm">●</span> our rank &nbsp; <span class="sk">●</span> the market's rank &nbsp; — the gap between them is the argument</b></p>
+      <div class="row"><span class="rk">2</span><span class="pos RB">RB</span>
+        <span class="nm">Ashton Jeanty<small>22</small></span>
+        <span class="dumb"><span class="rail"></span><span class="conn" style="left:38%;width:22%"></span>
+          <span class="dot m" style="left:38%"></span><span class="dot k" style="left:60%"></span></span>
+        <span class="val">8,400</span></div>
+      <div class="row"><span class="rk">3</span><span class="pos WR">WR</span>
+        <span class="nm">Garrett Wilson<small>25</small></span>
+        <span class="dumb"><span class="rail"></span><span class="conn" style="left:52%;width:12%"></span>
+          <span class="dot m" style="left:52%"></span><span class="dot k" style="left:64%"></span></span>
+        <span class="val">7,850</span></div>
+      <p class="note">Position keeps its <b>shape</b> and loses its hue. Nothing is hidden; the surface
+         has simply decided what it is about.</p>
+    </div>
+  </div>
+
+  <!-- 5 -->
+  <h2><span class="n">05 · ordered ≠ categorical</span>Pick horizon is a lightness ramp, not four hues</h2>
+  <p class="claim">2026 → 2029 is <b>ordered</b>, and it carries a measured recency premium — a 2027
+     first sits ~17% above the ordinary one-year step. An ordered quantity given four categorical hues
+     would be a category error, so it gets one channel: lightness on the ground. This spends <b>no
+     hue at all</b>, which is how the system affords it.</p>
+  <div class="panel">
+    <div class="chips">
+      <span class="chip y26">2026 1st</span><span class="chip y27">2027 1st</span>
+      <span class="chip y28">2028 1st</span><span class="chip y29">2029 1st</span>
+      <span style="width:20px"></span>
+      <span class="chip player">Ashton Jeanty</span><span class="chip player">Brock Bowers</span>
+    </div>
+    <div class="ramp-lab"><span>nearer, worth more</span><span style="flex:1"></span><span>further out</span></div>
+    <p class="note"><b>Asset class is form, not colour:</b> a pick is a square-cornered chip carrying its
+       year, a player is a pill. Two currencies, distinguished for free.</p>
+  </div>
+
+  <!-- 6 -->
+  <h2><span class="n">06 · the refusal</span>What gets no hue, by rule</h2>
+  <p class="claim">This is the part that stops colour sliding back into decoration.</p>
+  <div class="panel">
+    <table class="led">
+      <thead><tr><th>dimension</th><th>channel instead</th><th>why not hue</th></tr></thead>
+      <tbody>
+        <tr><td>verdict — buy / sell / hold</td><td>prose plus an uncoloured lean tag</td>
+            <td class="no">This product renders decision support, not verdicts. Sleeper colours matchup quality; we deliberately do not.</td></tr>
+        <tr><td>manager posture</td><td><span class="posture">rebuilding</span> <span class="posture">contender</span></td>
+            <td class="no">Verdict-adjacent. A hue would make one phase look better than another.</td></tr>
+        <tr><td>data absent</td><td><span class="absent"></span></td>
+            <td class="no">"Not there" is not a category alongside real ones. Hatch reads as missing; a colour would read as a value.</td></tr>
+        <tr><td>evidence thin</td><td><span class="thin-mark"></span> carrying its n</td>
+            <td class="no">Uncertainty is drawn, not footnoted — and it is not a different <em>kind</em> of thing, it is a weaker version of the same thing.</td></tr>
+        <tr><td>ownership — mine / theirs</td><td>weight plus a labelled reference line</td>
+            <td class="no">Binary, and the reference line already earns its place on 013.</td></tr>
+        <tr><td>asset class — player / pick</td><td>chip shape</td>
+            <td class="no">Form is free and unambiguous; hue is the scarce resource.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7 -->
+  <h2><span class="n">07 · the whole system</span>One page, every layer, no legend</h2>
+  <p class="claim">Layer 0 ground carries depth and no meaning. Layer 1 the two lanes, constitutional.
+     Layer 2 position identity. Layer 3 horizon as lightness. Layer 4 movement, arrows only. Layer 5
+     everything that gets no hue at all.</p>
+  <div class="panel">
+    <p class="lanekey" style="margin-bottom:14px"><b><span class="sm">●</span> our rank &nbsp;
+      <span class="sk">●</span> market rank &nbsp; · &nbsp; ▲▼ movement &nbsp; · &nbsp; badge = position</b></p>
+    <div class="row"><span class="rk">1</span><span class="pos QB">QB</span>
+      <span class="nm">Jayden Daniels<small>24 · rebuilding core</small></span>
+      <span class="dumb"><span class="rail"></span><span class="conn" style="left:20%;width:14%"></span>
+        <span class="dot m" style="left:20%"></span><span class="dot k" style="left:34%"></span></span>
+      <span class="val">9,100</span></div>
+    <div class="row"><span class="rk">2</span><span class="pos RB">RB</span>
+      <span class="nm">Ashton Jeanty<small>22 · pick 1.03</small></span>
+      <span class="dumb"><span class="rail"></span><span class="conn" style="left:38%;width:22%"></span>
+        <span class="dot m" style="left:38%"></span><span class="dot k" style="left:60%"></span></span>
+      <span class="val">8,400</span></div>
+    <div class="row"><span class="rk">3</span><span class="pos WR">WR</span>
+      <span class="nm">Garrett Wilson<small>25 · sell window open</small></span>
+      <span class="dumb"><span class="rail"></span><span class="conn" style="left:52%;width:12%"></span>
+        <span class="dot m" style="left:52%"></span><span class="dot k" style="left:64%"></span></span>
+      <span class="val">7,850</span></div>
+    <div class="row"><span class="rk">4</span><span class="pos TE">TE</span>
+      <span class="nm">Rasheen Ali<small>24 · thin evidence</small></span>
+      <span class="dumb"><span class="rail"></span><span class="absent" style="position:absolute;left:30%;top:5px;width:40%;height:12px"></span></span>
+      <span class="val">—</span></div>
+    <div style="margin-top:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <span class="posture">rebuilding</span>
+      <span class="chip y26">2027 1st</span><span class="chip y27">2027 2nd</span><span class="chip y28">2028 1st</span>
+      <span style="font-family:var(--font-mono);font-size:13px;color:var(--muted)">· your capital</span>
+    </div>
+    <p class="note">Four hues of identity, two of comparison, one directional pair, and everything else
+       carried by shape, weight, lightness or texture. <b>No legend box anywhere</b> — every mark is
+       either labelled where it sits or named in one line of prose above the rows.</p>
+  </div>
+
+  <h2><span class="n">the cost</span>What I would be arguing for, and what it breaks</h2>
+  <div class="panel">
+    <p class="claim" style="margin-bottom:12px"><b>It changes four shipped token values.</b> The
+      engineers ship four position hues today; this re-steps them. The argument is the measurement in
+      §1, not preference — the current pair separations are 4.0 and 8.0 where the floors are 6 and 15.</p>
+    <p class="claim" style="margin-bottom:12px"><b>It accepts one collision.</b> RB green and WR crimson
+      share hue families with the movement arrows. Resolved by form, place and the category's own
+      precedent — but it is a real cost, and the alternative (positions avoiding green and red entirely)
+      leaves too little of the wheel to separate four hues once blue and amber are reserved. I tested it.</p>
+    <p class="claim" style="margin:0"><b>It is restrained on purpose.</b> Two lanes plus four positions,
+      everything else earning distinction without hue. If the ask was "more colour", this is the
+      defensible amount — and the honest note is that it could be argued the other way.</p>
+  </div>
+</div>
+</body>
+</html>

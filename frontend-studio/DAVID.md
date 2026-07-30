@@ -1843,3 +1843,76 @@ earlier one, mark the old one superseded and link them.
   designer"). More measurement will not close it. **How to apply: the next move is the craft strand —
   outward at the design world, not inward at this product's internals — and it is Studio's call to make,
   not a question to put to David.**
+
+- **2026-07-29 (late) — AUTHORISED and delivered: the app's colour and encoding system.** David:
+  *"we need colors a color scheme that represents things"*, then *"do some research - you can create the
+  apps color scheme and encoding if you have a strong set of research and ideas and thinking behind it."*
+  **The grant is conditional on the reasoning, and that is the standard the work was built to.**
+  **The load-bearing finding, from running the validator instead of trusting an eye: the product's four
+  shipped position hues FAIL, and not only for colourblind readers.** TE↔WR **ΔE 4.0** deutan (floor 6);
+  **TE↔RB ΔE 8.0 in NORMAL vision** (floor 15) — cyan against teal, hard to separate with full colour
+  vision. They ship unused, so nothing has been drawn wrong yet. Re-stepped: **8.4 CVD / 15.8 normal,
+  both themes**, QB keeping the product's own violet.
+  **The rule that organises it is FORCED, not a preference — and this is the part worth keeping.** 64
+  candidate position sets searched across every legal hue arc, lightness varied as a second
+  discrimination channel: **none** clears the target while sitting beside model-blue and market-amber as
+  one categorical set. **Six simultaneous categorical hues do not fit on this product's wheel.**
+  Therefore: **one categorical dimension carries hue per surface** — if the surface is about positions,
+  positions hold hue and the lanes go neutral; if it is about our view versus the market's, the reverse.
+  **How to apply: decide what a surface is ABOUT before assigning any hue, and de-saturate the other
+  layer rather than fitting both in.**
+  **The refusal layer is the design.** Verdicts, manager posture, absence, thin evidence, ownership and
+  asset class get **no hue at all** — form, weight, texture and lightness instead. Ordered dimensions
+  (pick horizon) get a **lightness ramp**, never categorical hues; giving an ordered quantity four hues
+  is a category error. This is what stops "add colour" from becoming decoration.
+  **One collision named rather than hidden:** RB green and WR crimson share hue families with the
+  movement arrows David ruled legal. Resolved by form and place (a position hue is always a filled badge
+  containing text; movement is always a bare triangle by the rank) — and **the category proves it works:
+  Sleeper colour-codes positions and uses green/red trend arrows in the same lists.** The alternative was
+  tested and fails.
+  **Not shipped, not relayed.** It re-steps four shipped token values; the argument for that is the
+  measurement, not taste.
+
+- **2026-07-29 — "BEST WORK OF THE DAY", and the instruction that outranks the work itself.** David on
+  the colour and encoding system: *"best work of the day. try to teach Studio to think like u just did as
+  we move forward - that effort and reasoning and steps taken and execution would be great to stack
+  session over session."*
+  **This is a process ruling, not praise, and it is the highest-value thing said today.** He is not asking
+  for more colour work; he is asking for the METHOD to survive resets. Acted on immediately, at two tiers:
+  **ENCODED (tier 1) — `kit/palette-check.mjs`.** Today's load-bearing finding was that the product's four
+  shipped position hues fail the validator. In a markdown file that decays silently the first time anyone
+  edits `tokens.css`. It is now a tool that **reads the hues out of the product's stylesheet** and either
+  passes or fails loudly — shipped set FAIL (deutan 4.0, normal 8.0), proposed set ok (8.4 / 15.8). *The
+  difference between a fact and a claim about a fact is whether it can fail on its own.*
+  **LOADED (tier 2) — `CLAUDE.md` now carries "The sequence — run it in this order":** name what the ask is
+  really asking and enumerate the domain before touching form · check the category before inventing ·
+  **measure what exists before proposing a replacement** · compute the choice and let the instrument
+  arbitrate · **a failed search is a finding, never weaken the test to get an answer** · design the
+  refusal · name the one real cost having tested the alternative · ship the picture with reproduction
+  commands.
+  **Paid for rather than appended, per that file's own budget rule:** the two old instrument rules were
+  merged into one three-clause rule (both-directions + population + **determinism**, the new one from this
+  morning), so the section gained a method without doubling.
+  **The observation that makes the sequence worth trusting:** it is the deliberate inverse of the two
+  surfaces David rejected the same day. 012 and 013 polished the drawing before the question was
+  understood; the colour work spent its first hour on *what needs representing* and never touched a
+  palette until the domain was enumerated. **Same designer, same day, same craft tools — the difference
+  was the order of operations.**
+
+- **2026-07-29 (evening) — the two verbatim reactions that bracket the craft thread, recorded as said
+  rather than as read.**
+  **On the depth/hierarchy lab (lab-001):** *"better for sure - but we need colors a color scheme that
+  represents things."* **Read it precisely:** the depth work landed — "better for sure" is the first
+  unqualified positive of the day — **and it was incomplete**, because depth without colour still does not
+  *represent* anything. The operative word is **represents**: he is asking for encoding, not decoration.
+  Studio's monochrome habit was the deficiency; depth was only half its cause.
+  **Then the grant:** *"do some research - you can create the apps color scheme and encoding if you have a
+  strong set of research and ideas and thinking behind it."* **The authority is conditional on the
+  reasoning** — a scheme with taste behind it would not have qualified under the words he used.
+  **Then the verdict:** *"best work of the day."*
+  **The arc across one day, worth holding as a single fact:** *"really missing the mark on the UI/UX"* →
+  *"not a bad idea"* → *"interesting - not bad - not awesome. lets park this"* → *"better for sure"* →
+  *"best work of the day."* **What changed between the bottom and the top was not effort and not craft
+  tooling — it was the order of operations** (`CLAUDE.md` items 16–23). Both rejected surfaces reached for
+  a form before the question was settled; the colour work enumerated the domain first and did not touch a
+  palette until it had.

@@ -18,6 +18,27 @@ session start.
 
 ---
 
+## DELIVERED — curated to disk
+
+- **`craft/colour-encoding-system.md`** (2026-07-29, **authorised by David**: *"you can create the apps
+  color scheme and encoding if you have a strong set of research and ideas and thinking behind it"*) —
+  the full scheme. **Load-bearing finding: the product's four shipped position hues FAIL the validator,
+  and not only for colourblind readers** (TE↔WR ΔE 4.0 deutan; TE↔RB ΔE 8.0 in *normal* vision, floor
+  15). Re-stepped set measures 8.4 / 15.8 in both themes. **The scarcity rule is forced, not preferred:**
+  across 64 candidate sets, no four position hues clear the target while sitting beside model-blue and
+  market-amber, so one categorical dimension carries hue per surface. Five layers plus an explicit
+  no-hue layer. Demo: `craft/lab-002-colour-encoding.html`.
+
+- **`craft/premium-surface-technique.md`** (2026-07-29) — the gap that caused 012 and 013 to land at
+  "not awesome" with every check passing: Studio's surfaces are flat because it concluded "the product
+  has no gradients" means "use no depth." Eight techniques with the boundary attached (elevation by
+  lightness step, ring-instead-of-border, inset lit edge, tinted neutrals, scale contrast, six
+  microstates, spring overshoot, gradient-only-for-absence) and one rule — **light the room, never the
+  number.** Practice artifact: `craft/lab-001-depth-and-hierarchy.html`, every technique built twice,
+  once as craft and once as a defect. **Self-directed; nothing proposed to the product.**
+
+---
+
 ## Tier 1 — the gaps that caused real failures
 
 These are ranked by damage done, not by interest.

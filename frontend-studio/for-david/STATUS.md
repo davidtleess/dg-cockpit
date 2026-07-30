@@ -2,6 +2,81 @@
 
 ## ══ CLOSEOUT 2026-07-29 ══ read this first if you are coming to this board cold
 
+### DAVID'S PROCESS RULING — "best work of the day… teach Studio to think like u just did"
+
+> *"best work of the day. try to teach Studio to think like u just did as we move forward - that effort
+> and reasoning and steps taken and execution would be great to stack session over session."*
+
+**Acted on at two tiers, because the file's own rule is that the best form of a learning stops being a
+document and becomes an instrument.**
+- **ENCODED:** `kit/palette-check.mjs` reads the product's position hues **out of `tokens.css`** and
+  validates them every run. Shipped set **FAIL** (deutan 4.0, normal 8.0); proposed **ok** (8.4 / 15.8).
+  The finding can no longer go stale in prose.
+- **LOADED:** `CLAUDE.md` now carries **"The sequence — run it in this order"** (items 16–23): enumerate
+  the domain before touching form · check the category before inventing · **measure what exists before
+  proposing a replacement** · compute the choice · **a failed search is a finding — never weaken the test
+  to get an answer** · design the refusal · name the one real cost having tested the alternative · ship
+  the picture with reproduction commands. Paid for by merging the two old instrument rules into one
+  three-clause rule that now also carries **determinism**.
+
+**Why the sequence is trustworthy: it is the inverse of the same day's two rejections.** 012 and 013
+polished the drawing before the question was understood; the colour work spent its first hour on what
+needed representing. Same designer, same day, same tools — the difference was the order of operations.
+
+### COLOUR AND ENCODING SYSTEM — authorised by David, delivered same session
+
+> *"we need colors a color scheme that represents things"* … *"you can create the apps color scheme and
+> encoding if you have a strong set of research and ideas and thinking behind it."*
+
+**The finding that carries it: the product's four shipped position hues FAIL, and not only for
+colourblind readers.** TE↔WR **ΔE 4.0** (deutan, floor 6); TE↔RB **ΔE 8.0 in normal vision** (floor 15) —
+cyan TE against teal RB is hard to separate with full colour vision. They ship unused, so nothing has
+been drawn wrong yet; the moment position hue is used, it would be. Re-stepped set measures **8.4 CVD /
+15.8 normal in both themes**, QB keeping the product's own violet.
+
+**The rule is forced, not stylistic.** 64 candidate sets searched across every legal hue arc with
+lightness varied as a second channel: **none** clears ΔE≥8 while sitting beside model-blue and
+market-amber as one categorical set. Six simultaneous categorical hues do not fit. Therefore **one
+categorical dimension carries hue per surface** — demonstrated in the lab as the same rows twice.
+
+**Five layers + a refusal layer:** ground (no meaning) · the two constitutional lanes · position identity
+(always co-labelled — the label is the secondary encoding) · pick horizon as a **lightness ramp** because
+ordered ≠ categorical · movement arrows only · and an explicit **no-hue list** (verdicts, posture, absence,
+thin evidence, ownership, asset class — each given form, weight, texture or lightness instead).
+
+**One collision named rather than hidden:** RB green and WR crimson share hue families with the movement
+arrows. Resolved by form and place, with the category's own precedent — Sleeper does exactly this. The
+alternative was tested and fails: with blue, amber, green and red reserved, the wheel cannot separate four
+hues.
+
+**On disk:** `craft/colour-encoding-system.md` (reproduction commands included),
+`craft/lab-002-colour-encoding.html`. **Nothing shipped, nothing relayed** — it re-steps four shipped
+token values, which is an engineering conversation.
+
+### CRAFT — self-directed, on David's "go for it" after 013 was parked
+
+**The diagnosis Studio owns:** two surfaces in a row at "not awesome" with every measurable check
+passing. Defensible is not compelling, and the gap is taste, not rigour. Studio's surfaces are flat and
+monochrome because it turned one true fact (*the product renders zero gradients and zero elevation
+shadows*) into a different claim (*therefore use no depth or colour anywhere*).
+
+**Built:** `craft/lab-001-depth-and-hierarchy.html` — eight techniques from products that read as
+premium, each implemented **twice**: once on chrome where it is craft, once on a data mark where it is a
+defect, so the boundary is visible rather than asserted. **Curated:**
+`craft/premium-surface-technique.md`, indexed in `CRAFT-LIBRARY.md`.
+
+**The rule it produced: light the room, never the number.** Elevation, lit edges, tinted ramps, springs
+and scale contrast belong to containers and type; the moment one touches a mark whose length, position
+or count carries a value it becomes a second channel arguing with the first. Concrete finding: a shadow
+is invisible on a dark surface, so "the product ships zero shadows" is not evidence against depth — the
+technique dark UIs use instead is **luminance**, and the product ships two surfaces where the practice
+is four or five.
+
+**Nothing proposed, nothing relayed.** Divergence is a cost paid once in tokens across every surface,
+never on one page. The lab exists so Studio knows what it would be arguing for before it argues. And
+stated honestly in the note: "not awesome" may not be about depth at all — this is one hypothesis with a
+built artifact behind it, not the answer.
+
 ### 013 — WHO DO I CALL · **PARKED by David** (built after closeout, on his UI/UX judgement)
 
 > *"interesting - not bad - not awesome. lets park this for now."* — **not a rejection, not an approval.**
@@ -65,80 +140,128 @@ a day later, rendering module-script pages blank and grading documents that neve
 
 Everything below is Studio-measured only. Nothing here has been seen by David or the engineers.
 
+**Instrument work (morning)**
 | figure | value |
 |---|---|
-| gate non-determinism (before fix) | 84 / 108 / 93 / 96 marks; density 3.44–5.63 on one file |
-| density, 012 before → after | **4.38 → 2.17** per 10k px² |
-| density, all surfaces | 001 2.02 · 004v4 1.72 · 005 2.79 · 006 frontdoor **2.13** · 006 evidence-v2 1.38 · 008 0.80 · 009 matrix **3.95** · 009 proto 6.68 · 010 **4.71** · 011 n/a · 012 2.17 |
-| old horizontal dodge displacement | **29 of 72 marks (40%)**, median 12.8px, worst **72 days** late |
-| new placement accuracy | **72/72 marks at 0% positional error** vs the dataset's own span |
-| lane geometry | 470×34 → **494×56**; nearest-neighbour min **1px → 17px**; stack rows 46/20/6 |
-| target-size failures found | 001: 10 controls (47×19, 15px-tall spans) · 005: 5 sort buttons 17px tall (smallest 23×17) · 006 evidence-v2: 1 prose link 93×15, **exempt** |
-| runtime DOM facts | 36 JS-injected `aria-hidden` marks inside lanes; 15 gradient-only marks |
-| board layout | board 1190px; columns 250 / 151 / 523 / 90 / 176 |
-| MCP servers | Playwright MCP **24 tools**, `@playwright/mcp` 0.0.78 · Chrome DevTools MCP **29 tools**, 1.6.0 |
-| app front door | `GET /favicon.ico` → 404 on every load (reproducible, trivial) |
+| gate non-determinism, before the fix | 84 / 108 / 93 / 96 marks; density 3.44–5.63 on one unchanged file |
+| gate self-test | **12/12** labelled specimens agree |
+| density, all eleven surfaces | 001 2.02 · 004v4 1.72 · 005 2.79 · 006 frontdoor **2.13** · 006 evidence-v2 1.38 · 008 0.80 · 009 matrix **3.95** · 009 proto 6.68 · 010 **4.71** · 012 2.17 · 013 1.22 |
+| target-size failures found by the new page-wide sweep | 001: 10 controls (47×19, 15px-tall spans) · 005: **5 sort buttons 17px tall**, smallest 23×17 · 006 evidence-v2: 1 prose link, **inline-exempt** |
+| C6 denominator error | occupancy understated **3.4×**; 013 read 8.7% → **30.0%** after the fix |
 
-**Weak by construction, flagged:** the density thresholds (warn 2.13 / fail 3.95) are a **two-point
-fit** to two surfaces. That was true before today and is still true; the improvement is only that the
-two points are now measured on settled pages and regenerated rather than transcribed.
+**012 lane rebuild**
+| figure | value |
+|---|---|
+| density before → after | **4.38 → 2.17** per 10k px² |
+| old horizontal dodge | **29 of 72 marks (40%)** displaced, median 12.8px, worst **72 days** late, on David's own lane |
+| after | **72/72 marks at 0% positional error** vs the dataset's own span |
+| geometry | lane 470×34 → **494×56**; nearest-neighbour min **1px → 17px**; dodge rows 46/20/6 |
+
+**013 call sheet**
+| figure | value |
+|---|---|
+| your posture | **70%** of receipts taken as picks, **net +11**, 13 players out |
+| bands | 4 pay in picks · 5 want picks · 2 silent |
+| timing | July and August have **never** produced a trade in four seasons; 71% close Sep–Dec (Wilson 55–83%, n=38) |
+| gate | 0 fail, 1 warn; density **1.22**; 11/11 controls ≥24px; C6 30.0% of 300px |
+
+**Colour and encoding system (evening)**
+| figure | value |
+|---|---|
+| shipped position hues | **FAIL** — TE↔WR **ΔE 4.0** deutan (floor 6); TE↔RB **ΔE 8.0 normal** (floor 15) |
+| proposed set | deutan **8.4**, normal **15.8**, both themes; **tritan 7.1–8.9 — floor band, not above target** |
+| the forced constraint | **64** candidate sets searched; **none** clears ΔE≥8 as one six-hue categorical set beside model-blue and market-amber |
+| gamut | TE at `oklch(0.50 0.15 210)` clipped to chroma **0.097**, below the 0.1 floor — re-stepped to `0.58 0.13 200` |
+
+**MCP servers** — Playwright MCP 24 tools (`@playwright/mcp` 0.0.78) · Chrome DevTools MCP 29 tools (1.6.0).
+**App front door** — `GET /favicon.ico` → 404 on every load (reproducible, trivial).
+
+**Weak by construction, flagged:** the density thresholds (warn 2.13 / fail 3.95) remain a **two-point
+fit** to two labelled surfaces. True before today; the only improvement is that the two points are now
+measured on settled pages and regenerated rather than transcribed.
+
+### TWO FINDINGS THAT ARE NOT DELIVERABLES AND WILL OTHERWISE BE FORGOTTEN
+
+**1. The instrument was lying, Studio caught it, and the corrected version then convicted Studio.**
+Four runs of `craft-gate.mjs` over an unchanged file returned **84, 108, 93, 96 marks** — it sampled
+400ms after load while an entrance animation was still fading marks in. Nobody had ever run it twice.
+Fixed (settled end state + a refusal when the population will not stop moving), then **proved it can
+still reject a known-bad sample** (12 specimens, including a paint-invariance pair and a page it must
+refuse — and the bad specimen caught Studio's *own first fix*, which compared mark counts when the
+flickering page always shows 36, never the same 36). Then the corrected sweep over the whole back
+catalogue **failed two of Studio's own surfaces on target size**: 001 and 005. **The direction of that
+last step is the only reason a self-built instrument is worth anything.**
+
+**2. The app ranks a manager it should not.** Measured against the completed-transaction record:
+**Seidmans Sasquatches is the app's #4 trade partner of 11 — with one trade in four seasons, the last on
+2024-11-14, and zero transactions in 2026.** The league's most active manager ranks last. Two of the
+four components of that score are dead constants in source (`activity_recency_score` 0.0 for every team,
+`divergence_density_score` 1.0 for every team). This is the sharpest ours-versus-reality finding Studio
+has, it is one curl and two lines of source to re-check, and it sits unrelayed in `012-RELAY.md`.
 
 ### (b) Asserted today, then retracted / reversed / narrowed
 
-1. **RETRACTED in writing (engineer-readable file).** 012's "density 2.74" and "2.22, between the
-   approved and rejected surfaces" and "improved to 2.10, level with the approved front door" — all
-   void, all produced mid-animation by a paint-blind census. Struck through in
-   `proposals/012-league-pulse.md`, not quietly edited.
-2. **RETRACTED.** "C5 PASS" on ten of eleven surfaces. A pass on an empty population is a claim about
-   something never examined; those verdicts meant nothing and now read SKIP.
-3. **REVERSED, on Studio's own fix.** Claimed determinism solved when mark counts stabilised. The
-   known-bad specimen showed a churning population with a constant count. Signature now hashes mark
-   *identity*.
-4. **REVERSED blame.** When the inert fixture failed, Studio first suspected its own fixture; the
-   gate was wrong (it read `aria-label` as interactivity). Then on the very next specimen the fixture
-   *was* the wrong thing (no controls at all). Both directions happened within ten minutes.
-5. **NARROWED before it became a claim.** A date-accuracy probe reported a **10.7%** worst error; the
-   probe had invented its own time span. Against the dataset's real span the error is **0%**. Never
-   reported as a defect.
-6. **NARROWED before it became a claim.** The console 404 seen **31 times** has not reproduced in four
-   later loads. Recorded as unconfirmed and unclaimed.
-7. **NARROWED.** C4 fails on nine of eleven surfaces, but the gate's own caveat says its
-   content-vs-label split is unreliable without a repeating unit. **Not quoted** until proved in both
-   directions.
-8. **CORRECTED same turn.** Opened the day saying Studio was turning to David's "I want to know what
-   the trades were" note — stale by hours; that criticism had already been fixed. Caught by reading
-   the board before acting.
-9. **DOUBTED CORRECTLY-RECORDED HISTORY, then conceded.** Studio said the record's claim that the gate
-   "skips `<button>` as chrome" was not in the source it had just read — the very next run printed
-   `[chrome skipped: button×72]`. The record was right; the doubt was wrong.
-10. **CORRECTED mid-task.** Explained a 108→85 mark drop as the `aria-hidden` exclusion, then a grep
-    of the static file found zero such attributes and Studio said its explanation was wrong — then a
-    runtime measurement found **36 JS-injected** ones. The explanation was right; the *test* was
-    wrong. Recorded because "my test was invalid" and "my claim was invalid" are different repairs.
+1. **RETRACTED in the engineer-readable file.** 012's "density 2.74" / "2.22, between the approved and
+   rejected surfaces" / "improved to 2.10, level with the approved front door" — all void, struck
+   through rather than quietly edited.
+2. **RETRACTED.** "C5 PASS" on ten of eleven surfaces — a pass on an empty population is a claim about
+   something never examined. Now SKIP.
+3. **REVERSED, on Studio's own fix.** Claimed determinism solved when mark *counts* stabilised; the
+   known-bad specimen showed a churning population at constant cardinality. Signature now hashes mark
+   identity.
+4. **CORRECTED BY STUDIO'S OWN NEW TOOL, same hour it was built.** The colour write-up claimed the
+   proposed palette "clears the ΔE≥8 target". `kit/palette-check.mjs` reported **tritan 7.1** — inside
+   the floor band, legal only because every position badge carries its two letters. The claim was
+   rewritten rather than rounded up.
+5. **NEARLY CONVICTED STUDIO'S OWN DESIGN FOR AN INSTRUMENT BUG.** C6 failed 013's shared axis at 8.7%
+   occupancy; the cause was the gate normalising mark positions against the repeating *unit* (1032px)
+   instead of the box the mark is positioned in (300px) — a **3.4×** denominator error. True value
+   **30.0%**, passing. And the first attempt at that fix changed only the *reported* span, not the
+   normalisation — caught because the number did not move.
+6. **REFUSED A CLEAN RESULT.** Declaring 013's rail as chrome (truthfully) starved the gate's unit
+   detector, which then found no unit and printed **"0 fail" by seeing less**. Not accepted; re-measured
+   with the unit named. **Open instrument item: a summary line that counts only fails lets emptiness read
+   as success.**
+7. **REVERSED BLAME, twice in ten minutes.** When the inert fixture failed, Studio first suspected the
+   fixture — the gate was wrong (it read `aria-label` as interactivity). On the next specimen the
+   fixture *was* the wrong thing (no controls at all).
+8. **A FIX THAT FIXED NOTHING, said so.** 013's 3px mobile overflow: thinning the axis with
+   `visibility:hidden` kept the boxes and changed the layout not at all. Real cause was gutter width.
+9. **NARROWED before becoming claims.** A date-accuracy probe reporting **10.7%** worst error (the probe
+   had invented its own time span; true value **0%**) · the console 404 seen **31 times** and never
+   reproduced · **C4 failing nine of eleven surfaces**, not quoted because the gate's own caveat says
+   that check is unreliable in the conditions it ran under.
+10. **CORRECTED same turn.** Opened the day citing a David note that had been fixed hours earlier ·
+    doubted a correctly-recorded history entry that the next run confirmed · explained a mark-count drop
+    by `aria-hidden` after a grep of the *static* file found none, then a runtime measurement found **36
+    JS-injected** ones. **"My test was invalid" and "my claim was invalid" are different repairs.**
 
 ### Background inventory
 
-**NONE started by Studio.** No process, watcher, job, cron, server or subagent was started that
-outlives this turn. Every browser Studio launched was closed in the same script; the gate's HTTP
-server opens and closes inside a single run. Artefacts written are inert files only:
-`analysis/012-lane-after.png`, `kit/gate-fixtures/*.html`, `kit/gate-calibration.json`, `.gitignore`,
-and probe scripts in the session scratchpad (disposable). The two MCP servers Studio registered are
-**configuration, not running processes** — they start on demand when a session loads them.
+**NONE started by Studio.** Re-measured at closeout, browsers named explicitly because today's tooling
+drives real Chrome:
 
-**Checked rather than asserted, and it turned up something worth knowing.** A process scan found four
-live `chrome-devtools-mcp` processes. **They are not Studio's:** elapsed time **3 days 9 hours** (they
-predate today's install), and they carry `--autoConnect`, a flag Studio has never used. They belong to
-**Antigravity IDE** (same start moment, PID 41579). So `chrome-devtools-mcp` was **already running on
-this machine in another client's lane** before Studio installed it into Claude Code this morning.
-Studio's install claim was scoped to Claude Code's own registry and remains accurate, but "this was not
-installed" was true of that registry, not of the machine. **Left running and deliberately not
-touched** — not Studio's process, not Studio's lane.
+- **Chromium / Playwright / headless_shell: zero.** Every browser Studio launched today — the gate, the
+  self-test, the MCP probes, every screenshot and verification script — was closed in the same script
+  that opened it (`await browser.close()`), and a process scan finds none surviving.
+- **Node processes from Studio's tools: zero.** The gate's HTTP server opens and closes inside a run.
+- **No watchers, crons, subagents or shell jobs.**
+- **NOT STUDIO'S, and deliberately untouched:** four `chrome-devtools-mcp` processes belonging to
+  **Antigravity IDE** — now aged **3 days 14 hours**, carrying an `--autoConnect` flag Studio has never
+  used. They predate today's install and are unrelated to it. David's own Chrome (12 days) also left
+  alone.
+- **The two MCP servers Studio registered are configuration, not processes** — they start on demand when
+  a session loads them, and no session has yet used them for work.
+
+Artefacts written are inert files only: the craft labs and notes, `kit/gate-fixtures/*`,
+`kit/gate-calibration.json`, `kit/palette-check.mjs`, the 013 prototype, screenshots under `analysis/`,
+and disposable probe scripts in the session scratchpad.
 
 ### Open threads and where each one sits
 
 | thread | state | sits with |
 |---|---|---|
-| **013 call sheet** | **Parked by David** — "not bad, not awesome". Nothing to do unless he reopens it. | **David** |
+| **013 call sheet** | **PARKED on David's word** — *"interesting - not bad - not awesome. lets park this for now."* **What it IS:** a built, verified sketch answering "who do I call, why, and is now the time" — timing verdict, your pick-buying posture, eleven managers grouped by what they pay in, rows expanding to evidence cards. Gate 0 fail; 72 checks green. **What it is NOT:** approved, relayed, iterated, or shippable — it depends on a Sleeper endpoint the product has never called. **Not a rejection either.** No further work unless he reopens it. | **David** |
 | **012 lane, rebuilt** | Density fixed 4.38 → 2.17, dodge made honest, verified. Prototype open in David's browser. **One question outstanding, unanswered:** does the lane read at a glance, and do the upward stacks land as "several trades at once" or as noise? | **David** |
 | **012 as a whole** | Direction checkpoint only, never approved. `012-RELAY.md` **authored, NOT authorised** (T1–T5: two dead score components, the uncalled transactions endpoint, the 35-day-stale posture artifact, constant-only ranks). | **David** — relay needs his word, then Tower |
 | **010 density** | Measures **4.71**, above the rejected matrix's 3.95. **Already relayed to engineers.** Studio has not acted; it is a judgement about a shipped relay, not a defect to silently patch. | **David** |
