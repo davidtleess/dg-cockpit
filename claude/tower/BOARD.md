@@ -301,3 +301,30 @@ STILL OPEN, DAVID'S  (1) scope ruling on splitting fetch from derive — the cyc
          measured baseline — an instrument that has never been observed failing is the disease.
 UNCOMMITTED NOW: the post-commit audit entries and Tower's disposition in the ledger. They ride with
          the next commit; no separate gate requested.
+
+# ============ CLOSEOUT STATE — 2026-07-30 17:05, from source ============
+GIT      HEAD e3e3555 · origin/main e20291e · 0 behind / 4 ahead · working tree CLEAN.
+         CI GREEN on e20291e. FOUR closeout commits LOCAL-ONLY; Codex audited all: zero executable,
+         product, data, model or contract divergence. David asked to push; NEITHER Tower NOR any
+         lane can — both refused by their harness classifiers. The charter's closeout push authority
+         is NOT IMPLEMENTED BY THE MACHINE. Raise tomorrow: grant it or retire it.
+FLUSH    All three crew postflights filed in today's ledger and VERIFIED by reading it (Claude
+         16:44, Codex 16:47/bcc0848, Gemini 16:44 + a date-placeholder correction at 16:50 that
+         TOWER caught from the permission prompt and checked afterwards rather than assuming).
+         Cross-lane audits done in BOTH directions; Claude CLEAR on Codex's close, Codex CLEAR on
+         the product surface of every commit.
+STUDIO   Flushed and durable FROM DISK (DAVID.md 16:43, STATUS.md 16:42, "Studio closed"). It found
+         and killed a leftover python http.server and verified the port closed; TOWER CONFIRMED
+         independently — no chromium, no headless_shell, no server. Consequence for David: the 014
+         prototype will not load until re-served.
+BACKGROUND INVENTORY, Tower's own process-table check, not any lane's account: NOTHING unattended
+         survives the session. One pre-existing uvicorn (PID 7180, 15 days old, July 14) disclosed
+         and NOT ours to stop. No launchd job in flight. Tower's two watchers are session-scoped.
+WIRE     Every composer swept: two ghosts, two empty, NO real strands. open-asks.sh CLEAN.
+         ⚠ DAVID REVEALED the inbound Codex packets had been STUCK and he pushed them through.
+         Tower had read their arrival as a healthy wire. THE LEDGER IS THE CHANNEL — read it on a
+         rhythm; treat packets as a bonus.
+TREADMILL STOPPED by Tower order to both lanes: state that changes when you commit must not be
+         committed. Three successive corrections each invalidated their own count.
+TOMORROW LET THE MORNING RUN UNTOUCHED. The pre-registered blind verification measures the CURRENT
+         system — the only chance to prove the instrument can fail before it is asked to certify.
