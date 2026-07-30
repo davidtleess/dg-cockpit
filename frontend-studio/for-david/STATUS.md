@@ -2,6 +2,39 @@
 
 ## ══ CLOSEOUT 2026-07-29 ══ read this first if you are coming to this board cold
 
+### 013 — WHO DO I CALL · **PARKED by David** (built after closeout, on his UI/UX judgement)
+
+> *"interesting - not bad - not awesome. lets park this for now."* — **not a rejection, not an approval.**
+> The reframe cleared the bar 012 failed and still did not land. No iteration authorised. Prototype and
+> write-up are on disk; nothing relayed. **Two surfaces in a row now sit at "not awesome" with every
+> measurable check passing — the gap is taste, not rigour.**
+
+**David on 012:** *"you have the data analysis that could be a valuable foundation for this page but you
+are really missing the mark when it comes to the UI/UX."* On the reframe: **"not a bad idea"** — a weak
+green light on the QUESTION only. **Nothing approved, nothing relayed.**
+
+**The reframe:** league activity is not the subject of a page, it is the evidence inside one. 013 answers
+*who do I call, why, and is now the time* — a timing verdict as the hero (July and August have never
+produced a trade here; 71% close Sep–Dec), your own posture as the reason for the ordering (you take 70%
+of receipts as picks, net +11), then one call sheet of eleven managers grouped by **what each has
+historically paid in**, rows expanding into the evidence-card pattern David already confirmed.
+**No composite score** — blending a partner into one number is the 2026-07-24 failure.
+
+**Verified:** gate 0 fail / 1 warn (two declared display sizes), density **1.22** vs the approved front
+door's 2.13; 11/11 controls ≥24px and named; keyboard expand; reduced motion 7/7 bars final; no overflow
+at 1440 or 390; zero console errors; identical gate output across runs. Write-up in
+`proposals/013-who-do-i-call.md`.
+
+**Two more instrument defects found while gating it, both of the day's family:**
+- **C6 normalised mark positions against the repeating unit, not the box the mark is positioned in** —
+  on a row holding a 300px track inside 1032px that understated occupancy **3.4x** and reported a
+  reader-discrimination failure that was purely a denominator error. Corrected: 8.7% → **30.0%**, which
+  passes. 012 unchanged at 63.2%, specimens still 12/12.
+- **An honest chrome declaration starved the unit detector.** Declaring the rail and reference line as
+  chrome left one data mark per row, below the "≥2 marks per unit" threshold, so the gate found no unit
+  and printed **"0 fail" by seeing less.** Studio did not accept the clean result. **Open instrument
+  item: the summary line must count skips, or emptiness reads as success.**
+
 ### The day in one sequence — the most useful thing in this lane today
 
 **The instrument gave four different answers to identical input, was fixed, was proved able to still
@@ -105,6 +138,7 @@ touched** — not Studio's process, not Studio's lane.
 
 | thread | state | sits with |
 |---|---|---|
+| **013 call sheet** | **Parked by David** — "not bad, not awesome". Nothing to do unless he reopens it. | **David** |
 | **012 lane, rebuilt** | Density fixed 4.38 → 2.17, dodge made honest, verified. Prototype open in David's browser. **One question outstanding, unanswered:** does the lane read at a glance, and do the upward stacks land as "several trades at once" or as noise? | **David** |
 | **012 as a whole** | Direction checkpoint only, never approved. `012-RELAY.md` **authored, NOT authorised** (T1–T5: two dead score components, the uncalled transactions endpoint, the 35-day-stale posture artifact, constant-only ranks). | **David** — relay needs his word, then Tower |
 | **010 density** | Measures **4.71**, above the rejected matrix's 3.95. **Already relayed to engineers.** Studio has not acted; it is a judgement about a shipped relay, not a defect to silently patch. | **David** |

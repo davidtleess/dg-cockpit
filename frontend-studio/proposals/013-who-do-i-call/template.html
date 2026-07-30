@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Who do I call — Studio sketch 013</title>
+<style>
+/* ===========================================================================
+   013 — WHO DO I CALL, AND IS NOW THE TIME
+   ---------------------------------------------------------------------------
+   The page answers one question a dynasty manager actually has on a weekday
+   morning. League activity is the EVIDENCE inside it, never the subject: 012
+   rendered the history and left the reader to derive the implication, which is
+   why it missed.
+
+   Visual vocabulary is the product's own — its three type steps, its 4/8/12/16
+   space scale, its 3/4/6/999 radii, zero gradients, zero elevation shadows.
+   TWO DECLARED EXTENSIONS, stated rather than smuggled:
+     1. A display size (44/28px) above the product's 18px ceiling. The product
+        ships no display scale; a verdict that must be read before anything else
+        cannot be set at body size.
+     2. The four position hues, which ship in the product and go unused. They
+        appear ONLY where a position is actually named, so hue always means the
+        same thing.
+   =========================================================================== */
+
+@font-face{font-family:"Archivo";src:url("../006-state-of-franchise/fonts/archivo-latin-600-normal-3BBy0ZsW.woff2")format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Archivo";src:url("../006-state-of-franchise/fonts/archivo-latin-700-normal-D9cHMWGj.woff2")format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../006-state-of-franchise/fonts/ibm-plex-sans-latin-400-normal-CDDApCn2.woff2")format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../006-state-of-franchise/fonts/ibm-plex-sans-latin-500-normal-6ng42L7E.woff2")format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("../006-state-of-franchise/fonts/ibm-plex-sans-latin-600-normal-CuJfVYMP.woff2")format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("../006-state-of-franchise/fonts/ibm-plex-mono-latin-400-normal-DMJ8VG8y.woff2")format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("../006-state-of-franchise/fonts/ibm-plex-mono-latin-500-normal-DSY6xOcd.woff2")format("woff2");font-weight:500;font-display:swap}
+
+:root{
+  --dg-surface:oklch(0.2 0.012 250);
+  --dg-surface-raised:oklch(0.24 0.014 250);
+  --dg-border:oklch(0.32 0.012 250);
+  --dg-border-strong:oklch(0.48 0.014 250);
+  --dg-text:oklch(0.92 0.005 250);
+  --dg-text-muted:oklch(0.68 0.008 250);
+  --dg-focus:oklch(0.72 0.11 255);
+  --pos-qb:oklch(0.6 0.14 300);
+  --pos-rb:oklch(0.62 0.13 170);
+  --pos-wr:oklch(0.6 0.15 340);
+  --pos-te:oklch(0.64 0.12 205);
+
+  --font-display:"Archivo",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --t-sm:13px; --t-base:15px; --t-lg:18px;
+  --t-display:44px; --t-mid:28px;          /* declared extension */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px;
+  --track-label:.12em;
+
+  --dur-1:120ms; --dur-2:220ms; --dur-3:380ms;
+  --ease-entrance:cubic-bezier(.05,.7,.1,1);
+  --ease-standard:cubic-bezier(.2,0,0,1);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--dg-surface);color:var(--dg-text);
+  font-family:var(--font-body);font-size:var(--t-base);line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 24px 120px}
+
+.eyebrow{
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  text-transform:uppercase;letter-spacing:var(--track-label);margin:0 0 var(--sp-4);
+}
+
+/* ---------------------------------------------------------------- the verdict
+   The hero is the WINDOW, because seasonality is the most characteristic fact
+   in this subject's world — every dynasty manager already organises the year
+   around it. It renders the same shape every day whether or not anything
+   happened, which is the instrument-not-editorial rule; only the words and the
+   marker position change. */
+.verdict{margin:0 0 var(--sp-3)}
+.verdict h1{
+  font-family:var(--font-display);font-weight:700;font-size:var(--t-display);
+  line-height:1.02;letter-spacing:-.028em;margin:0 0 var(--sp-3);max-width:22ch;
+}
+.verdict .because{
+  font-size:var(--t-lg);color:var(--dg-text);margin:0 0 var(--sp-2);max-width:62ch;
+  line-height:1.5;
+}
+.verdict .because b{font-weight:600}
+.verdict .qual{font-size:var(--t-sm);color:var(--dg-text-muted);margin:0;max-width:70ch}
+
+/* ------------------------------------------------------------- rhythm strip
+   Trades per month, four seasons pooled. Magnitude by LENGTH from a common
+   baseline. A month that has NEVER produced a trade renders as absence — a
+   hatched baseline stub, not a zero-height bar sitting in a row of bars, because
+   "never happened here" and "very small" are different claims. */
+.rhythm{margin:var(--sp-4) 0 0;padding:var(--sp-4) 0 0;border-top:1px solid var(--dg-border)}
+.rhythm-grid{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sp-2);
+  align-items:end;height:120px;position:relative;
+}
+.mo{position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}
+.mo-bar{
+  width:100%;max-width:44px;border-radius:3px 3px 0 0;background:var(--dg-text);
+  transform-origin:bottom;transform:scaleY(0);
+  transition:transform var(--dur-3) var(--ease-entrance);
+}
+.entered .mo-bar{transform:scaleY(1)}
+.mo-none{
+  width:100%;max-width:44px;height:3px;border-radius:0;
+  background:repeating-linear-gradient(135deg,transparent 0 3px,var(--dg-border-strong) 3px 4px);
+}
+.mo-n{
+  font-family:var(--font-mono);font-size:var(--t-sm);font-weight:500;
+  margin-bottom:var(--sp-1);color:var(--dg-text);
+}
+.mo-n.zero{color:var(--dg-text-muted)}
+.rhythm-axis{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--sp-2);
+  margin-top:var(--sp-2);padding-top:var(--sp-2);border-top:1px solid var(--dg-border);
+}
+.rhythm-axis span{
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  text-align:center;
+}
+.rhythm-axis span.open{color:var(--dg-text)}
+.rhythm-axis span.now{color:var(--dg-text);font-weight:500}
+/* the window is a recessed ZONE behind the marks, delimited, never a fill that
+   competes with them for figure/ground */
+.window-zone{
+  position:absolute;top:-6px;bottom:-6px;pointer-events:none;
+  background:color-mix(in oklch,var(--dg-text) 4%,transparent);
+  border-left:1px solid var(--dg-border-strong);border-right:1px solid var(--dg-border-strong);
+}
+.window-lab{
+  position:absolute;top:2px;font-family:var(--font-mono);font-size:var(--t-sm);
+  color:var(--dg-text-muted);white-space:nowrap;letter-spacing:var(--track-label);
+  text-transform:uppercase;
+}
+.now-line{
+  position:absolute;top:-10px;bottom:-6px;width:2px;background:var(--dg-focus);
+  pointer-events:none;opacity:0;transition:opacity var(--dur-2) var(--ease-standard) 340ms;
+}
+.entered .now-line{opacity:1}
+.now-pill{
+  position:absolute;top:-34px;transform:translateX(-50%);
+  font-family:var(--font-mono);font-size:var(--t-sm);font-weight:500;
+  background:var(--dg-focus);color:oklch(0.16 0.01 250);
+  padding:1px var(--sp-2);border-radius:999px;white-space:nowrap;
+  opacity:0;transition:opacity var(--dur-2) var(--ease-standard) 340ms;
+}
+.entered .now-pill{opacity:1}
+
+/* --------------------------------------------------------------- your posture */
+.you{
+  margin:36px 0 0;padding:var(--sp-4);border:1px solid var(--dg-border);
+  border-radius:6px;background:var(--dg-surface-raised);
+  display:grid;grid-template-columns:1fr auto;gap:var(--sp-4);align-items:center;
+}
+.you h2{
+  font-family:var(--font-display);font-weight:600;font-size:var(--t-mid);
+  letter-spacing:-.018em;margin:0 0 var(--sp-1);line-height:1.15;
+}
+.you p{margin:0;color:var(--dg-text-muted);font-size:var(--t-sm);max-width:52ch}
+.you-figs{display:flex;gap:24px;text-align:right}
+.fig{font-family:var(--font-mono)}
+.fig b{display:block;font-size:var(--t-lg);font-weight:500;line-height:1.2}
+.fig span{font-size:var(--t-sm);color:var(--dg-text-muted);text-transform:uppercase;letter-spacing:var(--track-label)}
+
+/* ------------------------------------------------------------- the call sheet */
+.sheet{margin:44px 0 0}
+.sheet-head{display:flex;justify-content:space-between;align-items:baseline;gap:var(--sp-4);margin-bottom:var(--sp-3)}
+.sheet-head h2{
+  font-family:var(--font-display);font-weight:600;font-size:var(--t-mid);
+  letter-spacing:-.018em;margin:0;line-height:1.15;
+}
+.sheet-head p{margin:0;font-size:var(--t-sm);color:var(--dg-text-muted);max-width:44ch;text-align:right}
+
+/* THE SIGNATURE: one axis, shared by every row, with YOU as a fixed reference.
+   The sheet reads as a distribution at a glance — the pick-payers sit visibly on
+   one side of your line — and no row can be compared on a scale of its own,
+   which is the auto-scaling failure David confirmed on 004 N4. */
+.axis-key{
+  display:grid;grid-template-columns:var(--c1) var(--c2) var(--c3);gap:var(--sp-3);
+  align-items:end;padding:0 var(--sp-3) var(--sp-2);
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  text-transform:uppercase;letter-spacing:var(--track-label);
+  border-bottom:1px solid var(--dg-border);
+}
+/* The end labels and the YOU reference sit on separate lines: at 70% appetite the
+   reference lands exactly where the right-hand label is, and the two collided into
+   "YOUW7A0N%TSJ PICKS" on the first render. Two rows, no overlap at any value. */
+.axis-key .track-key{position:relative;height:38px}
+.axis-key .track-key .lo{position:absolute;left:0;bottom:0}
+.axis-key .track-key .hi{position:absolute;right:0;bottom:0}
+.axis-key .track-key .youtick{
+  position:absolute;top:0;transform:translateX(-50%);color:var(--dg-text);
+  white-space:nowrap;
+}
+
+:root{--c1:1fr;--c2:300px;--c3:230px}
+
+.band{margin:0}
+.band-head{
+  display:flex;align-items:baseline;gap:var(--sp-3);
+  padding:22px var(--sp-3) var(--sp-2);
+}
+.band-head h3{
+  font-family:var(--font-body);font-weight:600;font-size:var(--t-base);margin:0;
+}
+.band-head span{font-size:var(--t-sm);color:var(--dg-text-muted)}
+
+.row{
+  display:grid;grid-template-columns:var(--c1) var(--c2) var(--c3);gap:var(--sp-3);
+  align-items:center;width:100%;text-align:left;
+  padding:var(--sp-3);border:0;border-top:1px solid var(--dg-border);
+  background:none;color:inherit;font:inherit;cursor:pointer;
+  transition:background var(--dur-1) linear;
+}
+.row:hover,.row:focus-visible{background:var(--dg-surface-raised)}
+.row:focus-visible{outline:2px solid var(--dg-focus);outline-offset:-2px}
+.who .name{font-family:var(--font-display);font-weight:600;font-size:var(--t-base);letter-spacing:-.008em}
+.who .sub{font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);display:block;margin-top:2px}
+.who .lean{
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  border:1px solid var(--dg-border-strong);border-radius:4px;padding:0 5px;margin-left:var(--sp-2);
+  text-transform:uppercase;letter-spacing:.02em;white-space:nowrap;
+}
+
+/* the shared track */
+.track{position:relative;height:26px}
+.track-rail{position:absolute;left:0;right:0;top:12px;height:1px;background:var(--dg-border)}
+.track-you{position:absolute;top:0;bottom:0;width:1px;background:var(--dg-border-strong)}
+.track-mark{
+  position:absolute;top:6px;width:14px;height:14px;border-radius:999px;
+  background:var(--dg-text);transform:translateX(-50%);
+  outline:2px solid var(--dg-surface);outline-offset:-1px;
+}
+.row:hover .track-mark{outline-color:var(--dg-surface-raised)}
+/* provisional: a proportion over fewer than four deals is not equal evidence,
+   and the mark says so rather than a footnote saying so */
+.track-mark.thin{
+  background:repeating-linear-gradient(135deg,var(--dg-text-muted) 0 2px,transparent 2px 4px);
+  border:1px solid var(--dg-text-muted);
+}
+.track-val{
+  position:absolute;top:4px;font-family:var(--font-mono);font-size:var(--t-sm);
+  color:var(--dg-text-muted);white-space:nowrap;
+}
+
+.stats{display:flex;justify-content:flex-end;gap:20px;font-family:var(--font-mono);font-size:var(--t-sm)}
+.stats div{text-align:right}
+.stats b{display:block;font-weight:500;color:var(--dg-text)}
+.stats span{color:var(--dg-text-muted);font-size:var(--t-sm)}
+.stats .cold b{color:var(--dg-text-muted)}
+
+/* -------------------------------------------------------------- the expansion
+   Detail expands inline and pushes the next row down — David's standing default
+   since 2026-07-15. Nothing overlays, nothing is replaced. */
+.detail{overflow:hidden;height:0;transition:height var(--dur-3) var(--ease-standard)}
+.detail-inner{padding:var(--sp-4) var(--sp-3) 22px;border-top:1px solid var(--dg-border)}
+.read{font-size:var(--t-base);margin:0 0 var(--sp-4);max-width:76ch}
+.read b{font-weight:600}
+.factors{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-4)}
+.factor{border:1px solid var(--dg-border);border-radius:4px;padding:var(--sp-3)}
+.factor .k{
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  text-transform:uppercase;letter-spacing:var(--track-label);display:block;margin-bottom:var(--sp-1);
+}
+.factor .v{font-size:var(--t-base);display:block}
+.factor .v em{font-style:normal;color:var(--dg-text-muted);font-size:var(--t-sm)}
+.deals{margin:0}
+.deals .dh{
+  font-family:var(--font-mono);font-size:var(--t-sm);color:var(--dg-text-muted);
+  text-transform:uppercase;letter-spacing:var(--track-label);margin:0 0 var(--sp-2);
+}
+.deal{
+  display:grid;grid-template-columns:96px 1fr;gap:var(--sp-3);
+  padding:var(--sp-2) 0;border-top:1px solid var(--dg-border);font-size:var(--t-sm);
+}
+.deal .d{font-family:var(--font-mono);color:var(--dg-text-muted)}
+.pos{font-weight:600}
+.pos.QB{color:var(--pos-qb)} .pos.RB{color:var(--pos-rb)}
+.pos.WR{color:var(--pos-wr)} .pos.TE{color:var(--pos-te)}
+
+.foot{
+  margin:56px 0 0;padding-top:var(--sp-4);border-top:1px solid var(--dg-border);
+  font-size:var(--t-sm);color:var(--dg-text-muted);max-width:88ch;
+}
+.foot p{margin:0 0 var(--sp-2)}
+.foot b{color:var(--dg-text);font-weight:500}
+
+@media (max-width:820px){
+  /* Twelve three-letter labels do not fit 390px at the 13px type floor — "Dec"
+     overflowed its column by 3px and pushed the page sideways. Thin the AXIS
+     rather than the type: every third month plus the current one, positions kept
+     by visibility so the bars stay aligned to their labels. The counts are direct
+     on the bars, so nothing is lost by dropping a tick. */
+  /* visibility:hidden keeps the box, so thinning alone changed nothing — the
+     column was simply narrower than a 23px label. Tighten the gutters so the
+     columns are wider than the widest label, and thin for clutter, not for fit. */
+  .rhythm-grid,.rhythm-axis{gap:3px}
+  .rhythm-axis span{visibility:hidden}
+  .rhythm-axis span:nth-child(3n+1),.rhythm-axis span.now{visibility:visible}
+  :root{--c1:1fr;--c2:1fr;--c3:auto}
+  .verdict h1{font-size:32px}
+  .you{grid-template-columns:1fr}
+  .you-figs{text-align:left;justify-content:flex-start}
+  .row{grid-template-columns:1fr;gap:var(--sp-2)}
+  .axis-key{display:none}
+  .stats{justify-content:flex-start}
+  .sheet-head{flex-direction:column}
+  .sheet-head p{text-align:left}
+}
+
+@media (prefers-reduced-motion:reduce){
+  /* substituted, never deleted: the end state is the information */
+  .mo-bar{transform:scaleY(1);transition:none}
+  .now-line,.now-pill{opacity:1;transition:none}
+  .detail{transition:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Studio · sketch 013 · not a proposal yet</p>
+
+  <section class="verdict">
+    <h1 id="hero">—</h1>
+    <p class="because" id="because"></p>
+    <p class="qual" id="qual"></p>
+
+    <div class="rhythm">
+      <div class="rhythm-grid" id="rhythm"></div>
+      <div class="rhythm-axis" id="rhythmAxis"></div>
+    </div>
+  </section>
+
+  <section class="you">
+    <div>
+      <h2 id="youHead">—</h2>
+      <p id="youSub"></p>
+    </div>
+    <div class="you-figs" id="youFigs"></div>
+  </section>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>Who to call when it opens</h2>
+      <p>Grouped by what each manager has historically paid in — not by a blended score.
+         Ordered by deals a season inside each group.</p>
+    </div>
+    <div class="axis-key" id="axisKey"></div>
+    <div id="bands"></div>
+  </section>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const D = /*__DATA__*/null;
+
+const $ = (s) => document.querySelector(s);
+const el = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
+const fmtDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+const pct = (v) => Math.round(v * 100) + '%';
+
+/* ---------- the verdict, in the domain's own words ---------- */
+// Prose gets full month names; only the axis speaks in three letters. "never made
+// a trade in Jul" is chart shorthand leaking into a sentence a person reads.
+const FULL = { Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April', May: 'May', Jun: 'June',
+               Jul: 'July', Aug: 'August', Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December' };
+const longMonths = (arr) => arr.map(m => FULL[m] || m);
+
+(function verdict(){
+  const monthName = D.calendar[D.thisMonth].name;
+  const isDead = D.deadMonths.includes(monthName);
+  const open = D.calendar[D.openMonth].name;
+
+  $('#hero').textContent = isDead ? 'The phones are off.' : 'The phones are live.';
+
+  const deadList = longMonths(D.deadMonths).join(', ');
+  $('#because').innerHTML = isDead
+    ? `It is ${fmtDate(D.today)}. In four seasons this league has never made a trade in ` +
+      `<b>${FULL[monthName]}</b> — nor in ${longMonths(D.deadMonths.filter(m => m !== monthName)).join(', ')}. ` +
+      `<b>${pct(D.inseasonShare)}</b> of its ${D.totalTrades} trades close between September and December.`
+    : `It is ${fmtDate(D.today)}, inside the window where ${pct(D.inseasonShare)} of this league's ` +
+      `${D.totalTrades} trades have closed.`;
+
+  $('#qual').innerHTML =
+    `Next opening: around <b style="color:var(--dg-text)">${fmtDate(D.nextOpen)}</b>, ` +
+    `${D.daysToOpen} days out. League data captured ${fmtDate(D.captured)}` +
+    `${D.captureAgeDays > 0 ? `, ${D.captureAgeDays} day${D.captureAgeDays === 1 ? '' : 's'} old` : ' (today)'}. ` +
+    `Months with no trade in four years: ${deadList} — ` +
+    `absence, not a small number. Share interval ${pct(D.inseasonCI[0])}–${pct(D.inseasonCI[1])} on ` +
+    `n=${D.totalTrades}, so treat the shape as the finding and the exact percentage as approximate.`;
+})();
+
+/* ---------- rhythm strip ---------- */
+(function rhythm(){
+  const grid = $('#rhythm'), axis = $('#rhythmAxis');
+  const max = Math.max(...D.calendar.map(m => m.trades), 1);
+
+  // the September–December window, drawn as a recessed zone behind the marks
+  const zone = el('div', 'window-zone');
+  zone.style.left = `calc(${(D.openMonth / 12) * 100}% - 4px)`;
+  zone.style.width = `calc(${(4 / 12) * 100}% + 8px)`;
+  grid.appendChild(zone);
+  const zlab = el('div', 'window-lab', 'the window');
+  zlab.style.left = `calc(${(D.openMonth / 12) * 100}% + 2px)`;
+  grid.appendChild(zlab);
+
+  D.calendar.forEach((m, i) => {
+    const cell = el('div', 'mo');
+    const n = el('span', 'mo-n' + (m.trades ? '' : ' zero'), m.trades ? String(m.trades) : '·');
+    cell.appendChild(n);
+    if (m.trades) {
+      const bar = el('div', 'mo-bar');
+      bar.style.height = (m.trades / max * 78) + 'px';
+      bar.style.transitionDelay = (60 + i * 26) + 'ms';
+      cell.appendChild(bar);
+    } else {
+      cell.appendChild(el('div', 'mo-none'));
+    }
+    cell.title = `${m.name}: ${m.trades} trade${m.trades === 1 ? '' : 's'} in four seasons`;
+    grid.appendChild(cell);
+
+    const a = el('span', (i === D.thisMonth ? 'now' : '') + (i >= D.openMonth ? ' open' : ''), m.name);
+    axis.appendChild(a);
+  });
+
+  // today, as a labelled rule — the one thing on this strip that moves daily
+  const frac = (D.thisMonth + new Date(D.today).getDate() / 31) / 12;
+  const line = el('div', 'now-line');
+  line.style.left = `calc(${frac * 100}%)`;
+  grid.appendChild(line);
+  const pill = el('div', 'now-pill', 'today');
+  pill.style.left = `calc(${frac * 100}%)`;
+  grid.appendChild(pill);
+
+  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('entered')));
+})();
+
+/* ---------- your own posture: the reason the sheet is ordered as it is ---------- */
+(function you(){
+  const y = D.you;
+  $('#youHead').textContent = y.appetite >= 0.6 ? 'You are buying picks.' : 'You are buying players.';
+  $('#youSub').innerHTML =
+    `Of everything you have taken back in ${y.trades} career trades, <b>${pct(y.appetite)}</b> was draft ` +
+    `capital. You have sent out ${y.playersOut} players and pulled in ${y.picksIn} picks against ` +
+    `${y.picksOut} spent. That is what a rebuild looks like in the transaction log, and it is why the ` +
+    `sheet below leads with managers who pay in picks.`;
+  $('#youFigs').innerHTML =
+    `<div class="fig"><b>${y.netPicks > 0 ? '+' : ''}${y.netPicks}</b><span>net picks</span></div>` +
+    `<div class="fig"><b>${pct(y.appetite)}</b><span>taken as picks</span></div>` +
+    `<div class="fig"><b>${y.perSeason}</b><span>deals a season</span></div>`;
+})();
+
+/* ---------- the call sheet ---------- */
+const BANDS = [
+  { key: 'pays_picks',  title: 'Pays in picks',
+    note: 'Historically takes players and hands over draft capital — the other side of what you are doing.' },
+  { key: 'wants_picks', title: 'Wants picks too',
+    note: 'Takes capital back at least as often as he gives it. You are bidding against him, not trading with him.' },
+  { key: 'silent',      title: 'Has not traded',
+    note: 'No completed trade inside a year, or none ever. A call here is a call into the void.' },
+];
+const LEAN = { pays_picks: 'worth a call', wants_picks: 'long shot', silent: 'skip' };
+
+// the shared axis: share of receipts taken as picks, 0 → 1, you fixed on it
+const AX = { lo: 0, hi: 1 };
+const xOf = (v) => ((v - AX.lo) / (AX.hi - AX.lo)) * 100;
+
+(function axisKey(){
+  const k = $('#axisKey');
+  k.innerHTML =
+    `<div>manager</div>` +
+    `<div class="track-key">` +
+      `<span class="lo">pays in picks</span>` +
+      `<span class="hi">wants picks</span>` +
+      `<span class="youtick" style="left:${xOf(D.you.appetite)}%">you ${pct(D.you.appetite)} ↓</span>` +
+    `</div>` +
+    `<div style="text-align:right">activity</div>`;
+})();
+
+function posSpan(text){
+  return text.replace(/\((QB|RB|WR|TE)\)/g, (_, p) => `<span class="pos ${p}">${p}</span>`);
+}
+
+function rowFor(p){
+  const frag = document.createDocumentFragment();
+
+  const btn = el('button', 'row');
+  btn.type = 'button';
+  btn.setAttribute('aria-expanded', 'false');
+
+  const cold = p.lastTradeDays === null || p.lastTradeDays > 120;
+  btn.appendChild(el('div', 'who',
+    `<span class="name">${p.team}</span><span class="lean">${LEAN[p.band]}</span>` +
+    `<span class="sub">${p.joined > 2023 ? 'joined ' + p.joined : 'since 2023'}` +
+      `${p.former.length ? ' · was ' + p.former.join(', ') : ''}` +
+      `${p.withYou ? ' · ' + p.withYou + ' deal' + (p.withYou === 1 ? '' : 's') + ' with you' : ' · never dealt with you'}` +
+    `</span>`));
+
+  const track = el('div', 'track');
+  /* Roles are DECLARED, not left to be guessed from geometry. The rail and the
+     reference line are the axis this mark is drawn on; a checker measuring the
+     three together reads one mixed population and issues a confident wrong
+     verdict about "the encoding" — which is exactly what happened on the first
+     gate run of this page. */
+  const rail = el('div', 'track-rail'); rail.setAttribute('data-sk-role', 'chrome');
+  rail.setAttribute('aria-hidden', 'true'); track.appendChild(rail);
+  const yt = el('div', 'track-you'); yt.style.left = xOf(D.you.appetite) + '%';
+  yt.setAttribute('data-sk-role', 'chrome'); yt.setAttribute('aria-hidden', 'true');
+  track.appendChild(yt);
+  if (p.appetite !== null) {
+    const mk = el('div', 'track-mark' + (p.thin ? ' thin' : ''));
+    mk.setAttribute('data-sk-role', 'data');
+    mk.setAttribute('data-encodes', 'position');
+    mk.style.left = xOf(p.appetite) + '%';
+    track.appendChild(mk);
+    const v = el('div', 'track-val', pct(p.appetite) + (p.thin ? ' · n=' + p.trades : ''));
+    if (p.appetite > 0.62) { v.style.right = (100 - xOf(p.appetite)) + '%'; v.style.marginRight = '12px'; }
+    else { v.style.left = xOf(p.appetite) + '%'; v.style.marginLeft = '12px'; }
+    track.appendChild(v);
+  } else {
+    track.appendChild(el('div', 'track-val', 'no trades to read'));
+  }
+  btn.appendChild(track);
+
+  btn.appendChild(el('div', 'stats',
+    `<div><b>${p.perSeason ?? '—'}</b><span>a season</span></div>` +
+    `<div class="${cold ? 'cold' : ''}"><b>${p.lastTradeDays === null ? 'never' : p.lastTradeDays + 'd'}</b><span>since a deal</span></div>`));
+
+  frag.appendChild(btn);
+
+  /* --- the expansion --- */
+  const det = el('div', 'detail');
+  const inner = el('div', 'detail-inner');
+
+  const appDisagrees = p.appRank !== null &&
+    ((p.band === 'silent' && p.appRank <= 5) || (p.band === 'pays_picks' && p.appRank >= 9));
+
+  inner.appendChild(el('p', 'read', readFor(p, appDisagrees)));
+
+  const f = el('div', 'factors');
+  f.appendChild(el('div', 'factor',
+    `<span class="k">does he deal</span><span class="v">${p.trades} in ${p.seasons} season${p.seasons === 1 ? '' : 's'} ` +
+    `<em>· ${p.perSeason ?? '—'} a season</em></span>`));
+  f.appendChild(el('div', 'factor',
+    `<span class="k">what he pays in</span><span class="v">${p.appetite === null ? 'unknown' : pct(p.appetite) + ' of receipts are picks'} ` +
+    `<em>· ${p.picksIn} picks in, ${p.picksOut} out (net ${p.netPicks > 0 ? '+' : ''}${p.netPicks})</em></span>`));
+  f.appendChild(el('div', 'factor',
+    `<span class="k">when he deals</span><span class="v">${p.inSeasonShare === null ? 'unknown' : pct(p.inSeasonShare) + ' in season'} ` +
+    `<em>· last ${p.lastTrade ? fmtDate(p.lastTrade) : 'never'}</em></span>`));
+  f.appendChild(el('div', 'factor',
+    `<span class="k">the app ranks him</span><span class="v">#${p.appRank ?? '—'} of 11 ` +
+    `<em>· ${p.appPosture ? p.appPosture.toLowerCase() : 'no posture'}${appDisagrees ? ' · disagrees with the record' : ''}</em></span>`));
+  inner.appendChild(f);
+
+  if (p.recent.length) {
+    const d = el('div', 'deals');
+    d.appendChild(el('p', 'dh', 'his last ' + p.recent.length + ' deal' + (p.recent.length === 1 ? '' : 's')));
+    p.recent.forEach(r => d.appendChild(el('div', 'deal',
+      `<span class="d">${fmtDate(r.date)}</span><span>${posSpan(r.summary)}</span>`)));
+    inner.appendChild(d);
+  }
+
+  det.appendChild(inner);
+  frag.appendChild(det);
+
+  btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    det.style.height = open ? '0px' : inner.getBoundingClientRect().height + 'px';
+  });
+
+  return { frag, btn, det, inner };
+}
+
+/* The read is ASSEMBLED FROM THE FACTORS, never asserted over them. David's bar,
+   2026-07-23: lean heavily on the decision data, then a soft earned tag — never a
+   prescription. Every clause below is a measured value, and the sentence changes
+   only because the numbers do. */
+function readFor(p, appDisagrees){
+  const bits = [];
+  if (p.band === 'silent') {
+    bits.push(p.trades === 0
+      ? `<b>${p.team} has never completed a trade in this league.</b>`
+      : `<b>${p.team} has made ${p.trades} trade${p.trades === 1 ? '' : 's'} in ${p.seasons} seasons, the last on ${fmtDate(p.lastTrade)} — ${p.lastTradeDays} days ago.</b>`);
+    bits.push(`There is no trading history here to read a habit from, so nothing about this manager predicts a deal.`);
+  } else if (p.band === 'pays_picks') {
+    bits.push(`<b>${p.team} takes players and pays in picks</b> — ${pct(p.appetite)} of what he has received back is draft capital, against your ${pct(D.you.appetite)}.`);
+    bits.push(`He has dealt ${p.perSeason} times a season and moved last ${p.lastTradeDays} days ago.`);
+    if (p.withYou) bits.push(`You have already done ${p.withYou} deal${p.withYou === 1 ? '' : 's'} with him, so the line is open.`);
+    else bits.push(`You have never traded with him in four seasons, which is either an opening or a reason.`);
+  } else {
+    bits.push(`<b>${p.team} collects picks too</b> — ${pct(p.appetite)} of his receipts, close to your ${pct(D.you.appetite)}.`);
+    bits.push(`On capital you are shopping the same shelf; a deal here has to be about players or need, not picks.`);
+  }
+  if (p.thin) bits.push(`Read all of this loosely: it rests on ${p.trades} trade${p.trades === 1 ? '' : 's'}.`);
+  if (appDisagrees) bits.push(`<b>The app ranks him #${p.appRank} of 11 as a trade partner, which the transaction record does not support.</b>`);
+  return bits.join(' ');
+}
+
+(function sheet(){
+  const host = $('#bands');
+  BANDS.forEach(b => {
+    const inBand = D.partners.filter(p => p.band === b.key);
+    if (!inBand.length) return;
+    const sec = el('section', 'band');
+    sec.appendChild(el('div', 'band-head',
+      `<h3>${b.title}</h3><span>${inBand.length} of ${D.partners.length} · ${b.note}</span>`));
+    inBand.forEach(p => sec.appendChild(rowFor(p).frag));
+    host.appendChild(sec);
+  });
+})();
+
+/* ---------- what this cannot tell you ---------- */
+(function foot(){
+  $('#foot').innerHTML =
+    `<p><b>Read this as evidence, not advice.</b> Every figure here is the completed-transaction record ` +
+    `for this league across four seasons — ${D.totalTrades} trades — pulled from the same free Sleeper API ` +
+    `the product already calls. It says what each manager has DONE. It cannot say what he wants now.</p>` +
+    `<p><b>What it does not include.</b> No player valuations, ours or the market's, enter this page: the ` +
+    `juxtaposition here is the app's own trade-partner ranking against the transaction record, and where ` +
+    `the two disagree it is named on the row. Rosters change; a manager who paid in picks for four years ` +
+    `may be done doing it.</p>` +
+    `<p><b>Small numbers.</b> ${D.totalTrades} trades across 11 counterparties is roughly ${(D.totalTrades / 11).toFixed(1)} ` +
+    `each. Marks drawn from fewer than four deals are hatched and carry their n. The month shares carry ` +
+    `Wilson 95% intervals; the shape is the finding, not the decimal.</p>`;
+})();
+</script>
+</body>
+</html>

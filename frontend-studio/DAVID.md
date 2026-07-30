@@ -1794,3 +1794,52 @@ earlier one, mark the old one superseded and link them.
   did not: "this was not installed" was true of **Claude Code's registry**, not of the machine, where
   the same package had been running in another client's lane for three days. **Verify the inventory you
   are about to assert, including the empty one — an empty answer is still a claim.**
+
+- **2026-07-29 (late) — "you have the data analysis that could be a valuable foundation for this page but
+  you are really missing the mark when it comes to the UI/UX."** The data stands; the surface does not.
+  **Studio's own diagnosis, conceded without defence:** two days went into the DRAWING (density gates,
+  collision maths, target sizes) and none into the FORM or the QUESTION. That is the 008 failure
+  repeating — *the craft improved every version and the outcome did not* — and it is now the second
+  thread where polishing a chart substituted for understanding what David would do with it.
+  **The four misses, each against a bar already in this file:**
+  1. **No thesis.** Twelve lanes of dots over four years is a *history*; the reader derives the
+     implication. The standing bar is that a surface renders a verdict about his situation.
+  2. **No juxtaposition at all** — not one figure on the page is ours-versus-the-market, on a surface
+     built after David said twice that a market-only panel does not leave this lane.
+  3. **It answers the analyst's question, not the manager's.** "How does my league trade?" is read once.
+     "Who do I call, and is now even the time?" is Tuesday morning.
+  4. **It reads as a terminal** — already said once; a colour pass was made and then largely reconciled
+     away to match the app's flat reality, so the net drifted back.
+  **The reframe David reacted to with "not a bad idea" — a WEAK GREEN LIGHT ON THE QUESTION ONLY,
+  nothing approved, nothing built at the time of writing:** league activity is not the subject of a
+  page, it is the **evidence inside one**. The page becomes **who to call, ranked, with the case for
+  each**, in the evidence-card vocabulary David already confirmed ("calls worth weighing looks solid"),
+  plus a timing verdict (this league has never traded in July or August — so the honest answer to
+  "should I be working the phones" is no, with the date that changes it).
+  **Where the juxtaposition comes from on THIS surface, since it carries no player valuations:** the
+  app's own trade-partner ranking versus what the transaction record says — it ranks a manager with
+  zero transactions this year and one trade in four seasons at **#4**, and the league's most active
+  trader **last**. Ours-vs-reality is the comparison, and it is measured.
+  **How to apply:** the form is the deliverable, not the polish. Validate the form on ONE card at full
+  craft rather than a whole page at low craft, and never let a gate score stand in for a reason to build.
+  **013 built the same evening, and gating it found two more defects of the day's family.** (1) C6
+  normalised mark positions against the repeating UNIT rather than the box the mark is positioned in —
+  on a row holding a 300px track inside 1032px it understated occupancy **3.4x** and convicted the
+  design for a denominator error (8.7% → **30.0%**, passing; 012 unchanged, specimens 12/12). (2) **An
+  honest chrome declaration starved the unit detector** — declaring the rail as chrome left one data
+  mark per row, under the "≥2 marks per unit" threshold, so the gate found no unit and printed **"0
+  fail" by seeing less.** Studio refused the clean result and re-measured with the unit named. **The
+  open instrument item: a summary line that counts only fails lets emptiness read as success.**
+
+- **2026-07-29 (late) — 013 PARKED by David: "interesting - not bad - not awesome. lets park this for
+  now."** Not a rejection and **not an approval**. The reframe cleared the bar 012 failed — it carries a
+  thesis, it groups by a fact rather than a score, it states its own limits — and it still did not land.
+  **Record it as lukewarm and do not read a diagnosis into it that he did not give.** No further
+  iteration was requested and none is authorised; 013 stops here with the write-up and prototype on disk.
+  **The pattern Studio should own, stated without him having to say it:** two surfaces in a row have
+  landed at "not awesome" while every measurable check passed. Defensible is not compelling. The gap is
+  **taste and craft**, not rigour — which is the same thing his earlier signals pointed at ("have you
+  been working on your craft?", "colours and better visuals and animations", "you're a MASTER FRONT END
+  designer"). More measurement will not close it. **How to apply: the next move is the craft strand —
+  outward at the design world, not inward at this product's internals — and it is Studio's call to make,
+  not a question to put to David.**

@@ -522,7 +522,13 @@ const measure = () => page.evaluate(({ UNIT_SEL, T }) => {
     // offset of each mark's centre within its own unit, normalised 0..1, per axis
     const offsBy = { x: [], y: [] };
     for (const el of dominant.els) {
-      const u = unitEls.find((x) => x.contains(el)) || el.parentElement;
+      /* Normalise against the box the mark is POSITIONED in, falling back to the
+       * repeating unit. Normalising against the unit makes a mark inside a small
+       * plot look like it barely moves across a big row, which understates the
+       * occupancy of every inset chart — and understated occupancy reads as "the
+       * reader cannot discriminate these values" when the real cause is the
+       * measurement. */
+      const u = el.offsetParent || unitEls.find((x) => x.contains(el)) || el.parentElement;
       if (!u) continue;
       const ur = u.getBoundingClientRect(), r = el.getBoundingClientRect();
       if (ur.width > 0) offsBy.x.push(Math.max(0, Math.min(1, (r.x + r.width / 2 - ur.x) / ur.width)));
@@ -548,7 +554,23 @@ const measure = () => page.evaluate(({ UNIT_SEL, T }) => {
     const series = (channel === 'position' || channel === 'constant') ? offs : lens;
     // the axis the REPORTED channel runs along — position and length can differ
     const horiz = (channel === 'position' || channel === 'constant') ? posHoriz : lenHoriz;
-    const spanOf = () => med(unitEls.map((u) => { const r = u.getBoundingClientRect(); return horiz ? r.width : r.height; })) || 1;
+    /* For a POSITION encoding the available span is the box the mark is positioned
+     * inside — its offsetParent — not the repeating unit that happens to contain
+     * it. Using the unit was right on 012 only by accident, because there the unit
+     * WAS the plot; on a row holding a 300px track inside 1032px it overstates the
+     * axis 3.4x and reports a reader-discrimination failure that is really a
+     * denominator error. */
+    const plotSpan = () => {
+      const spans = dominant.els.map((e) => {
+        const host = e.offsetParent || e.parentElement;
+        if (!host) return null;
+        const r = host.getBoundingClientRect();
+        return horiz ? r.width : r.height;
+      }).filter((v) => v && v > 0);
+      return spans.length ? med(spans) : null;
+    };
+    const spanOf = () => plotSpan()
+      || med(unitEls.map((u) => { const r = u.getBoundingClientRect(); return horiz ? r.width : r.height; })) || 1;
     const avail = (channel === 'position' || channel === 'constant') ? 1 : spanOf();
     const s = [...series].sort((a, b) => a - b);
     const q = (p) => s[Math.min(s.length - 1, Math.floor(p * s.length))];

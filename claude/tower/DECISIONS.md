@@ -703,3 +703,24 @@ CHECK     Tower grepped the review packet for lean leakage BEFORE approving. It 
           change's own authority line ('retire the databricks check'); the mentions of push and
           pull_request are CI trigger names, not the conditional commit word. No leakage.
 AUTHORITY DELEGATED-4.
+
+## 2026-07-29 22:44 — CLOSEOUT: all commits verified ON REMOTE, tree clean
+VERIFIED  git log --oneline origin/main..HEAD EMPTY; git status --porcelain EMPTY; origin/main=ade7d61.
+          Seven commits landed today. Tower caught a FALSE 'everything is pushed' claim from the
+          implementing lane by checking per-commit against the remote after a fetch.
+AUTHORITY DAVID-WORD for each commit and each push. Tower approved no push dialog at any point.
+
+## 2026-07-29 22:44 — NEW STANDING RULE: no push-state commits; regenerate instead
+GRANT     David's word 22:41: 'stop that treadmill but dont let it affect fresh sessions - they
+          should be aware what gets pushed and what does not.'
+RULE      Never commit a record of push state — it is false the instant the push happens. The
+          handoff carries commit IDENTITY only; push state is marked regenerate-do-not-trust with
+          the three git commands inline. Relayed to the crew as a rule, not a task.
+AUTHORITY DAVID-WORD (2026-07-29 22:41).
+
+## 2026-07-29 22:43 — STUDIO/CREW CONVERGENCE recorded as INDEPENDENT, not corroboration
+FINDING   Studio measured that the app ranks a manager #4 of 11 as a trade partner who has made ONE
+          trade in four seasons. The crew independently found the mechanism: activity component
+          hardcoded 0.0. NEITHER lane saw the other's work; Tower carried no figures between them.
+          This is genuine independent convergence and is recorded as such.
+AUTHORITY TRAFFIC (observation only; nothing authorised off it).
