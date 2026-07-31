@@ -7,6 +7,38 @@ PRODUCT_BRIEFING.md. When David gives feedback — in this pane or relayed — d
 entry here (the rule, not the transcript). Never delete an entry; if a later ruling supersedes an
 earlier one, mark the old one superseded and link them.
 
+## HOW TO READ THIS FILE — two tiers, and most of it is the lower one
+
+**Set by David, 2026-07-30, in his own words:** *"my preferences should definitely be retained and
+considered - but unless i explicitly tell you something should be done as a rule or hardened or any
+kind of permanent go forward terms - i want u to be an ELITE TRADESMAN at YOUR CRAFT - be creative -
+use your labs and research the web to sharpen your toolkit and techniques - you are a UI/UX
+visionary."*
+
+Everything below is one of two things, and **the default is the first**:
+
+1. **A PREFERENCE, dated, given about a specific surface.** Real evidence about what this user
+   likes and why. **Input to a design judgement, never a substitute for one.** It does not
+   generalise to every surface unless the reasoning does, and *"David's rule says so"* is not an
+   argument for a design decision. If a preference and the work disagree, the work has to be
+   argued on its merits — his taste is evidence, not a checklist.
+2. **A HARD RULE**, which exists only where he explicitly said it is permanent, standing, or a
+   go-forward term — or where it is a factual constraint (the briefing's §4, data that does not
+   exist). Very few entries qualify. They are marked **HARD RULE** at their head.
+
+**Why this note exists, and it is a real cost that was paid.** The 2026-07-15 *"filters and sort,
+not tabs"* entry was feedback about one surface. Studio recorded it with a generalising *"how to
+apply"* and thereafter treated it as law — on 2026-07-30 it described 014 as committing a *"doctrine
+violation"* for having no sort, and built a sort control largely to satisfy it. David then asked
+*"what am i supposed to learn with it"* and the honest answer was **nothing**: the control only
+re-arranged information already visible on every row. **A hardened preference produced a feature
+that could not be defended on merit.** That is what this tier system is here to stop.
+
+**The failure mode to watch in every future entry:** Studio writes down a reaction, appends a
+"how to apply" that is broader than what was said, and a later session inherits the imperative
+without the context. **When quoting an entry, quote what he actually said and the surface he said
+it about — never the generalisation Studio wrote around it.**
+
 ## Standing directives
 
 - **2026-07-22 — THE GOVERNING METHOD (David: "I love this — think like this every session").**
@@ -178,10 +210,20 @@ earlier one, mark the old one superseded and link them.
   (rebuild-vs-contend priority ladder) left running overnight — synthesize into the question-ladder
   document before the review; module order is not final until it lands.
 
-- **2026-07-15 — Filters and sort, not tabs.** Views are filter + sort states over one queryable
-  list, not separate tabs/widgets. "Available free agents" = an availability filter; "top movers" =
-  a sort by move. **How to apply:** default to a single list with filter chips and sortable columns
-  wherever multiple "views" of the same population are wanted.
+- **2026-07-15 — Filters and sort, not tabs. PREFERENCE, about one surface — DOWNGRADED 2026-07-30
+  by David.** What he actually said, reviewing a specific screen: views of the same population are
+  better as filter + sort states over one list than as separate tabs or widgets — "available free
+  agents" is an availability filter, "top movers" is a sort by move. **That is good advice about
+  that problem and it remains good advice.**
+  **What Studio wrongly added:** a generalised *"how to apply: default to a single list with filter
+  chips and sortable columns wherever multiple views are wanted"*, which then operated as law for two
+  weeks. David, 2026-07-30: *"i don't recall making it a rule and i certainly don't recall making it
+  a standing rule across all surfaces… sure, lists with filters and sorting are nice — and great for
+  some data — but by no means is it a hard rule."*
+  **How to apply now:** treat it as one strong option for multi-view data, chosen when it is the best
+  answer to the question the surface asks — never as a requirement a surface can violate. **A sort
+  control has to earn its place by what it lets the reader learn**, which is the test the 014 chip
+  row failed the same day.
 
 - **2026-07-15 — Copy the category's structure; our data is the juxtaposition.** Don't invent
   structure where a category convention exists. Build surfaces the way KTC/FantasyCalc/Sleeper
@@ -1968,6 +2010,78 @@ earlier one, mark the old one superseded and link them.
   re-taken.** Corrected in `craft/craft-profile-findings.md` rather than deleted, and the argument
   never rested on that row.
 
+- **2026-07-30 (evening) — REJECTED, and the diagnosis is that STUDIO ITERATES BY ADDITION.**
+  David on the rebuilt 014 top: *"sorry man you've lost me on this one - im not really seeing
+  anything here - not telling me anything -- very long page - the snap from the card on the top to
+  the lower end of the page is like pulling a parachute while skydiving - i feel like i have
+  whiplash."*
+  **Three faults, all Studio's, all introduced the same evening onto a surface he had already
+  reacted warmly to:**
+  1. **A summary statistic is not a finding.** The block led with *"17 of your 23 agree"* — a measure
+     of agreement, which changes nothing he does. The actual content was three names, buried in a
+     footnote sentence underneath. **Lead with the finding; never argue up to it.**
+  2. **Naming six things and then discounting two of them is worse than naming three.** Two of the
+     six splits were 2 and 4 ranks apart, which Studio itself labelled arithmetic — so the block
+     spent its last line explaining away its own contents. **If a caveat retracts an item, the item
+     should not be in the list.**
+  3. **A scroll teleport, on the day the whole session was about motion continuity.** Clicking a
+     name hurled him from the top of a long page into a row far below. Studio spent the evening
+     proving that a cross-fade breaks object constancy, then shipped a jump that does the same thing
+     with the entire viewport. **The irony is the lesson: continuity applies to navigation, not just
+     to marks.**
+  **The pattern that outranks the three faults, and it is the durable one:** Studio added **three**
+  things to 014 in one evening — a sort control, a verdict block, jump targets — and **all three were
+  subtractions waiting to happen.** Each was individually defensible and the accumulation was not.
+  He experiences iteration-by-addition as a page getting longer and less clear. **How to apply: when
+  a surface has already landed, the default move is subtraction. Before adding a region, name what
+  comes out.**
+  **What was done in response:** the block is now ONE sentence naming the three players the market
+  starts weekly and our model does not, with no cards, no statistic and no jump targets. Verified
+  15/15. **Not shown to him again the same night** — he had had three deliveries and said he was
+  lost; another version was the wrong response.
+
+- **2026-07-30 (evening) — REACTED to the motion lab: *"yea thats cool"*. An acknowledgment. Not an
+  approval, and NOT an answer.** The question put to him was whether watching a player travel across a
+  re-sort actually helps him or is fuss he would turn off. He did not answer it, exactly as he did not
+  answer 014's question the same day (*"cool thats fine"*). **Two questions now stand unanswered on the
+  same day, and the correct reading is not that the answer is yes.** Do not re-ask, do not treat the
+  acknowledgment as direction, and do not record the lab as approved.
+  **What was shown:** the app's own unused motion system applied to a re-sort of his twelve receivers,
+  three panels on one scrubber — teleport (shipping) vs cross-fade vs rows travelling — with the
+  cross-fade as the control that measures **opacity 0.000 at the midpoint**, i.e. worse than no
+  animation at all.
+  **The pattern worth noticing across both reactions:** warm, short, and content-free. The reactions
+  that moved the work — *"really missing the mark on the UI/UX"*, *"best work of the day"*, the flat-bar
+  logic correction — were all *specific*. A short warm reaction is closer to "no strong feeling" than to
+  "yes", and the honest response is to keep the question open rather than to bank it as a win.
+
+- **2026-07-30 (evening) — *"what am i supposed to learn with it"*. The single most useful question
+  asked of Studio in days, and it refuted the work it was aimed at.** Asked of the re-order control
+  added to 014. **The honest answer is that the control teaches nothing** — every disagreement is
+  already drawn on every row, so re-sorting rearranges information already on screen. Navigation, not
+  insight.
+  **What the question forced, and this is the part to keep.** Rather than defend the control with
+  words, Studio went to measure whether ordering by disagreement reveals structure. It looked like it
+  did: on his 23 comparable players, our model sat below the market on the expensive ones and above it
+  on the cheap ones (mean market value 2,645 vs 1,542). **Then every check killed it.** A permutation
+  test on the roster gave **p = 0.15**. Re-run on the full **337 shared players** the gradient
+  concentrated entirely in the bottom two deciles — which is exactly where a **rank-boundary artifact**
+  lives, because a player the market ranks near last can only produce a gap in one direction.
+  Controlling for the feasible range and restricting to players away from both ends of each position
+  list, mean disagreement across value thirds is **−2.3 / −0.7 / +0.6 — flat.** No systematic bias.
+  **The durable rules, both of which Studio nearly broke:**
+  1. **A rank difference is boundary-constrained, and any pattern in it near the ends of a list is
+     suspect by construction.** Compute what the boundary alone predicts before reading a gradient as
+     a finding. This is the ratio/normalisation trap in a new costume.
+  2. **"What am I supposed to learn with it" is the test every interaction must pass, and a control
+     that only re-arranges visible information fails it.** A sort is legitimate as *lookup* — doctrine
+     requires it — but it must never be presented as though the interaction were the value. Studio
+     pitched an interaction and had to be asked what it was for.
+  **What it leaves standing, stated as the smaller true thing:** the two boards agree far more than
+  014's design implies, and the disagreements are individual cases rather than a pattern — so
+  ordering by disagreement is a way to find *specific players*, and there is no population-level
+  lesson to extract from it. Recorded rather than buried, because the negative result is the finding.
+
 - **2026-07-29 (evening) — the two verbatim reactions that bracket the craft thread, recorded as said
   rather than as read.**
   **On the depth/hierarchy lab (lab-001):** *"better for sure - but we need colors a color scheme that
@@ -1985,3 +2099,96 @@ earlier one, mark the old one superseded and link them.
   tooling — it was the order of operations** (`CLAUDE.md` items 16–23). Both rejected surfaces reached for
   a form before the question was settled; the colour work enumerated the domain first and did not touch a
   palette until it had.
+
+- **2026-07-30 EVENING (SD-0730E-C) — THE NEGATIVE RESULT: Studio's own opening hypothesis measured
+  and REFUTED, in the pane, an hour after asserting it.** Studio opened the session by telling David
+  in plain words: *"Everything I build is a long scrolling document. Nothing in the category is."*
+  It then built `tools/screenfuls.mjs` and measured. **The claim was false.** 014 — the page David
+  called *"very long"* — is **3.84 screens**; 006, the page he called *"this is awesome"*, is **4.64**;
+  Sofascore is **6.92**; and the site David himself sent as a good example that evening is **10.52**.
+  Two further hypotheses died the same way: **column structure** (006 and 014 are both a single column
+  of repeated rows) and **row distinguishability** (`tools/row-variance.mjs`, validated in both
+  directions on fixtures at 0.00 and 1.07, reads 006 at **0.36** and 014 at **0.34** — statistically
+  the same). **No instrument was tuned until it agreed with Studio.**
+  **What survived, and it is the only thing that separates his reactions:** *could the product be
+  wrong about this sentence?* The live app's front door carries **42 strings of ≥3 words and not one
+  of them could turn out to be wrong** — every one is a label, a description of the surface itself, a
+  disclaimer, a feed status, or a count ("Feed status: ok", "Total players: 27", "Starting lineup
+  value: 97.39"). 006, approved, opens *"Last in the league in what you can start today — top of it in
+  the youth and picks you're building with."* 014, rejected, opens with **a methodology note about
+  rank comparability**, then counts. **How to apply:** before any surface leaves this lane, read its
+  sentences and ask of each whether the product could be wrong about it. A count is a fact he can get
+  from Sleeper; a claim is the model's opinion, which is the only thing here no other product has.
+  **The trap named:** on 2026-07-22 Studio found it had inherited the app's *structure* (a monitoring
+  feed as a front door). Tonight it found it had also inherited the app's **voice**. The product
+  confuses *"we render no verdicts"* with *"we make no claims"* — its doctrine forbids **prescription**
+  (buy/sell/cut), not a falsifiable **description**. *"Worst room in the league, three bodies"*
+  prescribes nothing, and David approved it. Written up at `craft/the-falsifiability-test.md`.
+
+- **2026-07-30 EVENING — DAVID'S REFERENCE: `she-displaced.vercel.app`, *"i thought this app had some
+  cool ways to visualize data"*.** Treated as a lens, not a spec (per 2026-07-15). What it does on
+  **every** figure without exception: a **kicker** naming the category · a **title that names a
+  concept, not a metric** ("The Gender Penalty", never "Gender delta by country") · a **decoder line**
+  (*"Stream thickness = people affected"*) · and **the highlight rule stated out loud** (*"Top 7 movers
+  — gender amplifies risk most"*). **That fourth device Studio has never used: it highlights things
+  and never says why.** It also answers the length complaint properly — 10.5 screens, navigable
+  because it is **chaptered** (seven numbered sections, persistent nav showing which one you are in,
+  background inversion between them). **Not shorter. Positioned.** And its **slope chart** is the form
+  Studio needed: looking at 014's receiver rows earlier the same evening showed every dumbbell
+  connector short and in the same narrow band — **the disagreement does not read across a group**,
+  which answers the question Studio put to David on 2026-07-30 and he never answered. **The answer is
+  no.** A dumbbell gives each player a private track; a slope chart puts both boards on one shared
+  scale and makes disagreement a crossing. Built as `craft/lab-004-the-claim-and-the-crossing.html`.
+
+- **2026-07-30 EVENING — DAVID'S ECOSYSTEM CHALLENGE: *"have u searched the ecosytem for tools to
+  helpful parts to work with our framework? have you looked at github?"* Honest answer: NO, and he was
+  right to ask.** Studio hand-rolls every chart in SVG and every instrument from scratch. What the
+  search actually found, and it cuts both ways:
+  1. **The app has FOUR runtime dependencies** — react, react-dom, zod, and three fonts. **Zero
+     charting library, zero component library, zero animation library.** Its one real chart slot
+     ("Movement history") is a permanent placeholder. So every chart Studio has proposed across eight
+     surfaces would land in a codebase with no way to draw it. **That is a genuine unasked question**,
+     and it is engineering's to decide, not Studio's.
+  2. **The best tool for the job was already in their devDependencies and had, as far as Studio can
+     tell, never been pointed at the running app: `@axe-core/playwright`.** Studio ran it against
+     three live surfaces. **Result went AGAINST Studio's own argument:** essentially clean — a single
+     violation type, `color-contrast` on the `.dg-shell__parked-badge` "(Parked)" nav chip, 3 nodes,
+     repeated across surfaces. No missing labels, no ARIA violations. **Studio was about to argue for
+     an accessible-primitives layer (shadcn/Radix) on the theory that the app had a11y defects; the
+     evidence refuted it and the argument was dropped rather than pressed.** Caveat stated: axe catches
+     a minority of real accessibility problems and cannot see the known unclickable command palette.
+  **How to apply:** check what is already installed before proposing an addition — the strongest
+  version of "search the ecosystem" is searching the repo's own dependency list first.
+
+- **2026-07-30 EVENING — SEVEN STACK LINKS in rapid succession** (Tailwind v4 + shadcn/ui + React
+  Router v7 starter; Vite hidden gems; CSS Modules / Lightning CSS / Stylelint; React 19 + Vite
+  scaffolding, twice; `@vitejs/plugin-react` + React Compiler). **Studio's honest read, given
+  unsoftened: none of it is the lever on why the surfaces are missing, and most of it describes an
+  architecture the app already has** — Vite 8, hand-written CSS, native OKLCH custom properties in a
+  root token file, deliberately minimal dependencies. Several were AI-generated summaries carrying
+  their own "may include mistakes" notice. **The one item with real substance is the React Compiler /
+  plugin question** (the app builds JSX through esbuild with **no `@vitejs/plugin-react` at all`**,
+  per the briefing §3) — which is an **engineering relay**, not a design lane item, and Studio has not
+  verified whether that is deliberate. **Recorded because David spent attention on it, and because the
+  pattern matters: he was circling how Studio's prototypes become real code.** That gap IS real —
+  Studio ships standalone HTML with hand-written CSS into a React codebase, and nothing it has built
+  is directly liftable. Not yet solved, named here so it is not lost.
+
+- **2026-07-30 LATE — CORRECTION FROM DAVID: *"these are just ideas / not rules."*** After eight
+  links in rapid succession (visualization reference, GitHub/ecosystem challenge, six stack posts),
+  Studio evaluated each one and returned a verdict on it — increasingly emphatic that most "were not
+  the lever." **David's correction: he was offering ideas to think with, not proposals to adjudicate.**
+  **The failure is precise and it is a repeat.** The standing entry of 2026-07-15 already says *"David
+  gives framing, not specs… treat his references as lenses; do the design reasoning independently."*
+  Studio **quoted that principle at the top of the session and then did the opposite** — converting
+  loose input into claims requiring rebuttal. It is the mirror image of the same day's other error
+  (hardening a preference into law): both collapse the distance between what David says and what
+  Studio must then defend or enforce. **The tell:** when a reply's shape is *idea → evaluation →
+  verdict*, repeatedly, Studio has stopped thinking and started scoring.
+  **How to apply:** when David sends a reference, a link, or a passing suggestion, the default is to
+  **use it, not rate it** — pull the one transferable thing and put it to work, and stay silent on the
+  rest unless he asks for an assessment or unless acting on it would cost him something real. **Say
+  "this doesn't fit" only when it would otherwise be built.** The evidence this is right is in the same
+  night: the two links Studio *used* rather than judged produced the figure-header pattern, the slope
+  chart, and the finding that the app carries no viz layer while its own accessibility auditor sat
+  installed and unused. The six Studio *rated* produced nothing but a paragraph of rebuttal.

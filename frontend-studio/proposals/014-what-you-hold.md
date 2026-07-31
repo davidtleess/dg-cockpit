@@ -2,7 +2,7 @@
 
 **Status: proposal, built and verified. Nothing shipped, nothing relayed, nothing approved.**
 Prototype: `proposals/014-what-you-hold/prototype.html` · data build: `build.mjs` ·
-verification: `tools/verify014.mjs` (12/12).
+verification: `tools/verify014.mjs` (16/16).
 
 ---
 
@@ -127,6 +127,53 @@ runs**. Position hues pass the palette validator (deutan 8.4 / normal 15.8; the 
    position's span, declared chrome.
 5. **This is one region, not the front door.** It does not answer "where do I stand" or "what should
    I do", and it deliberately renders no buy, sell, hold or cut call.
+
+## Addition, 2026-07-30 evening — the verdict block, and a control built then cut
+
+**Not shown to David at the time of writing.**
+
+### What went in: the roster's verdict
+
+The page drew 23 disagreements and weighted them equally, leaving the reader to work out that most
+are agreements. It now opens on the finding: **our board and the market's land on the same side of
+every line that decides anything — who starts in a given week, who clears replacement level — for
+17 of your 23.** Six split, named and ordered widest first, each one a button that opens that
+player's row below rather than a second list of its own.
+
+**Why a consequence and not a size.** Three definitions of "disagreement" were tested; two were
+thrown away:
+- a **raw rank gap** is not comparable across positions (36 of 140 WRs is not 36 of 45 QBs);
+- a **tier crossing** catches 16 of 23, because tiers are twelve wide and a three-rank gap crosses
+  one — Omar Cooper crosses on a gap of 3;
+- the **percentile-gap distribution is a smooth continuum** with no natural break, so any cut in it
+  would have been invented.
+
+What survives is a consequence: do the boards land on opposite sides of a line that decides
+something? The league's own structure supplies exactly two, and the page already draws both. It
+speaks the domain's units rather than an optimiser's.
+
+**Its limitation is printed on the surface.** Any line separates two ranks that fall either side of
+it however close they are, so every split shows its distance and the block says to read the
+distance, not the fact. The narrowest here is Mac Jones at 2 ranks.
+
+**The finding it exposes:** all three weekly-starter splits run the same way — the market starts him
+and our model does not (Burden, Odunze, Henderson).
+
+### What came out: the re-order control
+
+A five-chip order control was built the same evening and **removed before delivery.** David asked
+what it was supposed to teach him and the honest answer was nothing: every disagreement is already
+drawn on every row, so re-sorting re-arranged information already visible. The verdict block then
+took over the one ordering that carried weight — *where we disagree most* — and did it better, with
+the consequence attached. Two control blocks above the page's thesis was one too many.
+
+Removed with its machinery rather than left as unreachable code. The motion work it was built on is
+not lost: it lives as a craft artifact in `craft/lab-003-motion.html` with the measurement behind it
+in `craft/motion-on-a-resort.md`, and it is ready the day a surface genuinely needs to re-order.
+
+**Verified** `node tools/verify014.mjs` — **16/16**, including that the verdict's counts come from
+the data, that it names exactly the players who split a structural line, that they are ordered
+widest first, and that a shortcut opens the row it names.
 
 ## Open questions
 

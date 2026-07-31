@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab 003 — motion on a re-sort</title>
+<style>
+/* ============================================================================
+   LAB 003 · WHAT MOTION IS FOR ON THIS PRODUCT
+   Twelve real receivers from David's roster (market 2026-07-27, model 2026-07-27),
+   the same twelve 014 is built on.
+
+   THE MEASUREMENT THAT CAME FIRST (tools/sort-displacement.mjs):
+   across 115 row-transitions on the real roster, 76% of rows change position,
+   the median mover travels 2 rows (112px) and the worst travels 10 (560px) —
+   but that is almost entirely the WR group. QB, RB and TE hold 3-5 players and
+   their rows move a single slot. Displacement is a function of GROUP SIZE, and
+   only one of his four groups is big enough for a reader to lose a row in it.
+   That group is the one 014's own thesis is about.
+
+   TOKEN DISCIPLINE. Colour, type, space and radii are the product's own, as 014.
+   The motion values are the APP'S OWN, read from frontend/src/styles/motion.css —
+   a Carbon-derived set the app defines and then uses on exactly one element.
+   Nothing here is invented; the argument is about wiring, not about new tokens.
+   ========================================================================== */
+:root{
+  --bg:oklch(0.16 0.01 250);
+  --surface:oklch(0.2 0.012 250);
+  --raised:oklch(0.24 0.014 250);
+  --border:oklch(0.32 0.012 250);
+  --border-strong:oklch(0.48 0.014 250);
+  --text:oklch(0.92 0.005 250);
+  --muted:oklch(0.68 0.008 250);
+  --focus:oklch(0.72 0.14 255);
+  --model:oklch(0.72 0.11 255);
+  --market:oklch(0.76 0.13 75);
+  --wr:oklch(0.52 0.15 5);
+
+  --f-display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+  --f-sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+  --t-sm:13px; --t-base:15px; --t-lg:18px; --t-display:24px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px;
+
+  /* Verbatim from frontend/src/styles/motion.css. */
+  --dg-duration-fast-01:70ms;
+  --dg-duration-fast-02:110ms;
+  --dg-duration-moderate-01:150ms;
+  --dg-duration-moderate-02:240ms;
+  --dg-duration-slow-01:400ms;
+  --dg-ease-productive-standard:cubic-bezier(0.2,0,0.38,0.9);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-sans);
+  font-size:var(--t-sm);line-height:1.5;font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:40px 28px 96px}
+
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 var(--s3)}
+h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;letter-spacing:-.015em;
+  margin:0 0 var(--s2)}
+.lede{font-size:var(--t-base);color:var(--muted);max-width:70ch;margin:0}
+.lede b{color:var(--text);font-weight:600}
+.provenance{margin-top:var(--s4);padding-top:var(--s3);border-top:1px solid var(--border);
+  display:flex;flex-wrap:wrap;gap:var(--s4);font-family:var(--f-mono);font-size:var(--t-sm);
+  color:var(--muted)}
+.provenance b{color:var(--text);font-weight:500}
+
+/* ---------------------------------------------------------------- controls */
+.controls{margin-top:32px;padding:var(--s3) var(--s4);background:var(--surface);
+  border:1px solid var(--border);border-radius:6px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s4)}
+.ctl{display:flex;align-items:center;gap:var(--s2)}
+.ctl > label{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted)}
+.controls select,.controls button{font:inherit;font-size:var(--t-sm);color:var(--text);
+  background:var(--raised);border:1px solid var(--border-strong);border-radius:4px;
+  padding:6px var(--s2);min-height:28px;cursor:pointer}
+.controls button.go{background:var(--model);border-color:var(--model);
+  color:oklch(0.16 0.01 250);font-weight:600;padding:6px var(--s4)}
+.controls select:focus-visible,.controls button:focus-visible,
+.controls input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.scrub{flex:1 1 260px;display:flex;align-items:center;gap:var(--s2)}
+.scrub input{flex:1;min-width:140px;accent-color:var(--model);height:28px}
+.scrub .pct{font-family:var(--f-mono);font-size:var(--t-sm);color:var(--muted);min-width:52px;
+  text-align:right}
+.hint{width:100%;margin:0;color:var(--muted);font-size:12px}
+.hint b{color:var(--text);font-weight:500}
+
+/* ------------------------------------------------------------------ panels */
+.panels{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:var(--s4)}
+.panel{border:1px solid var(--border);border-radius:6px;background:var(--surface);
+  padding:var(--s3);min-width:0}
+.panel.good{border-color:var(--border-strong)}
+.ptitle{display:flex;align-items:baseline;gap:var(--s2);margin:0 0 2px}
+.ptitle h2{font-family:var(--f-display);font-size:var(--t-base);font-weight:600;margin:0;
+  letter-spacing:-.01em}
+.ptag{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:2px 5px;border-radius:3px;border:1px solid var(--border-strong);color:var(--muted)}
+.panel.good .ptag{color:var(--text);border-color:var(--model)}
+/* One height for all three notes so the three stages start on the same line and the
+   comparison is of the lists, not of where they happen to begin. */
+.pnote{margin:0 0 var(--s3);color:var(--muted);font-size:12px;min-height:76px}
+.pnote b{color:var(--text);font-weight:500}
+
+.stage{position:relative;border-top:1px solid var(--border)}
+/* OPAQUE, and that is a motion decision rather than a paint one. Rows in a 1-D list
+   necessarily pass THROUGH each other on a re-sort. Left transparent they composite,
+   and two names render on top of one another as unreadable mush — caught by looking
+   at a mid-flight screenshot, after every automated check had passed. An opaque row
+   means a crossing resolves as occlusion, which the eye reads as depth and can
+   follow. Occlusion order is declared below, never left to DOM order. */
+.r{position:absolute;left:0;right:0;height:38px;display:grid;
+  grid-template-columns:34px minmax(0,1fr) 96px;align-items:center;gap:var(--s2);
+  padding:0 2px;background:var(--surface);border-bottom:1px solid var(--border);
+  will-change:transform}
+.r .rk{font-family:var(--f-display);font-size:var(--t-base);font-weight:600;color:var(--model);
+  text-align:right;letter-spacing:-.01em}
+.r .nm{font-size:var(--t-sm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r.tracked{background:oklch(0.26 0.02 255);z-index:30}
+.r.tracked .nm{font-weight:600;color:var(--text)}
+/* The tracked row is marked by a rule on its leading edge — a border, not a hue,
+   because every hue on this page already means something. */
+.r.tracked::before{content:"";position:absolute;left:-2px;top:4px;bottom:4px;width:2px;
+  background:var(--focus);border-radius:999px}
+
+/* The dumbbell, compact. Same encoding as 014: blue = our rank, amber = market,
+   the connector between them is the disagreement, #1 at the RIGHT. */
+.tk{position:relative;height:14px}
+.tk .cn{position:absolute;top:6px;height:3px;background:oklch(0.60 0.012 250);border-radius:999px}
+.tk .d{position:absolute;top:1px;width:12px;height:12px;border-radius:999px;margin-left:-6px;
+  border:1.5px solid var(--surface)}
+.tk .d.m{background:var(--model)} .tk .d.k{background:var(--market)}
+
+/* ------------------------------------------------------------------ verdict */
+.verdict{margin-top:32px;padding:var(--s4);border:1px solid var(--border);border-radius:6px;
+  background:var(--surface)}
+.verdict h2,.refusal h2,.table-sec h2{font-family:var(--f-display);font-size:var(--t-lg);
+  font-weight:600;margin:0 0 var(--s2);letter-spacing:-.01em}
+.verdict p,.refusal p,.table-sec p{margin:0 0 var(--s2);max-width:82ch;color:var(--muted)}
+.verdict b,.refusal b,.table-sec b{color:var(--text);font-weight:500}
+.verdict p:last-child,.refusal p:last-child{margin-bottom:0}
+
+/* ----------------------------------------------------------------- refusal */
+.refusal{margin-top:32px;padding:var(--s4);border:1px solid var(--border);border-radius:6px}
+.demo{margin-top:var(--s3);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:var(--s4);align-items:start}
+.demo .cell{background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:var(--s3)}
+.demo h3{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 var(--s2);font-weight:400}
+.demo .cell.bad h3{color:var(--market)}
+.bigtrack{position:relative;height:38px;margin:var(--s3) 0 var(--s2)}
+.bigtrack .cn{position:absolute;top:12px;height:3px;background:oklch(0.60 0.012 250);
+  border-radius:999px}
+.bigtrack .d{position:absolute;top:6px;width:16px;height:16px;border-radius:999px;
+  margin-left:-8px;border:2px solid var(--surface)}
+.bigtrack .d.m{background:var(--model)} .bigtrack .d.k{background:var(--market)}
+.bigtrack .cap{position:absolute;top:26px;font-family:var(--f-mono);font-size:11px;
+  transform:translateX(-50%);white-space:nowrap;color:var(--model)}
+.readout{font-family:var(--f-mono);font-size:var(--t-sm);color:var(--muted);margin:0}
+.readout b{color:var(--text)}
+.readout .warn{color:var(--market);font-weight:600}
+.demo .cell.bad{border-color:var(--market)}
+
+/* ------------------------------------------------------------------- table */
+.table-sec{margin-top:32px}
+table{border-collapse:collapse;width:100%;max-width:620px;font-family:var(--f-mono);
+  font-size:var(--t-sm)}
+th,td{text-align:right;padding:5px var(--s3);border-bottom:1px solid var(--border)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:400;font-size:11px;letter-spacing:.06em;text-transform:uppercase}
+tbody tr.hi td{color:var(--text)}
+td.dim{color:var(--muted)}
+
+.foot{margin-top:40px;padding-top:var(--s4);border-top:1px solid var(--border);color:var(--muted);
+  max-width:84ch}
+.foot p{margin:0 0 var(--s2)}
+.foot code{font-family:var(--f-mono);font-size:12px;color:var(--text)}
+
+@media (max-width:1000px){
+  .panels{grid-template-columns:1fr}
+  .demo{grid-template-columns:1fr}
+}
+/* The reduced-motion path is handled in JS, because the substitute is not "less
+   travel" — it is a DIFFERENT DEVICE that carries the same information. See the
+   note in the verdict block. */
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Studio · craft lab 003</p>
+  <h1>What motion is for on this product</h1>
+  <p class="lede">A dynasty roster is a <b>ranked list you re-order to ask a different question</b> —
+  by our rank, by the market's, by who we disagree with most. On this product that re-order happens
+  in one frame: nothing moves, the list is simply different. These are the same twelve receivers
+  from your roster, re-sorted three ways. <b>Pick a player to follow, then run it — or drag the
+  scrubber and watch it frame by frame.</b></p>
+
+  <div class="provenance">
+    <span>market <b>2026-07-27</b></span>
+    <span>model <b>2026-07-27</b></span>
+    <span>pool <b>140 WR</b>, 337 shared players</span>
+    <span>held <b>12</b></span>
+  </div>
+
+  <div class="controls">
+    <div class="ctl">
+      <label for="sort">Sort by</label>
+      <select id="sort">
+        <option value="dr">our rank</option>
+        <option value="mr">market rank</option>
+        <option value="gap" selected>disagreement</option>
+        <option value="t30">30-day trend</option>
+        <option value="a">age</option>
+        <option value="v">market value</option>
+      </select>
+    </div>
+    <div class="ctl">
+      <label for="track">Follow</label>
+      <select id="track"></select>
+    </div>
+    <div class="ctl">
+      <label for="mode">Panel C timing</label>
+      <select id="mode">
+        <option value="unified" selected>one duration, from the longest move</option>
+        <option value="perrow">per row, from its own distance</option>
+      </select>
+    </div>
+    <button class="go" id="go" type="button">Re-sort</button>
+    <div class="scrub">
+      <label for="p" style="font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;
+        text-transform:uppercase;color:var(--muted)">Scrub</label>
+      <input id="p" type="range" min="0" max="1000" value="1000" step="1"
+        aria-label="Transition progress">
+      <span class="pct" id="pct">done</span>
+    </div>
+    <p class="hint" id="hint"></p>
+  </div>
+
+  <div class="panels">
+    <section class="panel" aria-labelledby="h-a">
+      <div class="ptitle"><h2 id="h-a">A · Teleport</h2><span class="ptag">shipping today</span></div>
+      <p class="pnote">The list re-renders in its new order. Nothing travels, so nothing connects the
+      old position to the new one. <b>The reader re-finds his player by reading names.</b></p>
+      <div class="stage" id="stage-a"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="h-b">
+      <div class="ptitle"><h2 id="h-b">B · Cross-fade</h2><span class="ptag">the shortcut</span></div>
+      <p class="pnote">Fade out, re-order, fade back in. It has animation and it costs the same time
+      — but <b>at the midpoint every player is gone</b>, so there is no frame in which the reader can
+      follow anyone.</p>
+      <div class="stage" id="stage-b"></div>
+    </section>
+
+    <section class="panel good" aria-labelledby="h-c">
+      <div class="ptitle"><h2 id="h-c">C · Rows travel</h2><span class="ptag">proposed</span></div>
+      <p class="pnote">Each row moves from where it was to where it belongs. <b>The player is on
+      screen in every frame</b>, so he can be followed without being read. Duration comes from the
+      app's own ladder, chosen by distance.</p>
+      <div class="stage good" id="stage-c"></div>
+    </section>
+  </div>
+
+  <section class="verdict">
+    <h2>What this is claiming, and what it is not</h2>
+    <p><b>The claim is object constancy, not polish.</b> Heer &amp; Robertson (InfoVis 2007) tested
+    animated transitions between statistical graphics and found subjects estimated changes more
+    accurately with animation than without — the mechanism being that a mark which travels can be
+    tracked, while one that is re-drawn must be re-identified. Panel B is the control that matters:
+    it is animated, it is smooth, it takes exactly as long as C, and it is <b>worse than A</b>,
+    because a fade breaks the very continuity the animation was supposed to supply. Motion is not
+    the ingredient. Continuity is.</p>
+    <p><b>Where it does not apply, on this roster, today.</b> Your QB, RB and TE groups hold three to
+    five players and a re-sort moves a row a single slot. At that distance adjacency does the tracking
+    and the animation is decoration — which is why duration is bound to travel rather than fixed: a
+    one-slot move resolves in 110ms and reads as instant, while the twelve-deep receiver group gets
+    the full 400ms it needs. One rule; the data decides where each transition lands on it.</p>
+    <p><b>The alternative that was tested and rejected</b> is the <em>per row, from its own distance</em>
+    option in the control bar. It gives every row the same velocity, which is more physically
+    truthful, and it looks worse: rows arrive at different moments and the list appears to settle
+    in pieces rather than to reconfigure as one object. Try it — the cost is real and visible, and
+    the unified duration is the trade being accepted.</p>
+    <p><b>The cost this does carry, stated plainly.</b> Scrub panel C to the midpoint of a full
+    reshuffle and it is busy: nine rows crossing at once, passing through each other, resolving by
+    occlusion. <em>The whole list is not readable mid-flight and this page does not claim it is.</em>
+    What stays readable is the one row you are following, which holds its highlight and its place in
+    front. That is the whole benefit — not a prettier list, but one player who never has to be
+    re-found — and it is worth having only because re-finding him is what panel A costs you every
+    time.</p>
+    <p><b>Reduced motion is not "the same thing, faster."</b> Travel is the vestibular trigger, so
+    the substitute cannot be a shorter travel — and it must not be a fade, which is panel B. Switch
+    your system to reduce-motion and this page swaps to the honest substitute: rows are placed
+    instantly, and every row that moved carries a one-off marker of how far and in which direction,
+    so the information the motion was carrying — <em>which things changed places, and by how
+    much</em> — survives the removal of the movement.</p>
+  </section>
+
+  <section class="refusal">
+    <h2>The refusal — what must never animate, on any surface</h2>
+    <p><b>A row's position on screen is ordering. A mark's position inside its track is a value.</b>
+    Moving the first is navigation; tweening the second invents data. This is the same boundary the
+    app's own motion file already states — <em>every intermediate frame a valid data graphic</em> —
+    and it is the one that decides whether motion on this product is craft or a defect.</p>
+    <p>Rome Odunze sits at <b>our 41</b> and the <b>market's 24</b>. Below, the same value change is
+    drawn twice. Drag the scrubber above to move both.</p>
+    <div class="demo">
+      <div class="cell">
+        <h3>Allowed — the row carries the mark as a passenger</h3>
+        <div class="bigtrack" id="ok-track"></div>
+        <p class="readout" id="ok-read"></p>
+      </div>
+      <div class="cell bad">
+        <h3>Refused — the mark tweens its own value</h3>
+        <div class="bigtrack" id="bad-track"></div>
+        <p class="readout" id="bad-read"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="table-sec">
+    <h2>The measurement this was built from</h2>
+    <p>Row travel on the real roster, from the default order, across every sort the surface offers.
+    Reproduce with <code style="font-family:var(--f-mono)">node tools/sort-displacement.mjs --row-px 56</code>.
+    Pixel figures here are at <b>014's shipping row height, 56px</b>; the panels above run compact
+    38px rows to fit three lists side by side, so their travel reads shorter for the same number of
+    rows. <b>The row count is the comparable quantity</b>, not the pixels.</p>
+    <table>
+      <caption class="visually-hidden" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+        Row displacement by position group</caption>
+      <thead><tr><th scope="col">group</th><th scope="col">rows</th><th scope="col">median move</th>
+        <th scope="col">worst move</th><th scope="col">worst travel</th></tr></thead>
+      <tbody>
+        <tr><td>QB</td><td class="dim">5</td><td class="dim">1</td><td class="dim">3</td><td class="dim">168px</td></tr>
+        <tr><td>RB</td><td class="dim">3</td><td class="dim">1</td><td class="dim">2</td><td class="dim">112px</td></tr>
+        <tr class="hi"><td>WR</td><td>12</td><td>2.5 – 6</td><td>10</td><td>560px</td></tr>
+        <tr><td>TE</td><td class="dim">3</td><td class="dim">1</td><td class="dim">2</td><td class="dim">112px</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="foot">
+    <p><b>Every motion value on this page is the product's own.</b> Durations and curves are read
+    from <code>frontend/src/styles/motion.css</code>, a Carbon-derived set the app defines — with a
+    class named <code>.dg-motion-row-settle</code>, commented <em>"row sort/filter settle"</em>, that
+    is referenced nowhere in the frontend. Five of its six classes are. Nothing here asks for a new
+    token.</p>
+    <p><b>Honest limits.</b> The displacement figures are one roster on one day; a deeper WR group or
+    a shallower one moves the numbers. The 47% of row-transitions clearing the two-row bar is close
+    enough to the 40% threshold that the pooled figure alone would not carry this — what carries it
+    is that the movement concentrates entirely in the one group large enough to lose a row in.
+    And no user study was run here: the panels demonstrate the <em>mechanism</em> Heer &amp; Robertson
+    measured, they do not re-measure the benefit.</p>
+  </div>
+</div>
+
+<script>
+const P = [{"n":"Parker Washington","a":24.4,"v":2026,"dr":29,"mr":37,"dt":"WR3","mt":"WR4","t30":-134,"gap":8},{"n":"Omar Cooper","a":22.6,"v":2012,"dr":35,"mr":38,"dt":"WR3","mt":"WR4","t30":-355,"gap":3},{"n":"Rome Odunze","a":24.2,"v":3273,"dr":41,"mr":24,"dt":"WR4","mt":"WR2","t30":-135,"gap":-17},{"n":"Luther Burden","a":22.6,"v":3602,"dr":53,"mr":17,"dt":"WR5","mt":"WR2","t30":3,"gap":-36},{"n":"Chris Bell","a":22.2,"v":1568,"dr":55,"mr":51,"dt":"WR5","mt":"WR5","t30":16,"gap":-4},{"n":"Elic Ayomanor","a":23.2,"v":865,"dr":70,"mr":83,"dt":"WR6","mt":"WR7","t30":32,"gap":13},{"n":"Chimere Dike","a":24.6,"v":927,"dr":73,"mr":80,"dt":"WR7","mt":"WR7","t30":-11,"gap":7},{"n":"Pat Bryant","a":23.6,"v":1041,"dr":86,"mr":78,"dt":"WR8","mt":"WR7","t30":-6,"gap":-8},{"n":"Xavier Legette","a":25.5,"v":447,"dr":88,"mr":98,"dt":"WR8","mt":"WR9","t30":-49,"gap":10},{"n":"Tre' Harris","a":24.4,"v":1211,"dr":90,"mr":63,"dt":"WR8","mt":"WR6","t30":-87,"gap":-27},{"n":"Adonai Mitchell","a":23.8,"v":1159,"dr":97,"mr":66,"dt":"WR9","mt":"WR6","t30":-56,"gap":-31},{"n":"Kyle Williams","a":23.7,"v":760,"dr":104,"mr":87,"dt":"WR9","mt":"WR8","t30":-62,"gap":-17}];
+
+const POOL = 140, ROW_H = 38;
+
+/* Sort keys. Every one ascends "best first" so #1 is always the top row. */
+const KEY = {
+  dr:  p => p.dr,
+  mr:  p => p.mr,
+  gap: p => -Math.abs(p.gap),
+  t30: p => -p.t30,
+  a:   p => p.a,
+  v:   p => -p.v,
+};
+
+/* The app's own duration ladder, snapped rather than interpolated: a value not on
+   the ladder is a value nobody chose. Bound to distance per Material's stated rule
+   that larger movement takes longer. */
+function ladder(rows){
+  if (rows <= 1) return 110;   // fast-02   — reads as instant
+  if (rows <= 3) return 150;   // moderate-01
+  if (rows <= 7) return 240;   // moderate-02
+  return 400;                  // slow-01   — the full-group reshuffle
+}
+
+/* cubic-bezier(0.2, 0, 0.38, 0.9) — Carbon productive-standard, the app's token.
+   Newton-Raphson on x, then evaluate y. */
+function bezier(x1,y1,x2,y2){
+  const A=(a,b)=>1-3*b+3*a, B=(a,b)=>3*b-6*a, C=a=>3*a;
+  const cx=t=>((A(x1,x2)*t+B(x1,x2))*t+C(x1))*t;
+  const cy=t=>((A(y1,y2)*t+B(y1,y2))*t+C(y1))*t;
+  const dx=t=>3*A(x1,x2)*t*t+2*B(x1,x2)*t+C(x1);
+  return x=>{
+    if(x<=0)return 0; if(x>=1)return 1;
+    let t=x;
+    for(let i=0;i<8;i++){const e=cx(t)-x; if(Math.abs(e)<1e-6)break;
+      const d=dx(t); if(Math.abs(d)<1e-6)break; t-=e/d;}
+    return cy(t);
+  };
+}
+const EASE = bezier(0.2,0,0.38,0.9);
+
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+const el = {
+  sort: document.getElementById('sort'),
+  track: document.getElementById('track'),
+  mode: document.getElementById('mode'),
+  go: document.getElementById('go'),
+  p: document.getElementById('p'),
+  pct: document.getElementById('pct'),
+  hint: document.getElementById('hint'),
+};
+
+P.forEach((p,i)=>{
+  const o=document.createElement('option'); o.value=String(i); o.textContent=p.n;
+  if(p.n==='Rome Odunze') o.selected=true;
+  el.track.appendChild(o);
+});
+
+const order = k => [...P].sort((a,b)=>(KEY[k](a)-KEY[k](b))||a.n.localeCompare(b.n));
+
+/* Rank scale: #1 at the RIGHT (David's ruling, 2026-07-23). */
+const xPct = rank => (1 - (rank-1)/(POOL-1)) * 100;
+
+function buildStage(id){
+  const stage = document.getElementById(id);
+  stage.style.height = (P.length*ROW_H) + 'px';
+  stage.innerHTML = '';
+  const nodes = new Map();
+  P.forEach(p=>{
+    const r=document.createElement('div');
+    r.className='r';
+    const l=Math.min(xPct(p.dr),xPct(p.mr)), w=Math.abs(xPct(p.dr)-xPct(p.mr));
+    r.innerHTML =
+      `<span class="rk">${p.dr}</span><span class="nm">${p.n}</span>`+
+      `<span class="tk"><span class="cn" style="left:${l}%;width:${w}%"></span>`+
+      `<span class="d m" style="left:${xPct(p.dr)}%"></span>`+
+      `<span class="d k" style="left:${xPct(p.mr)}%"></span></span>`;
+    stage.appendChild(r);
+    nodes.set(p.n, r);
+  });
+  return nodes;
+}
+
+const S = { a:buildStage('stage-a'), b:buildStage('stage-b'), c:buildStage('stage-c') };
+
+let from = order('dr'), to = order('dr'), maxTravel = 0, dur = 0, prog = 1, raf = 0;
+
+const idx = (list,n) => list.findIndex(p=>p.n===n);
+
+function paint(t){
+  const trackedName = P[+el.track.value].n;
+  const perRow = el.mode.value === 'perrow';
+
+  for (const p of P){
+    const y0 = idx(from,p.n)*ROW_H, y1 = idx(to,p.n)*ROW_H;
+    const travel = Math.abs(y1-y0)/ROW_H;
+    const tracked = p.n === trackedName;
+
+    // A — teleport. A real teleport takes one frame; it is placed at the midpoint
+    // here so the scrubber can show a before and an after at all.
+    const ra = S.a.get(p.n);
+    ra.style.transform = `translateY(${t<0.5?y0:y1}px)`;
+    ra.style.opacity = 1;
+
+    // B — cross-fade. Out, swap, in.
+    const rb = S.b.get(p.n);
+    rb.style.transform = `translateY(${t<0.5?y0:y1}px)`;
+    rb.style.opacity = t<0.5 ? 1-2*t : 2*t-1;
+
+    // C — travel. Unified duration by default; per-row gives each row its own
+    // sub-progress so all rows share a velocity instead of an end time.
+    const rc = S.c.get(p.n);
+    let tc = t;
+    if (perRow && dur > 0){
+      const own = ladder(travel);
+      tc = Math.min(1, t * dur / own);
+    }
+    rc.style.transform = `translateY(${y0 + (y1-y0)*EASE(tc)}px)`;
+    rc.style.opacity = 1;
+
+    /* Occlusion is DECLARED, not left to DOM order. Rows in a 1-D list must pass
+       through each other; the one travelling furthest passes in front, so a crossing
+       resolves consistently instead of flickering by source order. The followed row
+       is always topmost — it is the one thing the reader is trying not to lose. */
+    rc.style.zIndex = tracked ? 30 : 10 + Math.round(travel);
+
+    for (const r of [ra,rb,rc]) r.classList.toggle('tracked', tracked);
+  }
+  refusalDemo(t);
+}
+
+function refusalDemo(t){
+  const p = P.find(x=>x.n==='Rome Odunze');
+  const ours = xPct(p.dr), mkt = xPct(p.mr);
+
+  // Allowed: the mark holds its value; only the container it rides in moves.
+  const ok = document.getElementById('ok-track');
+  ok.innerHTML =
+    `<span class="cn" style="left:${Math.min(ours,mkt)}%;width:${Math.abs(ours-mkt)}%"></span>`+
+    `<span class="d m" style="left:${ours}%"></span><span class="d k" style="left:${mkt}%"></span>`+
+    `<span class="cap" style="left:${ours}%">our 41</span>`;
+  ok.style.transform = `translateY(${(1-Math.abs(2*t-1))*10}px)`;
+  document.getElementById('ok-read').innerHTML =
+    `The dot stays at <b>our 41</b> for the whole transition. Every frame is a rank he actually holds.`;
+
+  // Refused: the mark tweens from 41 to 24, so mid-flight it reports a rank that
+  // is not a fact about anybody.
+  const now = 41 + (24-41)*EASE(t);
+  const bad = document.getElementById('bad-track');
+  const bx = xPct(now);
+  bad.innerHTML =
+    `<span class="cn" style="left:${Math.min(bx,mkt)}%;width:${Math.abs(bx-mkt)}%"></span>`+
+    `<span class="d m" style="left:${bx}%"></span><span class="d k" style="left:${mkt}%"></span>`+
+    `<span class="cap" style="left:${bx}%">our ${now.toFixed(0)}</span>`;
+  const mid = t>0.05 && t<0.95;
+  document.getElementById('bad-read').innerHTML = mid
+    ? `Reads <span class="warn">our ${now.toFixed(0)}</span> — a rank the model has never assigned him, held on screen for ${Math.round(dur||400)}ms.`
+    : `Endpoints are true. <b>Everything between them is not.</b>`;
+}
+
+function prepare(){
+  const k = el.sort.value;
+  from = to;
+  to = order(k);
+  maxTravel = Math.max(...P.map(p=>Math.abs(idx(to,p.n)-idx(from,p.n))));
+  dur = ladder(maxTravel);
+  el.hint.innerHTML = maxTravel === 0
+    ? `This sort leaves every row where it was — nothing to animate.`
+    : `Longest move <b>${maxTravel} rows (${maxTravel*ROW_H}px)</b> → duration <b>${dur}ms</b> from the app's ladder`
+      + `${el.mode.value==='perrow' ? `, but each row is using its own` : ``}.`
+      + (reduced.matches ? ` <b>Reduced motion is on</b> — panel C is placing rows instantly and marking what moved.` : ``);
+}
+
+function run(){
+  cancelAnimationFrame(raf);
+  prepare();
+  if (reduced.matches){ prog=1; paint(1); markMoves(); sync(); return; }
+  clearMarks();
+  const t0 = performance.now();
+  const step = now => {
+    prog = dur === 0 ? 1 : Math.min(1,(now-t0)/dur);
+    paint(prog); sync();
+    if (prog < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+
+/* The reduced-motion substitute: no travel, but the information the travel carried
+   — which rows changed place and by how much — is rendered instead of deleted. */
+function clearMarks(){
+  document.querySelectorAll('.moved').forEach(n=>n.remove());
+}
+function markMoves(){
+  clearMarks();
+  for (const p of P){
+    const d = idx(from,p.n) - idx(to,p.n);
+    if (!d) continue;
+    const r = S.c.get(p.n);
+    const s = document.createElement('span');
+    s.className='moved';
+    s.style.cssText='font-family:var(--f-mono);font-size:11px;color:var(--muted);'+
+      'position:absolute;right:2px;top:2px';
+    s.textContent = (d>0?'▲':'▼') + Math.abs(d);
+    r.appendChild(s);
+  }
+}
+
+function sync(){
+  el.p.value = String(Math.round(prog*1000));
+  el.pct.textContent = prog>=1 ? 'done' : Math.round(prog*100)+'%';
+}
+
+el.go.addEventListener('click', run);
+el.sort.addEventListener('change', run);
+el.mode.addEventListener('change', ()=>{ prepare(); paint(prog); });
+el.track.addEventListener('change', ()=>paint(prog));
+el.p.addEventListener('input', ()=>{
+  cancelAnimationFrame(raf);
+  prog = +el.p.value/1000;
+  el.pct.textContent = prog>=1 ? 'done' : Math.round(prog*100)+'%';
+  paint(prog);
+});
+reduced.addEventListener('change', ()=>{ prepare(); });
+
+/* Initial state: land on the selected sort, settled. */
+to = order('dr'); from = to;
+el.sort.value = 'gap';
+prepare();
+prog = 1; paint(1); sync();
+</script>
+</body>
+</html>

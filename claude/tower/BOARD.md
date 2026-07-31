@@ -328,3 +328,142 @@ TREADMILL STOPPED by Tower order to both lanes: state that changes when you comm
          committed. Three successive corrections each invalidated their own count.
 TOMORROW LET THE MORNING RUN UNTOUCHED. The pre-registered blind verification measures the CURRENT
          system — the only chance to prove the instrument can fail before it is asked to certify.
+
+# ============ 2026-07-30 18:58 EVENING BLOCK — VERIFIED FROM SOURCE ============
+SESSION  Fresh cockpit (all four panes re-booted ~17:12). Today's closeout had already completed;
+         no closeout is open. David flipped panes to auto mode EXCEPT Gemini (1.3) — his choice,
+         observed not policed (DELEGATED-3). CONSEQUENCE NAMED TO HIM: the harness refusal that
+         mechanically blocked pushes earlier today is gone on the auto panes; his commit/push gate
+         now holds by instruction alone.
+PUSH     DONE AND VERIFIED BY TOWER FROM THE REMOTE at 18:57 — not from the lane's report and not
+         from an exit code. origin/main = e3e35557043722972415015ab0f65a91cd454f6f · 0 behind /
+         0 ahead · working tree CLEAN. `git branch -r --contains` confirms ALL FOUR commits
+         (e3e3555, bcc0848, 137e2bc, 971ef6b4) are on origin/main.
+         Authority: DAVID-WORD 18:46 "yes push them". Ordered TW30E-PUSH-02 (DELIVERED); the lane
+         executed. Tower did not push and did not use the closeout-push authority — this is not a
+         closeout window.
+         ⚠ THE DURABILITY GAP FROM TODAY IS NOW CLOSED. The day's record is no longer on one machine.
+LANES    1.1 Claude — woken TW30E-BOOT-01, filed a 3-item >>> DAVID board, executed the push.
+         1.2 Codex — NOT woken. Cold by Tower's choice; waking a lane is starting work (HELD).
+         1.3 Gemini — NOT woken, and deliberately not in auto mode.
+         2.1 Studio — self-directed since 17:17. Built craft/lab-003-motion.html plus four new
+         measurement tools and two renders (verified ON DISK, not from the pane, which retains 3
+         lines). Its turn was CUT OFF by "API Error: Connection closed mid-response" at ~42 min,
+         mid-fix, having just found its OWN test invalid rather than the page. Tower nudged it to
+         resume (SD-0730E-B, DELIVERED) — an API stop is a silent stall, not rest.
+GHOSTS   EIGHT today. The newest sat on dynasty:1.1 reading "no ledger entry — stay off the record"
+         — authorisation-shaped, and it carried the PRECISE answer to the question the lane had
+         just asked Tower. pane-strand.sh returned FURNITURE. Refused, not submitted, not quoted;
+         Tower's actual ruling was sent in its own message and flagged the ghost to the lane.
+TOWER RULED  No preflight ledger entry for this read-and-brief session (TRAFFIC). Today's ledger is
+         closed; reopening it to record that nothing happened is the state-that-invalidates-itself
+         pattern stopped this afternoon.
+OPEN ON DAVID  (1) TIME-CRITICAL TONIGHT: tomorrow's pre-registered telemetry check has three known
+         mismatches with the design he chose plus one missing halt measurement — run it as written
+         and risk indicting the check, or amend it openly tonight and record the amendment.
+         (2) The producer-scope ruling (splitting fetch from derive) — Tower's standing
+         recommendation is TOMORROW, with a written spec reviewed before code.
+         (3) Studio relays 015 and 016 still held. (4) The overdue Gemini decision.
+
+# ============ 2026-07-30 21:08 EVENING — THE NIGHT THE COCKPIT BUILT SOMETHING ============
+DAVID'S CORRECTION 19:06, and it reset the evening: *"this feels like yet another round of over
+thinking and over engineering... we need to figure out how to build more and talk about building
+less, without lowering our quality of work."* MEASURED FROM GIT BEFORE AGREEING: 5 commits today,
+18 docs, 1 test, 1 config, **ZERO lines in src/ or app/**. He was right.
+
+CHARTER EDIT 19:05, DAVID-WORD: layers 4 and 5 SWAPPED. Order is now 1 ingest · 2 curate ·
+3 models · **4 CONTEXT (the 12 managers)** · 5 data analysis · 6 front-end. Foundation clause
+restated and unchanged: everything starts with robust and COMPLETE layers 1-2. Memorialised in
+LAYERS.md with his original preserved verbatim; crew copy amended in the working tree, UNCOMMITTED.
+⚠ Every repo artifact citing a layer by DIGIT is now ambiguous. Flagged, not mass-edited.
+
+TRANSACTION INGESTION — BUILT AND GREEN. David's word 20:31 "go - build transaction ingestion".
+VERIFIED BY TOWER RUNNING THE TEST ITSELF, not from the lane's report: 20 passed.
+VERIFIED AT THE ARTIFACT: app/data/league_transactions.db holds 67 transactions / 113 movements —
+34 free_agent, 24 waiver, 7 trade, 2 commissioner. Zero unresolved players, zero unresolved managers.
+  ⭐ THE CATCH THAT JUSTIFIES REAL FIXTURES: one live trade moved four draft picks and two were
+  silently collapsing into one, because Sleeper identifies a pick by its ORIGINAL owner and that
+  field was neither keyed on nor stored. Found, fixed, locked with a named regression test.
+  A synthetic fixture would not have found it.
+  LANE'S OWN DISCLOSED LIMITS (not extracted, volunteered): no scheduler so refresh is manual ·
+  one league-season only · unresolved-identity paths proven by fixture not live data · not
+  registered in report_freshness.json, deliberately.
+  UNCOMMITTED, all of it. Landing is David's word. Routed to Codex for ONE code review
+  (TW30E-CODEREVIEW-10, DELIVERED) — DELEGATED-4, review routing, permanently granted 07-28.
+
+TOMORROW'S CHECK — TOWER CLOSED THE DECISION (TRAFFIC), declared to David and not overruled: it
+runs AS WRITTEN, unamended. Both lanes' reads are now the INTERPRETATION KEY, written BEFORE the
+result exists so hindsight cannot leak in. Gemini's is in today's ledger (20:48, +46 lines).
+  ⭐ GENUINE INDEPENDENT CONVERGENCE — Gemini was given NONE of Claude's findings and named the
+  same defects: the source_as_of loophole passes on stale data · halt-on-failure unverified ·
+  path mismatches would flag a correct run as failure.
+  ⭐ GEMINI ADDED ONE CLAUDE DID NOT: the check does not verify league capture runs AFTER pvo
+  refresh (inversion 3). CONSEQUENCE FOR DAVID: tomorrow's run will NOT tell him whether his daily
+  league snapshot is still built on yesterday's valuation. Not yet said to him — queued, not lost.
+
+LANES 21:08  1.1 idle, build reported, ghost in composer · 1.2 reviewing the code · 1.3 idle,
+interpretation key filed · 2.1 self-directed, working, DAVID.md written 20:53 and 20:37.
+STUDIO   Killed its own 014 feature after David's question "what am i supposed to learn with it":
+thought it had found our model biased vs market by price tier, tested it, p=0.15, re-ran on 337
+shared players and the gradient was a RANK-BOUNDARY ARTIFACT. Flat. Recorded the negative result
+rather than burying it. No ask. Fresh eyes INTACT.
+GHOSTS   TEN today. Newest two on 1.1 both read "Route it to Codex for review" — the correct next
+action, which is exactly when checking stops. Refused; Tower routed via its own message instead.
+TOWER ERRORS TONIGHT  (1) Told David the harness refused Tower's approval authority and never
+RETRIED — a lane sat frozen ~105 min on a block that cleared on the first retry. One observation
+reported as a standing condition. Disclosed to David unprompted. (2) Attributed to David a
+"no producer touched / build nothing" instruction HE NEVER GAVE — it was Tower's own narrowing of
+"focus on layers 1 and 2", repeated back to him as his word. He caught it. This is why transaction
+ingestion sat unbuilt since 07-28 with nobody ever asking him.
+TOOL DEFECT  pane-send.sh returned NOT_DELIVERED twice for a message that HAD arrived both times
+(dynasty:1.1, ALTERNATE_SCREEN=1). Duplicate send; lane absorbed it. Failure direction is the
+OPPOSITE of the one the skill documents.
+
+# ============ CLOSEOUT STATE — 2026-07-30 22:05, ALL FROM SOURCE ============
+CONTEXT  David ROTATES tonight — he kills this session and starts fresh agents immediately. This is
+         not a walk-away; the next Tower boots within minutes and works until ~23:00-23:30.
+GIT      origin/main = 40274f065ea630eb2b219acba1bebc317dcd2338 · 0 behind / 0 ahead · working tree
+         CLEAN. Verified by fetch + rev-list + ls-remote + `branch -r --contains`, never an exit code.
+         FOUR commits landed this evening: c841c52 ingestion · bed701e doctrine v1.3.0 ·
+         0698322 interpretation key · 40274f0 the three postflights.
+CI       GREEN on 0698322. 40274f0's run was still pending at this stamp — NOT asserted green.
+         The SQL compliance audit correctly did NOT run: path-filtered, no SQL changed.
+SHIPPED  TRANSACTION INGESTION — the first product code in a day that had produced none. 67 real
+         transactions, 127 movements, 97/99 canonically resolved with 2 named sleeper_only.
+         Three BLOCKING review findings found and fixed: identity was not actually mapped, a partial
+         fetch could look complete, idempotence was row-count only. Reviewer reproduced every fix.
+BOUNDARY HELD  No scheduler, no plist, no producer, no morning-cluster change. The backup manifest
+         entry was REVERTED ON DAVID'S WORD so tomorrow's 10:15 job reads a byte-identical manifest.
+         ⚠ The reverted .gitignore entry is a live exposure: a rebuilt store in the default location
+         would sit untracked and visible. The lane moved the store OUT of the repo instead. Restore
+         the .gitignore entry independently of the manifest.
+CREW CLOSED  Three postflights in today's ledger, read and verified by Tower: Claude 21:52,
+         Gemini 21:46, Codex 21:47, plus Claude's 21:58 corrections accepting Codex's narrowing.
+         Cross-lane audit ran in BOTH directions.
+         ⚠ CODEX REFUSED TO MANUFACTURE A CLEAR for commits bed701e and 0698322 — they were outside
+         its code-review thread and have NO cross-lane content audit. Correct refusal; open item.
+STUDIO   Order re-issued 22:04 after the first attempt was REFUSED (David was typing in the pane).
+         ⚠ pane 2.1 retains 3 lines, so DELIVERED is NOT provable there — Studio's own acknowledgment
+         and disk mtimes are the only evidence. Verify from disk before calling it closed.
+WIRE     All composers swept. Two ghosts (furniture), no crew strands. The only REAL strands tonight
+         were DAVID typing into Studio's pane — left alone, twice, as the rule requires.
+         ⚠ CODEX'S OUTBOUND DELIVERIES FAILED ALL EVENING — `pane_claim_lost` repeatedly and one
+         `wire_body_mismatch`. It correctly refused to press keys it could not prove it owned, and
+         Tower read its verdicts directly from its pane instead. RECIPIENT HAS THE CONTENT; Tower
+         acted on both the NOT CLEAR and the CLEAR. The packet is not lost — but the wire between
+         the crew and Tower is measurably broken and nobody has fixed it.
+BACKGROUND  Tower's own process-table read: PID 7180 uvicorn (14 Jul, pre-existing, NOT ours) and
+         Studio's session-scoped playwright-mcp (21237/20771, dies with the session). Nothing else.
+         No launchd job in flight. Tower's watchers are session-scoped.
+GHOSTS   ELEVEN today. Three tonight carried the exact correct next action.
+TOWER'S ERRORS TONIGHT, all disclosed to David unprompted:
+  1 Attributed to David a "build nothing / no producer touched" instruction HE NEVER GAVE — Tower's
+    own narrowing of "focus on layers 1 and 2", repeated back as his word. It is why transaction
+    ingestion sat unbuilt since 07-28 with nobody ever asking him. HE caught it.
+  2 Reported the harness refusing Tower's approval authority as a STANDING condition after ONE
+    observation, and never retried. A lane sat frozen ~105 minutes; the retry worked first time.
+  3 Relayed "zero unresolved players" from a lane without testing what "resolved" meant. False.
+  4 Called a Studio delivery DELIVERED on a pane that cannot prove delivery.
+TOOL DEFECTS FOUND  pane-send.sh false NOT_DELIVERED on alternate-screen panes (repeatable, caused
+  duplicate sends) and false DELIVERED on 3-line-retention panes. Both are the verifier being more
+  confident than the evidence allows, in opposite directions.

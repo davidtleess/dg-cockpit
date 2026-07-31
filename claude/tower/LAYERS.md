@@ -1,7 +1,33 @@
 # THE SIX LAYERS — David's architectural doctrine, 2026-07-28 21:04 ET
+# AMENDED BY DAVID 2026-07-30 19:05 ET — layers 4 and 5 SWAPPED. See the amendment below.
 
 **Status: LAW. David's word, verbatim below. Nothing Tower does outranks memorialising this and
 then making it ritual — his instruction, his priority order.**
+
+> ## ⭐ AMENDMENT — DAVID'S WORD, 2026-07-30 19:05 ET
+> **"fine - we can swith 4 and 5. but as i said everything must start with a robust and complete
+> layer 1 and 2"**
+>
+> **THE ORDER IS NOW:**
+> 1 ingest · 2 curate · **3 models** · **4 CONTEXT (the 12 managers, league behaviour)** ·
+> **5 data analysis** · 6 front-end.
+>
+> **Why he moved it** (Tower's recommendation, 19:04, which he accepted): the old layer 4 —
+> generic trend and cohort analysis — is where every public dynasty tool already competes. The
+> old layer 5 is the only thing nobody can copy, because it needs HIS league. It also depends far
+> more on layer 1 (transactions, which are NOT ingested) than it depends on generic analysis.
+> Ordered the old way, the roadmap sent him through the crowded room first.
+>
+> **What did NOT change, and he restated it deliberately:** everything starts with a robust and
+> COMPLETE layers 1 and 2. The swap re-ranks what happens AFTER the foundation; it does not move
+> anything ahead of it.
+>
+> ⚠ **The original text below is preserved VERBATIM and its internal numbering is now historical.**
+> Where his original closing line says "struggling in layer 4", that referred to generic data
+> analysis, which is now layer 5. His words are not rewritten to fit the amendment.
+>
+> ⚠ **`docs/governance/05-layer-doctrine.md` in the product repo is the crew's copy and is STALE
+> until amended.** Authoring that amendment is crew work; LANDING it is David's word.
 
 > **1) we ingest the data** — we have a robust dataset available both paid and free and we can
 > expand should we choose to. we must set up production grade pipelines that keep our data fresh

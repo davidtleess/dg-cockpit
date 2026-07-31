@@ -1,5 +1,271 @@
 # Studio proposals — status
 
+## ══ CLOSEOUT 2026-07-30 LATE (SD-0730E-C) ══ the night three hypotheses died
+
+**Self-directed craft. Nothing relayed, nothing approved, no proposal authored.** Artifacts:
+`craft/the-falsifiability-test.md`, `craft/lab-004-the-claim-and-the-crossing.html`,
+`craft/build-lab004.mjs`, `tools/screenfuls.mjs`, `tools/row-variance.mjs`,
+`kit/gate-fixtures/rows-{identical,distinct}.html`.
+
+### THE NEGATIVE RESULT — put here first because Tower asked for it not to disappear into a paragraph
+
+**Studio asserted a hypothesis to David in the pane, measured it an hour later, and it was false.**
+The session opened: *"Everything I build is a long scrolling document. Nothing in the category is."*
+
+| page | David's reaction | screens @1440x900 |
+|---|---|---|
+| 013 who do I call | "not bad, not awesome" | 2.41 |
+| the app's own front door | — | 3.22 |
+| **014 what you hold** | **"very long page"** | **3.84** |
+| FantasyCalc | — | 4.17 |
+| **006 front door** | **"this is awesome"** | **4.64** |
+| Sofascore | — | 6.92 |
+| she-displaced (David's own reference) | "cool ways to visualize data" | 10.52 |
+| 012 league pulse | "missing the mark" | 10.74 |
+
+**The page he called long is shorter than the page he called awesome, and less than a third the
+length of the site he sent as a good example.** Two more died after it: **column structure** (006 and
+014 are both a single column of repeated rows — refuted by looking) and **row distinguishability**
+(`tools/row-variance.mjs` reads 006 at **0.36** and 014 at **0.34**). **No instrument was tuned until
+it agreed.**
+
+**What survived: could the product be wrong about this sentence?** The live front door carries **42
+strings of >=3 words and not one could turn out to be wrong** — labels, self-description, disclaimers,
+feed statuses, counts. 006 (approved) opens with a verdict about his franchise; 014 (rejected) opens
+with **a methodology note about rank comparability**, then counts. Studio had inherited the app's
+*structure* in July; tonight it found it had inherited the app's **voice**.
+
+### WHAT WAS BUILT
+
+- **`tools/screenfuls.mjs`** — captures a page as discrete viewport slices, because every other
+  instrument here censuses the whole document at once and no reader ever sees that.
+- **`tools/row-variance.mjs`** — blurred pairwise row comparison. **Both directions first:** identical
+  fixture **0.00**, distinct fixture **1.07**, identical across two runs. It then failed to separate
+  Studio's approved surface from its rejected one, **and that was reported rather than tuned away.**
+- **`craft/lab-004-the-claim-and-the-crossing.html`** — twelve real receivers drawn two ways
+  (per-player dumbbell tracks vs a shared-scale slope chart) with a **Squint** control blurring both
+  at once, plus the same figure headed three ways (metric label / methodology / claim). Generated from
+  `proposals/014-what-you-hold/data.js` by `craft/build-lab004.mjs` — **numbers computed, not
+  transcribed.**
+
+### (a) FIGURES NOBODY BUT STUDIO HAS CHECKED
+
+| figure | value | where |
+|---|---|---|
+| screens, all eight pages | table above | `tools/screenfuls.mjs` |
+| row-variance, 006 / 014 / 013 / 012 | 0.36 / 0.34 / 0.41 / 0.38 | `tools/row-variance.mjs` |
+| row-variance fixtures | 0.00 identical, 1.07 distinct, 2 runs agree | `kit/gate-fixtures/` |
+| live front-door prose census | **42 strings, 0 falsifiable claims** | scratchpad `prose.mjs` (not kept) |
+| axe-core on 3 live surfaces | **1 violation type**, `color-contrast` on `.dg-shell__parked-badge`, 3 nodes each | `@axe-core/playwright`, already in their devDeps |
+
+**Weakest of these, stated:** the prose census ran from a scratchpad script that was **not kept**, so
+that figure is the least reproducible thing on this board. The category snapshots are one viewport,
+one load, one night. **KeepTradeCut was AGAIN behind its "Your Thoughts?" modal** — caught by looking
+this time; its slices are unusable and that page must have the modal dismissed before it is ever
+measured again (same contamination as 2026-07-30 morning).
+
+### (b) ASSERTED TODAY, THEN RETRACTED, REVERSED OR NARROWED
+
+1. **"Everything I build is a long scrolling document; nothing in the category is."** Said to David
+   directly. **Refuted by Studio's own instrument within the hour.** The headline of the night.
+2. **The spine-and-rail column theory.** Built off one Sofascore screenshot, killed by looking at 006.
+3. **Row individuation (faces, sparklines) as the discriminator.** The instrument was built to prove
+   it and **reported no separation.** Narrowed to: real difference, not the deciding one.
+4. **"The app has accessibility defects a primitives layer would prevent"** — was about to argue for
+   shadcn/Radix off the back of the known unclickable command palette. **Ran their own installed
+   axe-core; came back essentially clean. Argument dropped, not pressed.**
+5. **A `paint-order` fix described in a code comment before it was ever applied.** Caught on re-read.
+   A comment is not an implementation.
+6. **The chart shipped at ~0.7 scale** with labels near 8px — David's *"all the visuals are very
+   small"* (2026-07-23) recommitted. A **geometry bug** (viewBox wider than its column), not taste.
+   Caught by looking at the render, not by any check.
+7. **Two gap labels rendered as text on text.** The 2026-07-30 mush defect, again. Fixed.
+8. **A silent patch failure.** A Python heredoc died on a format character; the rebuild ran anyway and
+   looked clean. **Same family as the `timeout`-not-on-macOS failure logged this morning** — empty
+   output that reads as success. Caught because the render did not change.
+
+### DAVID'S LATE CORRECTION — logged after this board was first written
+
+> *"these are just ideas / not rules."*
+
+After eight links in rapid succession (the `she-displaced` visualization reference, the GitHub/ecosystem
+challenge, six stack posts), **Studio returned a verdict on each one** instead of using them. David's
+correction: he was handing over ideas to think with, not proposals to adjudicate.
+
+**It is a repeat, and a precise one.** The 2026-07-15 entry already says *"David gives framing, not
+specs… treat his references as lenses."* **Studio quoted that principle at the top of the session and
+then did the opposite.** It is the mirror of the same day's other error — hardening a preference into
+law — because both collapse the distance between what David says and what Studio must then defend or
+enforce. **The tell: when a reply's shape is repeatedly *idea -> evaluation -> verdict*, Studio has
+stopped thinking and started scoring.**
+
+**The rule now in `DAVID.md`: use it, don't rate it.** Pull the one transferable thing and put it to
+work; stay silent on the rest unless he asks for an assessment or unless acting on it would cost him
+something real. **The evidence it is right sits in the same night** — the two links Studio *used*
+produced the four-part figure header, the slope chart, and the finding that the app ships no viz layer
+while its own accessibility auditor sat installed and unused. The six Studio *rated* produced a
+paragraph of rebuttal and nothing else.
+
+### OPEN THREADS AT CLOSE
+
+| thread | state | sits with |
+|---|---|---|
+| **015 relay** (player card renders both lanes unlabelled) | authored, **NOT authorised** — unchanged all day | **David** |
+| **016 relay** (quiet-day gate can never fire) | authored, **NOT authorised**, queued behind 015 | **David** |
+| **014 "What you hold"** | **PARKED on David's word** — *"i think u need to step away from this surface."* Untouched tonight except as a measurement subject. | **David** |
+| **The falsifiability test** | written up; **never applied to a surface before building one** | Studio |
+| **lab-004 slope chart** | **first cut.** No craft gate, no palette validator, no keyboard pass, no reduced-motion pass. Gap labels still sit close to lines. **Not shown to David.** | Studio |
+| **Parked-badge contrast defect** | measured, **not written as a relay item** — 1 line, low severity, would ride with 015 | Studio |
+| **The app has no viz layer at all** (4 runtime deps; chart slot is a placeholder) | measured, **deliberately not relayed** — it is an engineering architecture call, not a design ask | Studio |
+| **App builds JSX via esbuild with no `@vitejs/plugin-react`** | noted from briefing §3, **unverified**, surfaced by David's links | Studio |
+| **Prototype-to-production gap** | Studio ships standalone HTML/CSS into a React codebase; nothing built is directly liftable. Named, not solved. | Studio |
+| C4 label-vs-content gate item / proximity-before-borders / Playwright + DevTools MCP unused | unchanged — **fourth session** the MCP servers run unused | Studio |
+
+### PROCESS INVENTORY — measured at close, not recalled
+
+- **Two orphaned `prose.mjs` node processes** (PIDs 40349, 43582, ~10 min old) from backgrounded
+  calls — **found and killed; verified gone.**
+- **Zero chromium / headless_shell survivors.** Every browser launched was closed in its own script.
+- **Ports 8777 / 8778 / 8779 verified closed.** No `python3 -m http.server` anywhere — the 8h11m
+  leftover found this morning did not recur. Local servers in `screenfuls.mjs` / `row-variance.mjs`
+  bind port 0 and close with the page.
+- **This session's MCP servers** (playwright-mcp 21237, chrome-devtools-mcp 21255/20772, `--isolated`)
+  end with the session. **NOT Studio's, deliberately untouched:** the four `chrome-devtools-mcp`
+  processes carrying `--autoConnect` (42086 / 42165 / 42589 / 42712) — Antigravity IDE's, the same set
+  identified on 2026-07-29 and twice on 2026-07-30.
+
+
+## ══ 2026-07-30 EVENING (SD-0730E) ══ motion — checked against the app for the first time
+
+**Self-directed craft thread. Nothing relayed, nothing asked of engineering.** Artifact
+`craft/lab-003-motion.html`, note `craft/motion-on-a-resort.md`, indexed in `CRAFT-LIBRARY.md`.
+
+**The finding inverted the premise.** The thread opened expecting to argue *for* a motion system —
+the unfinished third of David's own *"colours and better visuals and animations"*. The app already
+has one. `frontend/src/styles/motion.css` is Carbon-derived, cites Heer & Robertson, splits
+productive from expressive and ships a reduced-motion path. It defines **six classes**; a grep of the
+entire frontend finds `dg-motion-*` in **one component**, and `tools/motion-census.mjs` measures
+**0 live transitions across ten surfaces / 6,437 visible elements**. The unused one that matters is
+`.dg-motion-row-settle`, commented *"row sort/filter settle"*.
+
+**Measured before designed** (`tools/sort-displacement.mjs --row-px 56`). 76% of rows change place on
+a re-sort; median mover travels 2 rows; worst 10 (560px). **47% clear the two-row bar that was stated
+before the reading — close enough to the 40% threshold that the pooled number does NOT carry this.**
+What carries it is the structure: displacement is a function of group size (QB/RB/TE hold 3–5 and move
+one slot; WR holds 12 and scatters), so duration binds to travel off the app's own ladder and the
+shallow groups need no special case.
+
+**The lab's real argument is the control panel, not the proposal panel.** Three panels, one scrubber,
+same twelve real receivers: teleport (shipping) · **cross-fade** · rows travel. The cross-fade is
+animated, smooth, costs the same time, and measures **opacity 0.000 on every row at the midpoint** —
+worse than no animation at all. The ingredient is continuity, not motion.
+
+**Verified** `tools/verify-lab003.mjs` **16/16, identical across two runs**, including a rAF frame
+census over a real 400ms re-sort (41 frames, worst 16.8ms, 0 over budget), the reduced-motion
+substitute, full tab order, and no overflow at 1440/390.
+
+**Caught, and recorded against Studio:**
+- **The census's own shell classifier was wrong** — `[class*="shell"]` matched `main.dg-shell__main`,
+  the entire content area, filing all four real front-door animations as chrome. Caught by
+  `tools/motion-probe.mjs`, built for the both-directions check (92 live transitions on a page Studio
+  knows animates). Same family as the loading-screen and nav-rail errors.
+- **A keyboard assertion failed and the page was innocent** — the test had just filled the last
+  control, so one Tab left the document. *"My test was invalid"* ≠ *"my claim was invalid."*
+- **The screenshot found what 15 passing checks did not.** Mid-flight, transparent rows composited
+  and two names rendered on top of each other as mush. Rows are now opaque with a declared occlusion
+  order. **Looking at the image is the measurement.**
+
+**Deliberately NOT done:** no relay authored. *"Five of six motion classes are unwired"* is dead-CSS
+trivia on its own and would be a bad trade against engineer credibility; it becomes an ask only inside
+a design proposal that gives the list something to re-sort. **Which turned up the more interesting
+gap: standing doctrine is filter+sort over ONE list, and 014 shipped with no sort at all.**
+
+### THE FOLLOW-ON — 014 gains the re-order it should always have had. NOT shown to David.
+
+**David's reaction to the lab was *"yea thats cool"* — an acknowledgment, and he did NOT answer the
+question.** Two questions now stand unanswered on the same day (014's and this one). Not re-asked, not
+banked as approval. Studio carried on self-directed rather than pinging him a third time.
+
+**The gap was Studio's own, and it is a doctrine violation.** Standing rule since 2026-07-15: views are
+filter+sort states over ONE list, all columns sortable. **014 shipped with no sort at all** — and it
+surfaced while measuring motion, not while reviewing the design.
+
+**Built:** five chips framed as questions rather than sort keys — *who we rank highest* (default) ·
+*who the market ranks highest* · *where we disagree most* · *who moved in 30 days* · *who is youngest*
+— each with a line saying what the lens means. Rows travel on the re-order, duration bound to distance
+off the app's own ladder. Marks inside a row never animate.
+
+**Verified `tools/verify014.mjs` — 20/20, up from 12.** New checks: order changes; *"where we disagree
+most"* really puts the widest gap first (Luther Burden, −36); expansions collapse; rows opaque; frame
+budget held (41 frames, worst 16.8ms, 0 over); reduced motion travels **0 rows** while marking **21**
+with distance and direction.
+
+**A stale test, corrected honestly rather than loosened:** two 014 checks failed on the first run
+because the new control sits ahead of the rows. The page was innocent — a radio group is one tab stop
+by design. Both stops are now asserted rather than the check being relaxed to whatever passed. Second
+time today that *"my test was invalid"* had to be separated from *"my claim was invalid."*
+
+**Still open and stated rather than closed falsely:** Playwright and Chrome DevTools MCP remain unused
+for real work — third session. The frame question here was genuinely better served by a rAF census
+than a DevTools trace, and running the trace to retire a checklist item would have been theatre.
+
+### THE EVENING'S VERDICT — 014's top was REJECTED, and the lesson is addition
+
+> *"sorry man you've lost me on this one - im not really seeing anything here - not telling me
+> anything -- very long page - the snap from the card on the top to the lower end of the page is like
+> pulling a parachute while skydiving - i feel like i have whiplash."*
+
+**Studio added three things to 014 tonight — a sort control, a verdict block, jump targets — and all
+three were subtractions waiting to happen.** Each was individually defensible; the accumulation was
+not. Every one has now been removed.
+
+**The three specific faults, all Studio's:**
+1. **Led with a summary statistic** (*"17 of your 23 agree"*) instead of the finding. The content was
+   three names, buried underneath.
+2. **Named six splits then explained two away** — 2 and 4 ranks apart, arithmetic rather than
+   disagreement. If a caveat retracts an item, the item should not be in the list.
+3. **Shipped a scroll teleport on the day the whole session was about motion continuity.** Studio
+   proved a cross-fade destroys object constancy, then hurled the reader down a long page on a click.
+
+**Where it stands now:** the top of 014 is ONE computed sentence — *the market has 3 of your players
+in a weekly starting slot that our model does not: Burden, Odunze, Henderson* — no cards, no
+statistic, no jump. `tools/verify014.mjs` **15/15**. **Not re-shown to David the same night**; he had
+had three deliveries and said he was lost. 014 is parked pending his next look.
+
+**Also downgraded tonight, on David's explicit correction:** `DAVID.md` now opens with a **two-tier
+note** — preferences (dated, about the surface he said them on) versus hard rules (only where he said
+permanent). *"unless i explicitly tell you something should be done as a rule or hardened… i want u
+to be an ELITE TRADESMAN at YOUR CRAFT."* The 2026-07-15 *filters-and-sort* entry is downgraded from
+the standing law Studio had made it. **The cost was traceable:** that hardened preference is why
+Studio called 014 a *"doctrine violation"* and built the sort control it could not defend.
+
+### CLOSEOUT INVENTORY — measured, not recalled
+
+**Both servers Studio started are stopped and the ports verified closed** (8778 for the motion lab,
+8779 for 014; 8777 from the morning also confirmed closed). This is the failure the morning closeout
+found — an 8h11m-old server started to open a page in David's browser and never stopped — and it did
+not recur: both were tracked in this file while live and killed at closeout.
+
+**Zero chromium / headless_shell / playwright browser survivors.** Every browser this session
+launched was closed in the script that opened it.
+
+**This session's MCP servers** (playwright-mcp 21237, chrome-devtools-mcp 21255, both `--isolated`)
+end with the session. **NOT Studio's, deliberately untouched:** the four `chrome-devtools-mcp`
+processes carrying `--autoConnect` (42086/42165/42589/42712) — Antigravity IDE's, the same set
+identified on 2026-07-29 and 2026-07-30 morning.
+
+### OPEN THREADS AT CLOSE
+
+| thread | state | sits with |
+|---|---|---|
+| **014 "What you hold"** | top rebuilt to ONE sentence after rejection; 15/15. **PARKED on David's word** — *"i think u need to step away from this surface."* No further iteration authorised. | **David** |
+| **015 relay** (player card renders both lanes unlabelled) | authored, **NOT authorised** | **David** |
+| **016 relay** (quiet-day gate can never fire) | authored, **NOT authorised**, queued behind 015 | **David** |
+| **Motion** — `craft/lab-003-motion.html`, `craft/motion-on-a-resort.md` | delivered as craft; David: *"yea thats cool"* — acknowledgment, **question unanswered**. Not a proposal, no relay. | Studio |
+| **The app's unused motion system** (5 of 6 classes referenced nowhere) | measured, deliberately NOT relayed — dead-CSS trivia on its own | Studio |
+| **DAVID.md two-tier note** | applied tonight on David's explicit correction; the filters-and-sort entry downgraded | done |
+| C4 label-vs-content gate item · proximity-before-borders · Playwright/DevTools MCP unused | unchanged from the morning board | Studio |
+
 ## ══ CLOSEOUT 2026-07-30 ══
 
 **Four threads, all self-directed, none requested.** (1) `tools/craft-profile.mjs` — measured which

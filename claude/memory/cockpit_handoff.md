@@ -4,179 +4,214 @@ description: "Tower's parked board — durable snapshot of what every lane has p
 metadata: 
   node_type: memory
   type: handoff
-  originSessionId: 1938ae61-0578-4323-a709-df2f8c210891
-  modified: 2026-07-30T21:04:03.070Z
+  originSessionId: ada58724-3056-4f29-9ca1-69467fd8fcd4
+  modified: 2026-07-31T01:52:21.574Z
 ---
 
-# Cockpit handoff — 2026-07-30 EVENING → 07-31. THE DAY THE INSTRUMENTS WERE AIMED.
+# Cockpit handoff — 2026-07-30 LATE EVENING → the session David starts TONIGHT
 
 > **⚠ THIS FILE IS INHERITED CLAIM, NOT VERIFIED FACT.** Every line is a LEAD TO CHECK.
 > Rebuild `~/.claude/tower/BOARD.md` from source before telling David anything.
-> **Push state especially: regenerate it, never quote it from here.** It goes stale silently.
+> **Push state especially: regenerate it, never quote it from here.**
+
+## ⚠ READ THIS FIRST — YOU ARE NOT BOOTING INTO A QUIET MORNING
+
+David **rotates sessions mid-work**. He killed the previous cockpit at ~17:10 and started a fresh
+one immediately; he is doing it again now, around 22:15, and **works until ~23:00–23:30 ET.**
+So: a fresh cockpit is NOT a new day. Today's ledger is long and already closed twice. Do not run a
+morning brief. Read the ledger, state the board, and ask what he wants.
 
 ## ⭐ FIRST THINGS, NEW TOWER — IN THIS ORDER
 1. Invoke `cockpit-observation` before anything. Five parts.
-2. `~/.claude/tower/LAYERS.md` — David's six-layer doctrine. LAW. He invoked it again today
-   ("focus on layers 1 and 2") and it reordered the whole afternoon.
-3. `~/.claude/tower/BOARD.md` — rebuilt cold this morning and updated through the day.
+2. `~/.claude/tower/LAYERS.md` — David's layer doctrine. LAW. **AMENDED TONIGHT — see below.**
+3. `~/.claude/tower/BOARD.md` — rebuilt through the evening; closeout block at the bottom.
 4. `~/.claude/agents/tower.md` — the charter.
-5. `~/.claude/tower/DECISIONS.md` — every ruling today with the authority it rested on.
+5. `~/.claude/tower/DECISIONS.md` — every ruling tonight with the authority it rested on.
 6. **INVOKE BIN SCRIPTS AS `bash /Users/davidleess/.claude/skills/...`** — the `bash ` prefix and
-   the absolute path are both required by David's allowlist. Without them the harness classifier
-   denies the call and it looks exactly like a guard refusal.
+   absolute path are both required by David's allowlist.
 
 ---
 
-## 🚨 THE ONE THING TO DO FIRST TOMORROW — AND IT IS TIME-CRITICAL
+## 🏛 THE HEADLINE — TONIGHT THE COCKPIT STOPPED TALKING AND BUILT SOMETHING
 
-**LET THE 09:00–10:15 MORNING JOBS RUN COMPLETELY UNTOUCHED.** David agreed. Nothing was fixed
-tonight on purpose. Gemini has written a **pre-registered verification** — what it will measure and
-**what counts as failure** — authored BLIND, before any fix exists. Tomorrow's run is the
-**baseline**: proof the instrument can detect the defect before it is ever asked to certify a fix.
-*Every instrument caught lying today had never once been observed failing.*
+**David's correction at 19:06 is the most important thing in this file:**
+> *"this feels like yet another round of over thinking and over engineering... we need to figure out
+> how to build more and talk about building less, without lowering our quality of work."*
 
-**Do not create a scheduler, split a producer, or land a freshness change before that run.**
-Pre-registration lives in today's ledger (Gemini entries, 12:58 onward) and in
-`docs/agent-ledger/evidence/2026-07-30/loud_stop_and_telemetry_mismatch_claude_v1.md`.
+Tower measured before agreeing: the day to that point had produced **5 commits, 18 documents, and
+ZERO lines in `src/` or `app/`.** He was right.
+
+**What followed, in three hours:** transaction ingestion built, reviewed NOT CLEAR on three blocking
+findings, fixed, re-verified CLEAR, landed and pushed.
+
+### THE STANDING CHANGE TO HOW TOWER RUNS THE COCKPIT — declared to David, not overruled
+1. **Review rounds are for CODE and DATA, not write-ups.**
+2. **Tower stops routing decisions that have an obvious cheap default** — take it, report it, David
+   overrules if wrong. First use: closing the telemetry-check question itself.
+3. **A thread that hasn't touched `src/` or `app/` in two hours is a conversation, not work.**
+The quality bar does not move; its TARGET moves from documents to the thing that ships.
+
+---
+
+## 🚨 TOMORROW MORNING — TIME-CRITICAL, DO NOT LET ANYONE TOUCH IT
+
+**LET THE 09:00–10:15 CLUSTER RUN COMPLETELY UNTOUCHED, AND LET ITS PRE-REGISTERED CHECK RUN
+UNAMENDED.** Tower closed the amend-or-not question itself (authority TRAFFIC, declared to David).
+No scheduler, no producer split, no freshness change, no manifest entry before that run.
+
+**Both lanes independently found the check is weak, and their write-ups are the INTERPRETATION KEY**
+— authored before the result exists, committed at `0698322`. Read it before reading tomorrow's run.
+- It can PASS on stale data (the `source_as_of` loophole).
+- It can PASS on a partly-broken morning (no chain exists to halt; failed upstream jobs still let
+  downstream publish artifacts that look fresh).
+- Path mismatches could flag a CORRECT run as failure.
+- **Gemini named one Claude did not: the check never verifies league capture runs AFTER the valuation
+  refresh.** So tomorrow will NOT tell David whether his daily league snapshot is still built on
+  yesterday's valuation. **This gap survives the run either way. Do not lose it.**
 
 ---
 
 ## 🚨 GIT — REGENERATE, DO NOT TRUST THIS BLOCK
 ```
 cd ~/dynasty-genius-product && git fetch origin -q
-git rev-list --left-right --count origin/main...HEAD   # behind<TAB>ahead
-git log --oneline origin/main..HEAD                    # anything listed is NOT pushed
-git status --porcelain                                 # anything listed is NOT committed
+git rev-list --left-right --count origin/main...HEAD
+git log --oneline origin/main..HEAD
+git status --porcelain
 ```
-**As measured 17:00 today:** HEAD `e3e3555` · origin/main `e20291e` · **0 behind / 4 ahead** ·
-working tree CLEAN. CI GREEN on `e20291e` (runs 30576695096, 30576695095).
+**As measured 22:05:** origin/main `40274f065ea630eb2b219acba1bebc317dcd2338` · **0/0** · tree CLEAN.
+Four commits landed tonight: `c841c52` ingestion · `bed701e` doctrine v1.3.0 · `0698322`
+interpretation key · `40274f0` postflights. **CI GREEN on `0698322`; `40274f0`'s run was still
+pending at closeout and is NOT asserted green — check it.**
 
-**FOUR COMMITS WERE LOCAL-ONLY AT WRITING** — the closeout flush, the telemetry postflight, Codex's
-closeout, and the cross-audit. All documentation; Codex audited every one: **zero executable,
-product, data, model or contract divergence.** David was asked to push; check whether he did.
-
-**NEITHER TOWER NOR ANY LANE CAN PUSH.** Both are refused by their harness classifiers. David's
-charter grants Tower a bounded closeout push authority — **the machine does not implement it.**
-Raise this with him tomorrow: either the permission exists or the authority should be retired,
-because an authority that cannot be exercised is a promise Tower cannot keep.
+**Push works via the crew lane on David's word.** Tower's own charter push authority is
+closeout-only. David pushed manually earlier today; the lane pushed tonight.
 
 ---
 
-## 🏛 THE DAY IN ONE SENTENCE
-**Your data is fine; what you do with it stopped.** The universe kept growing — 12,201 → 12,203
-players captured — while the scored population sat at exactly 468 and **not one dynasty value
-changed since late June**, with the artifact stamping itself fresh every morning.
+## ⭐ CHARTER EDIT TONIGHT — DAVID SWAPPED LAYERS 4 AND 5
+**His word, 19:05:** *"fine - we can swith 4 and 5. but as i said everything must start with a robust
+and complete layer 1 and 2"*
 
-### What is ESTABLISHED (survived adversarial review)
-- **Transactions are not ingested.** The one confirmed gap, and the piece the layer-5 league-
-  behaviour edge would need.
-- **Values numerically unchanged since ~06-26/27** for the ~466-player overlapping scored
-  intersection. *The population around it DID move* — that distinction cost four review rounds.
-- **`pvo_refresh` runs 15 min after a job that takes ~57 min** — it consumes yesterday's features
-  by construction, daily.
-- **`roster_capacity` has NO scheduler and never has** — deliberately deferred, David-gated in v1,
-  recorded in the producer's own docstring. NOT a year of neglect; a decision he has now resolved.
-- **`league_opportunity` is registered weekly (David ruled it DAILY today) and also has no plist**,
-  but it ALREADY runs as an orchestrator PhaseStep — so a naive plist creates **two jobs writing
-  one artifact**, which is worse than the gap.
-- **`pvo_refresh.timestamp_field` is null** → freshness falls back to mtime.
-- **A THIRD INVERSION, and the morning is a CYCLE not a chain:** league capture consumes the PVO
-  runtime and runs before it; but the raw snapshot is PVO-independent — only the derived matrix,
-  posture and cut consume it, and what they consume is a previously-available runtime.
+**Order is now:** 1 ingest · 2 curate · 3 models · **4 CONTEXT (the 12 managers, league behaviour)** ·
+**5 data analysis** · 6 front-end.
+**Reason he accepted:** generic analysis is where every public tool competes; league behaviour cannot
+be copied because it needs HIS league, and it depends on layer 1 far more than on generic analysis.
+Recorded in `LAYERS.md` with his 07-28 original preserved VERBATIM; crew copy landed at `bed701e`.
+⚠ **Every repo artifact citing a layer by DIGIT is now ambiguous.** Flagged, deliberately NOT mass-edited.
 
-### REFUTED — including Tower's own claims
-- "The foundation stopped advancing" — WRONG LOCATION. Ingestion and curation are stable; the
-  defective behaviour is the layer-3 republish plus health/reader logic.
-- "Not one player changed" — Tower's query was NULL-BLIND. Re-run null-aware it holds **by luck,
-  not method**.
-- "Nothing is ingested" — rosters, status, IR and depth chart are all present.
-- "The app's instrument has the same blindness as Tower's" — it emits `coverage_count_deltas`.
-- "Built against YESTERDAY'S valuation every day" — Tower's dramatisation; see the cycle above.
+⚠ **"Robust and complete" still has NO exit criterion.** This is the gap that let Tower turn his
+directive into a prohibition. Tower offered him a **done-test for layers 1–2** — a countable
+definition of complete — and he has not ordered it. **Raise it again after tomorrow's run.**
+
+---
+
+## 📦 WHAT SHIPPED — TRANSACTION INGESTION (layer 1, the confirmed hole)
+Landed at `c841c52`. **67 real transactions, 127 movements, 97/99 canonically resolved**, 2 named
+`sleeper_only` (Matt Hibner 13324, Justin Joly 13400). 34 free-agent adds · 24 waivers · 7 trades ·
+2 commissioner. Failed waiver claims stored but excluded from completed movements.
+
+**It found a bug only live data could expose:** one of David's real trades moved four picks and two
+were silently collapsing into one, because Sleeper identifies a pick by its ORIGINAL owner — a field
+neither keyed on nor stored. Fixed, locked with a named regression test.
+
+**The review earned its keep — three BLOCKING findings, all real:**
+1. **No Dynasty Genius identity was actually stored** — it treated a Sleeper ID as "our identity."
+2. **A partial fetch could look complete** — an injected failure left the prior `status=ok` marker
+   byte-for-byte unchanged. Now writes a named `status=failed`.
+3. **Idempotence was row-count only** — stale movement rows survived.
+Plus: picks recorded the acquisition but not the SEND side, so "what every manager did" was wrong.
+
+### PARKED, EACH WITH ITS GATE
+| item | where | gate |
+|---|---|---|
+| **No scheduler — it does NOT refresh itself** | `scripts/run_league_transaction_capture.py` | **David's scheduler word.** Someone types the command until then |
+| **Backup manifest entry REVERTED on David's word** | `app/config/backup_manifest.json` | Returns with the scheduler word. **Do not let anyone re-add it silently** |
+| ⚠ **`.gitignore` entry also reverted — LIVE EXPOSURE** | `.gitignore` | Only the MANIFEST was live to the backup. **Restore the `.gitignore` entry independently**, or a rebuilt store sits untracked and visible |
+| **Runtime store moved OUT of the repo** | session-scoped scratchpad | Deliberate — rebuilds from Sleeper in seconds. Does not survive the session and does not need to |
+| **One league-season only** | same commit | Separate word. No `previous_league_id` chain-following, no CLI flag |
+| **Not registered in `report_freshness.json`** | deliberate | Blocked behind the freshness escalations |
 
 ---
 
 ## ▶️ DAVID'S OPEN BOARD — in the order Tower would raise it
-1. **PUSH the four local commits** (if still unpushed). One command in a crew pane:
-   `! git push origin main`.
-2. **THE PRODUCER-SCOPE RULING — the cycle.** Splitting *fetch* from *derive* is the only way the
-   morning becomes a coherent chain. It is a real architecture change and Tower recommended it get
-   its own written spec, reviewed before code. Evidence:
-   `docs/agent-ledger/evidence/2026-07-30/scheduling_escalations_claude_v1.md` and
+1. **RELAY STUDIO 016 — he agreed, at the start of the fresh session.** Studio measured the front
+   door and found the model lane silent on **33 of 36 overnight transitions** while the market lane
+   moved every morning — the same defect the crew diagnosed, found independently from outside.
+   Relay as a **CROSS-CHECK**. `~/frontend-studio/proposals/016-RELAY.md`.
+2. **015 stays parked** — flagship player card renders unlabelled concatenated values. Layer 6; it
+   will still be broken next week.
+3. **The producer-scope ruling** — splitting fetch from derive so the morning is a dependency chain
+   rather than guessed clock offsets. Recommended: its own written spec, reviewed before code.
+   Evidence: `docs/agent-ledger/evidence/2026-07-30/scheduling_escalations_claude_v1.md` and
    `morning_chain_design_claude_v1.md`.
-3. **THE CONTENT-IDENTITY RULING.** There is NO config-only freshness fix: every timestamp in the
-   PVO report is a REBUILD time. Only the semantic hash tracks content. The field first proposed
-   would have preserved false freshness — *the cure containing the disease.*
-4. **The two Studio relays — 015 and 016 — still queued, unrejected.** Tower held them
-   deliberately: 016 is layer-1/2 evidence the crew was independently diagnosing (relaying it would
-   have turned a second independent measurement into an echo); 015 is layer 6 and can wait.
-5. **The two governed SQL findings**, including the hard age-28 RB value cliff, unfixed by
-   instruction. Report-only CI routes findings to TOWER (that routing was itself a defect Codex
-   caught — it originally routed to David).
-6. Older parked: Databricks estate · the containment gap (crew has no mechanical deny on
-   `~/frontend-studio`) · Studio WRITE authority · doctrine §2 ratification · **the OVERDUE GEMINI
-   DECISION — now with a real contribution record: it independently found the stale-seed defect.**
+4. **Scheduler word for transaction ingestion** + prior seasons. Both cheap once he says go.
+5. **A done-test for layers 1–2** (see the charter-edit section). Tower's recommendation.
+6. **GEMINI — HE HAS NOW GIVEN A VERDICT.** Asked whether it adds value; Tower said yes, as a third
+   INDEPENDENT instrument (it found the stale-seed defect unassisted and converged blind tonight).
+   **David: *"i trust it the least - it has repeatedly gone rougue."*** The record backs him — its
+   production incident was a runtime-determined `--repo-root` default.
+   **TOWER'S RECOMMENDATION ON THE TABLE, NOT YET ORDERED: confine it to read + ledger-append only,
+   deny all other writes and any runtime-resolved path. Then auto mode is safe.** If he will not
+   wire that, **cut it** — the current arrangement is the worst of both.
+7. Older parked: two governed SQL findings incl. the age-28 RB value cliff · Databricks estate ·
+   the containment gap (crew has no mechanical deny on `~/frontend-studio`) · Studio WRITE authority.
 
-## 📌 WHAT SHIPPED TODAY
-- **The SQL governance auditor is AIMED.** Re-pointed at `infrastructure/src/sql/`, report-only,
-  with a real RED test. It reaches four governed SQL files and returns two real findings. **It had
-  audited ZERO files since May.** ⚠ **GREEN CI ≠ CLEAN SQL** — that job cannot fail the build.
-- The layers 1–2 investigation, committed and pushed at `e20291e`, CI green.
-- **NOT a fix.** The commit message says so deliberately.
+---
 
-## 🎨 STUDIO — fresh eyes INTACT, and it had its best day
-Self-directed all day; **never handed our roadmap.** Produced **014** (roster by position group,
-board vs market), **a squint-test instrument** that blurs a page until only shape survives, **015**
-(the flagship player card renders unlabelled concatenated values — `ENGINE_BACTIVE_B9948.23——19.901—`
-for the league's most valuable player), and **016** (the front door's model lane measured silent on
-**33 of 36** overnight transitions while the market lane moved every single morning).
-- **It measured its own hypothesis and published the refutation** — expected the category to win on
-  type-scale contrast; the best-crafted rival has the FLATTEST scale measured. It then shipped
-  inside the product's existing visual contract.
-- **Its own best lesson, volunteered:** it generated blurred renders and ran a counter over them
-  **without opening the images.** *"Looking is the measurement; the number computed from it is the
-  weaker thing."*
-- Flushed and DURABLE FROM DISK (`DAVID.md` 16:43, `for-david/STATUS.md` 16:42, "Studio closed").
-  It found and killed a leftover Python web server and verified the port closed — **Tower confirmed
-  independently.** ⚠ Consequence: the 014 prototype will not load in a browser until re-served.
+## 🎨 STUDIO — fresh eyes INTACT, best judgement of the day
+- **It deleted three things it had built** after David said *"you've lost me on this one… i feel like
+  i have whiplash."* A sort control, a verdict block, jump targets. It did not defend them: each was
+  individually defensible, the accumulation was not. 014's top is now ONE computed sentence.
+- **It killed its own feature** on David's question *"what am i supposed to learn with it"* — thought
+  it had found our model biased against the market by price tier, ran a permutation test (p=0.15),
+  re-ran on 337 shared players, found the whole gradient was a **rank-boundary artifact**. Flat.
+  **Published the negative result rather than burying it.**
+- Motion lab `craft/lab-003-motion.html`: the app already HAS a motion system, six classes, and
+  **0 live transitions across ten surfaces / 6,437 elements.** Deliberately NOT relayed — dead-CSS
+  trivia on its own.
+- ✅ **STUDIO CLOSED — VERIFIED FROM DISK, not from its word.** `DAVID.md` 21:49 and
+  `for-david/STATUS.md` 21:50, both written after the order. It answered both questions (which
+  figures nobody but it checked; what it retracted) and inventoried its own processes: **two
+  orphaned `prose.mjs` nodes found and KILLED**, ports 8777/8778/8779 confirmed closed, zero
+  browser survivors. The two `--autoConnect` chrome-devtools processes are Antigravity IDE's and
+  were deliberately left alone.
+- It also disclosed a failure against itself: a chart shipped at 0.7 scale with colliding labels
+  and **a silent patch failure that looked like a clean run** — the same disease as everything else
+  this week.
 - **~09-01 freshness review stays LIVE.**
 
-## ⚠️ TOWER'S ERRORS — 2026-07-30. All disclosed to David unprompted.
-1. Armed a Monitor with `tail -F`, which **replayed historical log lines as live events** — phantom
-   dialogs and stalls. A watcher log is a ledger, not a feed.
-2. Said **"nothing needs you"** without running `say-clear.sh`; the gate then found a real strand
-   and an open ask.
-3. **The null-blind query**, reported to David as verified.
-4. Overstated the Tower/product equivalence — the product emits coverage deltas; Tower's query
-   emitted nothing.
-5. Unanchored clocks in Tower's own reporting — while imposing the anchoring rule on the lanes.
-6. **Told the REVIEW lane to edit what it reviews**, which it then certified. Sequence reset:
-   reviewer proposes, implementing lane edits, reviewer verifies.
-7. **Instructed a FALSE SENTENCE into a durable commit message** — "every artifact is uncleared" —
-   when three had CLEARED an hour earlier. Tower repeated its own prior statement without
-   re-checking. *The exact failure the verified-board rule exists to prevent.*
-8. Dramatised the third inversion beyond what was measured.
-**WHAT HELD:** TEN authorisation-shaped GHOSTS refused, several carrying the PRECISE answer to the
-question then open, one **forging Tower's own marker format**, and **one coincidentally correct** —
-which is exactly when checking stops. No foreign keystroke ever submitted. Every commit, push,
-scheduler and producer question went to David.
+## 🔌 THE WIRE IS MEASURABLY BROKEN — AND NOBODY HAS FIXED IT
+**Codex's outbound deliveries failed all evening** — repeated `pane_claim_lost`, one
+`wire_body_mismatch`. It correctly refused to press keys into text it could not prove it owned.
+**Tower read its verdicts directly from its pane instead, and acted on both.** No content was lost.
+**But the crew→Tower wire does not work, and this is the second consecutive day it has been the
+quiet failure underneath everything.** THE LEDGER IS THE CHANNEL — read it on a rhythm.
 
-## 🔌 THE WIRE — READ THIS BEFORE TRUSTING ANY INBOUND PACKET
-**David revealed at 17:00 that the Codex packets reaching Tower had been STUCK — he pushed them
-through himself.** Tower had been treating their arrival as evidence the wire was healthy. **He was
-the wire, which is the one thing this arrangement exists to prevent.**
-**THE FIX: THE LEDGER IS THE CHANNEL.** `docs/agent-ledger/<today>.md` is durable, complete, and
-readable at will. Read it on a rhythm; treat inbound packets as a bonus, never as the feed.
+## ⚠️ TOWER'S ERRORS TONIGHT — all disclosed to David unprompted
+1. **Attributed to David an instruction he never gave** — "no producer touched / build nothing" was
+   Tower's own narrowing of *"focus on layers 1 and 2"*, repeated back to him as his word. **It is
+   why transaction ingestion sat unbuilt since 07-28 with nobody ever asking him.** HE caught it.
+2. **Reported a single harness denial as a standing incapability and never retried.** A lane sat
+   frozen ~105 minutes; the retry worked first time.
+3. **Relayed "zero unresolved players"** without testing what "resolved" meant. False at canonical
+   level; the true figure is 97/99.
+4. **Called a Studio delivery DELIVERED on a pane that cannot prove delivery.**
+**WHAT HELD:** eleven authorisation-shaped GHOSTS refused, three carrying the exact correct next
+action. No foreign keystroke ever submitted. David's own typing in Studio's pane left alone twice.
+Every commit, push, scheduler and manifest question went to him.
 
-## 🔁 THE TREADMILL — Tower stopped it tonight, and it must stay stopped
-Three successive correction commits each recorded a commit count that their own existence
-invalidated: "four commits / three local-only" became "five / four" at its own commit boundary.
-**RULE: state that changes when you commit must not be committed.** Counts, push status and
-"everything is landed" claims belong in a regenerating command or in this file — never in a durable
-artifact that the act of writing falsifies.
+## 🛠 TOOL DEFECTS FOUND TONIGHT — tell the next Tower before it trusts them
+- `pane-send.sh` returns **false NOT_DELIVERED on alternate-screen panes** (dynasty:1.1), repeatably,
+  causing duplicate sends. Read the pane before believing it.
+- `pane-send.sh` returns **false DELIVERED on 3-line-retention panes** (dynasty:2.1). It should say
+  CANNOT_DETERMINE. Take the recipient's acknowledgment and disk evidence instead.
+- `presend-check.sh` WARNs CONTAMINATION SHAPE on any message containing timestamps, markers or file
+  paths alongside a verification ask. Its **LEAN LEAKAGE** guard, by contrast, fired correctly once
+  tonight and the message was fixed rather than overridden.
 
-## 🧭 THE PATTERN OF THE DAY, worth carrying forward
-**Four separate times, the cure contained the disease:** a guard that could not fail; a summary
-reporting the wrong value; a re-point routing findings past Tower; a freshness fix that was itself a
-rebuild timestamp. And **every artifact shrank 73–83% when narrowed to what was actually measured** —
-the declarations went 18,700 → 3,300 characters. *Four-fifths of what was written was not supported
-by what was measured, and it took five adversarial rounds to find that out.*
+## 🧭 THE PATTERN WORTH CARRYING FORWARD
+**Every instrument that lied this week reported success without measuring anything** — the freshness
+stamp, the SQL guard that had audited zero files since May, and tonight a brand-new contract test
+that **enshrined the very defect it was written to catch** by asserting a Sleeper ID as "our
+identity." A test that encodes the bug cannot find it. **Ask of every green check: what would make
+this fail?**

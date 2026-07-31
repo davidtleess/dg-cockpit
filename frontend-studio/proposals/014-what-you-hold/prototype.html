@@ -74,6 +74,19 @@ h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;
   display:flex;flex-wrap:wrap;gap:var(--s4);font-family:var(--f-mono);font-size:var(--t-sm);color:var(--muted)}
 .provenance span b{color:var(--text);font-weight:500}
 
+/* ----------------------------------------------------------------- verdict */
+/* The page's thesis about the roster as a whole, which it previously made the
+   reader derive by comparing 23 connectors. FIXED SHAPE every day — the same
+   clauses in the same order, only the numbers and names moving — so a day with
+   one split and a day with nine render identically and the reader finds the
+   anomaly instead of being told it (2026-07-21). */
+.verdict{margin-top:28px;padding:var(--s4);border:1px solid var(--border);
+  border-radius:6px;background:var(--surface)}
+.verdict .vlead{margin:0;font-size:var(--t-base);line-height:1.6;max-width:76ch}
+.verdict .vlead b{font-weight:600}
+.verdict .vlead .o{color:var(--model)} .verdict .vlead .k{color:var(--market)}
+.verdict .vlead em{font-style:normal;color:var(--text);font-weight:600}
+
 /* ------------------------------------------------------------------ groups */
 .group{margin-top:44px}
 .ghead{display:flex;align-items:flex-start;gap:var(--s3);margin-bottom:var(--s3)}
@@ -105,7 +118,7 @@ h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;
    than a stack of differently-sized boxes. */
 .row{display:grid;grid-template-columns:66px minmax(148px,1fr) minmax(300px,2.2fr) 172px;
   align-items:center;gap:var(--s3);width:100%;min-height:56px;text-align:left;
-  background:none;border:0;border-bottom:1px solid var(--border);
+  position:relative;background:none;border:0;border-bottom:1px solid var(--border);
   color:inherit;font:inherit;padding:var(--s2);cursor:pointer}
 .row:hover{background:var(--surface)}
 .row:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
@@ -212,6 +225,15 @@ h1{font-family:var(--f-display);font-size:var(--t-display);font-weight:700;
   <h1>What you hold</h1>
   <p class="lede" id="lede"></p>
   <div class="provenance" id="prov"></div>
+
+  <section class="verdict" id="verdict" aria-labelledby="vh">
+    <h2 id="vh" class="visually-hidden"
+        style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">
+      Where the two boards agree</h2>
+    <p class="vlead" id="vlead"></p>
+  </section>
+
+
   <div id="groups"></div>
 
   <div class="foot">
@@ -310,6 +332,7 @@ document.getElementById('limits').innerHTML =
   `of opinion, never news.`;
 
 const root = document.getElementById('groups');
+const GROUPS = [];
 
 for (const g of H.groups){
   const sec = document.createElement('section');
@@ -338,6 +361,7 @@ for (const g of H.groups){
      <div class="rows"></div>`;
 
   const rows = sec.querySelector('.rows');
+  const items = [];
 
   g.players.forEach(p => {
     const ourX = p.tieSpan ? x(p.tieSpan.hi, g.n) : x(p.drank, g.n);
@@ -436,10 +460,74 @@ for (const g of H.groups){
     });
 
     rows.append(btn, exp);
+    items.push({ p, btn, exp });
   });
 
+  GROUPS.push({ g, rows, items });
   root.append(sec);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   THE VERDICT — where the two boards actually stand on this roster.
+
+   WHY IT EXISTS. The page drew 23 disagreements and gave every one the same
+   weight, leaving the reader to work out that most of them are agreements. That
+   is a surface displaying data rather than carrying a thesis.
+
+   WHY THIS DEFINITION OF "DISAGREEMENT" AND NOT A SIZE. Three thresholds were
+   tested and two were thrown away:
+     - a raw rank gap is not comparable across positions (36 of 140 WRs is not
+       36 of 45 QBs);
+     - a TIER crossing catches 16 of 23, because tiers are 12 wide and a 3-rank
+       gap crosses one — Omar Cooper crosses on a gap of 3;
+     - the percentile-gap distribution is a smooth continuum with no natural
+       break, so any cut in it would be invented.
+   What is left is a CONSEQUENCE rather than a size: do the two boards land on
+   opposite sides of a line that decides something? This league's own structure
+   supplies exactly two — the weekly-starter cut and replacement level — and the
+   page already draws both. It speaks the domain's units instead of an
+   optimiser's.
+
+   ITS OWN LIMITATION IS ON THE SURFACE. Any line splits two ranks that sit
+   either side of it however close they are, so the distance is printed on every
+   split and the reader is told to read the distance, not the fact.
+   ═══════════════════════════════════════════════════════════════════════════ */
+{
+  /* ONE SENTENCE. The first version of this block led with a summary statistic
+     ("17 of your 23 agree"), listed six splits as cards, then had to explain that
+     two of them were 2 and 4 ranks apart and therefore not really disagreements —
+     and every card teleported the reader down a long page when clicked.
+     David: "not telling me anything… very long page… the snap from the card at the
+     top to the lower end of the page is like pulling a parachute while skydiving."
+     All three faults were the same one: the block was ARGUING FOR a statistic
+     instead of stating the finding. The finding is three names.
+
+     The cut is the weekly-starter line only — the one with a consequence a manager
+     acts on. Replacement-level splits are dropped from the headline because on this
+     roster two of the three are 2 and 4 ranks either side of the line, which is
+     arithmetic rather than a difference of opinion. Nothing here is a jump target. */
+  const starts = [];
+  for (const { g, items } of GROUPS){
+    const S = g.weeklyStarts;
+    for (const { p } of items){
+      if ((p.drank <= S) === (p.mrank <= S)) continue;
+      starts.push({ p, g, mkt: p.mrank <= S, d: Math.abs(p.gap) });
+    }
+  }
+  starts.sort((a,b) => b.d - a.d);
+  const mkt = starts.filter(s => s.mkt);
+  const name = s => `<em>${s.p.name}</em>`;
+  const list = a => a.length === 1 ? name(a[0])
+    : a.slice(0,-1).map(name).join(', ') + ' and ' + name(a[a.length-1]);
+
+  document.getElementById('vlead').innerHTML = mkt.length
+    ? `The market has <b>${mkt.length}</b> of your players in a weekly starting slot that our model
+       does not: ${list(mkt)}. Everywhere else the two boards put you on the same side of starting
+       and of replacement level.`
+    : `Our board and the market's put every one of your players on the same side of starting and of
+       replacement level. Nothing splits.`;
+}
+
 </script>
 </body>
 </html>

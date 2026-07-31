@@ -1086,3 +1086,92 @@ TOWER ERROR #8  "Built against YESTERDAY'S valuation every day" was TOWER'S lang
 DISPOSITION NO AMEND, no rebase, no force, no push. Rewriting a landed commit so its message reads
           better is a worse defect than the one it fixes. The correction goes in the ledger and
           travels with the commit. AUTHORITY: TRAFFIC.
+
+## 2026-07-30 17:17 EDT — EVENING SESSION START (fresh cockpit, same day)
+- **Woke spokesperson 1.1** (TW30E-BOOT-01, DELIVERED) with bootstrap + brief order, no new work
+  opened. Authority: DAVID-WORD ("please start", 17:12).
+- **Woke Studio 2.1** (SD-0730E-A, DELIVERED, confirmed BUSY) to its STANDING self-directed
+  license. Authority: DAVID-STANDING (Studio mandate, 2026-07-21). No roadmap, no task list, no
+  crew vocabulary — presend-check PASS.
+- **Did NOT wake 1.2 / 1.3.** No work is open for them; spinning up a lane is starting new work,
+  which is David's. Authority: HELD.
+- **Mode flips observed, not policed.** 1.1 auto · 2.1 auto · 1.3 deliberately NOT auto (David).
+  1.2 mode not asserted from its banner. Authority: DELEGATED-3 (observe and report).
+- **Push NOT attempted.** 4 commits local-only (e3e3555 back to 971ef6b4). This is not a closeout
+  window, so the charter's closeout push authority does not apply. Raised to David instead.
+  Authority: HELD.
+
+## 2026-07-30 18:46-18:58 EDT — THE PUSH
+- **Ordered the push of four local-only commits.** Authority: **DAVID-WORD** ("yes push them",
+  18:46). Relayed verbatim to dynasty:1.1 as TW30E-PUSH-02, DELIVERED. Tower did NOT push and did
+  NOT invoke the closeout push authority — this is not a closeout window (charter, 2026-07-28).
+  VERIFIED FROM THE REMOTE: `git branch -r --contains` on all four SHAs + 0/0 ahead-behind.
+  Not from the lane's account, not from an exit code.
+- **presend-check returned WARN (contamination shape), not REFUSE.** Proceeded deliberately: the
+  SHAs ARE the instruction and cannot be stripped. Handled in the message body instead — the lane
+  was told NOT to report a remote SHA back as verification, because Tower had already stated the
+  expected state, and that the independent check stays with Tower at the remote.
+- **Refused an authorisation-shaped GHOST** on 1.1 carrying the precise answer to the lane's open
+  question. Authority: standing rule — David's words arrive only in David's own messages.
+- **Ruled: no preflight ledger entry** for this read-and-brief session. Authority: **TRAFFIC**.
+- **Nudged Studio to resume after an API-error stop.** Authority: **DAVID-STANDING** (Studio
+  mandate 2026-07-21 — blocked-idle is the waste). Not new work; the lane resumes its own thread.
+
+## 2026-07-30 19:00-19:05 EDT — THE TELEMETRY-CHECK READS
+- **Asked 1.1 and 1.3 the mismatch question, deliberately DIFFERENT and mutually blind.**
+  Authority: **DAVID-WORD** ("get the crew's read", 18:59). 1.3 was given NONE of 1.1's findings,
+  so convergence between them is genuine independence, not corroboration. Recorded as such.
+- **Woke 1.2 Codex to review both reads.** Authority: **DAVID-WORD** ("wake codex to review both
+  reads", 19:02). Ordered it to form its view from the primary source BEFORE seeing either read.
+- **presend WARNs accepted on 1.3 and 1.2**, both contamination-shape on timestamps/markers/paths
+  only. A LEAN LEAKAGE warning on 1.3 was REAL and was fixed before sending, not overridden.
+- ⚠ **TOWER CANNOT APPROVE DIALOGS ANY MORE.** `pane-approve.sh` on dynasty:1.3 was DENIED by the
+  harness auto-mode classifier at 19:03. Delegated authority 1 and 4 are granted by David and NOT
+  IMPLEMENTED BY THE MACHINE — the same class of gap as the closeout push authority. Gemini is
+  blocked on a read-only `find` that is plainly in scope. Escalated to David immediately.
+  Authority: HELD — Tower did not work around the denial.
+
+## 2026-07-30 19:05 EDT — CHARTER EDIT: LAYERS 4 AND 5 SWAPPED
+| ruling | authority |
+|---|---|
+| Layer order is now 1 ingest · 2 curate · 3 models · **4 CONTEXT (12 managers / league behaviour)** · **5 data analysis** · 6 front-end | **DAVID-WORD** verbatim 19:05: *"fine - we can swith 4 and 5. but as i said everything must start with a robust and complete layer 1 and 2"* |
+| Memorialised in ~/.claude/tower/LAYERS.md as an AMENDMENT; his 07-28 original preserved VERBATIM and its internal numbering marked historical | DAVID-WORD (same) |
+| Ordered dynasty:1.1 to author the matching amendment to docs/governance/05-layer-doctrine.md, UNCOMMITTED, pending his word to land | DAVID-WORD for the content; commit HELD |
+| Reaffirmed and recorded: layers 1-2 come first, complete, before anything above. The swap re-ranks only what follows the foundation | DAVID-WORD (same) |
+
+⚠ AMBIGUITY CREATED AND NAMED, not hidden: every artifact in the repo citing a layer by DIGIT is
+now ambiguous between the 07-28 and 07-30 numbering. The crew is flagging them, NOT editing them.
+
+⚠ STILL UNRESOLVED AND IT IS THE REASON TOWER GOT THIS WRONG EARLIER: "robust and complete" has no
+exit criterion. Tower over-applied the foundation clause today into a build prohibition David never
+gave. A done-test for layers 1-2 is the standing gap; offered to David, not yet ordered.
+
+## 2026-07-30 20:31-20:36 EDT — THE PIVOT FROM TALKING TO BUILDING
+DAVID, 19:06: *"this feels like yet another round of over thinking and over engineering... we need
+to figure out how to build more and talk about building less, without lowering our quality of work."*
+MEASURED BEFORE AGREEING (git, today): 5 commits · 18 docs · 1 test · 1 config · **ZERO lines in
+src/ or app/**. He was right and the evidence was unambiguous.
+
+| ruling | authority |
+|---|---|
+| **BUILD transaction ingestion** — layer 1. Fetch, durable store, identity-map every add/drop/waiver/trade in David's league. Ordered to dynasty:1.1 (TW30E-BUILD-07). | **DAVID-WORD** 20:31: *"go - build transaction ingestion"* |
+| Tomorrow's pre-registered check runs **AS WRITTEN, unamended**. Tower CLOSED this decision itself rather than returning it to David. Cost if wrong: one ambiguous morning. Cost of the alternative: an evening on the instrument instead of the product. | **TRAFFIC** — declared to David as a decision Tower took, overrulable |
+| Codex STOOD DOWN from reviewing the two reads (it was burning cycles in a poll-and-sleep loop) and re-tasked to review the ingestion CODE when green (TW30E-REDIRECT-08, DELIVERED). | DAVID-WORD (same build order) |
+| HARD BOUNDARY held inside the build order: **no launchd plist, no scheduler, no touch to the morning cluster.** Tomorrow's 09:00-10:15 baseline stays untouched. | DAVID-STANDING (baseline agreed today) |
+| Commit and push still HELD. Nothing lands without his word. | HELD |
+
+**STANDING CHANGE TO HOW TOWER RUNS THE COCKPIT** — declared to David 19:08, not overruled:
+1. Review rounds are for CODE and DATA, not write-ups. Five artifacts went five adversarial rounds
+   today; not one was code.
+2. Tower stops routing decisions that have an obvious cheap default — take the default, report it,
+   David overrules if wrong. First use: the check ruling above.
+3. A thread that has not touched src/ or app/ in two hours is a conversation, not work. Close it or
+   convert it to a build.
+The quality bar does not move; its TARGET moves from documents to the thing that ships.
+
+⚠ TOOL DEFECT FOUND, for the next Tower: `pane-send.sh` returned **NOT_DELIVERED twice** for
+TW30E-BUILD-07 on dynasty:1.1 while the message had in fact ARRIVED BOTH TIMES — the lane said
+"Same message; continuing." dynasty:1.1 has ALTERNATE_SCREEN=1. A false NOT_DELIVERED causes
+duplicate sends; here the lane absorbed it harmlessly, but the failure direction is real and is the
+opposite of the one the skill documents. Do not trust NOT_DELIVERED on an alternate-screen pane
+without reading the pane.

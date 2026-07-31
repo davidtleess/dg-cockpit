@@ -20,6 +20,22 @@ session start.
 
 ## DELIVERED — curated to disk
 
+- **`craft/the-falsifiability-test.md`** (2026-07-30 evening, self-directed) — **three composition
+  hypotheses measured and refuted in one night, kept because the refutations are the finding.**
+  Extent (`tools/screenfuls.mjs`): the page David called *"very long"* is **3.84 screens**, the one he
+  called *"awesome"* is **4.64**, and the site he sent as a good example is **10.52** — length does not
+  separate his reactions. Column structure: refuted by looking (his approved surface is a single
+  column of repeated rows, same as the rejected one). Row distinguishability (`tools/row-variance.mjs`,
+  validated both directions at 0.00 / 1.07): **006 reads 0.36, 014 reads 0.34** — the instrument was
+  built to prove a hypothesis and **reported no separation, which was published rather than tuned
+  away.** What survived is a one-line test — ***could the product be wrong about this sentence?*** The
+  live app's front door carries **42 strings of >=3 words and not one could turn out to be wrong.**
+  Names the trap: Studio inherited the app's *structure* in July and its **voice** in the same month.
+  Carries David's `she-displaced` reference distilled to the four-part figure header (kicker · concept
+  title · decoder line · **the highlight rule stated out loud**, a device Studio had never used) and
+  the slope chart as the population-scale form for rank disagreement. Demo:
+  `craft/lab-004-the-claim-and-the-crossing.html` (**first cut — ungated**).
+
 - **`craft/colour-encoding-system.md`** (2026-07-29, **authorised by David**: *"you can create the apps
   color scheme and encoding if you have a strong set of research and ideas and thinking behind it"*) —
   the full scheme. **Load-bearing finding: the product's four shipped position hues FAIL the validator,
@@ -47,6 +63,22 @@ session start.
   entirely), both fixed and **verified by re-running the test rather than by looking once**. Also
   carries NN/G's *proximity before borders*, recorded as **untested against 014's 23 row rules** rather
   than applied on faith.
+
+- **`craft/motion-on-a-resort.md`** (2026-07-30) — motion checked against the running app for the
+  first time, and the finding is not the one expected. **The app is not missing a motion system; it
+  has a good one and has not wired it up.** `frontend/src/styles/motion.css` is Carbon-derived, cites
+  Heer & Robertson and defines six classes; a grep of the whole frontend finds `dg-motion-*` in **one
+  component**, and the census measures **0 live transitions across ten surfaces** (`tools/motion-census.mjs`).
+  The unused one that matters is `.dg-motion-row-settle`, *"row sort/filter settle"* — on a product
+  whose standing doctrine is that views are filter+sort states over one list. **Measured before
+  designed** (`tools/sort-displacement.mjs`): 76% of rows change place on a re-sort, but displacement
+  is a function of GROUP SIZE and only the twelve-deep WR group is deep enough to lose a row in — so
+  duration binds to travel off the app's own ladder instead of a special case per group. Demo:
+  `craft/lab-003-motion.html`, three panels on one scrubber, where the **cross-fade control (opacity
+  0.000 at the midpoint) is worse than no animation at all** — the lab's actual argument: the
+  ingredient is continuity, not motion. Carries the refusal (**a row's position is ordering; a mark's
+  position inside its track is a value** — tweening the second printed *"our 29"*, a rank nobody holds)
+  and a reduced-motion substitute that renders what moved rather than deleting the feedback.
 
 - **`craft/premium-surface-technique.md`** (2026-07-29) — the gap that caused 012 and 013 to land at
   "not awesome" with every check passing: Studio's surfaces are flat because it concluded "the product
