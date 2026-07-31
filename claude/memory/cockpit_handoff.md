@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: ada58724-3056-4f29-9ca1-69467fd8fcd4
-  modified: 2026-07-31T01:55:34.195Z
+  modified: 2026-07-31T01:56:22.004Z
 ---
 
 # Cockpit handoff — 2026-07-30 LATE EVENING → the session David starts TONIGHT
@@ -20,6 +20,11 @@ David **rotates sessions mid-work**. He killed the previous cockpit at ~17:10 an
 one immediately; he is doing it again now, around 22:15, and **works until ~23:00–23:30 ET.**
 So: a fresh cockpit is NOT a new day. Today's ledger is long and already closed twice. Do not run a
 morning brief. Read the ledger, state the board, and ask what he wants.
+
+> **THE FIRST ACTION OF YOUR SESSION IS ALREADY DECIDED: relay Studio 016 to the crew.**
+> David asked whether it was ready, Tower checked the artifact and cleared it, and he agreed it goes
+> at startup. Full mechanics and both carry-forward flags are in **DAVID'S OPEN BOARD item 1**.
+> Do not re-litigate it and do not re-read it for merit — merit is David's, and he has the file.
 
 ## ⭐ FIRST THINGS, NEW TOWER — IN THIS ORDER
 1. Invoke `cockpit-observation` before anything. Five parts.

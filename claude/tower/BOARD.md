@@ -467,3 +467,22 @@ TOWER'S ERRORS TONIGHT, all disclosed to David unprompted:
 TOOL DEFECTS FOUND  pane-send.sh false NOT_DELIVERED on alternate-screen panes (repeatable, caused
   duplicate sends) and false DELIVERED on 3-line-retention panes. Both are the verifier being more
   confident than the evidence allows, in opposite directions.
+
+# ============ 21:57 — STUDIO 016 CLEARED, AND IT IS THE NEXT SESSION'S FIRST ACTION ============
+DAVID    Asked at 21:54 whether 016 is ready for relay at startup. Tower READ THE ARTIFACT and judged
+         it rather than asserting from the earlier hold.
+VERDICT  READY. Quality floor PASSED — exact file/line refs, reproducible SQL, it argues against its
+         own case and quotes the WEAKER figure, and it explicitly refuses the overclaim ("not a claim
+         the model is broken"). Design merit remains DAVID'S at the gate; Tower judged reviewability.
+FRAMING  CROSS-CHECK FIRST, fix request second — stated explicitly in the relay so the crew does not
+         reorder its priorities around a layer-6 bug.
+TWO FLAGS CARRIED  (1) its live figures are from 11:21 TODAY; the crew must RE-MEASURE, not quote
+         them. (2) It mixes layers: the FIX is layer 6, but the EVIDENCE — model lane silent on 33 of
+         36 overnight transitions vs the market lane moving all 36 — is layer 1/2 and independently
+         corroborates the crew's whole diagnosis from OUTSIDE. The evidence is why it goes now.
+HOLD RETIRED  The 11:25 hold existed to stop an independent measurement becoming an echo while the
+         crew diagnosed the same question. Their investigation is filed and pushed; the reason is spent.
+015      NOT cleared. Layer 6, still broken next week, waits for the foundation to reach a stop.
+MECHANICS Written into the handoff in full so the next Tower does not re-litigate a settled question:
+         Tower delivers to all three crew panes and verifies POSITIVELY, then sends Studio a
+         MECHANICAL ack only. David is the gate, never the wire.
