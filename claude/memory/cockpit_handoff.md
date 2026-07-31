@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: handoff
   originSessionId: ada58724-3056-4f29-9ca1-69467fd8fcd4
-  modified: 2026-07-31T01:52:21.574Z
+  modified: 2026-07-31T01:55:34.195Z
 ---
 
 # Cockpit handoff — 2026-07-30 LATE EVENING → the session David starts TONIGHT
@@ -134,10 +134,49 @@ Plus: picks recorded the acquisition but not the SEND side, so "what every manag
 ---
 
 ## ▶️ DAVID'S OPEN BOARD — in the order Tower would raise it
-1. **RELAY STUDIO 016 — he agreed, at the start of the fresh session.** Studio measured the front
-   door and found the model lane silent on **33 of 36 overnight transitions** while the market lane
-   moved every morning — the same defect the crew diagnosed, found independently from outside.
-   Relay as a **CROSS-CHECK**. `~/frontend-studio/proposals/016-RELAY.md`.
+
+### 1. ⭐ RELAY STUDIO 016 — THIS IS THE FIRST ACTION OF THE SESSION. DAVID AGREED.
+**He asked "is 016 ready for relay at startup?" at 21:54 and Tower checked it against the quality
+floor rather than asserting. VERDICT: READY. Do not re-litigate it; relay it.**
+
+**File:** `~/frontend-studio/proposals/016-RELAY.md` (5,095 bytes, written 11:21 today).
+Supporting: `016-the-silent-lane.md`, and `016-silent-lane/{figure.html,lanes.json}`.
+
+**MECHANICS — Tower does the delivery, David is the gate and never the wire.** Send to ALL THREE
+crew panes: `From Studio — review ~/frontend-studio/proposals/016-RELAY.md and respond per the
+standing protocol`. Verify each POSITIVELY (marker in transcript, never an empty composer). Then
+send Studio a MECHANICAL ack only — `016 relayed to crew`, nothing more, no crew or governance
+content. Then confirm to David.
+
+**FRAME IT AS CROSS-CHECK FIRST, FIX REQUEST SECOND — say so explicitly in the relay**, so the crew
+does not reorder its own priorities around a UI bug. Reason below.
+
+**WHAT IT SAYS, in one line:** the app has a built, populated 27-row "quiet-day baseline" view of
+David's roster for mornings when the model has nothing to say — and it can NEVER render, because the
+gate also requires the MARKET to have been silent. The market moved on 36 of 36 mornings.
+
+**WHY IT PASSED THE QUALITY FLOOR** (Tower judged reviewability, NOT design merit — merit is David's):
+exact file and line refs; reproducible SQL the crew can run itself; **it argues against its own
+case** ("two of the three model changes may be initialisation… we quote the weaker figure"); it
+explicitly REFUSES the overclaim ("this is not a claim that the model is broken — a dynasty valuation
+should be stable"); every finding ends "confirm, fix, or refute with a concrete technical reason."
+
+**TWO FLAGS TOWER GAVE DAVID, CARRY BOTH INTO THE RELAY:**
+- ⚠ **Its live figures are from 11:21 THIS MORNING** (`top_movers 25`, `roster_deltas 26`,
+  `model.deltas 0` → moveCount 51). **Tomorrow's 09:00 run will move them. Tell the crew to
+  RE-MEASURE, not to quote Studio's numbers back.**
+- ⚠ **It mixes layers, and that is exactly why it goes now.** The FIX is layer 6. The EVIDENCE —
+  model lane silent on 33 of 36 overnight transitions, last change 2026-07-10, while the market lane
+  moved every single morning — is **layer 1/2, and it independently corroborates the crew's entire
+  diagnosis from outside.** The evidence is the value; whether the front-end fix jumps the queue is
+  **David's sequencing call, not Studio's and not the crew's.**
+
+**WHY IT WAS HELD UNTIL NOW, so nobody re-opens the question:** Tower held it deliberately at 11:25
+because the crew was diagnosing that exact question at that moment and relaying it would have turned
+an independent second measurement into an echo. **That reason is now SPENT** — their investigation is
+filed, committed and pushed. It goes as the cross-check it was always meant to be.
+
+**015 IS NOT PART OF THIS.** See item 2.
 2. **015 stays parked** — flagship player card renders unlabelled concatenated values. Layer 6; it
    will still be broken next week.
 3. **The producer-scope ruling** — splitting fetch from derive so the morning is a dependency chain

@@ -1175,3 +1175,15 @@ TW30E-BUILD-07 on dynasty:1.1 while the message had in fact ARRIVED BOTH TIMES �
 duplicate sends; here the lane absorbed it harmlessly, but the failure direction is real and is the
 opposite of the one the skill documents. Do not trust NOT_DELIVERED on an alternate-screen pane
 without reading the pane.
+
+## 2026-07-30 21:56 EDT — STUDIO 016 CLEARED FOR RELAY AT NEXT SESSION START
+| ruling | authority |
+|---|---|
+| 016 is READY and is the FIRST action of the next session | **DAVID-WORD** — he agreed to relay at startup (21:12) and asked "is studios 16 ready for relay at startup?" (21:54) |
+| Tower judged the QUALITY FLOOR only — reviewable, scoped, claims marked as claims, self-argued against, no decided-language. **Design/product merit is DAVID'S at the gate, never Tower's** | TRAFFIC (containment duty, Studio mandate 2026-07-21) |
+| Relay framed **CROSS-CHECK FIRST, fix request second**, with an explicit instruction that the crew RE-MEASURE rather than quote Studio's 11:21 figures | TRAFFIC |
+| The 11:25 hold is RETIRED — it existed to stop an independent measurement becoming an echo while the crew diagnosed the same question. Their investigation is filed and pushed | TRAFFIC |
+| Tower does the delivery to all three crew panes and sends Studio a MECHANICAL ack only. **David is the gate, never the wire** | DAVID-STANDING (transport-layer rule) |
+| **015 NOT cleared** — layer 6, will still be broken next week, waits for the foundation to reach a stop | HELD |
+Full mechanics, both flags, and the reason for the original hold are written into the handoff so the
+next Tower does not re-litigate a question David has already answered.

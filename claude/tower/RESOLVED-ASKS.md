@@ -22,3 +22,27 @@ EVIDENCE   Tower did not take the citation on trust. Tower opened 2026-07-26.md 
            and closed the item on its own side.
 WHY IT     Gemini quoted the ask as a header immediately before answering it, so the ask text
 STUCK      appears AFTER its reply. No heuristic could have separated that from silence.
+
+## 2026-07-30 22:12 — two closeout-check FAILs retired WITH EVIDENCE, not talked past
+
+**FAIL: `dynasty:1.3` holds a REAL STRAND (`[Pasted text #1 +35 lines]`).**
+- SENDER: dynasty:1.1, coordinating the crew flush as spokesperson. Not Tower's, not submitted.
+- WHY IT IS RETIRED RATHER THAN RE-SENT: the need it carries is ALREADY MET. Tower sent Gemini its
+  own closeout order directly (TW30E-CLOSE-15, DELIVERED and marker-verified) precisely because 1.3
+  was sitting idle unasked, and **Gemini's postflight is IN today's ledger at 21:46** — read and
+  verified by Tower at source, answering both questions plus the league-capture gap.
+- Re-sending would produce a SECOND postflight for one lane. The loop was closed to the sender.
+- Tower did NOT press Enter on it. It dies with the session, which David is rotating within minutes.
+
+**FAIL: `dynasty:1.2` open ask — "PLEASE REPLY with (a) your postflight appended to today's ledger".**
+- FALSE POSITIVE, and the evidence is durable: **Codex's postflight is in today's ledger at 21:47**
+  (`TW30E-FLUSH-14 postflight, closed — parked`), read in full by Tower. It answers both questions,
+  names every parked item with its gate, and declares zero background processes.
+- The sweep flags the REQUEST text still visible in the pane; it cannot see that the ANSWER went to
+  the ledger rather than back up the wire. That is the correct conservative behaviour for the tool.
+
+**Both FAILs are therefore STALE, not open.** Recorded here rather than dismissed, because the
+alternative to a noisy gate must never be a quiet one.
+
+**NOT retired, and it is real:** the crew→Tower wire is broken (`pane_claim_lost`,
+`wire_body_mismatch` all evening). Both of tonight's stranded/failed deliveries are symptoms of it.
