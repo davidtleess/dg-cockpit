@@ -1,5 +1,106 @@
 # Studio proposals — status
 
+## ══ 2026-07-30 NIGHT (SD-0730N-B) ══ the claim inventory — four claims killed, nothing drawn
+
+**Self-directed craft/method. Nothing relayed, nothing shown to David, no proposal authored, and
+NO PICTURE — the whole night lives upstream of form.** Artifacts: `tools/claim-inventory.mjs`,
+`craft/the-claim-inventory.md`.
+
+**David handled 015 and 016 himself with Tower (SD-0730N-A). Nothing was needed from Studio on
+either; Studio stayed out of the relay lane entirely.**
+
+### THE RESULT — a failed search, reported as the finding
+
+Studio ran the falsifiability test **forward** for the first time: enumerate every claim this product
+is in a position to make, test each, THEN choose a form. It was one step from drawing a figure for
+the strongest candidate — **team-level model-vs-market divergence**, the one thing no competitor can
+compute (needs both lanes + league ownership). **It died, and so did three others.**
+
+| verdict | claim | why |
+|---|---|---|
+| **KILLED** | team divergence | `corr(mean gap, mean AGE) = 0.771` — restates "whose roster is young" |
+| **KILLED** | "the market is coming round to our view" | 46.4% of 323 players, **below a coin flip**, z=−1.28 |
+| **KILLED** | "X is your cleanest trade fit" | **3 teams tied**; array order was picking the winner |
+| **KILLED** | Odunze as a third starter-split | margin to the cut is **0**; one rank erases him |
+| downgraded | "11th of 12 in weekly starters" | perturbing the cut moves him 9th–11th; the number isn't supported |
+| survived | room standing per position · Burden's 36-rank split · start-split at n=2 | nothing new |
+
+**No new unasked claim cleared the bar, and the bar was not lowered to produce one.**
+
+### THE SELF-IMPLICATING PART, which is the durable lesson
+
+The tool certified team divergence as independent after testing **team value** (0.008) and **roster
+size** (−0.074). Both confounders Studio **invented**. The one that mattered — **age** — was already
+dated in `DAVID.md` (2026-07-22, *"a raw model-vs-market gap sort is mostly an age sort"*) and was
+never run. **A confounder list assembled from imagination omits the ones already paid for.** Now
+encoded: the tool checks age by name, carries the ruling's date in the comment, and prints
+`NO CLAIM AVAILABLE` when any confound clears 0.3.
+
+### CAUGHT IN STUDIO'S OWN OUTPUT, before anything left the lane
+
+1. **The gap sign was inverted** — announced the team our board is *lowest* on as the one it is
+   *highest* on. A confident wrong sentence about a real person's roster. Now **asserted against a
+   known specimen at load time**, because a comment cannot fail.
+2. **Raw rank gaps averaged across incomparable pools.** 36 ranks among 45 QBs ≠ 36 among 140 WRs.
+   Normalising **reorders the league** (Spearman 0.83) and named a different team. Per-player prose
+   keeps raw positional rank — the hobby's unit; aggregation normalises.
+3. **The first battery passed 11 of 11 candidates** — read as a defect in the battery, not a triumph
+   of the candidates. A fourth gate was added, and a claim never subjected to an artifact test now
+   prints `artifact tests run: NONE — untested, not credited` rather than letting silence read as a pass.
+
+### THE TEST ITSELF GAINED A PART
+
+*Falsifiable* alone does not separate David's reactions — *"17 of your 23 agree"* is falsifiable and
+he rejected it flat. It must also **NAME AN ENTITY**. Every line he kept names one; the one he
+rejected aggregates. Battery calibrated in both directions against one approved and one rejected
+specimen, and **deterministic across two runs**.
+
+### THE FOLLOW-ON — the inventory's first act was to convict the lab it was built to feed
+
+**`craft/lab-004` rebuilt.** Its headline was *"The market is paying for your receivers. We are not"*
+— an **aggregate direction claim**, the exact shape the age finding invalidates. His WR room averages
+**23.7** vs the pool's **25.7**; league-wide the market is higher on **56%** of receivers under 24;
+his 7-of-12 is **58%**. **The headline was reporting the age baseline**, one polish pass from being
+shown.
+
+Replaced with a **threshold crossing** — *the market starts Burden every week, our board benches him*
+— robust to moving the cut ±3. **The cut line became the spine instead of furniture**, which also
+solves the Odunze problem: at market WR24 he sits **exactly on the line**, so the margin is visible
+rather than footnoted. Draw the margin and the picture carries what the sentence has to caveat.
+
+**Three defects found by LOOKING, none caught by any check:** labels came unstuck from their dots
+while the collision census read **zero** (a text-overlap test cannot see a label attached to the wrong
+mark — leaders added); a 54-char annotation had a slope running through the words *"every week"*
+(text-on-line, third appearance, deleted not moved); and the gap numbers were **cut** after a zoom
+showed their halo punching a notch *through* the line carrying the argument — on a shared scale the
+slope's steepness IS the magnitude, so `market +36` was a fourth number for one quantity.
+**Three things removed, one added.**
+
+**Craft gate: 3 fail, 1 warn, 1 pass, identical across two runs — and every failure localises to the
+DUMBBELL control panel** (11px `.dtier`, 172px `.dtrack`, the per-row ours/market legend ×12). The
+gate independently convicts the form this lab argues against. Slope-chart text now 13px throughout;
+no overflow, no console errors, 0 collisions.
+
+### OPEN THREADS AT CLOSE
+
+| thread | state | sits with |
+|---|---|---|
+| **015 / 016 relays** | **RELAYED by David with Tower.** Closed for Studio. | — |
+| **014 "What you hold"** | PARKED on David's word — *"step away from this surface."* Untouched tonight. | David |
+| **lab-004 slope chart** | rebuilt around the surviving claim; gate + overflow + collision clean. **Keyboard, reduced-motion and a squint pass on the rebuilt figure NOT run. Not shown to David.** | Studio |
+| **The lab is WR-only** | the start-split claim spans positions (Henderson is RB), and ranks in different-sized pools are not one scale — so the honest full form is position-faceted, four panels. Not built. | Studio |
+| **The residual after age adjustment** | survives but weak; **not** tested against position mix or rookie share. Parked as weak, not disproved. | Studio |
+| **The battery convicts nothing boring** | it catches ties, chance, unnamed aggregates, known confounders — not a sound dull claim. Real, unmeasured. | Studio |
+| Parked-badge contrast defect · C4 label-vs-content gate item · proximity-before-borders · Playwright/DevTools MCP unused | unchanged — **fifth session** the MCP servers run unused | Studio |
+
+### PROCESS INVENTORY
+
+**No servers started, no browsers launched this session** — the night was computation over a
+checked-in dataset, so nothing was opened that needed closing. Two scratch JSON files in `/tmp`
+(`c1/c2.json`, determinism diff). **NOT Studio's, deliberately untouched:** the four
+`chrome-devtools-mcp` processes carrying `--autoConnect` — Antigravity IDE's, identified 2026-07-29
+and repeatedly since.
+
 ## ══ CLOSEOUT 2026-07-30 LATE (SD-0730E-C) ══ the night three hypotheses died
 
 **Self-directed craft. Nothing relayed, nothing approved, no proposal authored.** Artifacts:

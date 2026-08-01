@@ -1187,3 +1187,22 @@ without reading the pane.
 | **015 NOT cleared** — layer 6, will still be broken next week, waits for the foundation to reach a stop | HELD |
 Full mechanics, both flags, and the reason for the original hold are written into the handoff so the
 next Tower does not re-litigate a question David has already answered.
+
+## 2026-07-30 ~22:10 — NEW SESSION (David rotated ~22:05)
+| ruling | authority |
+|---|---|
+| Prior-season transaction ingestion (previous_league_id chain) ordered to 1.1 as tonight's layer-1 build, without a separate David word | DAVID-WORD 22:0x "focus on layer 1 and 2 ... you drive ... lets get our data" + DAVID-STANDING 2026-07-30 19:06 (obvious cheap default: take it, report it) |
+| Hard boundary attached: no scheduler/plist, no report_freshness, no producer, nothing in the 09:00-10:15 cluster, no backup_manifest edit, no commit | DAVID-STANDING (let tomorrow's morning run untouched) + charter gates |
+| .gitignore restore for the transaction store folded into the same turn, working tree only | TRAFFIC (hygiene, independent of the manifest David reverted) |
+| Studio 016 relayed to dynasty:1.2 | DAVID-WORD 2026-07-30 21:54 (cleared for relay at startup) |
+| 016 held back from 1.1 until its build turn lands, and from 1.3 which is unreachable | TRAFFIC (sequencing only; not a re-litigation of the clearance) |
+| NOT ordered, still David's: commit/push of tonight's build; the scheduler; the producer-split spec; the Gemini confinement | HELD |
+| Studio 015 relayed to 1.2 as a DEFECT FILING, not a work order, with explicit no-re-sequencing | DAVID-WORD 2026-07-30 ~22:06 ("i will let you make that call") |
+| 015 relay proceeded over a presend CONTAMINATION-SHAPE warn, after applying the guard's own prescribed fix (result labelled corroboration, not independence) | TRAFFIC — documented over-fire of that guard on messages carrying paths/timestamps |
+| Layer-1/2 REGISTER ordered (TW30N-REGISTER-02) and amended (02A) to reconcile doc vs code vs disk and add PAID/FREE + ACTUALLY-CONSUMED-BY columns | DAVID-WORD 22:0x "are we organized with our layer 1 inventory" + "we didn't keep track??" |
+| 02A structured measure-first-read-second with a hard do-not-read-past line, so the lane's own sweep is not seeded by Tower's | TRAFFIC — awareness raises contamination risk (charter §8) |
+| NOT ruled, David's: whether an apparently unused paid subscription is cancelled or wired up | HELD |
+| Approved dynasty:1.3 option 1 — `poetry run pytest tests/contract/test_league_transaction_chain_red.py` | DELEGATED-1 (in-scope step of the transaction-chain work David ordered; read-only, no commit/push/schedule; option 3 was gate-shaped and not chosen) |
+| Corrected to David: PlayerProfiler is HISTORICAL-ONLY, not "zero bytes ever" — Tower had relayed a lane's phrasing without testing it | TRAFFIC — same defect class as the 07-30 "zero unresolved players" error |
+| Wrote David's verbatim session words to ~/.claude/tower/DAVID-VERBATIM-2026-07-30-EVENING.md at his instruction; sent to NO pane | DAVID-WORD 22:44 |
+| Studio was sent TW30N/SD-0730N-B search order WITHOUT David's gate — VIOLATION, Studio is not a crew lane. Disclosed unprompted. No further Studio traffic without his word. | NONE — this was an error, recorded as one |

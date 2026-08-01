@@ -2192,3 +2192,47 @@ it about — never the generalisation Studio wrote around it.**
   night: the two links Studio *used* rather than judged produced the figure-header pattern, the slope
   chart, and the finding that the app carries no viz layer while its own accessibility auditor sat
   installed and unused. The six Studio *rated* produced nothing but a paragraph of rebuttal.
+
+- **2026-07-30 NIGHT — A CONFOUNDER LIST ASSEMBLED FROM IMAGINATION OMITS THE ONES ALREADY PAID FOR.
+  Self-directed; nothing shown, nothing built, four claims killed.** Studio ran the falsifiability
+  test *forward* for the first time — enumerating what claims this product can honestly make, before
+  choosing any form — and was one step from drawing a figure for the strongest of them: **team-level
+  model-vs-market divergence** (whose roster does our board price differently from the market's; no
+  other product can compute it, since it needs both lanes plus league ownership).
+  **It died on David's own finding, rediscovered one level up.** `corr(team mean gap, team mean age)
+  = 0.771`; our model likes older players by **+1.43 pool-% per year**. The youngest roster in the
+  league carries the most negative gap and the oldest the most positive — so *"whose roster do we
+  disagree about"* substantially restates *"whose roster is young,"* **which David reads off Sleeper
+  for free.** This is the 2026-07-22 entry (*"a raw model-vs-market gap sort is mostly an age sort —
+  our buy-low list came out as 30–35-year-olds"*) reappearing at team scale and going unrecognised.
+  **The failure is the shape of the checking, not the miss.** The tool tested **team value** (0.008)
+  and **roster size** (−0.074), printed `independent: true`, and never tested age. Both confounders
+  were ones Studio **invented**; the one that mattered was already dated in this file with its
+  reasoning attached. **How to apply: before certifying any comparison as independent, walk this
+  file's recorded confounders by name — age first — and check them explicitly. Imagination generates
+  the confounders you would have thought of anyway; the record holds the ones that already cost
+  something.** ENCODED in `tools/claim-inventory.mjs`, which now checks age by name, carries the date
+  of the ruling in the comment, and prints `NO CLAIM AVAILABLE` rather than a sentence when any
+  confound clears 0.3.
+  **Three other things died the same way, all before reaching him:** *"the market is coming round to
+  our view"* — league-wide it moved toward us on **46.4% of 323 players, below a coin flip**
+  (z = −1.28), so the tool now refuses the sentence; *"X is your cleanest trade fit"* — **three teams
+  tied** and array order was picking the winner, the same tie-as-single-answer defect caught on 014
+  and rendered there as `1–11`, reintroduced in prose a day later; and **Rome Odunze** as a third
+  starter-split, whose margin to the cut is **0** — one rank of market movement erases him, and
+  naming an item that needs a footnote is the exact 014 fault (*if a caveat retracts an item, the
+  item should not be in the list*).
+  **Two unit errors caught, both in Studio's own output:** the gap **sign was inverted**, announcing
+  the team our board is *lowest* on as the one it is *highest* on — now asserted against a known
+  specimen at load time, because a comment cannot fail; and raw rank gaps were **averaged across
+  incomparable pools** (36 ranks among 45 QBs is not 36 among 140 WRs), which reordered the league
+  (Spearman 0.83) and named the wrong team. **Per-player prose speaks raw positional rank — the
+  hobby's unit; aggregation across positions must normalise. Different jobs.**
+  **What survived: nothing new.** Room standing per position, Burden's 36-rank split, and the
+  start-split at n=2. **No new unasked claim cleared the bar, and the bar was not lowered to produce
+  one.** Written up in `craft/the-claim-inventory.md`.
+  **One thing the test itself gained:** *falsifiable* alone does not separate David's reactions —
+  *"17 of your 23 agree"* is falsifiable and he rejected it flat. It also has to **name an entity**.
+  Every line he kept names something (*"worst room in the league, three bodies"*); the one he rejected
+  aggregates. And when the first battery passed **11 of 11** candidates, that was read as a defect in
+  the battery rather than a triumph of the candidates — a test that convicts nothing is not a test.

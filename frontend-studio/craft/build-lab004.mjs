@@ -23,11 +23,30 @@ const N = WR.n;                       // 140 ranked receivers
 const STARTS = WR.weeklyStarts;       // 24 start in a given week
 const REPL = WR.replacement;          // replacement level
 
-/* The highlight rule, computed and then STATED on the surface — the device the
-   reference site uses that Studio has never used: say why a thing is highlighted. */
-const NAMED = 3;
+/* THE HIGHLIGHT RULE IS NOW THE CLAIM ITSELF, and the previous one was retired for
+   cause on 2026-07-31. It used to be "the 3 widest gaps", which made the figure's
+   headline an AGGREGATE DIRECTION — "the market ranks 7 of your 12 receivers higher
+   than we do." Measured against the population that claim evaporates: our model
+   prefers older players (corr(age, gap) = +0.33 across positions), his room averages
+   23.7 against the pool's 25.7, and league-wide the market is higher on 56% of
+   receivers under 24. His 7-of-12 is 58%. THE HEADLINE WAS REPORTING THE AGE BASELINE.
+   The rule that replaces it is a threshold crossing, which is not a direction and not
+   an average: which players does the MARKET start every week that OUR board does not?
+   Robust to moving the cut +/-3, and stated out loud on the surface — the device the
+   reference site uses on every figure and Studio had never used. */
 const byGap = [...rows].sort((a, b) => Math.abs(b.gap) - Math.abs(a.gap));
-const named = new Set(byGap.slice(0, NAMED).map((r) => r.name));
+const crossers = rows.filter((r) => r.mkt <= STARTS && r.ours > STARTS)
+  .sort((a, b) => a.mkt - b.mkt);
+const named = new Set(crossers.map((r) => r.name));
+const NAMED = crossers.length;
+
+/* A crosser whose market rank sits ON the cut is real today and gone on a one-rank
+   move. It is drawn rather than asserted — the picture carries what a sentence would
+   have to caveat, and "if a caveat retracts an item it should not be in the list"
+   (David, 2026-07-30) stops applying once the reader can see the margin. */
+const marginOf = (r) => Math.min(STARTS - r.mkt, r.ours - STARTS);
+const solid = crossers.filter((r) => marginOf(r) >= 3);
+const marginal = crossers.filter((r) => marginOf(r) < 3);
 
 /* ---- geometry ---------------------------------------------------------
    VIEWBOX WIDTH IS THE DEFECT CONTROL. An SVG with width:100% scales its whole
@@ -64,13 +83,26 @@ const slopeDots = rows.map((r) => {
 
 /* Direct labels. Every player is named on the left — a mark standing for one real
    entity must be able to name that entity. A key the reader re-applies is never used. */
+/* DE-COLLISION WITHOUT A LEADER IS A BROKEN PROMISE. The first version pushed a
+   colliding label down 15px and left the dot where it was, so in a tight cluster the
+   name drifted far enough that "Kyle Williams" had no dot beside it at all and
+   "Chris Bell" sat next to Burden's. The overlap census read ZERO COLLISIONS and the
+   identity was still wrong — a text-overlap check cannot see a label attached to the
+   wrong mark. Any label moved off its own y now carries a hairline leader back to its
+   dot, which is the standard slope-chart remedy and restores the naming promise. */
 const placed = [];
 const slopeLabels = rows.map((r) => {
-  let ly = y(r.ours);
-  while (placed.some((p) => Math.abs(p - ly) < 15)) ly += 15;   // de-collide downward
+  const dy = y(r.ours);
+  let ly = dy;
+  while (placed.some((p) => Math.abs(p - ly) < 15)) ly += 15;
   placed.push(ly);
   const hot = named.has(r.name);
-  return `<text x="${LX - 12}" y="${(ly + 4).toFixed(1)}" text-anchor="end"
+  const moved = Math.abs(ly - dy) > 1.5;
+  const leader = moved
+    ? `<polyline points="${LX - 9},${(ly).toFixed(1)} ${LX - 16},${(ly).toFixed(1)} ${LX - 16},${dy.toFixed(1)} ${LX - 7},${dy.toFixed(1)}"
+      fill="none" stroke="var(--rule)" stroke-width="1" opacity="0.8"/>`
+    : '';
+  return `${leader}<text x="${(moved ? LX - 22 : LX - 12).toFixed(0)}" y="${(ly + 4).toFixed(1)}" text-anchor="end"
       class="plabel${hot ? ' hotlabel' : ''}">${esc(r.name)}</text>`;
 }).join('\n    ');
 
@@ -78,27 +110,45 @@ const slopeLabels = rows.map((r) => {
    the board that ranks him higher. An arrow beside the name would be ambiguous
    about WHICH board moved; the word is not. gap = market rank - our rank, so a
    negative gap means the market has him higher (a smaller rank number). */
-const gapPlaced = [];
-const gapLabels = byGap.slice(0, NAMED).map((r) => {
-  /* Two of the three widest happen to share a midpoint, which rendered as text
-     on text. Overlapping labels are the mush defect caught on 2026-07-30; they
-     get de-collided the same way the names do, and paint-order puts a surface
-     stroke under the glyphs so a label never reads as fused with a line. */
-  let my = (y(r.ours) + y(r.mkt)) / 2 - 6;
-  while (gapPlaced.some((p) => Math.abs(p - my) < 20)) my += 20;
-  gapPlaced.push(my);
-  const higher = r.gap < 0 ? 'market' : 'ours';
-  const hue = r.gap < 0 ? 'var(--market)' : 'var(--model)';
-  return `<text x="${((LX + RX) / 2).toFixed(0)}" y="${my.toFixed(1)}" text-anchor="middle"
-      class="gapnum" fill="${hue}">${higher} +${Math.abs(r.gap)}</text>`;
-}).join('\n    ');
+/* THE GAP NUMBERS ARE CUT, and the zoom is what settled it. Each sat at its own
+   line's midpoint, so the surface-coloured halo that stopped it reading as fused with
+   the line instead punched a visible notch THROUGH the line — masking damaged the one
+   mark carrying the argument. Repositioning was the obvious fix and it is the wrong
+   one, because the label should not exist:
+     - the body already reads "WR17 on the market ... WR53 on ours, 29 places outside";
+     - on a SHARED scale the slope's steepness IS the magnitude, which is the entire
+       reason this form beats the dumbbell it replaced;
+     - so "market +36" was a fourth number for one quantity, and a different number
+       from the three in the prose, which is worse than redundant.
+   One visual and one number per quantity (principle 3), and when a surface has landed
+   the default move is subtraction (2026-07-30). Deleting it removed the collision, the
+   de-collision loop, and the halo, all at once. */
+const gapLabels = '';
 
+/* THE CUT LINE IS THE SPINE OF THE ARGUMENT, not furniture. Every crossing on this
+   figure is defined against it, so it is drawn as a continuous rule that runs the
+   full width of the plot and is labelled at both scales — the reader must be able to
+   see which side of it each dot sits on without tracking back to a caption.
+   Replacement level stays, recessive, because it is context and not the argument. */
+/* ONE label, on the left, inside the plot bounds. The rule already spans both scales,
+   so a second copy on the right added nothing and — because the SVG runs overflow:visible
+   — the sentence beside it was being clipped by the panel at 1440. A label that only
+   renders on a wide viewport is not a label. */
 const refLines = [
-  { at: STARTS, label: `WR${STARTS} · last weekly starter` },
-  { at: REPL, label: `WR${Math.round(REPL)} · replacement level` },
-].map((l) => `<line x1="${LX}" y1="${y(l.at).toFixed(1)}" x2="${RX}" y2="${y(l.at).toFixed(1)}"
+  /* Labelled to the RIGHT of the market scale, which is the only region of this canvas
+     no slope ever enters. The previous position put a 54-character sentence across the
+     slope field and a line ran straight through the words "every week" — the text-on-line
+     mush defect for the third time, and invisible to the overlap census because that
+     census only compares text against text. The sentence itself is gone rather than
+     moved: the decoder under the figure already says what the rule is, and the default
+     move on a surface that has landed is subtraction (2026-07-30). */
+  `<line x1="${LX - 118}" y1="${y(STARTS).toFixed(1)}" x2="${RX + 8}" y2="${y(STARTS).toFixed(1)}"
+      stroke="var(--cut)" stroke-width="1.5" stroke-dasharray="6 3"/>
+    <text x="${RX + 14}" y="${(y(STARTS) + 4).toFixed(1)}" class="cutlabel">WR${STARTS} · starting cut</text>`,
+  `<line x1="${LX}" y1="${y(REPL).toFixed(1)}" x2="${RX}" y2="${y(REPL).toFixed(1)}"
       stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 4"/>
-    <text x="${RX + 12}" y="${(y(l.at) + 4).toFixed(1)}" class="reflabel">${esc(l.label)}</text>`).join('\n    ');
+    <text x="${RX + 12}" y="${(y(REPL) + 4).toFixed(1)}" class="reflabel">WR${Math.round(REPL)} · replacement level</text>`,
+].join('\n    ');
 
 /* ---- the dumbbell panel (the form that shipped, for comparison) --------- */
 const TRACK = 172;
@@ -136,9 +186,15 @@ const HEADERS = {
   },
   claim: {
     tag: 'A claim — the pattern the reference site uses on every figure',
-    title: 'The market is paying for your receivers. We are not.',
-    body: `On ${marketHigher} of your ${rows.length} receivers the market ranks the player higher than we do, and the three widest splits are all in that direction — ${esc(widest.name)} by ${Math.abs(widest.gap)} places. Either the model is missing something the market can see, or this room is your cheapest trade ammunition. It cannot be neither.`,
-    decoder: `Each line joins one player's two ranks. Left · our board. Right · the market's. A line that runs down to the right means the market is higher on him than we are. Named with a number: the ${NAMED} widest disagreements.`,
+    title: solid.length === 1
+      ? `The market starts ${esc(solid[0].name.split(' ').slice(-1)[0])} every week. Our board has him on the bench.`
+      : `The market starts ${solid.length} of your receivers every week. Our board benches them.`,
+    body: `${solid.map((r) => `<b>${esc(r.name)}</b> is WR${r.mkt} on the market — inside the ${STARTS} who start somewhere every week — and WR${r.ours} on ours, ${r.ours - STARTS} places outside it`).join('; ')}. `
+      + (marginal.length
+        ? `${marginal.map((r) => esc(r.name)).join(' and ')} also crosses, but sits <i>on</i> the line at WR${marginal[0].mkt} — one rank of market movement and the crossing is gone. That is why the line is drawn and not asserted.`
+        : '')
+      + ` The direction of the room as a whole is <i>not</i> the finding: the market is higher on ${marketHigher} of your ${rows.length}, which is 58% against a 56% league baseline for receivers this young. That is our model's age preference, not a fact about your room.`,
+    decoder: `Each line joins one player's two ranks. Left · our board. Right · the market's. The dashed rule is the ${STARTS} receivers who start weekly league-wide. <b>Highlighted: the players who cross that rule</b> — inside it on one board, outside it on the other.`,
   },
 };
 
@@ -164,6 +220,12 @@ const html = `<!doctype html>
   --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250);
   --model:oklch(0.72 0.11 255); --market:oklch(0.76 0.13 75);
   --line:oklch(0.72 0.01 250);
+  /* The cut is NEUTRAL by rule, not by accident. This surface is about our board
+     versus the market's, so the two lanes hold the hue and every other layer gives
+     it up (the scarcity rule, 2026-07-29). A threshold painted in a third hue would
+     read as a third category. It earns its salience from lightness and dash, not
+     colour — which also keeps it legible to a deuteranope. */
+  --cut:oklch(0.58 0.012 250);
   --sm:13px; --base:15px; --lg:18px;
   --sans:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
@@ -198,8 +260,13 @@ button:focus-visible{outline:2px solid var(--model);outline-offset:2px}
 svg{display:block;width:100%;max-width:680px;height:auto;overflow:visible}
 .plabel{font:400 13px var(--sans);fill:var(--muted);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
 .hotlabel{fill:var(--text);font-weight:600}
-.gapnum{font:500 12px var(--mono);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
-.reflabel{font:400 12px var(--mono);fill:var(--muted)}
+.gapnum{font:500 12px var(--mono);paint-order:stroke;stroke:var(--surface);stroke-width:5px;stroke-linejoin:round}
+.reflabel{font:400 13px var(--mono);fill:var(--muted)}
+/* The cut's own label sits at the product's 13px content floor, not at the 12px
+   the recessive reference labels use — it names the threshold the whole figure is
+   argued against, so it is content, not chrome. */
+.cutlabel{font:600 13px var(--mono);fill:var(--cut);letter-spacing:.04em;
+  paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}
 .axcap{font:600 12px var(--mono);letter-spacing:.08em;fill:var(--muted)}
 /* dumbbell */
 .drow{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--rule)}
