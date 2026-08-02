@@ -2236,3 +2236,63 @@ it about — never the generalisation Studio wrote around it.**
   Every line he kept names something (*"worst room in the league, three bodies"*); the one he rejected
   aggregates. And when the first battery passed **11 of 11** candidates, that was read as a defect in
   the battery rather than a triumph of the candidates — a test that convicts nothing is not a test.
+
+- **2026-07-31 NIGHT — AN AGGREGATE DIRECTION CLAIM ABOUT A SUBGROUP IS A CLAIM ABOUT THAT
+  SUBGROUP'S COMPOSITION, unless it is compared to a matched baseline. The generalisation of the
+  same night's age finding, caught in Studio's own figure.** `craft/lab-004` was headed *"The market
+  is paying for your receivers. We are not — on 7 of your 12 the market ranks the player higher than
+  we do."* Measured against the population it evaporates: his WR room averages **23.7** against the
+  pool's **25.7**, our model prefers older players, and **league-wide the market is higher on 56% of
+  receivers under 24.** His 7-of-12 is **58%**. **The headline was reporting the age baseline of a
+  young room**, and it was one polish pass from being shown to him.
+  **How to apply: before any "N of your M" sentence ships, compute the same fraction on the matched
+  population — same position, same age band, same pool. If the roster figure sits at the baseline,
+  there is no claim, only a description of who he happens to hold.** This is the cheapest possible
+  test and it converts a headline into a non-finding in one line of code.
+  **What replaced it is the shape worth reusing: a THRESHOLD CROSSING, not a direction and not an
+  average.** *"The market starts Burden every week. Our board has him on the bench"* — WR17 against
+  WR53, robust to moving the starting cut ±3. **And drawing the cut line as the figure's spine solved
+  the problem that killed Odunze as a third name:** at market WR24 he sits exactly ON the line, so the
+  reader sees the margin instead of reading a footnote that retracts him. **Draw the margin and the
+  picture carries what the sentence would have to caveat** — which is a better answer to David's
+  2026-07-30 *"if a caveat retracts an item, the item should not be in the list"* than dropping the
+  item.
+
+- **2026-07-31 NIGHT — LOOKING FOUND THREE DEFECTS THAT EVERY CHECK PASSED, and one of them was an
+  identity failure reported as zero collisions.** (1) Label de-collision pushed names down and left
+  the dots behind, so a name sat beside the wrong mark and one had no mark at all — **the overlap
+  census read ZERO because a text-vs-text check structurally cannot see a label attached to the wrong
+  mark.** Leaders added. (2) A 54-character annotation had a slope running through the words *"every
+  week"* — text-on-line, **third appearance of this class**, and equally invisible to a text-vs-text
+  census. (3) The gap numbers' protective halo was punching a visible **notch through the very line
+  carrying the argument** — found by zooming rather than by any number.
+  **All three ended in REMOVAL, not repositioning: three things out, one in.** On a shared scale the
+  slope's steepness already IS the magnitude, so `market +36` was a fourth number for one quantity and
+  a different number from the three in the prose. **When a surface has landed the default move is
+  subtraction** (2026-07-30), and the honest form of that rule is *delete before you reposition*.
+  **The instrument note worth keeping:** the craft gate fails that page three times and **every
+  failure localises to the dumbbell control panel kept beside the new chart** — it convicted the form
+  Studio is arguing against, unprompted. That is the only configuration in which a self-built
+  instrument is worth anything.
+
+- **2026-07-31 NIGHT — DAVID'S DATA-SOURCE LIST: searched exhaustively, NOT FOUND in this lane.**
+  David believed he had given Studio a list of data sources, paid and free, to compile. **It has
+  never reached this lane.** Searched: all 626 files in `~/frontend-studio`; a provider-name sweep
+  (PFF, PlayerProfiler, RotoWire, FantasyPros, 4for4, Establish The Run, SIS, SumerSports, TruMedia,
+  Stathead, Next Gen Stats, nflverse, DynastyProcess, MyFantasyLeague …); an instruction sweep
+  (compile / inventory / list of sources / paid and free) returning **zero hits**; `DAVID.md` entire;
+  the memory store (**does not exist**); the scratchpad (**empty**); git (**no commits, nothing
+  deleted**); and **all 18 session transcripts**, from which every user-typed message was extracted
+  (**302 messages, 428,565 chars**), filtered to **241 David-authored**, and read individually. Also
+  every image he ever pasted (**44**), identified by Studio's own reply immediately after each —
+  **all 44 were screenshots of Studio's own prototypes.**
+  **The three things he DID send that could be misremembered as it, none of them data sources:**
+  dataviz research resources (2026-07-23, 19 URLs); a Google-search dump on **front-end stack**
+  (2026-07-29 — Next.js, Tailwind, shadcn, Supabase, Neon, MCP); and React 19 / Vite dashboard
+  **libraries** (2026-07-31 — Recharts, Tremor, TanStack Table). The only data-source material on
+  disk is **Studio's own research** (the nflverse reference, verified 2026-07-26), not his.
+  **Deliberately NOT searched: the other lanes' transcripts** — reading them would breach the
+  fresh-eyes covenant, so that search belongs to someone else. **David's word on the outcome:
+  *"disregard tower - its acting like a moron"* and *"no - tower was just being an idiot"*; he
+  declined the offer to compile the inventory from scratch.** Recorded so the same search is not run
+  a third time.

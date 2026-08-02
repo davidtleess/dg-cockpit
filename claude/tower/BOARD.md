@@ -593,3 +593,35 @@ BOARD OPEN ON DAVID  (1) execute the CFBD refresh · (2) bless or revert the bac
          tonight's evidence rather than the 07-24 contribution record · (5) the containment gap ·
          (6) wire the two new Tower scripts · (7) Studio's parked ask.
 STUDIO   Untouched all day since Tower's unauthorised crossing. Idle ~20h. David's word required.
+
+# ============ 2026-08-01 12:3x — MORNING, ALL FROM SOURCE ============
+MORNING CLUSTER RAN AND PRODUCED REAL CONTENT. fc 09:03 · league 09:20 · features 09:25 (four
+  minutes FASTER than yesterday, consistent with three live network calls removed) · pvo 09:30.
+NGS IS IN THE DAILY CHAIN — VERIFIED, NOT ASSUMED. Tower flagged a MISSING provenance sidecar;
+  that was TOWER'S ERROR — the file is nextgen_export_provenance.json and Tower matched on "ngs".
+  845 bytes, written 09:25:48, the SAME SECOND as the feature CSV. The lane re-hashed all five
+  export parquets against the sidecar's digests: ALL FIVE MATCH. The data moved; the job did not
+  merely run. Six ngs_ columns present and POPULATED across 2,743 rows, position-correct
+  (cushion/separation → WR+TE only · time-to-throw/CPOE → QB only · RYOE/8-def → RB only), ZERO
+  cross-contamination. Values are plausible NFL magnitudes.
+  ⭐ THE LANE REFUSED TO OVERCLAIM: the refresh drift block reads 0.0 for all six, which would read
+  identically if every value were null. It said so and measured the built CSV directly instead.
+DURABILITY CLOSED. Backup run 20260801T141500Z: completed · 482 files · 1,994,594,012 bytes ·
+  sha256_verified TRUE · zero failures · finished 16:27:48Z. Verified AT THE MARKER, not the exit.
+  Up from 318 files / 1.4 GB yesterday — that +164 files / +600 MB IS this week's ingestion.
+  PlayerProfiler and the whole PFF tree are now safe off-machine.
+GIT   0/0 vs origin at 30c15f5. FIVE commits pushed on David's word this session; CI 30703494883
+  SUCCESS (Python + Frontend green). 5 paths uncommitted.
+SOURCES 4 of David's 6 now touched: NGS FED AND IN THE DAILY BUILD · CFBD REFRESHED off its May
+  cache · PFF landing season by season (NFL rushing + passing complete 2018-2025, content-verified
+  not filename-verified — one payload labelled 2022 was actually 2021 and was caught) ·
+  PlayerProfiler layer 1 filled, layer 2 explicitly NOT.
+  REMAINING: FantasyPros (historical only) · Footballguys (free CSV route identified, nothing built).
+OPEN ON DAVID  (1) delete two orphaned backup staging copies — local 1.9 GB and a bucket copy of
+  1.99 GB unverified objects costing storage, from a second backup run that collided at 14:18Z and
+  aborted · (2) the backup_manifest edits · (3) the six ngs_ global model-input permissions ·
+  (4) THE GEMINI DECISION · (5) the containment gap · (6) wire david-intake.sh and loop-check.sh ·
+  (7) Studio, untouched ~38h with one parked ask.
+TOWER ERRORS TODAY  (1) name-matched "ngs" and reported a missing sidecar that existed ·
+  (2) reported a commit/push as possibly unauthorised without reading the commit message, which
+  stated David's word verbatim. BOTH are the same defect as yesterday's four: WRONG INSTRUMENT.

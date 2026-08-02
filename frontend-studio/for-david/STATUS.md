@@ -93,13 +93,31 @@ no overflow, no console errors, 0 collisions.
 | **The battery convicts nothing boring** | it catches ties, chance, unnamed aggregates, known confounders — not a sound dull claim. Real, unmeasured. | Studio |
 | Parked-badge contrast defect · C4 label-vs-content gate item · proximity-before-borders · Playwright/DevTools MCP unused | unchanged — **fifth session** the MCP servers run unused | Studio |
 
-### PROCESS INVENTORY
+### THE RETRIEVAL TASK — David's data-source list: NOT FOUND in this lane
 
-**No servers started, no browsers launched this session** — the night was computation over a
-checked-in dataset, so nothing was opened that needed closing. Two scratch JSON files in `/tmp`
-(`c1/c2.json`, determinism diff). **NOT Studio's, deliberately untouched:** the four
-`chrome-devtools-mcp` processes carrying `--autoConnect` — Antigravity IDE's, identified 2026-07-29
-and repeatedly since.
+Ordered via Tower, executed, and **David then set it aside** (*"disregard tower - its acting like a
+moron"* / *"no - tower was just being an idiot"*), declining the offer to compile the inventory from
+scratch. **Recorded so the search is not run a third time.** Covered: all 626 studio files; a
+provider-name sweep; an instruction sweep (**zero hits**); `DAVID.md`; the memory store (does not
+exist); scratchpad (empty); git (no commits); **all 18 transcripts** — 302 user-typed messages
+extracted, filtered to **241 David-authored**, each read; and **all 44 pasted images**, identified by
+Studio's own reply after each (**every one a screenshot of Studio's own work**). The three link dumps
+he did send are dataviz research, a front-end stack list, and React chart libraries — **no data
+providers**. **Not searched: other lanes' transcripts** — that would breach the fresh-eyes covenant.
+
+### CLOSEOUT PROCESS INVENTORY — scanned, not recalled
+
+- **Zero chromium / headless_shell / playwright-browser survivors.** Every browser launched tonight
+  (`tools/shot-lab004.mjs`, the zoom probe) was closed in the script that opened it.
+- **Zero listening ports.** Both screenshot tools bind port 0 and close the server with the page; the
+  8h11m leftover of 2026-07-30 did not recur, and no `python3 -m http.server` exists anywhere.
+- **This session's MCP:** playwright-mcp (82765 / 83584, `--isolated`), ends with the session.
+  `.mcp-artifacts` still empty — **sixth session these servers have run unused.**
+- **NOT Studio's, deliberately untouched:** the four `chrome-devtools-mcp` processes carrying
+  `--autoConnect` (42086 / 42165 / 42589 / 42712), now **6 days 6 hours** old — Antigravity IDE's,
+  the same set identified 2026-07-29 and every session since, aging consistently.
+- Scratch files in `/tmp` only (`david-typed.json`, `c1/c2.json`, two probe scripts) — nothing in the
+  studio tree, nothing in the product repo. **The product repo was not written to. Not one byte.**
 
 ## ══ CLOSEOUT 2026-07-30 LATE (SD-0730E-C) ══ the night three hypotheses died
 
