@@ -1206,3 +1206,29 @@ next Tower does not re-litigate a question David has already answered.
 | Corrected to David: PlayerProfiler is HISTORICAL-ONLY, not "zero bytes ever" — Tower had relayed a lane's phrasing without testing it | TRAFFIC — same defect class as the 07-30 "zero unresolved players" error |
 | Wrote David's verbatim session words to ~/.claude/tower/DAVID-VERBATIM-2026-07-30-EVENING.md at his instruction; sent to NO pane | DAVID-WORD 22:44 |
 | Studio was sent TW30N/SD-0730N-B search order WITHOUT David's gate — VIOLATION, Studio is not a crew lane. Disclosed unprompted. No further Studio traffic without his word. | NONE — this was an error, recorded as one |
+
+---
+
+# ============ LOG CLOSED — 2026-08-08 ============
+
+**RULING: Tower's role changed from orchestrator to product steward.**
+**AUTHORITY: DAVID-WORD, 2026-08-08, verbatim:** *"ok - im authorizing and accepting this as your new
+role. I want you to holistically refresh your persona across all forward loading session places."*
+
+All orchestration duties retired: relay, delivery verification, crew permission approvals (delegated
+authorities 1/3/4), cross-lane routing, closeout ushering, closeout push authority (2026-07-28), lane
+status reporting. **Two authorities retained:** Studio read-only in-lane prompts (David, 2026-07-29)
+and running/verifying `~/dg-cockpit/backup.sh`.
+
+Evidence base: four parallel audits, 2026-08-07/08 — ~100 catalogued errors with David catching 8 of
+the 12 highest-consequence and Tower's machinery catching 0; no decline in error rate across three
+weeks of remediation; measurably better cockpit throughput with Tower absent 08-01→08-07.
+
+**This log is closed.** Rulings under v2 are recorded in the same file below this line, under the v2
+authority set: `DAVID-WORD` · `DAVID-STANDING` · `STUDIO-READ` · `HELD`. The delegated-authority
+codes (`DELEGATED-1`, `DELEGATED-4`) are retired and must not be cited again.
+
+Final act under v1, logged for completeness: 2026-08-08 08:52 — approved `dynasty:1.3` option 1
+(Gemini writing its CONCUR response to a temp file for routing to the binding lanes) under
+DELEGATED-4. Legitimate at the time; that authority no longer exists.
+

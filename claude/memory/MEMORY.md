@@ -1,16 +1,32 @@
 # Memory Index
 
-- [BMW search project](project_bmw_search.md) — used-BMW market research role; baseline findings; facebook-marketplace MCP installed & connected; awaiting David's car list + scoping answers
+## ⭐ READ FIRST — Tower's role
+- [**Tower role v2 — product steward**](tower_role_v2.md) — **David-authorized 2026-08-08. SUPERSEDES
+  every earlier description of Tower.** Steward of Dynasty Genius's operational health and David's
+  spokesperson for it: data fresh · models honest · truth when he sits down, plus Studio's bridge and
+  his dated commitments. **NOT an orchestrator, relay, gate or approval seat — those are surrendered.**
+  Every product statement carries a label: VERIFIED · PROPOSED PRODUCT CHANGE · RELAYED PROPOSAL.
+  Two-week kill criterion from 2026-08-08.
 
-- [David's profile](user_profile.md) — background, experience level, Sleeper username, working style
-- [Python environment](feedback_python39_syntax.md) — project venv is Python 3.14 now; old 3.9 constraints obsolete; avoid `round` as param name
+## Project state
 - [Dynasty Genius project state](project_dynasty_genius.md) — what's built, model performance, Sleeper IDs, next steps
-- [Frontend Studio outsider agent](project_frontend_studio.md) — Studio lane: ungoverned front-end agent in ~/frontend-studio, David as message bus
-- [Push not pull](feedback_david_workflow.md) — David rejects file/pull workflows; one spokesperson pushes consolidated asks
+- [Frontend Studio outsider agent](project_frontend_studio.md) — Studio lane: ungoverned front-end agent in ~/frontend-studio. **Correction: David is no longer the message bus — Tower carries this lane, and it is Tower's only structural monopoly (STANDING WALL TW29-WALL-35 bars every crew lane from reading or touching it).**
+- [Grounding-layer plan](project_grounding_layer.md) — kernel now (H2 guard + constitution honesty markup); full build gated to ~Aug 2026 on BUILD-1. **DUE NOW — one of Tower's dated commitments. NO-GO is a legitimate outcome.**
 - [Backup architecture](reference_backup_architecture.md) — three-copy model: code→GitHub, data→GCS, cockpit→dg-cockpit repo; new-Mac bootstrap
-- [Cockpit handoff](cockpit_handoff.md) — Tower's parked board: per-lane parked items, David's open decisions, standing agenda; update at significant state changes
-- [David's research register](david_research_register.md) — STANDING DUTY (2026-07-17): track every research doc David sends; verify it reaches the crew; check at boot and closeout
-- [Ghost text in panes](feedback_ghost_text.md) — grey AI prompt-suggestions look like typed input in capture-pane; ALWAYS verify with `-e` (dim `\e[2m` = ghost) before treating input-line text as a stranded message; solved the 07-15 fragment mystery
-- [Grounding-layer plan](project_grounding_layer.md) — kernel now (H2 guard + constitution honesty markup), full build gated to ~Aug 2026 on BUILD-1; Tower-board + memory dual-tracked so it isn't forgotten
-- [Frontier brainstorm handoff](project_frontier_brainstorm.md) — 07-17 four-dive brainstorm done; doc on Desktop; distribution HELD till morning; open: Gemini transparency + sequencing
-- [Tower operating method](feedback_tower_situational_awareness.md) — 2026-07-27 David correction: Tower must KNOW crew state from source (ledger + panes + artifacts), never from interrupts or its own prior messages; board file at ~/.claude/tower/BOARD.md, output feed at ~/.claude/tower/output-watch.sh, method doc at ~/.claude/tower/TOWER-OPERATING-METHOD.md
+- [David's research register](david_research_register.md) — track every research doc David sends
+- [Frontier brainstorm handoff](project_frontier_brainstorm.md) — 07-17 four-dive brainstorm done; doc on Desktop
+
+## About David
+- [David's profile](user_profile.md) — background, experience level, Sleeper username, working style
+- [Push not pull](feedback_david_workflow.md) — David rejects file/pull workflows; tell him in sentences, never point him at a file
+- [Python environment](feedback_python39_syntax.md) — project venv is Python 3.14 now; old 3.9 constraints obsolete; avoid `round` as param name
+
+## Other projects
+- [BMW search project](project_bmw_search.md) — used-BMW market research; facebook-marketplace MCP connected; awaiting David's car list + scoping answers
+
+## HISTORICAL — the orchestrator era. Context only; do NOT act on these duties.
+Kept because they hold hard-won facts about the environment, not because their duties still apply.
+- [Cockpit handoff](cockpit_handoff.md) — the parked board. **INHERITED CLAIM, never a source — verify against the artifact.**
+- [Tower operating method](feedback_tower_situational_awareness.md) — 2026-07-27 correction: know state from source, never from your own prior messages. **This principle SURVIVES as Rule 2 of the v2 charter.** The orchestration machinery around it does not.
+- [Ghost text in panes](feedback_ghost_text.md) — grey AI prompt-suggestions look like typed input in capture-pane; ALWAYS verify with `-e` (dim `\e[2m` = ghost). **Still live and still relevant — Tower reads Studio's pane.**
+- [David's rulings 2026-07-25](david_rulings_2026-07-25_dg2.md) — DG 2.0 ruling set

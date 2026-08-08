@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>fixture: orphaned y-axis</title>
+<style>body{background:#0a0e11;color:#e8eaec;font:15px system-ui;margin:0;padding:24px}
+p{color:#a9aeb2;max-width:70ch}svg{display:block;overflow:visible}</style></head><body>
+<!-- KNOWN-BAD. The y-axis label exists, but as PROSE ABOVE THE PLOT — the exact shape of the
+     017 defect David caught 2026-08-07. The x-axis IS correctly labelled, so a working
+     detector must fail the y and pass the x on the SAME figure. -->
+<p>The vertical scale shows fantasy points per game, the value of a player's role.</p>
+<svg viewBox="0 0 800 300" width="800" height="300">
+  <text x="40" y="270" text-anchor="end" font-size="13" fill="#a9aeb2">0</text>
+  <text x="40" y="200" text-anchor="end" font-size="13" fill="#a9aeb2">8</text>
+  <text x="40" y="130" text-anchor="end" font-size="13" fill="#a9aeb2">16</text>
+  <text x="40" y="60"  text-anchor="end" font-size="13" fill="#a9aeb2">24</text>
+  <polyline points="60,250 180,190 300,120 420,160 540,90 660,140" fill="none" stroke="#bbbec1" stroke-width="2"/>
+  <text x="60"  y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">1</text>
+  <text x="180" y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">2</text>
+  <text x="300" y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">3</text>
+  <text x="420" y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">4</text>
+  <text x="540" y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">5</text>
+  <text x="660" y="292" text-anchor="middle" font-size="13" fill="#a9aeb2">6</text>
+  <text x="360" y="278" font-size="13" fill="#a9aeb2">week</text>
+</svg></body></html>

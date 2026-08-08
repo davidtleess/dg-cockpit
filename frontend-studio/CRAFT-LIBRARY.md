@@ -18,6 +18,29 @@ session start.
 
 ---
 
+
+## orphan-axis — the first instrument that tests comprehension rather than drawing
+
+`tools/orphan-axis.mjs` · fixtures `kit/gate-fixtures/axis-{orphaned,labelled}.html` ·
+record `kit/orphan-axis-calibration.md` · **added 2026-08-07**
+
+Every other instrument here measures the DRAWING — marks, hues, contrast, targets, collisions,
+geometry, density. This one asks whether a group of numbers has a **word attached to it**, because
+on 2026-08-07 a figure passed all six of those checks and David could not read its y-axis.
+
+**Attachment, not presence.** The label existed; it sat as prose above the plot and read as another
+sentence in the paragraph. Distance is the test: nearest word within 46px of the tick group.
+
+**Calibrated both directions on one figure** — the orphaned fixture FAILS its y-axis (nearest word
+320px) and PASSES its x-axis ("week" at 0px), which is exactly the discrimination David made by eye.
+Deterministic across two runs.
+
+**Its own limits, measured not assumed:** it sees only `<svg>`, so HTML/CSS figures like
+`016-silent-lane/figure.html` are not examined at all; and it tests attachment, never whether the
+name is a good one. Across eight studio figures it found an axis in exactly one — narrow coverage,
+stated rather than reported as a clean sweep.
+
+
 ## DELIVERED — curated to disk
 
 - **`craft/the-falsifiability-test.md`** (2026-07-30 evening, self-directed) — **three composition

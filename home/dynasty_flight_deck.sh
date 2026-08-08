@@ -48,7 +48,11 @@ tmux set-window-option -t "$SESSION:2" window-status-style 'fg=colour214'
 tmux set-window-option -t "$SESSION:2" window-status-current-style 'fg=colour232,bg=colour214,bold'
 tmux send-keys -t "$SESSION:2.1" "claude" C-m
 
-# 7. Tower — chief of staff, right split beside Studio.
+# 7. Tower — product steward, right split beside Studio.
+# Role changed 2026-08-08 on David's word: Tower owns Dynasty Genius's operational
+# health (data freshness, model honesty, the truth David is told when he sits down)
+# plus Studio's bridge and David's dated commitments. It is NOT an orchestrator —
+# it does not relay between lanes, approve crew dialogs, or gate work.
 # cwd is $HOME on purpose: Tower loads its agent definition and home-dir
 # memory, and must NOT inherit the repo's governance bootstrap.
 # Color: Deep Navy (Control Tower)

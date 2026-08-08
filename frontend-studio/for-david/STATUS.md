@@ -1,5 +1,124 @@
 # Studio proposals — status
 
+## ══ 2026-08-07 NIGHT (SD-0807N) ══ 017 "The job, not the season" — the data floor moved
+
+**Self-directed. Built, verified, SHOWN to David four times. Nothing relayed, nothing approved.**
+Artifacts: `proposals/017-the-job.md`, `proposals/017-RELAY.md`, `proposals/017-the-job/{index.html,
+build.py,data.js}`, `tools/{shot017,serve017,orphan-axis}.mjs`, `kit/gate-fixtures/axis-{orphaned,
+labelled}.html`, `kit/orphan-axis-calibration.md`.
+
+### THE FINDING — the briefing's §4 hard constraints are STALE
+
+`app/data/nflverse_usage.db` now holds **eight seasons (2018–2025) of weekly expected fantasy points**
+(`ff_opportunity`, 47,282 rows), NGS, PFR, FTN charting, snap counts, injury reports and depth charts
+(812,074). Plus `playerprofiler.db` (949,041 pbp-slot rows) and `league_transactions.db` (937).
+**A grep of `app/api/routes/` finds ONE file referencing any of it — a health readout.** Two parked
+screens are parked on the grounds that this data does not exist.
+
+### WHAT DAVID SAID, in order — the substance landed, the drawing took three passes
+
+| # | his words | what it was |
+|---|---|---|
+| 1 | *"this is valuable data analysis - role plays a big factor in production - growth or decline in role is a legitimate signal"* | **the strongest confirmation of a QUESTION this lane has had** — he restated the thesis unprompted |
+| 1b | *"visually im a little confused what the left axis shows"* | axis had no title |
+| 2 | *"right but what are the numbres? targets?"* | the UNIT was still abstract — a substance question answered with typography |
+| 3 | *"its empty"* | **a BLANK PAGE was delivered to the client** |
+| 4 | *"nothing on the left axis"* | label existed but was not ATTACHED to its ticks |
+| 5 | *"ahhh i see now"* | resolved |
+
+### THE METHOD THAT PRODUCED IT — every aggregate claim died and the bar was not lowered
+
+- **Confounder battery, age checked BY NAME** (the 2026-07-30 ruling): corr(points-over-expected, age)
+  = **−0.104**; experience −0.085; weeks played +0.142; xFP +0.167. Market +0.317, DVS +0.378 —
+  entangled, not restatements. **Age, which killed the last two threads, does not touch this one.**
+- **Every room-level claim KILLED by binomial test against the matched population** — WR his 3/11=27%
+  vs 25% base rate (p=1.00); RB, TE, QB all p≥0.95. **So the surface names players and never
+  characterises a room.** That refusal became the design rule.
+- **The headline Studio nearly shipped was WRONG.** *"Chicago's fourth receiver is the second-most
+  valuable player in your room"* — true on season totals, **substantively misleading**, because
+  Burden's role doubled across the year. Checking it produced the real finding: **the role is a
+  trajectory, and a season total is the wrong unit for a young player.**
+- **What survived, beating a baseline:** population median role change **−0.4/g** (roles shrink); his
+  roster carries three players in the league's top 5% — Mitchell +7.3 (98th), Henderson +6.3 (96th),
+  Burden +6.0 (95th) — and Legette at the 6th. Young-player p90 is +4.6; all three clear it.
+- **Rookie confounder ruled out:** Burden's role was 65th percentile *among 2025 rookie WRs*.
+- **Instrument validated both directions before use:** 2025 xFP leaders came back McCaffrey, Lawrence,
+  Prescott, Stafford, Maye. Scoring confirmed PPR by magnitude against known totals.
+
+### THE ENCODING RULE WORTH KEEPING — opinions get colour, facts get ink
+
+Blue = our model, amber = the market: those are *opinions*. The tape is what happened, so it is drawn
+in neutral ink. **Colour appears on the page in exactly four marks.** Extends the colour constitution
+without expanding it and obeys the scarcity rule rather than spending a third hue.
+
+### CAUGHT AGAINST STUDIO — four defects, and every check passed all of them
+
+1. **A BLANK PAGE reached David.** `python3 -m http.server` sends no `Cache-Control`; a regenerated
+   `data.js` paired with a fresh `index.html`, the module threw, and every region is script-rendered.
+   **Studio spent the whole build on "absence renders as missing, never as zero" and shipped a page
+   whose own failure mode was a silent blank.** Now `tools/serve017.mjs` (no-store), a cache-busted
+   import, and a failure state **verified both directions**: healthy 4,689 visible chars, broken 193
+   reading *"failed to draw — not an empty result, a fault"*, restored 4,689.
+2. **The overflow audit only ever checked the RIGHT edge.** The axis fix introduced a label anchored
+   `end` running **600px off the LEFT** of its viewBox, clipped away entirely, audit clean. Fixed and
+   **verified both directions**.
+3. **"No 2025 tape — 10 players"** was factually false for 7 of them, including Tucker Kraft (8 games,
+   the model's top-rated player on the roster). Three presence tiers now.
+4. **Wrote two files into the PRODUCT REPO** — `kit/gate-fixtures/axis-*.html` — from a persisted
+   working directory. **Never tracked by git, removed, repo verified byte-identical to how it was
+   found.** Disclosed to David. Absolute paths from here. Also incidentally saw `docs/agent-ledger/`
+   FILENAMES in a `git status` run for that cleanup — **names only, nothing opened**; logged per the
+   fresh-eyes covenant.
+
+### RELAY 017 — authored, PARKED on David's word, and R1 WITHDRAWN
+
+**David: *"i am working on filling the model with scores."*** R1 was reframed from a defect report to
+a localisation and downgraded to in-flight. **Studio's first framing — "113 rows falsely claiming an
+active model" — was wrong and is withdrawn in the file.** The real shape, offered as possibly
+useful:
+
+| 2025 games | unscored | scored | rate |
+|---|---|---|---|
+| 0 | 5 | 84 | 6% |
+| **1–7** | **108** | **56** | **66%** |
+| 8+ | 0 | 328 | **0%** |
+
+**No unscored row has more than 7 games**, and briefing §5 says the Bayesian blend covers exactly
+1–7. Stable at 113/581 across **eight consecutive daily captures**. Remaining items: **R2 Tank Dell
+has no row in the model capture at all** (distinct from R1 — missing record, not null score), R3 the
+unserved usage stores, R4 depth-chart feed static since 2026-03-14 while ingestion runs nightly, R5
+the endpoint shape.
+
+### THE CRAFT STRAND — `orphan-axis`, the first comprehension instrument
+
+Built on David's *"do you want to work on your skills and toolkit?"*. **Every other instrument here
+measures the DRAWING; a figure passed all six tonight and he could not read its y-axis.** The tool
+asks whether a group of aligned numbers has a **word attached** — distance, not presence.
+**Calibrated both directions on ONE figure**: the orphaned fixture FAILS its y (nearest word 320px)
+and PASSES its x ("week" at 0px). Deterministic across two runs.
+**Blind spots stated, measured not assumed:** sees only `<svg>`, so `016-silent-lane/figure.html`
+(**0 SVGs**) is not examined at all — a hole, not a pass; `lab-004` has 0 numeric text (correctly
+skipped); `006-frontdoor` has 51 numerics spread one-per-SVG across 55 SVGs (correctly skipped).
+**Across eight studio figures it found an axis in exactly one.** Narrow coverage, stated.
+
+### OPEN THREADS AT CLOSE
+
+| thread | state | sits with |
+|---|---|---|
+| **017 relay** | authored, R1 withdrawn/downgraded, **NOT authorised** | **David** |
+| **017 production not drawn** | the cost Studio is least sure of — Mitchell got the job and played badly in it; that lives in prose, not in the picture | Studio |
+| **The briefing's §4 is stale** | usage/stat lines are now obtainable; several design constraints in this lane were derived from the old text | Studio / relay R3 |
+| **`orphan-axis` cannot see HTML figures** | real hole, named in the calibration record | Studio |
+| **Nothing in the kit tests comprehension** | one hole closed tonight; the wall is mostly hole. David is the only instrument for the rest | Studio |
+| **craft gate C6 misclassifies polylines** | measured (series span 92–98%, gate reads segments); same family as the C4 `<dt>` problem | Studio |
+| **014 "What you hold"** | PARKED on David's word, untouched | David |
+| Parked-badge contrast · proximity-before-borders · Playwright/DevTools MCP unused | unchanged — **seventh session** the MCP servers run unused | Studio |
+
+### PROCESS INVENTORY — scanned, not recalled
+
+See the closeout scan appended at session end.
+
+
 ## ══ 2026-07-30 NIGHT (SD-0730N-B) ══ the claim inventory — four claims killed, nothing drawn
 
 **Self-directed craft/method. Nothing relayed, nothing shown to David, no proposal authored, and

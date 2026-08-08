@@ -26,12 +26,27 @@ rsync -a --delete "$HOME/.claude/projects/-Users-davidleess/memory/" claude/memo
 # and holding no instrument.
 #   tower/  — the TOWER-1 ticket, the 2026-07-25 failure record, ghost-check and
 #             the pane watchers, and durable measurement evidence.
-#   skills/ — Tower-authored skills, notably cockpit-observation.
+#   skills/ — Tower-authored skills.
 # Excludes transient watcher state; those are runtime artifacts, not durable.
+#
+# 2026-08-08: this loop replaced a HARDCODED single-skill rsync. Tower's role changed that day
+# and its new skill (product-health-verification) would have been outside the backup entirely —
+# the exact coverage hole found on 2026-07-28, when 12 of 24 Tower files were stale or missing
+# while the backup reported healthy. A NEW TOWER-AUTHORED SKILL MUST BE ADDED TO THIS LIST.
+TOWER_SKILLS=(product-health-verification cockpit-observation)
+
 rsync -a --delete --exclude '*.heartbeat' --exclude 'tower-watch-*' \
       "$HOME/.claude/tower/" claude/tower/
-rsync -a --delete --exclude '__pycache__' \
-      "$HOME/.claude/skills/cockpit-observation/" claude/skills/cockpit-observation/
+for _skill in "${TOWER_SKILLS[@]}"; do
+  if [ -d "$HOME/.claude/skills/$_skill" ]; then
+    mkdir -p "claude/skills/$_skill"
+    rsync -a --delete --exclude '__pycache__' \
+          "$HOME/.claude/skills/$_skill/" "claude/skills/$_skill/"
+  else
+    echo "BACKUP FAIL: declared Tower skill '$_skill' not found at \$HOME/.claude/skills/$_skill" >&2
+    exit 1
+  fi
+done
 
 # Hook SCRIPTS — added 2026-07-28. settings.sanitized.json above records that a hook is
 # WIRED, but not what it does; the scripts it invokes lived only on this machine. That is

@@ -2296,3 +2296,162 @@ it about — never the generalisation Studio wrote around it.**
   *"disregard tower - its acting like a moron"* and *"no - tower was just being an idiot"*; he
   declined the offer to compile the inventory from scratch.** Recorded so the same search is not run
   a third time.
+
+- **2026-08-07 — VALIDATED THE QUESTION, REJECTED THE AXIS. On 017 "The job, not the season":**
+  *"this is valuable data analysis - role plays a big factor in production - growth or decline in role
+  is a legitimate signal - visually im a little confused what the left axis shows."*
+  **Read it precisely, because the two halves are different verdicts.** The first half is the
+  strongest confirmation this lane has had that a *question* was right — he restated the thesis back
+  in his own words (*"growth or decline in role is a legitimate signal"*) unprompted, which is the
+  test the falsifiability work exists to pass. The second half is a craft defect, and it is one of
+  Studio's own stated principles broken.
+  **The defect: the decoder was in the masthead and the axis was naked.** The y-axis showed `0 8 16
+  24` with no title, no unit, and no gloss. The sentence explaining what those numbers meant sat
+  ~400px above in the page header, and the one named reference on the chart — the weekly-starter
+  line — was labelled on the **far right**, at the opposite end from the numbers it anchors. So the
+  reader had to hold a definition in their head, carry it down the page, and re-apply it to bare
+  integers. **That is exactly the failure `CLAUDE.md` principle 2 names — "direct-label on the
+  graphic; never a key the reader re-applies" — and Studio wrote that principle and then shipped its
+  violation.**
+  **How to apply: an axis must name itself on the figure.** The unit, and what the quantity *is*, go
+  adjacent to the tick numbers — not in a masthead, not in a caption, not in a legend. If a
+  reference line carries a name, that name is labelled at the end of the line the reader is already
+  looking at, which is the axis end. A decoder line in the masthead is for saying *why the quantity
+  matters*; it is not a substitute for labelling.
+  **Fixed the same night:** axis title and gloss moved directly above the ticks; the starter line
+  relabelled inline at the left as `11.3 — what a weekly WR starter's role is worth`; the masthead
+  decoder rewritten to carry the *reason* (opportunity repeats, efficiency mostly does not — 74% of
+  receivers give it back) instead of repeating the unit. Text-on-text census 0, text-on-stroke 0, and
+  the first attempt at the fix **collided the new axis gloss with the trade annotations and was
+  caught by the census, not by looking** — the one case tonight where the instrument beat the eye.
+  **The wider lesson, which generalises past this figure:** Studio verified this page against a craft
+  gate, a palette validator, a squint test, a keyboard pass and a geometry census, and **not one of
+  them can see an unlabelled axis.** Every instrument in the kit measures marks, contrast, targets
+  and collisions. *Comprehension* has no instrument here, and David is currently the only test for
+  it. Do not read a clean instrument board as a clean surface.
+
+- **2026-08-07 (same review, second pass) — *"right but what are the numbres? targets?"* The axis
+  label was fixed and the UNIT still had not landed. This is the more important half.**
+  Studio's first fix named the quantity — *"expected fantasy points per game"* — and that was still
+  an abstraction. David was reaching for something physical he already counts (targets), which is
+  precisely the 2026-07-15 grounding ruling reappearing: *"DG's proprietary numbers are too abstract
+  to provide any value without a comparison population."* **xFP is not proprietary, but to this user
+  it was just as abstract, and naming it more precisely made it no more concrete.**
+  **The three things that fixed it, in order of how much work each does:**
+  1. **Name the unit in a currency he already holds.** *"fantasy points per game — PPR, the same
+     scoring as your lineup"*, then the distinction that matters: *"but not what he scored: what his
+     targets and carries were worth."* The unit is the points he already reads every Sunday; the
+     twist is whose they are.
+  2. **Show the arithmetic once, on the graphic, at the peak the eye already goes to.** *"week 13: 12
+     targets, 173 air yards → that opportunity was worth 19.1 points."* **One worked example teaches
+     a unit better than any definition of it**, and it costs one annotation. This is the durable
+     move.
+  3. **Anchor the reference line with a name.** *"11.3 — a weekly WR starter's role. Alec Pierce ran
+     at exactly this in 2025."* Straight from his own 2026-07-15 ruling that a tier must carry
+     comparables that make it concrete. Computed in `build.py`, not chosen by hand.
+  Ingredients (targets / carries / air yards) now also ride in every hover and every screen-reader
+  label, so the decomposition is available on any point rather than only the annotated one.
+  **How to apply, and it generalises past charts: a derived metric must show its ingredients at
+  least once where the reader is looking.** Naming a metric well is not the same as grounding it. If
+  the number is a model output, the surface owes the reader one visible instance of the inputs that
+  produced it — otherwise the reader is asked to trust a quantity they cannot take apart.
+  **What this cost, recorded honestly:** two rounds of his attention on one figure, because the first
+  fix treated a comprehension problem as a labelling problem. **The tell Studio missed: he did not
+  ask "what does the axis mean," he asked "what ARE the numbers" — a question about substance, and
+  it was answered with typography.**
+
+- **2026-08-07 — *"its empty"*. Studio delivered a BLANK PAGE to the client. The most expensive class
+  of error in this engagement, because it spends his attention and returns nothing.**
+  **Cause, diagnosed rather than guessed:** the prototype was served by `python3 -m http.server`,
+  which sends `Last-Modified` and **no `Cache-Control` at all**, so the browser cached
+  heuristically. Studio then regenerated `data.js` with a new field (`starterAnchor`) and edited
+  `index.html` to read it. His browser paired a **fresh page with a stale data file**, the module
+  threw on the first missing field, and an ES-module failure aborts the whole script — leaving the
+  body exactly as authored, which is empty because every region is rendered by JS.
+  **Two defects, and the second is the one that matters:**
+  1. *Mechanical.* A caching static server plus a static import is a stale-pair waiting to happen.
+     Fixed with `tools/serve017.mjs` (`Cache-Control: no-store`) and a cache-busted dynamic import.
+  2. **Design. The page had no failure state, so it failed into nothing.** Studio spent this whole
+     build on the principle that *absence renders as missing, never as zero* — a dedicated block for
+     players with no tape, line breaks for missed weeks — and then shipped a page whose own failure
+     mode was a silent blank. **The rule was applied to the data and never to the artefact carrying
+     it.** A blank page is the worst possible state: it looks simultaneously like nothing is wrong
+     and like nothing is there, and the reader cannot tell a fault from an empty result.
+  **How to apply: every JS-rendered prototype gets a visible failure state before it is opened in
+  his browser, and that state is tested in both directions.** 017 now catches at both the import and
+  the render, and prints the fault with the fix. Verified by deleting a field from `data.js` and
+  re-rendering: healthy 4,689 visible characters, broken **193 characters reading "This page failed
+  to draw — not an empty result, a fault"**, restored 4,689. **An error boundary that has never been
+  made to fire is not an error boundary.**
+  **The wider pattern this is the third instance of:** Studio verified this page with a craft gate,
+  palette validator, squint test, keyboard pass, collision census and geometry audit — **every one of
+  them run against a freshly-built local copy, none against what his browser actually received.**
+  The instruments all measure the artefact in ideal conditions. Delivery was never measured. **Open
+  the URL you are about to send him, from a cold cache, and look at it — that is the last check and
+  it was missing.**
+
+- **2026-08-07 — *"it says 'week' on the bottom axis and nothing on the left axis"*. Third pass on the
+  same axis, and this one names the actual defect better than Studio had.**
+  He was not describing missing pixels — the tick numbers were rendering. He was describing a
+  **missing label**, and he diagnosed it by comparison: the x-axis has the word *"week"* sitting
+  under its numbers, so it is self-evidently an axis. The y-axis had three faint 11px integers and
+  **no word attached to them at all.** Studio's "axis title" was a horizontal line of prose sitting
+  above the plot area, where it read as another sentence in the hero paragraph — **near the chart but
+  not attached to the axis.** Proximity is not attachment.
+  **Fixed by symmetry with the axis that worked:** *"fantasy points per game"* now runs rotated up
+  the left side, immediately beside its own numbers, exactly as *"week"* sits under its own. Tick
+  numbers 11px → 13px (his 2026-07-23 *"all the visuals are very small"*, still true and still being
+  re-earned).
+  **How to apply: an axis label belongs beside its own ticks, not above the plot.** The test is his,
+  and it is a good one — *cover everything except the axis and its numbers; can you still say what
+  the numbers are?* Prose above a chart fails that test no matter how well written.
+  **THE PROCESS FAILURE, which is the real entry.** This took **three passes on one axis** — a
+  labelling fix, then a grounding fix, then an attachment fix — and each pass cost David a round of
+  attention. All three were visible in the very first screenshot Studio rendered. **Studio looked at
+  that screenshot and read it for defects it already had names for** (collisions, overflow, contrast,
+  target size, density) **and did not once ask the naive question: if I knew nothing, could I read
+  this?** The instruments trained the looking, and the looking narrowed to what the instruments
+  measure.
+  **And the same pass produced the proof.** Fixing the axis introduced a label anchored `end` that
+  ran **600px off the left edge of its viewBox** and was clipped away entirely — and Studio's own
+  overflow audit reported clean, because it only ever checked the RIGHT edge. Caught by looking at
+  the render, then fixed in the tool and **verified in both directions** (convicts the reintroduced
+  bug, clears the fixed page). **Two defects in one session that every check passed and one glance
+  caught. Look at the picture first, with the instruments second.**
+
+- **2026-08-07 — STUDIO WROTE INTO THE PRODUCT REPOSITORY. The one absolute prohibition in this
+  engagement, broken.** Two fixture files landed at `dynasty-genius-product/kit/gate-fixtures/`.
+  **Cause: a working directory persisting between shell calls.** An earlier command had `cd`'d into
+  the product repo to read its databases; a later heredoc used a *relative* path and wrote there.
+  **Never tracked by git (`?? kit/`), removed, and the repo verified byte-identical to how it was
+  found.** Disclosed to David unprompted in the same message it was discovered.
+  **How to apply: every write uses an absolute path, always.** The studio and the product repo differ
+  by one directory component and the shell does not care which one you are in. A relative path in this
+  lane is a latent violation waiting for the wrong cwd — the prohibition cannot be honoured by
+  intention, only by never expressing a destination that depends on state.
+  **Second exposure, logged per the fresh-eyes covenant:** the `git status` run to verify the cleanup
+  printed FILENAMES under `docs/agent-ledger/`. Names only; nothing was opened. Unavoidable given the
+  cleanup had to be verified, and recorded rather than passed over.
+
+- **2026-08-07 — *"ok do you want to work on your skills and toolkit?"* — and the honest answer was
+  that tonight had already named the gap.** Built `tools/orphan-axis.mjs`: the first instrument in
+  this kit that tests **comprehension** rather than the drawing. Everything else measures marks,
+  hues, contrast, targets, collisions, geometry, density — and a figure passed all six of them
+  tonight while David could not read its y-axis.
+  **What it encodes:** a group of aligned numbers is a claim about a quantity, and the reader must be
+  able to name that quantity without leaving the figure. **Attachment, not presence** — distance is
+  the test. This promotes the axis lesson from *loaded* (a line in a file someone must remember) to
+  **encoded** (a check that fires at the moment of the decision), which is the top tier of the ladder
+  in `CLAUDE.md`.
+  **Calibrated both directions on ONE figure** — the orphaned fixture fails its y-axis (nearest word
+  320px) and passes its x-axis ("week" at 0px), which is precisely the discrimination David made by
+  eye. Deterministic across two runs.
+  **Its limits were measured rather than assumed, and reported rather than buried:** it sees only
+  `<svg>`, so `016-silent-lane/figure.html` (0 SVGs) was **not examined at all** — a hole, not a
+  pass; and across eight studio figures it found an axis in exactly **one**. It also cannot tell
+  whether a name is a *good* name.
+  **The thing worth carrying forward is not the tool.** Every fault David caught tonight was visible
+  in the first screenshot Studio rendered. Studio read that screenshot for defects it already had
+  names for and never asked the naive question — **if I knew nothing, could I read this?** The
+  instruments train the looking, and the looking narrows to what the instruments measure. **Look at
+  the picture first, with the instruments second.**
