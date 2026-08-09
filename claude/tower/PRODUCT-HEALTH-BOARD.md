@@ -140,3 +140,62 @@ profiles on disk with no API route reading them; roster-tape depth on a young ro
 **Convergence with crew work observed; independence NOT established** — pane 2.1 retains almost no
 scrollback and Tower has no verified record of what crossed into that lane in the preceding six days.
 Record it as convergence, never as independent corroboration.
+
+---
+
+# ============ 2026-08-09 — VERIFIED 09:28–09:35 ET ============
+
+## ⚠ NEW AND USER-FACING: `/api/health` is slow and getting slower
+**VERIFIED 09:32 — `curl -w '%{time_total}'` against the live server, two attempts:**
+`http=200 t=43.74s` and `http=200 t=39.02s`, payload 3,567 bytes both times.
+**Yesterday 2026-08-08 the same endpoint answered in 14.36s.** The rest of the app is unaffected:
+`/` = 0.109s, `/docs` = 0.023s. So it is this endpoint specifically, and it roughly TRIPLED in a day.
+This is the endpoint behind the System Diagnostics card David sees in the app.
+**TOWER NEAR-MISS, recorded:** the first probe used `--max-time 8`, returned `http_code=000`, and
+Tower nearly reported the server DOWN. It was slow, not down. Wrong instrument; caught before it
+reached David. The lesson generalises — a timeout is an instrument setting, not a fact about the world.
+
+## ✅ THE GREEN-ON-STALE-DATA DEFECT IS NOW CONFIRMED, not inferred
+Two readings, different times of day, same artifacts, opposite verdicts, **identical underlying data**:
+
+| when | roster_capacity / league_opportunity | root |
+|---|---|---|
+| 2026-08-08 11:58 (inside the 3h grace window) | `freshness_overdue / within_grace`, 24.64d | **`ok`** |
+| 2026-08-09 09:32 (before the 09:35 & 10:00 slots) | `stale / past_grace`, **25.54d** | **`degraded`** |
+
+Config: both `cadence: weekly`, `grace_hours: 3`, scheduled 10:00 and 09:35, `dormant_ok: false`,
+in-season months [9,10,11,12,1]. **Neither has a producer** — `launchctl list` returns none.
+**Conclusion: the health light turns green every day for a window around mid-morning, on data now
+25.5 days old, waiting on a job that will never run.** That window includes the hour David would sit
+down on a Tuesday in season. Pinning the exact evaluator rule is crew work; the outcome is not in doubt.
+
+## MORNING JOBS — 2026-08-09
+- `league_capture` — ran clean **09:20:43**, marker `status: ok`. Health: `fresh`, 0.01d.
+- `feature_refresh` — **started 09:15, still running at 09:30 (PID 7620, 15+ min elapsed).**
+  Yesterday's completed in ~6 min. Not failed; running long. Health still grades **yesterday's**
+  report `fresh` at 1.01d.
+- `pvo_refresh` — started on time **09:30** (PID 23816). Health reads `freshness_overdue /
+  within_grace` at 1.00d while it runs.
+- **Yesterday's feature refresh substance (VERIFIED from `stream_provenance`):** `participation`
+  = `loaded_empty` (ValueError); `pbp`, `player_stats`, `snap_counts` all `fallback_used: true`
+  (ValueError / ConnectionError / ValueError). **Only `rosters` loaded clean.** The report still
+  said `status: ok` and health still graded it `fresh`. The shape-not-substance gap is live daily.
+
+## UNCHANGED, RE-VERIFIED 09:32
+`realized_outcome` grades **`fresh`** at 4.97d — still the 2026-08-04 `noop`. Nothing has graded a
+prediction. Model provenance / capture health / tier readiness subsystems all `ok`.
+
+## STUDIO — from disk, 09:28
+**Alive and producing.** `017-the-job.md` and `018-what-repeats.md` (08-08), **`019-on-the-field.md`
+written 09:24 today.** `DAVID.md` 09:15 today, `for-david/STATUS.md` 09:24 today.
+019 supersedes 017/018 on David's own reaction, quoted in it: *"wtf is a JOB?? are you using any of
+your football context research?"* — **David has been working with Studio directly across 08-08/09.**
+019 status line: *"Not approved, nothing relayed."* Studio reports **no background jobs** in its lane
+and the **fresh-eyes covenant INTACT** — it deliberately left the product's `visualCraftAudit.test.js`
+baseline unread, and named the cost rather than hiding it.
+
+**RELAYED PROPOSAL (Studio's, not started, David's gate):** install Playwright MCP and Chrome
+DevTools MCP. Changes his machine, therefore his word.
+
+## CREW — observed only, not Tower's lane
+Ledger `2026-08-09.md` 41KB by 09:25 · 2 commits today · **57 uncommitted paths** (22 yesterday).

@@ -2519,3 +2519,109 @@ it about — never the generalisation Studio wrote around it.**
   **Dead: `craft/lab-005-composition.html`, `craft/lab-006-identity.html`, and the "job" framing
   wherever it appears — including 017 and 018, which both carry it.** Torn down on his word, not
   iterated.
+  **Research done the same session, and it is now on disk as a searchable reference rather than a
+  lesson to be re-learned:** `craft/how-the-hobby-speaks.md` — the nouns, the metrics, the published
+  bars with their sources, and a column stating whether the product's data can actually speak each
+  one. Instrument validated both directions before any number was quoted (2025 YPRR leaders came
+  back Nacua / Smith-Njigba / Kincaid / Flowers / St. Brown; TPRR leaders Nacua / Smith-Njigba /
+  St. Brown / Rice / Chase). **Three defects were caught in the building of it, all the same
+  family:** a join on NAME silently lost `Tre' Harris` (the roster spells him without the
+  apostrophe); the weekly gamelog **includes the postseason**, so every per-game rate mixed playoff
+  football into regular-season rates until weeks 19-22 were filtered out; and a hard 20.0-touch
+  cutoff labelled **Ashton Jeanty a "committee" back at 19.9 touches on a 79% snap share** —
+  **a categorical noun on a continuous quantity lies at the boundary**, which is its own durable
+  rule and the same shape as the coined-word error it was found while fixing.
+
+- **2026-08-08 — CONFIRMED, and it is the first unambiguous positive of the day: *"this is great"*,
+  pointing at four specific player lines.** Quoted exactly as he marked them:
+  *"Luther Burden ran 234 routes on a 39% snap share and posted 2.79 yards per route. Elite per-route
+  production in a part-time role."* · *"Xavier Legette is at 0.94 — under the line where analysts stop
+  defending a receiver."* · *"Odunze 23.6% target share on 88% of snaps, Wilson 36% — both alphas in
+  their offenses."* · *"Jeanty: 339 touches, 79% snaps — a real bell cow, past the 280-touch marker."*
+  **What he approved is a SENTENCE, and that is the finding.** Not a table, not a chart — a scouting
+  line: **a named player, two or three real metrics in the hobby's own units, and a plain-language
+  read that the numbers earn.** Every one of these was rejected in a different costume earlier the
+  same day when the same underlying data was drawn as dots on an axis and labelled with a coined noun.
+  **The atom of value here is the analyst's sentence with the numbers embedded, not the graphic.**
+  **Read the four and the shape is consistent — each is either a STATUS the numbers earn or a
+  TENSION between two of them:** Burden = tension (elite rate, part-time role). Legette = a
+  threshold crossing against a published bar. Odunze/Wilson = a status with the share that proves it.
+  Jeanty = a status with the marker that proves it. **None of them is "he was mid at everything",
+  which is the honest description of most players — so the open risk is that this form only works on
+  the interesting minority and manufactures a protagonist for everyone else.** That is David's own
+  2026-07-21 ruling (*"what if there's not an outlier and it's just a normal day?"*) and it must be
+  tested against the boring players before any surface is built on this.
+
+- **2026-08-08 — THE FORM SURVIVES THE BORING PLAYERS, but only after the labels came out. Third
+  boundary failure of the day, and the mechanism was the bug rather than the roster.**
+  Studio tested the approved scouting-line form against all 18 rostered players with tape, on bars
+  fixed from the published sources BEFORE the output was read, and did not re-tune them afterwards.
+  **First run: 7 of 18 carried a status or a tension and 11 came out MID.** But among the MID rows
+  was **Rome Odunze — the player David had just agreed was an alpha** — because the rule wanted a
+  25% target share and he sits at 23.6%. And **Elic Ayomanor** was missed by landing *exactly* on
+  the p25 line and failing a `<`. Together with **Ashton Jeanty being called a "committee" back at
+  19.9 touches on a 79% snap share**, that is **three false football statements in one run, all
+  produced at a threshold edge.**
+  **The rule, and it generalises well past this surface: do not put a categorical noun on a
+  continuous quantity. POSITION the number against the bar instead.** *"23.4% targets per route
+  (clears the 20% bar) · 1.72 yards per route (above the middle of 170 qualifiers)"* is true for a
+  middling player and for a star, cannot lie at a boundary, and preserves the reader's judgement —
+  which is the decision-support doctrine of 2026-07-23 arriving from a different direction.
+  **After the rewrite every one of the 18 reads as a real scouting line**, so the form does not
+  only work on the interesting minority. **What remains genuinely open is whether the positioned
+  line for an ordinary player is worth having or is filler — that needs David's eye, not another
+  measurement.**
+  **SAME DAY, SECOND CONFIRMATION — and it names the part that matters, which is NOT the numbers.**
+  David: *"i like this a lot too"*, quoting four fragments — and every one of them is the
+  **interpretive clause**, not the metric: *"Elite per-route production in a part-time role"* ·
+  *"under the line where analysts stop defending a receiver"* · *"both alphas in their offenses"* ·
+  *"bell cow, past the 280-touch marker"*.
+  **The atom of value is number + THE ANALYST'S READ OF IT, in the hobby's words.** A bare
+  positioned figure is not what he responded to twice; he responded to the sentence that says what
+  the figure MEANS to a football person.
+  **This looks like it contradicts the boundary lesson recorded above and does not.** Read what the
+  four phrases have in common: **every one names the bar it is being judged against** — the 280-touch
+  marker, the 1.00 line analysts stop defending at, "part-time" against the snap share quoted beside
+  it. **They interpret AND position at the same time.** So the rule is not "stop interpreting" — that
+  was the wrong conclusion from the Jeanty/Odunze misclassifications. The rule is: **the read must
+  name the bar it rests on, and a player near that bar gets "just under" rather than a flipped
+  category.** Interpretation earned by a named, published threshold is exactly what he is paying for;
+  an unanchored label is what lied at the edge.
+  **Consequence for the positioned lines written an hour earlier: they are too mechanical.** They
+  position correctly and carry no read. They need the clause.
+
+- **2026-08-09 — *"still - missing dots, not great visibility on some dots. study!!!"* and then
+  *"i still don't see a dot for DIKE"*. Three rounds of "missing dots", and Studio guessed twice
+  before measuring once.**
+  **What was actually wrong, in order, each found only by measuring against the ROSTER rather than
+  against Studio's own derived arrays:**
+  1. **Five quarterbacks were on no panel and in no caption.** 5 of 27 players, invisible, and the
+     surface never mentioned the position existed. Found by auditing the league snapshot's roster
+     against the rendered figure — the audit Studio should have written before the first delivery.
+  2. **Four running backs were absent** because the caption said "backs are not here". **A sentence
+     is not representation.** They now have their own panel in their own units.
+  3. **Dike's dot was drawn and his NAME was 52px away from it**, next to a different player's mark.
+     To the reader that is a missing dot, and he is right.
+  4. Both greys sat at L=0.32 and L=0.74 on an L=0.20 ground — the darker one was a 0.12 lightness
+     gap, which is the "not great visibility" complaint.
+  **Studio mis-diagnosed twice before getting it right, both times by counting a derived array
+  instead of the rendered figure, and both times reported the wrong cause to David** — first
+  claiming Kyle Williams had vanished (he had not), then claiming full coverage when five QBs were
+  missing. **A name-based join produced two further false positives in the same session (Tre'
+  Harris, Luther Burden III). Audit by ID, against the source of truth, never against your own
+  intermediate.**
+  **THE DURABLE FIX, and it came from the study he demanded twice.** The greedy de-collision loop
+  Studio kept hand-rolling had two structural holes: it knew nothing about a label overlapping a
+  MARK, and it had no cost for distance from the anchor, so a crowded label walked arbitrarily far
+  and landed on someone else. The literature's answer is **simulated annealing over an energy
+  function** (Evan Wang's D3-Labeler, CS294-10) with terms for leader length (0.2), leader crossings
+  (1.0), label-label overlap (30), **label-over-mark overlap (30 — the term whose absence caused
+  this)** and quadrant preference (3.0). Implemented as `kit/labeler.mjs`, seeded so layout is
+  deterministic. **Label-over-mark collisions on the receiver panel: 49 → 3.**
+  **This exact failure was recorded on 2026-07-31** — *"label de-collision pushed names down and
+  left the dots behind, so a name sat beside the wrong mark"* — **and reintroduced, because the fix
+  applied then was ad hoc rather than a mechanism.** That is the whole argument for promoting a
+  lesson from Loaded to Encoded, failing in public.
+  **Also: a STATIC module import that fails bypasses the error boundary entirely** — the page went
+  blank with no fault message when the server returned the wrong MIME type for `.mjs`. Both imports
+  are now inside the guarded block.

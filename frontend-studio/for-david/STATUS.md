@@ -1,5 +1,80 @@
 # Studio proposals — status
 
+## ══ 2026-08-08/09 (SD-0808) ══ The day a coined word cost two surfaces, and the study that fixed it
+
+**Self-directed throughout. Nothing relayed, nothing approved.**
+Artifacts: `proposals/019-on-the-field{.md,/}`, `proposals/018-what-repeats{.md,/}`,
+`craft/how-the-hobby-speaks.md`, `craft/composition-findings.md`, `kit/labeler.mjs`,
+`tools/{composition-profile,population-census,shot018,serve018,serve019}.mjs`,
+`tools/{does-market-pay-for-role,does-opportunity-repeat,does-the-finish-predict,
+finish-predict-followups,does-the-finish-keep-the-job,does-the-finish-predict-for-the-young,
+the-premium-that-does-not-repeat,pairing-stability,usage-in-the-hobbys-units,
+does-the-line-survive-the-boring}.py`.
+
+### THE ARC, in David's words
+*"i have no clue what this surface is saying"* → *"i just think your design principles are off -
+please go learn some new techniques"* → *"wtf is a JOB?? are you using any of your football context
+research?? tear this whole surface down"* → *"this is great"* (four scouting lines) → *"i like this
+a lot too"* → *"nice looking surface with some good analysis"* → *"better - but still not the
+colors"* → *"sloppy work - missing player dots"* → *"study!!!"* → *"i still don't see a dot for
+DIKE"* → *"ok - better"*.
+
+### WHAT WAS MEASURED AND KILLED
+- **017's organising axis is refuted.** Role *trajectory* does not predict next season's role
+  (ΔR² +0.003, and +0.009 with survivorship fixed), does not predict job retention once level and
+  age are held fixed (59% of matched pairs, p=0.22), and adds ΔR² 0.011 even for the young players
+  it is explicitly about. Five tests, bars never weakened. Correction appended to `017-the-job.md`.
+- **Opportunity repeats (r=0.767), efficiency does not (r=0.195)** — measured in-house across 8
+  seasons, replicating the published 74% at 72%. The market pays a real premium for the
+  non-repeating half (+0.125 SD, bootstrapped CI [0.049, 0.205]).
+- **Studio's opening hypothesis died in the first regression** — the market prices role almost
+  completely (β 0.77), not production.
+- **Two of Studio's own instruments disagreed** (65% vs 25% on the same data) and neither was
+  quoted until 2,000 random matched pairings resolved it at a stable 62%.
+
+### THE THREE FAILURES THAT COST HIS ATTENTION
+1. **A coined word.** "Job" for expected fantasy points. No dynasty manager says it. Two surfaces
+   were built on it. Fixed by research: `craft/how-the-hobby-speaks.md`.
+2. **Composition measured flat.** `tools/composition-profile.mjs` — biggest÷median block **1.00** on
+   017/018 against 5.5–91.5 in the category; **0 identity imagery** against 26–36. Type scale was
+   never the problem (1.38, inside the category's range). **Studio then shipped 019 at 1.18 without
+   running its own new gate on it.**
+3. **Missing dots, three rounds.** Five QBs on no panel and in no caption; four backs excluded by a
+   caption rather than drawn; Dike's label 52px from his own mark. **Studio mis-diagnosed twice by
+   counting a derived array instead of the rendered figure, and reported the wrong cause both
+   times.**
+
+### WHAT WAS BUILT THAT SHOULD OUTLIVE THE SESSION
+- **`kit/labeler.mjs`** — simulated-annealing label placement (Evan Wang's D3-Labeler energy terms),
+  seeded and deterministic. The greedy loop it replaces had no cost for label-over-mark and no cost
+  for distance from the anchor. **49 → 3 collisions.** This exact defect was recorded on 2026-07-31
+  and reintroduced, because that fix was ad hoc; this one is a mechanism.
+- **`tools/composition-profile.mjs`** — spatial weight, ground layers, identity, chroma. Its colour
+  parser initially read only `rgb()`, so every oklch page measured as 0 — fixed via canvas and
+  validated.
+- **`tools/population-census.mjs`** — does every entity in the data reach the figure. **Its first
+  version could not convict its own known-bad specimen** because it searched the whole page; scoped
+  to the figure, it now does.
+- **The colour system finally applied** after eleven days unused: position hues (deutan ΔE 8.4 vs
+  the shipped set's 4.0), lanes neutral, ownership carried by lightness.
+
+### OPEN THREADS AT CLOSE
+| thread | state | sits with |
+|---|---|---|
+| **019** | built, iterated on four rounds of his reactions, **not approved** | David |
+| **018** | superseded by 019's vocabulary; the repeatability finding stands | Studio |
+| **017 correction** | written into the file; the table is still ordered by the refuted axis | Studio |
+| **017 relay R1–R5** | authored, **not authorised**, unchanged | David |
+| **Waiver state absent from the snapshot** | engineering ask, stated on-surface | relay |
+| **Headshot cache empty** | 22/22 available from sleepercdn by sleeper_id | relay |
+| **3 label-over-mark overlaps** | measured, not fixed | Studio |
+| **Repo/ecosystem study** | one round done (label placement); broader front-end study not started | Studio |
+
+**Fresh-eyes covenant: INTACT.** Read only data stores, `tokens.css` values and `/openapi.json`.
+**Product repo: read-only, no writes this session.**
+
+---
+
 ## ══ 2026-08-07 NIGHT (SD-0807N) ══ 017 "The job, not the season" — the data floor moved
 
 **Self-directed. Built, verified, SHOWN to David four times. Nothing relayed, nothing approved.**

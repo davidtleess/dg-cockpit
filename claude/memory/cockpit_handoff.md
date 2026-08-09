@@ -1,68 +1,86 @@
-# TOWER HANDOFF — written 2026-08-08
+# TOWER HANDOFF — written 2026-08-09 at David's closeout
 
 **TREAT THIS AS INHERITED CLAIM, NEVER AS A SOURCE.** Every line is a lead to check against the
-artifact. The previous handoff was stale the moment it was written, twice.
+artifact. Re-verify before repeating any of it to David — that is Rule 2 and it is the rule that
+matters most.
 
-## FIRST: your role changed on 2026-08-08. Read the charter before anything else.
+## YOUR ROLE — read the charter before anything else
 
-`~/.claude/agents/tower.md` was rewritten. **Tower is no longer an orchestrator.** No relay, no
-crew approvals, no gating, no closeout ushering, no lane-status reporting. If a prior document tells
-you to do any of those, it is historical — do not act on it.
+`~/.claude/agents/tower.md`. **Tower is not an orchestrator.** No relay, no crew approvals, no
+gating, no closeout ushering, no lane-status reporting. If an older document tells you otherwise, it
+is historical. You own: **data fresh · models honest · truth when David sits down**, plus **Studio's
+bridge** and **his dated commitments**.
 
-You are the steward of Dynasty Genius's operational health and David's spokesperson for it:
-**data fresh · models honest · truth when he sits down**, plus **Studio's bridge** and **his dated
-commitments**. Full spec and its evidence: `~/.claude/tower/SPEC-2026-08-08-tower-role-v2.md`.
+**Rule 1 (David's word):** never invent product features. Label everything **VERIFIED** /
+**PROPOSED PRODUCT CHANGE** / **RELAYED PROPOSAL**.
 
-**Rule 1, David's word:** never invent product features. Every statement about the product is
-labelled **VERIFIED**, **PROPOSED PRODUCT CHANGE**, or **RELAYED PROPOSAL**.
+**Trial ends ~2026-08-22.** Kill criterion is in the charter.
 
-**You are on a two-week trial from 2026-08-08.** The kill criterion is in the charter. Read it.
+## WHAT DAVID SHOULD HEAR FIRST NEXT SESSION
 
-## THE BOARD
+**`/api/health` is slow and getting worse — and it is user-facing.** Verified 2026-08-09 09:32:
+two calls at **43.7s and 39.0s**. Same endpoint answered in **14.4s** the day before. Rest of the app
+is fine (`/` 0.11s, `/docs` 0.02s). This is the endpoint behind the System Diagnostics card. **Check
+this first — if it has kept climbing, it is the most urgent thing on the board.**
 
-Live product health, verified 2026-08-08 with commands recorded:
-`~/.claude/tower/PRODUCT-HEALTH-BOARD.md`. Re-verify before quoting any of it — the whole point of
-Rule 2 is that yesterday's measurement is not today's fact.
+## THE CONFIRMED DEFECT — do not soften it, it is proven twice
 
-**The three findings that define the current work:**
-1. `/api/health` has read `degraded` for ~24 days because two declared artifacts have no scheduled
-   producer. The amber light carries no information.
-2. `feature_refresh` grades `fresh` while its own provenance records four of five upstream streams
-   falling back to cache and one loading empty.
-3. **Nothing has ever compared a prediction to an outcome.** The scorer's loaders `return []` while
-   500,303 prediction snapshots sit in `model_forward_capture.db`. From September it will report
-   healthy all season while grading nothing.
+The health light **turns green daily on 25-day-old data**. `roster_capacity` and
+`league_opportunity` are declared weekly (10:00 and 09:35, 3h grace) with **no launchd producer at
+all**. Inside the grace window they grade `within_grace` and the root reads `ok`; outside it they
+grade `stale` and the root reads `degraded`. Same data, opposite verdicts, verified 08-08 11:58 and
+08-09 09:32. That green window covers the hour David would open the app on a Tuesday in season.
 
-## OPEN WITH DAVID — in dependency order
+## FULL BOARD
 
-1. **The eight PROPOSED PRODUCT CHANGES** on the board. None started, none authorized. Tower's
-   recommended first: wire the outcome scorer to the existing snapshots — it is the only path to
-   model honesty and to any drift signal, and its statistics are already built.
-2. **Grounding-layer GO/NO-GO — DUE NOW.** His charter edit of 2026-07-22 gated it to "~August 2026"
-   with an instruction to raise it proactively. NO-GO is a legitimate outcome.
-3. **The Gemini seat** — contribution record, due ~2026-07-24, two weeks overdue.
-4. **Crew-facing documents still describe the old Tower** and need his word plus the crew's hands —
-   `AGENT_SYNC.md` (TW29-WALL-35 escalation path), `docs/governance/02-agent-operating-loop.md`,
-   `.claude/skills/cockpit-closeout/SKILL.md`. Tower must NOT edit these; they are product-repo
-   commits.
-5. **The SessionStart and UserPromptSubmit hooks** still run orchestration-era instrumentation
-   (`watchdog.sh`, `turn-brief.sh`). Changing them is a settings change — his word only.
-6. **`~/dg-cockpit/backup.sh` was edited 2026-08-08** to cover the new skill directory; the previous
-   hardcoded path would have left the new persona outside the backup. **It has NOT been run or
-   pushed** — that needs his word.
+`~/.claude/tower/PRODUCT-HEALTH-BOARD.md` — every line stamped with the command that produced it.
+Carries eight **PROPOSED PRODUCT CHANGES**, none started, none authorized. Tower's standing
+recommendation for first: wire the outcome scorer to the 500,303 prediction snapshots that already
+exist — the statistics are built and it is the only route to any drift signal.
+
+## DATED COMMITMENTS — Tower's alone, nobody else holds these
+
+| Item | Due | State |
+|---|---|---|
+| Grounding-layer full-build GO/NO-GO | "~August 2026" (his charter edit 2026-07-22) | **DUE, still unraised.** NO-GO is legitimate. |
+| Gemini seat — contribution record | ~2026-07-24 | **Overdue.** |
+| Studio fresh-eyes review | ~2026-09-01 | Approaching. Studio is highly active — see below. |
 
 ## STUDIO
 
-Rest through early August was **David's deliberate choice** while the crew built Layer 1 — not
-neglect. Working under its own licence overnight 08-07/08. Disk is the only truth (pane 2.1 retains
-almost no scrollback). Last proposal 2026-07-30; `DAVID.md` last written 2026-08-01 15:27.
-The ~2026-09-01 fresh-eyes review is live.
+**Active and producing.** 017 and 018 on 08-08; **019-on-the-field.md written 09:24 on 08-09**;
+`DAVID.md` and `STATUS.md` both written 08-09. **David has been working with Studio directly** —
+019 quotes his reaction verbatim and supersedes 017/018 on it. 019 is marked *"Not approved, nothing
+relayed."* No background jobs in its lane. Fresh-eyes covenant recorded INTACT, with the cost of a
+deliberately unread file named rather than hidden.
 
-## TOWER'S OWN ERRORS THIS SESSION — recorded because the next Tower should know
+**RELAYED PROPOSAL awaiting David:** install Playwright MCP and Chrome DevTools MCP. Changes his
+machine, so it is his gate.
 
-1. Read eight quiet days in Studio as neglect without checking; David corrected it — the rest was
-   intentional. **Rest is fine; blocked-idle is the waste.**
-2. Reported that Studio was actively working as though it were valuable news. It was status, not
-   value. David: *"thats marginally - if that - valuable."*
-3. **Blurred the product-change line inside the pitch for this role** — four unbuilt changes stated
-   as duties. David caught it and made the labelling rule binding. This is why Rule 1 exists.
+## STILL OPEN WITH DAVID
+
+1. The eight proposed product changes — none authorized.
+2. Grounding-layer GO/NO-GO — due.
+3. **Crew-facing docs still describe the old Tower** — `AGENT_SYNC.md` (TW29-WALL-35 escalation
+   path), `docs/governance/02-agent-operating-loop.md`, the repo's `cockpit-closeout` skill. These
+   are product-repo commits; **Tower must not edit them.** Prepare wording, route through David.
+4. **The SessionStart / UserPromptSubmit hooks** still run orchestration-era instrumentation
+   (`watchdog.sh`, `turn-brief.sh`). Harmless, but they belong to the retired role. Settings change
+   = his word.
+
+## NOT TOWER'S LANE — observed only
+
+Crew on 2026-08-09: 41KB ledger by 09:25, 2 commits, **57 uncommitted paths** (22 the day before).
+Tower does not act on this and does not report lane status to David unless it bears on the product.
+
+## TOWER'S OWN ERRORS — recorded so the next one does not repeat them
+
+**2026-08-09:** probed `/api/health` with an 8-second timeout, got `http_code=000`, and **nearly told
+David the server was down.** It was slow, not down. **A timeout is an instrument setting, not a fact
+about the world.** Caught before it reached him — but only just.
+
+**2026-08-08:** blurred the product-change line inside the pitch for this role — four unbuilt changes
+stated as duties. David caught it and made the labelling rule binding. That is why Rule 1 exists.
+
+**2026-08-07:** read eight quiet days in Studio as neglect without checking. The rest was David's
+deliberate choice. **Rest is fine; blocked-idle is the waste.**
