@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lab-006 — identity, and mass that means something</title>
+<!--
+  CRAFT LAB v2. David on lab-005: "better. still needs more."
+  The largest remaining measured gap was IDENTITY IMAGERY: Savant 26 nodes, FotMob 26,
+  Sofascore 36, every Studio surface 0. Resolved — sleepercdn serves a headshot for all 18
+  players keyed by the sleeper_id the app already stores (18/18 verified, 200 + >50KB).
+
+  The new idea here is that MASS CARRIES THE MEANING rather than decorating it: a player
+  who held a weekly starter's job is drawn large; a player who did not is drawn small. The
+  size difference IS the finding, so the strongest attention channel (size, ~45% of
+  attention) is spent on the one distinction the page exists to make.
+-->
+<style>
+  :root{
+    --bg:oklch(0.16 0.01 250); --surface:oklch(0.20 0.012 250); --raised:oklch(0.24 0.014 250);
+    --border:oklch(0.32 0.012 250); --border-strong:oklch(0.48 0.014 250);
+    --text:oklch(0.92 0.005 250); --muted:oklch(0.68 0.008 250); --faint:oklch(0.52 0.010 250);
+    --display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --sm:13px; --base:15px; --lg:18px; --xl:26px; --xxl:84px;
+    --r:6px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:var(--base);
+       line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1200px;margin:0 auto;padding:20px 20px 64px}
+  .kicker{font-family:var(--mono);font-size:var(--sm);letter-spacing:.09em;text-transform:uppercase;
+          color:var(--muted);margin:0 0 16px}
+
+  /* ── the Bite: short, wide, one number ── */
+  .bite{display:flex;gap:24px;align-items:center;background:var(--surface);
+        border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin:0 0 14px}
+  .bite .n{font-family:var(--display);font-size:var(--xxl);font-weight:700;line-height:.82;
+           letter-spacing:-.035em;font-variant-numeric:tabular-nums;flex:none}
+  .bite .n span{font-size:var(--xl);color:var(--faint)}
+  .bite h1{font-family:var(--display);font-size:var(--xl);font-weight:650;margin:0 0 6px;
+           line-height:1.2;letter-spacing:-.015em}
+  .bite p{margin:0;color:var(--muted);font-size:var(--sm);max-width:82ch}
+
+  /* ── the hero: the depth chart ── */
+  .hero{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px}
+  .hero > h2{font-family:var(--display);font-size:var(--lg);font-weight:650;margin:0 0 4px}
+  .hero > .note{color:var(--muted);font-size:var(--sm);margin:0 0 4px;max-width:96ch}
+  .hero > .shape{color:var(--muted);font-size:var(--sm);margin:0 0 16px;max-width:96ch}
+  .columns{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
+  @media (max-width:900px){.columns{grid-template-columns:1fr}}
+  .col{background:var(--raised);border-radius:var(--r);padding:14px}
+  .col h3{font-family:var(--display);font-size:var(--base);font-weight:650;margin:0}
+  .col .cut{font-family:var(--mono);font-size:12px;color:var(--muted);margin:2px 0 12px}
+
+  /* HAS A JOB — large. The size difference is the claim. */
+  .big{display:flex;gap:12px;align-items:center;padding:10px;border-radius:var(--r);
+       background:var(--surface);margin:0 0 8px;border-left:4px solid var(--team,var(--border-strong))}
+  .big img{width:64px;height:64px;border-radius:var(--r);object-fit:cover;object-position:top center;
+           flex:none;background:var(--bg)}
+  .big .nm{font-family:var(--display);font-size:var(--lg);font-weight:650;line-height:1.15;
+           letter-spacing:-.01em}
+  .big .mt{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px;
+           white-space:nowrap}
+  .big .who{min-width:0}
+  .big .rl{margin-left:auto;text-align:right;flex:none}
+  .big .rl b{font-family:var(--display);font-size:var(--xl);font-weight:700;line-height:1;
+             font-variant-numeric:tabular-nums;display:block}
+  .big .rl i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--faint)}
+
+  /* THE LINE */
+  .cutline{display:flex;align-items:center;gap:10px;margin:12px 0}
+  .cutline .rule{flex:1;border-top:2px solid var(--border-strong)}
+  .cutline .lab{font-family:var(--mono);font-size:12px;color:var(--text);white-space:nowrap;
+                font-weight:600}
+
+  /* NO JOB — small. Same information, a tenth of the mass. */
+  .sm{display:flex;gap:9px;align-items:center;padding:4px 6px;border-radius:4px;
+      border-left:3px solid var(--team,var(--border))}
+  .sm img{width:30px;height:30px;border-radius:4px;object-fit:cover;object-position:top center;
+          flex:none;background:var(--bg);filter:saturate(.75)}
+  .sm .nm{font-size:var(--sm);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sm .mt{font-family:var(--mono);font-size:11px;color:var(--faint);white-space:nowrap}
+  .sm .rl{margin-left:auto;font-family:var(--mono);font-size:var(--sm);color:var(--muted);
+          font-variant-numeric:tabular-nums}
+  .sm .who{min-width:0}
+
+  .empty{display:flex;align-items:center;gap:12px;padding:10px;border-radius:var(--r);
+         border:1px dashed var(--border-strong);margin:0 0 8px;min-height:84px}
+  .empty .ghost{width:64px;height:64px;border-radius:var(--r);flex:none;
+                border:1px dashed var(--border-strong)}
+  .empty .txt{font-family:var(--display);font-size:var(--lg);font-weight:650;color:var(--muted)}
+  .empty .sub{font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:3px}
+
+  .absent{margin-top:14px;background:var(--surface);border:1px solid var(--border);
+          border-radius:var(--r);padding:14px 16px}
+  .absent h3{font-family:var(--display);font-size:var(--base);margin:0 0 4px}
+  .absent p{margin:0 0 10px;color:var(--muted);font-size:var(--sm);max-width:88ch}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{display:flex;align-items:center;gap:7px;border:1px dashed var(--border-strong);
+        border-radius:999px;padding:3px 12px 3px 3px;font-size:var(--sm);color:var(--muted)}
+  .chip img{width:26px;height:26px;border-radius:999px;object-fit:cover;object-position:top center;
+            filter:grayscale(1) opacity(.55);background:var(--bg)}
+  .chip b{color:var(--text);font-weight:600}
+
+  details.meal{margin-top:16px;border-top:1px solid var(--border);padding-top:12px}
+  details.meal summary{cursor:pointer;font-size:var(--sm);color:var(--muted);font-family:var(--mono)}
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th{font-size:12px;font-weight:600;color:var(--muted);text-align:left;padding:5px 8px}
+  th.num,td.num{text-align:right}
+  td{padding:4px 8px;font-size:var(--sm);border-top:1px solid var(--border)}
+  td.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  footer{margin-top:20px;color:var(--faint);font-family:var(--mono);font-size:12px;line-height:1.7}
+  #fault{display:none;border:2px solid var(--text);border-radius:var(--r);padding:16px;margin:16px 0;
+         background:var(--surface)}
+  img{max-width:100%}
+  .fallback{display:grid;place-items:center;flex:none;color:#fff;font-family:var(--display);
+            font-weight:700;letter-spacing:-.02em;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+  .fallback.big{width:64px;height:64px;border-radius:var(--r);font-size:var(--lg)}
+  .fallback.sm{width:30px;height:30px;border-radius:4px;font-size:11px}
+  .fallback.chip{width:26px;height:26px;border-radius:999px;font-size:10px;opacity:.7}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="fault" role="alert"><b>This page failed to draw — a fault, not an empty result.</b>
+    <div id="faultmsg" style="font-family:var(--mono);font-size:13px;margin-top:8px"></div></div>
+  <div id="app"></div>
+</div>
+<script type="module">
+const fault=(e)=>{document.getElementById('fault').style.display='block';
+  document.getElementById('faultmsg').textContent=String(e&&e.stack||e);console.error(e)};
+let META,PLAYERS,NO_TAPE;
+try{({META,PLAYERS,NO_TAPE}=await import('../proposals/018-what-repeats/data.js?v='+Date.now()))}
+catch(e){fault(e);throw e}
+
+const TEAM={CHI:'#C83803',NYJ:'#1C8B5B',NE:'#C60C30',LV:'#B4B8BB',JAX:'#22909F',DEN:'#FB4F14',
+  TEN:'#4B92DB',CAR:'#0085CA',SEA:'#69BE28',NYG:'#3B62C4',GB:'#FFB612',BAL:'#7B5CD6',LAC:'#0080C6'};
+const head=(p)=>`heads/${p.sleeperId}.jpg`;
+const initials=(n)=>n.split(/\s+/).filter(w=>!/^(jr|sr|ii|iii|iv)\.?$/i.test(w))
+  .slice(0,2).map(w=>w[0]).join('');
+// Not every player has a portrait on the CDN. A broken-image icon is the worst possible
+// state - it reads as a fault rather than as an absence - so a miss falls back to the
+// team-coloured initials tile and looks deliberate.
+const face=(p,cls)=>{
+  const img=document.createElement('img');
+  img.src=head(p); img.alt=''; img.loading=cls==='big'?'eager':'lazy';
+  img.addEventListener('error',()=>{
+    const d=document.createElement('div');
+    d.className='fallback '+cls; d.textContent=initials(p.name);
+    d.style.background=TEAM[p.team]||'#5A6472';
+    img.replaceWith(d);
+  });
+  return img;
+};
+const $=(t,a={},...k)=>{const e=document.createElement(t);
+  for(const[q,v]of Object.entries(a)){if(v==null)continue;q==='html'?e.innerHTML=v:e.setAttribute(q,v)}
+  for(const c of k.flat())if(c!=null)e.append(c);return e};
+const word=['Zero','One','Two','Three','Four','Five','Six','Seven'];
+
+try{
+const cuts=META.starterCuts, app=document.getElementById('app');
+const POS=[['RB','Running backs'],['WR','Receivers'],['TE','Tight ends']];
+const full=PLAYERS.filter(p=>p.tier==='full');
+const withJob=full.filter(p=>p.role>=cuts[p.pos]);
+const partialAbove=PLAYERS.filter(p=>p.tier==='partial'&&p.role>=cuts[p.pos]);
+
+app.append($('p',{class:'kicker'},'2025 tape · expected fantasy points · nflverse · your roster'));
+
+app.append($('div',{class:'bite'},
+  $('div',{class:'n',html:`${withJob.length}<span>/${full.length}</span>`}),
+  $('div',{},
+    $('h1',{},`${word[withJob.length]} of your players held a weekly starter's job.`),
+    $('p',{},`A "job" is the workload of the 36th-best receiver, 24th back or 12th tight end by `
+      +`what his targets and carries were worth — the line a 12-team superflex league starts. `
+      +`The other ${full.length-withJob.length} full seasons on your roster came in under it.`
+      +(partialAbove.length?` ${partialAbove.map(p=>p.name).join(' and ')} cleared it too, in `
+        +`${partialAbove.map(p=>p.games).join(' and ')} games — drawn above the line, left out `
+        +`of the count.`:'')))));
+
+const hero=$('div',{class:'hero'},
+  $('h2',{},'Where the tape puts them'),
+  $('p',{class:'note'},'Stacked by what his targets and carries were worth per game — not by where '
+    +'the team lists him. Players above the line are drawn large: the size is the finding, not '
+    +'decoration.'),
+  $('p',{class:'shape'},'Column height is your roster, not the layout — you hold '
+    +POS.map(([pos,l])=>`${PLAYERS.filter(p=>p.pos===pos).length} ${l.toLowerCase()}`).join(', ')
+    +'. The short columns are rooms, not empty space.'));
+
+const cols=$('div',{class:'columns'});
+for(const [pos,label] of POS){
+  const grp=PLAYERS.filter(p=>p.pos===pos).sort((a,b)=>b.role-a.role);
+  const above=grp.filter(p=>p.role>=cuts[pos]), below=grp.filter(p=>p.role<cuts[pos]);
+  const col=$('div',{class:'col'},$('h3',{},label),
+    $('div',{class:'cut'},`a weekly starter's job = ${cuts[pos]} pts/g`));
+
+  for(const p of above) col.append($('div',{class:'big'+(p.tier==='partial'?' partial':''),
+      style:`--team:${TEAM[p.team]||'#5A6472'}`},
+    face(p,'big'),
+    $('div',{class:'who'},$('div',{class:'nm'},p.name),
+      $('div',{class:'mt'},`${p.team||'—'} · ${p.age??'—'} · yr ${p.exp??'—'}`
+        +(p.tier==='partial'?` · ${p.games}g`:''))),
+    $('div',{class:'rl'},$('b',{},p.role.toFixed(1)),$('i',{},'pts/g'))));
+
+  if(!above.length) col.append($('div',{class:'empty'},
+    $('div',{class:'ghost'}),
+    $('div',{},$('div',{class:'txt'},'Nobody'),
+      $('div',{class:'sub'},`no ${label.toLowerCase().replace(/s$/,'')} you hold `
+        +`reached ${cuts[pos]} pts/g`))));
+  col.append($('div',{class:'cutline'},$('span',{class:'rule'}),
+    $('span',{class:'lab'},`${cuts[pos]} — a weekly starter`),$('span',{class:'rule'})));
+
+  for(const p of below) col.append($('div',{class:'sm'+(p.tier==='partial'?' partial':''),
+      style:`--team:${TEAM[p.team]||'#5A6472'}`},
+    face(p,'sm'),
+    $('div',{class:'who'},$('div',{class:'nm'},p.name),
+      $('div',{class:'mt'},`${p.team||'—'} · ${p.age??'—'} · yr ${p.exp??'—'}`
+        +(p.tier==='partial'?` · ${p.games}g`:''))),
+    $('div',{class:'rl'},p.role.toFixed(1))));
+  cols.append(col);
+}
+hero.append(cols); app.append(hero);
+
+if(NO_TAPE.length) app.append($('div',{class:'absent'},
+  $('h3',{},`No 2025 tape — ${NO_TAPE.length} players`),
+  $('p',{},'Not zeros, and not sorted to the bottom as though they had been measured and found '
+    +'wanting. There is no season on the record, so this page says nothing about them.'),
+  $('div',{class:'chips'},NO_TAPE.map(p=>$('span',{class:'chip'},
+    face(p,'chip'),$('b',{},p.name),` ${p.pos}`)))));
+
+const meal=$('details',{class:'meal'},$('summary',{},'every number behind this →'));
+const tb=$('tbody',{});
+for(const p of [...PLAYERS].sort((a,b)=>b.role-a.role))
+  tb.append($('tr',{},$('td',{},p.name),$('td',{class:'mono'},p.pos),
+    $('td',{class:'mono num'},p.role.toFixed(1)),$('td',{class:'mono num'},p.prod.toFixed(1)),
+    $('td',{class:'mono num'},(p.prod-p.role>=0?'+':'−')+Math.abs(p.prod-p.role).toFixed(2)),
+    $('td',{class:'mono num'},p.games+'g'),
+    $('td',{class:'mono num'},p.mktValue?Math.round(p.mktValue).toLocaleString():'—')));
+meal.append($('table',{},$('thead',{},$('tr',{},...['Player','Pos'].map(h=>$('th',{},h)),
+  ...['The job','Scored','vs job','Games','Market'].map(h=>$('th',{class:'num'},h)))),tb));
+app.append(meal);
+
+app.append($('footer',{},`tape: nflverse ff_opportunity 2025, PPR · market FantasyCalc `
+  +`${META.marketCapture} · roster snapshot ${META.snapshot.slice(0,10)} · headshots sleepercdn, `
+  +`keyed by the sleeper_id the app already stores (18/18 available) · team colour is the brighter `
+  +`of each club's pair, to read on a dark ground`));
+}catch(e){fault(e)}
+</script>
+</body>
+</html>

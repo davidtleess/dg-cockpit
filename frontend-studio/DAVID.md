@@ -2455,3 +2455,67 @@ it about — never the generalisation Studio wrote around it.**
   names for and never asked the naive question — **if I knew nothing, could I read this?** The
   instruments train the looking, and the looking narrows to what the instruments measure. **Look at
   the picture first, with the instruments second.**
+
+- **2026-08-08 — REJECTED, flat: *"i have no clue what this surface is saying - wayyyy off from
+  something that i would enjoy looking at."* On 018 "The half that repeats". Two verdicts in one
+  sentence — it did not COMMUNICATE, and it was not something he wanted to look at.**
+  **The diagnosis, and it is structural rather than cosmetic: Studio shipped a METHODS PAPER.** The
+  morning's investigation ran validate-the-instrument → apply-it-to-his-roster, and the page was
+  built in that same order. So the top half of the surface — the first thing he saw — was a
+  population-statistics figure about 1,154 anonymous player-seasons answering *is this metric
+  reliable?*, which is **Studio's question, never his**. His players did not appear until below the
+  fold, and when they did, each row was two dots and a bar with no sentence saying what it meant.
+  **The durable rule: the order in which a finding was ESTABLISHED is not the order in which to
+  present it.** Verification belongs in the footnotes and the proposal file; the surface opens on
+  the reader's own situation. This is the 2026-07-22 governing method (*does it carry a thesis about
+  the user's situation, or merely display data?*) failing in a new costume — the thesis this page
+  carried was about a metric's statistical properties.
+  **Four specific faults underneath it:**
+  1. **A derived quantity of a derived quantity, ungrounded.** Yesterday took three passes to land
+     "expected fantasy points" and the fix was naming it in currency he holds plus ONE worked
+     example of its ingredients. Today Studio introduced *"points above or below the job"* — a
+     difference of two abstractions — with no worked example at all. Strictly worse than the thing
+     that had just been corrected.
+  2. **The mark was directionally mute.** A bar between two dots: nothing on the row said whether
+     longer was better or worse, or which end was which.
+  3. **Doctrine-driven additions.** Three rank columns (job / ours / market) went on because the
+     two-lane rule says the market must be present, not because the reader needed them — the
+     iterate-by-addition failure of 2026-07-30, committed while quoting the rule that forbids it.
+  4. **A statistics lecture ending in a refusal.** The page's own last paragraph says it does not
+     tell him what to do. Mechanism first, refusal last, his players in between.
+  **What is NOT retracted:** the measurement itself stands (role repeats r=0.767, conversion r=0.195,
+  market pays +0.125 for the half that does not repeat, and 017's role-CHANGE axis is refuted across
+  five tests). **The finding is sound and the surface built from it was rejected — those are separate,
+  and conflating them would be the wrong lesson.**
+
+- **2026-08-08 — *"wtf is a JOB?? are you using any of your football context research?? tear this
+  whole surface down."* Studio INVENTED A UNIT OF VOCABULARY and built two surfaces on it.**
+  **The error, named precisely.** "The job he was given," "your biggest job," "a weekly starter's
+  job" — **no dynasty manager says any of this.** Studio coined a noun for expected fantasy points,
+  dressed it as vernacular, and then made it the organising label of an entire surface. The hobby's
+  actual words for this are **volume, usage, workload, touches, target share, snap share,
+  opportunity** — and, decisively, the hobby expresses them as a **positional rank**, not as points
+  per game: *"he's getting WR2 volume"*, *"that's RB1 touches"*. Nobody says *"his job was worth
+  11.31 points a game."*
+  **This is the THIRD consecutive time the same lesson has been handed over, escalating each time.**
+  2026-07-15: *"DG's proprietary numbers are too abstract to provide any value without a comparison
+  population."* 2026-08-07: *"right but what are the numbres? targets?"* — a substance question that
+  Studio answered with typography, costing two rounds of his attention on one axis. 2026-08-08: an
+  invented word. **Studio did not merely fail to use the domain's units; it manufactured a
+  competing one.**
+  **The compounding failure is that the persona is supposed to make this impossible.** The
+  engagement's premise is a designer who is *"a genuine dynasty degenerate"* and does not need
+  fantasy football explained. Fresh eyes are an asset on interface and a liability on dynasty
+  fundamentals — the 2026-07-24 meta-lesson, verbatim: *"do the domain research BEFORE designing,
+  not after three rejected surfaces. The fix is research, not intuition."* Studio spent this
+  session's research budget entirely on **visual technique** (composition, mass, identity imagery)
+  and **zero on how the thing being drawn is spoken about.** The composition work measured real and
+  the vocabulary underneath it was invented, so the better the drawing got, the more confidently it
+  said something nobody would say.
+  **How to apply: before a quantity appears on a surface, find how practitioners SAY it — in their
+  own sources, not from intuition — and use that phrasing and that unit.** If the hobby expresses
+  something as a positional rank, it ships as a positional rank. **A coined term is a defect even
+  when the maths behind it is correct**, and no amount of composition rescues it.
+  **Dead: `craft/lab-005-composition.html`, `craft/lab-006-identity.html`, and the "job" framing
+  wherever it appears — including 017 and 018, which both carry it.** Torn down on his word, not
+  iterated.

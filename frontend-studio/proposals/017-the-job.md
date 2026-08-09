@@ -256,3 +256,38 @@ rendered. Studio read that screenshot for defects it had names for — collision
 target size, density — and never asked *if I knew nothing, could I read this?* **The instruments
 trained the looking, and the looking narrowed to what the instruments measure.** Nothing in the kit
 tests comprehension; David is currently the only instrument that does.
+
+---
+
+## CORRECTION — 2026-08-08. The ordering axis on this surface is not supported.
+
+This surface orders its table by **role change** and marks the extremes of that ordering. David
+reacted on 2026-08-07 and restated the thesis unprompted: *"growth or decline in role is a legitimate
+signal."*
+
+**Measured on 2026-08-08 against the same eight seasons this surface is built from, I cannot
+demonstrate it.** Five tests, none weakened after the result was seen:
+
+- The last-6-game role is a **worse** forecast of next season's role than the season average
+  (r = 0.729 vs 0.767).
+- Role change adds **ΔR² = +0.003** over the season average (n = 1,154); with survivorship fixed,
+  **+0.009**.
+- As a predictor of whether a player keeps a job at all, holding role level and age fixed:
+  **32/54 matched pairs, 59%, p = 0.22.**
+- Pre-specified for the young players this surface is explicitly about (yrs 1–2): **ΔR² = +0.011**
+  against 0.000 for established players — a real difference between the groups, and still nothing
+  actionable. Assumption-free: **51%, p = 0.71**.
+- The mechanism hypothesis (a change caused by a mid-season trade, which is this surface's own hero
+  case) has **24 instances in eight seasons** and is untestable. Neither supported nor refuted.
+
+**What survives:** the *question* is right. Role is the thing to look at, and it is the repeatable
+half of fantasy scoring (r = 0.767, against 0.195 for efficiency). **What does not survive is
+treating the trajectory as the signal.** The season's role level is the better number.
+
+**Consequence, not yet applied:** this table should be re-ordered by **role level**, with the
+trajectory demoted to a per-row annotation rather than the organising axis. Held pending David's
+word, because re-opening a surface he reacted well to is his call, not mine.
+
+Full measurement and the replacement direction: `proposals/018-what-repeats.md`.
+Reproduce: `tools/does-the-finish-predict.py`, `finish-predict-followups.py`,
+`does-the-finish-keep-the-job.py`, `does-the-finish-predict-for-the-young.py`.
