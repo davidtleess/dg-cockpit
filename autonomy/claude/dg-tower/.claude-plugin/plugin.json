@@ -1,0 +1,9 @@
+{
+  "name": "dg-tower",
+  "version": "0.2.0",
+  "description": "Product-health, freshness, and model-honesty verification for Dynasty Genius Tower.",
+  "author": {
+    "name": "Dynasty Genius"
+  },
+  "license": "MIT"
+}

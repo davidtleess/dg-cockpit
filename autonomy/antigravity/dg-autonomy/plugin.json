@@ -1,0 +1,26 @@
+{
+  "name": "dg-autonomy",
+  "version": "0.2.0",
+  "description": "Safe Dynasty Genius engineering autonomy with a pinned Antigravity Swarm backend.",
+  "author": "Dynasty Genius",
+  "license": "MIT",
+  "skills": "./skills",
+  "hooks": "./hooks.json",
+  "interface": {
+    "displayName": "Dynasty Autonomy",
+    "shortDescription": "Goal-to-gate engineering autonomy with pinned ASW workflows.",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Skills",
+      "Hooks",
+      "Subagents",
+      "Workflow"
+    ],
+    "defaultPrompt": [
+      "dg-auto complete this bounded engineering goal",
+      "dg-plan write a test-first plan",
+      "dg-review verify this worktree"
+    ],
+    "brandColor": "#00B8A9"
+  }
+}

@@ -2,6 +2,7 @@
 SESSION="dynasty"
 PROJECT_DIR="/Users/davidleess/dynasty-genius-product"
 STUDIO_DIR="/Users/davidleess/frontend-studio"
+COCKPIT_DIR="$HOME/dg-cockpit"
 
 # 1. Kill any existing session to start fresh
 tmux kill-session -t "$SESSION" 2>/dev/null
@@ -16,7 +17,7 @@ tmux send-keys -t "$SESSION:1" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1" "cat docs/governance/00-product-constitution.md" C-m
 tmux send-keys -t "$SESSION:1" "cat AGENT_SYNC.md" C-m
-tmux send-keys -t "$SESSION:1" "claude" C-m
+tmux send-keys -t "$SESSION:1" 'claude --plugin-dir "$HOME/dg-cockpit/autonomy/claude/dg-engineering"' C-m
 
 # 4. Setup Pane 2: Codex (Right Top)
 # Color: Deep Purple (Strategy)
@@ -58,7 +59,7 @@ tmux send-keys -t "$SESSION:2.1" "claude" C-m
 # Color: Deep Navy (Control Tower)
 tmux split-window -h -p 50 -t "$SESSION:2.1" -c "$HOME" "/bin/bash"
 tmux select-pane -t "$SESSION:2.2" -P 'bg=colour17,fg=colour153'
-tmux send-keys -t "$SESSION:2.2" "claude --agent tower" C-m
+tmux send-keys -t "$SESSION:2.2" 'claude --agent tower --plugin-dir "$HOME/dg-cockpit/autonomy/claude/dg-tower"' C-m
 tmux select-pane -t "$SESSION:2.1"
 
 # 8. Crew badges: window names and a title bar on every pane

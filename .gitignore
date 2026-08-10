@@ -5,3 +5,7 @@
 *secret*
 .env
 settings.live.json
+.dg-autonomy/
+autonomy/.state/
+autonomy/.smoke/
+autonomy/.plugin-cache/

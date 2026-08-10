@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "commands": {
+    "dg-auto": "Run an authorized engineering goal through implementation and verification to a human gate.",
+    "dg-plan": "Inspect and write an implementation plan without editing product code.",
+    "dg-review": "Review the current worktree, evidence, and real surface.",
+    "dg-status": "Report scope, phase, checks, blockers, and terminal state."
+  },
+  "engineeringRoles": [
+    "claude",
+    "codex",
+    "gemini"
+  ],
+  "engineeringActions": [
+    "inspect",
+    "plan",
+    "edit",
+    "test",
+    "qa",
+    "delegate",
+    "review",
+    "status",
+    "cleanup"
+  ],
+  "tower": {
+    "adapter": true,
+    "actions": [
+      "health-verify"
+    ]
+  },
+  "studio": {
+    "adapter": false,
+    "actions": []
+  },
+  "hardGates": [
+    "commit",
+    "push",
+    "merge",
+    "release",
+    "publish",
+    "destructive",
+    "permission-escalation",
+    "scope-expansion",
+    "external-communication"
+  ],
+  "failureLimit": 3,
+  "requiredChecks": {
+    "engineering": [
+      "tests",
+      "static-analysis",
+      "real-surface-qa",
+      "review",
+      "cleanup"
+    ],
+    "tower": [
+      "product-health"
+    ]
+  },
+  "terminalStates": [
+    "READY_FOR_GATE",
+    "BLOCKED"
+  ]
+}

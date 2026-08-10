@@ -66,6 +66,10 @@ cp "$HOME/.gemini/settings.json" gemini/ 2>/dev/null || true
 cp "$HOME"/Library/LaunchAgents/com.davidleess.dynasty-*.plist launchagents/ 2>/dev/null || true
 cp "$HOME"/Library/LaunchAgents/com.davidleess.dg-*.plist      launchagents/ 2>/dev/null || true
 
+# Autonomy source is repository-owned; verify it before backup. Runtime ownership,
+# generated host caches, and run state are deliberately not copied into this repo.
+"$REPO/autonomy/verify.sh" --source-only
+
 # Commit and push only if something changed
 git add -A
 if ! git diff --cached --quiet; then

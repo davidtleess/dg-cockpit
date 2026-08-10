@@ -1,0 +1,9 @@
+{
+  "name": "dg-engineering",
+  "version": "0.2.0",
+  "description": "Safe goal-to-gate engineering autonomy for Dynasty Genius Claude sessions.",
+  "author": {
+    "name": "Dynasty Genius"
+  },
+  "license": "MIT"
+}

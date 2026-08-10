@@ -1,0 +1,29 @@
+{
+  "name": "dg-autonomy",
+  "version": "0.2.0",
+  "description": "Safe goal-to-gate engineering autonomy for Dynasty Genius",
+  "author": {
+    "name": "Dynasty Genius"
+  },
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Dynasty Autonomy",
+    "shortDescription": "Take engineering goals safely to a human gate.",
+    "longDescription": "Plans, implements, tests, performs real-surface QA, and reviews authorized Dynasty Genius engineering work without crossing publication or permission gates.",
+    "developerName": "Dynasty Genius",
+    "category": "Productivity",
+    "capabilities": [
+      "Planning",
+      "Editing",
+      "Testing",
+      "QA",
+      "Review"
+    ],
+    "defaultPrompt": [
+      "Use dg-auto to take this goal to a human gate.",
+      "Use dg-plan to write a test-first implementation plan.",
+      "Use dg-review to verify this worktree and its evidence."
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "dynasty-autonomy",
+  "interface": {
+    "displayName": "Dynasty Autonomy"
+  },
+  "plugins": [
+    {
+      "name": "dg-autonomy",
+      "source": {
+        "source": "local",
+        "path": "./plugins/dg-autonomy"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
