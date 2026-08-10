@@ -8,25 +8,25 @@
 set -euo pipefail
 REPO="$(cd "$(dirname "$0")" && pwd)"
 
-echo "== 1/6 product repo =="
+echo "== 1/7 product repo =="
 [ -d "$HOME/dynasty-genius-product" ] || git clone https://github.com/davidtleess/dynasty-genius.git "$HOME/dynasty-genius-product"
 
-echo "== 2/6 cockpit scripts + terminal config =="
+echo "== 2/7 cockpit scripts + terminal config =="
 cp "$REPO/home/dynasty_flight_deck.sh" "$HOME/" && chmod +x "$HOME/dynasty_flight_deck.sh"
 cp "$REPO/home/tmux.conf" "$HOME/.tmux.conf"
 grep -q "dynasty_flight_deck" "$HOME/.bash_profile" 2>/dev/null || cat "$REPO/home/dg_aliases.sh" >> "$HOME/.bash_profile"
 
-echo "== 3/6 claude: tower, memory, settings =="
+echo "== 3/7 claude: tower, memory, settings =="
 mkdir -p "$HOME/.claude/agents" "$HOME/.claude/projects/-Users-davidleess"
 cp "$REPO/claude/agents/tower.md" "$HOME/.claude/agents/"
 rsync -a "$REPO/claude/memory/" "$HOME/.claude/projects/-Users-davidleess/memory/"
 [ -f "$HOME/.claude/settings.json" ] || cp "$REPO/claude/settings.sanitized.json" "$HOME/.claude/settings.json"
 echo "  NOTE: settings.json is sanitized — re-add the env block (GitHub PAT: generate a NEW one, never reuse)."
 
-echo "== 4/6 studio =="
+echo "== 4/7 studio =="
 rsync -a "$REPO/frontend-studio/" "$HOME/frontend-studio/"
 
-echo "== 5/6 other agent configs + launchd jobs =="
+echo "== 5/7 other agent configs + launchd jobs =="
 mkdir -p "$HOME/.codex" "$HOME/.gemini"
 [ -f "$HOME/.codex/config.toml" ]    || cp "$REPO/codex/config.toml" "$HOME/.codex/" 2>/dev/null || true
 [ -f "$HOME/.gemini/settings.json" ] || cp "$REPO/gemini/settings.json" "$HOME/.gemini/" 2>/dev/null || true
@@ -34,7 +34,10 @@ mkdir -p "$HOME/Library/LaunchAgents"
 cp "$REPO"/launchagents/*.plist "$HOME/Library/LaunchAgents/"
 for p in "$HOME"/Library/LaunchAgents/com.davidleess.d*.plist; do launchctl load "$p" 2>/dev/null || true; done
 
-echo "== 6/6 data restore from GCS =="
+echo "== 6/7 Dynasty autonomy layer =="
+"$REPO/autonomy/install.sh" --activate
+
+echo "== 7/7 data restore from GCS =="
 LATEST=$(gsutil ls gs://dynasty-genius-backup-dtl/dynasty-genius/runs/ | tail -1)
 echo "  latest backup run: $LATEST"
 gsutil -m rsync -r "${LATEST}app/data" "$HOME/dynasty-genius-product/app/data"

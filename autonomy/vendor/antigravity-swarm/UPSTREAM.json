@@ -1,0 +1,12 @@
+{
+  "source": "https://github.com/wjgoarxiv/antigravity-swarm",
+  "commit": "a949cb8b9736115c555bf493eeb009ccb28a703e",
+  "version": "0.2.4",
+  "auditDate": "2026-08-09",
+  "license": "MIT",
+  "copiedPaths": [
+    "LICENSE",
+    "plugins/antigravity-swarm"
+  ],
+  "installerUsed": false
+}

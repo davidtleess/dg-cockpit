@@ -17,3 +17,9 @@ block stripped. On a new machine, generate a NEW GitHub PAT and re-add it; never
 reuse or commit the old one. Sleeper env vars are re-entered by hand.
 
 Manual backup anytime: `./backup.sh`
+
+## Autonomy Layer
+
+The cockpit includes a safe goal-to-gate [Dynasty Autonomy Layer](autonomy/README.md). Claude and Codex route engineering work through their installed Superpowers capabilities; Gemini uses the pinned, repaired ASW backend. All three install native PreToolUse guardrails and stop at the human gate, with each host's sandbox and permission engine remaining the final enforcement boundary.
+
+Tower remains health-only and does not orchestrate or edit product code. Studio remains independent and receives no autonomy, ASW, or crew plugin.
