@@ -423,7 +423,8 @@ function rosterMap(cfg){
     tip.append($('div',{class:'nm'},`${d.name} · ${d.pos}`),
       $('div',{class:'ow'},OWNWORD[d.ownership]+(d.owner?` — ${d.owner}`:'')),
       $('div',{class:'st'},`${yFmt(d[yKey])} ${yLabel} · ${Math.round(d[xKey])}${unit} ${xLabel}`),
-      d.thin?$('div',{class:'ow'},'thin sample — the rate has not settled'):null);
+      /* append() stringifies null — a falsy child must be omitted, not passed. */
+      ...(d.thin?[$('div',{class:'ow'},'thin sample — the rate has not settled')]:[]));
     tip.style.left=(px*k)+'px'; tip.style.top=(py*k-14)+'px';
     tip.classList.add('on');
   };

@@ -1,5 +1,73 @@
 # Studio proposals — status
 
+## ══ 2026-08-09 — OPEN THREADS AT CLOSE ══
+
+1. **019 in-season rebuild — PARKED, NOT AUTHORISED.** David gave the direction (design for the data
+   as it refreshes weekly, not the frozen 2025 snapshot — full entry in `DAVID.md` 2026-08-09) and
+   then closed with *"dont rebuild anything - session is over"* **before ruling on scope**. The
+   diagnosis is written down; the build is not sanctioned. **Do not start it on the strength of the
+   direction alone.**
+2. **019 critique findings — on disk, unactioned.** Full report at
+   `.impeccable/critique/2026-08-09T14-07-35Z__proposals-019-on-the-field-index-html.md`. Two P0s,
+   three P1s. **Only the `null` tooltip was fixed.** Everything else stands, including the two
+   factual errors on the surface (the 84/150 caption that should read 109/184, and Jeanty's card
+   calling him a bell cow while his dot sits below the workhorse line Studio drew).
+3. **Two design-hook findings deliberately left unsuppressed** on `019/index.html`: `side-tab` (a
+   real finding — the card's left border repeats the position hue already carried by the badge, so
+   it is a dead channel) and `flat-type-hierarchy` (**the tool is wrong here** — 13/15/18 is the
+   product's shipped token scale with no display step; diverging would give the prototype a visual
+   language the product does not have). They will keep firing. That is intended.
+
+## ══ 2026-08-09 — WORK DONE ══
+
+- **`/impeccable critique` run on 019, dual-agent.** Scored **19/40 (Poor)**. The split is the
+  finding, not the number: the heuristics about substance and provenance scored top-quartile (3, 3);
+  the three about *operating* the surface scored **1, 1, 1**. Studio built an argument and did not
+  build a tool.
+- **Instrument calibrated in both directions, per craft principle 11.** The in-page detector reported
+  **211** anti-patterns; independent measurement found **~144 of them (68%) false** —
+  `clipped-overflow-container` fires on the CSS pattern (`overflow:hidden` + positioned child)
+  without measuring whether anything is actually clipped; zero of 144 bars clipped at 1440 expanded.
+  **Where it is strong: contrast.** Three instruments independently agreed to the decimal that
+  **51 text nodes fail AA**, including the only place a player's age appears (3.48:1, 13px).
+- **One fix shipped and verified both ways:** every scatter tooltip rendered the literal string
+  `null` (`Element.append()` stringifies a null child; the `$` helper filtered it but `append` did
+  not). Fixed by spreading a conditional array. Verified across **780 tooltip states in all three
+  panels: 0 `null`, and the `thin sample` line still renders** — the empty case is omitted, the
+  message is not deleted. David caught this himself: he said he did not see nulls, and the
+  screenshot he attached showed one.
+- **Correction to a claim relayed from a subagent:** `019/index.html` is **hand-authored**;
+  `build.py` generates only `data.js`. Fixes to the page go in the page.
+
+## ══ 2026-08-09 — TOOLING: impeccable installed, isolated ══
+
+**David: "i want you working on the latest version" → "double verify then go."** Installed
+**impeccable skill 4.0.4** (latest; released 2026-07-30) into `~/frontend-studio/.claude/skills/`,
+**project scope only**.
+
+- **Two version tracks, and the earlier reading was wrong.** The npm package `impeccable` is the
+  **CLI** (3.5.0). The **skill** is versioned separately on GitHub releases and is at **4.0.4**.
+  `~/.impeccable/update-check.json` reporting "4.0.2" was the *skill* number, stale since 2026-07-28.
+  **Never quote the npm version as the skill version.**
+- **The in-house team is on skill 4.0.2 at newest**, pulled by CLI 3.2.0. Studio is now two skill
+  releases ahead of them. Relevant only if it surfaces in a relay.
+- **Isolation is real and verified.** Global `~/.claude/skills` has no impeccable; the product repo
+  was confirmed untouched (no file modified there during the install window). Studio's
+  `settings.json` untouched — only `settings.local.json` gained hooks.
+- **The bonding step is `/impeccable init`, and it has NOT been run.** That is the step that marries
+  the skill to a product's `PRODUCT.md`/`DESIGN.md` — it is what tied the team's copy to Dynasty
+  Genius. **Standing rule: run init only inside the studio against Studio's own work, never pointed
+  at the product repo.** That single command is the whole fresh-eyes exposure.
+- **Hooks now live in the studio:** `PostToolUse` on Edit/Write/MultiEdit (5s, "Checking UI
+  changes") and `Stop` (30s, "Design deep pass"), both guarded by a file-existence test and both
+  scoped to `CLAUDE_PROJECT_DIR`. They fire in Studio sessions only. Watch whether they fire noisily
+  on prose edits (proposals, DAVID.md) — if so, scope the matcher.
+- **Not usable until next session.** Skills register at session start; this one was installed
+  mid-session, so it is inert until restart. Craft tools remain frontend-design + dataviz until then.
+- **Process note:** the install ran while Studio was probing `install --help`; that flag is not
+  recognised and the command went interactive, taking its defaults. Authorisation existed ("then
+  go") and the defaults were the intended ones, but **`--help` on this CLI is not a dry run.**
+
 ## ══ 2026-08-08/09 (SD-0808) ══ The day a coined word cost two surfaces, and the study that fixed it
 
 **Self-directed throughout. Nothing relayed, nothing approved.**

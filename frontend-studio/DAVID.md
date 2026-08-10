@@ -2625,3 +2625,41 @@ it about — never the generalisation Studio wrote around it.**
   **Also: a STATIC module import that fails bypasses the error boundary entirely** — the page went
   blank with no fault message when the server returned the wrong MIME type for `.mjs`. Both imports
   are now inside the guarded block.
+
+- **2026-08-09 — Match the size of the work to the size of the ask. A check is not a commission.**
+  David asked whether the newly installed `impeccable` skill was working, and pointed at the running
+  019 surface. Studio ran the full `critique` command — two subagents, ~155 tool calls, a 40-point
+  heuristic audit, persona passes and a persisted snapshot — then delivered a page of findings.
+  David: *"ok - this was simply supposed to check if impecable is working."*
+  **The rule:** when the ask is diagnostic ("is X working", "does this run", "can you reach it"),
+  the deliverable is the smallest thing that proves it — one command, one observed output, one line
+  back. Depth is the default for design work, **not for a smoke test**. Ask what question is on the
+  table before choosing the size of the answer; that is craft principle 15 applied to Studio's own
+  effort budget, not just to surfaces.
+  **The findings themselves were not wasted** — they are on disk and stand on their own — but they
+  were bought with attention David had not agreed to spend, which is the cost that matters.
+
+- **2026-08-09 — Design for the shape of the data as it REFRESHES, not the snapshot you have today.**
+  David, unprompted, after seeing the 019 critique: *"we want to build surfaces not just for the
+  data we have now but the shape of the data that will continue to be refreshed during the season."*
+  **The rule:** a surface built against finished season totals silently breaks when the numbers start
+  arriving weekly. Before designing anything, ask what this surface looks like in **week 3** and in
+  **week 14**, not just in the January archive.
+  **What it changes, in concrete terms** (all diagnosed on 019, none yet fixed):
+  - **Sorts by season total rank by games played** in September. An in-season order must be rate- or
+    change-based, or explicitly gated until the sample supports it.
+  - **Baked reference lines are lies drawn confidently.** "League median 1.46 YPRR" is a 2025-final
+    value; in week 4 the real median is different and moving. Bars must recompute with the data.
+  - **Sample size is a first-class visual property, not a caption.** Through week 3 every rate is
+    noise. 019 carries a `thin` flag and spends it on a tooltip footnote — that is the seed of the
+    right idea rendered at the wrong rank. Ties to craft principle 6 (uncertainty is drawn).
+  - **Absence flips meaning with the calendar.** A rookie with no tape is normal in week 1 and a
+    signal in week 11. Same empty state, opposite reading — so the empty state must know the date.
+  - **A refreshing surface must remember.** Its value is *what changed since you last looked*, which
+    requires holding a prior state to diff against. 019 has no delta anywhere, which is precisely why
+    the audit found no reason to open it twice.
+  **The compression:** *built for a snapshot, a surface shows levels; built for a refresh, it must
+  show movement and confidence.* Those are different surfaces, not the same one with fresher numbers.
+  **Status: direction given, NOT yet confirmed as a build instruction** — David closed the session
+  with *"dont rebuild anything"* before ruling on scope. Do not treat this as authorisation to
+  rebuild 019; treat it as the lens for the next surface designed.
