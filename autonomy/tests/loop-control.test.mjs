@@ -30,7 +30,9 @@ async function makeWorktree(files = { "src/app.mjs": "line one\n" }) {
 
 async function makeRun({ role = "claude", files } = {}) {
   const worktree = await makeWorktree(files);
-  const statePath = join(worktree, ".dg-state", "run.json");
+  // Production keeps run state under .git/dg-autonomy — outside the tree the
+  // round snapshots measure. The fixture mirrors that separation.
+  const statePath = join(await mkdtemp(join(tmpdir(), "dg-state-")), "run.json");
   const options = { statePath };
   const run = await createRun(
     { role, goal: "goal", repository: "repo", worktree, scope: "scope" },
@@ -132,7 +134,7 @@ test("F4: phase cap with an unresolved BLOCKER halts, applies as BLOCKED with PH
   }
   assert.ok(firstBlockerId);
   const verdict = loopVerdict(state.run, contract);
-  assert.equal(verdict.status, "HUMAN_GATE_REQUIRED");
+  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
   assert.ok(verdict.reasons.includes("PHASE_ROUND_CAP"));
 
   await assert.rejects(openRound(state.run, { phase: "red", scope: SCOPE }, state.options), /cap/i);
@@ -186,7 +188,7 @@ test("F6: the run cap halts an unresolved BLOCKER but never forces a halt on a c
   // green-review: the 10th round overall, with an unresolved blocker.
   await playRound(state, { phase: "green-review", findings: [blockerFinding({ criterionId: "F-green-1" })], churnLines: 20 });
   let verdict = loopVerdict(state.run, contract);
-  assert.equal(verdict.status, "HUMAN_GATE_REQUIRED");
+  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
   assert.ok(verdict.reasons.includes("RUN_ROUND_CAP"));
 
   // Zero-blocker path at the same cap follows the CLEAR rule instead of halting.
@@ -206,7 +208,7 @@ test("F7: the same fingerprint unresolved across 3 rounds with combined churn 9 
   await playRound(state, { churnLines: 3 });
   await playRound(state, { churnLines: 3 });
   const verdict = loopVerdict(state.run, await loadContract());
-  assert.equal(verdict.status, "HUMAN_GATE_REQUIRED");
+  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
   assert.ok(verdict.reasons.includes("DIMINISHING_RETURNS"));
 });
 
@@ -261,7 +263,7 @@ test("F11: cap and diminishing report together — one reason never masks the ot
     await playRound(state, { churnLines: 2 });
   }
   const verdict = loopVerdict(state.run, contract);
-  assert.equal(verdict.status, "HUMAN_GATE_REQUIRED");
+  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
   assert.ok(verdict.reasons.includes("PHASE_ROUND_CAP"));
   assert.ok(verdict.reasons.includes("DIMINISHING_RETURNS"));
 });

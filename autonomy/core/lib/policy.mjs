@@ -200,6 +200,35 @@ export function classifyCommand(command) {
     (actions.includes("test") ? "test" : "inspect");
 }
 
+// Conservative allowlist used when a run is terminal (loop-control spec F18):
+// only commands that can be shown read-only pass; anything unparseable,
+// redirecting, or unlisted fails closed.
+const READ_ONLY_COMMANDS = new Set([
+  "ls", "cat", "head", "tail", "grep", "rg", "wc", "stat", "file", "pwd", "du", "df", "which", "diff",
+]);
+const READ_ONLY_GIT_SUBCOMMANDS = new Set(["status", "diff", "log", "show", "rev-parse", "blame"]);
+
+export function isReadOnlyCommand(command) {
+  if (typeof command !== "string" || command.trim() === "") return false;
+  if (command.includes("`") || /\$\s*\(/.test(command)) return false;
+  const segments = tokenize(command.trim());
+  if (!segments || segments.length === 0) return false;
+  for (const original of segments) {
+    if (original.some((token) => token === ">" || token === ">>")) return false;
+    const tokens = unwrap(original);
+    const name = commandName(tokens[0]);
+    if (READ_ONLY_COMMANDS.has(name)) continue;
+    if (name === "git" && READ_ONLY_GIT_SUBCOMMANDS.has(gitSubcommand(tokens))) continue;
+    if (
+      name === "node" &&
+      tokens.some((token) => /dg-autonomy\.mjs$/.test(token)) &&
+      tokens.some((token) => ["status", "verdict"].includes(token))
+    ) continue;
+    return false;
+  }
+  return true;
+}
+
 export function isPathWithinScope(root, candidate) {
   const canonicalize = (path) => {
     let existing = resolve(path);

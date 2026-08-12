@@ -30,9 +30,9 @@
     "Stop": [
       {
         "type": "command",
-        "command": "node \"${PLUGIN_ROOT}/scripts/asw-stop-check.mjs\"",
+        "command": "node \"${PLUGIN_ROOT}/scripts/dg-antigravity-stop.mjs\"",
         "timeout": 10,
-        "statusMessage": "ASW: checking continuation"
+        "statusMessage": "ASW: checking continuation (Dynasty-bounded)"
       }
     ],
     "PreToolUse": [

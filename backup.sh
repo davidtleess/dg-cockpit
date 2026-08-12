@@ -17,6 +17,8 @@ grep -E "alias dg|alias dg-|claude --agent" "$HOME/.bash_profile" > home/dg_alia
 
 # Claude Code: Tower's charter, memory, and SANITIZED settings (env block stripped — it holds tokens)
 cp "$HOME/.claude/agents/tower.md" claude/agents/
+# The Judge's charter — standing adjudication seat, David's word 2026-08-12
+cp "$HOME/.claude/agents/judge.md" claude/agents/
 jq 'del(.env)' "$HOME/.claude/settings.json" > claude/settings.sanitized.json
 rsync -a --delete "$HOME/.claude/projects/-Users-davidleess/memory/" claude/memory/
 

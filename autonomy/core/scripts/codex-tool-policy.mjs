@@ -8,7 +8,9 @@ import {
   evaluateAction,
   findScopeViolation,
   isPathWithinScope,
+  isReadOnlyCommand,
 } from "../lib/policy.mjs";
+import { readRunSnapshotSync } from "../lib/run-state.mjs";
 
 function deny(reason) {
   process.stdout.write(`${JSON.stringify({
@@ -48,6 +50,34 @@ async function main() {
     return;
   }
 
+  // Loop-control terminal deny (spec F18): once a run is terminal, only
+  // read-only inspection may proceed until David's word. Corrupt state on an
+  // existing run file fails closed.
+  const runSnapshot = readRunSnapshotSync({ cwd });
+  if (runSnapshot.status === "corrupt") {
+    deny("Dynasty loop control: run state unreadable — failing closed");
+    return;
+  }
+  // A judge SHIP ruling authorizes exactly the commit of the ruled content —
+  // nothing else. Push and edits stay gated.
+  const shipRuled =
+    runSnapshot.status === "ok" &&
+    runSnapshot.run?.terminalState === "READY_FOR_GATE" &&
+    runSnapshot.run?.judgeRuling?.ruling === "SHIP";
+  if (runSnapshot.status === "ok" && runSnapshot.run?.terminalState) {
+    const readOnly =
+      (name === "Bash" && isReadOnlyCommand(input.command ?? "")) ||
+      ["update_plan", "view_image", "request_user_input"].includes(name);
+    const shipCommit =
+      shipRuled && name === "Bash" && classifyCommand(input.command ?? "") === "commit";
+    if (!readOnly && !shipCommit) {
+      deny(
+        `Dynasty loop control: run is terminal (${runSnapshot.run.terminalState}); only read-only inspection${shipRuled ? " and the judge-ruled commit" : ""} is permitted until David's word`,
+      );
+      return;
+    }
+  }
+
   let authorizedRoot = process.env.DG_AUTONOMY_WORKTREE;
   if (!authorizedRoot) {
     try {
@@ -68,10 +98,12 @@ async function main() {
       return;
     }
     const violation = findScopeViolation(command, { cwd, authorizedRoot });
-    const result = await evaluateAction({
-      role: "codex",
-      action: violation ? "scope-expansion" : classifyCommand(command),
-    });
+    const action = violation ? "scope-expansion" : classifyCommand(command);
+    if (action === "commit" && shipRuled) {
+      // The judge's recorded SHIP ruling is the authorization for this commit.
+      return;
+    }
+    const result = await evaluateAction({ role: "codex", action });
     if (!result.allowed) deny(result.reason);
     return;
   }

@@ -19,6 +19,7 @@ grep -q "dynasty_flight_deck" "$HOME/.bash_profile" 2>/dev/null || cat "$REPO/ho
 echo "== 3/7 claude: tower, memory, settings =="
 mkdir -p "$HOME/.claude/agents" "$HOME/.claude/projects/-Users-davidleess"
 cp "$REPO/claude/agents/tower.md" "$HOME/.claude/agents/"
+cp "$REPO/claude/agents/judge.md" "$HOME/.claude/agents/"
 rsync -a "$REPO/claude/memory/" "$HOME/.claude/projects/-Users-davidleess/memory/"
 [ -f "$HOME/.claude/settings.json" ] || cp "$REPO/claude/settings.sanitized.json" "$HOME/.claude/settings.json"
 echo "  NOTE: settings.json is sanitized — re-add the env block (GitHub PAT: generate a NEW one, never reuse)."

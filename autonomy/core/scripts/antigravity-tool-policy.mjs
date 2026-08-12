@@ -7,7 +7,9 @@ import {
   evaluateAction,
   findScopeViolation,
   isPathWithinScope,
+  isReadOnlyCommand,
 } from "../lib/policy.mjs";
+import { readRunSnapshotSync } from "../lib/run-state.mjs";
 
 function decision(value, reason) {
   process.stdout.write(`${JSON.stringify({ decision: value, ...(reason ? { reason } : {}) })}\n`);
@@ -59,6 +61,28 @@ async function main() {
   }
   const authorizedRoot = resolve(roots[0]);
   const cwd = resolve(event?.cwd ?? authorizedRoot);
+
+  // Loop-control terminal deny (spec F18): once a run is terminal, only
+  // read-only inspection may proceed until David's word. Corrupt state on an
+  // existing run file fails closed.
+  const runSnapshot = readRunSnapshotSync({ cwd });
+  if (runSnapshot.status === "corrupt") {
+    decision("deny", "Dynasty loop control: run state unreadable — failing closed");
+    return;
+  }
+  const terminalRun = runSnapshot.status === "ok" && runSnapshot.run?.terminalState;
+  if (terminalRun) {
+    const readOnly =
+      (/^(?:run_command|run_shell_command|Bash)$/i.test(name) && isReadOnlyCommand(args.command ?? "")) ||
+      /^(?:read_file|view_file|list_directory|list_dir|grep_search|search_files|glob|get_errors|get_diagnostics)$/i.test(name);
+    if (!readOnly) {
+      decision(
+        "deny",
+        `Dynasty loop control: run is terminal (${runSnapshot.run.terminalState}); only read-only inspection is permitted until David's word`,
+      );
+      return;
+    }
+  }
 
   if (/^(?:run_command|run_shell_command|Bash)$/i.test(name)) {
     const command = args.command;

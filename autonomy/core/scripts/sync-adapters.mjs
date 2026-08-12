@@ -71,16 +71,30 @@ for (const definition of Object.values(hosts)) {
   const contract = await readFile(join(coreRoot, "contract.json"), "utf8");
   const policy = await readFile(join(coreRoot, "lib", "policy.mjs"), "utf8");
   const runState = await readFile(join(coreRoot, "lib", "run-state.mjs"), "utf8");
+  const loopControl = await readFile(join(coreRoot, "lib", "loop-control.mjs"), "utf8");
   const cli = (
     await readFile(join(coreRoot, "bin", "dg-autonomy.mjs"), "utf8")
   )
     .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"')
-    .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"');
+    .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
+    .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"');
   expected.set(join(definition.root, "scripts", "contract.json"), contract);
   expected.set(join(definition.root, "scripts", "lib", "policy.mjs"), policy);
   expected.set(join(definition.root, "scripts", "lib", "run-state.mjs"), runState);
+  expected.set(join(definition.root, "scripts", "lib", "loop-control.mjs"), loopControl);
   expected.set(join(definition.root, "scripts", "dg-autonomy.mjs"), cli);
 }
+
+// The Claude/Codex Stop hook surfaces loop-control human gates and never
+// forces continuation; it is generated into both engineering adapters.
+const stopCheckSource = (
+  await readFile(join(coreRoot, "scripts", "stop-check.mjs"), "utf8")
+)
+  .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
+  .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"')
+  .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"');
+expected.set(join(hosts.claude.root, "scripts", "stop-check.mjs"), stopCheckSource);
+expected.set(join(hosts.codex.root, "scripts", "stop-check.mjs"), stopCheckSource);
 
 const codexRoot = hosts.codex.root;
 const codexToolPolicy = await readFile(
@@ -89,7 +103,9 @@ const codexToolPolicy = await readFile(
 );
 expected.set(
   join(codexRoot, "scripts", "pre-tool-use.mjs"),
-  codexToolPolicy.replace('"../lib/policy.mjs"', '"./lib/policy.mjs"'),
+  codexToolPolicy
+    .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
+    .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"'),
 );
 expected.set(
   join(codexRoot, "hooks", "hooks.json"),
@@ -105,6 +121,18 @@ expected.set(
               command: 'node "${PLUGIN_ROOT}/scripts/pre-tool-use.mjs"',
               timeout: 10,
               statusMessage: "Checking Dynasty autonomy boundary",
+            },
+          ],
+        },
+      ],
+      Stop: [
+        {
+          hooks: [
+            {
+              type: "command",
+              command: 'node "${PLUGIN_ROOT}/scripts/stop-check.mjs"',
+              timeout: 10,
+              statusMessage: "Dynasty loop control: checking the human gate",
             },
           ],
         },
@@ -133,7 +161,23 @@ const antigravityToolPolicy = await readFile(
 );
 expected.set(
   join(antigravityRoot, "scripts", "dg-antigravity-tool-policy.mjs"),
-  antigravityToolPolicy.replace('"../lib/policy.mjs"', '"./lib/policy.mjs"'),
+  antigravityToolPolicy
+    .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
+    .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"'),
+);
+
+// Dynasty-bounded Stop hook replaces the vendored unbounded asw-stop-check
+// wiring: identical behavior with no run in scope, no continuation once the
+// run is terminal or loop control requires a human gate.
+const antigravityStopCheck = (
+  await readFile(join(coreRoot, "scripts", "antigravity-stop-check.mjs"), "utf8")
+)
+  .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
+  .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"')
+  .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"');
+expected.set(
+  join(antigravityRoot, "scripts", "dg-antigravity-stop.mjs"),
+  antigravityStopCheck,
 );
 
 const antigravityManifest = {
@@ -169,6 +213,14 @@ const upstreamHooks = JSON.parse(
 const antigravityHooks = {
   "dg-autonomy": {
     ...upstreamHooks,
+    Stop: [
+      {
+        type: "command",
+        command: 'node "${PLUGIN_ROOT}/scripts/dg-antigravity-stop.mjs"',
+        timeout: 10,
+        statusMessage: "ASW: checking continuation (Dynasty-bounded)",
+      },
+    ],
     PreInvocation: [
       {
         type: "command",

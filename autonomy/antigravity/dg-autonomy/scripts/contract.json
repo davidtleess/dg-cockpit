@@ -59,5 +59,15 @@
   "terminalStates": [
     "READY_FOR_GATE",
     "BLOCKED"
-  ]
+  ],
+  "loopControl": {
+    "severities": ["BLOCKER", "WARN", "STYLE"],
+    "phases": ["framing", "red", "green-review"],
+    "phaseRoundCap": 5,
+    "runRoundCap": 10,
+    "diminishingWindow": 3,
+    "diminishingWindowMaxCombinedLinesExclusive": 10,
+    "maxSnapshotFileBytes": 1048576,
+    "scopeExclusions": ["AGENT_SYNC.md", "backlog.md", "docs/agent-ledger/", ".git/"]
+  }
 }

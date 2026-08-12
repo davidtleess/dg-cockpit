@@ -43,7 +43,7 @@ tmux send-keys -t "$SESSION:1.3" "agy" C-m
 # Deliberately NO governance reads and NOT in the project dir: Studio's
 # persona loads from ~/frontend-studio/CLAUDE.md and must stay ungoverned.
 # Color: Deep Maroon + Amber (Outsider — visually distinct from the gray engineering panes)
-tmux new-window -t "$SESSION" -n "🎨🗼 studio·tower" -c "$STUDIO_DIR" "/bin/bash"
+tmux new-window -t "$SESSION" -n "🎨🗼⚖ studio·tower·judge" -c "$STUDIO_DIR" "/bin/bash"
 tmux select-pane -t "$SESSION:2.1" -P 'bg=colour52,fg=colour230'
 tmux set-window-option -t "$SESSION:2" window-status-style 'fg=colour214'
 tmux set-window-option -t "$SESSION:2" window-status-current-style 'fg=colour232,bg=colour214,bold'
@@ -60,6 +60,16 @@ tmux send-keys -t "$SESSION:2.1" "claude" C-m
 tmux split-window -h -p 50 -t "$SESSION:2.1" -c "$HOME" "/bin/bash"
 tmux select-pane -t "$SESSION:2.2" -P 'bg=colour17,fg=colour153'
 tmux send-keys -t "$SESSION:2.2" 'claude --agent tower --plugin-dir "/Users/davidleess/dg-cockpit/autonomy/claude/dg-tower"' C-m
+
+# 7b. Judge — standing adjudication seat, below Tower (David's word, 2026-08-12).
+# Rules bindingly on loop-control gates (review caps, diminishing returns,
+# referrals): SHIP is what ships, STOP parks for David. Consults Tower for
+# verified operational facts. Never touches Studio (TW29-WALL-35). cwd is the
+# product repo: rulings bootstrap from governance and the disputed run's records.
+# Color: Deep Olive/Bronze (Judicial)
+tmux split-window -v -p 40 -t "$SESSION:2.2" -c "$PROJECT_DIR" "/bin/bash"
+tmux select-pane -t "$SESSION:2.3" -P 'bg=colour58,fg=colour229'
+tmux send-keys -t "$SESSION:2.3" "claude --agent judge" C-m
 tmux select-pane -t "$SESSION:2.1"
 
 # 8. Crew badges: window names and a title bar on every pane
@@ -75,6 +85,7 @@ tmux set -p -t "$SESSION:1.2" allow-set-title off; tmux select-pane -t "$SESSION
 tmux set -p -t "$SESSION:1.3" allow-set-title off; tmux select-pane -t "$SESSION:1.3" -T "✦ gemini"
 tmux set -p -t "$SESSION:2.1" allow-set-title off; tmux select-pane -t "$SESSION:2.1" -T "🎨 studio"
 tmux set -p -t "$SESSION:2.2" allow-set-title off; tmux select-pane -t "$SESSION:2.2" -T "🗼 tower"
+tmux set -p -t "$SESSION:2.3" allow-set-title off; tmux select-pane -t "$SESSION:2.3" -T "⚖ judge"
 
 # 9. Finalize focus on the engineering window
 tmux select-window -t "$SESSION:1"

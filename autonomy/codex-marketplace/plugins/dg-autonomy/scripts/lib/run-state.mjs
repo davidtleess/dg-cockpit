@@ -1,5 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 
@@ -20,15 +21,82 @@ export function resolveStatePath({
   return resolve(cwd, gitPath);
 }
 
-async function writeRun(run, options = {}) {
+// Optimistic concurrency: every mutation carries the revision it was loaded at.
+// A stale writer gets a named conflict instead of silently clobbering a
+// concurrent finding or round (loop-control spec F17).
+export async function persistRun(run, options = {}, { fresh = false } = {}) {
   const statePath = resolveStatePath(options);
+  let next = run;
+  if (!fresh) {
+    const base = Number.isInteger(run.revision) ? run.revision : 0;
+    let diskRaw = null;
+    try {
+      diskRaw = await readFile(statePath, "utf8");
+    } catch {
+      diskRaw = null;
+    }
+    if (diskRaw !== null) {
+      let disk = null;
+      try {
+        disk = JSON.parse(diskRaw);
+      } catch {
+        disk = null;
+      }
+      const diskRevision = Number.isInteger(disk?.revision) ? disk.revision : 0;
+      if (diskRevision !== base) {
+        const error = new Error(
+          `Run state revision conflict: disk is at ${diskRevision}, caller loaded ${base} — reload and retry`,
+        );
+        error.code = "DG_REVISION_CONFLICT";
+        throw error;
+      }
+    }
+    next = { ...run, revision: base + 1 };
+  }
   await mkdir(dirname(statePath), { recursive: true });
   const temporaryPath = `${statePath}.tmp-${process.pid}`;
-  await writeFile(temporaryPath, `${JSON.stringify(run, null, 2)}\n`, {
+  await writeFile(temporaryPath, `${JSON.stringify(next, null, 2)}\n`, {
     mode: 0o600,
   });
   await rename(temporaryPath, statePath);
-  return run;
+  return next;
+}
+
+async function writeRun(run, options = {}) {
+  return persistRun(run, options);
+}
+
+// Hook-safe state read: bounded, synchronous, and never throws. Hooks run
+// inside 10s host timeouts and today (2026-08-12) a hanging hook froze the
+// Codex lane for 41 minutes — nothing here may block or recurse.
+export function readRunSnapshotSync({
+  statePath = process.env.DG_AUTONOMY_STATE,
+  cwd = process.cwd(),
+} = {}) {
+  let path = statePath;
+  if (!path) {
+    try {
+      const gitPath = execFileSync(
+        "git",
+        ["rev-parse", "--git-path", "dg-autonomy/run.json"],
+        { cwd, encoding: "utf8", timeout: 2000, stdio: ["ignore", "pipe", "ignore"] },
+      ).trim();
+      path = resolve(cwd, gitPath);
+    } catch {
+      return { status: "missing", run: null };
+    }
+  }
+  let raw;
+  try {
+    raw = readFileSync(path, "utf8");
+  } catch {
+    return { status: "missing", run: null };
+  }
+  try {
+    return { status: "ok", run: JSON.parse(raw) };
+  } catch {
+    return { status: "corrupt", run: null };
+  }
 }
 
 function assertActive(run) {
@@ -60,7 +128,7 @@ export async function createRun(
   }
 
   const run = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id: randomUUID(),
     role,
     goal,
@@ -76,10 +144,14 @@ export async function createRun(
     failureCounts: {},
     terminalState: null,
     reason: null,
+    reasonCodes: [],
+    reviewRounds: [],
+    backlog: [],
+    revision: 0,
     createdAt: now,
     updatedAt: now,
   };
-  return writeRun(run, options);
+  return persistRun(run, options, { fresh: true });
 }
 
 export async function recordCheck(run, receipt, options = {}) {
@@ -116,7 +188,7 @@ export async function recordCheck(run, receipt, options = {}) {
   return writeRun(next, options);
 }
 
-export async function blockRun(run, reason, options = {}) {
+export async function blockRun(run, reason, options = {}, { reasonCodes } = {}) {
   assertActive(run);
   if (typeof reason !== "string" || reason.trim() === "") {
     throw new TypeError("block reason must be a non-empty string");
@@ -125,6 +197,9 @@ export async function blockRun(run, reason, options = {}) {
   next.phase = "blocked";
   next.terminalState = "BLOCKED";
   next.reason = reason;
+  if (Array.isArray(reasonCodes) && reasonCodes.length > 0) {
+    next.reasonCodes = [...reasonCodes];
+  }
   next.updatedAt = new Date().toISOString();
   return writeRun(next, options);
 }
