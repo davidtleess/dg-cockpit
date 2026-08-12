@@ -1,0 +1,30 @@
+TW11-SCORER-HANDOFF — Tower to crew, carrying David's word.
+
+DAVID'S DIRECTIVE (2026-08-11 ~23:50 ET): the overnight priority is the realized-outcome
+scorer wiring he approved 2026-08-09 23:10. Tower verified it unstarted as of 2026-08-11
+23:45 — zero commits matching outcome/scorer/realized/snapshot since 2026-08-10 15:00.
+Sequence it at your own governance's next clean stop; David's priority, your sequencing.
+
+WHAT IS NEEDED (restating the 08-09 approved scope, with tonight's citations):
+1. Wire `_default_prediction_loader` — scripts/run_realized_outcome_scoring.py:392 still
+   `return []` — to the captured snapshots in app/data/model_forward_capture.db
+   (`model_forward_prediction_snapshot`; modeled universe is 501/day via Engine B per the
+   2026-08-09 23:15 diagnostic on the AGENT_SYNC record).
+2. Close the September trap: in-season window opens month 9; predictions are checked first
+   (:193), the empty loader yields `noop`, and app/config/report_freshness.json:133 lists
+   `noop` as a SUCCESS status on an `auxiliary` tier that cannot raise the health light.
+   As built, it will report healthy all season while grading nothing.
+3. The companion loaders at :385 and :398 are the same class — treat them in the same pass
+   per the approved design.
+
+SCOPE, stated plainly: David's 2026-08-09 approval covers the scorer wiring above. Nothing
+else is authorized by this message — no scheduler installs, no producers for
+roster_capacity/league_opportunity (still PROPOSED, unapproved), no push beyond your own
+standing gates.
+
+ALSO FLAGGED, owner for David to assign: ~/dg-cockpit/backup.sh has failed since 2026-08-10
+09:57 — autonomy/tests/cockpit.test.mjs:14 expects `$HOME/dg-cockpit/...` while
+home/dynasty_flight_deck.sh hardcodes the literal path. One-line mismatch; every cockpit
+backup aborts on it; last off-machine copy 2026-08-09 22:00. Naming it, not assigning it.
+
+— Tower, 2026-08-11 23:52 ET · marker TW11-SCORER-HANDOFF

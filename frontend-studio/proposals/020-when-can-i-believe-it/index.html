@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>When can I believe it — Dynasty Genius / Studio 020</title>
+<style>
+  :root{
+    --g1:oklch(0.17 0.012 258); --g2:oklch(0.21 0.014 258); --g3:oklch(0.245 0.015 258);
+    --border:oklch(0.32 0.012 258); --border-strong:oklch(0.48 0.014 258);
+    --text:oklch(0.94 0.005 250); --muted:oklch(0.74 0.008 250); --faint:oklch(0.62 0.010 250);
+    /* IDENTITY: position only. Measured deutan dE 8.4; always co-labelled with the
+       two-letter position, which is what makes the band legal. */
+    --qb:oklch(0.60 0.15 300); --rb:oklch(0.64 0.15 130);
+    --wr:oklch(0.52 0.15 5);   --te:oklch(0.58 0.13 200);
+    /* The tape is what happened, so it is drawn in neutral ink (017's encoding rule).
+       No hue on this surface carries a quantity or a verdict. */
+    --ink:oklch(0.86 0.006 250); --ink-dim:oklch(0.55 0.008 250);
+    --display:"Archivo","Archivo Narrow",system-ui,sans-serif;
+    --sans:"IBM Plex Sans",system-ui,sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --sm:13px; --base:15px; --lg:18px; --xl:24px; --r:6px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--g1);color:var(--text);font-family:var(--sans);
+       font-size:var(--base);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:20px 20px 72px}
+  .kicker{font-family:var(--mono);font-size:var(--sm);letter-spacing:.09em;
+          text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+  h1{font-family:var(--display);font-size:var(--xl);font-weight:650;letter-spacing:-.015em;
+     margin:0 0 8px;max-width:34ch;line-height:1.2}
+  .lede{color:var(--muted);font-size:var(--sm);max-width:82ch;margin:0 0 4px}
+  .lede b{color:var(--text);font-weight:600}
+  h2{font-family:var(--display);font-size:var(--lg);font-weight:650;margin:0}
+
+  /* ── the clock ─────────────────────────────────────────────────────────────── */
+  .clock{position:sticky;top:0;z-index:20;background:var(--g2);border:1px solid var(--border);
+         border-radius:var(--r);padding:14px 18px 12px;margin:18px 0 10px;
+         box-shadow:0 8px 20px -12px rgba(0,0,0,.8)}
+  .clock .row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .clock label{font-family:var(--display);font-size:var(--lg);font-weight:650;flex:none}
+  .clock input[type=range]{flex:1;min-width:240px;accent-color:var(--ink);height:26px}
+  .clock input[type=range]:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+  .clock .btn{font-family:var(--mono);font-size:var(--sm);background:var(--g3);
+              color:var(--text);border:1px solid var(--border-strong);border-radius:4px;
+              padding:6px 12px;cursor:pointer;min-height:32px}
+  .clock .btn:focus-visible{outline:2px solid var(--text);outline-offset:2px}
+  .thesis{font-size:var(--base);margin:10px 0 0;max-width:88ch}
+  .thesis b{font-weight:650}
+  .thesis .n{font-family:var(--mono);font-weight:600}
+
+  /* ── group ────────────────────────────────────────────────────────────────── */
+  .grp{margin:26px 0 0}
+  .grp-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+            border-bottom:1px solid var(--border-strong);padding-bottom:6px;margin-bottom:12px}
+  .grp-head .n{font-family:var(--mono);font-size:var(--sm);color:var(--muted)}
+  .posbadge{font-family:var(--mono);font-size:var(--sm);font-weight:700;letter-spacing:.04em;
+            color:#fff;background:var(--phue);border-radius:4px;padding:3px 8px;
+            text-shadow:0 1px 2px rgba(0,0,0,.4)}
+  .scalenote{font-size:var(--sm);color:var(--muted);margin:0 0 10px;max-width:92ch}
+  .scalenote b{color:var(--text);font-weight:600}
+
+  /* ── player ───────────────────────────────────────────────────────────────── */
+  .p{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;background:var(--g2);
+     border:1px solid var(--border);border-radius:var(--r);padding:12px 14px;margin:0 0 8px}
+  .p.out{opacity:.68}
+  .p .face{flex:none;width:56px;height:56px;border-radius:var(--r);object-fit:cover;
+           object-position:top center;background:var(--g3)}
+  .p .body{flex:1;min-width:280px}
+  .p .marks{flex:none;width:268px}
+  .p .marks svg{display:block;width:100%;height:auto;overflow:visible}
+  .p .bank{flex-basis:100%;max-width:560px;margin-top:2px}
+  .p .nm{font-family:var(--display);font-size:var(--lg);font-weight:650;letter-spacing:-.01em;
+         line-height:1.15}
+  .p .meta{font-family:var(--mono);font-size:var(--sm);color:var(--faint);margin-top:2px}
+  .p .role{font-family:var(--mono);font-size:var(--base);margin-top:7px;color:var(--text)}
+  .p .role .d{color:var(--muted)}
+  .reads{margin:7px 0 0;padding:0;list-style:none;max-width:78ch}
+  .reads li{margin:0 0 3px;font-size:var(--base)}
+  .reads li.firm{color:var(--text)}
+  /* Not-yet-reliable is drawn, never footnoted (craft principle 6) and never deleted
+     (principle 7). It is a TEXTURE and a weight, never a hue — no verdict colour. */
+  .reads li.thin{color:var(--muted);text-decoration:underline;text-decoration-style:dotted;
+                 text-decoration-color:var(--border-strong);text-underline-offset:4px}
+  .reads li.wait{color:var(--muted);font-style:italic}
+  .reads li .tag{font-family:var(--mono);font-size:var(--sm);color:var(--faint);
+                 border:1px solid var(--border);border-radius:3px;padding:1px 5px;
+                 margin-right:6px;white-space:nowrap}
+  .bank svg{display:block;width:100%;height:auto;overflow:visible}
+  .gone{font-family:var(--mono);font-size:var(--sm);color:var(--muted);margin-top:7px}
+
+  .note{background:var(--g2);border:1px solid var(--border);border-radius:var(--r);
+        padding:14px 16px;margin:26px 0 0}
+  .note h3{font-family:var(--display);font-size:var(--base);margin:0 0 6px}
+  .note p{margin:0 0 8px;color:var(--muted);font-size:var(--sm);max-width:88ch}
+  .note p b{color:var(--text);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .chip{font-family:var(--mono);font-size:var(--sm);color:var(--muted);background:var(--g3);
+        border:1px solid var(--border);border-radius:999px;padding:4px 10px}
+  footer{margin-top:30px;padding-top:14px;border-top:1px solid var(--border);
+         font-family:var(--mono);font-size:var(--sm);color:var(--faint);line-height:1.7}
+  /* The failure state. 2026-08-07: a blank page reached the client, and the page had no
+     way to say "fault" rather than "empty". Tested in BOTH directions before delivery. */
+  #fault{display:none;background:oklch(0.24 0.02 30);border:1px solid oklch(0.5 0.09 30);
+         border-radius:var(--r);padding:16px 18px;margin:18px 0;font-size:var(--base)}
+  #fault b{display:block;font-family:var(--display);font-size:var(--lg);margin-bottom:6px}
+  #fault code{font-family:var(--mono);font-size:var(--sm);color:var(--muted);
+              display:block;margin-top:8px;white-space:pre-wrap}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+  @media (max-width:720px){
+    .p{flex-wrap:wrap}.clock{position:static}
+    .fig .plot svg{min-width:700px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="kicker">Dynasty Genius · Studio 020 · a prototype, not the app</p>
+  <h1>The same numbers, read the way you would actually have met them</h1>
+  <p class="lede">Every screen in this product — and every screen in Sleeper, KeepTradeCut and
+    FantasyCalc — shows a week-3 rate with exactly the authority of a week-17 rate. This replays
+    your own 2025 roster week by week and marks each number with <b>whether there is yet enough
+    of it to mean anything</b>. Drag the clock.</p>
+
+  <div id="fault">
+    <b>This page failed to draw — a fault, not an empty result.</b>
+    Something threw before the roster could render. Nothing here is a reading about your team.
+    <code id="faultmsg"></code>
+  </div>
+
+  <div id="app"></div>
+</div>
+
+<script type="module">
+const fault = (e) => {
+  const box = document.getElementById('fault');
+  if (box) {
+    box.style.display = 'block';
+    document.getElementById('faultmsg').textContent =
+      (e && (e.stack || e.message)) ? String(e.stack || e.message) : String(e);
+  }
+  console.error(e);
+};
+// Both imports live inside the guard: a STATIC import that fails never reaches a
+// try/catch inside the module, which is how a page went blank with no fault message
+// on 2026-08-09.
+try {
+  const { META, PLAYERS, ABSENT } = await import('./data.js?v=' + Date.now());
+  run(META, PLAYERS, ABSENT);
+} catch (e) { fault(e); }
+
+function run(META, PLAYERS, ABSENT) {
+const $ = (t, a = {}, ...kids) => {
+  const n = document.createElementNS(
+    ['svg','g','path','line','text','rect','circle','polyline','tspan'].includes(t)
+      ? 'http://www.w3.org/2000/svg' : 'http://www.w3.org/1999/xhtml', t);
+  for (const [k, v] of Object.entries(a)) {
+    if (v === null || v === undefined) continue;
+    if (k === 'class') n.setAttribute('class', v); else n.setAttribute(k, v);
+  }
+  n.append(...kids.filter(k => k !== null && k !== undefined));
+  return n;
+};
+const app = document.getElementById('app');
+const HUE = { QB: 'var(--qb)', RB: 'var(--rb)', WR: 'var(--wr)', TE: 'var(--te)' };
+const GROUPS = [
+  { key: 'QB', title: 'Quarterbacks', unit: 'pass attempts a game',
+    bar: META.bars.qbFulltimeAtt, barLabel: 'a full-time starter runs at 30 a game' },
+  { key: 'RB', title: 'Running backs', unit: 'touches a game',
+    bar: META.bars.rb1Touches, barLabel: '20 a game — the weekly top-15 conversation' },
+  { key: 'REC', title: 'Receivers and tight ends', unit: 'routes a game',
+    bar: 25, barLabel: '25 a game — roughly a full-time route runner' },
+];
+let WEEK = 3;
+
+// ── the clock ───────────────────────────────────────────────────────────────────
+const slider = $('input', { type: 'range', min: 1, max: META.lastReg, value: WEEK, step: 1,
+  'aria-label': 'week of the 2025 season' });
+const weekLabel = $('label', { for: 'wk' });
+const thesis = $('p', { class: 'thesis' });
+const jump = (w) => () => { slider.value = String(w); setWeek(w); };
+const clock = $('div', { class: 'clock' },
+  $('div', { class: 'row' },
+    weekLabel, slider,
+    $('button', { class: 'btn', type: 'button' }, 'week 3'),
+    $('button', { class: 'btn', type: 'button' }, 'week 9'),
+    $('button', { class: 'btn', type: 'button' }, 'end of season')),
+  thesis);
+const [b3, b9, b18] = clock.querySelectorAll('.btn');
+b3.onclick = jump(3); b9.onclick = jump(9); b18.onclick = jump(META.lastReg);
+slider.addEventListener('input', () => setWeek(Number(slider.value)));
+app.append(clock);
+
+const body = $('div', {});
+app.append(body);
+
+// ── the row mark: one small multiple per player, one fixed scale per group ────────
+// Fourteen lines on one axis was spaghetti at the left edge, which is the overplotting
+// David rejected outright on 2026-07-21 ("the plots are indistinguishable"). The answer
+// the literature and the category both give is small multiples — and the condition that
+// killed the last attempt at them (004 v3: "all the trend lines are flat") was MEASURED
+// absent here first: within a player, routes a game moves with sd 8.08 against a spread
+// across players of 7.31. The lines are not flat.
+//
+// Scales are fixed to the WHOLE season at every week, so scrubbing never rescales. A
+// rescaling axis makes weeks incomparable — the auto-scale defect confirmed on 004 (N4).
+function spark(group, p, maxRole) {
+  const W = 268, H = 98, L = 26, R = 8, T = 26, B = 20;
+  const x = w => L + (w - 1) / (META.lastReg - 1) * (W - L - R);
+  const y = v => H - B - (v / maxRole) * (H - T - B);
+  const c = p.cuts[WEEK - 1];
+  const svg = $('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img',
+    'aria-label': `${p.name}: ${group.unit} through each week. ` +
+      (c ? `${c.role.toFixed(1)} through week ${WEEK}.` : `no game yet.`) +
+      ` Panel scale runs 0 to ${maxRole.toFixed(0)}, the same in every panel here.` });
+
+  // The anchors that let the shape be read without a key elsewhere on the page. The top
+  // one carries its UNIT, because a group of aligned numbers with no word attached is the
+  // orphan-axis defect that cost three rounds of David's attention on 2026-08-07.
+  svg.append($('text', { x: L - 5, y: y(maxRole) + 4, 'text-anchor': 'end',
+    fill: 'var(--faint)', 'font-size': 13, 'font-family': 'var(--mono)' },
+    maxRole.toFixed(0)));
+  svg.append($('text', { x: 0, y: 12, fill: 'var(--faint)', 'font-size': 13,
+    'font-family': 'var(--mono)' }, group.unit));
+  svg.append($('text', { x: L - 5, y: y(0) + 4, 'text-anchor': 'end', fill: 'var(--faint)',
+    'font-size': 13, 'font-family': 'var(--mono)' }, '0'));
+  svg.append($('line', { x1: L, x2: W - R, y1: y(0), y2: y(0),
+    stroke: 'var(--border)', 'stroke-width': 1 }));
+  svg.append($('text', { x: W - R, y: H - 4, 'text-anchor': 'end', fill: 'var(--faint)',
+    'font-size': 13, 'font-family': 'var(--mono)' }, `week ${META.lastReg}`));
+  svg.append($('text', { x: L, y: H - 4, fill: 'var(--faint)', 'font-size': 13,
+    'font-family': 'var(--mono)' }, '1'));
+
+  // the published bar for this position, the same height in every panel
+  svg.append($('line', { x1: L, x2: W - R, y1: y(group.bar), y2: y(group.bar),
+    stroke: 'var(--border-strong)', 'stroke-width': 1, 'stroke-dasharray': '4 4' }));
+
+  // everything right of the clock is a season that has not been played
+  svg.append($('rect', { x: x(WEEK), y: T - 6, width: Math.max(0, (W - R) - x(WEEK)),
+    height: H - T - B + 6, fill: 'var(--g1)', opacity: 0.62 }));
+
+  // The series STOPS at the last week he actually played. Carrying the cumulative value
+  // forward drew a flat line all the way to week 18 for a player whose season ended in
+  // week 9 — absence rendered as continuity, which is the same lie as rendering it as
+  // zero (craft principle 7) and was caught by looking, not by any check here.
+  const upto = Math.min(WEEK, p.lastWeek);
+  const pts = [];
+  for (let w = 1; w <= upto; w++) {
+    const cc = p.cuts[w - 1];
+    if (cc) pts.push([x(w), y(cc.role)]);
+  }
+  if (!pts.length) {
+    svg.append($('text', { x: (L + W - R) / 2, y: (T + y(0)) / 2, 'text-anchor': 'middle',
+      fill: 'var(--muted)', 'font-size': 13, 'font-family': 'var(--mono)' },
+      'not played yet'));
+    return svg;
+  }
+  const out = p.lastWeek < WEEK;
+  svg.append($('polyline', { points: pts.map(q => q.join(',')).join(' '), fill: 'none',
+    stroke: 'var(--ink)', 'stroke-width': 2, 'stroke-linejoin': 'round',
+    'stroke-linecap': 'round' }));
+  const [ex, ey] = pts[pts.length - 1];
+  // A player who has stopped playing gets a hollow terminal, not a filled one: the series
+  // ENDED, which is a different statement from "this is the latest value".
+  svg.append($('circle', { cx: ex, cy: ey, r: 4, fill: out ? 'var(--g2)' : 'var(--ink)',
+    stroke: 'var(--ink)', 'stroke-width': 2 }));
+  if (out) {
+    svg.append($('text', { x: Math.min(ex + 7, W - R - 30), y: ey - 8, fill: 'var(--muted)',
+      'font-size': 13, 'font-family': 'var(--mono)' }, 'out'));
+  }
+  return svg;
+}
+
+// ── the route bank: the one confidence mark on the page ──────────────────────────
+// DELIBERATE REFUSAL (craft principle 21): snap share, routes a game and touches a game
+// get NO confidence treatment, ever — they measure 0.88-0.90 reliable from game two, so
+// marking them would make the mark decoration. Only the two per-route rates carry it.
+function routeBank(c) {
+  const W = 520, H = 46, L = 4, R = 4, BASE = 26, MAX = 560;
+  const x = v => L + (v / MAX) * (W - L - R);
+  const svg = $('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img',
+    'aria-label': `${Math.round(c.routes)} routes run so far. Targets per route becomes ` +
+      `reliable at ${META.gates.tprr} routes, yards per route at ${META.gates.yprr}.` });
+  svg.append($('rect', { x: L, y: BASE - 9, width: W - L - R, height: 10, rx: 3,
+    fill: 'var(--g3)' }));
+  svg.append($('rect', { x: L, y: BASE - 9, width: Math.max(1, x(Math.min(c.routes, MAX)) - L),
+    height: 10, rx: 3, fill: 'var(--ink)' }));
+  // Each tick names the ROUTE COUNT it stands at as well as what clears there. Labelling
+  // only the metric left the reader unable to say what number the tick marked — the same
+  // orphan defect as an unlabelled axis, in a smaller mark.
+  for (const [v, lab] of [[META.gates.tprr, 'targets per route'],
+                          [META.gates.yprr, 'yards per route']]) {
+    svg.append($('line', { x1: x(v), x2: x(v), y1: BASE - 15, y2: BASE + 3,
+      stroke: 'var(--text)', 'stroke-width': 1.5 }));
+    svg.append($('text', { x: x(v), y: BASE + 17, 'text-anchor': 'middle',
+      fill: 'var(--muted)', 'font-size': 13, 'font-family': 'var(--mono)' },
+      `${v} · ${lab}`));
+  }
+  svg.append($('text', { x: L, y: BASE - 14, fill: 'var(--text)', 'font-size': 13,
+    'font-family': 'var(--mono)' }, `${Math.round(c.routes)} routes run`));
+  return svg;
+}
+
+function card(p, group, maxRole) {
+  const c = p.cuts[WEEK - 1];
+  const out = p.lastWeek < WEEK;
+  const el = $('div', { class: 'p' + (out ? ' out' : '') });
+  const img = $('img', { class: 'face', src: `heads/${p.sleeperId}.jpg`, alt: '',
+    loading: 'lazy' });
+  img.addEventListener('error', () => img.remove());
+  const bodyEl = $('div', { class: 'body' },
+    $('div', { class: 'nm' }, p.name),
+    $('div', { class: 'meta' },
+      `${p.pos} · ${p.team || '—'} · age ${p.age ?? '—'} · ` +
+      (p.exp === 0 ? 'rookie' : `${p.exp} yr`)));
+
+  if (!c) {
+    bodyEl.append($('p', { class: 'gone' },
+      `no game logged through week ${WEEK}.`));
+  } else {
+    // Only the CHANGE lives here. The levels are in the read below, in the hobby's own
+    // phrasing — a value gets one number, not two (David, 2026-07-22). What prose cannot
+    // carry is "since you last looked", which is the whole point of a refreshing surface.
+    const unit = p.grp === 'QB' ? 'pass attempts a game'
+      : p.grp === 'RB' ? 'touches a game' : 'routes a game';
+    const d = c.roleDelta;
+    // "+0.0" for a week he did not play says "nothing changed" when the truth is "he was
+    // not out there" — the same absence-as-zero error the whole page is about, committed
+    // in its own header line. Caught by reading a card, not by any instrument.
+    bodyEl.append($('div', { class: 'role' }, out
+      ? `no game since week ${p.lastWeek}`
+      : !c.played
+        ? `did not play in week ${WEEK} — everything below is unchanged from week ` +
+          `${p.cuts.slice(0, WEEK).map((cc, i) => cc && cc.played ? i + 1 : 0)
+             .filter(Boolean).pop()}`
+        : (d === null || d === undefined
+            ? `first week on the books`
+            : `${d >= 0 ? '+' : '−'}${Math.abs(d).toFixed(1)} ${unit} since week ${WEEK - 1}`)));
+    const ul = $('ul', { class: 'reads' });
+    for (const r of c.reads) {
+      ul.append($('li', { class: r.s },
+        r.short ? $('span', { class: 'tag' }, `needs ${r.short}`) : null, r.t));
+    }
+    bodyEl.append(ul);
+    if (out) {
+      bodyEl.append($('p', { class: 'gone' },
+        `Last played week ${p.lastWeek}. Nothing in the reading above saw it coming — that `
+        + `is the point, not a gap in it.`));
+    }
+  }
+  el.append(img, bodyEl, $('div', { class: 'marks' }, spark(group, p, maxRole)));
+  if (c && p.grp === 'REC' && c.routes > 0) {
+    el.append($('div', { class: 'bank' }, routeBank(c)));
+  }
+  return el;
+}
+
+// ── the thesis line: same shape every week, content computed ────────────────────
+// David, 2026-07-21: a summary region must render the SAME SHAPE every day regardless of
+// whether anything happened. Never manufacture a protagonist on a quiet week.
+function thesisText() {
+  const rec = PLAYERS.filter(p => p.grp === 'REC');
+  const live = PLAYERS.filter(p => p.cuts[WEEK - 1]);
+  const tprrOk = rec.filter(p => (p.cuts[WEEK - 1]?.routes ?? 0) >= META.gates.tprr).length;
+  const yprrOk = rec.filter(p => (p.cuts[WEEK - 1]?.routes ?? 0) >= META.gates.yprr).length;
+  thesis.replaceChildren(
+    $('span', {}, 'Of your '),
+    $('b', {}, `${rec.length} receivers and tight ends`),
+    $('span', {}, ', '),
+    $('b', { class: 'n' }, String(tprrOk)),
+    $('span', {}, ` ${tprrOk === 1 ? 'has' : 'have'} run enough routes for a targets-per-route `
+      + `number to hold up, and `),
+    $('b', { class: 'n' }, String(yprrOk)),
+    $('span', {}, ` for a yards-per-route number. `),
+    $('span', {}, `${live.length} of ${PLAYERS.length} players have a game on the books.`));
+  weekLabel.textContent = WEEK >= META.lastReg ? 'End of season' : `Week ${WEEK}`;
+}
+
+function setWeek(w) {
+  WEEK = w;
+  thesisText();
+  const frag = document.createDocumentFragment();
+  for (const g of GROUPS) {
+    const players = PLAYERS.filter(p => p.grp === g.key)
+      .sort((a, b) => (b.cuts[WEEK - 1]?.role ?? -1) - (a.cuts[WEEK - 1]?.role ?? -1));
+    if (!players.length) continue;
+    const hue = g.key === 'REC' ? 'var(--wr)' : HUE[g.key];
+    const maxRole = Math.max(g.bar * 1.15, ...players.flatMap(
+      p => p.cuts.filter(Boolean).map(c => c.role)));
+    const sec = $('section', { class: 'grp' },
+      $('div', { class: 'grp-head' },
+        $('span', { class: 'posbadge', style: `--phue:${hue}` }, g.key),
+        $('h2', {}, g.title),
+        $('span', { class: 'n' }, `${players.length} on your roster with 2025 tape`)),
+      $('p', { class: 'scalenote' },
+        `Every panel below plots ${g.unit} averaged over every game played to that week, on `,
+        $('b', {}, `one fixed 0–${maxRole.toFixed(0)} scale`),
+        ` that never rescales as the clock moves — so a flat line is flat and two panels can `
+        + `be compared directly. The dashed line sits at the same height in all of them: `,
+        $('b', {}, g.barLabel), `. Shaded ground is the part of the season not yet played.`));
+    for (const p of players) sec.append(card(p, g, maxRole));
+    frag.append(sec);
+  }
+  frag.append(footerBlocks());
+  body.replaceChildren(frag);
+}
+
+function footerBlocks() {
+  const f = document.createDocumentFragment();
+  if (ABSENT.length) {
+    f.append($('div', { class: 'note' },
+      $('h3', {}, `${ABSENT.length} of your players had no 2025 NFL tape at all`),
+      $('p', {}, `They are not plotted because there is nothing to plot — which is a `
+        + `different statement from a zero, and in August it is the normal state for a `
+        + `rookie.`),
+      $('div', { class: 'chips' },
+        ...ABSENT.map(a => $('span', { class: 'chip' },
+          `${a.name} · ${a.pos}${a.exp === 0 ? ' · rookie' : ''}`)))));
+  }
+  const rc = META.reliability.routeCurve;
+  const at180 = rc.find(r => r[0] === 180);
+  f.append($('div', { class: 'note' },
+    $('h3', {}, 'Where the two thresholds come from, and what deliberately has none'),
+    $('p', {},
+      `Split-half reliability, WR/TE, 2020-2025: the odd weeks' rate against the even `
+      + `weeks' rate up to each route count, Spearman-Brown corrected. `,
+      $('b', {}, `Targets per route reaches 0.70 at ${META.gates.tprr} routes; yards per `
+        + `route not until ${META.gates.yprr}.`),
+      ` The hobby quotes 180 routes as where yards per route "stabilises" — measured here `
+      + `it is ${at180[1].toFixed(2)} at that bar, on 912 player-seasons, so roughly `
+      + `${Math.round((1 - at180[1]) * 100)}% of what separates two receivers' figures there `
+      + `is still sampling noise.`),
+    $('p', {},
+      `Nothing else on this page carries a confidence mark, on purpose. Snap share, routes `
+      + `a game and touches a game measure 0.88-0.90 reliable from the second game — `,
+      $('b', {}, 'marking those too would turn the mark into decoration'),
+      ` and it would stop meaning anything where it does belong.`),
+    $('p', {},
+      `Why a per-week axis is earned here rather than assumed: between week 3 and December, `
+      + `a receiver's routes a game moves with a standard deviation of `,
+      $('b', {}, `${META.dispersion.withinSd}`),
+      `, while the spread across all receivers is `,
+      $('b', {}, `${META.dispersion.acrossSd}`),
+      `. `,
+      $('b', {}, 'A player moves as much as players differ'),
+      `, so time deserves the axis.`)));
+
+  f.append($('footer', {},
+    `2025 regular season, weeks 1–${META.lastReg}, postseason excluded · weekly `
+    + `usage from playerprofiler.db · roster snapshot ${String(META.snapshot).slice(0, 10)}`,
+    $('br', {}),
+    `${META.rostered} rostered · ${META.resolved} resolved to a model id · `
+    + `${META.withTape} with 2025 tape`,
+    $('br', {}),
+    `published bars from craft/how-the-hobby-speaks.md (Fantasy Footballers, Fantasy Life, `
+    + `Fantasy Points) · every threshold on this page is measured, not chosen`,
+    $('br', {}),
+    `reproduce: tools/how-many-routes-until-real.py · tools/when-can-i-believe-it.py · `
+    + `tools/survivorship-check.py · tools/does-youth-move-more.py · `
+    + `tools/replay-his-2025.py`));
+  return f;
+}
+
+setWeek(WEEK);
+}
+</script>
+</body>
+</html>

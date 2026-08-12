@@ -2663,3 +2663,76 @@ it about — never the generalisation Studio wrote around it.**
   **Status: direction given, NOT yet confirmed as a build instruction** — David closed the session
   with *"dont rebuild anything"* before ruling on scope. Do not treat this as authorisation to
   rebuild 019; treat it as the lens for the next surface designed.
+
+- **2026-08-09 LATE — REJECTED, and the criterion he gave in place of it is the durable part:
+  *"the thing needed is surfaces that will become valuable with more and more data."*** On 020
+  ("When can I believe it"), his words: *"useless - just a tool that makes it dynamic but adds
+  nothing - you could easily just mark the axis with perpendicular week lines...not good work. stop
+  and rethink this whole session please."*
+  **Three faults, smallest first.** (1) **The scrubber was redundant with the chart under it.** Time
+  was already the x-axis; eighteen interactive states revealed what one marked axis shows at a
+  glance. Interaction standing in for a tick mark costs the reader effort and returns nothing.
+  (2) **It was a replay of a season he already lived through** — the page existed to prove a finding
+  to him, not to help him do anything. Same fault as the 018 rejection the day before, third
+  costume: Studio's verification rendered at full size. (3) **The finding does not want to be a
+  surface at all.** "Yards per route needs 400 routes before it settles" is learned once and applied
+  forever. It is a property the system should enforce quietly on every number it prints. Studio
+  found a footnote and built eight screens for it.
+  **THE CRITERION, and it generalises past this page:** a surface must be worth MORE after a
+  thousand days than after one. 020 was worth the same on day 1 and day 500 — less, actually, since
+  once you have learned it you never open it again. **Negative compounding.** This retroactively
+  explains 014 (a static reference lookup), 018 (a statistical property of a metric) and 020, and it
+  explains what 006 and the per-player track record have in common.
+  **The second-order consequence Studio drew and David has not yet ruled on:** everything that
+  compounds starts near empty, so the hard design problem is not the full state but **day 3** — and
+  the app currently renders accrual as a placeholder card ("the line begins once enough days are on
+  the books") and an Accuracy Tracker reading *inactive*. Those teach the reader to stop checking.
+
+- **2026-08-09 LATE — *"start with football context."*** Given after the 020 rejection, as the entry
+  point for the rethink. Studio had spent an entire session measuring 2020-2025 historical data
+  without once establishing what a dynasty manager DOES in August or what was live on his roster.
+  **What four searches turned up, and it killed more of the session than the critique did:**
+  Chicago traded DJ Moore to Buffalo in March, vacating 85 targets to the two receivers David owns
+  (ESPN now projects Odunze 118 targets, Burden 113, from Burden's 60 in 2025); **Garrett Wilson is
+  fully cleared and Tucker Kraft is off PUP** — the two players 020 spent its most dramatic space
+  telling him had "vanished"; two of his four quarterbacks are in unresolved Week 1 competitions in
+  a Superflex league, resolving at the **August 30 cutdown**.
+  **The durable lesson: a roster's meaning changes from EVENTS, not from statistics.** Studio built
+  careful instruments pointed backwards while the only things that moved his roster this month
+  happened in a press conference. **Establish the football situation before measuring anything** —
+  this is the 2026-07-24 meta-lesson ("do the domain research BEFORE designing") arriving for the
+  third time, and the second time in two days.
+
+- **2026-08-09 LATE — *"just look at dynasty sites like dynasty nerds, footballguys, playerprofiler,
+  KTC, Sleeper."*** A restatement of the 2026-07-15 copy-the-category doctrine, given because Studio
+  was theorising a surface from a data inventory instead of looking at how the category already
+  solves it. **Looked properly this time, with a browser rather than a search engine** (KTC
+  rankings, KTC player page, KTC trade database, PlayerProfiler player page).
+  **The finding that matters for the compounding criterion:** KTC's player page IS a compounding
+  surface and the category's answer is settled — **one metric over time, a range selector (1mo / 3mo
+  / 6mo / 1yr / All Time), a change readout for the selected range, and the current value
+  direct-labelled at the end of the line**, stacked twice (dynasty value, then positional rank). It
+  also advertises its own accumulation as a credibility claim: *"26,369,404 data points (and
+  counting)."*
+  **And the gap, which is evidence rather than intuition: KTC's Trade Database has breadth and no
+  memory.** 25,000 recent trades from 200,813 leagues, filtered by league settings, shown as DATE |
+  what side A got | what side B got. It is a comparables tool. **It never says what happened next**,
+  and structurally cannot — it aggregates across leagues rather than owning one league's continuous
+  history. Dynasty Genius holds the opposite: one league, four seasons, 39 trades with both sides
+  captured symmetrically, plus daily prices on both lanes. **Copy their trade row; spend the whole
+  originality budget on the column they cannot have.**
+
+- **2026-08-09 — A STALE SERVER PUT THE WRONG PROPOSAL IN FRONT OF THE CLIENT, and the check that
+  caught it ran too late.** Studio opened David's browser on port 8782 and he was shown **018 — the
+  surface he had rejected the day before.** A `serve018.mjs` from an earlier session was still
+  squatting the port; Studio's own server died on `EADDRINUSE`, that error was in the output and was
+  read past, and the browser was opened on the strength of a `curl` returning **200**.
+  **Two failures, and the second is the durable one.** (1) An error in a tool result was skimmed.
+  (2) **The cold-cache check — which exists because of the blank page of 2026-08-07 — was run AFTER
+  the browser was opened, not before.** It reported 0 cards and named the fault correctly; it was
+  simply too late to matter. A check that runs after delivery is a post-mortem, not a check.
+  **How to apply: before opening his browser, fetch the URL and verify the served `<title>`, not the
+  HTTP status.** A 200 from the right port is not a 200 from the right page, and every prototype in
+  this tree is served by an identical-looking node process on an adjacent port. Standing hygiene
+  added at the same closeout: **kill every leftover prototype server at session end** — two were
+  still listening from previous sessions, and one of them caused this.

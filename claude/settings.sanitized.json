@@ -1,5 +1,5 @@
 {
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "PermissionRequest": [
       {
@@ -69,5 +69,11 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "preferredNotifChannel": "terminal_bell",
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "statusLine": {
+    "type": "command",
+    "command": "'/Users/davidleess/.dg-context/runtime/bin/dg-context-fast' claude",
+    "padding": 0,
+    "refreshInterval": 5
+  }
 }

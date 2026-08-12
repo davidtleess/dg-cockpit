@@ -1,86 +1,93 @@
-# TOWER HANDOFF — written 2026-08-09 at David's closeout
+# Tower handoff — written 2026-08-10 15:05 ET
 
-**TREAT THIS AS INHERITED CLAIM, NEVER AS A SOURCE.** Every line is a lead to check against the
-artifact. Re-verify before repeating any of it to David — that is Rule 2 and it is the rule that
-matters most.
+**ROLE NOTICE, READ FIRST.** Tower is a **product steward** (v2, David-authorized 2026-08-08), not an
+orchestrator. No relay, no delivery duty, no crew approvals, no gating, no closeout ushering. If this
+file ever reads like a cockpit traffic board, it has drifted — see `memory/tower_role_v2.md`.
+**Retained authorities: exactly two** — Studio's read-only in-lane prompts, and running/verifying
+`~/dg-cockpit/backup.sh`.
 
-## YOUR ROLE — read the charter before anything else
+**THIS FILE IS AN INHERITED CLAIM, NEVER A SOURCE.** Verify every line against the artifact before
+repeating it to David. The live board with commands and timestamps is
+`~/.claude/tower/PRODUCT-HEALTH-BOARD.md` — read its newest dated block first.
 
-`~/.claude/agents/tower.md`. **Tower is not an orchestrator.** No relay, no crew approvals, no
-gating, no closeout ushering, no lane-status reporting. If an older document tells you otherwise, it
-is historical. You own: **data fresh · models honest · truth when David sits down**, plus **Studio's
-bridge** and **his dated commitments**.
+---
 
-**Rule 1 (David's word):** never invent product features. Label everything **VERIFIED** /
-**PROPOSED PRODUCT CHANGE** / **RELAYED PROPOSAL**.
+## The one thing that matters tomorrow
 
-**Trial ends ~2026-08-22.** Kill criterion is in the charter.
+**David approved wiring the realized-outcome scorer (2026-08-09 23:10). As of 2026-08-10 15:00 it has
+not been started** — verified, 35 commits today, zero touching it. It is his to hand to the crew;
+Tower is not the wire. The cost of not doing it is not a delay, it is a silence: in September the
+in-season window opens, the scorer runs on a real finalized week, hits `return []`
+(`scripts/run_realized_outcome_scoring.py:392`), files a `noop`, and `noop` is listed as a **success
+status** (`app/config/report_freshness.json:130-134`) on an `auxiliary` tier that cannot raise the
+health light. **It reports healthy all season while grading nothing, and nobody finds out.**
 
-## WHAT DAVID SHOULD HEAR FIRST NEXT SESSION
+## What David decided 2026-08-09 23:10
 
-**`/api/health` is slow and getting worse — and it is user-facing.** Verified 2026-08-09 09:32:
-two calls at **43.7s and 39.0s**. Same endpoint answered in **14.4s** the day before. Rest of the app
-is fine (`/` 0.11s, `/docs` 0.02s). This is the endpoint behind the System Diagnostics card. **Check
-this first — if it has kept climbing, it is the most urgent thing on the board.**
+Approved: the 501 diagnostic · wire the scorer before September · Studio's MCP install.
+**NOT approved: the other six health-board proposals** (scheduling the two producerless artifacts,
+freshness reading `stream_provenance`, disclosing model-card age, `noop` non-success, plists
+reconcile, 2026 weekly-results ingest). They remain PROPOSED PRODUCT CHANGES, unstarted.
 
-## THE CONFIRMED DEFECT — do not soften it, it is proven twice
+## Tower's two errors this session — both self-caught, both instructive
 
-The health light **turns green daily on 25-day-old data**. `roster_capacity` and
-`league_opportunity` are declared weekly (10:00 and 09:35, 3h grace) with **no launchd producer at
-all**. Inside the grace window they grade `within_grace` and the root reads `ok`; outside it they
-grade `stale` and the root reads `degraded`. Same data, opposite verdicts, verified 08-08 11:58 and
-08-09 09:32. That green window covers the hour David would open the app on a Tuesday in season.
+1. **Called 500,303 prediction snapshots an asset.** The count was real; 95.9% were
+   `capture_incomplete` with null projections. **Counted rows, called it substance — the exact error
+   Tower had criticised the freshness layer for in the same message.**
+2. **Then called the 4% a perishable capture defect and recommended fixing it.** The diagnostic
+   proved **501 IS the modeled universe** — skill positions ∧ ≥4 games in 2025 → 503 runtime rows
+   − 2 named identity orphans = 501, reconciled independently against
+   `app/data/valuation_runtime/universe_pvo_coverage_runtime.json`. Writing all ~12,218 rows is
+   specified behaviour ("append-only, survivorship-complete"). **The fix was withdrawn before it
+   reached anyone.** Do not let it be revived.
 
-## FULL BOARD
+**What survives from that:** a real, small, UNAPPROVED **PROPOSED PRODUCT CHANGE** — the word
+`capture_incomplete` is documented as *"the companion write should have happened and didn't"*
+(`src/dynasty_genius/capture/prediction_snapshot_store.py:17-22`) but is stamped on ~11,700 rows/day
+meaning "outside the modeled universe." A failure word on correct behaviour. It fooled Tower; it will
+fool the next reader.
 
-`~/.claude/tower/PRODUCT-HEALTH-BOARD.md` — every line stamped with the command that produced it.
-Carries eight **PROPOSED PRODUCT CHANGES**, none started, none authorized. Tower's standing
-recommendation for first: wire the outcome scorer to the 500,303 prediction snapshots that already
-exist — the statistics are built and it is the only route to any drift signal.
+## Studio — Tower's only structural monopoly
 
-## DATED COMMITMENTS — Tower's alone, nobody else holds these
+David's MCP approval was **delivered and verified 2026-08-09 23:13** (`pane-send.sh` →
+`VERDICT=DELIVERED`, marker `SM-0809-MCP` in 2.1's transcript). **Studio has not acted on it** —
+`~/frontend-studio/.mcp.json` does not exist as of 14:58. Studio wrote `DAVID.md` at 23:22 and then
+nothing for ~15.5h. Nothing blocks it. **Whether that is rest or blocked-idle is NOT established —
+establish it before reporting either way.** Studio's own STATUS.md still lists the MCP question as
+open, unaware David answered it.
+
+Newest proposal: `020-when-can-i-believe-it.md` (08-09 22:34). No background jobs in its lane.
+Fresh-eyes covenant INTACT — it deliberately leaves the product's `visualCraftAudit.test.js` unread
+and names the cost.
+
+## Product health — verified 2026-08-10 14:56
+
+- `/api/health` = `degraded`, single cause: `roster_capacity` **26.76 days stale, no producer**.
+  Expected — David declined the fix. `league_opportunity` same, auxiliary.
+- **The endpoint got ~14× faster overnight** (25.0s → ~1.8s across three probes). **Cause NOT
+  established. Do not call it fixed; watch for regression.**
+- `realized_outcome` grades **`fresh` at 6.2d** on a `noop`. Nothing has ever graded a prediction.
+- `feature_refresh` reports `ok`/`fresh` daily while falling back to cache on 4 of 5 upstream
+  streams — read `stream_provenance`, never the status field.
+
+## Cost watch — the duty with no other owner
+
+25 commits of `round-N` / `framing vN` between 08:49 and 12:39 today = **~3h50m of three lanes
+running challenge/accept rounds on the framing of one intake module.** It did land real code, and it
+was still in review churn at 14:51 (`GREEN review NOT CLEAR (3C/4H)`). 60 uncommitted paths.
+**Name this to David; do not direct the crew.**
+
+## Tower's dated commitments — LATE, and nobody else carries them
 
 | Item | Due | State |
 |---|---|---|
-| Grounding-layer full-build GO/NO-GO | "~August 2026" (his charter edit 2026-07-22) | **DUE, still unraised.** NO-GO is legitimate. |
-| Gemini seat — contribution record | ~2026-07-24 | **Overdue.** |
-| Studio fresh-eyes review | ~2026-09-01 | Approaching. Studio is highly active — see below. |
+| Grounding-layer full-build GO/NO-GO | ~Aug 2026 | **DUE, UNRAISED two sessions running.** NO-GO is a legitimate outcome. **Raise it first thing.** |
+| Gemini seat contribution record | ~2026-07-24 | **OVERDUE ~2.5 weeks.** |
+| Studio fresh-eyes review + crew stability | ~2026-09-01 | 3 weeks out. |
 
-## STUDIO
+## The kill criterion — live
 
-**Active and producing.** 017 and 018 on 08-08; **019-on-the-field.md written 09:24 on 08-09**;
-`DAVID.md` and `STATUS.md` both written 08-09. **David has been working with Studio directly** —
-019 quotes his reaction verbatim and supersedes 017/018 on it. 019 is marked *"Not approved, nothing
-relayed."* No background jobs in its lane. Fresh-eyes covenant recorded INTACT, with the cost of a
-deliberately unread file named rather than hidden.
-
-**RELAYED PROPOSAL awaiting David:** install Playwright MCP and Chrome DevTools MCP. Changes his
-machine, so it is his gate.
-
-## STILL OPEN WITH DAVID
-
-1. The eight proposed product changes — none authorized.
-2. Grounding-layer GO/NO-GO — due.
-3. **Crew-facing docs still describe the old Tower** — `AGENT_SYNC.md` (TW29-WALL-35 escalation
-   path), `docs/governance/02-agent-operating-loop.md`, the repo's `cockpit-closeout` skill. These
-   are product-repo commits; **Tower must not edit them.** Prepare wording, route through David.
-4. **The SessionStart / UserPromptSubmit hooks** still run orchestration-era instrumentation
-   (`watchdog.sh`, `turn-brief.sh`). Harmless, but they belong to the retired role. Settings change
-   = his word.
-
-## NOT TOWER'S LANE — observed only
-
-Crew on 2026-08-09: 41KB ledger by 09:25, 2 commits, **57 uncommitted paths** (22 the day before).
-Tower does not act on this and does not report lane status to David unless it bears on the product.
-
-## TOWER'S OWN ERRORS — recorded so the next one does not repeat them
-
-**2026-08-09:** probed `/api/health` with an 8-second timeout, got `http_code=000`, and **nearly told
-David the server was down.** It was slow, not down. **A timeout is an instrument setting, not a fact
-about the world.** Caught before it reached him — but only just.
-
-**2026-08-08:** blurred the product-change line inside the pitch for this role — four unbuilt changes
-stated as duties. David caught it and made the labelling rule binding. That is why Rule 1 exists.
-
-**2026-08-07:** read eight quiet days in Studio as neglect without checking. The rest was David's
-deliberate choice. **Rest is fine; blocked-idle is the waste.**
+Two weeks from 2026-08-08. The role ends if the work has not changed a decision David made, **a
+dated commitment slips again**, or he catches a false claim in a Tower document. Two of the three are
+already in play: both commitments above are late, and the only reason the false-claim clause has not
+fired is that Tower caught its own two errors first. **Write the succession rather than argue.**

@@ -1,7 +1,9 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "printf '\\033[1;38;5;214m🎨 STUDIO\\033[0m \\033[38;5;180m· independent front-end practice · outsider lane — repo is read-only\\033[0m'"
+    "command": "'/Users/davidleess/.dg-context/runtime/bin/dg-context-fast' claude",
+    "padding": 0,
+    "refreshInterval": 5
   },
   "permissions": {
     "defaultMode": "acceptEdits",

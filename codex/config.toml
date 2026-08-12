@@ -20,6 +20,11 @@ last_updated = "2026-07-05T14:11:16Z"
 source_type = "local"
 source = "/Users/davidleess/.codex/.tmp/marketplaces/21st-local"
 
+[marketplaces.dynasty-autonomy]
+last_updated = "2026-08-10T13:58:50Z"
+source_type = "local"
+source = "/Users/davidleess/dg-cockpit/autonomy/codex-marketplace"
+
 [plugins."documents@openai-primary-runtime"]
 enabled = true
 
@@ -59,6 +64,9 @@ enabled = true
 [plugins."chrome@openai-bundled"]
 enabled = true
 
+[plugins."dg-autonomy@dynasty-autonomy"]
+enabled = true
+
 [projects."/Users/davidleess/Documents/New project"]
 trust_level = "trusted"
 
@@ -66,6 +74,9 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/davidleess"]
+trust_level = "trusted"
+
+[projects."/Users/davidleess/dg-cockpit"]
 trust_level = "trusted"
 
 [apps.connector_76869538009648d5b282a4bb21c3d157.tools.github_create_pull_request]
@@ -91,3 +102,6 @@ theme = "gruvbox-dark"
 
 [hooks.state."/Users/davidleess/.codex/hooks.json:permission_request:0:0"]
 trusted_hash = "sha256:b3f49212896322dc2e435a18cc1c154b663a8b01edb3a53541decb0d55448fc3"
+
+[hooks.state."dg-autonomy@dynasty-autonomy:hooks/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:93215ecb793b3e7067ff370dd92f1b215302ee878cea30d62eff6d6fd74d6e8a"

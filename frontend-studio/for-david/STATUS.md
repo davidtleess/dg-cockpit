@@ -1,5 +1,112 @@
 # Studio proposals — status
 
+## ══ 2026-08-09 LATE (SD-0809L) ══ 020 "When can I believe it" — the clock the numbers never had
+
+**SHOWN AND REJECTED. Not iterated, not relayed.** Artifacts:
+`proposals/020-when-can-i-believe-it{.md,/}`, `craft/how-the-category-shows-time.md`,
+`tools/{when-can-i-believe-it,survivorship-check,does-youth-move-more,how-many-routes-until-real,
+replay-his-2025}.py`, `tools/{serve020,shot020}.mjs`.
+
+### THE ARC, in David's words
+*"useless - just a tool that makes it dynamic but adds nothing - you could easily just mark the axis
+with perpendicular week lines...not good work. stop and rethink this whole session please"* →
+*"start with football context"* → *"the thing needed is surfaces that will become valuable with more
+and more data"* → *"just look at dynasty sites like dynasty nerds, footballguys, playerprofiler,
+KTC, Sleeper"*. Full entries in `DAVID.md`.
+
+### THE DELIVERY FAILURE, first thing that happened and the worst of it
+**Studio opened David's browser onto proposal 018 — the surface he rejected the day before.** A
+leftover `serve018.mjs` from an earlier session was squatting port 8782; Studio's own server hit
+EADDRINUSE, that error was read past, and the browser was opened anyway. **Caught only by the
+cold-cache check** (2026-08-07's rule) which reported 0 cards — after he had already looked.
+**The rule now: verify the served `<title>` before opening his browser, never just the HTTP status.**
+A 200 from the right port is not a 200 from the right page.
+
+### WHERE IT LANDED — the criterion, which outranks the artifact
+A surface must be worth MORE after a thousand days than after one. 020 was worth the same on day 1
+and day 500 — **less**, once learned. This retroactively explains 014, 018 and 020 as one family:
+fixed facts rendered as pages. **Second-order problem Studio raised and David has not ruled on:**
+everything that compounds starts near empty, so the design problem is day 3, and the app currently
+answers accrual with a placeholder card and an Accuracy Tracker reading *inactive*.
+
+### THE CATEGORY LOOK — done with a browser, first real use of Playwright MCP in this engagement
+Written up in `craft/how-the-category-shows-time.md`. **KTC's player page is the settled answer for
+a metric over time**: range selector, change readout for that range, current value labelled at the
+line's end, stacked twice — and **no empty state**, a thin player just gets a short line. It sells
+accrual as credibility: *"26,369,404 data points (and counting)."*
+**The gap, which is evidence not intuition: KTC's Trade Database has breadth and no memory.** 25,000
+trades from 200,813 leagues, shown as date | side A got | side B got — a comparables tool that never
+says what happened next, and structurally cannot. **DG holds the inverse**: one league, four
+seasons, 39 trades both sides symmetric (73 players / 92 picks), ledger live to 2026-08-05, plus 47
+days of two-lane daily prices.
+**Scope stated honestly: Footballguys not reached, Sleeper login-gated.** PlayerProfiler's upsell
+modal blocked the first capture — same contamination class as KTC's modal on 2026-07-30.
+
+### WHAT WAS MEASURED (stands on its own; the surface built from it does not)
+
+**The call made, and it is Studio's own:** David's 2026-08-09 direction (*design for the shape of
+the data as it REFRESHES, not the snapshot*) was given and then the session closed with *"dont
+rebuild anything"* before scope was ruled. So **019 was not touched.** The direction was taken as a
+lens for a new question instead, which is what it was explicitly labelled as.
+
+### WHAT WAS MEASURED
+
+- **Reliability and prediction are two questions and they come apart.** WR/TE 2020-2025: routes a
+  game and snap share are reliable from **week 2**, target share **week 3**; targets per route not
+  until **150 routes**; **yards per route not until 400**; yards per target **never** (0.20 at week
+  12, flat since week 2 — more data buys literally nothing).
+- **The hobby's published 180-route bar for yards per route FAILS.** Measured 0.62 on 912
+  player-seasons — ~38% still noise at the bar 019's own footer quotes.
+- **On his roster, 12 of 22 with tape moved materially** between the week-3 cut and December; five
+  went from no role to full-time, three vanished. Legette ran the MOST routes on the roster at
+  week 3 with a yards-per-route of **0.10**, and finished at 0.94.
+- **Survivorship corrected rather than ignored:** ~1 in 4 role-holders is gone by week 13, and
+  counting them at zero costs 0.07–0.32 of correlation.
+- **The nice story was killed by its own test.** "His roster is young so it moves more" — REFUTED;
+  rookies' roles are *more* stable than veterans' (0.45 vs 0.20). Not used anywhere.
+- **The time axis was earned before it was drawn** (the 004 v3 failure condition): within-player
+  sd 8.08 vs across-player sd 7.31.
+- All five tools **deterministic across two runs**; controls pass in both directions.
+
+### CAUGHT BY LOOKING, NOT BY ANY INSTRUMENT
+
+1. **A player's line ran flat to week 18 though he last played week 9** — cumulative value carried
+   forward, so **absence rendered as continuity**. Same lie as absence-as-zero, on the page whose
+   whole argument is that one.
+2. **`+0.0 since week 8` for a week he did not play** — the same error again, in the header line.
+3. **Fourteen lines on one axis was spaghetti** (the 2026-07-21 overplotting rejection). Replaced
+   with small multiples only after measuring that the flat-lines condition which killed 004 v3 was
+   absent here.
+4. **Route-bank ticks named the metric but not the route count** — an orphan axis in a smaller
+   mark. The census that found the resulting collision **now names the colliding pair** instead of
+   returning a count, so the next fix is a diagnosis rather than a guess.
+
+### THE COST STUDIO IS LEAST SURE OF
+
+**7.7 screenfuls at 1440×900** (8.05 at end of season) against 4.64 for the approved 006 and 3.84
+for the rejected 014. It is long because it shows all 22 players rather than the interesting ones.
+Named in the proposal; David's call.
+
+### OPEN THREADS
+
+| thread | state | sits with |
+|---|---|---|
+| **The trade retrospective** | proposed in the pane, **awaiting David's go/no-go**. Copy KTC's trade row; the new column is what the assets did afterwards | **David** |
+| **020** | REJECTED, closed. Measurement kept | — |
+| **019 footer correction** | its "180 routes" citation measures 0.62; **not yet fixed** | Studio |
+| **019 rebuild** | untouched — parked direction still not authorised | David |
+| **017 relay R1–R5** | authored, **not authorised**, unchanged | David |
+| **Roster snapshots frozen at 2026-06-23** | but the transaction ledger is live to Aug 5, so composition is **reconstructible** — unserved, unrelayed | Studio / relay |
+| Can a 2023 pick be resolved to the player drafted with it | **unchecked**; decides whether old pick-heavy trades price completely | Studio |
+| QB/RB confidence thresholds | not measured; only WR/TE gates exist | Studio |
+| Does the market overreact to early-season noise | **unanswerable** — market history starts 2026-06-24 | — |
+| Footballguys / Sleeper | named by David, **not looked at** | Studio |
+
+**Fresh-eyes covenant: INTACT.** Read only data stores and prior studio files.
+**Product repo: read-only, absolute paths throughout, no writes.**
+
+---
+
 ## ══ 2026-08-09 — OPEN THREADS AT CLOSE ══
 
 1. **019 in-season rebuild — PARKED, NOT AUTHORISED.** David gave the direction (design for the data

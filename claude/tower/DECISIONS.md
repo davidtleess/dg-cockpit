@@ -1232,3 +1232,11 @@ Final act under v1, logged for completeness: 2026-08-08 08:52 — approved `dyna
 (Gemini writing its CONCUR response to a temp file for routing to the binding lanes) under
 DELEGATED-4. Legitimate at the time; that authority no longer exists.
 
+
+## 2026-08-11 23:52 — One-off crew delivery on David's word
+**Authority: DAVID-WORD 2026-08-11 ~23:50** — "find the right time and then tell the team whats needed."
+A single Tower-authored handoff to dynasty:1.1 (marker TW11-SCORER-HANDOFF): the scorer wiring David
+approved 08-09 23:10, verified unstarted tonight; plus the dg-cockpit backup defect named, owner
+unassigned. EXCLUDED as unapproved: roster_capacity/league_opportunity producers (still PROPOSED).
+Presend gate PASS. Lane busy at 23:52 — delivery armed for its next clean stop, not mid-build.
+This does not reopen relay duty; it is one delivery on one instruction.
