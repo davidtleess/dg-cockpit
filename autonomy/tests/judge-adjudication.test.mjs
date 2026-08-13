@@ -1,22 +1,23 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import test from "node:test";
 
 import { loadContract } from "../core/lib/policy.mjs";
 import { blockRun, createRun } from "../core/lib/run-state.mjs";
-import {
+import * as loopControl from "../core/lib/loop-control.mjs";
+
+const {
   adjudicateRun,
   applyLoopVerdict,
   closeRound,
   loopVerdict,
   openRound,
   recordFinding,
-  referToJudge,
-} from "../core/lib/loop-control.mjs";
+} = loopControl;
 
 const autonomyRoot = fileURLToPath(new URL("..", import.meta.url));
 const claudeToolPolicy = join(autonomyRoot, "claude", "dg-engineering", "scripts", "pre-tool-use.mjs");
@@ -46,53 +47,53 @@ function blocker() {
   };
 }
 
-// Drives the run into a judge-referred BLOCKED state before any cap.
-async function referredRun() {
+// Drives the run to the QUANTIFIABLE gate: 5 closed rounds in one phase with
+// an unresolved BLOCKER — the only way (besides the run cap and diminishing
+// returns) a case can ever reach the judge.
+async function cappedRun() {
   const state = await makeRun();
-  state.run = await openRound(state.run, { phase: "red", scope: SCOPE }, state.options);
-  state.run = await recordFinding(state.run, { round: 1, ...blocker() }, state.options);
-  state.run = await closeRound(state.run, { round: 1 }, state.options);
-  state.run = await referToJudge(
-    state.run,
-    { by: "codex", reason: "severity dispute", evidence: "positions attached in round 1" },
-    state.options,
-  );
-  const verdict = loopVerdict(state.run, await loadContract());
+  const contract = await loadContract();
+  for (let round = 1; round <= contract.loopControl.phaseRoundCap; round += 1) {
+    state.run = await openRound(state.run, { phase: "red", scope: SCOPE }, state.options);
+    if (round === 1) {
+      state.run = await recordFinding(state.run, { round: 1, ...blocker() }, state.options);
+    }
+    state.run = await closeRound(state.run, { round }, state.options);
+  }
+  const verdict = loopVerdict(state.run, contract);
+  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
+  assert.ok(verdict.reasons.includes("PHASE_ROUND_CAP"));
   state.run = await applyLoopVerdict(state.run, verdict, state.options);
+  assert.equal(state.run.terminalState, "BLOCKED");
   return state;
 }
 
-test("J1: early referral gates the run for adjudication before any cap", async () => {
+test("J1: routing is purely quantifiable — no referral surface exists and legacy referral fields carry no weight", async () => {
+  assert.ok(!("referToJudge" in loopControl), "referToJudge must not exist");
+
   const state = await makeRun();
   state.run = await openRound(state.run, { phase: "red", scope: SCOPE }, state.options);
   state.run = await recordFinding(state.run, { round: 1, ...blocker() }, state.options);
   state.run = await closeRound(state.run, { round: 1 }, state.options);
 
-  state.run = await referToJudge(
-    state.run,
-    { by: "claude", reason: "deadlocked on severity", evidence: "round 1 disposition attached" },
-    state.options,
-  );
-  const verdict = loopVerdict(state.run, await loadContract());
-  assert.equal(verdict.status, "ADJUDICATION_REQUIRED");
-  assert.ok(verdict.reasons.includes("JUDGE_REFERRAL"));
+  const legacy = { ...structuredClone(state.run), judgeReferral: { by: "codex", reason: "x", evidence: "y" } };
+  const verdict = loopVerdict(legacy, await loadContract());
+  assert.equal(verdict.status, "CONTINUE");
+  assert.ok(!verdict.reasons.includes("JUDGE_REFERRAL"));
 });
 
-test("J1b: a referral without evidence or reason fails closed", async () => {
-  const state = await makeRun();
-  state.run = await openRound(state.run, { phase: "red", scope: SCOPE }, state.options);
-  await assert.rejects(
-    referToJudge(state.run, { by: "claude", reason: "", evidence: "x" }, state.options),
-    TypeError,
-  );
-  await assert.rejects(
-    referToJudge(state.run, { by: "claude", reason: "r", evidence: "  " }, state.options),
-    TypeError,
-  );
+test("J1b: the CLI carries no refer verb", () => {
+  const cli = join(autonomyRoot, "core", "bin", "dg-autonomy.mjs");
+  const result = spawnSync(process.execPath, [cli, "refer", "--by", "codex"], {
+    encoding: "utf8",
+    timeout: 15000,
+  });
+  assert.equal(result.status, 64);
+  assert.match(result.stderr, /Unknown command/);
 });
 
-test("J2: a SHIP ruling terminally resolves the gate and records the ruling with evidence and pins", async () => {
-  const state = await referredRun();
+test("J2: a SHIP ruling on a capped run terminally resolves the gate with evidence and pins", async () => {
+  const state = await cappedRun();
   const ruled = await adjudicateRun(
     state.run,
     {
@@ -109,7 +110,7 @@ test("J2: a SHIP ruling terminally resolves the gate and records the ruling with
 });
 
 test("J3: a STOP ruling keeps the run blocked and parks it for David", async () => {
-  const state = await referredRun();
+  const state = await cappedRun();
   const ruled = await adjudicateRun(
     state.run,
     { ruling: "STOP", evidence: "neither position is safe to ship; park for David" },
@@ -130,7 +131,7 @@ test("J4: the judge cannot override a verification-failure BLOCKED run", async (
 });
 
 test("J5: adjudication fails closed on a bad ruling word, missing evidence, or an active run", async () => {
-  const state = await referredRun();
+  const state = await cappedRun();
   await assert.rejects(
     adjudicateRun(state.run, { ruling: "APPROVE", evidence: "x" }, state.options),
     TypeError,
@@ -148,7 +149,7 @@ test("J5: adjudication fails closed on a bad ruling word, missing evidence, or a
 });
 
 test("J6: a second ruling on the same gate is refused — one gate, one ruling", async () => {
-  const state = await referredRun();
+  const state = await cappedRun();
   const ruled = await adjudicateRun(
     state.run,
     { ruling: "STOP", evidence: "parked" },
@@ -161,7 +162,7 @@ test("J6: a second ruling on the same gate is refused — one gate, one ruling",
 });
 
 test("J7: after a SHIP ruling the hooks permit exactly commit — no edits, no push", async () => {
-  const state = await referredRun();
+  const state = await cappedRun();
   const ruled = await adjudicateRun(
     state.run,
     { ruling: "SHIP", evidence: "ship the pinned green", pins: ["pin"] },

@@ -17,7 +17,6 @@ import {
   openRound,
   recordFinding,
   recordReviewerVerdict,
-  referToJudge,
   resolveFinding,
 } from "../lib/loop-control.mjs";
 
@@ -26,7 +25,7 @@ function usage(message) {
     process.stderr.write(`${message}\n`);
   }
   process.stderr.write(
-    "Usage: dg-autonomy init|check-action|record-check|block|finish|status|round-open|finding|resolve|reviewer-clear|round-close|verdict|refer|adjudicate [--name value]\n",
+    "Usage: dg-autonomy init|check-action|record-check|block|finish|status|round-open|finding|resolve|reviewer-clear|round-close|verdict|adjudicate [--name value]\n",
   );
   process.exitCode = 64;
 }
@@ -163,15 +162,6 @@ async function main() {
     if (verdict.status === "ADJUDICATION_REQUIRED") {
       process.exitCode = 2;
     }
-    return;
-  }
-  if (command === "refer") {
-    await referToJudge(await loadRun(), {
-      by: args.by,
-      reason: args.reason,
-      evidence: args.evidence,
-    });
-    process.stdout.write(`Referred to the judge by ${args.by}: ${args.reason}\n`);
     return;
   }
   if (command === "adjudicate") {
