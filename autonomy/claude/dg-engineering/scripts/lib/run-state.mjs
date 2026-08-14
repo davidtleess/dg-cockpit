@@ -177,10 +177,16 @@ export async function recordCheck(run, receipt, options = {}) {
     recordedAt: new Date().toISOString(),
   });
   if (status === "failed") {
-    next.failureCounts[name] = (next.failureCounts[name] ?? 0) + 1;
-    if (next.failureCounts[name] >= contract.failureLimit) {
+    // The failure limit stops a lane grinding against the SAME wall: a wall is
+    // (loop phase, check). Counting a check across phases summed unrelated
+    // walls and terminally blocked the 2026-08-14 scorer run at green-review
+    // round 1/5 on two leftover framing failures (David's word: per phase).
+    const loopPhase = next.reviewRounds?.at(-1)?.phase ?? "pre-loop";
+    const wall = `${loopPhase}:${name}`;
+    next.failureCounts[wall] = (next.failureCounts[wall] ?? 0) + 1;
+    if (next.failureCounts[wall] >= contract.failureLimit) {
       next.terminalState = "BLOCKED";
-      next.reason = `${name} failed ${contract.failureLimit} times`;
+      next.reason = `${name} failed ${contract.failureLimit} times in ${loopPhase}`;
       next.phase = "blocked";
     }
   }
