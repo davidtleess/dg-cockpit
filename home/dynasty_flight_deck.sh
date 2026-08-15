@@ -100,6 +100,14 @@ tmux set -g status-right '#[fg=#727169]%a %H:%M '
 tmux set -g pane-border-style 'fg=#363646'
 tmux set -g pane-active-border-style 'fg=#7E9CD8'
 
+# 8c. Resume wire — the machinery wakes the implementer lane on reviewer
+# CLEAR; no human courier at turn boundaries (David's word, 2026-08-14).
+# Idempotent via pidfile; dedupe lives in per-run wire receipts.
+mkdir -p "$HOME/.dg-autonomy"
+nohup node "$COCKPIT_DIR/autonomy/core/bin/resume-wire.mjs" --loop 20 \
+  "/Users/davidleess/dynasty-genius/.git/worktrees/dynasty-genius-product/dg-autonomy/run.json" \
+  >> "$HOME/.dg-autonomy/resume-wire.log" 2>&1 &
+
 # 9. Finalize focus on the engineering window
 tmux select-window -t "$SESSION:1"
 tmux select-pane -t "$SESSION:1.1"

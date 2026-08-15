@@ -69,66 +69,77 @@ async function writeReceipt(statePath, receipt) {
   return receipt;
 }
 
-function findJudgePane(exec) {
+export function findPaneByTitle(title, exec = defaultExec) {
   const listing = exec(["list-panes", "-a", "-F", "#{pane_id} #{pane_title}"]) ?? "";
   for (const line of listing.split("\n")) {
     const separator = line.indexOf(" ");
     if (separator === -1) continue;
-    if (line.slice(separator + 1).trim().startsWith(JUDGE_TITLE)) {
+    if (line.slice(separator + 1).trim().startsWith(title)) {
       return line.slice(0, separator);
     }
   }
   return null;
 }
 
-export async function deliverDocket({ statePath, run, exec = defaultExec, now = () => new Date().toISOString() }) {
-  const existing = await readReceipt(statePath);
-  if (existing?.status === "delivered" && existing.verified) {
-    return { status: "already-delivered", marker: existing.marker };
-  }
-  const attempts = (existing?.attempts ?? 0) + 1;
-  const { marker, message } = composeDocket(run, { statePath });
-
-  const fail = async (error) => {
-    await writeReceipt(statePath, {
-      status: "failed",
-      error,
-      marker,
-      attempts,
-      lastAttemptAt: now(),
-    });
-    return { status: "failed", error, marker };
-  };
-
+// Shared verified delivery: send to a pane by title, prove arrival by marker
+// in the transcript (wrap-tolerant), refuse when a dialog would swallow the
+// paste. Used by the docket clerk and the resume wire.
+export function deliverToPane({ paneTitle, message, marker, exec = defaultExec }) {
   let pane;
   try {
-    pane = findJudgePane(exec);
+    pane = findPaneByTitle(paneTitle, exec);
   } catch (error) {
-    return fail(`tmux unavailable: ${error.message}`);
+    return { status: "failed", error: `tmux unavailable: ${error.message}` };
   }
-  if (!pane) return fail("no judge pane with the ⚖ judge title");
+  if (!pane) return { status: "failed", error: `no ${paneTitle} pane found in any session` };
 
   const tail = exec(["capture-pane", "-p", "-t", pane]) ?? "";
   if (tail.includes("Do you want to proceed?")) {
-    return fail("open dialog in the judge pane; a paste would be discarded");
+    return { status: "failed", error: `open dialog in the ${paneTitle} pane; a paste would be discarded` };
   }
 
   exec(["send-keys", "-t", pane, "-l", message]);
   exec(["send-keys", "-t", pane, "C-m"]);
 
   const transcript = exec(["capture-pane", "-p", "-t", pane, "-S", "-"]) ?? "";
-  const verified = transcript.replaceAll("\n", "").includes(marker);
-  if (!verified) return fail("marker not found in the judge transcript after send");
+  if (!transcript.replaceAll("\n", "").includes(marker)) {
+    return { status: "failed", error: "marker not found in the transcript after send" };
+  }
+  return { status: "delivered", verified: true, pane };
+}
+
+export async function deliverDocket({ statePath, run, exec = defaultExec, now = () => new Date().toISOString() }) {
+  const { marker, message } = composeDocket(run, { statePath });
+  const existing = await readReceipt(statePath);
+  // A verified receipt settles only ITS OWN firing: the marker hashes the
+  // gate's identity, so a receipt with a different marker is a stale artifact
+  // of an earlier run at this path and must not suppress the new docket.
+  if (existing?.status === "delivered" && existing.verified && existing.marker === marker) {
+    return { status: "already-delivered", marker: existing.marker };
+  }
+  const attempts = (existing?.marker === marker ? existing?.attempts ?? 0 : 0) + 1;
+
+  const result = deliverToPane({ paneTitle: JUDGE_TITLE, message, marker, exec });
+  if (result.status === "failed") {
+    await writeReceipt(statePath, {
+      status: "failed",
+      error: result.error,
+      marker,
+      attempts,
+      lastAttemptAt: now(),
+    });
+    return { status: "failed", error: result.error, marker };
+  }
 
   await writeReceipt(statePath, {
     status: "delivered",
     verified: true,
     marker,
-    pane,
+    pane: result.pane,
     attempts,
     deliveredAt: now(),
   });
-  return { status: "delivered", verified: true, marker, pane };
+  return { status: "delivered", verified: true, marker, pane: result.pane };
 }
 
 export async function sweepDockets(statePaths, { exec = defaultExec } = {}) {

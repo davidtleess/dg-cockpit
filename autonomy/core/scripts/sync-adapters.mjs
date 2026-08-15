@@ -73,17 +73,22 @@ for (const definition of Object.values(hosts)) {
   const runState = await readFile(join(coreRoot, "lib", "run-state.mjs"), "utf8");
   const loopControl = await readFile(join(coreRoot, "lib", "loop-control.mjs"), "utf8");
   const docket = await readFile(join(coreRoot, "lib", "docket.mjs"), "utf8");
+  const release = await readFile(join(coreRoot, "lib", "release.mjs"), "utf8");
+  const wire = await readFile(join(coreRoot, "lib", "wire.mjs"), "utf8");
   const cli = (
     await readFile(join(coreRoot, "bin", "dg-autonomy.mjs"), "utf8")
   )
     .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"')
     .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
-    .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"');
+    .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"')
+    .replace('"../lib/release.mjs"', '"./lib/release.mjs"');
   expected.set(join(definition.root, "scripts", "contract.json"), contract);
   expected.set(join(definition.root, "scripts", "lib", "policy.mjs"), policy);
   expected.set(join(definition.root, "scripts", "lib", "run-state.mjs"), runState);
   expected.set(join(definition.root, "scripts", "lib", "loop-control.mjs"), loopControl);
   expected.set(join(definition.root, "scripts", "lib", "docket.mjs"), docket);
+  expected.set(join(definition.root, "scripts", "lib", "release.mjs"), release);
+  expected.set(join(definition.root, "scripts", "lib", "wire.mjs"), wire);
   expected.set(join(definition.root, "scripts", "dg-autonomy.mjs"), cli);
 }
 

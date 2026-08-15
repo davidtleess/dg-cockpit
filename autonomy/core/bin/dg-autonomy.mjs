@@ -6,8 +6,10 @@ import {
   finishRun,
   formatStatus,
   loadRun,
+  readRunSnapshotSync,
   recordCheck,
 } from "../lib/run-state.mjs";
+import { releaseRun } from "../lib/release.mjs";
 import { evaluateAction, loadContract } from "../lib/policy.mjs";
 import {
   adjudicateRun,
@@ -25,7 +27,7 @@ function usage(message) {
     process.stderr.write(`${message}\n`);
   }
   process.stderr.write(
-    "Usage: dg-autonomy init|check-action|record-check|block|finish|status|round-open|finding|resolve|reviewer-clear|round-close|verdict|adjudicate [--name value]\n",
+    "Usage: dg-autonomy init|check-action|record-check|block|finish|status|round-open|finding|resolve|reviewer-clear|round-close|verdict|adjudicate|release [--name value]\n",
   );
   process.exitCode = 64;
 }
@@ -162,6 +164,28 @@ async function main() {
     if (verdict.status === "ADJUDICATION_REQUIRED") {
       process.exitCode = 2;
     }
+    return;
+  }
+  if (command === "release") {
+    // David's word made executable: archives a terminal run with its receipts
+    // and appends the release to the audit log. Engineering lanes cannot reach
+    // this — it classifies as the "release" hard gate and the terminal-state
+    // allowlist refuses it — so a useful invocation is David's (or Tower's on
+    // his word) by construction.
+    const snapshot = readRunSnapshotSync({});
+    if (!snapshot.path) {
+      usage("release: no run state path (set DG_AUTONOMY_STATE or run inside the repo)");
+      return;
+    }
+    const record = await releaseRun({
+      statePath: snapshot.path,
+      label: args.as,
+      word: args.word,
+    });
+    process.stdout.write(
+      `Released ${record.terminalState} run to ${record.archivePath}\n` +
+      `Audit: releases.jsonl ← ${JSON.stringify({ label: record.label, judgeRuling: record.judgeRuling, sha256: record.sha256.slice(0, 12) })}\n`,
+    );
     return;
   }
   if (command === "adjudicate") {

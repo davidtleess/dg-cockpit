@@ -182,6 +182,13 @@ function classifySegment(originalTokens) {
   if (["npm", "pnpm", "yarn"].includes(name) && tokens[1] === "run" && !/^(?:test|lint|build|check|typecheck|verify)(?::|$)/.test(tokens[2] ?? "")) return "unreviewable-command";
   if (name === "make" && /^(?:deploy|publish|release|commit|push|install)$/i.test(tokens[1] ?? "")) return "unreviewable-command";
   if ((name === "node" && tokens[1] === "--test") || ["pytest", "cargo", "go"].includes(name) && tokens[1] === "test") return "test";
+  // Releasing a terminal run is David's word made executable; a lane that can
+  // release its own block has no blocks. Both invocation shapes classify as
+  // the "release" hard gate.
+  if (name === "dg-autonomy" && tokens.includes("release")) return "release";
+  if (name === "node" && tokens.some((token) => /dg-autonomy\.mjs$/.test(token)) && tokens.includes("release")) {
+    return "release";
+  }
   return "inspect";
 }
 
