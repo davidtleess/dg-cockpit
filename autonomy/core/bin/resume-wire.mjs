@@ -45,11 +45,13 @@ async function onePass(statePaths) {
   }
   // Context handoff protocol (docs/2026-08-15-context-handoff-design.md).
   // David-gated: ~/.dg-autonomy/handoff-config.json ships disabled, so this
-  // sweep is a silent no-op until his word flips "enabled".
+  // sweep is a silent no-op until his word flips "enabled". Each enable
+  // transition logs once with the config hash — activation provenance
+  // (Tower, 2026-08-15); entry.detail carries it.
   try {
     for (const entry of await runHandoffSweep()) {
       if (!HANDOFF_QUIET.has(entry.status)) {
-        log(`handoff ${entry.status}${entry.error ? ` (${entry.error})` : ""}${entry.lane ? ` [lane ${entry.lane}]` : ""}`);
+        log(`handoff ${entry.status}${entry.detail ? ` ${entry.detail}` : ""}${entry.error ? ` (${entry.error})` : ""}${entry.lane ? ` [lane ${entry.lane}]` : ""}`);
       }
     }
   } catch (error) {

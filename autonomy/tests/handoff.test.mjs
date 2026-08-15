@@ -13,6 +13,7 @@ import { computeHandoff, runHandoffSweep } from "../core/lib/handoff.mjs";
 // never interrupt a turn; verify the artifact, not the claim; the wire clears;
 // one cycle per crossing; a failed delivery never silences the cycle;
 // disabled by default — activation is David-gated.
+// Findings F1-F4 are Tower's line-by-line review of 9c73fff (2026-08-15).
 
 const OBSERVED = "2026-08-15T12:00:00.000Z";
 
@@ -37,6 +38,12 @@ const PANE_STATE = {
 };
 
 const CONFIG = { enabled: true, lanes: { "1.1": { floor: 30 } } };
+
+// Lane results only — the activation-provenance entry is asserted in its own
+// test and filtered everywhere else.
+async function sweep(options) {
+  return (await runHandoffSweep(options)).filter((entry) => entry.status !== "activation");
+}
 
 test("computeHandoff arms on the floor crossing, for configured lanes only", () => {
   const now = () => Date.parse(OBSERVED);
@@ -67,12 +74,14 @@ test("computeHandoff arms on the floor crossing, for configured lanes only", () 
 });
 
 // A fake cockpit: two panes with per-pane transcripts, a composer, and the
-// busy/dialog states the boundary check must respect. Same fake-exec shape as
-// release-wire.test.mjs — no live pane is ever touched by these tests.
+// busy/dialog states the boundary check must respect. `freezeScreen` pins
+// what capture-pane returns regardless of the real transcript — the tool for
+// simulating verification blindness (F2) and redraw races (F3). Same
+// fake-exec shape as release-wire.test.mjs — no live pane is ever touched.
 function cockpitHarness() {
   const panes = {
-    "%0": { title: "✳ claude", transcript: "", pending: "", busy: false, dialog: false },
-    "%4": { title: "🗼 tower", transcript: "", pending: "", busy: false, dialog: false },
+    "%0": { title: "✳ claude", transcript: "", pending: "", busy: false, dialog: false, freezeScreen: null },
+    "%4": { title: "🗼 tower", transcript: "", pending: "", busy: false, dialog: false, freezeScreen: null },
   };
   const exec = (args) => {
     if (args[0] === "list-panes") {
@@ -82,6 +91,7 @@ function cockpitHarness() {
     const pane = panes[id];
     if (!pane) return "";
     if (args[0] === "capture-pane") {
+      if (pane.freezeScreen !== null) return pane.freezeScreen;
       const busyLine = pane.busy ? "✻ Cogitating… (esc to interrupt)\n" : "";
       const dialogLine = pane.dialog ? "Do you want to proceed?\n" : "";
       return `${pane.transcript}${dialogLine}${busyLine}❯ \n`;
@@ -129,56 +139,67 @@ async function environment({ config = CONFIG, remaining = 28 } = {}) {
   );
   await writeFile(join(stateDir, "dynasty_1_3.json.123.tmp"), "{half-written");
 
+  const orderMarker = async () =>
+    JSON.parse(await readFile(join(receiptDir, "handoff-1.1.json"), "utf8")).cycle.orderMarker;
+
   return {
     dirs: { configPath, stateDir, receiptDir, ledgerDir },
     ledgerDir,
     receiptDir,
     writeState,
+    orderMarker,
     clock: () => clock,
     advance: (ms) => { clock += ms; },
   };
 }
 
+function optionsFor(env, exec, extra = {}) {
+  return { ...env.dirs, exec, banner: () => {}, now: () => env.clock(), sleep: async () => {}, ...extra };
+}
+
 test("the full cycle: arm at the boundary, order, artifact, clear, rebirth — one cycle per crossing", async () => {
   const env = await environment();
   const { panes, exec } = cockpitHarness();
-  const opts = { ...env.dirs, exec, banner: () => {}, now: () => env.clock() };
+  const opts = optionsFor(env, exec);
 
   // Busy pane: the threshold arms; the boundary has not fired.
   panes["%0"].busy = true;
-  let [entry] = await runHandoffSweep(opts);
+  let [entry] = await sweep(opts);
   assert.equal(entry.status, "arm-wait");
   assert.equal(panes["%0"].transcript, "", "never interrupt a turn");
 
   // Dialog open: still not a boundary.
   panes["%0"].busy = false;
   panes["%0"].dialog = true;
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "arm-wait");
   assert.equal(panes["%0"].transcript, "");
 
   // Idle boundary: the order goes, fixed-format and machinery-carried.
   panes["%0"].dialog = false;
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "order-delivered");
   assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/);
   assert.match(panes["%0"].transcript, /smallest honest increment/);
   assert.match(panes["%0"].transcript, /UNPROVEN/);
   assert.match(panes["%0"].transcript, /HANDOFF-DONE/);
   assert.match(panes["%0"].transcript, /Do not start new work/);
+  assert.match(panes["%0"].transcript, /marker verbatim/, "the order instructs the lane to sign its ledger entry");
   assert.equal(panes["%4"].transcript, "", "the exempt Tower seat hears nothing");
   const receipt = JSON.parse(await readFile(join(env.receiptDir, "handoff-1.1.json"), "utf8"));
   assert.equal(receipt.cycle.phase, "ordered");
+  const marker = receipt.cycle.orderMarker;
 
   // The claim alone moves nothing: verify the artifact, not the claim.
   panes["%0"].transcript += "HANDOFF-DONE\n";
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "awaiting-artifact");
 
-  // The ledger artifact lands (mtime after the order): the wire clears and reboots.
+  // The signed ledger artifact lands (mtime after the order, marker inside):
+  // the wire clears and reboots.
   const artifactPath = join(env.ledgerDir, "2026-08-15.md");
-  await writeFile(artifactPath, "## postflight — context handoff\n");
-  [entry] = await runHandoffSweep(opts);
+  await writeFile(artifactPath, `## postflight — context handoff ${marker}\n`);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "reborn");
   assert.doesNotMatch(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "the wire cleared the pane before rebirth");
   assert.match(panes["%0"].transcript, /FRESH SESSION/);
@@ -189,34 +210,157 @@ test("the full cycle: arm at the boundary, order, artifact, clear, rebirth — o
   assert.equal(done.cycle.phase, "done");
 
   // Still below the floor: one cycle per threshold crossing, forever.
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "cycle-complete");
 
   // The fresh session climbs above the floor: the receipt resets; the next
   // crossing starts a new cycle at an idle boundary.
   await env.writeState({ remainingPercentage: 92, sessionId: "session-2" });
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "reset-above-floor");
   await env.writeState({ remainingPercentage: 25 });
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "order-delivered");
+});
+
+test("F1: only a ledger artifact carrying the order marker moves the cycle — another lane's file never does", async () => {
+  const env = await environment();
+  const { panes, exec } = cockpitHarness();
+  const opts = optionsFor(env, exec);
+
+  let [entry] = await sweep(opts);
+  assert.equal(entry.status, "order-delivered");
+  panes["%0"].transcript += "HANDOFF-DONE\n";
+
+  // Another lane writes the shared agent-ledger directory after the order:
+  // right mtime, wrong lane. It must not feed the cycle or the boot prompt.
+  const decoyPath = join(env.ledgerDir, "2026-08-15-other-lane.md");
+  await writeFile(decoyPath, "## another lane's postflight — no marker here\n");
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "awaiting-artifact", "an unsigned artifact is another lane's, not this handoff's");
+
+  const marker = await env.orderMarker();
+  const signedPath = join(env.ledgerDir, "2026-08-15-lane-1-1.md");
+  await writeFile(signedPath, `## postflight handoff ${marker}\n`);
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "reborn");
+  assert.ok(panes["%0"].transcript.includes(signedPath), "the boot prompt names the SIGNED artifact");
+  assert.ok(!panes["%0"].transcript.includes(decoyPath), "another lane's file never reaches the rebirth prompt");
+});
+
+test("F2: order echoes are counted from the transcript, not the receipt — a landed-but-unverified order never fakes a reply", async () => {
+  const env = await environment();
+  const { panes, exec } = cockpitHarness();
+  const opts = optionsFor(env, exec);
+
+  // The order LANDS in the pane, but verification is blind (the live failure
+  // mode: wrap/redraw hides the marker from capture) — delivery reports
+  // failure and the receipt never records the send.
+  panes["%0"].freezeScreen = "❯ \n";
+  let [entry] = await sweep(opts);
+  assert.equal(entry.status, "order-retry");
+  assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "the first order landed despite the failed verification");
+
+  // The retry lands a second copy: the transcript now carries TWO order
+  // echoes of HANDOFF-DONE and the lane has said nothing.
+  panes["%0"].freezeScreen = null;
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "order-delivered");
+
+  const marker = await env.orderMarker();
+  await writeFile(join(env.ledgerDir, "2026-08-15.md"), `## postflight ${marker}\n`);
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "awaiting-handoff-done", "order echoes never count as the lane's reply");
+  assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "the pane was not cleared on a faked reply");
+
+  panes["%0"].transcript += "HANDOFF-DONE\n";
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "reborn");
+});
+
+test("F3: clear intent persists before /clear — a redraw race still boots the fresh session, even above the floor", async () => {
+  const env = await environment();
+  const { panes, exec } = cockpitHarness();
+  const opts = optionsFor(env, exec);
+
+  let [entry] = await sweep(opts);
+  assert.equal(entry.status, "order-delivered");
+  panes["%0"].transcript += "HANDOFF-DONE\n";
+  const marker = await env.orderMarker();
+  await writeFile(join(env.ledgerDir, "2026-08-15.md"), `## postflight ${marker}\n`);
+
+  // Freeze the screen at its pre-clear content: the /clear takes (the real
+  // transcript wipes) but every verification capture still shows the order.
+  panes["%0"].freezeScreen = `${panes["%0"].transcript}❯ \n`;
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "clear-unverified");
+  const receipt = JSON.parse(await readFile(join(env.receiptDir, "handoff-1.1.json"), "utf8"));
+  assert.equal(receipt.cycle.phase, "clearing", "the clear intent was persisted BEFORE the send");
+  assert.ok(receipt.cycle.artifactPath, "the artifact path survives the race for the boot prompt");
+  assert.equal(panes["%0"].transcript, "", "the /clear itself took");
+
+  // Still frozen: the next poll retries the clear, it does not re-derive from
+  // the wiped transcript.
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "clear-unverified");
+
+  // The redraw completes AND the monitor already shows the fresh session
+  // above the floor — the reset law must not strand the cleared lane.
+  panes["%0"].freezeScreen = null;
+  await env.writeState({ remainingPercentage: 95, sessionId: "session-2" });
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "reborn", "the boot prompt is sent, never lost to the above-floor reset");
+  assert.match(panes["%0"].transcript, /FRESH SESSION/);
+
+  // Only after the cycle completes does the floor reset apply.
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "reset-above-floor");
+});
+
+test("F4: the deadline parks the whole ordered phase — artifact without HANDOFF-DONE past deadline parks BLOCKED", async () => {
+  const env = await environment();
+  const { panes, exec } = cockpitHarness();
+  const banners = [];
+  const opts = optionsFor(env, exec, { banner: (text, title) => banners.push({ text, title }) });
+
+  let [entry] = await sweep(opts);
+  assert.equal(entry.status, "order-delivered");
+  const marker = await env.orderMarker();
+  await writeFile(join(env.ledgerDir, "2026-08-15.md"), `## postflight ${marker}\n`);
+
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "awaiting-handoff-done");
+
+  env.advance(21 * 60 * 1000);
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "parked", "a silent lane past the deadline parks even with the artifact on disk");
+  assert.match(panes["%4"].transcript, /BLOCKED/);
+  assert.match(panes["%4"].transcript, /HANDOFF-DONE/);
+  assert.equal(banners.length, 1);
+  assert.equal(banners[0].title, "Dynasty BLOCKED");
+  assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "a parked lane is never cleared");
+
+  [entry] = await sweep(opts);
+  assert.equal(entry.status, "parked-held");
+  assert.equal(banners.length, 1, "one park per cycle");
 });
 
 test("the wire waits for HANDOFF-DONE even with the artifact on disk", async () => {
   const env = await environment();
   const { panes, exec } = cockpitHarness();
-  const opts = { ...env.dirs, exec, banner: () => {}, now: () => env.clock() };
+  const opts = optionsFor(env, exec);
 
-  let [entry] = await runHandoffSweep(opts);
+  let [entry] = await sweep(opts);
   assert.equal(entry.status, "order-delivered");
-  await writeFile(join(env.ledgerDir, "2026-08-15.md"), "## postflight\n");
+  const marker = await env.orderMarker();
+  await writeFile(join(env.ledgerDir, "2026-08-15.md"), `## postflight ${marker}\n`);
 
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "awaiting-handoff-done");
   assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "the pane was not cleared under the lane");
 
   panes["%0"].transcript += "HANDOFF-DONE\n";
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "reborn");
 });
 
@@ -224,22 +368,22 @@ test("no artifact: renotify at half-deadline, park BLOCKED at the deadline — o
   const env = await environment();
   const { panes, exec } = cockpitHarness();
   const banners = [];
-  const opts = { ...env.dirs, exec, banner: (text, title) => banners.push({ text, title }), now: () => env.clock() };
+  const opts = optionsFor(env, exec, { banner: (text, title) => banners.push({ text, title }) });
 
-  let [entry] = await runHandoffSweep(opts);
+  let [entry] = await sweep(opts);
   assert.equal(entry.status, "order-delivered");
   panes["%0"].transcript += "HANDOFF-DONE\n";
 
   // Half the deadline with no artifact: the order is renoticed, once.
   env.advance(11 * 60 * 1000);
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "renotified");
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "awaiting-artifact", "the renotice fires once per cycle");
 
   // Past the deadline: park BLOCKED-tier to the Tower seat, banner fired.
   env.advance(10 * 60 * 1000);
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "parked");
   assert.match(panes["%4"].transcript, /BLOCKED/);
   assert.match(panes["%4"].transcript, /handoff/i);
@@ -247,7 +391,7 @@ test("no artifact: renotify at half-deadline, park BLOCKED at the deadline — o
   assert.equal(banners[0].title, "Dynasty BLOCKED");
   assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/, "a parked lane is never cleared");
 
-  [entry] = await runHandoffSweep(opts);
+  [entry] = await sweep(opts);
   assert.equal(entry.status, "parked-held");
   assert.equal(banners.length, 1, "one park per cycle");
 });
@@ -255,14 +399,14 @@ test("no artifact: renotify at half-deadline, park BLOCKED at the deadline — o
 test("a failed delivery retries next poll — never silences the cycle", async () => {
   const env = await environment();
   const banners = [];
-  const baseOptions = { ...env.dirs, banner: (text, title) => banners.push({ text, title }), now: () => env.clock() };
+  const base = { ...env.dirs, banner: (text, title) => banners.push({ text, title }), now: () => env.clock(), sleep: async () => {} };
 
   // tmux answers but the lane's pane is missing: armed, waiting, not lost.
-  let [entry] = await runHandoffSweep({ ...baseOptions, exec: () => "" });
+  let [entry] = await sweep({ ...base, exec: () => "" });
   assert.equal(entry.status, "arm-wait");
 
   const { panes, exec } = cockpitHarness();
-  [entry] = await runHandoffSweep({ ...baseOptions, exec });
+  [entry] = await sweep({ ...base, exec });
   assert.equal(entry.status, "order-delivered", "the retry delivers the same cycle");
   assert.match(panes["%0"].transcript, /CONTEXT HANDOFF ORDER/);
 });
@@ -279,8 +423,30 @@ test("disabled or missing config: the sweep is a no-op that never touches tmux",
   );
 });
 
+test("activation transitions log once, with the config hash, in both directions", async () => {
+  const env = await environment();
+  const { exec } = cockpitHarness();
+  const opts = optionsFor(env, exec);
+
+  const first = await runHandoffSweep(opts);
+  assert.equal(first[0].status, "activation", "the enable transition leads the results");
+  assert.equal(first[0].enabled, true);
+  assert.match(first[0].configHash, /^[0-9a-f]{8}$/);
+  assert.match(first[0].detail ?? "", /enabled=true/);
+
+  const second = await runHandoffSweep(opts);
+  assert.ok(!second.some((entry) => entry.status === "activation"), "no transition, no provenance line");
+
+  await writeFile(env.dirs.configPath, JSON.stringify({ enabled: false, lanes: { "1.1": { floor: 30 } } }));
+  const disabled = await runHandoffSweep(opts);
+  assert.equal(disabled.length, 1);
+  assert.equal(disabled[0].status, "activation");
+  assert.equal(disabled[0].enabled, false);
+});
+
 test("the resume-wire daemon carries the sweep behind the David-gate", async () => {
   const source = await readFile(new URL("../core/bin/resume-wire.mjs", import.meta.url), "utf8");
   assert.match(source, /runHandoffSweep/);
   assert.match(source, /handoff\.mjs/);
+  assert.match(source, /entry\.detail/, "activation provenance reaches the daemon log");
 });
