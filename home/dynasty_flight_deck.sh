@@ -11,8 +11,9 @@ tmux kill-session -t "$SESSION" 2>/dev/null
 tmux new-session -d -s "$SESSION" -c "$PROJECT_DIR" "/bin/bash"
 
 # 3. Setup Pane 1: Claude Code (Left)
-# Color: Deep Midnight Blue (Exec)
-tmux select-pane -t "$SESSION:1.1" -P 'bg=colour24,fg=colour252'
+# Crew palette is Kanagawa (Hokusai's Great Wave) — David's pick, 2026-08-14.
+# Color: Kanagawa waveBlue2 "storm blue" (Exec)
+tmux select-pane -t "$SESSION:1.1" -P 'bg=#2D4F67,fg=#DCD7BA'
 tmux send-keys -t "$SESSION:1" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1" "cat docs/governance/00-product-constitution.md" C-m
@@ -20,9 +21,9 @@ tmux send-keys -t "$SESSION:1" "cat AGENT_SYNC.md" C-m
 tmux send-keys -t "$SESSION:1" 'claude --plugin-dir "/Users/davidleess/dg-cockpit/autonomy/claude/dg-engineering"' C-m
 
 # 4. Setup Pane 2: Codex (Right Top)
-# Color: Deep Purple (Strategy)
+# Color: Kanagawa winterRed "oxblood ink" (Reviewer)
 tmux split-window -h -p 50 -t "$SESSION:1" -c "$PROJECT_DIR" "/bin/bash"
-tmux select-pane -t "$SESSION:1.2" -P 'bg=colour53,fg=colour252'
+tmux select-pane -t "$SESSION:1.2" -P 'bg=#43242B,fg=#DCD7BA'
 tmux send-keys -t "$SESSION:1.2" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1.2" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1.2" "cat docs/governance/00-product-constitution.md" C-m
@@ -30,9 +31,9 @@ tmux send-keys -t "$SESSION:1.2" "cat AGENT_SYNC.md" C-m
 tmux send-keys -t "$SESSION:1.2" "codex" C-m
 
 # 5. Setup Pane 3: Antigravity PM (Right Bottom)
-# Color: Deep Forest Green (PM/Governance)
+# Color: Kanagawa autumnGreen "moss", sumi-ink text (PM/Governance)
 tmux split-window -v -p 50 -t "$SESSION:1.2" -c "$PROJECT_DIR" "/bin/bash"
-tmux select-pane -t "$SESSION:1.3" -P 'bg=colour22,fg=colour252'
+tmux select-pane -t "$SESSION:1.3" -P 'bg=#76946A,fg=#1F1F28'
 tmux send-keys -t "$SESSION:1.3" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1.3" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1.3" "cat docs/governance/00-product-constitution.md" C-m
