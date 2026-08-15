@@ -12,7 +12,7 @@ tmux new-session -d -s "$SESSION" -c "$PROJECT_DIR" "/bin/bash"
 
 # 3. Setup Pane 1: Claude Code (Left)
 # Color: Deep Midnight Blue (Exec)
-tmux select-pane -t "$SESSION:1.1" -P 'bg=colour17,fg=colour252'
+tmux select-pane -t "$SESSION:1.1" -P 'bg=colour24,fg=colour252'
 tmux send-keys -t "$SESSION:1" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1" "cat docs/governance/00-product-constitution.md" C-m
