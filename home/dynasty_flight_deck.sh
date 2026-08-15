@@ -12,7 +12,7 @@ tmux new-session -d -s "$SESSION" -c "$PROJECT_DIR" "/bin/bash"
 
 # 3. Setup Pane 1: Claude Code (Left)
 # Color: Deep Midnight Blue (Exec)
-tmux select-pane -t "$SESSION:1.1" -P 'bg=colour232,fg=colour252'
+tmux select-pane -t "$SESSION:1.1" -P 'bg=colour17,fg=colour252'
 tmux send-keys -t "$SESSION:1" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1" "cat docs/governance/00-product-constitution.md" C-m
@@ -22,7 +22,7 @@ tmux send-keys -t "$SESSION:1" 'claude --plugin-dir "/Users/davidleess/dg-cockpi
 # 4. Setup Pane 2: Codex (Right Top)
 # Color: Deep Purple (Strategy)
 tmux split-window -h -p 50 -t "$SESSION:1" -c "$PROJECT_DIR" "/bin/bash"
-tmux select-pane -t "$SESSION:1.2" -P 'bg=colour234,fg=colour252'
+tmux select-pane -t "$SESSION:1.2" -P 'bg=colour53,fg=colour252'
 tmux send-keys -t "$SESSION:1.2" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1.2" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1.2" "cat docs/governance/00-product-constitution.md" C-m
@@ -32,7 +32,7 @@ tmux send-keys -t "$SESSION:1.2" "codex" C-m
 # 5. Setup Pane 3: Antigravity PM (Right Bottom)
 # Color: Deep Forest Green (PM/Governance)
 tmux split-window -v -p 50 -t "$SESSION:1.2" -c "$PROJECT_DIR" "/bin/bash"
-tmux select-pane -t "$SESSION:1.3" -P 'bg=colour235,fg=colour252'
+tmux select-pane -t "$SESSION:1.3" -P 'bg=colour22,fg=colour252'
 tmux send-keys -t "$SESSION:1.3" "source .venv/bin/activate" C-m
 tmux send-keys -t "$SESSION:1.3" "cat '# DYNASTY GENIUS — SESSION STARTER.md'" C-m
 tmux send-keys -t "$SESSION:1.3" "cat docs/governance/00-product-constitution.md" C-m
