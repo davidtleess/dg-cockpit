@@ -14,6 +14,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
 
+import { runHandoffSweep } from "../lib/handoff.mjs";
 import { runWire } from "../lib/wire.mjs";
 
 const stateRoot = process.env.DG_AUTONOMY_HOME ?? join(homedir(), ".dg-autonomy");
@@ -23,12 +24,36 @@ function log(line) {
   process.stdout.write(`${new Date().toISOString()} ${line}\n`);
 }
 
+// Steady-state handoff outcomes that would flood the log every poll; the
+// transitions (orders, parks, rebirths, failures) are the record.
+const HANDOFF_QUIET = new Set([
+  "no-handoff-due",
+  "above-floor",
+  "arm-wait",
+  "awaiting-artifact",
+  "awaiting-handoff-done",
+  "cycle-complete",
+  "parked-held",
+]);
+
 async function onePass(statePaths) {
   const results = await runWire(statePaths);
   for (const entry of results) {
     if (entry.status !== "no-wake-due" && entry.status !== "already-woken") {
       log(`${entry.status}${entry.error ? ` (${entry.error})` : ""}${entry.key ? ` [${entry.key}]` : ""}: ${entry.statePath}`);
     }
+  }
+  // Context handoff protocol (docs/2026-08-15-context-handoff-design.md).
+  // David-gated: ~/.dg-autonomy/handoff-config.json ships disabled, so this
+  // sweep is a silent no-op until his word flips "enabled".
+  try {
+    for (const entry of await runHandoffSweep()) {
+      if (!HANDOFF_QUIET.has(entry.status)) {
+        log(`handoff ${entry.status}${entry.error ? ` (${entry.error})` : ""}${entry.lane ? ` [lane ${entry.lane}]` : ""}`);
+      }
+    }
+  } catch (error) {
+    log(`handoff sweep failed: ${error.message}`);
   }
   return results;
 }
