@@ -12,9 +12,10 @@
 
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { homedir } from "node:os";
-import { join } from "node:path";
+import { basename, join } from "node:path";
 
 import { runHandoffSweep } from "../lib/handoff.mjs";
+import { observeRecord } from "../lib/observe.mjs";
 import { runWire } from "../lib/wire.mjs";
 
 const stateRoot = process.env.DG_AUTONOMY_HOME ?? join(homedir(), ".dg-autonomy");
@@ -37,6 +38,20 @@ const HANDOFF_QUIET = new Set([
 ]);
 
 async function onePass(statePaths) {
+  // Record observation first — the record as polled, before anything else
+  // this pass does (Tower's ruling, 2026-08-15): any rewrite of run.json
+  // outside persistRun becomes a named, timestamped log event. One line per
+  // change (the first sight is the baseline); steady state stays silent.
+  for (const statePath of statePaths) {
+    try {
+      const observation = await observeRecord(statePath);
+      if (observation.status === "changed" || observation.status === "first-observed") {
+        log(`record-change [${basename(statePath)}] revision=${observation.revision ?? "none"} sha=${observation.sha}`);
+      }
+    } catch (error) {
+      log(`record-observe failed (${error.message}): ${statePath}`);
+    }
+  }
   const results = await runWire(statePaths);
   for (const entry of results) {
     if (entry.status !== "no-wake-due" && entry.status !== "already-woken") {
