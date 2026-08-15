@@ -46,8 +46,8 @@ tmux send-keys -t "$SESSION:1.3" "agy" C-m
 # Color: Deep Maroon + Amber (Outsider — visually distinct from the gray engineering panes)
 tmux new-window -t "$SESSION" -n "🎨🗼⚖ studio·tower·judge" -c "$STUDIO_DIR" "/bin/bash"
 tmux select-pane -t "$SESSION:2.1" -P 'bg=colour52,fg=colour230'
-tmux set-window-option -t "$SESSION:2" window-status-style 'fg=colour214'
-tmux set-window-option -t "$SESSION:2" window-status-current-style 'fg=colour232,bg=colour214,bold'
+tmux set-window-option -t "$SESSION:2" window-status-style 'fg=#DCA561'
+tmux set-window-option -t "$SESSION:2" window-status-current-style 'bg=#DCA561,fg=#16161D,bold'
 tmux send-keys -t "$SESSION:2.1" "claude" C-m
 
 # 7. Tower — product steward, right split beside Studio.
@@ -87,6 +87,18 @@ tmux set -p -t "$SESSION:1.3" allow-set-title off; tmux select-pane -t "$SESSION
 tmux set -p -t "$SESSION:2.1" allow-set-title off; tmux select-pane -t "$SESSION:2.1" -T "🎨 studio"
 tmux set -p -t "$SESSION:2.2" allow-set-title off; tmux select-pane -t "$SESSION:2.2" -T "🗼 tower"
 tmux set -p -t "$SESSION:2.3" allow-set-title off; tmux select-pane -t "$SESSION:2.3" -T "⚖ judge"
+
+# 8b. Status bar and borders — Kanagawa ink, matching the crew palette
+# (sumiInk0 bar, storm-blue active tab, autumnYellow keeps window 2's
+# outsider cue, crystalBlue marks the focused pane). David, 2026-08-14.
+tmux set -g status-style 'bg=#16161D,fg=#727169'
+tmux set -g status-left '#[fg=#DCD7BA,bold] dynasty #[fg=#727169]· '
+tmux set -g status-left-length 20
+tmux set -g window-status-format ' #I #W '
+tmux set -g window-status-current-format '#[bg=#2D4F67,fg=#DCD7BA,bold] #I #W #[default]'
+tmux set -g status-right '#[fg=#727169]%a %H:%M '
+tmux set -g pane-border-style 'fg=#363646'
+tmux set -g pane-active-border-style 'fg=#7E9CD8'
 
 # 9. Finalize focus on the engineering window
 tmux select-window -t "$SESSION:1"
