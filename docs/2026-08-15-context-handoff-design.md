@@ -59,8 +59,21 @@ resumes from disk. Quality stays constant because context never gets scarce.
 - Codex clear verb + paste-settle handling.
 - Threshold tuning: 30% default; judge/Tower exempt; Studio David's call.
 
-## Status
+## Status — updated 2026-08-15 (activation day)
 
-DESIGN COMMITTED, BUILD NOT STARTED. Authored by the helper session at ~10% of its own context
+BUILT (9c73fff), Tower-reviewed with four findings FIXED (817097d, REVIEW CLEAR), ACTIVATED on
+David's word ("flip it on when tower clears it") — burn-in lane 1.1 only, floor 30, provenance
+logged (config d277a473). First live cycle's receipt trail preserved for Tower's full-sequence
+audit.
+
+**STANDING ORDER — David's word, 2026-08-15: "ok add codex when the burn-in passes."**
+When Tower's burn-in audit of the first real 1.1 cycle passes, the Codex extension proceeds
+without further asking: (1) verify Codex's real clear verb and fill the per-lane `clearCommand`
+hook; (2) add the paste-settle delay to deliverToPane (Tower's live observation: Codex needed a
+second Enter); (3) teach boundary detection Codex's screen signatures. Same road: build TDD,
+Tower review, David's flip adds lane 1.2 to handoff-config.json. Gemini only on David's later
+word.
+
+Original status line, for the record: DESIGN COMMITTED, BUILD NOT STARTED. Authored by the helper session at ~10% of its own context
 — which is the pitch: by this very protocol, the right move is committing this handoff and
 letting a fresh session build it. Practice what it specifies.
