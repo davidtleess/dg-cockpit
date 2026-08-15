@@ -96,7 +96,13 @@ function defaultBanner(text, title = "Dynasty cockpit") {
   });
 }
 
-export async function runWire(statePaths, { exec, banner = defaultBanner } = {}) {
+// Banner refire law (Tower ruling): first attempt banners; while the park
+// stays undeliverable to the seat, re-banner at most every 15 minutes —
+// three banners a minute trains David to ignore the channel, banner-once
+// risks losing the moment across a daemon restart. Pane retry every poll.
+const BANNER_REFIRE_MS = 15 * 60 * 1000;
+
+export async function runWire(statePaths, { exec, banner = defaultBanner, now = () => Date.now() } = {}) {
   const results = [];
   for (const statePath of statePaths) {
     let run;
@@ -113,10 +119,16 @@ export async function runWire(statePaths, { exec, banner = defaultBanner } = {})
         results.push({ statePath, status: "already-notified", key: park.key });
         continue;
       }
-      try {
-        banner(park.banner, park.bannerTitle);
-      } catch {
-        // Banner is best-effort on top; seat delivery below is the recorded fact.
+      const lastBanner = receipt.banners?.[park.key] ? Date.parse(receipt.banners[park.key]) : 0;
+      let receiptDirty = false;
+      if (now() - lastBanner >= BANNER_REFIRE_MS) {
+        try {
+          banner(park.banner, park.bannerTitle);
+        } catch {
+          // Banner is best-effort on top; seat delivery below is the recorded fact.
+        }
+        receipt.banners = { ...(receipt.banners ?? {}), [park.key]: new Date(now()).toISOString() };
+        receiptDirty = true;
       }
       const delivery = deliverToPane({
         paneTitle: park.paneTitle,
@@ -124,13 +136,14 @@ export async function runWire(statePaths, { exec, banner = defaultBanner } = {})
         marker: park.marker,
         ...(exec ? { exec } : {}),
       });
-      // Defect B (Tower review): record ONLY on verified delivery, exactly like
-      // the wake branch — a failed park delivery must retry next poll, never be
-      // silenced forever by one bad attempt.
+      // Defect B (Tower review): record sent ONLY on verified delivery, exactly
+      // like the wake branch — a failed park delivery must retry next poll,
+      // never be silenced forever by one bad attempt.
       if (delivery.status === "delivered") {
         receipt.sent[park.key] = new Date().toISOString();
-        await writeWireReceipt(statePath, receipt);
+        receiptDirty = true;
       }
+      if (receiptDirty) await writeWireReceipt(statePath, receipt);
       results.push({ statePath, status: delivery.status === "delivered" ? "parked-notified" : "park-retry", key: park.key, seat: delivery.status });
       continue;
     }

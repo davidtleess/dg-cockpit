@@ -53,7 +53,10 @@ async function main() {
     // in the receipt for the sweep to retry — never in the lane's stop.
     if (snapshot.path && needsDocket(snapshot.run)) {
       try {
-        await deliverDocket({ statePath: snapshot.path, run: snapshot.run });
+        // execTimeout 1500: worst case ~5 tmux calls stays well inside this
+        // hook's 10s budget — "return fast and never hang" (Tower review,
+        // Finding 1). A slow delivery fails here and the sweep retries it.
+        await deliverDocket({ statePath: snapshot.path, run: snapshot.run, execTimeout: 1500 });
       } catch {
         // The receipt records the failure; the sweep is the guarantor.
       }

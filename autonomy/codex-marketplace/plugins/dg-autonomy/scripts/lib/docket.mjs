@@ -26,7 +26,10 @@ const JUDGE_TITLE = "⚖ judge";
 
 export function needsDocket(run) {
   if (!run?.terminalState) return false;
-  if (run.judgeRuling) return false; // the bench has spoken; a ruled case is settled
+  // "The bench has spoken" means a RULING exists — a placeholder judgeRuling
+  // object must not suppress a docket for an unruled case (Tower review,
+  // Finding 2: substance, not truthiness).
+  if (run.judgeRuling?.ruling) return false;
   const codes = Array.isArray(run.reasonCodes) ? run.reasonCodes : [];
   return codes.some((code) => LOOP_GATE_CODES.has(code));
 }
@@ -46,8 +49,8 @@ export function composeDocket(run, { statePath }) {
   return { marker, message };
 }
 
-function defaultExec(args) {
-  return execFileSync("tmux", args, { encoding: "utf8", timeout: 4000 });
+function defaultExec(args, timeout = 4000) {
+  return execFileSync("tmux", args, { encoding: "utf8", timeout });
 }
 
 function receiptPath(statePath) {
@@ -84,7 +87,12 @@ export function findPaneByTitle(title, exec = defaultExec) {
 // Shared verified delivery: send to a pane by title, prove arrival by marker
 // in the transcript (wrap-tolerant), refuse when a dialog would swallow the
 // paste. Used by the docket clerk and the resume wire.
-export function deliverToPane({ paneTitle, message, marker, exec = defaultExec }) {
+// execTimeout caps EACH tmux call; callers on a hard budget (the Stop hook's
+// "return fast and never hang" law) pass a small value so the ~5-call worst
+// case stays inside their deadline (Tower review, Finding 1). The sweep and
+// daemon, which have no budget, keep the default.
+export function deliverToPane({ paneTitle, message, marker, exec, execTimeout = 4000 }) {
+  if (!exec) exec = (args) => defaultExec(args, execTimeout);
   let pane;
   try {
     pane = findPaneByTitle(paneTitle, exec);
@@ -108,7 +116,8 @@ export function deliverToPane({ paneTitle, message, marker, exec = defaultExec }
   return { status: "delivered", verified: true, pane };
 }
 
-export async function deliverDocket({ statePath, run, exec = defaultExec, now = () => new Date().toISOString() }) {
+export async function deliverDocket({ statePath, run, exec, execTimeout = 4000, now = () => new Date().toISOString() }) {
+  if (!exec) exec = (args) => defaultExec(args, execTimeout);
   const { marker, message } = composeDocket(run, { statePath });
   const existing = await readReceipt(statePath);
   // A verified receipt settles only ITS OWN firing: the marker hashes the

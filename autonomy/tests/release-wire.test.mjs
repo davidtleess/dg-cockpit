@@ -134,6 +134,38 @@ test("a failed park delivery retries next poll — never silenced by one bad att
   assert.equal(retry[0].status, "parked-notified", "the retry delivers and records");
 });
 
+test("banner refires at most every 15 minutes while a park stays undeliverable", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dg-park-banner-"));
+  const statePath = join(directory, "run.json");
+  await writeFile(statePath, JSON.stringify({ terminalState: "BLOCKED", reason: "stuck", updatedAt: "x" }));
+
+  const banners = [];
+  const dead = () => "";
+  let clock = 1_000_000_000_000;
+  const opts = { exec: dead, banner: (t) => banners.push(t), now: () => clock };
+
+  await runWire([statePath], opts);
+  assert.equal(banners.length, 1, "first attempt banners");
+  clock += 60 * 1000;
+  await runWire([statePath], opts);
+  assert.equal(banners.length, 1, "one minute later: no re-banner, pane still retried");
+  clock += 15 * 60 * 1000;
+  await runWire([statePath], opts);
+  assert.equal(banners.length, 2, "past the 15-minute window: re-banner");
+});
+
+test("needsDocket requires a ruling of substance, not a truthy stub", async () => {
+  const { needsDocket } = await import("../core/lib/docket.mjs");
+  const gated = { terminalState: "BLOCKED", reasonCodes: ["PHASE_ROUND_CAP"] };
+  assert.equal(needsDocket({ ...gated, judgeRuling: {} }), true, "an empty stub is not a ruling");
+  assert.equal(needsDocket({ ...gated, judgeRuling: { ruling: "STOP" } }), false, "a real ruling settles");
+});
+
+test("the stop hook caps each tmux call at 1500ms — inside its own budget", async () => {
+  const source = await readFile(new URL("../core/scripts/stop-check.mjs", import.meta.url), "utf8");
+  assert.match(source, /execTimeout: 1500/);
+});
+
 test("the default banner's execFileSync is actually imported", async () => {
   // Tower review Defect A: the banner called execFileSync with no import; the
   // ReferenceError was swallowed and the 'guaranteed floor' never fired once.
