@@ -71,6 +71,17 @@ test("jurisdiction: loop-gate codes docket, check failures never do", () => {
   assert.equal(needsDocket({ ...GATED_RUN, terminalState: null, reasonCodes: [] }), false);
 });
 
+test("a run the judge has already ruled is settled — never re-docketed", () => {
+  // Found live 2026-08-15: receipt ADJ-4dfa2949 delivered 11 minutes AFTER
+  // ruledAt — a lane stop re-fired the hook on the ruled run and the clerk
+  // docketed a settled case back to the bench.
+  const ruled = {
+    ...GATED_RUN,
+    judgeRuling: { ruling: "STOP", ruledAt: "2026-08-15T02:50:23.167Z" },
+  };
+  assert.equal(needsDocket(ruled), false);
+});
+
 test("docket text carries the trigger and the record path, never lane content", () => {
   const docket = composeDocket(GATED_RUN, { statePath: "/state/run.json" });
   assert.match(docket.marker, /^ADJ-[0-9a-f]{8}$/);

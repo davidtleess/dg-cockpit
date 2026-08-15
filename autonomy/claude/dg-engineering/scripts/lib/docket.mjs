@@ -26,6 +26,7 @@ const JUDGE_TITLE = "⚖ judge";
 
 export function needsDocket(run) {
   if (!run?.terminalState) return false;
+  if (run.judgeRuling) return false; // the bench has spoken; a ruled case is settled
   const codes = Array.isArray(run.reasonCodes) ? run.reasonCodes : [];
   return codes.some((code) => LOOP_GATE_CODES.has(code));
 }
