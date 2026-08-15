@@ -12,6 +12,7 @@
 import { loadContract } from "../lib/policy.mjs";
 import { loopVerdict } from "../lib/loop-control.mjs";
 import { readRunSnapshotSync } from "../lib/run-state.mjs";
+import { deliverDocket, needsDocket } from "../lib/docket.mjs";
 
 async function readStandardInput() {
   const chunks = [];
@@ -45,7 +46,23 @@ async function main() {
   const verdict = loopVerdict(snapshot.run, contract);
   if (snapshot.run.terminalState || verdict.status === "ADJUDICATION_REQUIRED") {
     const codes = verdict.reasons.length > 0 ? verdict.reasons.join(", ") : snapshot.run.reason ?? "terminal";
-    emit({ systemMessage: `Dynasty loop control: ADJUDICATION REQUIRED — routes to the judge; David remains above (${codes}). The loop stops here for David's decision.` });
+    // The docket clerk: a fired loop gate is carried to the judge pane by the
+    // machinery itself (David's word 2026-08-14 — no human, Tower included,
+    // may be a single point of failure on the courthouse door). Best-effort
+    // only: this hook must return fast and never hang, so any failure lands
+    // in the receipt for the sweep to retry — never in the lane's stop.
+    if (snapshot.path && needsDocket(snapshot.run)) {
+      try {
+        await deliverDocket({ statePath: snapshot.path, run: snapshot.run });
+      } catch {
+        // The receipt records the failure; the sweep is the guarantor.
+      }
+    }
+    if (needsDocket(snapshot.run)) {
+      emit({ systemMessage: `Dynasty loop control: ADJUDICATION REQUIRED — docketed to the judge; David remains above (${codes}). The loop stops here for the ruling.` });
+      return;
+    }
+    emit({ systemMessage: `Dynasty loop control: run is terminal (${codes}). This is not a judge matter — it parks for David's word.` });
     return;
   }
   emit({});

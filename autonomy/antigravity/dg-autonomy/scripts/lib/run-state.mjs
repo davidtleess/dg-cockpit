@@ -90,10 +90,10 @@ export function readRunSnapshotSync({
   try {
     raw = readFileSync(path, "utf8");
   } catch {
-    return { status: "missing", run: null };
+    return { status: "missing", run: null, path };
   }
   try {
-    return { status: "ok", run: JSON.parse(raw) };
+    return { status: "ok", run: JSON.parse(raw), path };
   } catch {
     return { status: "corrupt", run: null };
   }

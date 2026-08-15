@@ -72,6 +72,7 @@ for (const definition of Object.values(hosts)) {
   const policy = await readFile(join(coreRoot, "lib", "policy.mjs"), "utf8");
   const runState = await readFile(join(coreRoot, "lib", "run-state.mjs"), "utf8");
   const loopControl = await readFile(join(coreRoot, "lib", "loop-control.mjs"), "utf8");
+  const docket = await readFile(join(coreRoot, "lib", "docket.mjs"), "utf8");
   const cli = (
     await readFile(join(coreRoot, "bin", "dg-autonomy.mjs"), "utf8")
   )
@@ -82,6 +83,7 @@ for (const definition of Object.values(hosts)) {
   expected.set(join(definition.root, "scripts", "lib", "policy.mjs"), policy);
   expected.set(join(definition.root, "scripts", "lib", "run-state.mjs"), runState);
   expected.set(join(definition.root, "scripts", "lib", "loop-control.mjs"), loopControl);
+  expected.set(join(definition.root, "scripts", "lib", "docket.mjs"), docket);
   expected.set(join(definition.root, "scripts", "dg-autonomy.mjs"), cli);
 }
 
@@ -92,7 +94,8 @@ const stopCheckSource = (
 )
   .replace('"../lib/policy.mjs"', '"./lib/policy.mjs"')
   .replace('"../lib/run-state.mjs"', '"./lib/run-state.mjs"')
-  .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"');
+  .replace('"../lib/loop-control.mjs"', '"./lib/loop-control.mjs"')
+  .replace('"../lib/docket.mjs"', '"./lib/docket.mjs"');
 expected.set(join(hosts.claude.root, "scripts", "stop-check.mjs"), stopCheckSource);
 expected.set(join(hosts.codex.root, "scripts", "stop-check.mjs"), stopCheckSource);
 
