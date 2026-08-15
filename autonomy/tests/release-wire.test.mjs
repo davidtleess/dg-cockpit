@@ -5,7 +5,7 @@ import { join } from "node:path";
 import test from "node:test";
 
 import { releaseRun } from "../core/lib/release.mjs";
-import { computeWake, runWire } from "../core/lib/wire.mjs";
+import { computePark, computeWake, runWire } from "../core/lib/wire.mjs";
 import { classifyCommand, isReadOnlyCommand } from "../core/lib/policy.mjs";
 
 // David's word 2026-08-14: the two remaining human couriers become machinery.
@@ -64,6 +64,43 @@ test("the lanes cannot reach release: hard-gate classification and terminal allo
   assert.equal(classifyCommand("node /x/scripts/dg-autonomy.mjs release --as foo"), "release");
   assert.equal(isReadOnlyCommand("dg-autonomy release --as foo"), false);
   assert.equal(classifyCommand("dg-autonomy status"), "inspect", "other verbs stay unclassified");
+});
+
+test("park-watcher: terminal runs notify David exactly once; active runs never do", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dg-park-"));
+  const statePath = join(directory, "run.json");
+  const parked = {
+    terminalState: "BLOCKED",
+    reason: "Loop control requires David's decision: PHASE_ROUND_CAP",
+    judgeRuling: { ruling: "STOP" },
+    updatedAt: "2026-08-15T04:00:00.000Z",
+  };
+  await writeFile(statePath, JSON.stringify(parked));
+
+  assert.equal(computePark({ terminalState: null }, { statePath }), null, "active runs never notify");
+  const park = computePark(parked, { statePath });
+  assert.match(park.message, /PARKED FOR DAVID/);
+  assert.match(park.message, /judge ruled STOP/);
+  assert.match(park.paneTitle, /tower/);
+  assert.doesNotMatch(park.message, /release --as/, "the watcher informs; it never suggests the lift");
+
+  let sent = "";
+  const banners = [];
+  const exec = (args) => {
+    if (args[0] === "list-panes") return "%2 🗼 tower\n%1 ✳ claude\n";
+    if (args[0] === "send-keys" && args.includes("-l")) sent += args.at(-1);
+    if (args[0] === "capture-pane") return `${sent}\n❯ \n`;
+    return "";
+  };
+
+  const first = await runWire([statePath], { exec, banner: (text) => banners.push(text) });
+  assert.equal(first[0].status, "parked-notified");
+  assert.equal(banners.length, 1, "macOS banner is the guaranteed floor");
+  assert.match(sent, /PARKED FOR DAVID/);
+
+  const second = await runWire([statePath], { exec, banner: (text) => banners.push(text) });
+  assert.equal(second[0].status, "already-notified");
+  assert.equal(banners.length, 1, "one notification per park event, forever");
 });
 
 test("wire wakes exactly once on a reviewer CLEAR, and only then", async () => {

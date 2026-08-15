@@ -60,7 +60,9 @@ tmux send-keys -t "$SESSION:2.1" "claude" C-m
 # Color: Deep Navy (Control Tower)
 tmux split-window -h -p 50 -t "$SESSION:2.1" -c "$HOME" "/bin/bash"
 tmux select-pane -t "$SESSION:2.2" -P 'bg=colour17,fg=colour153'
-tmux send-keys -t "$SESSION:2.2" 'claude --agent tower --plugin-dir "/Users/davidleess/dg-cockpit/autonomy/claude/dg-tower"' C-m
+# --remote-control: the seat appears in David's Claude app after every boot —
+# decisions from the phone, factory on the Mac (design doc 2026-08-15).
+tmux send-keys -t "$SESSION:2.2" 'claude --agent tower --remote-control --plugin-dir "/Users/davidleess/dg-cockpit/autonomy/claude/dg-tower"' C-m
 
 # 7b. Judge — standing adjudication seat, below Tower (David's word, 2026-08-12).
 # Rules bindingly on loop-control gates (review caps, diminishing returns,
