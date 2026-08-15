@@ -79,10 +79,20 @@ test("park-watcher: terminal runs notify David exactly once; active runs never d
 
   assert.equal(computePark({ terminalState: null }, { statePath }), null, "active runs never notify");
   const park = computePark(parked, { statePath });
-  assert.match(park.message, /PARKED FOR DAVID/);
+  assert.equal(park.lead, "BLOCKED", "two-tier: stuck runs lead BLOCKED");
+  assert.match(park.message, /BLOCKED:/);
   assert.match(park.message, /judge ruled STOP/);
+  assert.equal(park.bannerTitle, "Dynasty BLOCKED");
   assert.match(park.paneTitle, /tower/);
   assert.doesNotMatch(park.message, /release --as/, "the watcher informs; it never suggests the lift");
+
+  const shipped = computePark(
+    { terminalState: "READY_FOR_GATE", reason: "SHIP: commit authorized", updatedAt: "x" },
+    { statePath },
+  );
+  assert.equal(shipped.lead, "READY", "two-tier: SHIPs are good-news parks, not alarms");
+  assert.match(shipped.message, /awaits your gate word/);
+  assert.equal(shipped.bannerTitle, "Dynasty READY");
 
   let sent = "";
   const banners = [];
@@ -96,11 +106,39 @@ test("park-watcher: terminal runs notify David exactly once; active runs never d
   const first = await runWire([statePath], { exec, banner: (text) => banners.push(text) });
   assert.equal(first[0].status, "parked-notified");
   assert.equal(banners.length, 1, "macOS banner is the guaranteed floor");
-  assert.match(sent, /PARKED FOR DAVID/);
+  assert.match(sent, /BLOCKED:/);
 
   const second = await runWire([statePath], { exec, banner: (text) => banners.push(text) });
   assert.equal(second[0].status, "already-notified");
   assert.equal(banners.length, 1, "one notification per park event, forever");
+});
+
+test("a failed park delivery retries next poll — never silenced by one bad attempt", async () => {
+  // Tower review Defect B: the receipt was written unconditionally, so one
+  // failed attempt silenced a David-moment forever.
+  const directory = await mkdtemp(join(tmpdir(), "dg-park-retry-"));
+  const statePath = join(directory, "run.json");
+  await writeFile(statePath, JSON.stringify({ terminalState: "BLOCKED", reason: "stuck", updatedAt: "x" }));
+
+  const dead = await runWire([statePath], { exec: () => "", banner: () => {} });
+  assert.equal(dead[0].status, "park-retry", "no pane found → not recorded as notified");
+
+  let sent = "";
+  const live = (args) => {
+    if (args[0] === "list-panes") return "%2 🗼 tower\n";
+    if (args[0] === "send-keys" && args.includes("-l")) sent += args.at(-1);
+    if (args[0] === "capture-pane") return `${sent}\n❯ \n`;
+    return "";
+  };
+  const retry = await runWire([statePath], { exec: live, banner: () => {} });
+  assert.equal(retry[0].status, "parked-notified", "the retry delivers and records");
+});
+
+test("the default banner's execFileSync is actually imported", async () => {
+  // Tower review Defect A: the banner called execFileSync with no import; the
+  // ReferenceError was swallowed and the 'guaranteed floor' never fired once.
+  const source = await readFile(new URL("../core/lib/wire.mjs", import.meta.url), "utf8");
+  assert.match(source, /import \{ execFileSync \} from "node:child_process"/);
 });
 
 test("wire wakes exactly once on a reviewer CLEAR, and only then", async () => {

@@ -13,6 +13,7 @@
 // - Delivery is proven by marker-in-transcript, same as the docket clerk.
 
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { readFile, rename, writeFile } from "node:fs/promises";
 
 import { deliverToPane } from "./docket.mjs";
@@ -71,16 +72,26 @@ export function computePark(run, { statePath }) {
     .slice(0, 8)}`;
   const reason = run.reason ?? run.terminalState;
   const ruling = run.judgeRuling?.ruling;
-  const message =
-    `${marker} — PARKED FOR DAVID: ${reason}${ruling ? ` (judge ruled ${ruling})` : ""}. ` +
-    `Record: ${statePath}. Machinery-carried notice — nothing moves until David's word.`;
-  const banner = `Dynasty parked for you: ${reason}${ruling ? ` — judge ruled ${ruling}` : ""}`;
-  return { key, marker, message, banner, paneTitle: TOWER_TITLE };
+  // Two-tier per Tower's review ruling 2026-08-15: both classes are parks whose
+  // blocker is David's word, so both notify — but lock-screen triage must be
+  // possible without opening anything. BLOCKED = stuck, his word un-sticks it.
+  // READY = good news awaiting his gate word, act at leisure.
+  const ready = run.terminalState === "READY_FOR_GATE";
+  const lead = ready ? "READY" : "BLOCKED";
+  const message = ready
+    ? `${marker} — READY: ${reason}${ruling ? ` (judge ruled ${ruling})` : ""} — awaits your gate word. Record: ${statePath}. Machinery-carried notice.`
+    : `${marker} — BLOCKED: ${reason}${ruling ? ` (judge ruled ${ruling})` : ""}. Record: ${statePath}. Machinery-carried notice — nothing moves until David's word.`;
+  const banner = ready
+    ? `${reason}${ruling ? ` — judge ruled ${ruling}` : ""} — awaits your gate word`
+    : `${reason}${ruling ? ` — judge ruled ${ruling}` : ""} — your word un-sticks it`;
+  const bannerTitle = ready ? "Dynasty READY" : "Dynasty BLOCKED";
+  return { key, marker, lead, message, banner, bannerTitle, paneTitle: TOWER_TITLE };
 }
 
-function defaultBanner(text) {
+function defaultBanner(text, title = "Dynasty cockpit") {
   const safe = text.replaceAll('"', "'");
-  execFileSync("osascript", ["-e", `display notification "${safe}" with title "Dynasty cockpit"`], {
+  const safeTitle = title.replaceAll('"', "'");
+  execFileSync("osascript", ["-e", `display notification "${safe}" with title "${safeTitle}"`], {
     timeout: 4000,
   });
 }
@@ -103,9 +114,9 @@ export async function runWire(statePaths, { exec, banner = defaultBanner } = {})
         continue;
       }
       try {
-        banner(park.banner);
+        banner(park.banner, park.bannerTitle);
       } catch {
-        // Banner is best-effort; the receipt still records only on success below.
+        // Banner is best-effort on top; seat delivery below is the recorded fact.
       }
       const delivery = deliverToPane({
         paneTitle: park.paneTitle,
@@ -113,9 +124,14 @@ export async function runWire(statePaths, { exec, banner = defaultBanner } = {})
         marker: park.marker,
         ...(exec ? { exec } : {}),
       });
-      receipt.sent[park.key] = new Date().toISOString();
-      await writeWireReceipt(statePath, receipt);
-      results.push({ statePath, status: "parked-notified", key: park.key, seat: delivery.status });
+      // Defect B (Tower review): record ONLY on verified delivery, exactly like
+      // the wake branch — a failed park delivery must retry next poll, never be
+      // silenced forever by one bad attempt.
+      if (delivery.status === "delivered") {
+        receipt.sent[park.key] = new Date().toISOString();
+        await writeWireReceipt(statePath, receipt);
+      }
+      results.push({ statePath, status: delivery.status === "delivered" ? "parked-notified" : "park-retry", key: park.key, seat: delivery.status });
       continue;
     }
     const wake = computeWake(run, { statePath });
