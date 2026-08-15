@@ -44,7 +44,7 @@ tmux send-keys -t "$SESSION:1.3" "agy" C-m
 # Deliberately NO governance reads and NOT in the project dir: Studio's
 # persona loads from ~/frontend-studio/CLAUDE.md and must stay ungoverned.
 # Color: Deep Maroon + Amber (Outsider — visually distinct from the gray engineering panes)
-tmux new-window -t "$SESSION" -n "🎨🗼⚖ studio·tower·judge" -c "$STUDIO_DIR" "/bin/bash"
+tmux new-window -t "$SESSION" -n "studio·tower·judge" -c "$STUDIO_DIR" "/bin/bash"
 tmux select-pane -t "$SESSION:2.1" -P 'bg=colour52,fg=colour230'
 tmux set-window-option -t "$SESSION:2" window-status-style 'fg=#DCA561'
 tmux set-window-option -t "$SESSION:2" window-status-current-style 'bg=#DCA561,fg=#16161D,bold'
@@ -76,7 +76,9 @@ tmux select-pane -t "$SESSION:2.1"
 # 8. Crew badges: window names and a title bar on every pane
 # Note: keep window/pane emoji to single-codepoint characters — compound
 # (ZWJ) emoji like 👨‍✈️ break tmux's status-line width math and garble the footer
-tmux rename-window -t "$SESSION:1" "👥 crew"
+# Window tabs are PLAIN TEXT: emoji in tab names shift tmux's click-zone
+# math (ambiguous-width glyphs); the pane-title badges carry the emoji.
+tmux rename-window -t "$SESSION:1" "crew"
 for w in 1 2; do
   tmux setw -t "$SESSION:$w" pane-border-status top
   tmux setw -t "$SESSION:$w" pane-border-format " #{pane_title} "
