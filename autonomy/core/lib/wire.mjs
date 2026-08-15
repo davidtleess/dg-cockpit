@@ -71,7 +71,11 @@ export function computePark(run, { statePath }) {
     .digest("hex")
     .slice(0, 8)}`;
   const reason = run.reason ?? run.terminalState;
-  const ruling = run.judgeRuling?.ruling;
+  // Cite the bench ONLY for judge-jurisdiction parks (loop-gate reasonCodes).
+  // A stale judgeRuling from an earlier adjudication must never label a later
+  // unrelated park — PARK-82b8f120 told David's phone "judge ruled STOP" about
+  // an event no judge ever saw (Tower review, 2026-08-15).
+  const ruling = run.reasonCodes?.length ? run.judgeRuling?.ruling : undefined;
   // Two-tier per Tower's review ruling 2026-08-15: both classes are parks whose
   // blocker is David's word, so both notify — but lock-screen triage must be
   // possible without opening anything. BLOCKED = stuck, his word un-sticks it.
@@ -114,12 +118,18 @@ export async function runWire(statePaths, { exec, banner = defaultBanner, now = 
     }
     const park = computePark(run, { statePath });
     if (park) {
+      // Transition-based dedupe (Tower review, third notice for one event):
+      // David is notified when a run ENTERS a terminal state — never because
+      // the record's write clock moved. lastPark survives bookkeeping writes;
+      // it resets only when the run is observed non-terminal in between.
       const receipt = await readWireReceipt(statePath);
-      if (receipt.sent[park.key]) {
+      const samePark = receipt.lastPark?.terminalState === run.terminalState;
+      if (samePark && receipt.lastPark.delivered) {
         results.push({ statePath, status: "already-notified", key: park.key });
         continue;
       }
-      const lastBanner = receipt.banners?.[park.key] ? Date.parse(receipt.banners[park.key]) : 0;
+      const next = samePark ? { ...receipt.lastPark } : { terminalState: run.terminalState };
+      const lastBanner = samePark && next.bannerAt ? Date.parse(next.bannerAt) : 0;
       let receiptDirty = false;
       if (now() - lastBanner >= BANNER_REFIRE_MS) {
         try {
@@ -127,7 +137,7 @@ export async function runWire(statePaths, { exec, banner = defaultBanner, now = 
         } catch {
           // Banner is best-effort on top; seat delivery below is the recorded fact.
         }
-        receipt.banners = { ...(receipt.banners ?? {}), [park.key]: new Date(now()).toISOString() };
+        next.bannerAt = new Date(now()).toISOString();
         receiptDirty = true;
       }
       const delivery = deliverToPane({
@@ -136,16 +146,27 @@ export async function runWire(statePaths, { exec, banner = defaultBanner, now = 
         marker: park.marker,
         ...(exec ? { exec } : {}),
       });
-      // Defect B (Tower review): record sent ONLY on verified delivery, exactly
-      // like the wake branch — a failed park delivery must retry next poll,
-      // never be silenced forever by one bad attempt.
+      // Record delivered ONLY on verified delivery — a failed park delivery
+      // retries next poll, never silenced by one bad attempt.
       if (delivery.status === "delivered") {
-        receipt.sent[park.key] = new Date().toISOString();
+        next.delivered = true;
+        next.notifiedAt = new Date(now()).toISOString();
         receiptDirty = true;
       }
-      if (receiptDirty) await writeWireReceipt(statePath, receipt);
+      if (receiptDirty) {
+        receipt.lastPark = next;
+        await writeWireReceipt(statePath, receipt);
+      }
       results.push({ statePath, status: delivery.status === "delivered" ? "parked-notified" : "park-retry", key: park.key, seat: delivery.status });
       continue;
+    }
+    // Non-terminal observation: any previous park is genuinely over; clear it
+    // so the NEXT transition into terminal notifies even if the state string
+    // repeats.
+    if ((await readWireReceipt(statePath)).lastPark) {
+      const receipt = await readWireReceipt(statePath);
+      delete receipt.lastPark;
+      await writeWireReceipt(statePath, receipt);
     }
     const wake = computeWake(run, { statePath });
     if (!wake) {

@@ -72,6 +72,7 @@ test("park-watcher: terminal runs notify David exactly once; active runs never d
   const parked = {
     terminalState: "BLOCKED",
     reason: "Loop control requires David's decision: PHASE_ROUND_CAP",
+    reasonCodes: ["PHASE_ROUND_CAP"],
     judgeRuling: { ruling: "STOP" },
     updatedAt: "2026-08-15T04:00:00.000Z",
   };
@@ -152,6 +153,52 @@ test("banner refires at most every 15 minutes while a park stays undeliverable",
   clock += 15 * 60 * 1000;
   await runWire([statePath], opts);
   assert.equal(banners.length, 2, "past the 15-minute window: re-banner");
+});
+
+test("parks notify on the transition, never on the record's write clock", async () => {
+  // Tower review: round-7 bookkeeping (updatedAt moved) re-keyed the same
+  // BLOCKED park and David got a third notice for one event.
+  const directory = await mkdtemp(join(tmpdir(), "dg-park-transition-"));
+  const statePath = join(directory, "run.json");
+  const parked = { terminalState: "BLOCKED", reason: "stuck", updatedAt: "2026-08-15T10:22:41Z" };
+  await writeFile(statePath, JSON.stringify(parked));
+
+  let sent = "";
+  const live = (args) => {
+    if (args[0] === "list-panes") return "%2 🗼 tower\n";
+    if (args[0] === "send-keys" && args.includes("-l")) sent += args.at(-1);
+    if (args[0] === "capture-pane") return `${sent}\n❯ \n`;
+    return "";
+  };
+  const banners = [];
+  const opts = { exec: live, banner: (t) => banners.push(t) };
+
+  assert.equal((await runWire([statePath], opts))[0].status, "parked-notified");
+  await writeFile(statePath, JSON.stringify({ ...parked, reason: "stuck, enriched", updatedAt: "2026-08-15T10:24:11Z" }));
+  assert.equal((await runWire([statePath], opts))[0].status, "already-notified", "a bookkeeping write is not a new park");
+  assert.equal(banners.length, 1);
+
+  await writeFile(statePath, JSON.stringify({ terminalState: null, reviewRounds: [] }));
+  await runWire([statePath], opts);
+  await writeFile(statePath, JSON.stringify({ ...parked, updatedAt: "2026-08-15T11:00:00Z" }));
+  assert.equal((await runWire([statePath], opts))[0].status, "parked-notified", "un-park then re-park notifies again");
+});
+
+test("a stale ruling never labels an out-of-jurisdiction park", async () => {
+  // Tower review PARK-82b8f120: David's phone read "judge ruled STOP" about an
+  // event no judge ever saw.
+  const stale = computePark(
+    {
+      terminalState: "BLOCKED",
+      reason: "review failed 3 times in green-review",
+      reasonCodes: [],
+      judgeRuling: { ruling: "STOP", ruledAt: "2026-08-15T02:50:23Z" },
+      updatedAt: "x",
+    },
+    { statePath: "/s/run.json" },
+  );
+  assert.doesNotMatch(stale.message, /judge ruled/);
+  assert.doesNotMatch(stale.banner, /judge ruled/);
 });
 
 test("needsDocket requires a ruling of substance, not a truthy stub", async () => {
