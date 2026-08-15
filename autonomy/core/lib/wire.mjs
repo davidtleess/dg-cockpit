@@ -16,10 +16,29 @@ import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { readFile, rename, writeFile } from "node:fs/promises";
 
-import { deliverToPane } from "./docket.mjs";
+import { deliverToPane, findPaneByTitle } from "./docket.mjs";
 
 const IMPLEMENTER_TITLE = "✳ claude";
 const TOWER_TITLE = "🗼 tower";
+
+// Which pane reviews which phase — the one obvious place to extend when a
+// phase gains a different reviewer. A phase absent here never wakes anyone.
+// Note: Tower's spec names "red-review", but the loop contract's phase is
+// spelled "red" (contract.json loopControl.phases: framing, red,
+// green-review); both spellings map so neither the spec's vocabulary nor the
+// contract's can strand a round.
+const REVIEWER_TITLES = {
+  "green-review": "⬡ codex",
+  "red-review": "⬡ codex",
+  red: "⬡ codex",
+};
+
+// Grace before a reviewer wake: the implementer's own handover usually
+// reaches the reviewer within moments of the round opening — the wake covers
+// the strand, not the normal path. Ten minutes is long past any honest
+// handover and short enough that a stranded round loses only one poll cycle
+// of consequence.
+const REVIEWER_GRACE_MS = 10 * 60 * 1000;
 
 function wireReceiptPath(statePath) {
   return `${statePath}.wire.json`;
@@ -57,6 +76,62 @@ export function computeWake(run, { statePath }) {
     `Run record: ${statePath}. The next move is the implementer's — proceed per the loop ` +
     `contract (advance, next round, or gate). Machinery-carried; no one authored this wake.`;
   return { key, marker, message, paneTitle: IMPLEMENTER_TITLE };
+}
+
+// A reviewer wake is due when the run is ACTIVE and its newest round has sat
+// open with no verdict past the grace period — the reviewer-strand observed
+// twice on 2026-08-15. Same laws as computeWake: the wire wakes, it never
+// decides; no instruction beyond proceed-per-contract.
+export function computeReviewerWake(run, { statePath }, { now = () => Date.now() } = {}) {
+  if (!run || run.terminalState) return null;
+  const rounds = Array.isArray(run.reviewRounds) ? run.reviewRounds : [];
+  const last = rounds.at(-1);
+  if (!last || last.closedAt !== null || last.reviewerVerdict != null) return null;
+  const paneTitle = REVIEWER_TITLES[last.phase];
+  if (!paneTitle) return null;
+  const opened = Date.parse(last.openedAt ?? "");
+  // No parseable openedAt means staleness is unprovable: fail closed (silent),
+  // never nag on a guess.
+  if (!Number.isFinite(opened) || now() - opened < REVIEWER_GRACE_MS) return null;
+  const key = `review:${last.phase}:${last.index}`;
+  const marker = `RVW-${createHash("sha256")
+    .update(`${statePath}\0${key}`)
+    .digest("hex")
+    .slice(0, 8)}`;
+  const message =
+    `${marker} — REVIEWER WAKE: ${last.phase} round ${last.index} is open with no reviewer ` +
+    `verdict. Run record: ${statePath}. The open round awaits your review verdict — proceed ` +
+    `per the loop contract. Machinery-carried; no one authored this wake.`;
+  return { key, marker, message, paneTitle };
+}
+
+// Never-interrupt boundary for the reviewer pane. paneBoundary (handoff.mjs)
+// is Claude-specific — its composer glyph is "❯" — so a Codex pane would
+// read "no-composer" forever. Choices here, per Tower's spec note:
+// - An open dialog refuses (a paste would be swallowed) — same law as
+//   deliverToPane.
+// - /esc to interrupt/i refuses: it is Claude's generating banner, harmless
+//   and cheap to honor for any pane that shows it.
+// - A visible composer prompt ("❯" or "›") is required: no composer means
+//   the pane is mid-render or not a TUI yet.
+// - The Codex "Worked for Ns" header was REJECTED as a busy signal: it
+//   persists in the visible transcript after a turn completes, so treating
+//   it as busy would starve the wake forever. A Codex spinner has no stable
+//   text to match; the dialog + composer checks are what is trivially and
+//   safely detectable.
+function reviewerBoundary(paneTitle, exec) {
+  let pane;
+  try {
+    pane = findPaneByTitle(paneTitle, exec);
+  } catch (error) {
+    return { state: "unreachable", error: error.message };
+  }
+  if (!pane) return { state: "missing" };
+  const tail = exec(["capture-pane", "-p", "-t", pane]) ?? "";
+  if (tail.includes("Do you want to proceed?")) return { state: "dialog", pane };
+  if (/esc to interrupt/i.test(tail)) return { state: "busy", pane };
+  if (!tail.includes("❯") && !tail.includes("›")) return { state: "no-composer", pane };
+  return { state: "idle", pane };
 }
 
 // A park is any terminal run: the machinery has stopped for David's word.
@@ -169,26 +244,57 @@ export async function runWire(statePaths, { exec, banner = defaultBanner, now = 
       await writeWireReceipt(statePath, receipt);
     }
     const wake = computeWake(run, { statePath });
-    if (!wake) {
+    if (wake) {
+      const receipt = await readWireReceipt(statePath);
+      if (receipt.sent[wake.key]) {
+        results.push({ statePath, status: "already-woken", key: wake.key });
+        continue;
+      }
+      const delivery = deliverToPane({
+        paneTitle: wake.paneTitle,
+        message: wake.message,
+        marker: wake.marker,
+        ...(exec ? { exec } : {}),
+      });
+      if (delivery.status === "delivered") {
+        receipt.sent[wake.key] = new Date().toISOString();
+        await writeWireReceipt(statePath, receipt);
+      }
+      results.push({ statePath, key: wake.key, ...delivery });
+      continue;
+    }
+    // Reviewer wake: a round stranded open past the grace period. Same
+    // receipt dedupe as the CLEAR wake; recorded ONLY on verified delivery
+    // (the park lesson — a failed delivery retries, never silences); and the
+    // never-interrupt law holds — a busy reviewer pane skips this poll and
+    // the next poll tries again.
+    const reviewerWake = computeReviewerWake(run, { statePath }, { now });
+    if (!reviewerWake) {
       results.push({ statePath, status: "no-wake-due" });
       continue;
     }
     const receipt = await readWireReceipt(statePath);
-    if (receipt.sent[wake.key]) {
-      results.push({ statePath, status: "already-woken", key: wake.key });
+    if (receipt.sent[reviewerWake.key]) {
+      results.push({ statePath, status: "already-woken", key: reviewerWake.key });
+      continue;
+    }
+    const execFn = exec ?? ((args) => execFileSync("tmux", args, { encoding: "utf8", timeout: 4000 }));
+    const boundary = reviewerBoundary(reviewerWake.paneTitle, execFn);
+    if (boundary.state !== "idle") {
+      results.push({ statePath, status: "reviewer-busy", key: reviewerWake.key, boundary: boundary.state });
       continue;
     }
     const delivery = deliverToPane({
-      paneTitle: wake.paneTitle,
-      message: wake.message,
-      marker: wake.marker,
+      paneTitle: reviewerWake.paneTitle,
+      message: reviewerWake.message,
+      marker: reviewerWake.marker,
       ...(exec ? { exec } : {}),
     });
     if (delivery.status === "delivered") {
-      receipt.sent[wake.key] = new Date().toISOString();
+      receipt.sent[reviewerWake.key] = new Date(now()).toISOString();
       await writeWireReceipt(statePath, receipt);
     }
-    results.push({ statePath, key: wake.key, ...delivery });
+    results.push({ statePath, key: reviewerWake.key, ...delivery });
   }
   return results;
 }

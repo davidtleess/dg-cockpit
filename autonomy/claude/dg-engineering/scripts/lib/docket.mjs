@@ -53,6 +53,18 @@ function defaultExec(args, timeout = 4000) {
   return execFileSync("tmux", args, { encoding: "utf8", timeout });
 }
 
+// Synchronous settle wait: deliverToPane is sync by contract (the Stop hook
+// and the wire call it without awaiting), so the paste-settle pause cannot be
+// a Promise. Atomics.wait on a throwaway buffer blocks this thread only.
+function syncSleep(ms) {
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+}
+
+// Paste-settle wait: long enough for the Codex TUI to redraw after the bare
+// C-m, short enough not to matter on the daemon's 20s poll. Only the settle
+// branch ever pays it — the normal first-C-m-submits path stays instant.
+const PASTE_SETTLE_MS = 1000;
+
 function receiptPath(statePath) {
   return `${statePath}.docket.json`;
 }
@@ -91,7 +103,7 @@ export function findPaneByTitle(title, exec = defaultExec) {
 // "return fast and never hang" law) pass a small value so the ~5-call worst
 // case stays inside their deadline (Tower review, Finding 1). The sweep and
 // daemon, which have no budget, keep the default.
-export function deliverToPane({ paneTitle, message, marker, exec, execTimeout = 4000 }) {
+export function deliverToPane({ paneTitle, message, marker, exec, execTimeout = 4000, sleep = syncSleep }) {
   if (!exec) exec = (args) => defaultExec(args, execTimeout);
   let pane;
   try {
@@ -108,6 +120,20 @@ export function deliverToPane({ paneTitle, message, marker, exec, execTimeout = 
 
   exec(["send-keys", "-t", pane, "-l", message]);
   exec(["send-keys", "-t", pane, "C-m"]);
+
+  // PASTE-SETTLE (observed live twice, 2026-08-15): the Codex TUI sometimes
+  // holds the pasted text in its composer after the first C-m — the message
+  // sits unsubmitted after the "›" prompt. If the visible screen shows the
+  // marker AFTER the last composer prompt, nudge with one bare C-m, give the
+  // TUI ~1s to redraw, then verify as usual. Panes that submit on the first
+  // C-m (including Claude's "❯" composer) never show the marker after a "›"
+  // and are untouched. Wrap-tolerant, same as the transcript check.
+  const visible = exec(["capture-pane", "-p", "-t", pane]) ?? "";
+  const composerAt = visible.lastIndexOf("›");
+  if (composerAt !== -1 && visible.slice(composerAt).replaceAll("\n", "").includes(marker)) {
+    exec(["send-keys", "-t", pane, "C-m"]);
+    sleep(PASTE_SETTLE_MS);
+  }
 
   const transcript = exec(["capture-pane", "-p", "-t", pane, "-S", "-"]) ?? "";
   if (!transcript.replaceAll("\n", "").includes(marker)) {

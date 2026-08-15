@@ -54,7 +54,11 @@ async function onePass(statePaths) {
   }
   const results = await runWire(statePaths);
   for (const entry of results) {
-    if (entry.status !== "no-wake-due" && entry.status !== "already-woken") {
+    // "reviewer-busy" is quiet: an actively reviewing pane past the grace
+    // period is steady state, and the never-interrupt skip retries every
+    // poll — logging it would print a line every 20s for the length of a
+    // review. The delivery (or failure) is the transition worth recording.
+    if (entry.status !== "no-wake-due" && entry.status !== "already-woken" && entry.status !== "reviewer-busy") {
       log(`${entry.status}${entry.error ? ` (${entry.error})` : ""}${entry.key ? ` [${entry.key}]` : ""}: ${entry.statePath}`);
     }
   }
