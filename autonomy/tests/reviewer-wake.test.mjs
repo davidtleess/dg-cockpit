@@ -228,6 +228,41 @@ test("paste-settle: a composer that holds the paste gets one bare C-m, then veri
   assert.deepEqual(slept, [1000], "the settle wait runs once, ~1s");
 });
 
+test("paste-settle: a composer still held after the settle C-m is a FAILURE, never a delivery", () => {
+  // Tower review of 3f43b62: without this guard, a double-failed submit let
+  // the full-transcript check see the composer text and record a phantom
+  // delivery on a wake the reviewer never got — the exact strand this build
+  // exists to kill. A held composer fails; failed retries next poll.
+  let composer = "";
+  let cm = 0;
+  const slept = [];
+  const exec = (args) => {
+    if (args[0] === "list-panes") return "%3 ⬡ codex\n";
+    if (args[0] === "send-keys" && args.includes("-l")) {
+      composer += args.at(-1);
+      return "";
+    }
+    if (args[0] === "send-keys" && args.at(-1) === "C-m") {
+      cm += 1; // NO C-m ever submits: the text stays in the composer
+      return "";
+    }
+    if (args[0] === "capture-pane") return `\n› ${composer}\n`;
+    return "";
+  };
+
+  const result = deliverToPane({
+    paneTitle: "⬡ codex",
+    message: "RVW-dead8901 — REVIEWER WAKE test payload",
+    marker: "RVW-dead8901",
+    exec,
+    sleep: (ms) => slept.push(ms),
+  });
+  assert.equal(result.status, "failed", "a held composer must never count as delivered");
+  assert.match(result.error, /composer held after settle/);
+  assert.equal(cm, 2, "one settle nudge only — no C-m storm into a stuck TUI");
+  assert.deepEqual(slept, [1000]);
+});
+
 test("paste-settle: a pane that submits on the first C-m is untouched", () => {
   let composer = "";
   let transcript = "";

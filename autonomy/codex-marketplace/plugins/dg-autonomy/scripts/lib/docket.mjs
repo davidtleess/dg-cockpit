@@ -133,6 +133,20 @@ export function deliverToPane({ paneTitle, message, marker, exec, execTimeout = 
   if (composerAt !== -1 && visible.slice(composerAt).replaceAll("\n", "").includes(marker)) {
     exec(["send-keys", "-t", pane, "C-m"]);
     sleep(PASTE_SETTLE_MS);
+    // A composer STILL held after the settle C-m is a failure, never a
+    // delivery (Tower review of 3f43b62): the full-transcript check below
+    // captures the visible screen too, so without this guard a double-failed
+    // submit would read its own composer text as proof and record a phantom
+    // delivery on a wake the reviewer never got. Failed → retry next poll —
+    // the wire's own law. Checked against both composer glyphs ("›"/"❯").
+    const settled = exec(["capture-pane", "-p", "-t", pane]) ?? "";
+    const settledComposerAt = Math.max(settled.lastIndexOf("›"), settled.lastIndexOf("❯"));
+    if (
+      settledComposerAt !== -1 &&
+      settled.slice(settledComposerAt).replaceAll("\n", "").includes(marker)
+    ) {
+      return { status: "failed", error: "composer held after settle; the paste never submitted" };
+    }
   }
 
   const transcript = exec(["capture-pane", "-p", "-t", pane, "-S", "-"]) ?? "";
