@@ -728,3 +728,36 @@ prior 116,684-byte 23-round execution record (`f8f7551c`, revisions through 140)
 none — name+content search of `dg-autonomy/` and `docs/agent-ledger/` finds no copy. Not asserted
 lost (git/cockpit backup may hold it; this board carries the cited summary) — but the archiving
 pattern broke on the most significant record of the project so far.
+
+---
+
+# ============ 2026-08-17 — SESSION CLOSEOUT, VERIFIED 13:14–13:17 ET ============
+
+## ✅ QB-1 PROGRAM: EXECUTED, REPRODUCED, ACCEPTED, LANDED, PUSHED
+**VERIFIED 12:53–13:00:** product repo level with origin (**0 ahead** — was ahead 101 on 08-12);
+program commits through closeout `6fbe161` ("final divergence-audit CLEAR recorded");
+`d4be95f` records "readout reproduced and accepted by David". David's landing word on the release
+ledger: *"ok lets go - land the QB-1 program"* (releases.jsonl, 12:47:05Z), run record archived
+properly to `run.land-qb1-program.json.bak`. Report on disk: `run_status: ok`,
+**`decision_supported: false` — the product's honesty gate is UNCHANGED; the app recommends
+nothing more than before.** No autonomy run in flight; no park outstanding.
+
+## ✅ CLOSEOUT DURABILITY: RESTORED — with the backup defect still open
+`backup.sh` REAL exit 1 — **same cockpit.test.mjs `$HOME`-vs-literal assertion as 08-10, still
+unfixed** (aborts before commit/push; not Tower's file). Coverage verified independently:
+board / memory / Studio STATUS staged copies **byte-identical** to live (`cmp`). Tower completed
+commit+push manually: **`526cb03` confirmed on remote**, branch level. Last prior off-machine
+copy was `c941549` 08-15 18:46 — ~2 days of Tower/Studio state had been on one machine.
+(MEMORY.md index edited after the push; rides the next backup.)
+
+## OPEN AT CLOSE — for the next session's boot
+1. **Studio quiet 4.5 days** (nothing on disk since 021, 08-12 23:32) — possible blocked-idle,
+   FLAGGED TO DAVID 12:53, his word open.
+2. **Gemini seat record** — overdue ~3.5 weeks; raised 08-13, unanswered; parked, not re-raised.
+3. **Studio fresh-eyes review** ~09-01, ~2 weeks out.
+4. **backup.sh verifier defect** — one line, known since 08-10, owner unassigned; Tower's manual
+   commit+push is the working mitigation, not the fix.
+5. **f8f7551c overwrite** custodial finding (above) — owner unassigned.
+6. **H2-into-product**: David accepted the readout, but what his ruling means for surfaces
+   (`decision_supported`, the diagnostic gate) is NOT yet expressed anywhere in the app — any
+   change there is a future PROPOSED PRODUCT CHANGE, David-gated.
