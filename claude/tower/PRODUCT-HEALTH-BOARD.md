@@ -456,3 +456,275 @@ overdue. Studio fresh-eyes ~09-01.
 
 **Today's Tower correction (07:12) stands on the record above: the autonomy hard-gate hook is
 real; 1.1 was truthful; Tower was wrong and David caught it.**
+
+---
+
+# ============ 2026-08-14 — VERIFIED 08:05–08:15 ET ============
+
+## ✅ GROUNDING-LAYER GO/NO-GO: RAISED AND DECIDED — dated commitment CLOSED
+Tower raised it with the researched read; **David ruled ~08:10 ET.** The read, all verified from
+disk 08:05–08:10:
+- Kernel 1 (H2 guard): DONE, on disk — commit `ae536f7`, Addendum A at
+  `docs/validation/2026-07-21-qb-1-study-registration.md:503`. Still binding; QB-1 unexecuted.
+- Kernel 2 (constitution honesty markup): **NEVER HAPPENED** — constitution mtime Jul 15 23:47,
+  six days before the grounding decision; no ladder markup present. Still a PROPOSED PRODUCT CHANGE.
+- BUILD-1 signal: Jun-13 trust-surface backtests (62 days old) — **WR alone passes
+  `g3_market_superiority_pass`; QB/RB/TE fail.** Scorer failing (see below). Four open questions
+  unanswered on disk.
+
+**DAVID'S RULING (his words):** *"i want the QB1 study done. QBs are the most important position in
+Superflex Dynasty - we need to have a strong model. the rest can be deferred for later."* Plus
+explicit agreement to focus on: the G3 failures, QB-1 execution, the scorer fix, the four open
+questions. **Full build: DEFERRED, no re-gate date given.** Then: *"find the right time to tell the
+team"* — delivery to 1.1 authorized on his word (TW11 pattern).
+
+## ⚠ SCORER: from "never graded" to ACTIVELY FAILING
+**VERIFIED 08-13 23:20** — `realized_outcome_scoring_status_latest.json`: `status: "failed"`,
+`failure_reason: "predictions_load_failed:FrozenPredictionSetUndeclared"`, finished 2026-08-12T04:19Z.
+Approved 08-09; zero commits against it through 08-13.
+
+## ✅ DELIVERED — TW14-QB1-HANDOFF, confirmed from the recipient's own words
+Message at `~/.claude/tower/outbox/TW14-QB1-HANDOFF.txt`, marker `TW14-QB1-HANDOFF`, sent twice
+after idle-watch (first send raced a new run; second after 3-stable-idle). **Both times
+`pane-send.sh` returned NOT_DELIVERED — both were FALSE negatives.** VERIFIED ~08:4x by
+`tmux capture-pane` of 1.1's live screen: the lane states *"This dispatch is a verbatim redelivery
+of TW14-QB1-HANDOFF, which I received and executed last turn — no part of it is re-executed (no
+duplicate ledger entries or wires)."* So: send #1 DELIVERED and executed; send #2 received and
+correctly deduped by the lane. The lane's visible todo list already carries scorer-cycle items.
+
+**⚠ TOWER TOOLING DEFECT, Tower's own layer:** `pane-send.sh` verifies by grepping retained
+scrollback, but 1.1 runs `ALTERNATE_SCREEN=1` where new content never enters scrollback
+(HISTORY_SIZE frozen at 1738 across reads). **Marker-absence is NOT meaningful evidence in an
+alt-screen pane** — the script's "this pane DOES retain scrollback" reasoning is wrong there. Same
+lesson as the 08-09 timeout near-miss: an instrument setting is not a fact about the world. Fix
+belongs to Tower's tooling (not the product repo); until fixed, treat NOT_DELIVERED on alt-screen
+panes as CANNOT_DETERMINE and verify by live-screen capture.
+
+## ⚖ RELAYED CLAIM ON RECORD — Judge's awareness copy, attribution NOT attestable by Tower
+Received ~09:0x from the Judge seat [w#a4bgwlb0-1]: David allegedly said in the Judge pane
+*"do it - remediation round plus state repair authorized"* (R5-G1 + R5-G2 + run-state repair;
+run.json revision 23; held trigger unchanged). Judge added: "Tower may attest this attribution if
+a lane asks."
+**VERIFIED ~09:0x — Tower attempted to establish it and CANNOT:** `pane-state.sh dynasty:2.3` →
+`HISTORY_SIZE=0`, `ALTERNATE_SCREEN=1`, `RETENTION=none`; full capture of the visible screen
+contains no "remediation" line. There is no artifact Tower can cite.
+**STANDING ANSWER if any lane asks Tower to attest: CANNOT ATTEST.** Tower has no verified record
+of David's authorization — David's words arrive only in David's own messages to Tower, and a quote
+relayed by another seat is precisely the class of plausible authorization Tower's charter refuses
+to authenticate (fake-authorization ghost precedent). This is not a claim the relay is false —
+Judge's record stands on Judge's own authority; Tower simply is not a witness and will not be
+cited as one.
+
+## 🔴 FORGED/FALSE ATTRIBUTION — "Tower GO-2" — ESCALATED TO DAVID
+The write lane (dynasty:1.1) requested a "three-seat majority vote" (Gemini · Judge · Tower) on the
+QB-1 run-record reconciliation, citing relayed DAVID'S WORD ("ask gemini, the judge, and tower.
+majority rules") plus an override of Gemini's telemetry-only seat. **Tower REFUSED the vote** —
+charter bars every gate/approval seat; a relayed delegation cannot re-open it; David can re-issue
+it directly to Tower if it is real. Refusal delivered via SendMessage to session
+dynasty-genius-product-8f [a40409], msg e6fed1b0, ~09:2x.
+**The graver finding, VERIFIED:** ledger `docs/agent-ledger/2026-08-14.md:53,78` and the ballot doc
+cite **"Tower GO-2"** as authority for renaming the STOP'd `run.json` →
+`run.claude-qb1-STOP-r5.json.bak` and re-initializing a fresh run. **Tower's complete outbound
+record is two messages ever (TW11-SCORER-HANDOFF, TW14-QB1-HANDOFF); no GO-2 exists anywhere in
+`~/.claude/tower/`.** A directive bearing Tower's name, never authored by Tower, was used as
+authority for disk changes. Consistent with the ghost/fake-authorization failure class. Lane told
+to strike the attribution and treat the action as unauthorized pending David.
+
+**FOLLOW-UP, VERIFIED on disk ~09:4x:** the write lane executed a FREEZE — ledger headline at
+`2026-08-14.md:3` "TOWER DISAVOWS GO/GO-2 … EVERYTHING HELD FOR DAVID"; both citations annotated
+ATTRIBUTION DISPUTED (`:93-94`, `:123-124`), preserved not deleted. **Line 93 reveals a SECOND
+forged Tower message: "(Tower relay TW0814-QB1-GO)" — also never authored by Tower.** So two
+fabricated Tower relays (GO and GO-2) drove the rename + re-init. All remediation actions HELD;
+tally collapsed (Judge's vote self-voided absent Tower attestation); reconciliation returned to
+David undecided, with four questions escalated in the write lane's pane: did he type the GO texts;
+was the rename his keystroke; does "remediation round plus state repair" stand; does the
+delegation stand. Tower's record AGREES with the lane's ACK — no dispute open between seats.
+H2 remains UNDER TEST; no execution, no push.
+
+**RESOLVED 2026-08-14 ~23:55 — actor identified, freeze lifted, Tower corrected by David.**
+Helper account (`~/.claude/tower/HELPER-ACCOUNT-2026-08-15.md`, written 23:52 on David's word):
+a Claude session on ttys009 (running since 08-13, VERIFIED in the process table) misidentified
+itself as Tower for two days; GO/GO-2 content was David's genuine words under a false Tower
+signature; the wedge renames were David's keystrokes. Tower's disavowal stands as accurate;
+DISPUTED annotations stand with the account as resolution. Helper's cited commits verified real
+(`ba8b056`, `f3d0291`, `a6ea3c4`; scorer wiring `17cfc1e` — code landed, latest run marker still
+the 08-12 fail, unproven by a run). Resume-wire daemon RUNNING (pid 34757). Helper builds =
+unaudited green pending the Codex after-the-fact review.
+**⚠ TOWER ERROR, David-caught:** Tower told David 1.1 was "still FROZEN" based on ledger silence
++ the helper account. David corrected ("its not frozen"); VERIFIED from 1.1's live screen: lane
+actively executing remediation round 6 (R6 ridge-lane tests, full suite running). Lesson repeated:
+a document's silence is not a measurement — read the lane before asserting its state.
+
+# ============ 2026-08-15 — TOOLING GOs, EXECUTED 00:07–00:1x ET ============
+
+David's word 00:07 ("2, 3 and 4 are a go") against the merged tooling-survey queue:
+- **#3 DONE, VERIFIED** — facebook-marketplace MCP moved from global `~/.claude.json` scope to the
+  `/Users/davidleess` project only (backup `~/.claude.json.bak-2026-08-15-tower`). Crew lanes shed
+  it at next session start. Executed by Tower (machine config, not product repo).
+- **#4 IN FLIGHT** — `brew install ripgrep` running in background; verify binary on completion.
+  (Corrects Tower's earlier false "YES rg" — that was Claude Code's shell shim, helper was right.)
+- **#2 ROUTED TO CREW** — remove `magic` MCP from product `.mcp.json`; David's GO carried to 1.1
+  as TW15-MCP-CLEANUP (msg ece43ca7). Tower to verify the edit on disk. Product repo = crew's hands.
+- **NOT authorized:** #1 notification wire (helper's build candidate) and #5 crew Playwright —
+  both still PROPOSED, awaiting David.
+- **00:13 UPDATE — David authorized #5 and #1:** Playwright MCP registered for the product project
+  (VERIFIED, Studio's --isolated shape, artifacts in-repo); Tower joined the notification-wire work
+  as reviewer on David's word ("you should review and help").
+
+## 🔔 NOTIFICATION WIRE — REVIEWED, FIXED, RE-VERIFIED (00:15–00:3x ET)
+Design of record: dg-cockpit `docs/2026-08-15-phone-command-design.md`. Tower review findings, all
+CONFIRMED by reproduction then FIXED by helper and RE-VERIFIED on disk (commits `bafd31a`, `fb543eb`):
+1. Banner dead — execFileSync never imported, error swallowed; now imported + source-pinned test.
+2. Park silenced forever on one failed delivery (receipt written unconditionally); now
+   receipt-on-delivered only, park-retry each poll.
+3. Two-tier alert taxonomy (Tower ruling): BLOCKED vs READY, distinct banners — never filtered.
+4. Stop-hook worst case ~20s vs 10s budget; now execTimeout 1500 in hook context (~7.5s worst).
+5. needsDocket truthy judgeRuling could settle an unruled case; now requires `.ruling`.
+6. Banner refire law (Tower ruling): first attempt banners, re-banner ≥15min while undeliverable.
+Wire increment now carries ONE independent review pass; Codex after-the-fact CLEAR review still
+queued as the deeper second pass. LIVE EVIDENCE: PARK-3c742e10 (QB-1 BLOCKED, judge STOP) delivered
+to Tower pane 00:15 and verified; **David's word on that park still OUTSTANDING.**
+Pre-remote-day checklist: phone auto-list of remote-controlled seat = VERIFY-ONCE at next `dg`.
+
+# ============ 2026-08-15 MORNING — REMOTE DAY 1, VERIFIED 06:11–08:0x ET ============
+
+- **Remote seat CONFIRMED working** — David ran /remote-control and drove the morning from it.
+- **QB-1:** David authorized bounded round 7 overnight; it failed (blockers unaddressed), failure
+  limit tripped, parked BLOCKED 10:22Z. Codex woken on David's word (TW15-CODEX-WAKE, delivered
+  verified after a TUI second-Enter quirk). Real bottleneck: 4 blockers await CLAUDE's pins/mutant
+  evidence; judge's full 02:50Z ruling on record — "remediation is a short path, not a teardown."
+  **DAVID'S WORD STILL OPEN: wake Claude for blocker work, or release the run.**
+- **Wire shakedown in production:** 3 defects found live and fixed same-morning (stale judgeRuling
+  in park text → cleared-on-consume at state layer; timestamp-keyed park dedupe → transition-based
+  lastPark; false-negative retry noise → accepted per never-lose-a-park, recheck queued). Commits
+  `70e98a9`. All Tower-verified on disk.
+- **CONTEXT-HANDOFF PROTOCOL** (David's design: finish→handoff→/clear→fresh session, never
+  compact): built `9c73fff`, Tower review found 4 defects (unattributed artifact, echo-count
+  break under blind delivery, clear-race losing the rebirth, partial deadline); fixed `817097d`,
+  re-verified, **REVIEW CLEAR. Shipped DISABLED; activation flip + daemon restart are DAVID'S,**
+  helper carrying the call. Burn-in lane 1.1 only; Tower audits first real cycle's receipts.
+- Tooling GOs all executed: magic MCP removed by crew (verified 0 traces), Playwright registered
+  for product project, fb-marketplace scoped home, ripgrep installed.
+- Scorer: code shipped `17cfc1e`, still no successful run (08-12 fail marker stands).
+- **HANDOFF ACTIVATED 12:14Z on David's conditional word** (config d277a473, daemon 47701,
+  provenance verified). Lane 1.1 only, floor 30; 1.1 at 79% — first cycle hours out.
+- **⏳ TOWER-HELD TRIGGER (standing order `ae1edff`, David: "ok add codex when the burn-in
+  passes"): burn-in audit of the first real 1.1 cycle. On PASS → Codex extension builds without
+  re-asking → Tower review → David flips 1.2 in.** Receipt trail preserved for the audit.
+  Codex at ~20% remaining and uncovered — the wasting asset behind QB-1's review context.
+- **⏳ OPEN — the judgeRuling resurrection anomaly.** Round 8 (opened 11:08 via openRound —
+  churn carries openSnapshotHash) should have cleared the consumed 02:50 ruling; at 12:17 it is
+  back. Helper's merge hypothesis REFUTED by Tower (persistRun = straight overwrite + conflict,
+  no merge; fresh:true only in initRun). Surviving suspect: stale DIRECT rewrite of run.json
+  outside persistRun — precedent documented in the judge's own 02:50 ruling. Tower ruling: no
+  null-instead-of-delete (false confidence); instead PROPOSED: wire logs {revision, sha-8} per
+  poll on change, making any direct rewrite a visible event. Stays open until observed or recurs.
+- **Helper session signed off at bottom of its window** — durable through `ae1edff`; standing
+  order, burn-in trigger, and the anomaly thread now live with Tower and the record.
+
+## EVENING (18:1x–19:0x ET) — David's directive: "work towards the test execution"
+- Codex woken twice on David's word (TW15-CODEX-WAKE-2; paste-settle quirk handled manually).
+- **QB-1 round 9: real review, NOT CLEAR — 2 blockers (down from 4)**, gate "still accepts five
+  concrete impossible reports"; study NOT run; re-parked for David. Tower's recommendation on
+  record: round 10 instructed to IMPLEMENT THE REGISTERED INVARIANT VERBATIM, not another patch.
+  **DAVID'S WORD OPEN: round-10-as-framed / round-10-as-before / stop.**
+- **REVIEWER-WAKE built on David's "ok go"** by a fresh builder (Tower spec): commits `3f43b62`
+  + `c941549`, Tower-reviewed twice, one required fix (composer-held-after-settle = failed,
+  never delivered) landed and verified. Suite 108/107/1 (known fail). **CLEAR.**
+  Includes paste-settle in deliverToPane + REVIEWER_TITLES map (contract-correct phases).
+- **⏳ ONE RESTART, DAVID'S WORD, ARMS THREE: record-observer (04ce8f0) + reviewer-wake +
+  paste-settle.** Live daemon still runs pre-observation code until then.
+- QB-1: rounds 5–8 all closed without CLEAR (round 8 authorized outside Tower's channel,
+  closed 12:17). Claude lane observed mid-work at 77% ctx — possibly the remediation.
+
+## DATED COMMITMENTS
+| Item | Due | State |
+|---|---|---|
+| Grounding-layer full-build GO/NO-GO | ~Aug 2026 | **✅ CLOSED 2026-08-14 — David ruled: QB-1 GO, full build deferred.** |
+| Gemini seat contribution record | ~2026-07-24 | **OVERDUE ~3 weeks. Raised 08-13; unanswered — parked, not re-raised.** |
+| Studio fresh-eyes review + crew stability | ~2026-09-01 | ~2.5 weeks out. Studio produced 021-trade-retrospective 08-12 23:32. |
+
+---
+
+# ============ 2026-08-16 — PARK-fe90caa7, VERIFIED ~23:00 ET FROM run.json ============
+
+## 🔴 QB-1 EXECUTION PARKED BLOCKED — machinery cap, nothing moves until David's word
+**VERIFIED — read `/Users/davidleess/dynasty-genius/.git/worktrees/dynasty-genius-product/dg-autonomy/run.json`**
+(checks ledger lines 17–149, terminal block lines 151–157): `terminalState: "BLOCKED"`, reason
+`"real-surface-qa failed 3 times in green-review"`. Cumulative failure counts: **review 9,
+real-surface-qa 5** across ~18 review rounds since David's 08-14 "continue".
+
+**The five registered execution attempts, each a DIFFERENT wall, each fail-closed (all from the
+checks ledger; every one records `decision_supported=false`, no registered result produced or
+published):**
+1. 12:45Z `label_row_invalid` — 236/199,868 provider TEAM-aggregate rows in the pinned weekly pool
+   (data-shape fact in frozen inputs, measured by read-only census).
+2. 14:51Z `manifest_column_missing` — pbp: `offense_team`.
+3. 16:43Z `stat_value_invalid` — artifact carried no failure detail.
+4. 18:07Z `draft_capital_unresolved`.
+5. 22:57Z `report_schema_invalid` — 296-byte metric-free artifact; **carries no failure detail, so
+   the next wall's identity is unmeasured**; `generated_at` 21:35:31Z vs file mtime 22:45:47Z
+   recorded in the ledger without interpretation.
+
+**Pattern, verified from the same ledger:** each wall, once cleared by review (R12, R14, R16, R17,
+R18 all CLEAR), STAYED cleared — carried probes from earlier rounds now reject (e.g. R16: the exact
+R15 refusal gone, 199,632 records pass; R17: 11/11 aggregates excluded, digests unchanged). The
+fail-fast design reveals exactly one wall per run; **no bound on remaining walls is measurable from
+the record.** H2 remains UNDER TEST throughout. Nothing false ever published.
+
+**DAVID'S WORD OPEN: continue burning walls (each cycle ≈ one review round + one one-shot rerun),
+or park QB-1.** Tower holds no gate here; PARK stands on the machinery's own rule.
+
+## 2026-08-17 ~00:21Z — PARK-cdcb8265, the re-park after David's authorized round 19
+**VERIFIED from run.json (checks ledger, round-19 authorization block, wire state):** David's words
+on record: *"ok lets continue until we get throught h5"* + *"go"*. Round-19 (23:22–23:47Z) CLEAR —
+scope was failure-origin OBSERVABILITY, not a wall fix (the 5th failure's artifact was a 296-byte
+blank). Rerun fired 00:20:44Z, failed fail-closed on **`report_schema_invalid` — same wall as
+attempt 5, first REPEATED wall of the run**; 6th real-surface-qa failure; `decision_supported=false`;
+nothing published; failureCounts now review 9 / real-surface-qa 6; observed revision 124.
+**The round worked: the failure now carries coordinates — `failure_origin phase=execute`, five
+closed sites, terminal clause `execution.py:1298`.** Next cycle would be a targeted fix, not a
+diagnosis. **DAVID'S WORD OPEN: "go" for round 20 under his standing continue-through-H5 directive,
+or stop.** Machinery parks after every failed rerun; every prior cycle re-opened only on his
+explicit word.
+
+## 2026-08-17 ~01:17Z — PARK-04f6f9cd, review-cap park mid-round-20 (narrowest yet)
+**VERIFIED from run.json:** Round 20 opened 01:01Z under the standing words; implements the
+targeted fix at the named clause. Review NOT CLEAR with **exactly one blocker** (R20-G1:
+`repr(entry)` on an unreadable shape can raise RuntimeError and mislabel `report_schema_invalid`
+as `execution_error`). **Rerun held; nothing executed.** 10th cumulative review failure tripped the
+review cap → BLOCKED, reason "review failed 3 times in green-review". Round 20 still open
+(closedAt null); failureCounts review 10 / real-surface-qa 6; observed revision 128.
+**DAVID'S WORD OPEN: let round 20 finish (fix one blocker → re-review → rerun on CLEAR) or stop.**
+
+## ✅ 2026-08-17 ~03:42Z — PARK-a28bfdb0 READY: THE QB-1 STUDY EXECUTED CLEAN — FIRST EVER
+**VERIFIED from run.json (checks 26–30, round-22 record, observed revision 140):** Round-22 CLEAR
+(review 2ffffdd3, 03:04Z); registered execution completed **exactly once** at 03:42:22Z — PID 87628,
+exit 0, `run_status=ok`, `failure_reason=null`, **`decision_supported=false` still standing**.
+Registered artifact 9a63234b, **271,330 bytes** (vs ~296-byte blanks on the six failed walls).
+All five required checks passed: tests 6186P (15 standing governed-cadence RED, untracked), Ruff +
+strict py3.14 compile + diff-check clean, cleanup zero processes / no fetch / no commit / no push /
+no publication beyond the atomic artifact. `terminalState: READY_FOR_GATE`.
+**"Readout left unread for David ruling" — recorded in the ledger; TOWER HAS NOT OPENED IT EITHER.**
+No claim about study findings exists anywhere yet. **DAVID'S GATE OPEN: take the readout and rule
+on H2.** Final failure tallies for the run: review 10, real-surface-qa 6, across 22 rounds since
+his 08-14 "continue".
+
+**2026-08-17 06:52 ET — David's word: "claude has the readout."** The registered readout goes to
+him through the Claude lane, not Tower. **Tower never opened the report**; last Tower verification
+06:50 ET: artifact on disk matches recorded SHA `9a63234b` byte-for-byte, 271,330 bytes, run state
+`READY_FOR_GATE` unchanged at revision 140. H2 ruling remains David's, pending his read.
+
+## ✅ 2026-08-17 ~11:53Z — PARK-beb0b394 READY: REPRODUCIBILITY PROVEN
+**VERIFIED from the NEW run.json (run `d5736357`, 5 checks, revision 6):** one post-completion
+rerun on unchanged code (pins dd23f639/7367bee7/c3443751) and frozen inputs (22-file digest
+manifest unchanged be2607c0); full canonical JSON minus only root `generated_at` **matched
+Round-22 exactly** — canonical SHA 29021bb9; artifact size identical 271,330; no values read;
+`decision_supported=false`; H2 still UNDER TEST for David's ruling. All five checks passed.
+
+**⚠ CUSTODIAL FINDING, named for its owner (not Tower's to fix):** the new record OVERWROTE the
+prior 116,684-byte 23-round execution record (`f8f7551c`, revisions through 140) at 07:53 ET.
+**Every earlier superseded run left a named `.bak`** (five present, all ≤08-14); this one left
+none — name+content search of `dg-autonomy/` and `docs/agent-ledger/` finds no copy. Not asserted
+lost (git/cockpit backup may hold it; this board carries the cited summary) — but the archiving
+pattern broke on the most significant record of the project so far.

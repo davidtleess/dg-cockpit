@@ -594,6 +594,38 @@ BOARD OPEN ON DAVID  (1) execute the CFBD refresh · (2) bless or revert the bac
          (6) wire the two new Tower scripts · (7) Studio's parked ask.
 STUDIO   Untouched all day since Tower's unauthorised crossing. Idle ~20h. David's word required.
 
+# ============ 2026-08-13 EVENING — JUDGE PERMANENT · ACTIVATION · CREW TASKED ============
+JUDGE    PERMANENT on David's word ("permanently placed in the studio tower window and used going
+         forward"). Pane 2.3 live since ~mid-day (verified @judge loaded, product-repo cwd).
+         Flight deck §7b restored: after Tower's manual byte-restore tripped the installer's
+         ownership guard (BLOCKED: changed outside Dynasty ownership), Tower reconstructed the
+         Aug-10 file (SHA verified against the manifest 3d0e9a22…), and DAVID RAN
+         install.sh --activate himself — installer rendered the judge-wired deck through its own
+         sanctioned path. Live file now installer-owned and byte-identical to dg-cockpit HEAD.
+ACTIVATE DONE, David's word "yes activate codex and gemini". Verified at artifacts: Codex
+         dg-autonomy@dynasty-autonomy installed+enabled 0.2.0; Gemini plugin tree at
+         ~/.gemini/config/plugins/dg-autonomy; 15/15 contract tests green on both runs.
+         Loop-control enforcement now mechanical in ALL crew lanes (running Codex/Gemini panes
+         need a relaunch to pick it up; fresh dg gets everything).
+DRILL    David: "i want to see it working in action." Sandboxed run (scratchpad judge-drill,
+         DG_AUTONOMY_STATE isolated — product repo untouched): 5 green-review rounds, 1 unresolved
+         BLOCKER → verdict ADJUDICATION_REQUIRED / PHASE_ROUND_CAP / exit 2, applied. First
+         attempt taught the detector's honest design: diminishing-returns fires only on a STALLED
+         BLOCKER, not on resolved WARNs. Case handed to Judge (TW0813-JUDGE-DRILL-1, marker
+         verified in transcript, not composer); Judge bootstrapping from source at last check.
+TASKED   David departing: "get the team working on something." Tower carried it with the ONLY
+         David-approved unstarted build (approved 2026-08-09 23:10): wire the realized-outcome
+         scorer before September. Claims verified at artifacts before sending (line 391 return []
+         util-loader stub; noop in success_status, auxiliary tier). TW0813-SCORER-1 delivered to
+         1.1, marker verified; lane preflighting the sync board at last check.
+MODES    All observed panes MANUAL mode (David's setting, untouched). Reads/greps run without
+         prompts; lanes WILL stall at their first gated write/exec with nobody home. Named, not
+         fixed — mode changes are David's.
+TOWER'S ERRORS TODAY  (1) Restored the flight deck by hand where the installer owned the file —
+         correct bytes, wrong authority; cost one BLOCKED run and a rebuild of the Aug-10 state.
+         Disclosed to David in the moment. (2) First drill design assumed the diminishing-returns
+         trigger without reading it; corrected from source before reporting.
+
 # ============ 2026-08-01 12:3x — MORNING, ALL FROM SOURCE ============
 MORNING CLUSTER RAN AND PRODUCED REAL CONTENT. fc 09:03 · league 09:20 · features 09:25 (four
   minutes FASTER than yesterday, consistent with three live network calls removed) · pvo 09:30.

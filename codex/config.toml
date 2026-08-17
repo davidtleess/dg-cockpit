@@ -1,6 +1,6 @@
 model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
-approvals_reviewer = "auto_review"
+approvals_reviewer = "user"
 # Permission alerts now come from the PermissionRequest hook in hooks.json
 # (notify-only script at hooks/notify-permission.sh). The old `notify` banner
 # fired on agent-turn-complete — the wrong signal — and was removed 2026-07-16.
@@ -89,7 +89,7 @@ approval_mode = "approve"
 approval_mode = "approve"
 
 [tui]
-theme = "gruvbox-dark"
+theme = "one-half-dark"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4

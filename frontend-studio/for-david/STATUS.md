@@ -1,5 +1,27 @@
 # Studio proposals — status
 
+## ══ 2026-08-12 (SD-0812) ══ 021 "The trade ledger" — BUILT AND DELIVERED
+
+**David's explicit go ("ohh yes") on the trade retrospective pitched at session open.** Artifacts:
+`proposals/021-trade-retrospective{.md,/}`, `tools/{trade-retro-build.py,serve021.mjs,shot021.mjs}`.
+
+- **Pick resolution: SOLVED — the open thread from 2026-08-09 closes.** All four drafts complete in
+  the 2026-07-19 research capture; `slot_to_roster_id` inverts to resolve any traded pick.
+  **76/76 past picks resolved to players, zero failures.**
+- **All 39 trades predate the daily-price window** (last trade 2026-06-07, captures start
+  2026-06-24) — so no at-trade prices exist yet; stated on-surface as the accrual promise.
+- **Three defects caught by LOOKING after a clean census:** same-timestamp add/drop tie broke
+  location replay (Odunze read "now a free agent"); unpriced-only side rendered total 0
+  (absence-as-zero); a transcribed 76 in the methodology. All fixed; builder asserts zero
+  held-vs-location contradictions.
+- Census clean: 39/39 cards, 165/165 assets named, 0 errors, 0 overflow, deterministic build
+  (hash-identical twice). Served-title verified before browser open.
+- **Startup slot swap (Jul 2023, 36 picks) deliberately outside the bar system** — the refusal.
+- **021 RELAY: not authored yet** — held until David reacts. Would carry: ledger unserved by any
+  route (R3-adjacent), the surface concept, at-trade capture beginning with next trade.
+- Server left running for David's review: port 8791 (kill at closeout).
+
+
 ## ══ 2026-08-09 LATE (SD-0809L) ══ 020 "When can I believe it" — the clock the numbers never had
 
 **SHOWN AND REJECTED. Not iterated, not relayed.** Artifacts:

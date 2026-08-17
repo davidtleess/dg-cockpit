@@ -1,0 +1,14 @@
+[TW14-QB1-HANDOFF — Tower carrying David's ruling of 2026-08-14 ~08:10 ET. His words quoted; sequencing beyond this is yours and his.]
+
+DAVID'S RULING — grounding-layer GO/NO-GO (the ~Aug gate from his 2026-07-22 charter edit):
+
+1. QB-1 STUDY: EXECUTE. David's words: "i want the QB1 study done. QBs are the most important position in Superflex Dynasty - we need to have a strong model." The pre-registered study is docs/validation/2026-07-21-qb-1-study-registration.md with the pinned canonical JSON. The H2 UNDER-TEST guard (commit ae536f7, Addendum A) remains binding until the study executes and David rules on the registered result.
+
+2. GROUNDING-LAYER FULL BUILD: DEFERRED on David's word — "the rest can be deferred for later." Do not start the projection system (registry/generator/boot regeneration/point-of-use hook). No re-gate date was set.
+
+3. DAVID'S NAMED FOCUS LIST (he endorsed these explicitly):
+   - The realized-outcome scorer. Already approved 2026-08-09 23:10, still zero commits against it. It is now also actively failing, not just stub-wired: app/data/valuation_runtime/realized_outcome_scoring_status_latest.json shows status "failed", failure_reason "predictions_load_failed:FrozenPredictionSetUndeclared", finished_at 2026-08-12T04:19Z.
+   - The G3 market-superiority failures. Latest trust-surface backtests (app/data/backtest/trust_surface/latest/, dated Jun 13 — 62 days old): WR passes g3_market_superiority_pass; QB, RB, TE all fail it.
+   - The four grounding open questions need on-disk answers: where run-scripts write results; the full promotion-signal list; the category taxonomy; governance-digest alignment.
+
+Everything above is David's decision or cited from disk. Nothing else is authorized by this message.

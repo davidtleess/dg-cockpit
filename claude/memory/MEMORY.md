@@ -1,5 +1,8 @@
 # Memory Index
 
+## 🚨 READ BEFORE CLAIMING ANY SEAT
+- [**Cockpit session identity**](cockpit_session_identity.md) — loading this memory does NOT make you Tower; verify your tty against pane 2.2 first. A helper session assumed the seat 2026-08-13→15, the real Tower disavowed it, and David had to intervene twice.
+
 ## ⭐ READ FIRST — Tower's role
 - [**Tower role v2 — product steward**](tower_role_v2.md) — **David-authorized 2026-08-08. SUPERSEDES
   every earlier description of Tower.** Steward of Dynasty Genius's operational health and David's
@@ -9,6 +12,7 @@
   Two-week kill criterion from 2026-08-08.
 
 ## Project state
+- [Loop-control build](project_loop_control.md) — LIVE all lanes 2026-08-13 (judge pane permanent, Codex+Gemini activated on David's word, drill proven end-to-end); still gated: product push, D5; **gotchas: dg-cockpit backup law auto-commits worktrees; installer hash-guards the live flight deck — never hand-edit it**
 - [Dynasty Genius project state](project_dynasty_genius.md) — what's built, model performance, Sleeper IDs, next steps
 - [Frontend Studio outsider agent](project_frontend_studio.md) — Studio lane: ungoverned front-end agent in ~/frontend-studio. **Correction: David is no longer the message bus — Tower carries this lane, and it is Tower's only structural monopoly (STANDING WALL TW29-WALL-35 bars every crew lane from reading or touching it).**
 - [Grounding-layer plan](project_grounding_layer.md) — kernel now (H2 guard + constitution honesty markup); full build gated to ~Aug 2026 on BUILD-1. **DUE NOW — one of Tower's dated commitments. NO-GO is a legitimate outcome.**

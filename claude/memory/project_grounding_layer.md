@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 7ae03760-46ad-426b-ba81-8c65aadac73b
+  modified: 2026-08-14T12:10:56.866Z
 ---
 
 Origin: David's idea (night of 2026-07-21) for a "grounding layer" — a salient, always-current record of the product's load-bearing findings so agents don't cite buried/stale beliefs. Explored + adversarially pressure-tested over a long session. Draft: `scratchpad/2026-07-21-grounding-layer-DRAFT-v2.md` (ephemeral — seed content for the eventual build).
@@ -18,6 +19,18 @@ Origin: David's idea (night of 2026-07-21) for a "grounding layer" — a salient
 
 ## Why not bulletproof (and why that's fine)
 Nothing here — kernel or full build — is the safety mechanism. Real robustness lives in existing defenses (pre-registration, No-Verdict linter, Codex falsification, David gates every promotion). Grounding is a convenience/salience layer on top. A visibly-partial kernel is SAFER here than a falsely-complete full system, because false completeness makes people stop checking — against the falsification discipline the whole operation runs on.
+
+## RESOLVED — David's ruling, 2026-08-14 ~08:10 ET (closes the ~Aug GO/NO-GO gate)
+Tower raised the gate 08-14 with the researched read (kernel 1 DONE on disk `ae536f7`; kernel 2
+constitution markup NEVER happened — constitution untouched since Jul 15; BUILD-1 signal thin:
+Jun-13 trust-surface backtests show only WR passing G3 market superiority, QB/RB/TE fail; QB-1
+study unexecuted; outcome scorer failing `FrozenPredictionSetUndeclared`). **David's words:**
+*"i want the QB1 study done. QBs are the most important position in Superflex Dynasty - we need to
+have a strong model. the rest can be deferred for later."* He agreed the focus list is: the G3
+market-superiority failures (QB/RB/TE), executing QB-1, fixing the realized-outcome scorer, and
+answering the four open questions. **Full grounding build: DEFERRED (effectively NO-GO for now),
+no re-gate date set by David.** David then instructed Tower to "find the right time to tell the
+team" — delivery to crew lane 1.1 authorized on his word, same pattern as TW11-SCORER-HANDOFF.
 
 ## Anti-forget mechanism (the point of this memory)
 Two independent trackers so a single point of forgetting can't drop it: (a) **Tower** — board items 1+2, standing-agenda item 3, verify-on-disk discipline; (b) **this memory** — check at session boot/closeout. See [[cockpit_handoff]], [[project_dynasty_genius]].
