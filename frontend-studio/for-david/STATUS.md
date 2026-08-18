@@ -1,5 +1,98 @@
 # Studio proposals — status
 
+## ══ 2026-08-18 (SD-0818) ══ RELAY 024 ANSWERED — and the answer produced six live findings
+
+**The engineering team returned a technical response to 024: four confirmed, one neither confirmed
+nor refuted, every figure re-derived rather than accepted, and one question handed back to Studio.
+Answering that question is what produced 024b.** Nothing in the response was a request and no
+priority was attached to any of it.
+
+| thread | state | sits with |
+|---|---|---|
+| **024b addendum** (6 items: two surfaces disagree · do-not-use on 23/27 · inspector one-way door · capacity renders xVAR not PPG · unlabelled player card · Kraft silently capped) | **authored, every repro command executed verbatim, passes the foundation check. NOT AUTHORISED** | **David** |
+| **024 relay** | **ANSWERED.** Dispositions appended to the file, including Studio's two withdrawn claims | closed |
+| **The register** | updated with 5 corrections; new grade class `engineering-confirmed` | live |
+| **`foundation-check` upgraded** | now reports `file:line` + excerpt, per-rule `document`/`block` scope; three false-positive classes fixed, all calibrated both directions | live |
+| **021 the trade ledger** | delivered 2026-08-12, **still no reaction recorded** | **David** |
+| **017 relay R1–R5** | authored, **still not authorised** | David |
+| **023 the player card** | unchanged — ceiling is what our own lane can say; A1/A4/A5 now bear on it | Studio |
+| **Divergence framing** | **dated constraint, not permanent** — unevaluated until ~2026-12, then it becomes answerable | — |
+
+### WHAT THE RESPONSE CHANGED IN GROUND TRUTH
+
+- **R1 is a valuation ceiling, not a display convention**, and the disclosure is dark: `dvs_clamped`
+  is defined (`player_value_object.py:85`) and computed, and no served payload carries it. Verified
+  independently — the string is absent from `types.gen.ts` and from `app/api/routes/`.
+- **R3 sharpened:** DVS is PPG rescaled **and truncated**. The "no information beyond the projection"
+  claim holds only below the cap; above it, information is destroyed.
+- **R2 has a date:** `divergence_validity` is deferred pending forward-accrued point-in-time market
+  data; earliest real evaluation **~2026-12**. Nothing buildable accelerates it.
+- **R4 is a display defect, not a model defect** — `CLIFF_AGES` feeds one boolean; the models use
+  fitted continuous curves. And their caveat is accepted: attrition and production are different
+  statistics, and only attrition is well powered at RB-29 cell sizes.
+- **R5's repair is narrower than filed:** the data *class* exists for 2018-2025; the **2026 vintage**
+  does not. The parked-surface copy conflates the two.
+
+### STUDIO'S TWO METHOD ERRORS, BOTH WITHDRAWN IN THE FILE
+
+1. **"No shipped comparator mixes positions on DVS"** — checked in `frontend/src` only; the
+   comparator lives in `roster_cut_engine._tier_sort_key`. Measured afterwards: **dormant** on this
+   roster (20 of 21 candidates take the xVAR path, order monotone in raw xVAR). Right in effect,
+   wrong in method.
+2. **Cited `PRODUCT_BRIEFING.md` to the engineers as if it were their file.** It exists only here.
+
+### THE SIX FINDINGS (024b), measured 2026-08-18 against the running app
+
+- **A1 — two surfaces, two answers, 20 of 27 players.** Roster Audit: `PRE_MODEL`, no score.
+  `/api/players/{id}`: `ACTIVE_B` with a DVS and a 2-year projection. And one response contradicts
+  itself: header `RB: VALIDATED` against a row caveat *"Engine B (active player) not yet validated."*
+  **Studio did not assert which surface is right** — the audit's gate may be a deliberate disclosure
+  rule — and reported the unexplained disagreement instead.
+- **A2 — the flagship surface disclaims itself on 23 of 27 rows** (*"do not use for dynasty
+  decisions"*), and `inputs_missing` names `ppg_t`, `games_t`, `snap_share` — exactly what the
+  unserved 843 MB store holds. This is R5's real cost.
+- **A3 — closing the player inspector hides the control that reopens it:** 19.4% visible at 1440,
+  **0% at 1920**, page not horizontally scrollable, `elementFromPoint` at its centre returns `null`.
+  The button is fine (focusable, programmatic click works) — it is drawn out of reach. Measured in
+  the DOM deliberately; a screenshot of an absent control proves nothing.
+- **A4 — Roster Capacity is served `median_projection_2y` per candidate and renders `raw_xvar`.**
+  R3's fix reduced to a render change.
+- **A5 — the player card's model lane is eight unlabelled `<span>`s inside a `<dl>` with no
+  `<dt>`/`<dd>`** (`ValuationTwoLane.tsx:48-58`); `PlayerDetail.css` injects no labels. The points
+  figure is already on the surface, unnamed and unitless.
+- **A6 — the cap fires on his own roster:** Tucker Kraft, 10.329 PPG → raw DVS 109.9 → served 100.0.
+
+### CAUGHT AGAINST STUDIO, BEFORE ANYTHING LEFT
+
+- **Two `curl` repro commands carried invented sleeper ids** (Jeanty 8138, Kraft 9493; real: 12527,
+  9484). Every command in both briefs was then executed verbatim. **A repro path is a claim and must
+  be run, not composed** — no instrument here would have caught it.
+- **A bare `ls` at the product repo root printed governance FILENAMES** (`AGENT_SYNC.md`,
+  `PRODUCT.md`, `DESIGN.md`, `CLAUDE.md`, …). **Nothing opened**; logged per the covenant, same class
+  as the 2026-08-07 and 2026-08-17 precedents. Use targeted `find`, never a root listing.
+- **A second uvicorn was started while one was already serving** and exited `EADDRINUSE`; the error
+  was read this time, the port's owner identified, and the served `<title>` verified before use —
+  the 2026-08-09 rule working as intended.
+
+### THE INSTRUMENT GOT BETTER BY BEING RUN, NOT BY BEING DESIGNED
+
+`foundation-check` was whole-file: on a 2,900-line ledger it returned a bare rule id and could not
+say whether the offending sentence was written today or in July. **A verdict with no location is not
+a diagnosis.** It now reports `file:line` plus an excerpt, and carries an explicit per-rule scope
+(`document` for the two rules that ask what context the READER was given, `block` for the rest, since
+those lies live inside their own sentence). Scope is declared per rule so it cannot be widened to make
+a file pass.
+**Three false-positive classes found by pointing it at real files, none by its selftest:**
+"elite" convicting David's own *"ELITE TRADESMAN at YOUR CRAFT"* (twice, in two files); rank cliffs
+on the market board (`RB2→3 −26.1%`, `QB27→28 −22.6%`) convicted as age cliffs; and `tier` matching
+inside *"two-tier"*. Fixed by proximity and by number-shape, not by loosening.
+**And the selftest caught Studio breaking it:** the first age-cliff narrowing required the word
+"age" and silently stopped convicting the known-bad specimen *"The WR cliff is 28"*. **That is the
+whole argument for calibrating both directions** — the tightening looked correct and was wrong.
+
+**Fresh-eyes covenant: INTACT** (one filename-only exposure logged above).
+**Product repo: read-only. Not one byte written.**
+
 ## ══ 2026-08-17 CLOSEOUT — OPEN THREADS ══
 
 | thread | state | sits with |
@@ -12,7 +105,7 @@
 | **017 relay R1–R5** | authored, **still not authorised** (R3 restated inside 024) | David |
 | **QB age curve** | **unmeasurable** with 8 seasons — a hole, stated in the register, not a pass | Studio |
 | **Automatic firing of foundation-check** | a PostToolUse hook would make it fire without being remembered; **not added** — it is a machine-config change with real noise risk, David's call | David |
-| **Model can't separate the elite** (Chase = Pickens = 100) | measured; blocks any top-of-board design until R1 answered | relay |
+| **Model can't separate players above the cap** (Chase = Pickens = 100) | measured; blocks any top-of-board design until R1 answered | relay |
 | Roster snapshots · league capture | **CLOSED** — league capture now runs daily at 09:20, verified this session | — |
 
 **Fresh-eyes covenant: INTACT.** Read only data stores, `frontend/src` component files, route

@@ -1,0 +1,19 @@
+Commit what you have now, before you start the scoreboard.
+
+Uncommitted right now: the resolver fix (scripts/run_realized_outcome_scoring.py), the
+rehearsal harness (scripts/run_scorer_rehearsal.py) with both guards, and the three
+scorecard artifacts under app/data/backtest/rehearsal/. That is today's most valuable
+work and it is sitting in a working tree on a machine that has crashed twice today.
+
+Two conditions:
+
+1. Separate the code from the record. Put the resolver fix, the harness and the guards
+   in their own commit, with the message describing what changed in the product. If
+   ledger or evidence files go in at all, they go in a second commit, not bundled into
+   the first. I do not want to read a diffstat where the code change is a rounding
+   error next to the paperwork again.
+
+2. Do not start the scoreboard until this is committed.
+
+Also delete the stale markers first — marker_real.json, marker_control_shuffled.json
+and probe_marker.json in app/data/backtest/rehearsal/. You were right to ask; go ahead.

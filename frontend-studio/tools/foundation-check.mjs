@@ -28,6 +28,10 @@ const FACTS = JSON.parse(readFileSync(join(HERE, "../craft/foundation/facts.json
 
 /* Each rule: a pattern that indicates the refuted claim, plus the correction to print.
    `near` narrows to the right context so an unrelated "26" never fires. */
+/* Does `n` appear as an age rather than as a percentage, a decimal or a board rank?
+   Excludes: "-26.1%", "QB27->28", "WR28", "26.4". Keeps: "at 26", "26-year-old", "the cliff is 28". */
+const AGEISH = (t, n) => new RegExp(`(?<![A-Za-z0-9.\\-\u2013\u2014\u2192>])${n}(?![\\d.%])`).test(t);
+
 const RULES = [
   {
     id: "yprr-180",
@@ -37,13 +41,18 @@ const RULES = [
   },
   {
     id: "rb-cliff-26",
-    test: t => /(age[- ]?cliff|cliff|declines?|falls? off)/i.test(t) && /\bRB\b|running back/i.test(t) && /\b26\b/.test(t),
+    /* The digits must read as an AGE, not as a percentage or a board rank. This convicted a block
+       about RANK cliffs ("RB2->3 -26.1%", "QB27->28 -22.6%") on 2026-08-18, where "cliff", "RB" and
+       "26" all appear and no age claim is made. Requiring the word "age" was tried first and broke
+       the known-bad specimen ("The WR cliff is 28") — the selftest caught it. So the narrowing is on
+       the NUMBER's shape instead: not glued to a letter or an arrow, not a decimal, not a percent. */
+    test: t => /(age[- ]?cliff|cliff|declines?|falls? off)/i.test(t) && /\bRB\b|running back/i.test(t) && AGEISH(t, 26),
     unless: t => /\b29\b/.test(t),
     say: "The running-back wall measures at 29, not 26 (92% decline, half the cohort gone, median incl. departed -100%). 26 is barely distinguishable from 25 or 27.",
   },
   {
     id: "wr-cliff-28",
-    test: t => /(age[- ]?cliff|cliff|declines?|falls? off)/i.test(t) && /\bWR\b|receiver/i.test(t) && /\b28\b/.test(t),
+    test: t => /(age[- ]?cliff|cliff|declines?|falls? off)/i.test(t) && /\bWR\b|receiver/i.test(t) && AGEISH(t, 28),
     unless: t => /\b27\b/.test(t),
     say: "The receiver drop measures at 27, not 28; receivers run above baseline through 26.",
   },
@@ -65,12 +74,14 @@ const RULES = [
   },
   {
     id: "divergence-as-signal",
+    scope: "document",   // evidence is document-wide: has the reader been told the gate is unevaluated ANYWHERE?
     test: t => /divergence/i.test(t) && /(signal|edge|opportunity|means|indicates)/i.test(t),
     unless: t => /unevaluated|not evaluated|observation, not a signal|divergence_validity/i.test(t),
     say: "divergence_validity is None for all four positions — the gate that would make a disagreement informative is unevaluated. Call it an observation, not a signal.",
   },
   {
     id: "dvs-as-proprietary",
+    scope: "document",   // ditto: a brief that states DVS = PPG once has given the reader the unit
     test: t => /\bDVS\b|dynasty[_ ]value[_ ]score/i.test(t),
     unless: t => /PPG|points per game|projection_2y|4\.97|6\.36|6\.89|10\.63/i.test(t),
     say: "DVS is projection_2y x a per-position constant (QB 4.975, RB 6.369, WR 6.898, TE 10.637), clipped [0,100]. Prefer speaking it as projected points per game — the hobby's unit — and never compare it across positions.",
@@ -83,14 +94,27 @@ const RULES = [
   },
   {
     id: "categorical-on-continuous",
-    test: t => /\b(bell ?cow|committee|workhorse|elite|bust)\b/i.test(t),
+    /* "elite" is ordinary English and fired on David's own words ("an elite tradesman at YOUR
+       craft") in two files on 2026-08-18. The specific football nouns carry themselves; the
+       generic one needs a football context beside it or it convicts prose about carpentry. */
+    test: t => /\b(bell ?cow|committee|workhorse|bust)\b/i.test(t) ||
+               /\belite\b[^.]{0,60}?\b(QB|RB|WR|TE|receiver|back|tight end|player|roster|asset|tier|board|rank|snap|target|route|touch)\b/i.test(t) ||
+               /\b(QB|RB|WR|TE|receiver|back|tight end|player|roster|asset|tier|board|rank|snap|target|route|touch)\b[^.]{0,60}?\belite\b/i.test(t),
     unless: t => /(clears|above|below|against|bar|line|marker|threshold|percentile)/i.test(t),
     say: "A categorical noun on a continuous quantity lies at the boundary (Jeanty, 'committee' at 19.9 touches on a 79% snap share). Position the number against a NAMED bar instead.",
   },
 ];
 
+/* Prose ABOUT the checker quotes its own known-bad specimens, and the checker then convicts the
+   sentence describing it. Added 2026-08-18 after the session write-up — which quotes "The WR cliff
+   is 28" while explaining that the selftest catches exactly that — failed the sweep. This exempts
+   meta-discussion only; it cannot silence an ordinary claim, because an ordinary claim does not
+   talk about specimens and calibration. */
+const IS_META = t => /(known-bad|specimen|selftest|calibrat|false positive|convict)/i.test(t);
+
 function check(text, label) {
   const hits = [];
+  if (IS_META(text)) return { label, hits };
   for (const r of RULES) {
     if (r.test(text) && !r.unless(text)) hits.push(r);
   }
@@ -106,15 +130,20 @@ function selftest() {
     ["model-beats-market", "Our model beats the market on these players."],
     ["dvs-as-proprietary", "His DVS is 63.3, which is strong."],
     ["categorical-on-continuous", "Jeanty is a bell cow."],
+    ["categorical-on-continuous", "He is an elite receiver."],
   ];
   const good = [
     ["yprr-180", "YPRR needs 351 routes; the 184-route figure is TPRR's."],
     ["rb-cliff-26", "The RB wall is 29; 26 is indistinguishable from 27."],
+    ["rb-cliff-26", "RB cliffs on the board: TE4->5 -26.6%, RB2->3 -26.1%, QB27->28 -22.6%."],
+    ["wr-cliff-28", "WR cliffs on the board: WR3->4 -18.0%, QB27->28 -22.6%."],
     ["wr-cliff-28", "The WR drop is 27, not 28."],
     ["model-beats-market", "Our board disagrees with the market here; neither is proven better."],
     ["model-beats-market", "The model does not out-rank the market at any position."],
     ["dvs-as-proprietary", "We project 9.2 PPG over two years (DVS 63.3)."],
     ["categorical-on-continuous", "339 touches on a 79% snap share — clears the 280-touch marker."],
+    ["categorical-on-continuous", "David asked Studio to be an elite tradesman at its craft."],
+    ["categorical-on-continuous", "DAVID.md now opens with a two-tier note. He wrote: i want u to be an ELITE TRADESMAN at YOUR CRAFT."],
   ];
   let pass = true;
   console.log("CALIBRATION — the check must convict the bad specimen AND clear the good one\n");
@@ -137,14 +166,57 @@ function selftest() {
 const args = process.argv.slice(2);
 if (!args.length || args[0] === "--selftest") process.exit(selftest());
 
+/* Judge BLOCK BY BLOCK, not whole-file, and report file:line.
+   WHY (2026-08-18): run whole-file, this tool returned a bare rule id on a 2,900-line ledger and
+   could not say whether the offending sentence was written today or in July — a verdict with no
+   location is not a diagnosis. It is also the more honest granularity: an `unless` correction
+   sitting three pages from the claim does not protect the reader who reads only the claim.
+   Blocks are blank-line separated, so a claim and the sentence that qualifies it stay together. */
+function blocksOf(text) {
+  const lines = text.split("\n");
+  const out = [];
+  let start = 0, buf = [];
+  const flush = () => { if (buf.join("").trim()) out.push({ line: start + 1, text: buf.join("\n") }); buf = []; };
+  lines.forEach((ln, i) => {
+    if (!ln.trim()) { flush(); start = i + 1; } else { if (!buf.length) start = i; buf.push(ln); }
+  });
+  flush();
+  return out;
+}
+
 let found = 0;
 for (const f of args) {
   let text;
   try { text = readFileSync(f, "utf8"); } catch { console.log(`  ${f}: unreadable, SKIPPED (not a pass)`); continue; }
-  const { hits } = check(text, f);
-  if (!hits.length) { console.log(`✓ ${f}`); continue; }
+  /* SCOPE, added 2026-08-18 after block-granularity fired 7x on one relay for one reason.
+     Two rules are about CONTEXT THE READER WAS GIVEN, not about a sentence: has this artefact
+     anywhere said what DVS is, or that the divergence gate is unevaluated? Those are judged over
+     the whole document and reported once, at the first offending block. Every other rule is a lie
+     that lives inside its own sentence, and stays block-local. Scoping is stated per rule rather
+     than chosen per run, so it cannot be widened to make a file pass. */
+  const fileHits = [];
+  const docSeen = new Set();
+  const blocks = blocksOf(text);
+  for (const b of blocks) {
+    for (const h of check(b.text, f).hits) {
+      const docScope = h.scope === "document";
+      if (docScope) {
+        if (docSeen.has(h.id)) continue;
+        if (!check(text, f).hits.some(x => x.id === h.id)) continue;  // exempted somewhere in the file
+        docSeen.add(h.id);
+      }
+      fileHits.push({ ...h, line: b.line, scopeNote: docScope ? " (document-scope: first instance shown)" : "",
+                      excerpt: b.text.replace(/\s+/g, " ").trim().slice(0, 110) });
+    }
+  }
+  if (!fileHits.length) { console.log(`✓ ${f}`); continue; }
   console.log(`\n✗ ${f}`);
-  for (const h of hits) { found++; console.log(`   [${h.id}] ${h.say}`); }
+  for (const h of fileHits) {
+    found++;
+    console.log(`   ${f}:${h.line}  [${h.id}]${h.scopeNote}`);
+    console.log(`      ${h.excerpt}…`);
+    console.log(`      → ${h.say}`);
+  }
 }
 console.log(found ? `\n${found} foundation conflict(s). Fix or state why the foundation is wrong here.`
                   : "\nNo foundation conflicts. This checks known-refuted claims only — it cannot verify a new number.");

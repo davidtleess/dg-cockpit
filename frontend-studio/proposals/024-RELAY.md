@@ -9,7 +9,7 @@ published backtest at `/api/trust-surface/{POS}`. Every claim below has a comman
 
 | ID | summary | severity |
 |---|---|---|
-| R1 | DVS clipped at 100 erases separation among elite assets | high |
+| R1 | DVS clipped at 100 erases separation above the cap | high |
 | R2 | divergence_validity unevaluated while UI ships divergence everywhere | high |
 | R3 | DVS is projection_2y rescaled; publish the PPG instead | high |
 | R4 | Age-cliff constants measure late for RB, early for WR | medium |
@@ -178,3 +178,79 @@ restated here because the briefing's hard-constraint text is now materially stal
 
 *Studio measures against the running app and never writes to this repository. Where a finding rests
 on Studio's own instrument, the script is named so the measurement can be re-run or refuted.*
+
+---
+
+# DISPOSITIONS — engineering response received 2026-08-18
+
+Recorded verbatim in substance, with Studio's corrections to its own two method errors. Every
+figure below was re-derived by the engineering side rather than taken from this brief.
+
+| ID | verdict | what changed |
+|---|---|---|
+| R1 | **CONFIRMED — and worse than filed** | It is a valuation ceiling, not a display convention. The clamp is applied to the value that ships (`pvo_assembler.py:390-407`), and the designed disclosure is dark. |
+| R2 | **CONFIRMED — deferred pending data** | Not never-computed, not withheld. Earliest real evaluation ~2026-12. Studio's nDCG figures were **not** reproduced and are neither endorsed nor disputed. |
+| R3 | **CONFIRMED exactly** | Constants reproduce to within 0.001. One refinement, one correction to Studio (below). |
+| R4 | **Neither confirmed nor refuted** | The constants drive a human-readable boolean only; the predictive models use fitted continuous curves. A mis-calibrated constant here is a **display** defect. |
+| R5 | **CONFIRMED on every reachable fact** | One Studio citation was unresolvable. The repair is narrower and more precise than filed. |
+
+## R1 — the disclosure is dark, and that is the part to act on
+
+`player_value_object.py:85` defines `dvs_clamped` ("True if raw DVS exceeded 100 before clamping")
+and the assembler computes it, but the served valuation block carries neither `dvs_clamped` nor any
+`dvs_p90_ref`. Studio verified independently: the string appears in neither
+`frontend/src/lib/api/types.gen.ts` nor `app/api/routes/`. The formula at source is
+`dvs_raw = projection_2y / ENGINE_B_P90_PPG[pos] * 100.0`, so the per-position constant is
+`100 / P90`, with `ENGINE_B_P90_PPG` = QB 20.1 / RB 15.7 / WR 14.5 / TE 9.4.
+
+Studio's RB count of 5 against engineering's 6 is not a conflict: the sixth is Jeremiyah Love, whose
+`projection_2y` is null on a non-Engine-B path. Per-position denominators differ because this brief
+counted DVS-carrying players (163 WR) and the re-derivation counted universe rows (1,790). Both are
+correct on different bases.
+
+## R3 — the refinement is accepted, and Studio's comparator check was scoped wrong
+
+**Accepted refinement.** "The same quantity at zero modelling cost" holds only in the unclamped
+region, where DVS is a strictly monotone rescaling. In the clamped region information is *destroyed*
+rather than transformed. The honest statement is: **DVS is PPG rescaled AND truncated.** The
+register now says exactly that.
+
+**Studio's error, withdrawn.** This brief claimed "no shipped sort currently mixes positions on DVS
+(checked: no comparator in `frontend/src` references it)." A comparator does exist —
+`roster_cut_engine._tier_sort_key:171-180` sorts a mixed-position roster by `(tier, score)` with
+`score = dvs` for tiers B and C. The check was scoped to the layer Studio happened to search, which
+cannot support a claim about the whole system. The claim was right in effect and wrong in method.
+
+**The open question, answered by measurement rather than argument.** On the live roster the DVS path
+is **dormant**: of 21 cut candidates, 20 carry an `xvar_pct` and take the tier-A path, and the
+shipped order is monotone in `raw_xvar` (verified across all 20). The single tier-C player,
+Tank Dell, has no score at all, so no cross-position DVS comparison occurs. The latent defect is
+real; it does not currently fire on this roster.
+
+## R4 — accepted, including the caveat that weakens Studio's own figure
+
+The distinction between attrition and production is accepted and is now in the register: "14 of 27
+gone the next season" is an attrition statistic, "−32.1 vs baseline" is a production statistic, and
+at RB-29 cell sizes only attrition is well powered. Conflating them would overstate the wall.
+
+Since the constants drive display rather than the model, the live cost is now nameable: Roster Audit
+renders an `approaching_cliff (Ny)` label on every row, computed from these constants. Rasheen Ali
+(RB, 25) currently reads **`approaching_cliff (1y)`** against an in-house measured wall at 29.
+
+## R5 — Studio's citation was unresolvable; the repair is narrower than filed
+
+`PRODUCT_BRIEFING.md` does not exist in the product repository. It exists only in Studio's own
+engagement directory, and citing it to this audience was an error — the reader could not open it. It
+is withdrawn as a citation. The product's own text is the right anchor, and engineering supplied it:
+
+> `ParkedSurfaceCard.tsx:23` — "This surface needs in-season usage signals (routes, snaps) that only
+> accrue while games are played; building it now would ship an empty surface."
+
+The precise repair: routes and snaps for **2018-2025** are on disk. What does not exist is the
+**current-season 2026 vintage**. The sentence implies the data *class* is absent when only the
+vintage is.
+
+**A live consequence of R5, measured after the response and filed as A2 in the addendum:** Roster
+Audit renders "do not use for dynasty decisions" on 23 of 27 roster rows, and its `inputs_missing`
+list names `ppg_t`, `games_t`, `snap_share`, `snap_share_t_minus_1` — the exact quantities held in
+the unserved store.

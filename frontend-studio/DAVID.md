@@ -2859,3 +2859,66 @@ it about — never the generalisation Studio wrote around it.**
   average QB3 week; an RB boom is 19.4+, the average RB6 week. **A threshold defined by a rank slot
   labels itself, survives a scoring-format change, and cannot lie the way a hard-coded number does**
   — which is the constructive answer to the categorical-noun-on-a-continuous-quantity problem.
+
+- **2026-08-18 — RELAY 024 came back: four confirmed, one neither-confirmed-nor-refuted, and TWO
+  METHOD ERRORS OF STUDIO'S OWN. The errors are the part worth keeping.**
+  **The verdicts.** R1 (DVS clipped at 100) **confirmed and worse than filed** — it is a valuation
+  ceiling, not a display convention, and the designed disclosure is dark: `dvs_clamped` is defined
+  and computed and no served payload carries it. R2 **confirmed as deferred pending data**, with a date —
+  `divergence_validity` is unevaluated (not never-computed, not withheld); the input is
+  forward-accrued point-in-time market data and the earliest real evaluation is **~2026-12**. Until
+  then a disagreement between our board and the market is an **observation, not a signal**, and that
+  is now a constraint with about four months left to run rather than a permanent one. R3 (DVS = PPG × a constant) **confirmed exactly**, with a
+  refinement that makes it sharper: the "no information beyond the projection" claim holds only in
+  the **unclamped** region; in the clamped region information is *destroyed*, not transformed, so the
+  honest sentence is **"DVS is PPG rescaled AND truncated."** R4 (age constants) **neither confirmed
+  nor refuted** — the constants feed only a human-readable boolean, so a mis-calibration is a
+  **display** defect. R5 (843 MB unserved) **confirmed on every reachable fact**.
+  **Studio's two errors, both the same shape — a claim made about the whole system from a search of
+  one layer.**
+  1. *"No shipped sort mixes positions on DVS (checked: no comparator in `frontend/src`)."* A
+     comparator does exist, in the backend, and they found it in one pass. Measured afterwards: it is
+     **dormant** on this roster (20 of 21 cut candidates take the xVAR path, order monotone in raw
+     xVAR). **Right in effect, wrong in method** — and a claim that is accidentally true is not a
+     measurement.
+  2. Cited **`PRODUCT_BRIEFING.md` §4 to an engineering audience as though it were their file.** It
+     exists only in the studio. **A citation the reader cannot open is not a citation.** The right
+     anchor was their own `ParkedSurfaceCard.tsx:23`, which they supplied.
+  **The correction that improves R5 and should be carried into design:** the parked-surface copy says
+  in-season usage signals "only accrue while games are played". Routes and snaps for **2018-2025 are
+  on disk**; what is missing is the **2026 vintage**. The sentence implies the data *class* is absent
+  when only the vintage is. **Absent-class and absent-vintage are different empty states and must
+  never be written the same way** — the same rule as *absence renders as missing, never as zero*, one
+  level up.
+  **What the response is evidence of, and it is worth saying once:** every one of the five was
+  re-derived rather than accepted, two Studio figures were declined as unreproduced rather than
+  waved through, and the one thing handed back was a question rather than a verdict. That is a
+  higher standard of reply than this lane has had, and the right response to it is to hold the same
+  bar going the other way — which is why both method errors are in the register rather than quietly
+  fixed.
+
+- **2026-08-18 — The best findings of the day came from ANSWERING THEIR QUESTION, not from designing.**
+  The pass that verified the dormant DVS comparator turned up six live defects, filed as 024b. The
+  two that matter most:
+  1. **Two shipped surfaces answer the same question differently about 20 of 27 players.** Roster
+     Audit says `PRE_MODEL` / no score; `/api/players/{id}` says `ACTIVE_B` with a real DVS and a
+     2-year projection — same day, same instance. And one response **contradicts itself**: the header
+     says `RB: VALIDATED` while a row caveat says *"Engine B (active player) not yet validated."*
+     **Studio did not assert which surface is right** — the audit's stricter gate may be a deliberate
+     disclosure rule — and reported the *unexplained disagreement* instead. That restraint is the
+     part to repeat: the defect you can prove is worth more than the cause you can guess.
+  2. **The flagship roster surface disclaims itself on 23 of 27 rows** — *"do not use for dynasty
+     decisions"* — and the inputs it names as missing (`ppg_t`, `games_t`, `snap_share`) are exactly
+     what the unserved 843 MB store holds. **R5 stops being about two parked screens.** Every
+     conversation this lane has had about grounding the model's numbers in usage terminates here.
+  **And one found by trying to open a panel:** closing the player inspector moves the control that
+  reopens it off the viewport — **19.4% visible at 1440, 0% at 1920**, page not horizontally
+  scrollable. The button is fine (focusable, programmatic click works); it is drawn where the mouse
+  cannot reach. The route to the evidence card David called *"cool"* is a one-way door for a mouse
+  user. **Measured in the DOM rather than screenshotted, deliberately — a picture of an absent
+  control proves nothing**, which is the 2026-07-24 headless-viewport lesson applied the right way
+  round for once.
+  **The self-catch worth keeping:** Studio wrote two `curl` repro commands into the brief with
+  **invented sleeper ids** (Jeanty 8138, Kraft 9493; the real ones are 12527 and 9484), then ran every
+  command in the file verbatim before it left. **A repro path is a claim and has to be executed, not
+  composed.** Nothing in any instrument would have caught it.

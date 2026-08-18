@@ -887,3 +887,413 @@ Footballguys cross-lane audit). Repo **0 ahead of origin**; 42 uncommitted worki
 4. **Gemini seat record** — overdue ~3.5 wks, raised 08-13, parked.
 5. **Studio fresh-eyes review** ~09-01 — ~2 weeks out.
 6. **backup.sh verifier defect** — cockpit.test.mjs $HOME assertion, known since 08-10, owner unassigned.
+
+## ✅ DURABILITY AT CLOSE: OFF-MACHINE, VERIFIED ON REMOTE
+`backup.sh` REAL exit 1 — **same cockpit.test.mjs `$HOME`-vs-literal assertion, unfixed since
+08-10** (aborts before commit/push; not Tower's file). Coverage verified independently by `cmp`,
+all IDENTICAL to live: board · memory index · Studio `DAVID.md` / `for-david/STATUS.md` /
+proposals 022, 023, 024 · Tower outbox TW17-STUDIO-024. Manual commit+push completed:
+**`720e66a` CONFIRMED ON REMOTE** (origin/main tip, 06:21:28 -0400), branch level.
+**TOWER INSTRUMENT NOTE:** first arrival check used `origin/HEAD`, which is not a set symbolic ref
+in this repo — it printed "NOT LEVEL" as an artifact of the wrong instrument, not a fact about the
+push. Re-run against the resolved branch (`origin/main`) confirmed arrival. Same class as the
+08-09 timeout near-miss: **an instrument setting is not a fact about the world.** Caught before it
+reached David.
+
+# ============ 2026-08-18 08:0x ET — READY-FOR-TOMORROW CHECK ============
+
+## ⏰ TODAY IS TUESDAY — THREE JOBS FIRE IN THE NEXT ~2 HOURS, TWO FOR THE FIRST TIME EVER
+**VERIFIED 08:12 — `date` = Tuesday 2026-08-18; plists read; `launchctl list` confirms all three
+loaded, `Disabled` absent:**
+| job | fires | first scheduled run? |
+|---|---|---|
+| `league-opportunity-map` | **09:35** Weekday 2 | **YES — installed 08-17, never fired on schedule** |
+| `roster-capacity-audit` | **10:00** Weekday 2 | **YES — installed 08-17, never fired on schedule** |
+| `realized-outcome-scoring` | **10:00** Weekday 2 | fires weekly; ran manually 08-17 |
+
+**Why this is THE thing that makes tomorrow's record honest:** yesterday's fix to the two orphaned
+producers was proven by a MANUAL run. Today is the first test that the *schedule* works. If a plist
+is mis-wired, the artifacts silently go stale again and the health light returns to resting amber —
+and nothing in the system would say so. **Check after 10:15 that all three WROTE, and that the
+content timestamps (`created_at` / `captured_at` / `finished_at`) advanced — not just that exit was
+0.** Scorer expected to `noop / week_not_finalized` again (correct in August); anything else is news.
+
+## LEDGER OWNERSHIP — stated so it is not blurred
+`docs/agent-ledger/2026-08-18.md` is the CREW's file in the product repo. **Tower does not write it
+and did not touch it** (Rule 4: Tower never edits the product repository). Read-only observation
+only. Tower's record of truth is THIS board, which is current and pushed (`720e66a`).
+
+## CREW CLOSEOUT DID HAPPEN — not by Tower
+**VERIFIED 08:1x from the crew ledger:** Codex logged `06:27 ET — closeout lane: terminal closeout
+flush prepared; closed — parked [w#closeout-0818]` on David's word "close out"; `HEAD == origin/main
+== 505d62f`, exact-head CI run 32096785939 completed/success, zero stashes. Tower's boundary held.
+
+## ↩ STUDIO 024: CREW RESPONSE IS BACK AND AWAITING RETURN THROUGH TOWER
+**VERIFIED 08:1x from the crew ledger [w#studio-024], 06:21 ET.** Wall held both ways (crew neither
+read nor wrote Studio's directory; re-derived every fact from the product repo). Verdicts:
+**R1 CONFIRMED + escalated** — valuation ceiling, not display convention (`pvo_assembler.py:390-407`
+clamps `projection_2y ÷ ENGINE_B_P90_PPG[pos] × 100`); census on the SERVED artifact matches Studio
+(RB 6 / WR 6 / TE 11 at 100.0; McCaffrey raw 120.1 → served 100.0). Crew's own new finding:
+`dvs_clamped` and `dvs_p90_ref` are computed but NOT serialized — the clamp is silent on the surface.
+**R2 CONFIRMED as `deferred`** — Gate-4 needs forward-accrued PIT market data (~Dec 2026); not
+withheld, not never-computed. Studio's nDCG figures NOT reproduced — flagged unverified.
+**R3 CONFIRMED exactly** — constants are `100 ÷ {20.1,15.7,14.5,9.4}` (`engine_b_contract.py:24-29`),
+matching to 4 s.f. Refinement: DVS is truncated, not merely rescaled. Caution: `roster_cut_engine
+._tier_sort_key:171-180` MAY sort mixed positions on DVS — open verification, contradicts Studio's
+"no shipped comparator" check.
+**R4 NEITHER confirmed nor refuted** — method judged careful, −17.1% control right; caveat that
+attrition and production are different claims and only attrition is well-powered. **Any threshold
+change is a CONSTITUTION AMENDMENT — David's ruling.**
+**R5 CONFIRMED** — zero routes reference those sources. Repair named: `ParkedSurfaceCard.tsx:23`
+implies the usage-signal CLASS is absent when only the CURRENT season is.
+Crew states: nothing implemented, `decision_supported=false` unchanged, recommendations are NOT
+tickets. **Tower has NOT assessed merit. Return to Studio is Tower's to carry, on David's word.**
+
+---
+
+# ============ 2026-08-18 11:2x–11:3x ET — ANTIGRAVITY CRASH, RE-ESTABLISHED FROM SOURCE ============
+
+**Trigger:** David, "antigravity crashed." Prior Tower session died with it; everything below was
+rebuilt from artifacts, not from memory.
+
+## THE CRASH ITSELF
+**VERIFIED 11:27** — `ls -lt ~/Library/Application\ Support/Antigravity\ IDE/Crashpad/pending/`:
+dump `c02bbe61…` written **Aug 18 11:17**. `ps -p 67043 -o lstart` → IDE main process (Electron)
+started **11:18:09**, i.e. relaunched one minute after the dump.
+**VERIFIED 11:27** — `tmux list-panes -a` + `ps -o lstart` on every pane pid: all six panes
+(1.1/1.2/1.3/2.1/2.2/2.3) started **11:25:02–11:25:04**. The `dynasty` session was rebuilt after the
+crash; **no lane's in-memory context survived.** Studio's Playwright MCP relaunched 11:25:38.
+**VERIFIED 11:27 — this is a pattern, not an event.** Crashpad dumps since Aug 15: 08-15 00:33 /
+06:07 / 09:39, 08-16 14:57 / 16:19, 08-17 12:04 / 13:26, 08-18 10:11 / 11:17 — nine dumps, in
+same-day pairs ~70–80 min apart. Only the 11:17 one is confirmed to have taken the main process down
+(that is the only one with a corroborating main-process restart time in hand).
+
+## WHAT THE CRASH DID NOT COST
+**VERIFIED 11:28** — `git -C ~/dg-cockpit log`: `720e66a` committed **08-18 06:21** ("Tower close —
+board through 08-18, Studio 022/023/024 + foundation, TW17-STUDIO-024 outbox"); `rev-list --count
+origin/main..HEAD` = **0** (pushed). Only `carrier.log` and `delivery.db` dirty — retired machinery.
+**VERIFIED 11:28** — Studio's world intact on disk; newest files `DAVID.md` / `for-david/STATUS.md`
+**08-17 23:54**, `proposals/024-RELAY.md` 23:47, `proposals/023-the-player-card/` 23:40. Nothing
+after the crash, nothing lost to it. (Standing exposure, unrelated: `~/frontend-studio` has **zero
+commits ever** — `git log` → "does not have any commits yet"; every path untracked. Durability rests
+entirely on backup.sh coverage.)
+
+## DATA FRESHNESS — UNAFFECTED BY THE CRASH
+**VERIFIED 11:27** — all 8 artifacts declared in `app/config/report_freshness.json` exist and were
+written **today 09:20–10:00 ET**, all before the 11:17 crash; launchd runs independently of the IDE.
+Embedded timestamps read, not mtimes: pvo_refresh 09:30 · feature_refresh 13:23Z · what_changed
+13:45Z · roster_capacity 14:00Z · league_opportunity 13:35Z · realized_outcome 14:00Z ·
+market_divergence 13:40Z · league_capture 13:20Z.
+**VERIFIED 11:27 — the 2026-08-08 "declared but never scheduled" gap is CLOSED.** `launchctl list |
+grep dynasty` now shows **10** loaded jobs including `dynasty-roster-capacity-audit` and
+`dynasty-league-opportunity-map`, and both artifacts wrote today. **Supersedes the 08-08 board entry
+naming them as unschedulable/stale — do not repeat that claim.**
+
+## ⚠ THE ONE THING THAT ACTUALLY CHANGED TODAY — NOT CRASH-RELATED
+**VERIFIED 11:29 — the realized-outcome scorer FAILED for the first time.**
+`launchctl list` → `com.davidleess.dynasty-realized-outcome-scoring` last exit status **1** (the only
+non-zero dynasty job). `app/data/valuation_runtime/realized_outcome_scoring_status_latest.json`
+(10:00 ET, 217 bytes): `"status": "failed"`, `"failure_reason":
+"predictions_load_failed:FrozenPredictionSetUndeclared"`, season 2025 week 22.
+`app/data/logs/realized_outcome_scoring.out.log` holds 6 runs: **5 × `noop —
+no_predictions_for_target`, then today's 1 × `failed`.** It ran at 10:00, ~77 min BEFORE the crash.
+**Why it matters:** this is the machine that would earn the right to remove `decision_supported:
+false`. It has moved from "nothing to grade" to "cannot load what it is meant to grade." Still no
+prediction has ever been compared to a real outcome ⇒ **still no drift signal.**
+Tower has NOT diagnosed the cause — that is crew work behind David's gate.
+
+## STILL TRUE — GREEN OVER A DEGRADED RUN
+**VERIFIED 11:28** — `app/data/features_runtime/feature_refresh_latest_report.json` (generated
+2026-08-18T13:23:38Z) reports `"status": "ok"` while its own `stream_provenance` records
+`participation: loaded_empty` (ValueError, fallback_used) and `pbp` / `player_stats` / `snap_counts`
+all `fallback_used: true` — 4 of 5 streams degraded. `player_stats` error_type is **ConnectionError**.
+Only `rosters` loaded clean (season 2026). **Unchanged since 2026-08-08. Freshness still grades
+shape, not substance.**
+Note: `/api/health` returned nothing on ports 8000/8080/5000/3000/8001 at 11:27 — **the app was not
+serving**, plausibly a casualty of the crash. Health read from config + artifacts instead.
+
+## CARRIED — AWAITING DAVID
+**Studio 024 return leg.** Board entry of 08:1x today records the crew's technical response back and
+**awaiting return through Tower on David's word**. Re-checked 11:28: no evidence any return was
+carried (Studio disk unchanged since 23:54; `carrier.log` retired/`carrier_disabled`, 0 entries for
+2026-08-18). **Still pending David's word.** Studio pane 2.1 idle, no dialog — idle because it is
+waiting, not blocked.
+
+## DATED COMMITMENTS — BOTH STILL OVERDUE AS OF THIS ENTRY
+Gemini seat contribution record (due ~07-24) · Grounding-layer full-build GO/NO-GO (due ~Aug 2026,
+raise proactively; NO-GO legitimate). Neither raised in this turn — David's crash question took the
+turn. **Raise both next turn.**
+
+## 2026-08-18 12:3x — DAVID: "is the tooling out of proportion?" — MEASURED, NOT OPINED
+**VERIFIED 12:28** — `git log --since=2026-08-12 --name-only` in the PRODUCT repo, file-touches by
+directory: **`docs/agent-ledger` 419 · `src/dynasty_genius` 9.** AGENT_SYNC.md 14, tests/contract 13.
+**VERIFIED 12:27** — 21-day commit totals: product repo **317**, `dg-cockpit` **62**. Raw counts make
+the product look busy; the last-20 product commit subjects are closeout ×6, QB-1 CI repair, lint-policy
+grandfathering of one frozen exhibit, divergence audit, loop-control/judge governance drafts.
+**Conclusion Tower gave David: the tooling did not compete with the product repo — the PROCESS MOVED
+INSIDE IT.**
+**VERIFIED 12:29** — `ls -la app/data/backtest/model_cards/`: all 8 cards last written **2026-05-30**
+= **80 days old**, unchanged across the entire machinery build-out.
+**VERIFIED 12:29** — 8 of 8 sampled served artifacts carry `decision_supported: false`.
+**VERIFIED 12:29** — 23 days to NFL Week 1 (2026-09-10).
+**The sharp finding:** the one genuine product commit in the Aug 12–18 window is 08-14
+`feat(realized-outcome): wire scorer loaders end-to-end — declared frozen set, fail-closed boundaries`.
+Today at 10:00 that exact boundary failed: `predictions_load_failed:FrozenPredictionSetUndeclared`.
+**Shipped broken 08-14, unnoticed for 4 days, while the ledger took 419 touches.**
+**Tower's stated test, offered to David:** does this change what the app tells him on a Tuesday
+morning? Backups and freshness pass (crash-proven durability; two producerless artifacts now
+scheduled). QB-1's 23 review rounds, judge seat, loop-control governance, closeout flushes — Tower
+could not name a number David would see that any of them changed.
+**Tower self-assessed against its own kill criterion, out loud to David:** 10 days in, exactly one
+decision-relevant finding (today's scorer failure). Called it thin.
+**Grounding-layer GO/NO-GO raised (due now, David's 07-22 gate):** framed as a proposal to build MORE
+machinery, with David's own question as the argument for NO-GO. **Not asked as a question — parked,
+because Studio 024's return leg is still awaiting David's word from ~11:35.**
+
+## 2026-08-18 12:4x–13:1x — DAVID'S DIRECTION ON THE NO-VERDICT LINE + SCOREBOARD ACCEPTED
+**David's words, verbatim, 12:4x:** *"I am aware that our model may not Fully tuned. or accurate?
+to the standard that we are looking for. in week one. Frankly. in year one. But I do want to see
+what the model is saying. I don't want it to be refused. I don't want it to be overly cited or
+caveated. I wanna build a product that learns how to improve its models. every single week. when new
+data. and real stats. hit the machinery."* Then: *"and yes - the realize outcome must be wired - of
+course. that's how the models get better."*
+**David's word, 13:09: "scoreboard is good - accepted."** ⇒ **THE SCOREBOARD IS AN ACCEPTED PRODUCT
+CHANGE.** (Tower proposed it 13:0x as a PROPOSED PRODUCT CHANGE: show the model's running record
+against real outcomes — last week, season-to-date, by position — instead of caveating every number.)
+**Tower has built nothing, specced nothing, and routed nothing. Reaching a lane is David's.**
+
+### What Tower established from source that made this cheap (all VERIFIED 12:5x–13:0x)
+1. **The constitution ALREADY contains the door.** `docs/governance/00-product-constitution.md:162`
+   (David-ratified 2026-06-28): *"A tool earns decision-grade status only through a pre-registered
+   validation David ratifies; until then the no-verdict line holds."* **No amendment required.**
+   `decision_supported=False` is the DEFAULT STATE, not a wall. **Supersedes Tower's own 12:3x framing
+   ("constitution amendment") — that was wrong and was corrected to David in the same session.**
+2. **Line 166 is already on David's side about caveats:** *"Surface the arithmetic honestly,
+   unclamped… Tightening, clamping, banding, or editorializing a number into a recommendation is the
+   failure mode this line prevents."* **The shipped DVS clamp at 100 (Studio 024 R1, crew-CONFIRMED)
+   is a live violation of David's own constitution.** Unbreaking it needs NO ruling from David.
+3. **Enforcement sites, VERIFIED 12:3x:** `decision_supported: False` hardcoded at
+   `universe_pvo_batch.py:88,107` and `team_posture.py:146,158,176`; never set True anywhere in
+   `src/`; `subpopulation_landscape.py:624` documents "never True anywhere";
+   `eval/qb_validation/execution.py:2389` REFUSES on True as a No-Verdict violation.
+
+### ⭐ QB-1 ACTUALLY MEASURED THE MODEL — the result had never been stated to David in plain English
+**VERIFIED 13:0x** — `app/data/backtest/qb_validation/qb_validation_report.json` (generated
+2026-08-17T11:14:54Z, run_status `ok`, decision_supported `false`), 14 registered contrasts:
+**5 supported · 3 contradicted · 2 not_separable · 4 unsupported_power.**
+- **c01 H1 (efficiency: epa/dropback, cpoe, sack_rate, any_a, comp%) vs naive → CONTRADICTED**,
+  pooled_delta **−0.2651**, adj_p 0.0104. **Efficiency alone predicts next season WORSE than "use last
+  year's PPG."**
+- c02 H2 (rushing) vs naive → contradicted (−0.1308, adj_p 0.0696). c03 H3 (volume) vs naive →
+  not_separable (+0.0334).
+- **c04 H4 (composite = H1∪H2∪H3 + age_at_season_start + draft-capital group) vs naive → SUPPORTED**,
+  +0.0979, adj_p 0.0441. **And H4 beats H1 (+0.3649), H2 (+0.2287), H3 (+0.0645), all adj_p ≤ 0.0308.**
+- c07 H3>H1 supported (+0.2984, adj_p 0.0017); c06 H2>H3 contradicted (−0.1642, adj_p 0.0104).
+- **c11–c14 (H5, market non-inferiority) ALL `unsupported_power`** — folds 2021/2022/2023 excluded as
+  `fold_starved` + `degenerate_input`, **1 evaluable fold**. **Model-vs-market is UNMEASURED, not lost.**
+**Plain reading Tower gave David: ship the composite, do not ship single-family variants, and there is
+no evidence either way yet on beating the market.**
+**Note for the seat:** QB-1's own registration (`docs/validation/2026-07-21-qb-1-study-registration.md`
+§0) states it "grants no decision-grade status" — it was deliberately scoped NOT to open line 162's
+door. The pre-registration machinery is rehearsed; it was pointed at a research question, not at the
+shipped surface.
+
+### THE SEQUENCING FACT TOWER OWES DAVID
+The scoreboard has **nothing to render** until the realized-outcome scorer works: 6 logged runs =
+5 × `noop — no_predictions_for_target` + today's 1 × `failed —
+predictions_load_failed:FrozenPredictionSetUndeclared`. **Zero predictions have ever been graded.**
+Already-computed real-outcome data that could fill it on day one: the QB-1 backtest's 14 contrasts.
+**Clock: 23 days to Week 1; the scorer grades week-by-week and unwired weeks are only ever
+reconstructable from hindsight.**
+
+### TOWER'S STANDING DUTY ON THIS
+Not to build it and not to route it. To **grade it honestly when it exists** (duty 2) and to tell
+David the truth about what it shows him (duty 3). **First real test of the kill criterion.**
+
+### STILL AWAITING DAVID (unchanged, flagged 11:35 and 12:3x)
+Studio 024 return leg (Studio idle, waiting) · grounding-layer full-build GO/NO-GO (overdue) ·
+Gemini seat contribution record (overdue since ~07-24).
+
+## 2026-08-18 13:1x — STUDIO 024 RETURN LEG CARRIED (David's word: "relay 024 back to studio")
+**Source rebuilt, not reused:** read `docs/agent-ledger/evidence/2026-08-17/studio_024_relay_technical_response_claude_v1.md`
+(101 lines) in full rather than trusting Tower's own 08:1x board summary.
+**Authored** `~/.claude/tower/outbox/STUDIO-024-RESPONSE.txt` (5,790 bytes), marker
+`024-RESPONSE-2026-08-18`. **Contamination scan run and CLEAN** — zero hits for crew names, lane,
+Tower, David, ledger, governance, constitution, ticket ids, roadmap, backlog, closeout, gate.
+Stripped deliberately: the fix-cost ranking (= our backlog), the "already on David's board / reserved
+for a PVO-scale session" prior-art note (= our roadmap + reveals David's internal board), the
+"recommended framing for David" line (= signals David's lean). **INVERSION RULE held: no roadmap, no
+task list, no mention of the scoreboard acceptance or any in-flight work crossed to Studio.**
+**Sent 13:1x via `pane-send.sh dynasty:2.1`.**
+### ⚠ DELIVERY VERDICT — HONEST, NOT ROUNDED UP
+Script returned **NOT_DELIVERED** ("marker absent after 6s; pane retains scrollback"). **The script's
+reasoning is wrong here and Tower did NOT re-send.** Measured directly: `tmux capture-pane -S -3000`
+returns **58 lines total**; the retained buffer BEGINS mid-message at R3. The marker and R1/R2
+scrolled irrecoverably out of a pane whose entire history is 58 lines — the documented
+"2.1 retains almost no scrollback" condition. Tail is intact through R5 and the closing line, and
+Studio was actively working (`529 Overloaded · Retrying attempt 3/10`), so the submission landed.
+**True verdict: DELIVERED-tail-verified, R1/R2 UNVERIFIABLE from the pane.** Re-sending would have
+duplicated a landed message. **Real confirmation will come from Studio's own reply naming R1/R2 —
+watch for it.**
+**Precedent recorded for the seat:** `pane-send.sh` marker verification is UNSOUND on dynasty:2.1 for
+any message longer than the pane buffer, because the marker sits at the top and scrolls out. Put the
+marker at the FOOT of the message next time, or send short.
+
+## 2026-08-18 13:2x — DAVID ASKED TOWER TO DRAFT HIS CREW DIRECTIVE
+David: *"then tell me the exact prompt to fortify my decisions with the crew and get them building
+what i want."* **Tower AUTHORED the text and handed it to David to send. Tower did NOT send it and
+did NOT route it — sender owns delivery; this is not a return to the relay seat.**
+
+## 2026-08-18 16:0x — DAVID DELEGATED THE SEQUENCING CALL; TOWER DECIDED
+David: *"you decide - and write the final prompt and put it into my clipboard."*
+**Tower's ruling on item 3 (decision-grade gate): OFF the Week 1 path, explicitly.** Three grounds,
+all verified:
+1. **Hard dependency, not preference.** A pre-registered validation needs accrued real outcomes to
+   validate against. **Zero predictions have ever been graded** (6 logged runs: 5 noop + 1 failed).
+   The pre-registration is not slow — it is *impossible* before the scoreboard accrues weeks.
+2. **Precedent cost:** QB-1 ran 2026-07-21 → 2026-08-17 = **27 days** for ONE research question.
+   Repeating that inside 23 days, alongside the scorer and the scoreboard, rebuilds the exact
+   process-heavy pattern David ordered inverted at 12:3x.
+3. **⭐ David does not need the gate for what he actually asked for.** `00-product-constitution.md:164`
+   VERIFIED: a descriptive tool *"may report quantities, explicit sort orders, counts, ranks,
+   value-at-risk ranges, deficits, gaps, caveats, and structural states"* — only the imperative verb
+   is banned (buy/sell/keep/cut/must/recommended). **Unclamped numbers, honest ranks, ranges, and the
+   scoreboard are ALL legal today.** The gate withholds only "do this," which David has his own
+   judgment for in year one. **This dissolves the tension rather than trading it off — record it.**
+**Directive authored** at `~/.claude/tower/outbox/DAVID-CREW-DIRECTIVE.txt` (4,974 bytes) and
+**copied to clipboard via pbcopy; verified with pbpaste** (first line "DIRECTION — from David…",
+last line "Build the product."). **Tower did NOT send it. David sends it.**
+
+## 2026-08-18 16:05 — STUDIO: DELIVERY CONFIRMED, PLUS TWO THINGS FOR DAVID
+**✅ 024 RETURN DELIVERY NOW VERIFIED FROM STUDIO'S OWN WORDS** — pane 2.1 reads: *"my R3 claim that
+no shipped sort mixes positions on DVS was scoped to frontend/src only, and they found the mix in the
+backend."* Studio received R3 and is acting on it. **Supersedes the 13:1x NOT_DELIVERED verdict and
+the "R1/R2 unverifiable" caveat is now moot for practical purposes** — Studio is working the response.
+**⚠ STUDIO STARTED THE PRODUCT SERVER.** VERIFIED 16:06: `uvicorn app.main:app --host 127.0.0.1
+--port 8000` **PID 86607, started 16:04:39**, PPID 1 (detached). Port 8000 now returns 200. **Tower
+did not approve this and was not asked.** Judgement: NOT a clear wall breach — Studio's David-sanctioned
+practice (024 itself) is verifying against the running app at 127.0.0.1:8000, and it wrote nothing to
+the repo — but it IS a machine state change outside Tower's approval, and **David was told immediately
+and rules on whether Studio may start servers.** (Note: Studio's pane footer shows "⏵⏵ accept edits on".)
+**Also corrects Tower's 13:0x statement to David that "nothing is serving" — true then, false now.**
+**⚠ STUDIO BLOCKED ON A DIALOG TOWER COULD NOT PRESS.** Dialog `29943a8b9fe590be`: a Bash command that
+polls `curl 127.0.0.1:8000/openapi.json` until 200 then prints the API paths — **pure read, no write,
+no install, no credential path.** Tower judged it inside the read-only approval authority and ran
+`pane-approve.sh dynasty:2.1 1`; **the harness auto-mode classifier DENIED the keystroke.** Tower did
+NOT work around it. **Escalated to David: one keypress.**
+
+## 2026-08-18 16:3x — ITEM 1 FIXED BY THE WRITE LANE; TOWER'S MORNING FRAMING PARTLY WRONG
+**Write lane's diagnosis (theirs, relayed):** the scorer was never broken — the CLOCK was.
+`_resolve_season_week()` used `nflreadpy.get_current_season()`, which is date-derived and holds the
+completed season until the Thursday after Labor Day = **2026-09-10, Week 1 itself**. So all summer it
+targeted **(2025, wk 22)** — a season holding zero predictions. The five noops were HEALTHY. The
+frozen-set declaration landed 08-13; `_load_frozen_declaration` raises on an undeclared season
+(`run_realized_outcome_scoring.py:631,642,653`), converting the healthy noop into
+`predictions_load_failed:FrozenPredictionSetUndeclared`. Same target, new contract.
+**Fix:** resolve the LEAGUE year (roster=True, rolls Mar 15), week pinned to 1 in the pre-season window.
+**⭐ TOWER VERIFIED INDEPENDENTLY 16:3x** — `app/data/valuation_runtime/realized_outcome_scoring_status_latest.json`
+now reads `season 2026 · week 1 · status noop · noop_reason week_not_finalized · week_status
+not_finalized`, finished_at **2026-08-18T20:30:26Z**. This morning the same file read season 2025,
+week 22, **failed**. `git status`: `M scripts/run_realized_outcome_scoring.py`, **uncommitted** as the
+lane stated. **The fix is real and observable.**
+**NOT verified by Tower, labelled as the lane's claim:** 501 real frozen predictions from the
+2026-08-05 declared capture (501 eligible / 80 capture_incomplete / 581 declared); 119 loop contracts
+passing; ruff clean. Declaration artifact path is computed inside `_load_frozen_declaration` and was
+not located at Tower's altitude.
+### ⚠ TOWER SELF-CORRECTION, ISSUED TO DAVID UNPROMPTED
+At 11:35 and again in the crew directive Tower framed the scorer failure as carrying an
+**irrecoverable weekly clock** ("weeks that pass unwired can only ever be reconstructed from
+hindsight"). **That was overstated.** On the old resolver the date-derived season catches up on
+2026-09-10, so the failure would have **self-cleared exactly at Week 1**. What survives as true: it
+would have self-cleared with **zero rehearsal and zero margin**, and the back half is still unproven,
+so nobody would have known on the day whether it graded. **Surfacing it had value; the deadline
+framing did not. Do not repeat the clock claim.**
+### OPEN — DAVID'S CALL
+Write lane asks to run a **stubbed-finality rehearsal** (drive the real 501 through the real path)
+BEFORE items 2 and 3, because the back half — predictions → outcomes → scorecard — has never once
+executed and no 2026 outcomes exist. Nothing committed; lane batching the commit.
+**Composer of 1.1 holds GHOST TEXT "do the rehearsal"** — verified dim `ESC[2m` via `capture-pane -e`.
+**AI suggestion, NOT typed by David, NOT sent.** Tower did not and will not submit it.
+
+## 2026-08-18 16:4x — REHEARSAL RAN; TOWER VERIFIED THE NUMBERS FROM THE ARTIFACT
+**David pasted Tower's "condition + addition" into 1.1; the negative control was built and it earned
+its keep.** VERIFIED from `app/data/backtest/rehearsal/rehearsal_summary.json` (not from the pane):
+| pos | real spearman | shuffled spearman | real nDCG | shuffled nDCG | eligible |
+| QB | 0.6804 | **−0.2370** | 0.9171 | 0.6858 | 62 |
+| RB | 0.9244 | **−0.1334** | 0.9305 | 0.4343 | 127 |
+| TE | 0.8840 | 0.0912 | 0.9039 | 0.4783 | 107 |
+| WR | 0.8444 | 0.1103 | 0.9153 | 0.4968 | 205 |
+`_coverage` **byte-identical across both runs** — resolved 501, graded 405, rank_eligible 318.
+`"rehearsal": true` stamp present. **Control design is sound:** it preserves every player, field and
+the projection distribution and destroys ONLY the player↔projection mapping, so an echoing grader
+would have produced identical Spearman twice. It collapsed instead. **This is the first time any
+Dynasty Genius prediction has ever been graded against outcomes.**
+Artifacts: `scripts/run_scorer_rehearsal.py`, `app/data/backtest/rehearsal/{scorecard_real,
+scorecard_control_shuffled,rehearsal_summary}.json` — **ALL UNTRACKED/UNCOMMITTED.**
+### ⭐ THE FINDING THAT CHANGES DAVID'S PLAN
+**Week 1 cannot produce rank metrics at all.** Rank eligibility needs `games_played >= 4` and a
+cohort needs ≥10; the lane's week-1 run returned `status=ok` with every metric null and
+`rank_eligible_count: 0`, **and the corrupted set scored identically** — the negative control is
+VACUOUS at week 1. **First real live rank numbers ~Week 4–5, not Week 1.** Measured constraint, not
+preference. Week 1's scoreboard is QB-1's fourteen contrasts plus shape.
+### THE LANE FLAGGED THE HONESTY TRAP ITSELF — credit recorded
+Its own words: the real-run 0.68–0.92 "is not model accuracy and must never be shown as the model's
+record" — 2026 projections graded against a completed season's actuals, both sides tracking the same
+player quality. Every artifact stamped `rehearsal: true` with its substitution list. **That is the
+exact claim Tower would have raised; it was raised without prompting.**
+### ⚠ ONE THING TOWER IS ASKING, NOT ASSERTING
+Both runs record `"status": "noop"`, `"noop_reason": "already_scored"` while `rank_metrics` are fully
+populated. Benign reading: the harness graded, then the outer scorer noop'd on an existing scorecard.
+**But status-says-one-thing / substance-says-another is the exact class Tower exists to catch.** Ask
+whether the metrics were produced by THIS run or read from a prior one. **Not alarmed; unresolved.**
+### ⚠⚠ TOWER ERROR — SELF-SURFACED, KILL-CRITERION CLASS
+**Commit `f29a1b7`, 08-18 14:32, "feat(pvo): disclose DVS ceiling clamp in the served artifact" —
+LANDED ~90 MINUTES BEFORE Tower wrote David's crew directive telling them to fix it.**
+VERIFIED 16:5x on `universe_pvo_runtime.json` (12,222 rows, 23 at DVS 100.0): the valuation block now
+carries `dvs_clamped: True` and `dvs_p90_ref: 14.5`. **The directive's claim "computed and never
+serialized, so the truncation is invisible" is FALSE as of 14:32.** Still true: the value IS clamped
+at 100. **Half that directive item was already done and Tower put a stale claim in David's hands.
+Root cause: Tower reused its own 13:0x finding instead of re-reading the artifact — Rule 2, the
+exact ~38-error class. Told David unprompted.**
+(Aside: f29a1b7's diffstat is 453 lines of `docs/agent-ledger` + four Codex review docs around the
+code change — the ratio David ordered inverted, on the very fix.)
+### DURABILITY — TOWER'S OWN DUTY
+Everything above is uncommitted in the product working tree; **Antigravity has crashed twice today
+(10:11, 11:17)** and the 11:17 crash rebuilt every pane. Raised to David.
+
+## 2026-08-18 17:0x — TOWER'S `already_scored` QUESTION FOUND A REAL DEFECT
+**It was not benign.** The lane's finding: the rehearsal harness would report **REHEARSAL PASSED,
+exit 0, while grading nothing**, any time a marker for that (season, week) already existed — so the
+**second run in a row was always a lie.** Its own framing, which is the part that matters: *"On Week 1
+morning, re-running the rehearsal to reassure yourself would have been the exact moment it silently
+stopped rehearsing."*
+**Two guards added, both RAISE rather than warn:** (1) markers written to a fresh temp dir per
+invocation so `already_scored` cannot trigger; (2) raises if the run returns `already_scored` or if
+the scorecard mtime is unchanged.
+**⭐ TOWER VERIFIED THE FIX FROM THE ARTIFACT, 17:0x:**
+- `rehearsal_summary.json` now reads `status: "ok"`, `noop_reason: null` on BOTH runs. At 16:4x the
+  same file read `status: "noop"`, `noop_reason: "already_scored"`. **The status field now tells the
+  truth.**
+- `ls -lT app/data/backtest/rehearsal/`: `scorecard_real.json` **16:56:22**, `scorecard_control_shuffled.json`
+  **16:56:33** — 11s apart, consistent with two real ~10s computations, exactly as claimed.
+- Numbers reproduce identically (QB 0.6804/−0.2370, RB 0.9244/−0.1334, TE 0.8840/0.0912,
+  WR 0.8444/0.1103; coverage 501/405/318). Deterministic path, same seed — reproduction is the
+  correct outcome; drift would have been the defect.
+- `verdict.discriminated` block present with per-position deltas (RB 1.0579 largest).
+**Lane's own root-cause, recorded because it is accurate:** *"I verified the piece I built and
+under-checked what it was reading."* Same shape as the DVS cycle.
+**THIS IS THE CLASS TOWER EXISTS FOR** — a job reporting green over a run that did nothing; the same
+family as `feature_refresh` reporting `ok` over four cache-fallback streams. **Caught before it
+mattered. First datapoint against the 2026-08-08 kill criterion ("has the freshness and model work
+changed a decision").**
+### OPEN — DAVID'S CALL (destructive, correctly refused by the lane)
+Three inert files remain: `marker_real.json` + `marker_control_shuffled.json` (16:43:54),
+`probe_marker.json` (16:41:29) in `app/data/backtest/rehearsal/`. Lane flagged rather than deleted —
+destructive op on David's disk. **Tower's view given to David: yes delete, but it is hygiene, not
+safety — the GUARD prevents recurrence, not the deletion. Low stakes either way.**
+Composer of 1.1 holds ghost text *"delete the stale markers"* — suggestion, not sent.
+### ⚠ DURABILITY — TOWER'S LOUDEST OPEN ITEM
+**Last product commit is `f29a1b7`, 14:32.** The resolver fix (`scripts/run_realized_outcome_scoring.py`),
+the entire rehearsal harness (`scripts/run_scorer_rehearsal.py`) and all three scorecard artifacts are
+**UNCOMMITTED**, on a machine where Antigravity crashed at 10:11 and 11:17 today. ~3.5h of the most
+valuable work of the day is unprotected. **Raised to David again.**

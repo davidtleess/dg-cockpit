@@ -1,0 +1,100 @@
+DIRECTION — from David. This is a decision, not a discussion.
+
+The product is going to show me what the model says. It stops refusing, and it stops
+hedging every number. I know the model is not fully tuned and will not be in Week 1,
+or in Year 1. I would rather see an honest number that gets better every week than a
+perfect one I never see. Week 1 is 23 days out. Everything below is aimed at that date.
+
+---
+
+1. WIRE THE REALIZED-OUTCOME SCORER. FIRST, AND IT IS THE ONE WITH A REAL DEADLINE.
+
+It is already built — wired end-to-end on 08-14 — and it is failing as of today with
+predictions_load_failed:FrozenPredictionSetUndeclared. Its entire logged history is
+five "noop — no_predictions_for_target" and one failure. Zero predictions have ever
+been graded against a real outcome. Not once.
+
+This is the front half of everything else, and its deadline is one-directional: it
+grades week by week, and weeks that pass unwired can only ever be reconstructed from
+hindsight, which is worth much less. Every week it is down is a week I never get back.
+
+2. BUILD THE SCOREBOARD.
+
+The model's running record against real outcomes — last week, season to date, by
+position. Design it as you see fit; I am not specifying the surface.
+
+This is the honest alternative to caveating every number. Instead of hedging, show the
+track record and let me judge it. A number with a visible record behind it needs no
+apology attached.
+
+QB-1's fourteen contrasts in app/data/backtest/qb_validation/qb_validation_report.json
+are real model-vs-real-outcome results and can fill it on day one, with live weeks
+accruing on top. Do not wait for Week 1 to have something to show.
+
+3. STOP HEDGING NOW. YOU DO NOT NEED A RULING FROM ME FOR ANY OF THIS.
+
+I have seen the argument that decision_supported: false prevents this. It does not.
+Read 00-product-constitution.md:164 — a descriptive tool "may report quantities,
+explicit sort orders, counts, ranks, value-at-risk ranges, deficits, gaps, caveats,
+and structural states." The only thing forbidden is the imperative verb: buy, sell,
+cut, keep, must, recommended.
+
+So for Week 1 I want, and the current rules already allow: real unclamped numbers,
+honest rankings with their basis disclosed, the gaps and the ranges shown as they
+actually are, and the scoreboard. If any surface is currently withholding one of those
+and pointing at the no-verdict line as the reason, that is a misreading and I want it
+corrected, not defended.
+
+Two specific things in that category, both fixable without me:
+
+- THE DVS CLAMP. Line 166 of that same document: "Surface the arithmetic honestly,
+  unclamped... Tightening, clamping, banding, or editorializing a number into a
+  recommendation is the failure mode this line prevents." dynasty_value_score is
+  clamped at 100 — six RBs, six WRs and eleven TEs all read exactly 100.0, and
+  McCaffrey's raw 120.1 serves as 100.0. dvs_clamped and dvs_p90_ref are computed
+  and never serialized, so the truncation is invisible to me. That is a live
+  violation of my own written rule. Fix it.
+
+- ParkedSurfaceCard.tsx:23 tells me a surface needs usage data that "only accrues
+  while games are played." 1.3 GB of routes and snaps for 2018-2025 is sitting on
+  disk right now; only the 2026 vintage is missing. Fix the sentence, or serve the
+  history.
+
+4. THE DECISION-GRADE GATE IS A YEAR-ONE MILESTONE, NOT A WEEK-ONE ONE.
+
+00-product-constitution.md:162 says a tool earns decision-grade status through a
+pre-registered validation I ratify. That door exists and I intend to walk through it —
+but not before Week 1, and this is deliberate.
+
+It cannot be done sooner: a pre-registered validation needs accrued real outcomes to
+validate against, and we have zero. The scoreboard is what generates that evidence.
+Bring me the pre-registration when the scoreboard has real weeks in it — I would
+rather ratify on a track record than on faith.
+
+Nobody is to treat this as a reason to hedge in the meantime. See item 3.
+
+---
+
+WHAT QB-1 ACTUALLY FOUND, so nobody re-derives it:
+
+The composite — efficiency + rushing + volume + age + draft capital — beats a naive
+"use last year's PPG" baseline (+0.098, adj p 0.044) and beats each single family
+individually. Efficiency alone is significantly WORSE than naive (-0.265, adj p 0.010).
+All four market non-inferiority contrasts came back underpowered on one evaluable fold,
+so model-vs-market is unmeasured, not lost.
+
+Ship the composite. Do not ship single-family variants as if they were signal. Do not
+claim anything about beating the market.
+
+---
+
+FINALLY, AND I MEAN THIS:
+
+I do not want more process built for this. No new governance layer, no new registry,
+no new review protocol, no ledger-first work. Between Aug 12 and today this repository
+took 419 file-touches under docs/agent-ledger and nine under src/dynasty_genius. That
+ratio inverts now.
+
+If you are about to write a document about the work instead of the work, don't.
+
+Build the product.
