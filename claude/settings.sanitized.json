@@ -1,5 +1,5 @@
 {
-  "model": "claude-fable-5[1m]",
+  "model": "opus[1m]",
   "hooks": {
     "PermissionRequest": [
       {
@@ -75,7 +75,6 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "preferredNotifChannel": "terminal_bell",
-  "voiceEnabled": true,
   "autoMode": {
     "environment": [
       "### Org-wide",
@@ -103,5 +102,6 @@
       "**Org-specific CLIs**: None configured — user runs personal/hobby CLIs (claude, codex, dg, agy, sqlite3, brew) per shell history, none org-specific",
       "**routine under <user>/ prefix**: none configured"
     ]
-  }
+  },
+  "voiceEnabled": true
 }

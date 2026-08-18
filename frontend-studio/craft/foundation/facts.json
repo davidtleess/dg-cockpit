@@ -1,0 +1,128 @@
+{
+  "_": "THE FOUNDATION REGISTER — machine-readable domain facts for Dynasty Genius design work.",
+  "_standing_instruction": "David, 2026-08-17: 'make this research really important for all Studio sessions'. Consult before asserting any football or model number. tools/foundation-check.mjs reads this file; it is the source of truth, and prose copies of these numbers are derived, never authoritative.",
+  "_grades": {
+    "measured-in-house": "Studio computed it from the app's own data, with controls run in both directions. Highest confidence.",
+    "published-primary": "Traced to the original research, not a secondary article.",
+    "published-secondary": "Widely repeated in the hobby; source is an article, not the study.",
+    "unverified": "Encountered but not confirmed. Never quote without saying so."
+  },
+  "updated": "2026-08-17",
+
+  "corrections": [
+    {
+      "id": "yprr-route-threshold",
+      "wrong": "yards per route run stabilises at 180+ routes / 11+ games",
+      "right": "351 routes / ~14 games",
+      "why": "The ~184-route figure belongs to TPRR and ~188 to receptions-per-route; it was mis-attributed to YPRR. Studio's own split-half of the 180 bar returned 0.62 (~38% noise) on 912 player-seasons 2026-08-09, agreeing with the primary source.",
+      "grade": "published-primary",
+      "source": "Tuccitto split-half reliability, PFF 2007-13 (Intentional Rounding; recovered via Wayback)",
+      "fixed_in": ["craft/how-the-hobby-speaks.md", "proposals/019-on-the-field.md"],
+      "date": "2026-08-17"
+    },
+    {
+      "id": "rb-age-cliff",
+      "wrong": "the running-back age cliff is 26 (the value shipped in the product's code)",
+      "right": "the wall is 29; 26 is barely distinguishable from 25 or 27",
+      "why": "At 29: 92% of survivors decline, 14 of 27 gone the next season, median including the departed -100%. Measured in-house across 2018-2025.",
+      "grade": "measured-in-house",
+      "source": "tools/does-the-age-cliff-land-where-the-code-says.py",
+      "date": "2026-08-17"
+    },
+    {
+      "id": "wr-age-cliff",
+      "wrong": "the receiver age cliff is 28 (shipped in code)",
+      "right": "the drop is at 27; receivers run above baseline through 26",
+      "grade": "measured-in-house",
+      "source": "tools/does-the-age-cliff-land-where-the-code-says.py",
+      "date": "2026-08-17"
+    }
+  ],
+
+  "thresholds": [
+    { "metric": "TPRR (targets per route run)", "stabilises_at": "184 routes", "grade": "published-primary", "source": "Tuccitto split-half, PFF 2007-13" },
+    { "metric": "receptions per route run", "stabilises_at": "188 routes", "grade": "published-primary", "source": "Tuccitto" },
+    { "metric": "YPRR (yards per route run)", "stabilises_at": "351 routes", "grade": "published-primary", "source": "Tuccitto" },
+    { "metric": "yards per target", "stabilises_at": "205 targets", "grade": "published-primary", "source": "Tuccitto" },
+    { "metric": "TD per route run", "stabilises_at": "882 routes", "grade": "published-primary", "source": "Tuccitto" },
+    { "metric": "TPRR quality bar", "value": "20% clears WR2-or-better for 92% of finishers since 2006", "grade": "published-secondary" },
+    { "metric": "route participation", "value": "80%+ = full-time", "grade": "published-secondary" },
+    { "note": "'Stabilises' means HALF SIGNAL, HALF NOISE — it is not a green light. The hobby uses it as one.", "grade": "published-primary" }
+  ],
+
+  "repeatability": [
+    { "metric": "fantasy points per game", "year_over_year": 0.68, "note": "THE NAIVE BASELINE BEATS EVERY ADVANCED METRIC. An advanced panel must justify itself by explaining SHAPE, never by claiming better prediction.", "grade": "published-primary" },
+    { "metric": "target share / air-yards share / WOPR", "year_over_year": ">0.70", "grade": "published-primary" },
+    { "metric": "opportunity (role)", "year_over_year": 0.767, "grade": "measured-in-house", "source": "tools/does-opportunity-repeat.py, 2026-08-08" },
+    { "metric": "efficiency (conversion)", "year_over_year": 0.195, "grade": "measured-in-house", "source": "same" },
+    { "metric": "YPRR", "year_over_year": 0.51, "grade": "published-primary" },
+    { "metric": "RB rushing yards over expected", "r2": 0.01, "grade": "published-primary" },
+    { "metric": "yards per carry", "year_over_year": 0.16, "note": "worst metric in common use", "grade": "published-primary" }
+  ],
+
+  "age": {
+    "regression_baseline_yoy": -17.1,
+    "baseline_note": "The median qualifying player loses 17.1% of his PPG year over year AT EVERY AGE (n=956, all positions pooled). Read every age-decline figure as a difference from this. Most published age-decline numbers are measuring selection, not ageing.",
+    "grade": "measured-in-house",
+    "source": "tools/does-the-age-cliff-land-where-the-code-says.py",
+    "shipped_in_product": { "RB": 26, "WR": 28, "TE": 30, "QB": 33 },
+    "measured": { "RB": 29, "WR": 27, "TE": 30, "QB": "UNMEASURABLE — too few per age-year in 8 seasons. A hole, not a pass." },
+    "design_rule": "An age cliff is a CATEGORICAL LABEL ON A CONTINUOUS, NOISY QUANTITY and lies at the boundary. Draw the curve with its uncertainty and position the player on it; never a binary flag."
+  },
+
+  "quarterback": {
+    "trap": "Every marquee QB analytic — EPA/play, CPOE, DAKOTA, time to throw — is PASSING-ONLY. A rushing yard is worth 2.5x a passing yard, and every QB1 since 2019 posted >=350 rush yards and >=4 rush TDs. In Superflex a QB surface built from those metrics ranks the wrong players.",
+    "grade": "published-primary"
+  },
+
+  "dynasty_market": {
+    "superflex_qb_premium": { "KTC": 1.17, "FantasyCalc": 1.88, "DynastyProcess": 2.79,
+      "note": "FantasyCalc's is a FIXED multiplier applied to every QB — a model parameter, not a market observation. KTC re-crowdsources superflex separately, which also makes every NON-QB worth ~18% less.",
+      "grade": "published-primary" },
+    "rank_vs_value": "Values are NOT comparable across sources; ranks largely are. All three ecosystems agree a top-24 QB gains +40 to +45 overall rank spots going 1QB -> Superflex. Compare in rank space.",
+    "rookie_pick_hit_rates": { "round1": 0.48, "round2": 0.31, "round3": 0.07,
+      "note": "Outcomes are step-shaped by round while the market prices picks continuously across the round boundary (1.12 -> 2.01 is only -5.3%).", "grade": "published-secondary" },
+    "recency_premium": "Normally nearer years are worth more, BUT it is currently INVERTED: a 2027 Early 1st prices above a 2026 Early 1st (weak 2026 class). Any pick model hard-coding 'sooner = more' is broken by construction.",
+    "grade": "published-primary"
+  },
+
+  "our_model": {
+    "what_it_forecasts": "2-year average PPG (per the published model card).",
+    "dvs_is_derived": { "formula": "dynasty_value_score = projection_2y x per-position constant, clipped to [0,100]",
+      "constants": { "QB": 4.9752, "RB": 6.3688, "WR": 6.8976, "TE": 10.6371 },
+      "consequence_1": "DVS carries NO information beyond the projection. It can be spoken as fantasy points per game — the hobby's own unit — with no modelling change.",
+      "consequence_2": "DVS is NOT comparable across positions: DVS 50 = 10.05 PPG for a QB but 4.70 for a TE.",
+      "consequence_3": "The clip at 100 pins the elite: 6 WRs (spanning 5.76 PPG of real difference), 11 of 89 TEs, 5 RBs. Our model cannot separate Ja'Marr Chase from George Pickens.",
+      "grade": "measured-in-house", "source": "L4-our-special-sauce.md", "date": "2026-08-17" },
+    "vs_market_ndcg_at_24": { "QB": -0.0240, "RB": -0.0311, "WR": -0.0006, "TE": 0.0032,
+      "note": "OUR MODEL DOES NOT OUT-RANK THE MARKET ANYWHERE. Behind at QB and RB, a coin-flip at WR and TE, on the app's own published backtest. No surface may imply our number should be trusted over the market's.",
+      "grade": "measured-in-house" },
+    "divergence_validity": "None for all four positions — the gate that would establish that our disagreements are informative is UNEVALUATED. A divergence is an observation, not a signal.",
+    "board_movement": "Scores changed on 2 of 54 capture days (2026-06-26; a 0.1-DVS twitch 2026-08-14). Our lane is a standing opinion, not a live one. Never draw it as moving."
+  },
+
+  "category_conventions": {
+    "boom_bust_is_rank_relative": "'Boom' and 'bust' are NOT fixed point totals — they are the average weekly score of a rank slot at that position (QB boom = 27.3+, the average QB3 week; RB boom = 19.4+, the average RB6 week). Position-relative, self-labelling, and it survives a scoring-format change. Independently corroborated by a second method built from 2025 season data.",
+    "uncertainty_is_never_drawn": "FantasyPros prints uncertainty as four numbers (best / worst / average / std-dev) and draws it NOWHERE — no whiskers, no interval bars, anywhere on the product. The scatter-with-error-bars people associate with tiers is borischen.co, not FantasyPros. This is the strongest available argument for DRAWING the interval in a dynasty tool (and it agrees with craft principle 6).",
+    "ecr_is_two_different_things": "A draft ranking is a consensus of 88 experts; a weekly ranking is a consensus of 8. Both ship under the identical label 'ECR'. Never treat the two as the same quantity.",
+    "staleness_is_first_class": "FantasyPros shows per-expert freshness in human units ('5 h', '1 d', '2 w') and makes it SORTABLE — the most honest detail on any product in the category, and directly transferable to a product whose own lane has not moved since June.",
+    "no_single_rankings_column_order": "There is a View: selector with five column sets; the default (Upside/Bust/SOS) is not the classic BEST/WORST/AVG/STD.DEV set. There is no TEAM column and no ADP column — team folds into the player cell and ADP survives only as an 'ECR VS. ADP' delta.",
+    "grade": "published-primary",
+    "source": "L1-standard-fantasy-football.md §8, read from server-rendered HTML and embedded JSON config rather than the rendered view"
+  },
+
+  "small_sample_rendering": {
+    "shrinkage": "(observed x N + league_average x S) / (N + S). Continuous, cannot lie at a boundary, and the gap between raw and shrunk IS the drawable uncertainty.",
+    "savant_discipline": "Baseball Savant nulls all 105 percent_rank fields when is_qualified = 0 and prints the words 'NOT QUALIFIED' — a categorical refusal, never a faded bar. Its axis reads POOR - AVERAGE - GREAT and colour is normalised so the hue means percentile, never magnitude.",
+    "grade": "published-primary"
+  },
+
+  "unserved_data": {
+    "note": "The advanced-statistics layer is already on disk and reachable by NO api route.",
+    "nflverse_usage_db_mb": 843,
+    "tables": { "depth_charts": 812074, "ftn_charting": 185215, "ff_opportunity_weekly_expected_points": 47282, "nflverse_injury_report": 45337, "ngs_receiving": 14731 },
+    "seasons": "2016-2025 depending on table",
+    "verified": "grep -rl 'nflverse|playerprofiler|pff_export|ff_opportunity' app/api/routes/ returns nothing",
+    "grade": "measured-in-house", "date": "2026-08-17"
+  }
+}

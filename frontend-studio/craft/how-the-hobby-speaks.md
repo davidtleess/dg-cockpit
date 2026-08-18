@@ -36,7 +36,7 @@ does everything), **committee** / **RBBC**, **handcuff**, **target hog**, **rout
 | **Snap share** | share of offensive snaps | **70%+** the baseline for consistent production | ✅ weekly, percent-scaled |
 | **Route participation** | share of team dropbacks he ran a route on | full-time ≈ 80%+ | ✅ season table |
 | **TPRR** — targets per route run | targets ÷ routes run | **≥20%** — 92% of WR2-or-better finishers since 2006 cleared it; rookie-year average **18.8%** | ✅ computable weekly |
-| **YPRR** — yards per route run | receiving yards ÷ routes run | stabilises at **180+ routes / 11+ games**; 1st–3rd-round rookie yr-1 avg **1.37**, yr-2 **1.59**; **under 1.00** after two years is dire | ✅ computable weekly |
+| **YPRR** — yards per route run | receiving yards ÷ routes run | ~~stabilises at 180+ routes / 11+ games~~ **WRONG — CORRECTED 2026-08-17: stabilises at 351 routes / ~14 games** (Tuccitto split-half, PFF 2007–13). The ~185-route figure belongs to **TPRR (184)** and receptions-per-route (188), and was mis-attributed here to YPRR. 1st–3rd-round rookie yr-1 avg **1.37**, yr-2 **1.59**; **under 1.00** after two years is dire | ✅ computable weekly |
 | **WOPR** | 1.5 × target share + 0.7 × air-yards share | **>.700** elite | ⚠️ season only — air-yards share is empty in the weekly table |
 | **Air yards / share** | distance the ball travels to the target; intent of the offense | — | ⚠️ season only (461 players) |
 | **Opportunity share** (RB) | share of team carries + targets | — | ⚠️ season only, thin (138 players) |
@@ -50,6 +50,13 @@ Fantasy Life *What is Route Participation*; Fantasy Points *Bell-Cow or Bust*; R
 work; DLF air-yards app; nflanalytic YPRR explainer.
 
 ## Instrument validation — done before any number was quoted
+
+**Note added 2026-08-17:** the 180-route floor used below is now known to be the wrong threshold for
+YPRR (see the corrected row above — the real figure is 351 routes). The population it selects is
+still a reasonable "receivers with a real role" cut, but it must not be described as a YPRR
+reliability bar. **Studio's own measurement independently reached the same conclusion on
+2026-08-09** — the 180-route bar scored 0.62 split-half on 912 player-seasons, i.e. ~38% noise —
+so the in-house instrument and the recovered primary source agree.
 
 `tools/usage-in-the-hobbys-units.py`, 2025, regular season, 174 receivers clearing the 180-route
 stabilisation floor.

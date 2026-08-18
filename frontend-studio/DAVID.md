@@ -2736,3 +2736,126 @@ it about — never the generalisation Studio wrote around it.**
   this tree is served by an identical-looking node process on an adjacent port. Standing hygiene
   added at the same closeout: **kill every leftover prototype server at session end** — two were
   still listening from previous sessions, and one of them caused this.
+
+- **2026-08-17 — REACTED to 022 "The last cut": *"calendar anchors about roster cuts are short
+  lived - but the player cards are cool."* Two verdicts in one line.**
+  **The framing is rejected, and it is the compounding criterion firing again.** A countdown
+  surface expires by construction — worth less every day until it is worth nothing on Aug 31.
+  Studio named seasonality as the cost in the proposal; David ruled the cost disqualifying for the
+  *framing*, not merely notable. Add the corollary to the 2026-08-09 criterion: **an event can
+  gate or sort a surface, but a date must never be its spine** — deadlines are chrome that
+  self-deletes.
+  **What survived: the player evidence card.** The form he called cool: market now / the two
+  boards (dumbbell) / August drift toward-or-away from our board / the wire (best unrostered at
+  the position) / an analyst read naming its bar / a soft rule-produced lean. This extends the
+  confirmed 2026-07-23 "calls worth weighing" pattern with three new factors that all compound:
+  drift needs the daily capture and sharpens with every day of it; the wire repricing is live; a
+  delisting ("unpriced since") is exactly the kind of standing state the capture uniquely knows.
+  **How to apply:** the card is the durable unit, portable to any player decision (cut, waiver
+  claim, trade target, hold/sell) — carry it forward; leave the countdown behind.
+
+- **2026-08-17 LATE — STUDIO RETRACTED A FACTOR IT HAD PRAISED TO DAVID AN HOUR EARLIER, on its own
+  measurement. Recorded because the method is the lesson, not the finding.**
+  Told David the card's *"market moved toward / away from our board"* row was the factor that
+  compounds. Then tested it instead of building on it, and it failed twice over: **our board changed
+  on 2 of 54 capture days** (2026-06-26; then a 0.1-DVS twitch on 08-14), so it was never two lanes
+  drifting — one lane moving against a fixed line; and in percentile space the gap moves at **noise
+  scale** (within-player sd 0.030 vs 0.167 across players, ratio 0.18 — the same test that killed
+  004 v3). Studio's own threshold for the tag sat inside that noise floor.
+  **How to apply: test the factor you just praised before you build the next thing on it.** A
+  reaction Studio liked is the most dangerous input in the lane, because nothing about being agreed
+  with makes a measurement true. The praise-then-verify order is cheap here and expensive later.
+  **The replacement, and the defect inside it caught before shipping.** Where today's price sits in
+  the player's own captured band — which discriminates fully across the roster and strengthens with
+  every capture. But **normalising position-within-range renders Garrett Wilson (band 7.4% wide)
+  identically to Mac Jones (43%)**: both "at his 55-day low", one meaning the market never moved him
+  and the other a collapse. That is the 2026-07-24 epiphany (an option cannot be represented by its
+  average) in a new costume, and the fix is the same — **draw the width, not just the position.**
+  **A structural trap now encoded in the prototypes' own comments:** `render()` is called at the top
+  of these ES modules, so **any `const` declared below that call is in the temporal dead zone** —
+  two blank-page faults in one day came from it. Only hoisted function declarations are safe.
+
+- **2026-08-17 — HARD RULE (David's own words, explicitly go-forward): *"make this research really
+  important for all Studio sessions - ok?"*** Given after he directed the foundation itself:
+  *"do a little research about fantasy football and get your foundation laid based on what the
+  standard for fantasy football is. Then layer in dynasty, then layer in advanced statistics then
+  layer in our special sauce."*
+  **This is one of the very few entries that qualifies as a HARD RULE** under this file's own test —
+  he named it as standing, for all sessions, not as a reaction to one surface.
+  **How it was made to stick, using the promotion ladder rather than another markdown file:**
+  - **Encoded (top tier):** `craft/foundation/facts.json` is the machine-readable register, and
+    `tools/foundation-check.mjs` fires against any artefact, prints the correction, and is
+    calibrated in both directions. Its first real run **convicted Studio's own two newest
+    surfaces** for printing raw DVS.
+  - **Loaded:** a short standing section in `CLAUDE.md` beside the product briefing, because that
+    file loads every session and the foundation is now half of ground truth.
+  - **Retrievable:** the four layer documents in `craft/foundation/`, each fact graded
+    `measured-in-house` / `published-primary` / `published-secondary` / `unverified`.
+  **The precedence rule written into it:** a foundation fact outranks intuition, and Studio's own
+  in-house measurement outranks the foundation. That is not hypothetical — the dynasty research
+  returned "the RB cliff is 27, and 26 is flat"; measuring the app's own eight seasons put the wall
+  at **29** and found 26 barely distinguishable from 25. **The researched claim was not passed to
+  David.** The register records the measurement, with the tool that produced it.
+  **Why this rule is worth its space:** the three failures it exists to stop were all the same
+  shape — a number or a word taken on faith and then drawn beautifully. The 180-route threshold was
+  measured wrong by Studio's own instrument on 2026-08-09, written down, **and cited for eight more
+  days.** The correction existed and nothing made it fire. Now something does.
+
+- **2026-08-17 — *"these are fine. nothing special."* On 023, the player card presented as a card.
+  The diagnosis was found by AUDIT rather than by guessing, and the audit is the reusable part.**
+  Instead of iterating the drawing, every fact the card put on screen was classified by where a
+  manager could otherwise get it (`craft/what-on-the-card-is-actually-ours.md`). **Two of nine facts
+  were ours** — our model's percentile, and one population statistic. The rest is on KTC,
+  FantasyCalc or Sleeper, and **the card's apparent centrepiece, the price band, is something KTC
+  already draws better with years of history against our 55 days.**
+  **The rule: when a surface lands as "fine", audit its information provenance before touching its
+  form.** A surface built mostly from free data cannot be rescued by craft, and the ceiling is set
+  by how much our own lane can say — which on the same day measured as one static number that has
+  not moved since June.
+  **The second, structural half:** 023 was organised as a **component sheet** — "one unit, six
+  situations" — with Studio's own retraction as the first block on the page. That is the 018/020
+  failure a fourth time: the mechanism presented where the manager's situation belongs. **The same
+  cards were called "cool" hours earlier inside a decision and shrugged at presented as cards.
+  A unit is not a surface, and a catalogue of a unit is never his question.**
+
+- **2026-08-17 — Session closeout: the day the foundation replaced the guessing.**
+  **The arc.** 022 (calendar-anchored cut surface) built and delivered → *"calendar anchors about
+  roster cuts are short lived - but the player cards are cool"* → 023 carried the card forward, and
+  **testing its factors retracted one Studio had praised to David an hour earlier** → *"these are
+  fine. nothing special"* → provenance audit explained why → David: **lay the foundation in four
+  layers**, then **make it matter in every session**. Foundation built, promoted to Encoded, and
+  relay 024 authored with five findings. **Nothing relayed; 024 awaits his word.**
+  **What worked and should keep happening:**
+  - **Measuring a handed-over research claim before passing it on.** The dynasty layer said the RB
+    cliff is 27 and 26 is flat; our own eight seasons put the wall at **29**. It never reached him.
+  - **Running a new instrument against real work immediately.** `foundation-check` convicted
+    Studio's own two newest surfaces on its first real run, then **produced a false positive on the
+    relay** (a negated sentence), which became a calibration specimen. *The selftest did not find
+    that; using the tool did.*
+  - **The error boundary earned its keep twice**, both from the same structural trap now written
+    into the prototypes: `render()` is called at the top of these ES modules, so **any `const`
+    declared below that call is in the temporal dead zone**. Only hoisted functions are safe.
+  - **Looking at the picture caught what no instrument could**: broken ordinals ("81th"), and the
+    same figure printed twice whenever today's price *is* the low or high (4 of 6 cards).
+  **The one that cost the most, and it is a process failure not a craft one:** Studio measured the
+  180-route threshold as noise on 2026-08-09, **wrote it down, and kept citing it for eight days.**
+  The correction existed and nothing made it fire. That single fact is the whole argument for the
+  Encoded tier, and it is why the foundation now runs as a check rather than sitting as a document.
+
+- **2026-08-17 — Fresh-eyes exposure logged (names only, nothing opened).** A closeout
+  `git status` in the product repo — run to prove Studio had written nothing — printed FILENAMES
+  including `AGENT_SYNC.md` and paths under `docs/agent-ledger/`. **No file was opened.** Same class
+  and same handling as the 2026-08-07 precedent: unavoidable given the verification had to happen,
+  recorded rather than passed over. **Also observed and worth knowing: the in-house team was
+  committing to that repo concurrently during this session** (contract tests, `scripts/dg_delivery.py`
+  and their ledger changed at 23:43–23:51), so a dirty `git status` there is theirs, not Studio's.
+
+- **2026-08-17 — Two foundation findings that should shape the next surface, recorded so they are
+  not re-derived.** (1) **The category prints uncertainty as four numbers and draws it nowhere.**
+  FantasyPros ships best / worst / average / std-dev as text, with no whiskers or interval bars
+  anywhere; the error-bar tier charts people remember are borischen.co, not FantasyPros. That is an
+  open lane, and it agrees with craft principle 6 (*uncertainty is drawn, not footnoted*).
+  (2) **"Boom" and "bust" are rank-slot-relative, not fixed totals** — a QB boom is 27.3+, the
+  average QB3 week; an RB boom is 19.4+, the average RB6 week. **A threshold defined by a rank slot
+  labels itself, survives a scoring-format change, and cannot lie the way a hard-coded number does**
+  — which is the constructive answer to the categorical-noun-on-a-continuous-quantity problem.

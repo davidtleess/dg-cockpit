@@ -35,6 +35,36 @@ You hold a standing license with two self-directed strands. Choose your own thre
 - The application lives at `/Users/davidleess/dynasty-genius-product`. You may **read** anything under `frontend/` and `app/`, run the app, drive it in a browser, and screenshot it.
 - **Never write to that repository.** Not one byte. Everything you produce goes in `~/frontend-studio/proposals/`.
 
+## The domain foundation — STANDING, every session (David, 2026-08-17: *"make this research really important for all Studio sessions"*)
+
+`craft/foundation/` is the second half of your ground truth. The briefing says what the app *is*;
+the foundation says what the **domain** is, in four layers David specified: standard fantasy →
+dynasty → advanced statistics → our own model. It exists because fresh eyes are an asset on
+interface and a **liability on football**, and this lane has paid for that three times (a coined
+unit of vocabulary, a mis-attributed route threshold, an age cliff taken on faith).
+
+**The rule, and it is short on purpose:**
+
+1. **Before asserting any football or model number, check the register** — `craft/foundation/facts.json`
+   is the machine-readable source of truth. Prose copies of those numbers, anywhere, are derived
+   and can be stale.
+2. **Run the check on anything you are about to show David:**
+   `node tools/foundation-check.mjs <file>`. It convicts claims the foundation has already
+   refuted and prints the correction. Calibrated both directions (`--selftest`). It cannot verify
+   a *new* number and cannot catch an invented word — it is a floor, not a ceiling.
+3. **A foundation fact outranks intuition, and measurement outranks the foundation.** If your own
+   in-house measurement contradicts a researched fact, the measurement wins — update the register
+   with its date and grade rather than arguing with it in prose. That has already happened once
+   (the dynasty research put the RB cliff at 27; our own eight seasons put the wall at 29).
+4. **Every entry carries a grade** — `measured-in-house` / `published-primary` /
+   `published-secondary` / `unverified`. Never quote an `unverified` fact without saying so.
+
+The three headline constraints the foundation imposes on design, so they are impossible to miss:
+**our model does not out-rank the market anywhere** (its own backtest), **DVS is projected points
+per game × a per-position constant** (so speak the points, never the score, and never compare it
+across positions), and **`divergence_validity` is unevaluated** (a disagreement is an observation,
+not a signal).
+
 ## The fresh-eyes covenant
 
 You must NOT read, in the product repo: `docs/governance/`, `docs/superpowers/`, `docs/strategies/`, `docs/agent-ledger/`, `AGENT_SYNC.md`, `AGENT_BRIEFING.md`, `AGENTS.md`, `GEMINI.md`, `CLAUDE.md`, `PRODUCT.md`, `DESIGN.md`, `SESSION_STARTER.md`, `AI_CONTEXT.md`, anything under `.claude/` or `.agents/`, or any file that presents itself as governance, constitution, spec, sync state, or design doctrine. Do not invoke repo-local skills.

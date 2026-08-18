@@ -1,6 +1,135 @@
 # Studio proposals — status
 
-## ══ 2026-08-12 (SD-0812) ══ 021 "The trade ledger" — BUILT AND DELIVERED
+## ══ 2026-08-17 CLOSEOUT — OPEN THREADS ══
+
+| thread | state | sits with |
+|---|---|---|
+| **024 relay** (5 items: DVS cap · divergence gate unevaluated · DVS=PPG · age constants · unserved usage data) | **authored, verified live, passes its own foundation check. NOT AUTHORISED.** Last thing shown to David | **David** |
+| **023 the player card** | built, shown, reacted *"fine, nothing special"*. Provenance audit explains why (2 of 9 facts ours). **Not iterated** — the ceiling is what our lane can say | Studio / blocked on R2+R3 |
+| **022 the last cut** | delivered, framing rejected (*"calendar anchors… short lived"*), cards kept. Parked as reference | — |
+| **021 the trade ledger** | delivered 2026-08-12, **still no reaction recorded** | **David** |
+| **The domain foundation** | built, 4 layers + age study, promoted to Encoded. **Standing, all sessions** | live |
+| **017 relay R1–R5** | authored, **still not authorised** (R3 restated inside 024) | David |
+| **QB age curve** | **unmeasurable** with 8 seasons — a hole, stated in the register, not a pass | Studio |
+| **Automatic firing of foundation-check** | a PostToolUse hook would make it fire without being remembered; **not added** — it is a machine-config change with real noise risk, David's call | David |
+| **Model can't separate the elite** (Chase = Pickens = 100) | measured; blocks any top-of-board design until R1 answered | relay |
+| Roster snapshots · league capture | **CLOSED** — league capture now runs daily at 09:20, verified this session | — |
+
+**Fresh-eyes covenant: INTACT.** Read only data stores, `frontend/src` component files, route
+filenames, `/openapi.json` and live API responses. No governance, spec or doctrine file opened.
+**Product repo: read-only. Not one byte written** — verified at closeout.
+
+## ══ 2026-08-17 LATE (SD-0817F) ══ THE DOMAIN FOUNDATION — standing, all sessions
+
+**David's direction, then his standing instruction: *"do a little research about fantasy football
+and get your foundation laid… then layer in dynasty, then advanced statistics, then our special
+sauce"* → *"make this research really important for all Studio sessions - ok?"* Treated as a HARD
+RULE (he named it go-forward).** Artifacts: `craft/foundation/{README.md,facts.json,
+L2-dynasty.md,L3-advanced-stats.md,L4-our-special-sauce.md,age-curve-measured-in-house.md}`,
+`tools/{foundation-check.mjs,does-the-age-cliff-land-where-the-code-says.py,
+does-the-gap-path-carry-information.py,where-does-today-sit-in-his-own-history.py}`.
+**All four layers complete** (L1 landed at closeout, 1,476 lines).
+**L1's two most design-changing findings, now in the register:** the category prints uncertainty as
+four numbers and **draws it nowhere** — the strongest argument available for drawing the interval;
+and **'boom/bust' are rank-slot-relative**, not fixed point totals (QB boom = the average QB3 week),
+which is a self-labelling threshold that survives a scoring change. Also: 'ECR' silently means a
+consensus of 88 experts for draft rankings and 8 for weekly ones, and FantasyPros makes per-expert
+**staleness sortable in human units** — directly transferable to a lane that has not moved since June.
+
+**Promoted up the ladder rather than filed:** Encoded (`facts.json` + `foundation-check.mjs`,
+calibrated both directions) · Loaded (a short standing section in `CLAUDE.md` beside the briefing)
+· Retrievable (the graded layer documents).
+
+- **The check's first real run convicted Studio's own two newest surfaces** (022, 023) for printing
+  raw DVS. 023 fixed to speak points per game; it now passes with all render checks still clean.
+- **L4, measured: DVS = projection_2y × a per-position constant** (QB 4.9752 / RB 6.3688 /
+  WR 6.8976 / TE 10.6371), clipped [0,100]. So the "too abstract" number David has objected to
+  since 2026-07-15 is **fantasy points per game × a constant** — fixable by relabelling, no
+  modelling change. Also: DVS is **not comparable across positions**, and the cap pins the elite
+  (Chase = Pickens = 100; 11 of 89 TEs at 100).
+- **L4, measured: our model does not out-rank the market anywhere** — mean nDCG@24 edge QB −0.024,
+  RB −0.031, WR −0.0006, TE +0.003, on the app's own backtest. And **`divergence_validity` is
+  `None` for all four positions** — the gate justifying the two-lane concept is unevaluated.
+- **The age constants shipped in code are questionable in both directions.** Measured in-house
+  (2018–2025, postseason filtered, survivorship reported both ways, regression baseline −17.1%):
+  **RB wall is 29, not 26** (92% decline, half the cohort gone, median incl. departed −100%);
+  **WR drop is 27, not 28**; TE 30 correct; **QB unmeasurable — a hole, not a pass**.
+- **The precedence rule that earned itself immediately:** the dynasty research said the RB cliff is
+  27 and 26 is flat; our own eight seasons refuted it. **The researched claim was not relayed.**
+- **A false number of Studio's own was found and fixed at source:** YPRR does not stabilise at 180
+  routes (that is TPRR's 184) — it needs **351**. Studio's own instrument had measured that bar at
+  0.62 split-half on 2026-08-09, wrote it down, **and cited it for eight more days.**
+- **RELAY CANDIDATES accumulating, none authorised:** the age constants; the DVS→PPG relabelling;
+  the DVS cap at 100; `divergence_validity` unevaluated; 843 MB of usage data served by no route.
+
+## ══ 2026-08-17 LATE (SD-0817L) ══ 023 "The player card" — BUILT, NOT YET SHOWN
+
+**Carrying forward the one thing David kept from 022 ("the player cards are cool"), by TESTING its
+factors rather than reusing them. One failed, and the retraction is the session's real output.**
+Artifacts: `proposals/023-the-player-card{.md,/}`, `tools/{card-build.py,
+does-the-gap-path-carry-information.py,where-does-today-sit-in-his-own-history.py}`.
+
+- **RETRACTED — the "drift toward/away from our board" row Studio shipped in 022 and praised to
+  David the same hour.** Our board changed on **2 of 54 capture days** (06-26, then a 0.1-DVS
+  twitch on 08-14), so it was never two lanes drifting; and in percentile space the gap moves at
+  noise scale (within-player sd 0.030 vs 0.167 across, ratio 0.18 — the 004 v3 test). Studio's own
+  toward/away threshold sat inside the noise floor.
+- **REPLACED by the player's own captured band** — discriminates fully across the roster
+  (0.00–1.00, sd 0.35) and compounds with every capture.
+- **Caught in the replacement before it shipped:** normalising position-in-range renders **Wilson
+  (7.4% band) identically to Mac Jones (43%)** — the 2026-07-24 collapse-into-one-number error.
+  The mark now draws the band's WIDTH on a shared percent-of-own-high axis (also fixes 004 N4).
+- **Two defects only looking caught:** broken ordinals ("81th", "33th") and the same figure printed
+  twice whenever today's price IS the low or high (4 of 6 cards) — the one-number-per-quantity rule.
+- **A structural JS trap, now written into the page as a comment:** `render()` is invoked at the
+  top of the module, so ANY `const` below that call is in the temporal dead zone. Two faults today
+  from exactly this; only hoisted function declarations are safe in these prototypes.
+- Checks: 6/6 cards · overflow 0 · collisions 0 · duplicate-number census 0 · console 0 · error
+  boundary verified both directions · deterministic build.
+- **Football context verified live, not recalled:** Garrett Wilson practising since 29 July after
+  the 2025 knee injury (and still occupying a Sleeper IR slot); DJ Moore traded to Buffalo, Odunze
+  the primary outside target in Chicago.
+- **NOT SHOWN — no delivery attempted this session.** Next action is a review ritual.
+
+## ══ 2026-08-17 (SD-0817) ══ 022 "The last cut" — DELIVERED; REACTED same day
+
+**David: "calendar anchors about roster cuts are short lived - but the player cards are cool."
+The countdown framing is dead (compounding criterion — a date must never be a surface's spine);
+the evidence-card form is confirmed cool and is the piece to carry forward. Full entry in
+DAVID.md 2026-08-17. No relay; 022 stands as a parked prototype whose card pattern gets reused.**
+
+**Self-directed. The event lens (2026-08-09) applied to the real calendar: cutdown Aug 30 (13
+days), Week 1 kickoff Sep 9 (23 days, verified against league sources), roster 27/26 with taxi and
+IR both full — the one legally required cut is now a dated decision, and August camp battles are
+repricing exactly the players it is between.** Artifacts: `proposals/022-the-last-cut{.md,/}`,
+`tools/{last-cut-build.py,serve022.mjs}`.
+
+- **The measurement that carries it:** of the 13 below-replacement players, 8 moved ≥10% in August
+  (Gabriel −76.6%, Bryant +49.3%, Mac Jones −38%, Ayomanor +30.7%, Theo Johnson −29.8%) while the
+  model is frozen (largest August change 0.1 DVS across 468 scored — encoded as a build assertion,
+  which FIRED on the naive version of the claim and forced the threshold to be stated).
+- **Rasheen Ali — the app's #1 cut candidate — went unpriced on Aug 14**: listed 35 of 51 capture
+  days, last value 10, no row since. Detector calibrated both directions (convicts Ali, clears
+  Gabriel). Drawn as a line that ENDS with a terminal ring, never carried forward.
+- **Status-quo conviction (principle 18):** the live Roster Capacity surface is one-lane (raw
+  xVAR only), has no calendar, renders its table at ghost opacity, and prints ~31 "range
+  unavailable" lines for positions the league doesn't roster. Screenshot in the proposal dir.
+- **The wire fact:** free-agent Kirk Cousins (1,255, QB39) outprices rostered Mac Jones (800, QB41).
+- Checks: census 13/13 · overflow 0 both edges · collisions 0 · console 0 · error state verified
+  both directions · deterministic build · served-title verified before browser open.
+- **Defects caught by looking, not by instruments:** dollars on unitless FantasyCalc values (units
+  error, principle 14); runway labels clipped BOTH edges; the refusal's own number contradicting
+  its prose (Parker Washington +21.7% vs "barely touched" — rewrote to state both extremes);
+  "delisted" softened to "unpriced since" after the flicker pattern surfaced. The error boundary
+  fired on first render (TDZ bug) — it earned its keep before David ever saw the page.
+- **022 RELAY: not authored** — held until David reacts. Would carry: the capacity surface's
+  one-lane/no-calendar/ghost-render defects, the IR-return legality computation ask.
+- **League snapshot staleness thread CLOSED:** league capture now runs daily (09:20, verified) —
+  the 003 relay landed.
+- **021 still awaits David's reaction** (delivered 2026-08-12, no recorded response).
+- Servers running for review: app on 8000 (started this session), 022 on 8792. Kill at closeout.
+
+
 
 **David's explicit go ("ohh yes") on the trade retrospective pitched at session open.** Artifacts:
 `proposals/021-trade-retrospective{.md,/}`, `tools/{trade-retro-build.py,serve021.mjs,shot021.mjs}`.

@@ -761,3 +761,129 @@ copy was `c941549` 08-15 18:46 — ~2 days of Tower/Studio state had been on one
 6. **H2-into-product**: David accepted the readout, but what his ruling means for surfaces
    (`decision_supported`, the diagnostic gate) is NOT yet expressed anywhere in the app — any
    change there is a future PROPOSED PRODUCT CHANGE, David-gated.
+
+# ============ 2026-08-17 AFTERNOON — BOOT, VERIFIED 13:53–13:58 ET ============
+
+## FRESHNESS — all installed producers ran this morning; both known defects still live
+**VERIFIED 13:55 — status markers read directly:** `league_capture` 09:20 `ok` · `feature_refresh`
+09:25 `ok` (generated_at 13:25Z) · `pvo_refresh` 09:30 `ok` · `market_divergence` 09:40 `ok` ·
+`what_changed` 09:45 · `backup_status` 12:15. All 8 dynasty launchd jobs listed, last exit 0.
+- **Shape-not-substance, live again TODAY:** feature_refresh `status: ok` while its own
+  `stream_provenance` records `participation` = `loaded_empty` (ValueError) and `pbp` /
+  `player_stats` / `snap_counts` all `fallback_used: true`. Only `rosters` loaded clean.
+- **No-producer pair unchanged:** `roster_capacity` created 2026-07-15 (~33d), `league_opportunity`
+  captured_at 2026-07-15 (~33d). `launchctl list` still shows no job for either. Resting-amber
+  condition continues; PROPOSED PRODUCT CHANGES #2/#3 remain awaiting David.
+
+## SCORER — fix landed, never yet run; first live test TOMORROW 10:00 ET
+**VERIFIED 13:56:** marker still `status: failed`, `predictions_load_failed:
+FrozenPredictionSetUndeclared`, finished 2026-08-12T04:19Z — predates the fix. Since then:
+commit `17cfc1e` (08-14 10:37, "wire scorer loaders end-to-end") landed with the QB-1 program, and
+`app/config/realized_outcome_frozen_predictions.json` now carries David's declared frozen set
+(season 2026, capture 2026-08-05, declared_by David 08-13). Note: the 08-12 failure ran season=2025;
+declaration covers 2026 only — whether the next run targets a declared season is not verifiable from
+here. launchd fires weekly Tue 10:00 → **first test of the fixed scorer is 2026-08-18 10:00 ET.
+Tower checks the marker's substance after it fires.**
+
+## STUDIO — from disk, 13:54
+Nothing newer than 08-12 23:32 anywhere in ~/frontend-studio (find -newermt 2026-08-14 → empty).
+Quiet now ~4.6 days. The 12:53 blocked-idle flag to David STANDS, his word open. Not re-raised.
+
+## COMMITMENTS
+Gemini seat record: overdue ~3.5 wks, raised 08-13, parked. Studio fresh-eyes ~09-01: ~2 wks out.
+Grounding GO/NO-GO: closed 08-14.
+
+## SEAT
+Identity verified: this session's parent tty `ttys009` = pane dynasty:2.2 (tmux list-panes).
+
+# ============ 2026-08-17 EVENING — VERIFIED 22:37–22:44 ET ============
+
+## ✅ ORPHANED PRODUCERS: FIXED — the month-long resting amber is over
+**VERIFIED 22:38 — `launchctl list`:** `com.davidleess.dynasty-roster-capacity-audit` AND
+`com.davidleess.dynasty-league-opportunity-map` now installed (10 dynasty jobs, was 8). Both
+plists weekly Weekday 2 (10:00 / 09:35). **Both PRODUCED, not merely installed:**
+`roster_capacity_latest.json` created_at 2026-08-17T18:14:07Z (`status: ok`);
+`league_opportunity_latest.json` captured_at 2026-08-17T18:10:14Z. Content timestamps match file
+mtimes — 33 days stale → same-day. Board PROPOSED CHANGE #2 CLOSED by David's crew directive.
+
+## ⚠ SCORER: WALL CLEARED, GRADING PATH STILL UNPROVEN — and now un-provable until mid-Sept
+**VERIFIED 22:37 — marker `realized_outcome_scoring_status_latest.json`, finished
+2026-08-17T18:08:54Z (14:08 ET):** `status: noop`, `noop_reason: "week_not_finalized"`,
+**season 2026, week 1**, `decision_supported: false`.
+- **Real progress:** the 08-12 failure was `FrozenPredictionSetUndeclared` on season **2025**.
+  Today's run resolved to season **2026** — i.e. it READ David's declaration and passed the wall
+  that killed it. Commit `17cfc1e` is doing its job up to that boundary.
+- **But nothing has still ever been graded against a real outcome.** The run stopped at
+  `week_status != finalized` (`:349`, `:375`) — correct and honest in August.
+- **The timing problem, which is the real finding:** the scorer cannot demonstrate that its
+  grading path works until an NFL week is FINALIZED (~mid-September). David begins live use at
+  Week 1. So on current course the first-ever exercise of the grading code happens *in season,
+  under live use*, with no rehearsal.
+- **`--season` / `--week` args EXIST** (`:976-977`) so a historical dry-run is mechanically
+  possible, but the frozen-set declaration covers **2026 only**, and the capture DB's predictions
+  begin 2026-06-28 — so a 2025 rehearsal has no declared frozen set and likely no matching
+  predictions. **How to rehearse is crew work; the exposure is David's to weigh.**
+
+## ⚠ NOOP-AS-SUCCESS IS NOW DEMONSTRATED, not predicted
+**VERIFIED 22:40 — `report_freshness.json` realized_outcome block:** `success_status: ["ok","noop"]`,
+`dormant_ok: true`, `tier: auxiliary`. Today's `noop` grades as SUCCESS. In season this combination
+means the scorer **cannot raise a flag by any path** — a noop for a bad reason reads identical to a
+healthy off-season. Board PROPOSED CHANGE #5 remains OPEN and is now evidenced, not theoretical.
+
+## ✅ STUDIO: BACK AND PRODUCING — the nudge worked
+**VERIFIED 22:43 from disk:** `022-the-last-cut.md` (18:59) and **`023-the-player-card.md` (22:32)**,
+both with built artifacts (`022-the-last-cut/index.html`, `023-the-player-card/`). `DAVID.md` and
+`for-david/STATUS.md` both rewritten 22:33. New tools on disk incl.
+`does-the-gap-path-carry-information.py`, `where-does-today-sit-in-his-own-history.py`.
+4.6-day quiet ENDED on David's word. **Tower has NOT read the proposals' merit — David's gate.**
+
+## CREW: day landed clean
+`git log`: `8fe175b` closeout flush, `a7b8bb2` FBG-CAP-F1 divergence audit CLEAR, `d39ff34`
+footballguys first capture + ops repairs. Repo **0 ahead of origin**. 56 uncommitted working-tree
+files incl. `app/api/routes/system_capture_health.py` + regenerated frontend API types — every
+`decision_supported` occurrence in the diff is `False`/`Literal[False]`. **Honesty gate intact.**
+
+## 2026-08-17 23:5x — STUDIO 024 RELAYED TO 1.1 (TW17-STUDIO-024)
+**On David's word "relay 024 from studio."** Read `proposals/024-RELAY.md` in full (9,464 bytes,
+written 23:47) before crossing; quality floor cleared — every finding carries a reproduction
+command, observed-vs-expected, and stated caveats. No cockpit/bus-strategy content, clean to cross.
+Delivered to 1.1 as full text (Studio's dir is outside crew's lane, so no path pointer);
+**DELIVERY VERIFIED by live-screen capture** — message tail visible, lane BUSY=yes after send.
+Message carries the explicit line that David has NOT ruled and no implementation is authorized.
+Five findings: R1 DVS clipped at 100 (high) · R2 `divergence_validity` null all four positions (high)
+· R3 DVS = projection_2y × per-position constant (high) · R4 age-cliff constants mis-sited, RB breaks
+at 29 not 26, WR at 27 not 28 (medium) · R5 843 MB usage data served by no route (medium; restates
+017 R3 of 08-07).
+**Tower has NOT assessed merit — David's gate.** R2/R3 CONVERGE with this board's own 08-08 findings
+on the honesty gate and divergence; record as convergence, NEVER independent corroboration.
+
+# ============ 2026-08-18 — CLOSE, VERIFIED 06:16–06:2x ET ============
+
+## ROLE BOUNDARY HELD
+David asked Tower to "close out the team." **Crew closeout is a RETIRED function (his word,
+2026-08-08)** — Tower did NOT run it and did not resume it. Tower closed only what it owns:
+Studio's bridge and its own durability layer. Crew closeout handed back to David as one paste line.
+
+## STUDIO: ALREADY CLOSED ITSELF — nothing sent
+**VERIFIED 06:16 from live screen + disk:** pane 2.1 shows `Studio closed.`; flush landed 23:54
+(`DAVID.md` 250,160 b, `for-david/STATUS.md` 236,791 b, both 08-17 23:54). Proposals current
+through `024-RELAY.md` (23:47). Composer holds a stray `/` (slash-menu keystroke, not a message,
+not Tower's to clear). **Studio's 4.6-day quiet ended and it closed the day with 022, 023, 024 —
+no blocked-idle at close.**
+
+## PRODUCT STATE AT CLOSE
+`git log`: overnight adds `db0b379` (park Footballguys horizon at unknown) and `505d62f` (record
+Footballguys cross-lane audit). Repo **0 ahead of origin**; 42 uncommitted working-tree files.
+**Scorer marker UNCHANGED from 18:08:54Z yesterday** — still `noop / week_not_finalized`, season
+2026 week 1, `decision_supported: false`. No grading has occurred; the rehearsal exposure raised
+22:44 is UNANSWERED and is PARKED, not re-raised.
+
+## OPEN AT CLOSE — for the next boot
+1. **Scorer rehearsal exposure** — grading path cannot self-prove until a week finalizes (~mid-Sept),
+   i.e. after live use begins. Raised 08-17 22:44, David's word open. PARKED.
+2. **noop-as-success** — demonstrated live 08-17; `success_status:["ok","noop"]` + `dormant_ok:true`
+   + tier auxiliary means the scorer cannot raise a flag by any path in season. PROPOSED CHANGE #5.
+3. **Studio 024** — relayed to 1.1 23:5x; crew technical response not yet returned. David has not ruled.
+4. **Gemini seat record** — overdue ~3.5 wks, raised 08-13, parked.
+5. **Studio fresh-eyes review** ~09-01 — ~2 weeks out.
+6. **backup.sh verifier defect** — cockpit.test.mjs $HOME assertion, known since 08-10, owner unassigned.

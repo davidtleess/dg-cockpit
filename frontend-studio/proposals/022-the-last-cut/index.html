@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>022 — The last cut</title>
+<link rel="stylesheet" href="/kit/studio-kit.tokens.css">
+<style>
+  /* ── base ─────────────────────────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    background: var(--dg-bg); color: var(--dg-text);
+    font: 400 0.9375rem/1.5 var(--dg-font-sans);
+    padding: 2rem 1.5rem 4rem;
+  }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  h1, h2 { font-family: var(--dg-font-display); letter-spacing: 0.01em; }
+  h1 { font-size: 1.75rem; /* display extension above the 18px step, declared: hero only */ }
+  h2 { font-size: 1.125rem; margin: 2.5rem 0 0.25rem; }
+  .sub { color: var(--dg-text-muted); font-size: 0.8125rem; }
+  .mono { font-family: var(--dg-font-mono); }
+  section { margin-top: 0.75rem; }
+
+  /* ── the clock (hero) ─────────────────────────────────────────────────── */
+  .clock { border: 1px solid var(--dg-border); border-radius: 6px; background: var(--dg-surface); padding: 1.25rem 1.5rem 1rem; margin-top: 1rem; }
+  .clock .thesis { font-size: 0.9375rem; max-width: 62ch; margin-top: 0.5rem; }
+  .runway { margin: 1.25rem 0 0.25rem; }
+  .runway svg { display: block; width: 100%; height: 74px; }
+  .instrument { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid var(--dg-border); }
+  .instrument .cell b { font-family: var(--dg-font-mono); font-weight: 600; font-size: 0.9375rem; }
+  .instrument .cell { font-size: 0.8125rem; color: var(--dg-text-muted); }
+  .instrument .cell b { color: var(--dg-text); }
+
+  /* ── the tape (small multiples) ───────────────────────────────────────── */
+  .tape { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+  .panel { border: 1px solid var(--dg-border); border-radius: 4px; background: var(--dg-surface); padding: 0.625rem 0.75rem 0.5rem; }
+  .panel:focus-visible { outline: 2px solid var(--dg-focus); outline-offset: 2px; }
+  .panel header { display: flex; align-items: baseline; gap: 0.5rem; font-size: 0.8125rem; }
+  .panel header .nm { font-weight: 600; font-size: 0.9375rem; color: var(--dg-text); }
+  .pos { font-family: var(--dg-font-mono); font-size: 0.8125rem; font-weight: 600; padding: 0 0.3rem; border-radius: 3px; color: var(--dg-bg); }
+  .pos.QB { background: var(--dg-pos-qb); } .pos.RB { background: var(--dg-pos-rb); }
+  .pos.WR { background: var(--dg-pos-wr); } .pos.TE { background: var(--dg-pos-te); }
+  .cutrank { margin-left: auto; color: var(--dg-text-muted); font-size: 0.8125rem; }
+  .panel .move { font-size: 0.8125rem; color: var(--dg-text-muted); margin-top: 0.125rem; }
+  .up { color: oklch(0.72 0.17 150); } .dn { color: oklch(0.68 0.19 25); } /* rank-movement idiom only */
+  .panel svg { display: block; width: 100%; height: 120px; margin-top: 0.375rem; }
+  .panel .tip { position: absolute; pointer-events: none; background: var(--dg-surface-raised); border: 1px solid var(--dg-border-strong); border-radius: 3px; padding: 0.125rem 0.375rem; font: 0.8125rem var(--dg-font-mono); color: var(--dg-text); display: none; z-index: 3; white-space: nowrap; }
+  .panel { position: relative; }
+
+  /* ── the six cases ────────────────────────────────────────────────────── */
+  .cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 0.75rem; margin-top: 0.75rem; }
+  .case { border: 1px solid var(--dg-border); border-radius: 6px; background: var(--dg-surface); padding: 0.875rem 1rem; }
+  .case header { display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+  .case header .nm { font-weight: 600; font-size: 1.125rem; font-family: var(--dg-font-display); white-space: nowrap; }
+  .case header .age { color: var(--dg-text-muted); font-size: 0.8125rem; }
+  .lean { margin-left: auto; font-size: 0.8125rem; border: 1px solid var(--dg-border-strong); border-radius: 999px; padding: 0 0.6rem; color: var(--dg-text); white-space: nowrap; }
+  .facts { margin-top: 0.625rem; display: grid; grid-template-columns: 7.5rem 1fr; row-gap: 0.375rem; font-size: 0.8125rem; }
+  .facts dt { color: var(--dg-text-muted); }
+  .facts dd { color: var(--dg-text); }
+  .facts .lane-model { color: var(--dg-model); font-weight: 600; }
+  .facts .lane-market { color: var(--dg-market); font-weight: 600; }
+  .board svg { vertical-align: middle; margin-left: 0.375rem; }
+  .read { margin-top: 0.625rem; padding-top: 0.625rem; border-top: 1px solid var(--dg-border); font-size: 0.9375rem; }
+
+  /* ── refusal + methodology ────────────────────────────────────────────── */
+  .refusal, .methodology { border-left: 2px solid var(--dg-border-strong); padding: 0.25rem 0 0.25rem 1rem; margin-top: 0.75rem; max-width: 78ch; }
+  .methodology { font-size: 0.8125rem; color: var(--dg-text-muted); }
+  .methodology code { font-family: var(--dg-font-mono); font-size: 0.8125rem; color: var(--dg-text); }
+  .fail { border: 1px solid var(--dg-caveat); border-radius: 6px; padding: 1rem 1.25rem; margin-top: 1.5rem; max-width: 70ch; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .panel, .case { transition: border-color 120ms ease; }
+    .panel:hover, .case:hover { border-color: var(--dg-border-strong); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="sub">Studio proposal 022 · descriptive, not decision-grade · every number regenerable — commands in the footer</p>
+  <div id="root"><div class="fail" id="failbox" hidden></div></div>
+</div>
+
+<script type="module">
+const root = document.getElementById("root");
+const failbox = document.getElementById("failbox");
+function fail(msg) {
+  failbox.hidden = false;
+  failbox.textContent = "This page failed to draw — not an empty result, a fault. " + msg +
+    " Rebuild with: python3 tools/last-cut-build.py, then reload.";
+}
+try {
+  await import("./data.js?v=" + encodeURIComponent(document.lastModified));
+  const D = window.DATA;
+  if (!D || !D.bubble || !D.bubble.length) throw new Error("data.js loaded but carries no bubble players");
+  render(D);
+} catch (e) { fail(e.message); }
+
+function el(tag, attrs = {}, ...kids) {
+  const n = attrs.svg ? document.createElementNS("http://www.w3.org/2000/svg", tag) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) { if (k !== "svg" && v != null) n.setAttribute(k, v); }
+  for (const k of kids.flat()) if (k != null) n.append(k);
+  return n;
+}
+function fmtV(v) { return v == null ? "—" : v.toLocaleString("en-US"); }
+function days(a, b) { return Math.round((new Date(b + "T12:00Z") - new Date(a + "T12:00Z")) / 86400000); }
+
+function render(D) {
+  const cut = D.clock.cutdown, wk1 = D.clock.week1, today = D.as_of;
+
+  /* ── the clock ── */
+  const clock = el("div", { class: "clock" });
+  clock.append(
+    el("h1", {}, "One cut is due before Week 1."),
+    el("p", { class: "thesis" },
+      `${D.capacity.total} rostered against a cap of ${D.capacity.cap}. Camp is resolving your bubble's NFL jobs right now, ` +
+      `and the market reprices them every day — the cut is cheapest to get right while that tape is running.`),
+    runway(today, cut, wk1),
+    el("div", { class: "instrument", role: "list" },
+      cell(`${D.counts.bubble}`, "bubble players — priced below replacement by the model"),
+      cell(`${D.counts.moved_ge_10} of ${D.counts.bubble}`, "repriced ≥10% by the market in August"),
+      cell(`${D.counts.delisted}`, "gone unpriced — the market stopped listing him"),
+      cell(`${days(today, cut)} days`, `to NFL cutdown, Aug 30 — camp jobs become real`),
+      cell(`${days(today, wk1)} days`, `to Week 1 kickoff, Sep 9 — the roster must be legal`)));
+  function cell(b, s) { return el("div", { class: "cell", role: "listitem" }, el("b", {}, b), document.createTextNode(" " + s)); }
+  root.append(clock);
+
+  /* ── the runway strip ── */
+  function runway(t0, tCut, tWk1) {
+    const W = 1140, H = 74, x0 = 10, x1 = W - 10;
+    const d0 = D.capture_start, span = days(d0, tWk1);
+    const X = d => x0 + (x1 - x0) * days(d0, d) / span;
+    const s = el("svg", { svg: 1, viewBox: `0 0 ${W} ${H}`, role: "img",
+      "aria-label": `Timeline from ${d0} to ${tWk1}: captures run to today ${t0}; cutdown ${tCut}; Week 1 ${tWk1}.` });
+    s.append(el("line", { svg: 1, x1: x0, y1: 40, x2: x1, y2: 40, stroke: "var(--dg-border-strong)", "stroke-width": 1 }));
+    s.append(el("line", { svg: 1, x1: x0, y1: 40, x2: X(t0), y2: 40, stroke: "var(--dg-market)", "stroke-width": 3 }));
+    for (const [d, lbl, dy, anch] of [[d0, "captures begin " + d0.slice(5), 60, "start"], [t0, "today", 24, "middle"], [tCut, "cutdown 8/30", 60, "middle"], [tWk1, "Week 1 · 9/9", 24, "end"]]) {
+      s.append(el("line", { svg: 1, x1: X(d), y1: 30, x2: X(d), y2: 50, stroke: "var(--dg-text-muted)", "stroke-width": d === t0 ? 2 : 1 }));
+      s.append(el("text", { svg: 1, x: X(d), y: dy, "text-anchor": anch, fill: d === t0 ? "var(--dg-text)" : "var(--dg-text-muted)",
+        "font-size": "13", "font-family": "var(--dg-font-sans)" }, lbl));
+    }
+    return el("div", { class: "runway" }, s);
+  }
+
+  /* ── the tape ── */
+  root.append(el("h2", {}, "The bubble, on the tape"),
+    el("p", { class: "sub" }, `Every price the market has put on each bubble player since captures began ${D.capture_start} — one shared scale of FantasyCalc value (the number the hobby trades on), so a flat low line means exactly what it looks like: little at stake. The unfilled right side is the runway to the two dates that end the story. Amber is the market; the model's stance sits in each case below (its scores are frozen until games resume — largest August change across ${D.model_n_scored} scored players: ${D.model_max_aug_change} DVS).`));
+  const yMax = Math.ceil(Math.max(...D.bubble.flatMap(b => b.series.map(p => p.v))) / 500) * 500;
+  const tape = el("div", { class: "tape" });
+  for (const b of D.bubble) tape.append(panel(b));
+  root.append(tape);
+
+  function panel(b) {
+    const W = 280, H = 120, mx = { l: 40, r: 8, t: 8, b: 16 };
+    const d0 = D.capture_start, span = days(d0, wk1);
+    const X = d => mx.l + (W - mx.l - mx.r) * days(d0, d) / span;
+    const Y = v => mx.t + (H - mx.t - mx.b) * (1 - v / yMax);
+    const first = D.bubble[0] === b;
+    const s = el("svg", { svg: 1, viewBox: `0 0 ${W} ${H}` , "aria-hidden": "true" });
+    // date rules in the un-run future
+    for (const [d, lbl] of [[cut, "8/30"], [wk1, "9/9"]]) {
+      s.append(el("line", { svg: 1, x1: X(d), y1: mx.t, x2: X(d), y2: H - mx.b, stroke: "var(--dg-border-strong)", "stroke-dasharray": "2 3" }));
+      s.append(el("text", { svg: 1, x: X(d), y: d === wk1 ? mx.t + 6 : H - 4, "text-anchor": d === wk1 ? "end" : "middle", fill: "var(--dg-text-muted)", "font-size": "10", "font-family": "var(--dg-font-mono)" }, lbl));
+    }
+    // y ticks: leftmost column carries the numbers; sparse
+    for (const v of [0, yMax]) {
+      s.append(el("line", { svg: 1, x1: mx.l - 3, y1: Y(v), x2: mx.l, y2: Y(v), stroke: "var(--dg-border-strong)" }));
+      s.append(el("text", { svg: 1, x: mx.l - 6, y: Y(v) + 4, "text-anchor": "end", fill: "var(--dg-text-muted)", "font-size": "10", "font-family": "var(--dg-font-mono)" }, v ? (v / 1000) + "k" : "0"));
+    }
+    // the quantity, named beside its own ticks (attachment, not proximity)
+    s.append(el("text", { svg: 1, x: mx.l - 6, y: Y(yMax) + 18, "text-anchor": "end", fill: "var(--dg-text-muted)", "font-size": "9", "font-family": "var(--dg-font-sans)" }, "value"));
+    if (b.series.length) {
+      const pts = b.series.map(p => `${X(p.d).toFixed(1)},${Y(p.v).toFixed(1)}`).join(" ");
+      s.append(el("polyline", { svg: 1, points: pts, fill: "none", stroke: "var(--dg-market)", "stroke-width": 2 }));
+      const last = b.series[b.series.length - 1];
+      if (b.delisted) {  // the line ENDS — absence drawn as an ending, never carried forward
+        s.append(el("circle", { svg: 1, cx: X(last.d), cy: Y(last.v), r: 4, fill: "none", stroke: "var(--dg-market)", "stroke-width": 2 }));
+        const fits = X(last.d) + 118 <= W - mx.r;  // keep the label inside the panel
+        s.append(el("text", { svg: 1, x: fits ? X(last.d) + 7 : X(last.d) - 7, y: Y(last.v) - 6,
+          "text-anchor": fits ? "start" : "end", fill: "var(--dg-text)", "font-size": "11",
+          "font-family": "var(--dg-font-sans)" }, `unpriced since ${b.delisted.slice(5)}`));
+      } else {
+        s.append(el("circle", { svg: 1, cx: X(last.d), cy: Y(last.v), r: 3, fill: "var(--dg-market)" }));
+        s.append(el("text", { svg: 1, x: X(last.d) + 6, y: Y(last.v) + 4, fill: "var(--dg-text)", "font-size": "11", "font-family": "var(--dg-font-mono)" }, fmtV(last.v)));
+      }
+    }
+    const arrow = b.delta_rank == null ? null :
+      b.delta_rank > 0 ? el("span", { class: "up" }, `▲${b.delta_rank}`) :
+      b.delta_rank < 0 ? el("span", { class: "dn" }, `▼${-b.delta_rank}`) : el("span", {}, "·");
+    const moveTxt = b.value_now == null
+      ? `no market price — none since ${b.delisted ? b.delisted.slice(5) : "—"}`
+      : `Aug: ${b.delta_aug_pct > 0 ? "+" : ""}${b.delta_aug_pct}% · ${b.pos}${b.rank_aug1} → ${b.pos}${b.rank_now} `;
+    const p = el("figure", { class: "panel", tabindex: "0", role: "img",
+      "aria-label": `${b.name}, ${b.pos}. ${b.value_now == null ? "No market price since " + b.delisted : "Market value " + fmtV(b.value_now) + ", " + b.pos + b.rank_now + ", August move " + b.delta_aug_pct + " percent."} App cut order number ${b.cut_priority}.` });
+    const head = el("header", {}, el("span", { class: "nm" }, b.name), el("span", { class: "pos " + b.pos }, b.pos),
+      el("span", { class: "cutrank" }, `cut order #${b.cut_priority}`));
+    const move = el("div", { class: "move" }, moveTxt, arrow);
+    const tip = el("div", { class: "tip" });
+    p.append(head, move, s, tip);
+    // crosshair tooltip (mouse); keyboard/screen-reader users get the aria summary
+    p.addEventListener("mousemove", ev => {
+      if (!b.series.length) return;
+      const r = s.getBoundingClientRect();
+      const fx = (ev.clientX - r.left) / r.width * W;
+      let best = b.series[0], bd = 1e9;
+      for (const q of b.series) { const d = Math.abs(X(q.d) - fx); if (d < bd) { bd = d; best = q; } }
+      tip.style.display = "block";
+      tip.style.left = Math.min(ev.clientX - r.left + 10, r.width - 110) + "px";
+      tip.style.top = "8px";
+      tip.textContent = `${best.d.slice(5)} · value ${fmtV(best.v)}`;
+    });
+    p.addEventListener("mouseleave", () => { tip.style.display = "none"; });
+    return p;
+  }
+
+  /* ── the six cases ── */
+  root.append(el("h2", {}, "The last man — six cases worth weighing"),
+    el("p", { class: "sub" }, "The app's top of the cut order, plus the two the market argues about. A lean is what the shown facts earn — never a command; the tag stays uncolored on purpose."));
+  const CASE_IDS = ["Rasheen Ali", "Dillon Gabriel", "Kyle Williams", "Adonai Mitchell", "Mac Jones", "Pat Bryant"];
+  const byName = Object.fromEntries(D.bubble.map(b => [b.name, b]));
+  const reads = {
+    "Rasheen Ali": b => `The market has no price on him at all — he was listed on only ${b.priced_days} of the ${b.span_days} capture days before going dark for good on ${b.delisted}, and his last listed value was ${fmtV(b.series[b.series.length - 1].v)}. The model already ranked him first in line. Third-year back — the taxi squad is rookies-only, and IR is full. Of the twenty-seven, he is the only one with nothing measurable at stake.`,
+    "Dillon Gabriel": b => `Written down ${fmtV(b.value_aug1)} → ${fmtV(b.value_now)} in seventeen days — ${b.pos}${b.rank_now}, effectively off the board. The model still holds ${b.dvs} DVS, but it hasn't re-scored anyone since games stopped; the collapse is camp news it cannot see. He is your fifth quarterback by market value, even in Superflex.`,
+    "Kyle Williams": b => `Second in the app's cut order, and the market doesn't argue: ${b.pos}${b.rank_now} at ${fmtV(b.value_now)}, drifting ${b.delta_aug_pct}% through a camp where the receivers around him on this roster won jobs.`,
+    "Adonai Mitchell": b => `The boring case — and boring is information: both boards call him a mid-bench WR (model ${pct(b.model_pct)}, market ${pct(b.market_pct_now)}) and August barely moved him (${b.delta_aug_pct > 0 ? "+" : ""}${b.delta_aug_pct}%). Nothing on the tape separates him from Harris or Legette; only the model's tiebreak does.`,
+    "Mac Jones": b => `${b.pos}${b.rank_now} at ${fmtV(b.value_now)}, down ${b.delta_aug_pct}% in August — and the wire outprices him: ${D.wire.QB.name} sits unrostered at ${fmtV(D.wire.QB.value)} (QB${D.wire.QB.rank}). In Superflex a fourth quarterback has a job; the open question is whether it should be this one.`,
+    "Pat Bryant": b => `The table says seventh in line; the tape says he won a job — +${b.delta_aug_pct}% in August, ${b.pos}${b.rank_aug1} → ${b.pos}${b.rank_now}, the biggest climb on your roster. Cutting the one bubble player the market is repricing upward would be selling the bottom of a rise.`,
+  };
+  const cases = el("div", { class: "cases" });
+  for (const nm of CASE_IDS) {
+    const b = byName[nm]; if (!b) continue;
+    const wirePos = D.wire[b.pos];
+    const c = el("article", { class: "case" });
+    c.append(el("header", {}, el("span", { class: "nm" }, b.name), el("span", { class: "pos " + b.pos }, b.pos),
+      el("span", { class: "age" }, b.age ? `age ${Math.floor(b.age)} · cut order #${b.cut_priority}` : `cut order #${b.cut_priority}`),
+      el("span", { class: "lean" }, "lean: " + b.lean)));
+    const facts = el("dl", { class: "facts" });
+    fact(facts, "market now", b.value_now == null
+      ? `unpriced since ${b.delisted}`
+      : `${fmtV(b.value_now)} · ${b.pos}${b.rank_now} · Aug ${b.delta_aug_pct > 0 ? "+" : ""}${b.delta_aug_pct}%`);
+    fact(facts, "the two boards", boards(b));
+    fact(facts, "August drift", b.toward == null ? "gap steady — the month didn't change the disagreement"
+      : b.toward === "toward" ? "market moved toward our board's view"
+      : "market moved away from our board's view");
+    fact(facts, "the wire", wirePos ? `best free ${b.pos}: ${wirePos.name}, ${fmtV(wirePos.value)} (${b.pos}${wirePos.rank})` : "—");
+    c.append(facts, el("p", { class: "read" }, reads[nm](b)));
+    cases.append(c);
+  }
+  root.append(cases);
+  function fact(dl, t, d) { dl.append(el("dt", {}, t), el("dd", {}, d)); }
+  function pct(x) { return x == null ? "—" : Math.round(x * 100) + (["th","st","nd","rd"][((Math.round(x*100)%100>10&&Math.round(x*100)%100<14)?0:Math.round(x*100)%10<4?Math.round(x*100)%10:0)] || "th") + " pctile"; }
+  function boards(b) {
+    const span = el("span", { class: "board" });
+    if (b.model_pct == null || b.market_pct_now == null) {
+      span.append(`model ${b.model_pct == null ? "no score" : pct(b.model_pct)} · market ${b.market_pct_now == null ? "unpriced" : pct(b.market_pct_now)}`);
+      return span;
+    }
+    span.append(el("span", { class: "lane-model" }, "ours " + pct(b.model_pct)), " vs ",
+      el("span", { class: "lane-market" }, "market " + pct(b.market_pct_now)), ` among ${b.pos}s`);
+    // dumbbell: percentile track, best on the RIGHT (2026-07-23 axis ruling)
+    const W2 = 120, s = el("svg", { svg: 1, width: W2, height: 12, viewBox: `0 0 ${W2} 12`, "aria-hidden": "true" });
+    const px = v => 4 + (W2 - 8) * v;
+    s.append(el("line", { svg: 1, x1: 4, y1: 6, x2: W2 - 4, y2: 6, stroke: "var(--dg-border)", "stroke-width": 2 }));
+    s.append(el("line", { svg: 1, x1: px(b.market_pct_now), y1: 6, x2: px(b.model_pct), y2: 6, stroke: "var(--dg-border-strong)", "stroke-width": 2 }));
+    s.append(el("circle", { svg: 1, cx: px(b.market_pct_now), cy: 6, r: 4, fill: "var(--dg-market)" }));
+    s.append(el("circle", { svg: 1, cx: px(b.model_pct), cy: 6, r: 4, fill: "var(--dg-model)" }));
+    span.append(s);
+    return span;
+  }
+
+  /* ── the refusal ── */
+  root.append(el("h2", {}, "What this page refuses to cover"),
+    el("div", { class: "refusal" }, el("p", {},
+      `The other ${D.core.n} rostered players are not here — none of them sits below the model's replacement line, and a cut conversation that includes them is a worse conversation. ` +
+      `One boundary case is named rather than hidden: Tank Dell carries no model score at all, so the below-replacement rule cannot place him — he is absent by mechanics, not by judgement. ` +
+      `August's core extremes, both directions: steepest fall ${D.core.max_fall_name} at ${D.core.max_fall_pct}%, steepest rise ${D.core.max_rise_name} at +${D.core.max_rise_pct}%. ` +
+      `Stash routes are closed: taxi holds ${D.capacity.taxi.join(" and ")}; IR holds ${D.capacity.ir.join(", ")}. ` +
+      `If any of the four on IR is healthy for Week 1, Sleeper's slot rules will grow this crunch past one cut — that is a condition to watch, not a fact this page can settle.`)));
+
+  /* ── methodology ── */
+  root.append(el("h2", {}, "Methodology, limits, and how to re-run every number"),
+    el("div", { class: "methodology" },
+      el("p", {}, `Bubble = the app's own cut-exposure candidates with raw xVAR < 0 (below replacement) — mechanical, not curated. ` +
+        `Leans are rule-produced and stated here so they can be argued with: “cut candidate” needs app order ≤ 4 AND (market ≤ 40th positional percentile OR delisted) AND no August rise > 10%; ` +
+        `“hold” needs +15% August and ≥10 ranks climbed; everything else stays unresolved. ` +
+        `Market percentiles are ranks within the priced pool at each position on each date. ` +
+        `Prices: FantasyCalc daily capture, ${D.capture_start} → ${D.as_of} (${days(D.capture_start, D.as_of) + 1} days); its timestamp is fetch time, not publish time. ` +
+        `Model scores: frozen through August (largest change ${D.model_max_aug_change} DVS across ${D.model_n_scored} scored players) — the model learns from games, and there are none yet. ` +
+        `Dates: NFL cutdown Aug 30, 5pm CT; Week 1 opens Wed Sep 9 (league sources, verified 2026-08-17).`),
+      el("p", {}, "Rebuild: ", el("code", {}, "python3 tools/last-cut-build.py"), " · serve: ", el("code", {}, "node tools/serve022.mjs"),
+        " · data as of ", el("code", {}, D.as_of), ".")));
+}
+</script>
+</body>
+</html>

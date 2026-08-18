@@ -24,7 +24,7 @@ game. The metrics practitioners quote, with the bars they quote them against:
 | target share | >20% → WR1/WR2 outcomes; <10% rarely rosterable; ~26% = high-end WR2 | Fantasy Footballers |
 | snap share | 70%+ baseline for consistent production | Fantasy Life |
 | targets per route run | **≥20% — 92% of WR2-or-better finishers since 2006 cleared it** | Fantasy Footballers |
-| yards per route run | stabilises at 180+ routes; rookie yr-1 avg 1.37; **under 1.00 is dire** | Fantasy Footballers |
+| yards per route run | ~~stabilises at 180+ routes~~ — **CORRECTED 2026-08-17: 351 routes / ~14 games** (Tuccitto split-half, PFF 2007–13); the 184-route figure is TPRR's, not YPRR's. Studio's own split-half measurement of the 180 bar returned 0.62 (~38% noise) on 2026-08-09, agreeing. Rookie yr-1 avg 1.37; **under 1.00 is dire** | ~~Fantasy Footballers~~ Tuccitto / Intentional Rounding |
 | bell cow | 70–75% snaps; only ~4 backs a season clear 75% | Fantasy Points |
 | RB1 volume | 280+ touches appeared in 8 of 12 RB1 seasons | Fantasy Points |
 

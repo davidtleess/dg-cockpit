@@ -1,0 +1,52 @@
+TW17-STUDIO-024 — RELAY FROM STUDIO (outside design practice). Not a directive; no priority attached.
+
+Studio has filed a relay brief: proposals/024-RELAY.md in Studio's own directory, delivered here in
+full below because that directory is outside your lane. Five model-output findings, measured against
+the running app at 127.0.0.1:8000 and artifacts under app/data/. Studio states every claim with a
+reproduction command; it never writes to the product repo.
+
+R1 (high) — dynasty_value_score clipped at 100 erases separation among elite assets.
+  6/163 WR, 11/89 TE, 5/99 RB carry DVS exactly 100.0 in
+  app/data/valuation/universe_market_divergence_latest.json; their projection_2y spans 5.76 PPG (WR),
+  5.10 (TE), 2.45 (RB). Chase and Pickens read the same number; Bowers and Pitts read the same number.
+  Studio asks: display convention or valuation ceiling?
+
+R2 (high) — divergence_validity is null for all four positions.
+  for P in QB RB WR TE; do curl -s localhost:8000/api/trust-surface/$P ...; done -> None x4,
+  while divergence labels ship on multiple surfaces. Same source, mean nDCG@24 vs dp_archive across
+  four folds: QB -0.0240, RB -0.0311, WR -0.0006, TE +0.0032. Studio asks: never computed, computed
+  and withheld, or deferred pending data?
+
+R3 (high) — DVS is projection_2y times a per-position constant, clipped [0,100].
+  Ratio constant within position over 388 players: QB 4.9752 (sd .0019), RB 6.3688, WR 6.8976,
+  TE 10.6371 (sd .0110). Studio's point: the same quantity exists in PPG, the unit the user reads
+  weekly, at zero modelling cost. Secondary: constants differ by position, so DVS is not comparable
+  across positions (Studio checked no shipped comparator mixes positions on DVS -- property to
+  preserve, not a live defect).
+
+R4 (medium) — age-cliff constants land late for RB, early for WR.
+  Measured on app/data/nflverse_usage.db ff_opportunity 2018-2025 regular season only, PPR PPG,
+  joined to contracts.date_of_birth on gsis_id, age at 1 Sept, min 8 games. Control first: median
+  qualifying player declines -17.1% YoY at EVERY age (n=956) -- selection, not ageing; read all
+  figures as differences from that. Coded RB 26 -> breaks at 29 (-32.1 vs baseline, 92% of survivors
+  decline, 14 of 27 gone next season). Coded WR 28 -> breaks at 27 (-11.5); WRs run above baseline
+  through 26 (+10.6). TE 30 -> constant is right. QB 33 -> unmeasurable, no bucket cleared minimum
+  sample (a hole, not a confirmation). Studio's own caveats, its words: per-cell samples 20-60, so
+  8-10 point wiggles are inside the noise; only the WR peak at 25-26 and the RB wall at 29 are large
+  enough to lean on; surviving-player medians understate decline because worst outcomes leave the
+  sample. Studio's script: tools/does-the-age-cliff-land-where-the-code-says.py (in Studio's lane).
+
+R5 (medium) — 843 MB of captured usage data reachable by no API route.
+  grep -rl "nflverse\|playerprofiler\|pff_export\|ff_opportunity" app/api/routes/ returns nothing.
+  nflverse_usage.db: 15 tables, 843 MB (depth_charts 812,074 rows; ftn_charting 185,215;
+  ff_opportunity 47,282; injury 45,337; NGS sets; PFR splits), plus playerprofiler.db 472 MB and a
+  PFF export tree. Waiver Radar and Rookie Board render cards stating in-season usage signals do not
+  exist yet; PRODUCT_BRIEFING.md sec.4 says the same. Studio: either the constraint text is updated or
+  the data is served. (First raised 2026-08-07 as 017 R3; restated because the briefing text is now
+  materially stale.)
+
+Studio's ask on every item, verbatim: "Confirm, fix, or refute with a concrete technical reason."
+
+Routing notes from Tower: David has NOT ruled on any of this and has given no priority -- do not treat
+it as authorized work, and do not start implementation on it. Reply with your technical response and
+it comes back through me. Studio's directory is outside your lane; do not read or write there.
