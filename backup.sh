@@ -7,7 +7,7 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
 REPO="$HOME/dg-cockpit"
 cd "$REPO"
 
-mkdir -p home claude/agents claude/memory claude/tower claude/skills claude/hooks frontend-studio codex gemini launchagents
+mkdir -p home claude/agents claude/memory claude/tower claude/skills claude/hooks frontend-studio dg-build codex gemini launchagents
 
 # Cockpit scripts and terminal config
 cp "$HOME/dynasty_flight_deck.sh"  home/
@@ -59,6 +59,13 @@ rsync -a --delete "$HOME/.claude/hooks/" claude/hooks/
 
 # Studio's entire world: persona, DAVID.md, proposals, prototypes, bus protocol, permissions
 rsync -a --delete --exclude '.git' "$HOME/frontend-studio/" frontend-studio/
+
+# The DG 3.0 build system — added 2026-08-19 on David's word ("add dg-build to backup").
+# The ticket board, the parallel-work protocol agents boot from, and the worktree tooling.
+# Until now this lived on one disk with no copy anywhere. It is its own git repo locally;
+# '.git' is excluded here for the same reason Studio's is — a nested repo does not mirror
+# into this one cleanly. That means CONTENT is backed up and dg-build's own history is not.
+rsync -a --delete --exclude '.git' --exclude '.DS_Store' "$HOME/dg-build/" dg-build/
 
 # Other agent CLI configs (no secrets present; verify before widening)
 cp "$HOME/.codex/config.toml" codex/ 2>/dev/null || true

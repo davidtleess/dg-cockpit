@@ -14,6 +14,8 @@
   what you ran. Two-week kill criterion from 2026-08-08.
 
 ## Project state
+- [**David's rulings — DG 3.0**](david_rulings_dg3.md) — verbatim. **PPG = ALL GAMES (2026-08-19)** ·
+  governance to near zero (2026-08-18) · dg-build backed up.
 - [**DG 3.0 build system**](project_dg3_build_system.md) — `~/dg-build/`: the ticket board (DG-001..030),
   the parallel-work protocol, and the worktree tooling. **Governance turned to near zero by David
   2026-08-18.** Its own git repo; **NOT in backup.sh.**
