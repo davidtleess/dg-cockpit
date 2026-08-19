@@ -21,6 +21,29 @@ Ticket: `~/dg-build/tickets/DG-024-DECISION-ppg-definition.md`.
 
 ---
 
+## 2026-08-19 06:36 ET — Tower commits to the product repository
+
+> **"commit the agents.md hook"**
+
+Preceded by **"then commit it as the opening hook for every agent in DG"** (2026-08-18 ~23:0x).
+
+**This overrides the charter's "You never edit the product repository."** Tower raised the boundary
+once, was instructed a second time, and complied. The charter's own tie-break — *the instruction that
+narrows wins **until he says otherwise*** — was satisfied: he said otherwise, explicitly, twice.
+
+**Do not treat this as a general licence.** It authorised one doc-only commit of the parallel-work
+protocol. Product code, models, data artifacts and the registry remain outside Tower's hands. If a
+future Tower is asked again, the same sequence applies: raise it once, then do as he says.
+
+**How it was done, and the care is the point:**
+- Confirmed `AGENTS.md` was clean first — 56 unrelated dirty files in the tree belonged to others.
+- `git add AGENTS.md` only. **Never `git add -A`.** Dirty count was 56 before and after.
+- `feature/outcome-loop-week1` → `16a1e54`; `main` → `552733c`, applied in a throwaway worktree so
+  main took exactly ONE commit and none of the branch's 7 feature commits.
+- Both refs verified to carry the hook; pushed and confirmed arrived.
+
+---
+
 ## 2026-08-18 ~22:44 ET — governance to near zero
 
 > **"and i want the governance turned down to near zero. i still see value in the fresh eyes of
