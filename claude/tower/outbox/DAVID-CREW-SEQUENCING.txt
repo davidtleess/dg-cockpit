@@ -1,0 +1,70 @@
+Finish the snapshot and run the visual audit first. You were right not to call it done —
+contract-green is not done, and I do not want a surface that passes tests and looks broken.
+
+Then stop, because the priority changes and I want to explain why rather than just assign it.
+
+WHAT I NOW ACCEPT ABOUT THIS SEASON
+
+The model's edge is not available to me this year. QB, RB and TE all fail market
+superiority on the live gate. That cannot be fixed and proven in 23 days — outcomes do
+not exist until games are played, and the market comparison needs forward-accrued
+point-in-time prices that will not exist before roughly December.
+
+So beating the market by Week 1 was never on the table. What IS on the table is the
+model's description: projections in points per game, age, capacity, divergence as a flag
+to go look at something. That is the raw material I use with my own judgment, and it is
+exactly what the product is currently worst at giving me.
+
+A POINTS NUMBER DEGRADES GRACEFULLY. A SCORE DOES NOT.
+
+I can look at "Jeanty, 11.8 points a game" and tell you whether that is wrong. I have
+fifteen years of football for that. I cannot do anything with "75.3". A composite score
+demands trust this model has not earned. A projection invites the judgment I already have.
+
+That is the whole argument for what follows.
+
+CORRECTION TO WHAT I RELAYED EARLIER
+
+Studio's A1 is superseded — by Studio itself. It re-checked and the Roster Audit gate is
+deliberate and working: that column shows prospect-engine players only, and actives are
+suppressed on purpose. Do not chase A1 as an unexplained disagreement. It is not one.
+
+What it found instead, and I verified it myself against the running app:
+
+Four of my twenty-seven roster rows show a score. All four are prospects — Kaelon Black
+61.55, Omar Cooper Jr. 70.99, Chris Bell 62.46, Fernando Mendoza 85.14. Garrett Wilson:
+blank. Tank Dell: blank. Jeanty: blank, while the model scores him 75.3, which is 11.8
+projected points a game.
+
+The single column of numbers on my roster screen ranks my unproven prospects and shows
+nothing for my actual producers. Mendoza, a college quarterback, is the highest number on
+my screen and has no projection behind it at all. The 0-100 score means two different
+things depending on which engine produced it, and nothing on the surface says which.
+Studio is calling that A7 and it is the sharpest thing anyone found today.
+
+THE SEQUENCE
+
+1. NOW: show me what the model already knows. A7, the DVS clamp that is still applied,
+   the projections rendered with no label and no unit, and the do-not-use copy over data
+   I already hold. Those are not four bugs. They are one defect in four costumes: the
+   product hides its own numbers behind a composite score it cannot justify.
+   Points per game becomes the primary number on the surfaces I open. The 0-100 score is
+   demoted, or at minimum labelled with the engine that produced it so a prospect and a
+   proven receiver are not sharing a scale. Unclamp it.
+   This is mostly rendering, not modelling. Shape it before you build it, as you did today.
+
+2. THEN LEAVE THE MEASUREMENT LAYER ALONE. Scoreboard live, scorer grading from Week 1,
+   health signal honest about its inputs. Add the model card's age where I can see it.
+   Otherwise stop touching it. It is done. Let it accrue.
+
+3. THE MODEL IS SEASON-LONG WORK. Apply QB-1's composite finding, work the market-
+   superiority failures. Year 1 work whose payoff is Year 2. The only deadline that
+   matters is that my best honest model is in the field before Week 1, because that is
+   the one that gets a full season of grading.
+
+NOT BEFORE WEEK 1: the decision-grade gate, the frontend bundle freshness item, the
+grounding build — and above all, a large model push landing unvalidated in late August.
+That last one is the tempting mistake. It would ship me an unmeasured change on the exact
+date measurement starts.
+
+Do not build a governance layer around any of this.

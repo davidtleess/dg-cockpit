@@ -1,0 +1,42 @@
+New top priority, ahead of the scoreboard. The scoreboard is still next — start this first.
+
+Make the health signal mean something before Week 1.
+
+Right now /api/health tells me overall_status: degraded, and every one of the eight
+artifacts underneath it reports fresh. The degradation comes from capture_health and
+tier_readiness, whose entire stated basis is the string "adapter_status:degraded" — no
+reason, no detail. So the app tells me something is wrong, refuses to say what, and
+shows me nothing but green. I cannot act on that, and after enough mornings I stop
+reading it, which is worse.
+
+And the artifact that is actually sick is one of the ones reporting fresh.
+feature_refresh grades fresh on embedded_timestamp_fresh while its own
+stream_provenance block records participation loading completely empty (season null,
+ValueError) and pbp, player_stats and snap_counts all falling back to 2025 cache —
+player_stats on a ConnectionError. Only rosters is genuinely on 2026. Nothing outside
+the producer reads that block; the freshness layer grades the file's shape and never
+its substance.
+
+That is tolerable in August because 2026 has not happened. It becomes a lie the moment
+games start. On Week 1 morning it is the one defect that makes my numbers wrong and
+fine-looking at the same time, and the scoreboard inherits it — grading predictions
+built on silently stale features is a learning loop learning from garbage.
+
+Two outcomes I want. How you get there is yours:
+
+1. An artifact whose inputs degraded must not grade fresh. The provenance is already
+   computed and already written every run. Something outside the producer has to read it.
+
+2. A degraded status must name what degraded and why, in words I can act on.
+   "adapter_status:degraded" is not a reason.
+
+One trap to avoid: do not solve this by making everything amber. A light that is always
+degraded carries exactly as little information as one that is always green — that is the
+same defect wearing the other colour. If four streams are on cache and one is empty, say
+that. If everything else is genuinely fine, say that too.
+
+To be clear this does not contradict what I told you this morning about hedging. It is
+the same rule both times: tell me the truth. Do not hedge a number you actually have,
+and do not call something fresh when it is not.
+
+Do not build a governance layer around this. Then the scoreboard.

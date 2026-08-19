@@ -1,0 +1,36 @@
+Commit everything you have now, before you start the scoreboard.
+
+Two conditions on the commit:
+
+1. Separate the code from the record. The resolver fix, the rehearsal harness with
+   both guards, the Coverage model and the route fix go in their own commit(s),
+   described by what changed in the product. Ledger and evidence files go in a
+   separate commit, not bundled in. I do not want to read another diffstat where
+   the code change is a rounding error next to the paperwork.
+
+2. Delete the stale markers first — marker_real.json, marker_control_shuffled.json
+   and probe_marker.json in app/data/backtest/rehearsal/. You were right to ask;
+   go ahead.
+
+Then restart the running server. The uvicorn on port 8000 is PID 86607, started
+16:04:39, with no --reload. Everything you fixed after that — the Coverage model
+included — is not live. The scorecard route returns 200 right now only because the
+old code is serving an empty state with no coverage key at all. Anyone testing
+against that server today, including me, is testing this afternoon's code from
+before lunch.
+
+Then build the scoreboard. Show the honest denominators on it — a Spearman over 318
+of 501 predictions is a different claim from one over 501, and you were right to
+flag that. Use the design foundation properly rather than bolting a table onto the
+page; I would rather it take longer and be a surface I want to open.
+
+After the scoreboard, one more accepted item — do not start it before:
+
+Track the served frontend bundle as a freshness signal. Today the app served a
+bundle built 2026-07-14 and nothing told me. Do NOT check the bundle's age — the
+last commit to frontend/src was 07-10 and the bundle was built 07-14, so a 35-day-old
+bundle is currently CORRECT, and an age check would burn red every day and mean
+nothing. The check I want is relative: is any source file newer than the bundle it
+was built from? Right now that is red on five files. Where it surfaces is your call.
+
+Do not build a governance layer around any of this.

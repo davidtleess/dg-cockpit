@@ -198,3 +198,90 @@ to give him, and the surface does not tell him the opinion was removed rather th
 
 *Studio measures against the running app and never writes to this repository. Where a finding rests
 on Studio's own instrument, the script is named so the measurement can be re-run or refuted.*
+
+---
+
+# DISPOSITIONS — engineering response received 2026-08-18 (MARKER 024B-RESPONSE-2026-08-18)
+
+| ID | verdict |
+|---|---|
+| A1 | **CONFIRMED**, including the self-contradiction inside the single payload |
+| A2 | **CONFIRMED** — 23 of 27, `inputs_missing` naming the unserved fields |
+| A3 | **NOT CHECKED** on the engineering side — recorded unverified, not disputed |
+| A4 | **CONFIRMED** — `median_projection_2y` present alongside the rendered `raw_xvar` |
+| A5 | **CONFIRMED** by source and stylesheet — zero `<dt>`, zero `<dd>`, no rule for the class |
+| A6 | **CONFIRMED**, with a refinement that narrows Studio's claim |
+
+## A6 — the refinement, verified, and it is correct
+
+`dvs_clamped` is no longer computed-and-discarded: it is written into
+`app/data/valuation_runtime/universe_pvo_runtime.json` (captured 2026-08-18T13:30Z) together with
+`dvs_p90_ref`. Studio verified across the full 12,222-row artifact: **23 rows carry
+`dvs_clamped: true`**, and each carries its own engine's correct reference. Still absent from the
+API schema, the generated client and every route file. **The precise state is the one engineering
+stated: the data layer records the truncation and the served surface does not.** Studio's original
+"computed and never served" was right in effect and too broad in scope.
+
+## A1 — the mechanism, now answerable from the artifact rather than the payload
+
+Engineering said whether the audit's stricter gate is deliberate is not answerable from the payload.
+It is answerable from the producer artifact, and the answer is **deliberate**:
+
+**Roster Audit renders a DVS for Engine A rows only.** Of the 27 roster rows, the 4 that show a
+number are all `ENGINE_A` prospects (Chris Bell 62.46, Fernando Mendoza 85.14, Kaelon Black 61.55,
+Omar Cooper Jr. 70.99); all 22 `ENGINE_B` scores are suppressed. That is consistent with the row
+caveat *"Engine B (active player) not yet validated"* — the gate is on engine validation, and it is
+working as written.
+
+**So A1's defect is not the gate. It is that three true statements are rendered as one contradiction
+with no engine named anywhere on the surface:**
+
+- the header's `RB: VALIDATED` is a *position-level model status*;
+- the row's *"Engine B not yet validated"* is an *engine-level status*;
+- the visible DVS column is *Engine A output*.
+
+The reader is given no vocabulary to tell these apart, so the two sentences read as a contradiction
+and the column reads as "the model has no view on Jeanty." **Naming the engine on the row would
+resolve the whole item** — this is a labelling fix, not a gating change.
+
+## A7 (new, found while verifying A6) — the same 0-100 number is two different constructions
+
+**Claim.** `dynasty_value_score` is not one quantity. Engine B derives it from `projection_2y`;
+Engine A has **no projection at all** and uses different references.
+
+**Reproduce.** Over `universe_pvo_runtime.json`:
+
+| engine | rows | with a DVS | with `projection_2y` | `dvs_p90_ref` (QB / RB / WR / TE) |
+|---|---|---|---|---|
+| ENGINE_B | 503 | 388 | **503** | 20.1 / 15.7 / 14.5 / 9.4 |
+| ENGINE_A | 80 | **80** | **0** | 16.7 / 14.6 / 12.7 / 9.1 |
+
+**All 388** scored Engine-B rows reproduce `clamp(projection_2y / P90 * 100, 0, 100)` to within 0.15
+(`python3 tools/is-dvs-one-quantity.py`, deterministic across two runs).
+
+**Observed.** A WR is scored against 14.5 on one engine and 12.7 on the other, and the surface prints
+the same 0-100 scale for both with no engine label. On this roster the effect is direct: **Fernando
+Mendoza reads 85.14 and Ashton Jeanty reads `—`.**
+**Expected.** Either one comparable scale, or the engine named wherever the number appears.
+
+**Why the user pays.** The consequence is a false ordering between exactly the two groups a rebuilder
+is choosing between — his prospects and his active players. He is invited to read 85.14 against a
+blank, when the blank belongs to a player the model scores 75.3 (11.8 projected points a game) and
+the 85.14 has no projection behind it.
+
+**A second clamp, same class as A6, at the other end.** `max(0, ...)` also fires: KhaDarel Hodge
+carries `projection_2y −0.753`, a raw DVS of −5.2, and is served **0.0**. Stated precisely, because
+Studio got this wrong on the first pass and the tool corrected it: he *does* reproduce the formula —
+he is an instance of the **floor** clamp, not an exception to it. Both ends of the scale silently
+erase the model's opinion, and neither is flagged on the surface.
+
+**Confirm, fix, or refute with a concrete technical reason.**
+
+## Studio's own correction, made in the same pass
+
+This addendum's parent brief, and Studio's foundation register, both stated without qualification
+that **DVS = `projection_2y` × a per-position constant**. That is true for Engine B and **false for
+the 80 Engine-A rows**, which carry a score and no projection. The ratio was originally measured only
+on rows where both fields were present — which silently excluded every row where one was missing.
+**A ratio computed on the intersection cannot support a claim about the union.** The register now
+carries the scope limit and the correction.

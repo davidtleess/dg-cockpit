@@ -56,6 +56,15 @@
       "why": "A citation is only useful if the reader can open it. Never cite a studio-side document to the engineers; quote the product's own text instead (here: ParkedSurfaceCard.tsx:23).",
       "grade": "measured-in-house",
       "date": "2026-08-18"
+    },
+    {
+      "id": "studio-dvs-formula-scope",
+      "wrong": "This register's own headline: 'DVS = projection_2y x a per-position constant', stated without qualification, and 'DVS carries NO information beyond the projection'.",
+      "right": "True for ENGINE_B (503 rows). FALSE for the 80 ENGINE_A prospect rows, which carry a DVS and no projection at all, computed against different references.",
+      "why": "Studio measured the ratio only on rows where BOTH fields were present, which silently excluded every row where one was missing. A ratio computed on the intersection cannot support a claim about the union. Found on 2026-08-18 while checking an engineering refinement, not by the instrument.",
+      "grade": "measured-in-house",
+      "source": "app/data/valuation_runtime/universe_pvo_runtime.json, captured 2026-08-18T13:30Z",
+      "date": "2026-08-18"
     }
   ],
   "thresholds": [
@@ -208,7 +217,10 @@
       "formula_at_source": "dvs_raw = projection_2y / ENGINE_B_P90_PPG[pos] * 100.0; dynasty_value_score = round(min(100, max(0, dvs_raw)), 1). So the per-position constant is 100 / P90. ENGINE_B_P90_PPG = QB 20.1 / RB 15.7 / WR 14.5 / TE 9.4.",
       "confirmed_by_engineering": "2026-08-18. pvo_assembler.py:390-407 and engine_b_contract.py:24-29. The clamp is applied to the value that ships. Studio's four measured constants reproduce to within 0.001.",
       "clamp_is_silent": "player_value_object.py:85 defines dvs_clamped ('True if raw DVS exceeded 100 before clamping') and the assembler computes it, but NO served payload carries it and no dvs_p90_ref key exists. Verified independently 2026-08-18: 'dvs_clamped' appears in neither frontend/src/lib/api/types.gen.ts nor app/api/routes/. The ceiling is applied where the reader cannot see it.",
-      "live_instance_on_davids_roster": "Tucker Kraft (TE): projection_2y 10.329 PPG -> raw DVS 109.9 -> served 100.0, indistinguishable from a true 100. Measured 2026-08-18."
+      "live_instance_on_davids_roster": "Tucker Kraft (TE): projection_2y 10.329 PPG -> raw DVS 109.9 -> served 100.0, indistinguishable from a true 100. Measured 2026-08-18.",
+      "SCOPE_LIMIT_ENGINE_A": "THE FORMULA HOLDS FOR ENGINE B ONLY, and this register overclaimed it until 2026-08-18. In universe_pvo_runtime.json (12,222 rows, captured 2026-08-18T13:30Z): ENGINE_B has 503 rows, all carrying projection_2y, and all 388 scored rows reproduce clamp(projection_2y/P90*100, 0, 100) to within 0.15. ENGINE_A has 80 rows, ALL 80 carry a dynasty_value_score and NOT ONE carries any projection — so for prospects the score is not a rescaled projection and 'DVS carries no information beyond the projection' is FALSE for them. Engine A also uses DIFFERENT references: WR 12.7, QB 16.7, TE 9.1, RB 14.6, against Engine B's 14.5 / 20.1 / 9.4 / 15.7. So the same 0-100 number on a surface is two different constructions against two different denominators, and DVS is not comparable across ENGINES within a position, not merely across positions.",
+      "floor_clamp_also_fires": "max(0, ...) is a clamp too. KhaDarel Hodge carries projection_2y -0.753 (a negative projected PPG), raw DVS -5.2, served 0.0. With both clamps applied, ALL 388 scored Engine-B rows reproduce clamp(projection_2y / P90 * 100, 0, 100) to within 0.15 — Hodge is an instance of the floor clamp, not an exception to the formula. Studio first reported him as a formula failure, having omitted the clamp from its own check; tools/is-dvs-one-quantity.py corrected it.",
+      "dvs_clamped_now_in_the_artifact": "Engineering, 2026-08-18: dvs_clamped and dvs_p90_ref are now written into the producer artifact. Verified: 23 rows carry dvs_clamped true, and each carries its engine's correct dvs_p90_ref. Still absent from the API schema, the generated client and every route file. Precise state: the data layer records the truncation, the served surface does not. Studio's original claim ('computed and never served') was correct in effect and too broad in scope."
     },
     "vs_market_ndcg_at_24": {
       "QB": -0.024,

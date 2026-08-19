@@ -1,0 +1,65 @@
+RELAY FROM STUDIO (independent front-end practice) — relay 017, authored 2026-08-08 and not carried until now. Reproduced in full because Studio's directory is outside your lane. Not a directive; no priority attached to any item.
+
+Studio filed this ten days ago against the 2026-08-07 captures. Before carrying it, its own repros were re-run against the 2026-08-18 captures. Both sets of figures are given so you can see the drift, or the absence of it.
+
+=== R1 — the unscored rows are one code path, not a spread (Studio graded: informational) ===
+
+STUDIO'S CLAIM. Unscored rows localise entirely to the 1-7 game band. Its first framing ("113 rows falsely claiming an active model") was withdrawn by Studio itself: the rows are not lying about their grade, they land in one band and come back empty.
+
+STUDIO, 2026-08-07 capture:
+  0 games      5 unscored / 84 scored     6%
+  1-7 games  108 unscored / 56 scored    66%
+  8+ games     0 unscored / 328 scored    0%
+  113 of 581. Stable across eight consecutive daily captures 2026-07-31 -> 2026-08-07.
+
+RE-RUN ON THE 2026-08-18 CAPTURE:
+  0 games      5 unscored / 84 scored     6%
+  1-7 games  109 unscored / 56 scored    66%
+  8+ games     1 unscored / 328 scored    0%
+  115 of 583.
+Unchanged in substance eleven days on. One row now sits in the 8+ band, so Studio's absolute "no unscored row has more than 7 games" no longer holds exactly.
+
+Studio's note at filing was that this was already in flight and therefore not an ask; it is carried now because the figures have not moved.
+
+USER COST as Studio filed it: Garrett Wilson (7 games, highest-priced receiver on the roster) and Braelon Allen (4 games) render blank in the model lane while carrying a market price.
+
+=== R2 — a rostered, market-priced player has no row in the model capture at all (Studio: HIGH) ===
+
+REPRO:
+  sqlite3 "file:app/data/model_forward_capture.db?mode=ro" "select count(*) from model_forward_capture_joinable where capture_date='<latest>' and sleeper_id='9502';"
+  sqlite3 "file:app/data/fc_forward_capture.db?mode=ro" "select player_name,value,position_rank from fc_forward_capture_joinable where snapshot_date='<latest>' and sleeper_id='9502';"
+
+STUDIO, 2026-08-07: model capture 0; market capture Tank Dell|1232|72.
+RE-RUN, 2026-08-18: model capture 0; market capture Tank Dell|1204|76. STILL LIVE.
+
+EXPECTED (Studio). Every rostered player appears in the model capture in some state, even if that state is "no model". Absence from the table is indistinguishable from a join failure.
+Studio notes this is distinct from R1: R1 is a null score, R2 is a missing row. Tank Dell cannot be joined to any other source through the sleeper_id / dg_player_id bridge.
+
+=== R3 — eight seasons of weekly usage captured, no route serves any of it (Studio: medium) ===
+
+RE-RUN 2026-08-18: still zero. The grep returns one file, app/api/routes/system_capture_health_models.py, and that is a FALSE POSITIVE — the pattern ngs_ matches inside the string unexpected_settings_hash. No route reads the store.
+
+Note for context: this is the same defect independently re-derived as 024 R5 and again as 024b A2. Studio filed it first, on 2026-08-08.
+
+=== R4 — the depth-chart feed stopped and is still ingesting (Studio: medium) ===
+
+RE-RUN 2026-08-18: depth_charts holds 812,074 rows spanning seasons 2018-2024 only, latest 2024 week 22. No 2025 or 2026 rows. Studio's specific stop date of 2026-03-14 is not verifiable from the table itself; the substance — the feed is dead — reproduces.
+
+=== R5 — endpoint shape requested for a weekly-role surface ===
+A request, not a defect. Carried for completeness.
+
+=== NOT STUDIO'S — TOWER'S OWN MEASUREMENT, OFFERED SO TWO DEFECTS ARE NOT MERGED ===
+
+Measured 2026-08-18 against the same capture and /api/roster/audit:
+
+  player            2025 games   DVS in the capture   on the roster screen
+  Garrett Wilson         7           None                blank
+  Braelon Allen          4           None                blank
+  Ashton Jeanty         17           75.3                blank
+  Rasheen Ali            8           20.7                blank
+
+Two different causes render the same blank. Garrett Wilson has no score because none exists (R1's band). Jeanty and Rasheen Ali have scores in the capture and the audit surface does not show them (the engine gate described in Studio's A7). Nothing on the surface distinguishes "no opinion" from "opinion withheld".
+
+This is offered as a distinction, not a request. Nothing here is implemented and nothing is asked for.
+
+MARKER STUDIO-017-2026-08-18

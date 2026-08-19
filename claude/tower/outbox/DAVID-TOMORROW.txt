@@ -1,0 +1,64 @@
+Read this first. It corrects what I told you last night and carries the state across the clear.
+
+STOP THE FEATURE-STORE REBUILD. THE PREMISE WAS WRONG.
+
+I asked for a rebuild from ff_opportunity. Do not do it. The investigation refuted the
+diagnosis and I accept the refutation:
+
+- The missing 2024 row is the feature store's DELIBERATE inference partition, not a gap. It
+  retains complete training rows plus the latest inference season and drops the in-between
+  by design.
+- 2025 is not truncated. All 505 runtime rows matched a source player with exact games_t,
+  and the source reaches week 22.
+- The three counts of 115 were never the same 115 players. They overlap at 114 and are
+  different sets by construction.
+
+THE REAL DEFECT IS THAT THE PRODUCT LIES ABOUT WHAT IT DID
+
+- The low-game bridge asks for a rookie prior. It is applied to 114 served players, 85 of
+  them veterans with three or more years. They cannot have that prior.
+- When the prior does not exist, production still writes dvs_engine="A" and the caveat
+  "Engine A prospect score used as prior" — for 114 of 115 rows. It says a prior was used
+  when none exists.
+- Route assembly then reads that as an Engine A route, and the player API calls the row
+  "modeled" with degradation=None while dynasty_value_score is null.
+
+That is the surface telling me a model ran on a player it has no score for. That is worse
+than a blank, and it is the thing I want fixed.
+
+There is also a second invisible cohort underneath the 115: 108 players with one to three
+2025 games are dropped by a four-game floor before inference. So "1-7 games" is not one
+band — four-to-seven-game players have a hidden points forecast, one-to-three-game players
+have nothing at all. None of those four rostered names is on my roster.
+
+ORDER FOR TOMORROW
+
+1. Push what you have first.
+
+2. R1 as a serving and honest-state problem, not a modelling one. Put the points that
+   already exist on the surface, and make the state semantics true: no false prior, no
+   "modeled" label on a row with no score, degradation reported when a composite failed.
+
+3. R2 separately — Tank Dell has dg_player_id None, so he joins to nothing and can never be
+   graded. Identity failure, different defect.
+
+4. Then A7 and the descriptive cluster — the clamp, the unlabelled unitless projections, the
+   do-not-use copy.
+
+5. Check the health provenance you shipped yesterday. The investigation says it can mislabel
+   nonempty participation data as loaded_empty and describes an ordinary retry as "cache". I
+   would rather know that now than trust a signal I just built.
+
+WAITING ON A RULING FROM ME, DO NOT GUESS
+
+Engine B counts postseason in both game counts and PPG, and six players cross the eight-game
+gate only because of it. Whether my PPG should be regular-season-only is my call. Bring me
+what changes under each answer and I will rule. Nothing Engine B-dependent gets rerun until
+I do.
+
+QB-1 does not need rerunning. That is settled.
+
+STILL NOT BEFORE WEEK 1: market superiority, the decision-grade gate, bundle freshness, the
+grounding build.
+
+Do not build a governance layer around any of this.

@@ -1297,3 +1297,576 @@ Composer of 1.1 holds ghost text *"delete the stale markers"* — suggestion, no
 the entire rehearsal harness (`scripts/run_scorer_rehearsal.py`) and all three scorecard artifacts are
 **UNCOMMITTED**, on a machine where Antigravity crashed at 10:11 and 11:17 today. ~3.5h of the most
 valuable work of the day is unprotected. **Raised to David again.**
+
+## 2026-08-18 17:1x — DAVID: "studio may have stale data?" — ANSWER: YES, BUT NOT THE DATA
+**VERIFIED 17:1x. Backend data is CURRENT; the SERVED FRONTEND IS 35 DAYS OLD.**
+- Server: `uvicorn app.main:app --host 127.0.0.1 --port 8000`, PID 86607, started **16:04:39**,
+  **NO `--reload`** ⇒ code frozen at process start.
+- Files modified after 16:04:39: ONLY `scripts/run_realized_outcome_scoring.py`,
+  `scripts/run_scorer_rehearsal.py` and the rehearsal/scorer artifacts. **None of those are served by
+  the API.** So the API code and valuation data Studio queried are unchanged since boot — app and
+  disk agree.
+- `universe_pvo_runtime.json` mtime **09:30:09 today** (today's scheduled pvo_refresh) and it DOES
+  carry `dvs_clamped` / `dvs_p90_ref` — the assembler change was already in the working tree when the
+  09:30 job ran; commit `f29a1b7` at 14:32 formalised it. **No artifact regeneration is outstanding.**
+- **⚠ `app/main.py:69-71` mounts `frontend/dist/` as the SPA. `curl /` returns the built index.
+  `frontend/dist/assets/index-B0vu-JM6.js` mtime = `Jul 14 16:07:12` — 35 DAYS OLD.** Studio's 024b
+  states it verified "at 1440x900 and 1920x1080" ⇒ it rendered UI ⇒ **it critiqued the July 14 bundle,
+  not current source.** (Only 4 files under `frontend/src` are newer than Jul 14, and those are the
+  uncommitted generated API-client files.)
+### CONSEQUENCE FOR 024b'S SIX FINDINGS — Tower's read, not verified item-by-item
+- **Staleness could fully explain A1** ("two surfaces disagree whether the model scored 20 players")
+  if one of the two surfaces is the stale bundle. **Check A1 first.**
+- **A3, A4, A5 are UI-shape findings ⇒ in doubt** until a rebuild.
+- **A2** (ParkedSurfaceCard "do-not-use" copy) — the source copy is still unfixed, so the substance
+  likely survives even though the render is stale.
+- **A6** (DVS ceiling fires on David's TE) — data-level; the CLAMP is still applied (only the
+  DISCLOSURE landed). **Stands regardless of build age.**
+- **Cheap resolution: rebuild the frontend, re-run Studio's pass.** Do not discard 024b on this.
+### ⭐ GAP THIS EXPOSES IN TOWER'S OWN DOMAIN
+`report_freshness.json` tracks **data artifacts only**. Nothing tracks the age of the **served
+frontend bundle**. The product served a 35-day-old UI all day and no health signal said so — the same
+failure family as green-over-degraded. **PROPOSED PRODUCT CHANGE, not started: treat the built bundle
+as a declared freshness artifact.** David's to decide.
+
+## 2026-08-18 17:1x — ⚠⚠ TOWER SELF-CORRECTION: THE "35-DAY-OLD BUILD" READING WAS WRONG
+**VERIFIED 17:1x** — `git log -- frontend/src`: the last commit touching frontend source is
+**`f4ef4ef`, 07-10 17:29**. The bundle was built **07-14 16:07**, i.e. **FOUR DAYS AFTER the last
+source commit**. `frontend/dist` is untracked/gitignored.
+**⇒ The bundle is NOT stale against committed source. The FRONTEND is simply five weeks untouched.**
+**⇒ Studio critiqued the REAL, CURRENT, SHIPPED UI. All six 024b findings STAND on this basis.
+A1/A3/A4/A5 are NOT in doubt.** **This REVERSES what Tower told David at 17:1x minutes earlier.**
+**Root cause: Tower read an mtime and inferred a defect without asking what the mtime MEANT** —
+age treated as staleness. Same family as the Rule-2 errors. **Told David unprompted, immediately.**
+**The only real drift:** 5 files newer than dist — `frontend/openapi.json`,
+`frontend/src/lib/api/{types.gen.ts,index.ts,zod.gen.ts}`, `DailyWhatChanged.test.tsx` — **all
+uncommitted, all regenerated this afternoon** by the in-flight capture-health work. In-flight delta,
+not a stale UI.
+
+## 2026-08-18 17:1x — DAVID ACCEPTED THE BUNDLE-FRESHNESS CHANGE ("ok i accept that change")
+**ACCEPTED PRODUCT CHANGE: treat the served frontend bundle as a declared freshness artifact.**
+**Tower pressure-tested its own proposal before it became work and SHARPENED it:**
+a bare AGE check is the wrong signal — a 35-day-old bundle is perfectly correct when the source is
+35 days old, and a daily-cadence declaration would burn red every day while meaning nothing (the
+amber-light failure again). **The informative check is RELATIVE: is any source file NEWER than the
+built bundle it was built from?** Today that is **RED** (5 files newer than `frontend/dist`);
+yesterday it would have been **GREEN**. Boolean with meaning, not an age.
+Build command is `vite build` (`frontend/package.json`); full gate is `npm run gate`.
+**Tower authored David's instruction to the lane and clipboarded it. Tower did NOT route it.**
+
+## 2026-08-18 17:2x — THE SCOREBOARD WOULD HAVE 503'd ON WEEK 1 MORNING
+**Lane's finding (theirs):** the shipped scorecard route returns **503 on the first real scorecard**.
+The producer emits a root `coverage` block; the response model is `extra="forbid"` and never declared
+it. **On Week 1 morning the scoreboard would have rendered "malformed scorecard (schema contract)"
+instead of the model's record** — and nothing could have caught it earlier because no artifact
+existed to validate the contract against. **It became findable only because Tower's condition forced
+the rehearsal to emit a real artifact.** (Second thing Tower's input surfaced today, after
+`already_scored`.)
+**TOWER VERIFIED — IN SOURCE ONLY, AND THE DISTINCTION MATTERS:**
+- ✅ `app/api/routes/realized_outcome_scorecard_models.py:91` defines `class Coverage(_Strict)`; :132
+  wires `coverage: Coverage = Field(default_factory=Coverage)`; the file's own comment at :96 records
+  that `extra="forbid"` made the route reject the first real scorecard.
+- ❌ **NOT live.** `lsof -iTCP:8000` → still **PID 86607, started 16:04:39**, no `--reload`. The live
+  response carries **no `coverage` key at all** (`coverage: None`; keys are as_of_week,
+  cohort_metrics, decision_supported, excluded_counts, maturity_pct, settlement_status, status,
+  status_reason, tracking_rows). **The route's 200 right now is the OLD code serving an empty state —
+  it is NOT evidence the fix works.** Tower nearly mistook that 200 for verification.
+- ❌ Not verified by Tower: "119 tests pass, ruff clean."
+**⇒ Anyone testing against :8000 today — Studio included — is exercising code from 16:04:39.**
+**Lane is IDLE, composer empty, explicitly offering: "Everything so far is uncommitted; say the word
+and I'll build the scoreboard next."** Also holds: QB-1's 14 contrasts decoded; honest denominators
+named (318 rank-eligible of 501 — "a Spearman over 318 of 501 is a different claim than over 501").
+### DAVID SAID "commit them" — TOWER DID NOT COMMIT THE PRODUCT REPO
+**Rule 4 ("never edit the product repository") plus the explicitly SURRENDERED 2026-07-28 closeout
+push authority.** Ambiguity resolved toward the narrowing instruction, per charter. Tower instead
+authored ONE combined instruction — commit (code separated from ledger) → delete stale markers →
+**restart the server** → scoreboard with honest denominators → bundle-freshness after — and
+clipboarded it. **Tower told David the exact words that would override its charter, since the charter
+is his.** The server-restart item is Tower's own finding, not the lane's.
+
+## 2026-08-18 18:2x — ✅ IT COMMITTED, AND THE RATIO INVERTED ON THE FIRST TRY
+**VERIFIED 18:28:47 from git, on branch `feature/outcome-loop-week1` (fresh, off origin/main tip
+`29ca4d1` = the PR #158 merge — the lane rebranched off the spent `feature/dvs-ceiling-disclosure`
+after Tower flagged it):**
+- `38b377b` 18:27 `fix(outcome-loop): grade the league year, not the last played season` —
+  `.gitignore` +6, `scripts/run_realized_outcome_scoring.py` +44/−9,
+  `scripts/run_scorer_rehearsal.py` **+264 (new)**, `scripts/show_qb1_contrasts.py` +43. **348 lines.**
+- `e691f5e` 18:28 `fix(api): serve the scorecard coverage block instead of 503ing on it` —
+  `app/api/routes/realized_outcome_scorecard_models.py` +25, `frontend/openapi.json` +91,
+  `tests/contract/test_realized_outcome_scorecard_route.py` +16. **132 lines.**
+- **`git show --name-only` over BOTH commits ⇒ ZERO `docs/` or `AGENT_SYNC` files.**
+  **480 lines of product code, zero paperwork. David's demanded inversion, held exactly.**
+  (Compare `f29a1b7` earlier today: 453 ledger lines + 4 review docs around the code change.)
+- Uncommitted 56 → 50; the remainder is the separate in-flight capture-health workstream
+  (`system_capture_health*`, generated API client, its tests) — correctly left out.
+**Tower's earlier eyebrow at `git update-index --cacheinfo frontend/openapi.json` is ANSWERED:** it
+committed one blob version of `openapi.json` while leaving the working copy's other changes
+uncommitted. Legitimate, not suspicious. **Recorded so the suspicion is not left standing.**
+### ⚠ STILL OPEN — THE SERVER WAS NOT RESTARTED
+`lsof -iTCP:8000` at 18:28 → **still PID 86607, started 16:04:39.** Live route response still has
+**no `coverage` key**. **The 503 fix is committed but NOT live.** The instruction's restart step was
+not performed. **Anyone testing :8000 — Studio included — is still on 16:04:39 code.**
+### ⚠ TOWER TOOLING DEFECT, SELF-SURFACED
+Tower's first watcher fired `COMMIT DETECTED` on a **branch checkout**, not a commit — it graded
+HEAD-moved (shape) instead of commit-created (substance). **The exact defect Tower flagged in
+`feature_refresh` and in the lane's rehearsal harness on the same day, built into Tower's own tool.**
+Replaced with a `git log --all --since=<mark>` watcher, which fired correctly at 18:28:42.
+
+## 2026-08-18 18:31 — ALL THREE OPEN ITEMS CLOSED
+**VERIFIED 18:31:49:**
+- **Server restarted:** `lsof -iTCP:8000` → **PID 1086, started 18:30:35** (was 86607/16:04:39).
+- **The 503 fix is LIVE:** live `/api/realized-outcome/scorecard` response now CARRIES the `coverage`
+  key (`status: inactive`, `status_reason: awaiting_first_finalized_week`) — the honest pre-season
+  empty state. **Calibration note: this proves the schema declares `coverage` on the running server.
+  The original 503 fired on a REAL scorecard; that before/after was demonstrated by the lane against
+  the rehearsal artifacts, NOT by Tower against the live server, which correctly holds no real
+  scorecard yet. Do not overstate this as "the 503 is proven fixed end-to-end."**
+- **Third commit `d0c87db` 18:29 `docs(record): DVS clamp cycle receipts and 08-18 board state`** —
+  the ledger landed in its OWN commit, AFTER the two code commits. **The separation David demanded
+  held across all three.** Uncommitted 50 → **39**.
+- Lane 1.1 idle, composer ghost "build the scoreboard". **Item 2 not yet started.**
+
+## 2026-08-18 18:3x — TOWER'S TOP PRIORITY, ESTABLISHED FROM THE LIVE ENDPOINT
+**First read of `/api/health` on a RUNNING server today (PID 1086). VERIFIED 18:36:**
+- `overall_status: **degraded**`, `worst_affected_tier: core_substrate`
+- **All EIGHT artifacts report `fresh`** (pvo_refresh, feature_refresh, what_changed, roster_capacity,
+  league_opportunity, realized_outcome, market_divergence, league_capture).
+- Subsystems: `model_provenance: ok` · **`capture_health: degraded`** · **`tier_readiness: degraded`**,
+  both with basis literally **`adapter_status:degraded`** — **no reason, no detail.**
+**⇒ The light says DEGRADED, gives no diagnosable cause, and everything beneath it says FRESH.
+David cannot learn anything from this screen. This is the "amber light carries no information"
+failure named in the charter, now measured on the live endpoint rather than inferred.**
+**AND the one artifact that is genuinely sick reports `fresh`:** re-read 18:35 (not from memory) —
+`feature_refresh` `status: ok`, graded `fresh`, `basis: embedded_timestamp_fresh`, while its own
+`stream_provenance` records `participation: loaded_empty` (season **None**, ValueError),
+`pbp` 2025 fallback, `player_stats` 2025 fallback (**ConnectionError**), `snap_counts` 2025 fallback;
+only `rosters` clean at 2026. **`grep -rln stream_provenance` over app/ src/ scripts/ returns ONLY
+the producer and its runner — nothing in the freshness or health layer reads it.**
+### TOWER'S ANSWER TO DAVID: top priority = MAKE THE HEALTH SIGNAL MEAN SOMETHING BEFORE WEEK 1
+Grounds: (1) it is the only open defect that makes David's Week 1 numbers **wrong AND fine-looking**
+on the morning he uses them — 4 of 5 streams on 2025 data while the app says fresh; (2) the scoreboard
+**inherits** it — grading predictions built on silently-stale features is a learning loop learning
+from garbage, so this is a DEPENDENCY, not a preference; (3) the fix is small — the provenance block
+already exists and is already written, nothing reads it.
+**Second: the scoreboard** (accepted; lane idle awaiting it).
+**Tower's own miss, stated to David: feature_refresh was named three times today and never ranked
+top. Tower was reactive to whatever was in front of it.**
+
+## 2026-08-18 19:0x — ⚠⚠ TOWER ERROR #3 TODAY: THE GROUNDING GATE WAS NOT OVERDUE. IT WAS CLOSED.
+**VERIFIED 19:0x by reading `memory/project_grounding_layer.md` itself** (not the memory INDEX line,
+which is what Tower had been trusting):
+> "## RESOLVED — David's ruling, 2026-08-14 ~08:10 ET (closes the ~Aug GO/NO-GO gate) … **Full
+> grounding build: DEFERRED (effectively NO-GO for now), no re-gate date set by David.**"
+David's verbatim words on 08-14: *"i want the QB1 study done. QBs are the most important position in
+Superflex Dynasty - we need to have a strong model. the rest can be deferred for later."*
+**Tower raised this gate as "DUE NOW / overdue" TWICE today (13:0x to David, and in the 12:3x board
+entry) — both FALSE.** It was raised on 08-14 and David ruled. **Root cause: trusted the memory
+INDEX summary line instead of opening the artifact. Third instance today of the same class
+(morning: irrecoverable-clock; 17:1x: 35-day-bundle; now: this).** Told David unprompted.
+**⇒ EVERY EARLIER BOARD LINE CALLING THE GROUNDING GATE OPEN/OVERDUE IS SUPERSEDED AND WRONG.
+Do not re-raise it. There is no re-gate date.**
+### DAVID'S OWN 08-14 FOCUS LIST — TWO OF FOUR CLOSED TODAY
+1. G3 market-superiority failures (QB/RB/TE fail; only WR passed as of the Jun-13 backtests) — **OPEN,
+   and now the only substantive item left on his own list.**
+2. Execute QB-1 — ✅ **DONE 08-17** (report `run_status: ok`, 5 supported / 3 contradicted / 2 not
+   separable / 4 underpowered).
+3. Fix the realized-outcome scorer — ✅ **DONE 08-18** (`38b377b`; rehearsal + negative control;
+   `e691f5e` fixed the 503 that would have fired Week 1 morning).
+4. The four open grounding questions — **OPEN, but moot while the full build is NO-GO.**
+### GEMINI SEAT — CORRECTED STATUS: RAISED, UNANSWERED, PARKED (not "Tower forgot")
+Board line 644 records it **raised 2026-08-13, unanswered by David, parked and not re-raised** —
+which is the charter rule ("never ask a new question while a previous one is unanswered"). **It is
+not a Tower slip. Restate it as parked-awaiting-David, never as overdue-through-neglect.**
+
+## 2026-08-18 19:0x–19:1x — HEALTH INPUT-PROVENANCE GATE: VERIFIED IN SOURCE + TESTS, UNCOMMITTED
+**VERIFIED by reading the code, not the pane:**
+- `app/api/routes/system_health_models.py:380` `summarize_input_provenance(block) -> (degraded, basis)`
+  grades on **two self-describing signals** — `status != loaded`, and `fallback_used` — with the
+  stated design property that **no per-season config is needed so the check cannot rot as seasons
+  roll.** Names EMPTY, CACHED **and LIVE** streams (the anti-amber requirement, honoured).
+- `:396` declared-but-unreadable ⇒ `input_provenance_unreadable`, **fails closed.**
+- `:535` the gate sits **AFTER the producer-status check, BEFORE freshness** — comment states the
+  reason: "a successful, punctual run built on empty or cached inputs is precisely what a healthy
+  artifact looks like on disk, so freshness must not get to speak first."
+- `:50`/`:358` `inputs_degraded` is added to `_DEGRADING_STATUSES`, so it moves the ROLLUP — a real
+  status, not a decorative label.
+- **Root cause of the missing reason, and it is a good one:** the adapter contract was
+  `Callable[[], str]` — **the reason was destroyed by the TYPE before `basis` was built.** Widened to
+  carry `(status, reason)`, old bare-string adapters still work.
+- **Tests VERIFIED on disk:** `tests/contract/test_health_input_provenance.py` (19:07:16), **7 tests /
+  20 assertions**, incl. `test_healthy_inputs_still_grade_fresh` (the trap), `..._fails_closed_on_any_
+  unreadable_block`, `..._without_the_opt_in_is_unaffected`.
+- Scope note: **only `feature_refresh` declares `input_provenance_field`**; the other seven are
+  `None`. Correct today (only it writes a provenance block) but the mechanism is narrow.
+- **STILL UNCOMMITTED** (44 paths).
+### TWO FALSE ALARMS TOWER CHECKED AND KILLED BEFORE REPORTING
+1. **"/api/health regressed to 25–36s"** (was 0.79s at 18:36). **NOT a regression:** `uptime` load
+   average **17.93**, two `pytest` processes at 71.8% / 53.4% CPU running the health suite, plus
+   Google Drive at 78.7%. **CPU starvation from the lane's own concurrent test run.**
+2. **"no tests for the new gate"** — the grep ran at ~19:06; the test file was written **19:07:16**.
+   **Stale by one minute.**
+**Both would have been false claims in a Tower document. Checked first; neither reported as fact.**
+
+## 2026-08-18 19:1x — G3 VERIFIED LIVE (no longer an inherited claim) + TOWER'S TOP-PRIORITY CALL
+**VERIFIED 19:1x from the RUNNING app, `/api/trust-surface/{POS}` — promotion_gate block:**
+| pos | g1 rank_correlation | g2 rmse_stability | **g3 market_superiority** | g4 divergence | overall_grade |
+| QB | pass | pass | **FAIL** | deferred | `ACTIVE_B` |
+| RB | pass | pass | **FAIL** | deferred | `ACTIVE_B` |
+| WR | pass | pass | **PASS** | deferred | **`ACTIVE_B_VALIDATED`** |
+| TE | pass | pass | **FAIL** | deferred | `ACTIVE_B` |
+**Supersedes the inherited "Jun-13 backtests" phrasing — this is the live gate, today.**
+**The nuance that matters: G1 and G2 PASS at every position.** The model ranks sensibly and is
+stable. **It simply is not additive over the market price at QB, RB and TE.** For a dynasty tool that
+is the whole ballgame — a model that cannot beat consensus leaves David able to just read KTC.
+### TOWER'S ANSWER: TOP PRIORITY = THE QB MODEL
+Grounds: (1) **QB fails G3 live**; (2) David's own 08-14 words — *"QBs are the most important position
+in Superflex Dynasty - we need to have a strong model"*; (3) QB is **the only position with a
+completed pre-registered study** telling him what predicts — QB-1's composite (efficiency ∪ rushing ∪
+volume + age + draft capital) beats naive (+0.0979, adj_p 0.0441) and beats every single family,
+while efficiency alone is significantly WORSE than naive (−0.2651, adj_p 0.0104); (4) that finding
+has sat **unused since 08-17**; (5) the measurement spine that would grade a new model is, as of
+19:13, **done**.
+**Deadline framing — stated carefully after this morning's overstatement:** shipping a better QB
+model later does NOT destroy data (it can be backtested retroactively). What it delays is the point
+at which David has a **live forward record for the model he is actually using**. Whatever is in the
+field on 09-10 is what gets graded from Week 1. **Not "irrecoverable" — do not repeat that word.**
+**Scoreboard: still do it, it is small and accepted — but it SHOWS a record, it does not IMPROVE one.**
+
+## 2026-08-18 19:2x — ⚠⚠ UNIT ERROR: "+0.098 PPG" IS WRONG. IT IS SPEARMAN. TOWER AND THE LANE BOTH.
+**VERIFIED from the registration:** line 188 *"Primary metric: **per-fold Spearman**, paired delta"*;
+line 178 *"**Materiality floor: 0.05 Spearman units**"*; line 238 *"δ … in Spearman units."*
+`target.unit` is `points_per_qualifying_game` — that is the **prediction target**, NOT the unit of the
+contrast delta. The deltas are **rank-correlation units**.
+**Tower told David "+0.098 points per game" (19:19). WRONG — 4th Tower error today.**
+**AND the write lane's Model Scoreboard shape brief carries the SAME error: "+0.098 PPG" as the
+FOCAL headline number.** If built as briefed, the biggest number on David's scoreboard ships with a
+false unit — he would read a ranking statistic as a weekly points gain. **Caught before code.**
+### THE SIZE OF THE WIN, STATED HONESTLY
+`c04 h4_gt_naive`: pooled_delta **+0.0979**, adj_p 0.0441, 8/8 folds, **ci95 [0.0036, 0.1860]**.
+Study's own materiality floor is **0.05**. **The lower bound 0.0036 is an order of magnitude BELOW
+the floor.** ⇒ "The composite beats naive" is statistically supported AND the true effect may be
+immaterial. **Both are true; the scoreboard must not show one without the other.**
+### H2 (RUSHING) — DAVID ASKED; IT WAS DONE, AND IT LOST
+Executed 08-17; ledger `2026-08-17.md:27` records **"DAVID ACCEPTED THE REPRODUCED RESULT AND LANDED
+THE PROGRAM — commit d4be95f PUSHED"**, so the Addendum-A guard condition (executed + David rules) is
+satisfied. Results: `c02 h2_gt_naive` **−0.1308**, adj_p 0.0696, ci95 [−0.256, −0.016] —
+**contradicted**; `c06 h2_gt_h3` **−0.1642**, adj_p 0.0104 — **contradicted** (rushing loses to
+volume); `c05 h2_gt_h1` not_separable; `c09 h4_gt_h2` **+0.2287**, adj_p 0.0007 — composite beats it.
+**Rushing alone predicts next season WORSE than carrying last year's PPG forward.**
+### MODEL vs MARKET — DAVID'S ACTUAL QUESTION, ANSWERED
+QB-1 tried and **could not answer it**: c11–c14 all `unsupported_power`, 3 of 4 folds excluded
+`fold_starved`+`degenerate_input`, **1 evaluable fold**. Separately the LIVE promotion gate says
+**QB/RB/TE FAIL g3_market_superiority; only WR passes**. Different test, different data — but that is
+the standing answer today.
+
+## 2026-08-18 19:3x — ⚠⚠ STUDIO WAS RIGHT: THE DVS DISCLOSURE NEVER REACHES DAVID'S SCREEN
+**VERIFIED 19:3x, three ways:**
+- `dvs_clamped` **IS** in the artifact on disk (`universe_pvo_runtime.json`, confirmed 16:5x).
+- `dvs_clamped` is **NOT** in the live `/openapi.json` schema (`'dvs_clamped' in openapi: False`).
+- `grep -c dvs_clamped frontend/src/lib/api/types.gen.ts` → **0**. `grep -rc` over
+  `app/api/routes/*.py` → **no hits**.
+**⇒ Commit `f29a1b7` "disclose DVS ceiling clamp in the served artifact" wrote the field to the
+producer's DATA FILE. It never reaches the API, the generated client, or the screen. THE CLAMP IS
+STILL SILENT TO DAVID.**
+**Tower told David at ~17:1x that the disclosure had landed and "half that item stands." In the sense
+that matters — what David can see — it has NOT landed. 5th Tower error today; self-surfaced.**
+**Studio's 024b claim ("the string is absent from `types.gen.ts` and from `app/api/routes/`") is
+CORRECT and Tower's artifact-only check was the incomplete one.** Recorded because Tower cast doubt
+on 024b at 17:1x and this is the second time that doubt was misplaced.
+### STUDIO'S FOCUS AND ITS PARKED ITEMS (from `for-david/STATUS.md`, written 16:52:11)
+Current work: **024b addendum** — six findings measured against the running app. 024 relay itself
+**ANSWERED and closed**, dispositions appended. Register updated with 5 corrections; new grade class
+`engineering-confirmed`. `foundation-check` upgraded (file:line + excerpt, three false-positive
+classes fixed).
+**Studio openly WITHDREW two of its own claims** — (1) "no shipped comparator mixes positions on DVS"
+was checked in `frontend/src` only; measured afterwards as **dormant on David's roster** (20 of 21
+candidates take the xVAR path); (2) it cited `PRODUCT_BRIEFING.md` to the engineers as if it were
+their file — it exists only in Studio's lane. **Self-correction raises confidence in the rest.**
+### ⚠ TWO STUDIO DELIVERABLES PARKED ON DAVID — TOWER HAS NOT RAISED EITHER TODAY
+- **021 "the trade ledger"** — delivered **2026-08-12**, *"still no reaction recorded"* → **DAVID. 6 DAYS.**
+- **017 relay R1–R5** — authored, *"still not authorised"* → **DAVID.**
+**Tower is the ONLY carrier for these (TW29-WALL-35). Raised to David 19:3x.**
+Studio idle since **16:52:32** (~2.5h), pane 2.1 BUSY=no DIALOG=none COMPOSER=empty — idle because it
+is waiting, not blocked. Not yet a full working session; watch it.
+
+## 2026-08-18 19:4x — 024b ANSWERED AND DELIVERED (David's word: "draft the 024b response and carry it")
+**Tower re-derived FIVE OF SIX findings independently against the running app, with its own commands:**
+- **A1 CONFIRMED.** `/api/players/12527` → `model.model_grade ACTIVE_B`, `dynasty_value_score 75.3`,
+  `projection_2y 11.822`. `/api/roster/audit`, same instance → same player `PRE_MODEL`, DVS `null`,
+  `model_status_applies false`. 27 players, **23 PRE_MODEL**. Header
+  `model_status_by_position {QB: PROVISIONAL, RB/TE/WR: VALIDATED}` vs a row caveat reading
+  *"Engine B (active player) **not yet validated**"* — **both in the same payload.**
+- **A2 CONFIRMED.** 23 of 27 carry a do-not-use caveat; `signal_completeness 0.2857`; `inputs_missing`
+  includes `games_t, ppg_t, ppg_t_minus_1/2, snap_share, snap_share_t_minus_1` — exactly the unserved
+  store's contents for 2018-2025.
+- **A3 NOT CHECKED** (no DOM measurement on Tower's side). Recorded as unverified, NOT doubted.
+- **A4 CONFIRMED.** `/api/roster/capacity` candidates carry `median_projection_2y` alongside the
+  `raw_xvar` that is rendered.
+- **A5 CONFIRMED.** `ValuationTwoLane.tsx` → **0** `<dt>`, **0** `<dd>`; `PlayerDetail.css` → **0**
+  occurrences of `dg-two-lane__facts`.
+- **A6 CONFIRMED + refined in Studio's favour.** Player 9484: served DVS **100.0**, `projection_2y`
+  **10.329** ⇒ raw **109.9**; no `dvs_clamped` in the served payload. Refinement given to Studio: the
+  field IS now in the producer's data artifact but absent from the API schema, generated client and
+  every route — so "the data layer records the truncation and the served surface does not."
+**Contamination scan run; one hit fixed ("your lane" → "your own directory"). No crew names, no
+roadmap, no priorities, no mention of anything David has directed.**
+**⭐ DELIVERY VERDICT: `DELIVERED` — marker found in the transcript, whole buffer searched.**
+**Tower put the marker at the FOOT of the message this time; the 13:1x lesson (marker at the head
+scrolls out of a 58-line pane and produces a false NOT_DELIVERED) held and worked.**
+
+## 2026-08-18 19:35 — A1 + A2 RELAYED TO 1.1 (David's word: "now relay a1 and a2 to claude")
+Carried in FULL (4,185 bytes) because TW29-WALL-35 bars the crew from reading Studio's directory.
+**Framed exactly on the 024 precedent: "RELAY FROM STUDIO … Not a directive; no priority attached to
+either." David's lean NOT signalled in either direction.** Studio's own honesty note on A1 carried
+intact — that the stricter audit gate MAY be deliberate, that Studio does not assert the audit is
+wrong, and that the reported defect is the unexplained disagreement, not the gate.
+Included as a clearly separated block: **Tower's own independent re-derivation** (different commands,
+same instance, 19:3x) so the crew can see the figures reproduce without having to take Studio's word —
+while still being free to re-derive. **No instruction, no ranking, no mention of David's directives,
+the scoreboard, or the model-priority call.**
+**⭐ DELIVERY VERDICT: `DELIVERED` — marker found in transcript, whole buffer searched (history 842).**
+Sent while 1.1 was BUSY (spinner-elapsed) with `SENDABLE=yes` — Claude Code queues input during a
+turn, so it lands after the current one. Verified delivered, not assumed.
+
+## 2026-08-18 20:1x — SCOREBOARD IS LIVE; ALL FOUR OF DAVID'S CORRECTIONS LANDED
+Watcher expired at 20:18 with **no commit since `62768d0` 19:13** — because it is building, not
+stalled: uncommitted 40 → 48. New on disk: `app/api/routes/model_scoreboard.py`,
+`model_scoreboard_models.py`, `frontend/src/model-scoreboard/{ModelScoreboard.tsx,.css}`, wired at
+`app/main.py:14,43`. **Server restarted 19:29:54; `/api/model-scoreboard` IS in the live schema.**
+**VERIFIED against the live payload and the source — every correction implemented:**
+1. **UNIT — enforced at the type level, not by comment.** `SPEARMAN_UNITS =
+   "spearman_rank_correlation"` typed as a `Literal` on the model; docstring: *"the API never emits a
+   bare number a client could label 'PPG'."* Every `observed_effects` entry in the live response
+   carries `"unit": "spearman_rank_correlation"`.
+2. **MARKET QUESTION IS FIRST.** Live payload's opening object is `market_question`, headline
+   *"We cannot say yet whether the QB model beats the market."* `why` names 1 of 4 evaluable folds and
+   that the other 3 were excluded **before any result was read**; `excluded_fold_reasons`
+   `[degenerate_input, fold_starved]`. **David's inversion of the shape landed exactly.**
+3. **QB SCOPE.** `market_question.position: "QB"`; docstring records *"QB-1's cohort is
+   position_filter: QB_at_matrix_build. Nothing in it measured RB, WR or TE"*; `PositionScope` model
+   and `position` on every contrast.
+4. **MATERIALITY / CI.** `materiality_floor`, `below_materiality_floor`, `materiality_note` on the
+   payload, rendered via `dg-sb__counterweight` (`ModelScoreboard.tsx:184-191`). Every effect carries
+   `ci_low`/`ci_high`.
+**Unprompted discipline worth recording:** `what_would_answer_it` states *"No date is promised here
+because the rate depends on capture coverage, not on the calendar."* — refuses to invent a deadline,
+the exact error Tower made this morning with the "irrecoverable clock."
+**STILL UNCOMMITTED: 48 paths.**
+
+## 2026-08-18 20:2x — ⚠ STUDIO OVERTURNED ITS OWN A1, AND THE REFINEMENT (A7) IS BIGGER
+**Studio re-checked A1 after the response and found the audit gate is DELIBERATE AND WORKING:**
+Roster Audit's DVS column shows **prospect-engine players only**; active players are suppressed on
+purpose. **TOWER VERIFIED INDEPENDENTLY 20:2x on `/api/roster/audit`:** exactly **4 of 27 rows carry a
+DVS — Kaelon Black 61.55 (PROSPECT_C), Omar Cooper Jr. 70.99 (PROSPECT_C), Chris Bell 62.46
+(PROSPECT_C), Fernando Mendoza 85.14 (PROSPECT_D). ALL FOUR ARE PROSPECTS.** All 23 blanks are
+`PRE_MODEL` — including **Garrett Wilson** and **Tank Dell**.
+**⇒ A1's diagnosis was wrong; the defect is NAMING, not disagreement.** Three true statements — a
+position is validated, an engine is not, the visible number came from the other engine — are printed
+together while the word "engine" appears nowhere the reader can see.
+### ⭐ STUDIO A7 — DECISION-GRADE, AND THE SHARPEST FINDING OF THE DAY
+**The 0–100 score is TWO DIFFERENT SCALES on one column**, scored against different yardsticks
+depending on engine. On David's roster: **Fernando Mendoza (unproven college QB) reads 85.14 — the
+highest number on his screen — with NO projection behind it, while Garrett Wilson reads blank.**
+The model does hold a view on the actives (Jeanty 75.3 = 11.8 projected PPG); the screen shows a
+blank column instead. **The split falls exactly along the line David is choosing across as a
+rebuilder.** VERIFIED by Tower at the observable level.
+**Studio's third self-surfaced error today:** it had told David AND the crew that DVS is projected
+points × a constant. **True for actives, FALSE for all 80 prospects** (score, no projection) — it had
+measured the ratio only on players holding both numbers. Its own words: *"Every mistake I made today
+was that same shape: right arithmetic, wrong population."*
+### ⚠ CONSEQUENCE FOR TOWER: THE 19:35 A1 RELAY TO 1.1 IS NOW PARTLY STALE
+Tower relayed A1 as an unexplained disagreement **and added its own confirming re-derivation**.
+Studio has since answered its own open question — the gate is deliberate. **1.1 read A1 at ~20:1x and
+recorded it as "plausible, nothing implemented," so no work was misdirected — but the crew's picture
+is one revision behind. Flagged to David; a follow-up relay is his call, not Tower's.**
+### BOTH LANES ARE PARKED ON A DAVID QUESTION; NEITHER GHOST IS SENT
+- **1.1:** *"Want me to finish the snapshot and route the visual audit, or look at A1 first?"* Ghost
+  text reads "finish the snapshot and route the visual audit" — **NOT sent.**
+- **2.1:** *"Tell Tower to relay the new item — Studio A7 … — or tell me to hold it and just design
+  against it."* Ghost text reads "tell tower to relay A7" — **NOT sent.**
+### 1.1's OWN DISCLOSURES ON THE SCOREBOARD (theirs, recorded)
+Dropped 12 of 14 contrasts — two questions, not fourteen. Self-corrected its own copy ("each week adds
+a season-equivalent" was false; these are season folds). **Three defects its guardrails caught in its
+own work**, the serious one being the component dereferencing `position_scope` without a shape check —
+a drifted payload would have CRASHED the surface instead of degrading to unavailable. 293/293 frontend
+tests pass. **Not calling it done: OpenAPI snapshot will drift, and NO visual audit has been run —
+"contract-green is not visual-green."**
+
+## 2026-08-18 20:3x — TOWER REVERSES ITS OWN 19:1x TOP-PRIORITY CALL. SEQUENCING OF RECORD.
+**At 19:1x Tower told David the top priority was THE QB MODEL. Tower now believes that was wrong**
+and told him so. The reasoning that changed it:
+**THE HARD CONSTRAINT, stated plainly for the first time:** the model's EDGE is not available to
+David this season, and no amount of work makes it available. QB/RB/TE fail g3_market_superiority
+(live gate, verified 19:1x). That cannot be fixed AND proven in 23 days: outcomes do not exist until
+games are played, and model-vs-market needs forward-accrued point-in-time prices (~Dec 2026 earliest,
+per 024 R2). **Therefore "beat the market by Week 1" is not on the table. It was never on the table.**
+**THE REFRAME:** what IS available this season is the model's DESCRIPTION — projections in points per
+game, age curves, capacity, divergence as a flag to investigate. **And that is precisely what the
+product is worst at delivering.** A7 (roster screen shows prospects only, actives blank), the DVS
+clamp (still applied), A5 (projections rendered unlabelled and unitless), A2/R5 (do-not-use copy over
+data on disk) are **one defect in four costumes: the product hides its own numbers behind a composite
+score it cannot justify.**
+**Why descriptive beats model work under this constraint:** a PPG number degrades GRACEFULLY with
+model quality — David has 15 years of football judgment and can look at "11.8 points a game" and say
+that is wrong. He cannot do that with "75.3". **A composite score requires trust the model has not
+earned; a projection invites the judgment David already has.**
+**Note: this is Studio's 024 R3 verbatim from months ago — "DVS is projection_2y rescaled; publish
+the PPG instead." Studio has been right about this the entire time.**
+### THE SEQUENCE TOWER GAVE DAVID
+1. **NOW → ~5 days: show what the model already knows.** The A7/clamp/A5/R5 cluster. PPG becomes the
+   primary number; the 0–100 score is demoted or engine-labelled.
+2. **~1 week: let it accrue honestly.** Scoreboard live, scorer grading from Week 1, health signal
+   truthful. Add model-card vintage disclosure. Otherwise DO NOT TOUCH IT.
+3. **Season-long: the model.** QB-1's composite finding applied; G3 worked. **Year-1 work whose
+   payoff is Year 2.** Ship the best honest model BEFORE Week 1 so it is what gets graded.
+**DO NOT DO BEFORE WEEK 1:** decision-grade gate · bundle freshness · grounding build · **and above
+all a large model push landing unvalidated in late August** — the tempting one.
+**Standing observation, not a directive: Studio has been right more often than the crew or Tower
+today** (found the DVS-API gap both missed; overturned its own A1 with a better finding; three
+self-surfaced errors). **Evidence about where attention pays — NOT a reason to task it. Inversion
+rule holds.**
+
+## 2026-08-18 20:4x — A7 CARRIED BOTH WAYS; TOWER'S RECOMMENDATION IS TO LEAVE STUDIO ALONE
+**Verified the sequencing prompt LANDED in 1.1** (distinctive phrase present in buffer; BUSY=yes,
+spinner-elapsed) before telling Studio anything — did not assume from David's message.
+**Sent Studio a short acknowledgment: A7 carried, its open question closed, its own ratio correction
+recorded as ITS correction. Contamination scan clean. VERDICT=DELIVERED (marker at foot, found).**
+**No direction attached, and deliberately so.**
+### ⭐ THE DISCIPLINE CALL, RECORDED BECAUSE IT IS THE HARD ONE
+Studio declared its own next thread BEFORE knowing our priority: *"your model does have a real
+opinion about nearly every player on your roster, in points per game, and right now the screen shows
+you a blank column instead."* **That is the same thread as the sequencing Tower gave David.**
+**Convergence is validation — and confirming it to Studio would destroy the mechanism.** If Studio
+learns its pick matched our plan, the next thread it picks is chosen to please us, and the outsider
+value is gone. **So Studio was told the item moved and NOTHING about direction. INVERSION RULE
+applied at the exact moment it was most tempting to break.**
+### WHAT ACTUALLY NEEDS DAVID ON THE STUDIO LANE — unchanged, still unanswered
+- **021 "the trade ledger"** — delivered **2026-08-12**, no reaction recorded. **6 DAYS.**
+- **017 relay R1–R5** — authored, never authorised.
+- **~2026-09-01 fresh-eyes review — 14 days out.** Studio has now spent a full day in forensics;
+  first-impressions value is consumed by use. **Charter says this review is LIVE, not retired.**
+
+## 2026-08-18 20:4x — "relay 021 and 017 back to studio" — TOWER DID NOT EXECUTE; NOTHING TO CARRY BACK
+**Read both from disk before answering.** Neither is a crew→Studio return; **both are Studio→David,
+and the pending direction is FORWARD, not back.**
+- **`017-RELAY.md`** (08-08): Studio's R1–R5 — *"usage data is captured and unserved; two defects in
+  the model capture."* Status: **authored, never authorised to go to the crew.** There is no crew
+  response in existence to carry back.
+- **`021-trade-retrospective.md`** (08-12): a prototype **built and delivered to David**, marked
+  *"Not relayed."* It is a product proposal awaiting David's reaction. **No reaction exists to carry.**
+**Tower will not manufacture David's ruling and will not relay to the crew without his authorisation
+— 017's own recorded status is "not authorised." Asked David for the one word instead.**
+### ⚠ THE COST OF THE UNAUTHORISED 017, NOW MEASURABLE
+**017 R3 = "Eight seasons of usage data captured, zero API routes read it."** Filed **2026-08-08**.
+**That is the SAME defect the crew independently re-derived as 024 R5 on 08-18, and that Studio
+re-filed a third time as 024b A2 tonight.** Studio found it ten days ago; it never moved because the
+relay was never authorised. **Three discoveries of one defect is the price of the unauthorised relay.**
+**Also unexamined and graded HIGH by Studio: 017 R2 — "Rostered player Tank Dell absent from model
+capture entirely."** Tank Dell appeared tonight in `/api/roster/audit` as a `PRE_MODEL` blank row.
+**Tower has NOT verified whether these share a root cause — flagged, not claimed.**
+
+## 2026-08-18 20:5x — 017 VERIFIED AGAINST TODAY'S PRODUCT. EVERY DEFECT IS STILL LIVE.
+David: *"verify it."* Tower re-ran Studio's own repros against the **2026-08-18** captures.
+| # | Studio 2026-08-08 | Tower 2026-08-18 | verdict |
+| **R1** | 113/581 unscored; **all** in the 1–7 game band; 0g 6%, 1–7 **66%**, 8+ **0%** | **115/583**; 0g **6%**, 1–7 **66%**, 8+ 1 row | **STILL LIVE, essentially unchanged.** One 8+ exception now exists, so the absolute "no unscored row has more than 7 games" no longer holds exactly. |
+| **R2** | Tank Dell (sleeper 9502): **0** rows in model capture, market has him | capture 2026-08-18: **0 model rows**; market **`Tank Dell\|1204\|76`** | **STILL LIVE. HIGH. Never examined by anyone.** |
+| **R3** | zero routes read the usage store | zero — the single grep hit was a FALSE POSITIVE (`ngs_` inside `unexpected_settings_hash`) | **STILL LIVE.** |
+| **R4** | depth-chart feed stopped, still ingesting | `depth_charts` holds **2018–2024 only**, latest 2024 wk22, 812,074 rows; **no 2025/2026 data** | **STILL LIVE** (the specific 2026-03-14 stop date is not verifiable from the table). |
+| R5 | endpoint shape request | — | request, not a defect |
+**⇒ 017 IS NOT OVERTAKEN. It is entirely current, eleven days on. R1 was filed marked *"in flight —
+David is already filling these in"*; that work did not land.**
+### ⭐⭐ THE SYNTHESIS — TWO DIFFERENT CAUSES WEAR THE SAME BLANK ON DAVID'S SCREEN
+Measured 20:5x on the 08-18 capture vs `/api/roster/audit`:
+| player | 2025 games | DVS **in the capture** | on the roster screen |
+| Garrett Wilson | **7** | **None** | blank |
+| Braelon Allen | **4** | **None** | blank |
+| Ashton Jeanty | 17 | **75.3** | **blank** |
+| Rasheen Ali | 8 | **20.7** | **blank** |
+**Garrett Wilson is blank because the model genuinely has no opinion (017 R1, the 1–7 game band).
+Jeanty is blank because the surface declines to show the opinion it HAS (024b A7, the engine gate).
+Same pixel. Opposite meanings — "we don't know" versus "we're not telling you." Nothing on the
+screen distinguishes them.**
+**This is Tower's own finding, obtained only by verifying 017 against tonight's A7. Neither Studio
+nor the crew has stated it. Do NOT blur A7 and R1 together — they are separate defects that happen
+to collide on one column.**
+
+## 2026-08-18 21:0x — 017 RELAYED TO 1.1 (David's word: "relay 017 to claude") — 13 DAYS LATE
+Carried in full (4,571 bytes). **Framed on the 024 precedent: "RELAY FROM STUDIO … Not a directive;
+no priority attached to any item."** Every Studio figure paired with Tower's 2026-08-18 re-run so the
+crew sees drift or its absence without taking anyone's word.
+**Attribution kept clean in both directions:** R1's withdrawn first framing carried as Studio's own
+withdrawal; R1's "already in flight, not an ask" note carried with the neutral fact that the figures
+have not moved (no blame language); R3 noted as the ORIGINAL filing of the defect later re-derived as
+024 R5 and 024b A2; **and the two-causes table explicitly labelled "NOT STUDIO'S — TOWER'S OWN
+MEASUREMENT," offered as a distinction and not a request.**
+**⭐ VERDICT: `DELIVERED` — marker found in transcript, whole buffer searched.** Marker at foot again.
+**Standing lesson for the seat, recorded plainly:** 017 sat unauthorised from 2026-08-08 to
+2026-08-18. In that window its R3 was independently rediscovered TWICE (024 R5, 024b A2), its R1 root
+cause went unaddressed while the blank column it explains became tonight's top finding, and its R2
+(HIGH) was never examined by anyone. **The cost of an unsent message is not zero and is not visible
+until someone measures it.**
+
+## 2026-08-18 21:2x — ⭐⭐⭐ THE CHAIN CLOSED: `feature_refresh` GREEN-OVER-DEGRADED COST 115 VALUATIONS
+**The write lane found it; Tower verified every link independently at 21:2x.**
+- `app/data/features_runtime/engine_b_features_runtime.csv`, `feature_season` counts: 2018 **355** ·
+  2019 **379** · 2020 **382** · 2021 **381** · 2022 **371** · 2023 **373** · 2025 **505** —
+  **2024 IS ABSENT. ZERO ROWS.**
+- Sub-8-game players: **2023 → 44. 2025 → 115.** (2025 median games_t 13, max 21.)
+- **`ff_opportunity` on disk holds ALL EIGHT seasons at ~6,000 rows each, INCLUDING 2024 (6,005).**
+  **The source data was never missing. The store built from it is.**
+**⇒ `games_t < 8` for 115 players is a fact about the PIPELINE, not about those players.**
+**THE FULL CHAIN, now traceable end to end:** `feature_refresh` runs with 4/5 streams on stale cache
+and `participation` empty → the feature store loses 2024 and truncates 2025 → 115 players read
+`games_t < 8` → the composite falls to a blend requiring an Engine A prior → the prior requires draft
+capital → draft capital is `None` for every active player → **the score dies, the projection
+survives** → 115 blank rows on David's roster screen, each with a real PPG figure sitting unused.
+**And `/api/health` graded that artifact `fresh` the entire time — until yesterday's gate landed.**
+**Three independent counts converge on 115:** Studio's 1–7 band (08-08 and 08-18), the unscored
+capture rows, and `games_t < 8` in the feature store.
+### ⚠ TOWER ERROR #6 — AND THE PROMPT WAS CAUGHT BEFORE IT WAS SENT
+**Tower told David at 21:0x that "R1 is modelling" and should jump the queue. WRONG.** It is a
+**data-refresh defect with a rendering consequence**; the fix needs no research because the source
+data is already on disk. **Verified the tomorrow-prompt had NOT been sent (0 hits in 1.1's buffer),
+rewrote it, re-clipboarded.** Same root cause as the day's other five: a conclusion drawn one layer
+above the artifact.
+### WHY THIS IS THE DAY'S FINDING
+**The health-signal work was NOT hygiene.** A green light over a degraded run cost David **115 player
+valuations**, invisibly, for as long as anyone has looked. Tower named `feature_refresh` green-over-
+degraded at 08:35 and again three times without ever tracing it to a cost. **The lane traced it in
+one evening. Record that: naming a defect is not the same as knowing what it costs.**
+### CONTEXT NOTE
+David instructed 1.1 to make the finding durable and then clear (ctx 63%). **Tomorrow's prompt is
+written to carry the whole verified chain into a fresh context.**
+
+## 2026-08-18 21:4x — CODEX + GEMINI READ. ⚠ ONLY ONE OF THEM IS INDEPENDENT.
+### CODEX (1.2) — GENUINELY INDEPENDENT, STILL RUNNING (3m46s at read time)
+Strongest interim result, its own computation:
+`{'feature_low': 115, 'scoreless_projection': 115, 'intersection': 114, 'feature_only': 1, 'pvo_only': 1}`
+**⇒ The two populations are the same 114 people, with one exception each way.** Independent
+confirmation that the feature-store low-games set and the scoreless-with-projection set coincide.
+*(An earlier line in its transcript reads `intersection 0` — that is a SUPERSEDED intermediate from
+before its join was keyed correctly. Do not cite it.)* Also mid-run: several `KeyError`s and a
+`PreToolUse hook (failed)`; it is iterating. **No verdict yet.**
+### ⚠ GEMINI (1.3) IS NOT A SECOND CONFIRMING VOTE — IT IS AN ECHO
+Its transcript reads *"Received awareness notification on w#r1-unscored. Recorded operational
+telemetry facts"*. The analysis block above it is the **awareness copy of the write lane's finding**,
+not Gemini's derivation — it even reproduces the write lane's self-correction verbatim ("I earlier
+accepted games_t=7 as a fact about Garrett Wilson"). **Counting it as corroboration would be exactly
+the error class Tower has made five times today. It is recorded as ECHO, not confirmation.**
+It did carry one useful specific: the mechanism cited to `pvo_assembler.py:394-425`.
+### ⭐ TOWER VERIFIED THE MECHANISM IN SOURCE, 21:4x
+- `engine_b_contract.py:107` — `ENGINE_B_MIN_GAMES_T: int = 8`.
+- `pvo_assembler.py:396-402` — `_below_games_gate = games_t is not None and float(games_t) < ENGINE_B_MIN_GAMES_T`.
+- `:404-411` — the Engine B DVS path runs **only if NOT `_below_games_gate`**.
+- `:414-425` — Dead Window bridge, "Phase 15 precision-weighted Bayesian blend for games_t [1,7]",
+  requires `_dvs_a = engine_a_result["dynasty_value_score"] if engine_a_result else None`.
+**⇒ No Engine A prior ⇒ no blend ⇒ no score. `projection_2y` is computed regardless, which is why the
+projection survives and the score dies. MECHANISM CONFIRMED.**
+### AGAINST TOWER'S PRE-STATED CRITERIA (set 21:37, before any result)
+**Nothing has refuted the diagnosis. But NEITHER falsifier Tower named has been tested:**
+(a) is 2024's absence DELIBERATE (holdout / rolling window)? **Untested.**
+(b) does `games_t` derive from the store that would be rebuilt? **Untested.**
+(c) Tower's own weak link — 2025 carries **505** rows against ~**375** for every other season, which
+is MORE, not fewer, than a truncated season would suggest. **Unexamined by anyone.**
+**Status: mechanism confirmed hard; root cause plausible and unfalsified but not yet tested where it
+is weakest.**

@@ -2922,3 +2922,103 @@ it about — never the generalisation Studio wrote around it.**
   **invented sleeper ids** (Jeanty 8138, Kraft 9493; the real ones are 12527 and 9484), then ran every
   command in the file verbatim before it left. **A repro path is a claim and has to be executed, not
   composed.** Nothing in any instrument would have caught it.
+
+- **2026-08-18 LATE — 024b came back five-of-six confirmed, and the ONE refinement they offered was
+  the thread that unravelled a wrong fact in Studio's own foundation.**
+  **What they gave back:** `dvs_clamped` is no longer computed-and-discarded — it is now written into
+  the producer artifact with a `dvs_p90_ref`, though still absent from the API, the client and every
+  route. Their sentence for it is exact: *the data layer records the truncation and the served
+  surface does not.*
+  **Checking that one field produced three things Studio did not know.**
+  1. **A1's mechanism, now answerable.** They said whether the audit's stricter gate is deliberate
+     "is not answerable from the payload." It is answerable from the artifact: **Roster Audit renders
+     Engine A rows only** — the 4 numbers visible on David's roster are all prospects; all 22 Engine-B
+     scores are suppressed, exactly as the row caveat says. So the gate is working as written and
+     **the defect is purely labelling**: a position-level status ("RB: VALIDATED"), an engine-level
+     status ("Engine B not yet validated") and an Engine-A number are rendered together with the word
+     "engine" appearing nowhere the reader can see. Three true statements reading as one contradiction.
+  2. **The register's headline fact was WRONG, and Studio wrote it.** *"DVS = projection_2y × a
+     per-position constant"* holds for Engine B's 503 rows and is **false for the 80 Engine-A rows**,
+     which carry a score and **no projection at all**, against different references (WR 12.7 vs 14.5,
+     QB 16.7 vs 20.1). **The cause is a method error worth naming: the ratio was measured only on rows
+     carrying BOTH fields, which silently excluded every row missing one. A ratio computed on the
+     intersection cannot support a claim about the union.** Same family as the frontend-only comparator
+     search that had to be withdrawn hours earlier — *a claim about a population, evidenced on a subset
+     that was chosen by the very field being claimed about.*
+  3. **The design consequence, which is the part that matters:** the same 0-100 scale means two
+     different things, and it splits **exactly along the line a rebuilder is choosing across** — his
+     prospects against his active players. On his own roster, **Fernando Mendoza reads 85.14 and
+     Ashton Jeanty reads `—`**, when the model scores Jeanty 75.3 (11.8 projected points a game) and
+     Mendoza's 85.14 has no projection behind it.
+  **And a self-correction inside the same hour, caught by building the tool properly rather than
+  reasoning:** Studio filed KhaDarel Hodge as "the one row that does not reproduce the formula."
+  Applying the clamp the formula actually has, **all 388 reproduce** — he is the FLOOR clamp firing
+  (projection −0.753 → raw −5.2 → served 0.0), not an exception. **The claim was wrong because the
+  check omitted a step the thing being checked has.** Both ends of the scale erase the model's
+  opinion; only the top one had been noticed.
+  **The pattern across today, stated once because it is now three-for-three:** every Studio error this
+  session was a **scope** error, never an arithmetic one — searched one layer, cited one directory,
+  measured one subset, omitted one clamp. The numbers were right every time and the population they
+  described was wrong. **Instruments do not catch this; only asking "what did this check NOT look at"
+  does.**
+
+- **2026-08-18 LATE — *"i don't see it."* Two failures in one line, and the second was mine twice over.**
+  **The literal one first, because it is the one he actually said.** Studio pitched a narrowed design
+  thread and asked him to react to it **with nothing on his screen** — the last thing opened in his
+  browser was the roster surface from an unrelated finding, hours earlier. **A pitch without a picture
+  is a draft**, which is this engagement's own standing rule since 2026-07-15, broken here after three
+  consecutive prose-only messages. **Never ask him to react to something that exists only as prose in
+  the pane.** Nothing else in the reply matters until that is fixed.
+  **Then building the picture killed the thread it was built to sell.** The pitch was *"the five
+  largest independent opinions in the model are all quarterbacks, and it likes Dillon Gabriel ~2 points
+  a game more than last season while the app ranks him 4th most cuttable."* Computing those five
+  players for the figure showed the residuals had been fitted on a baseline **pooled across all four
+  positions**. Quarterbacks score far more per game than skill players, so a pooled mean inflates every
+  QB residual. Re-fitted within position: Darnold +3.06→**+1.45**, Ward +3.11→**+1.11**, Tua
+  +2.36→**+0.33**, Young +2.07→**+0.37**, **Gabriel +1.97→−0.64**. **Gabriel's edge is negative**, and
+  all four of David's scored quarterbacks sit *below* the QB baseline. **There is no player he owns
+  that our model has a distinctive view about.**
+  **The self-implicating part, stated plainly:** Studio spent the hour proving the model is
+  regression-to-the-mean wearing a forecast's clothes, **and then quoted that same regression back to
+  him as the model's opinion.** The artifact caught it; no instrument did, and the summary table it
+  came from looked fine.
+  **THIS IS THE THIRD INSTANCE OF ONE CLASS — pooling across incomparable populations.** 2026-07-30:
+  *"raw rank gaps averaged across incomparable pools — 36 ranks among 45 QBs ≠ 36 among 140 WRs."*
+  2026-07-22: *"a raw model-vs-market gap sort is mostly an age sort."* Tonight: the same error in
+  points-per-game space. **The rule, and it is now written where it will fire: fit the baseline inside
+  the population the claim is about, and never read a residual computed against a pooled one.**
+  **What survives the correction, because not everything died:** the model IS last season shrunk
+  (R² 0.887; 0.85-0.89 at RB/WR/TE) — that fit was never the pooled calculation. QB's within-position
+  shrink R² of 0.513 stands, and the restricted-range control held. And the honest characterisation of
+  what the model does differently at quarterback is that it marks **proven producers down** — five of
+  the ten largest per-position departures are QBs and every one is negative (Fields −3.84, Penix −3.60,
+  Brissett −3.42, Purdy −3.41, Mariota −2.86). That is a pessimism, not an edge, and none of them is his.
+  **Draw earlier.** The figure is an instrument, not a deliverable, and this one convicted the pitch
+  that commissioned it before it cost him anything but one line.
+
+- **2026-08-18 — Session closeout: the day two relay rounds landed and two design framings died.**
+  **The arc.** RELAY 024 answered (4 confirmed, 1 open, 2 Studio method errors withdrawn) → answering
+  their one question produced **024b**, six live findings → 024b answered (5 confirmed, A3 unchecked,
+  1 refinement) → checking that refinement produced **A7** (the 0-100 score is two different scales)
+  **and convicted a wrong fact in Studio's own register** → A7 carried → returned to design, announced
+  a thread, **tested its premise and killed half of it**, then **drew the other half and killed that
+  too, on Studio's own analytical error.**
+  **What worked and should keep happening:**
+  - **Answering the engineers' question instead of defending the claim.** Their one handed-back
+    question produced six findings; the highest-value work of the day was downstream of "let me go
+    check that."
+  - **Testing the premise of a thread before building it.** Two surfaces were not built. Both would
+    have restated what the manager already has.
+  - **Running every repro command verbatim before the brief left.** Two `curl` lines carried invented
+    player ids. No instrument would have caught it; executing them did.
+  - **Improving the instrument by pointing it at real files.** `foundation-check` gained `file:line`
+    localisation and per-rule scope; three false-positive classes were found by using it, none by its
+    selftest — and **the selftest then caught Studio breaking the tool while narrowing it.**
+  **The one that cost his attention, and it is procedural, not analytical:** three prose-only messages
+  in a row ending in *"react to this thread"* with **nothing on his screen**. *"i don't see it."*
+  **The rule already existed since 2026-07-15.** Draw first, pitch second — and the figure is an
+  instrument, not a deliverable: building it is what exposed the pooled-baseline error.
+  **Verified at closeout:** `dvs_clamped` and `dvs_p90_ref` remain absent from `openapi.json` and the
+  generated client, so A6 stands as filed. The product repo's modified files are the in-house team's
+  concurrent work (capture-health routes, contract tests, `dg_delivery.py` — the same files as
+  2026-08-17), **not Studio writes**. Port 8000 is a `--reload` server Studio did not start; left up.

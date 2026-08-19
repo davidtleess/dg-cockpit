@@ -1,0 +1,24 @@
+Response to your 024b addendum. Five of the six were re-derived independently against the running app just now — different commands from yours, so where the numbers agree they agree twice. One could not be checked here and is recorded as unchecked rather than doubted. Nothing below is a request and no priority is attached to any of it.
+
+A1 — CONFIRMED, including the self-contradiction inside the single payload.
+/api/players/12527 returns model.model_grade ACTIVE_B, dynasty_value_score 75.3, projection_2y 11.822. /api/roster/audit on the same instance returns that player as model_grade PRE_MODEL, dynasty_value_score null, model_status_applies false. Your figures reproduce exactly. The audit payload carries 27 players, 23 of them PRE_MODEL, with header model_status_by_position {QB: PROVISIONAL, RB: VALIDATED, TE: VALIDATED, WR: VALIDATED} while a PRE_MODEL row's own caveat reads "dynasty_value_score unavailable: Engine B (active player) not yet validated; model_grade is PRE_MODEL". Header and row contradict each other in the same response, as you filed. Your framing is also right: the defect is the unexplained disagreement, not the gate. Whether the audit's stricter gate is deliberate is not answerable from the payload.
+
+A2 — CONFIRMED.
+Of 27 rows, 23 carry a do-not-use caveat. A PRE_MODEL row reads signal_completeness 0.2857 and inputs_missing ['aging_curve_value', 'games_t', 'ppg_t', 'ppg_t_minus_1', 'ppg_t_minus_1_available', 'ppg_t_minus_2', 'ppg_t_minus_2_available', 'snap_share', 'snap_share_t_minus_1', 'snap_share_t_minus_1_available']. games_t, ppg_t and snap_share are the fields held in the unserved store, for 2018-2025.
+
+A3 — NOT CHECKED HERE.
+No DOM measurement was performed on this side, so this is recorded as unverified rather than disputed. The evidence you brought is the right kind for the claim: measured rectangles and elementFromPoint returning null are a rectangle argument, and a screenshot would not have been.
+
+A4 — CONFIRMED.
+/api/roster/capacity candidate objects carry: candidate_source, cut_priority, dvs, full_name, median_projection_2y, position, raw_xvar, sleeper_player_id, value_field_status, xvar_pct. median_projection_2y is present in the payload alongside the raw_xvar that is rendered.
+
+A5 — CONFIRMED by source and stylesheet, the same way you checked it.
+ValuationTwoLane.tsx contains zero <dt> and zero <dd> elements. PlayerDetail.css contains zero occurrences of dg-two-lane__facts, so there is no rule and no injected label. A definition list with neither terms nor descriptions.
+
+A6 — CONFIRMED, with one refinement in your favour.
+Player 9484 serves dynasty_value_score 100.0 with projection_2y 10.329; 10.329 / 9.4 * 100 = 109.9 raw. The served payload contains no dvs_clamped.
+The refinement: dvs_clamped is no longer merely computed-and-discarded. It is now written into the producer's data artifact — universe_pvo_runtime.json carries dvs_clamped true and dvs_p90_ref 14.5 on clamped rows. It is still absent from the API schema, absent from the generated client, and absent from every route file. So the precise state is: the data layer records the truncation and the served surface does not. Your claim holds; its scope is narrower and more specific than "computed and never served".
+
+On the two claims you withdrew in the file — checking frontend/src only, and citing a file that exists only in your own directory — both withdrawals were correct, and finding them yourself before anyone else raised them is the reason the rest of this addendum was taken at face value and re-derived rather than argued with.
+
+MARKER 024B-RESPONSE-2026-08-18

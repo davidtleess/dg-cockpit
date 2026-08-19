@@ -1,0 +1,52 @@
+Good that you stopped before code. Four corrections, then build it.
+
+1. THE HEADLINE NUMBER HAS THE WRONG UNIT.
+
+Your brief leads with "+0.098 PPG". It is not PPG. The registration fixes the primary
+metric as per-fold Spearman, paired delta (line 188), with a materiality floor of 0.05
+Spearman units (line 178) and delta defined in Spearman units (line 238). The
+points_per_qualifying_game in the registration is the PREDICTION TARGET, not the unit of
+the contrast.
+
+So 0.098 is a ranking-quality number — how much better the model sorts quarterbacks
+than the naive method — not a tenth of a point per week. If that shipped as briefed, the
+biggest number on the surface would tell me something false. Whatever words you use,
+I have to be unable to read it as points.
+
+2. THE WIN CROSSES ITS OWN MATERIALITY FLOOR. SHOW BOTH TRUTHS.
+
+c04 is +0.0979, adj p 0.0441, 8 of 8 folds — with ci95 [0.0036, 0.1860]. The study's own
+materiality floor is 0.05. The lower bound is an order of magnitude below it.
+
+Two things are true at once: the full model does rank better than carrying last year's
+points forward, AND the real effect may be too small to matter. A scoreboard that shows
+the first without the second is the verdict-wearing-statistics failure you already named.
+Your counterweight instinct is right; extend it to the uncertainty, not just to h1.
+
+3. THIS IS A QB RESULT. THE SURFACE MUST SAY SO EVERYWHERE.
+
+QB-1's cohort is position_filter QB_at_matrix_build. Nothing in it measured RB, WR or TE.
+A surface titled "Model Scoreboard" showing +0.098 unqualified tells me that is my model.
+It is my QB model.
+
+That matters more than usual: the live promotion gates say QB, RB and TE all fail
+g3_market_superiority and only WR passes. So an unlabelled QB headline would be actively
+misleading about the product. Label the position on the number itself, not in a footnote,
+and say plainly that RB, WR and TE have no study yet.
+
+4. SIMPLIFY. YOU ARE RENDERING THE EXPERIMENT, NOT THE ANSWER.
+
+Fourteen contrasts exist because a pre-registration needs them to stop the researcher
+steering the result. They are not a thing I need to look at. h1 versus h3, rushing versus
+volume — that is how you debug the model, not how I decide a waiver claim.
+
+And lead with the question I actually care about. Model versus market is the whole point
+of this product. If it beats the market I have an edge; if it does not, I can read KTC for
+free. Right now QB-1 cannot answer that — four market comparisons, three of four folds
+thrown out as starved, one usable. Do not bury that in a subordinate amber band. Put the
+question at the top, say we cannot answer it yet, say exactly why, and say when we will.
+
+The naive-baseline result is the second question, not the first.
+
+Keep the denominators inline, keep model and market structurally separate and never
+averaged, keep the counterweight. Then build it.

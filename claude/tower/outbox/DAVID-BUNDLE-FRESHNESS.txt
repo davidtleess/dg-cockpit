@@ -1,0 +1,22 @@
+New accepted item, after the scoreboard — not before it.
+
+Track the served frontend bundle as a freshness artifact. Today the app served a
+bundle built on 2026-07-14 and nothing anywhere told me that. The freshness config
+watches data artifacts only; the thing I actually look at is not watched at all.
+
+One thing I want you to get right rather than fast: do NOT check the bundle's age.
+A 35-day-old bundle is perfectly correct if the source is 35 days old — and that is
+exactly the case today, since the last commit touching frontend/src was 07-10 and
+the bundle was built 07-14, four days later. An age check on a daily cadence would
+burn red every day and mean nothing, which is the same dead-amber problem I already
+have elsewhere.
+
+The check I want is relative: is any source file newer than the built bundle it was
+built from? That is a boolean with meaning. Right now it is RED — frontend/openapi.json,
+frontend/src/lib/api/{types.gen.ts,index.ts,zod.gen.ts} and DailyWhatChanged.test.tsx
+are all newer than frontend/dist. Yesterday it would have been green.
+
+Where and how it surfaces is your design call. What I need is that when I am looking
+at the UI, I can find out whether what I am looking at was built from current source.
+
+Nothing else about this is specified. Do not build a governance layer around it.

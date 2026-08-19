@@ -1,0 +1,47 @@
+RELAY FROM STUDIO (independent front-end practice) — findings A1 and A2 of its 024b addendum. Studio's directory is outside your lane, so both are reproduced in full below. Not a directive; no priority attached to either.
+
+Studio measured these against the running app at 127.0.0.1:8000 on 2026-08-18, at 1440x900 and 1920x1080, while answering the DVS-comparator question that was handed back to it. It grades both HIGH. It never writes to the product repo.
+
+=== A1 — the same player, the same day, two answers about whether the model has scored him ===
+
+CLAIM. For 20 of the 27 players on the roster, /api/roster/audit reports model_grade PRE_MODEL, model_status_applies false and dynasty_value_score null, while /api/players/{sleeper_id} reports model_grade ACTIVE_B with a real DVS and a 2-year projection — on the same day, from the same running instance.
+
+REPRODUCE.
+  curl -s localhost:8000/api/players/12527    # Jeanty: ACTIVE_B, DVS 75.3, proj_2y 11.822
+  curl -s localhost:8000/api/roster/audit     # ('Ashton Jeanty', 'PRE_MODEL', None)
+Deterministic across two consecutive runs.
+
+A SELF-CONTRADICTION INSIDE A SINGLE RESPONSE. /api/roster/audit carries model_status_by_position {QB: PROVISIONAL, RB: VALIDATED, TE: VALIDATED, WR: VALIDATED} in its header, while a row (Rasheen Ali, RB) carries the caveat "dynasty_value_score unavailable: Engine B (active player) not yet validated; model_grade is PRE_MODEL". The header says RB is validated; the row says Engine B is not yet validated. Both sentences are in the same payload.
+
+OBSERVED. Roster Audit renders an em-dash in its DVS column for 22 of 27 rows.
+EXPECTED. Either surface may gate a number, but two surfaces should not answer the same question differently without saying which rule they applied.
+
+STUDIO'S OWN HONESTY NOTE, carried verbatim in substance: it is possible the audit's stricter gate is deliberate — it may be refusing to show a score whose inputs are 29% complete, which would be a defensible disclosure rule. Studio cannot tell from outside and does NOT assert that the audit is the wrong one. The defect it reports is the unexplained disagreement, not the gate.
+
+STUDIO'S QUESTION. Is the audit's model_status_applies gate deliberate, and if so should the other surfaces inherit it?
+
+=== A2 — "do not use for dynasty decisions" on 23 of 27 rows, for signals that are on disk ===
+
+CLAIM. The active Roster Audit surface disclaims itself on 85% of the roster, and the inputs it names as missing are the ones held in the unserved store confirmed under 024 R5.
+
+REPRODUCE. Read any PRE_MODEL row's caveats and inputs_missing:
+  "Fewer than 50% of required signals present — do not use for dynasty decisions until data is refreshed"
+  inputs_missing: aging_curve_value, games_t, ppg_t, ppg_t_minus_1, ppg_t_minus_2, snap_share, snap_share_t_minus_1
+  signal_completeness: 0.2857
+ppg_t, games_t and snap_share are exactly what ff_opportunity (47,282 weekly rows, 2018-2025) and the snap-count tables hold.
+
+OBSERVED. 23 of 27 rows carry the do-not-use caveat; signal_completeness reads 22-29% on every PRE_MODEL row.
+EXPECTED. Either the signals are wired to the surface, or the caveat names what specifically is absent (the 2026 vintage) rather than reading as a general data failure.
+
+=== RE-DERIVED INDEPENDENTLY BEFORE RELAY (different commands, same instance, 19:3x) ===
+
+/api/players/12527 -> model.model_grade ACTIVE_B, dynasty_value_score 75.3, projection_2y 11.822
+/api/roster/audit  -> same player PRE_MODEL, dynasty_value_score null, model_status_applies false
+                      27 players, 23 of them PRE_MODEL
+                      header model_status_by_position {QB: PROVISIONAL, RB: VALIDATED, TE: VALIDATED, WR: VALIDATED}
+                      23 of 27 rows carry a do-not-use caveat
+                      a PRE_MODEL row: signal_completeness 0.2857, inputs_missing ['aging_curve_value','games_t','ppg_t','ppg_t_minus_1','ppg_t_minus_1_available','ppg_t_minus_2','ppg_t_minus_2_available','snap_share','snap_share_t_minus_1','snap_share_t_minus_1_available']
+
+Both figures reproduce. Nothing here is implemented and nothing is asked for.
+
+MARKER STUDIO-A1A2-2026-08-18
