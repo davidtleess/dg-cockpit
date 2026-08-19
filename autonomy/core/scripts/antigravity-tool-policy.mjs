@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import { homedir } from "node:os";
 import { resolve } from "node:path";
 
 import {
@@ -22,23 +23,70 @@ async function readInput() {
   return JSON.parse(chunks.join(""));
 }
 
-function fileTargets(name, args) {
-  const targets = [];
-  for (const key of ["file_path", "path", "target_file", "targetFile"]) {
-    if (typeof args?.[key] === "string") targets.push(args[key]);
-  }
-  if (Array.isArray(args?.edits)) {
-    for (const edit of args.edits) {
-      if (typeof edit?.file_path === "string") targets.push(edit.file_path);
-      if (typeof edit?.path === "string") targets.push(edit.path);
+// Antigravity emits PascalCase destination keys such as TargetFile. Normalize
+// key casing so valid in-worktree writes reach the scope check instead of
+// being rejected as targetless.
+const TARGET_KEYS = new Set([
+  "file_path",
+  "filepath",
+  "path",
+  "target_file",
+  "targetfile",
+  "target_path",
+  "targetpath",
+]);
+
+function pushTargets(targets, value) {
+  if (!value || typeof value !== "object") return;
+  for (const [key, candidate] of Object.entries(value)) {
+    if (typeof candidate === "string" && TARGET_KEYS.has(key.toLowerCase())) {
+      targets.push(candidate);
     }
   }
-  if (name === "apply_patch" && typeof args?.patch === "string") {
-    for (const match of args.patch.matchAll(/^\*\*\* (?:Add|Update|Delete) File: (.+)$/gm)) {
+}
+
+function fileTargets(args) {
+  const targets = [];
+  pushTargets(targets, args);
+  for (const key of ["edits", "Edits"]) {
+    if (Array.isArray(args?.[key])) {
+      for (const edit of args[key]) pushTargets(targets, edit);
+    }
+  }
+  const patch = typeof args?.patch === "string"
+    ? args.patch
+    : typeof args?.Patch === "string"
+      ? args.Patch
+      : null;
+  if (patch) {
+    for (const match of patch.matchAll(/^\*\*\* (?:Add|Update|Delete) File: (.+)$/gm)) {
       targets.push(match[1]);
     }
   }
   return targets;
+}
+
+const studioRoot = resolve(homedir(), "frontend-studio");
+const forbiddenRoots = new Set([resolve("/"), resolve(homedir())]);
+
+function collapseWorkspaceRoots(roots) {
+  const resolved = roots
+    .filter((root) => typeof root === "string" && root.length > 0)
+    .map((root) => resolve(root));
+  if (resolved.length === 0) return null;
+
+  // Antigravity reports the repository root plus nested workspace folders.
+  // Accept that shape only when one entry contains every other entry.
+  const authorizedRoot = resolved.reduce(
+    (shortest, candidate) => candidate.length < shortest.length ? candidate : shortest,
+  );
+  if (resolved.some((candidate) =>
+    candidate !== authorizedRoot && !isPathWithinScope(authorizedRoot, candidate))) {
+    return null;
+  }
+  if (forbiddenRoots.has(authorizedRoot)) return null;
+  if (authorizedRoot === studioRoot || isPathWithinScope(authorizedRoot, studioRoot)) return null;
+  return authorizedRoot;
 }
 
 async function main() {
@@ -55,12 +103,20 @@ async function main() {
   const roots = process.env.DG_AUTONOMY_WORKTREE
     ? [process.env.DG_AUTONOMY_WORKTREE]
     : event?.workspacePaths;
-  if (typeof name !== "string" || !args || typeof args !== "object" || !Array.isArray(roots) || roots.length !== 1) {
+  if (typeof name !== "string" || !args || typeof args !== "object" || !Array.isArray(roots)) {
     decision("deny", "Dynasty autonomy requires one explicit authorized workspace");
     return;
   }
-  const authorizedRoot = resolve(roots[0]);
+  const authorizedRoot = collapseWorkspaceRoots(roots);
+  if (!authorizedRoot) {
+    decision("deny", "Dynasty autonomy requires one explicit authorized workspace");
+    return;
+  }
   const cwd = resolve(event?.cwd ?? authorizedRoot);
+  if (!isPathWithinScope(authorizedRoot, cwd)) {
+    decision("deny", "Dynasty autonomy current directory leaves the authorized workspace");
+    return;
+  }
 
   // Loop-control terminal deny (spec F18): once a run is terminal, only
   // read-only inspection may proceed until David's word. Corrupt state on an
@@ -101,7 +157,7 @@ async function main() {
 
   const writeTool = /^(?:write_to_file|write_file|replace_file_content|multi_replace_file_content|apply_patch|Write|Edit|MultiEdit)$/i.test(name);
   if (writeTool) {
-    const targets = fileTargets(name, args);
+    const targets = fileTargets(args);
     if (targets.length === 0 || targets.some((target) => !isPathWithinScope(authorizedRoot, resolve(cwd, target)))) {
       decision("deny", "Requested edit leaves the authorized worktree or has no verifiable target");
       return;

@@ -279,8 +279,14 @@ test("Antigravity adapter assembles the pinned ASW surface", async () => {
     assert.ok(scripts.includes(script));
   }
 
-  const toolHook = manifest.hooks && JSON.parse(await readFile(new URL("hooks.json", pluginRoot), "utf8"))["dg-autonomy"].PreToolUse;
+  const hookManifest = JSON.parse(await readFile(new URL("hooks.json", pluginRoot), "utf8"))["dg-autonomy"];
+  const toolHook = manifest.hooks && hookManifest.PreToolUse;
   assert.equal(toolHook[0].matcher, ".*");
+  for (const phase of ["PreInvocation", "PostToolUse", "Stop", "PreToolUse"]) {
+    const serialized = JSON.stringify(hookManifest[phase]);
+    assert.match(serialized, /\$\{HOME\}\/\.gemini\/config\/plugins\/dg-autonomy\/scripts\//);
+    assert.doesNotMatch(serialized, /\$\{PLUGIN_ROOT\}/);
+  }
 
   const policyPath = fileURLToPath(new URL("scripts/dg-antigravity-tool-policy.mjs", pluginRoot));
   const baseEvent = {
@@ -300,6 +306,39 @@ test("Antigravity adapter assembles the pinned ASW surface", async () => {
     assert.equal(result.status, expectedStatus, `${toolCall.name}: ${result.stderr}`);
     assert.equal(JSON.parse(result.stdout).decision, expectedStatus === 0 ? "allow" : "deny");
   }
+
+  for (const [workspacePaths, toolCall, expectedStatus] of [
+    [
+      [baseEvent.cwd, join(baseEvent.cwd, "docs")],
+      { name: "write_file", args: { TargetFile: join(baseEvent.cwd, "safe.txt"), content: "x" } },
+      0,
+    ],
+    [
+      [baseEvent.cwd, join(baseEvent.cwd, "docs")],
+      { name: "write_file", args: { TargetFile: "/tmp/outside", content: "x" } },
+      2,
+    ],
+    [
+      [baseEvent.cwd, "/tmp/disjoint"],
+      { name: "read_file", args: { path: join(baseEvent.cwd, "README.md") } },
+      2,
+    ],
+    [
+      [process.env.HOME],
+      { name: "read_file", args: { path: join(baseEvent.cwd, "README.md") } },
+      2,
+    ],
+  ]) {
+    const result = spawnSync(process.execPath, [policyPath], {
+      input: JSON.stringify({ ...baseEvent, workspacePaths, toolCall }),
+      encoding: "utf8",
+    });
+    assert.equal(result.status, expectedStatus, `${toolCall.name}: ${result.stderr}`);
+    assert.equal(JSON.parse(result.stdout).decision, expectedStatus === 0 ? "allow" : "deny");
+  }
+
+  const policySource = await readFile(policyPath, "utf8");
+  assert.doesNotMatch(policySource, /DG_HOOK_DEBUG|hook-debug\.log|tool_args_preview/);
 
   const searchableFiles = [
     "plugin.json",

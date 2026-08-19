@@ -52,6 +52,24 @@ async function addTree(sourceRoot, destinationRoot) {
   }
 }
 
+function useInstalledAntigravityScripts(value) {
+  if (Array.isArray(value)) return value.map(useInstalledAntigravityScripts);
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, entry]) => [key, useInstalledAntigravityScripts(entry)]),
+    );
+  }
+  if (typeof value === "string") {
+    // Antigravity does not expand PLUGIN_ROOT in hook commands. Its installer
+    // owns this stable per-user destination and does expand HOME.
+    return value.replaceAll(
+      "${PLUGIN_ROOT}/scripts/",
+      "${HOME}/.gemini/config/plugins/dg-autonomy/scripts/",
+    );
+  }
+  return value;
+}
+
 for (const definition of Object.values(hosts)) {
   for (const skillName of skillNames) {
     const template = await readFile(
@@ -218,7 +236,7 @@ expected.set(
 const upstreamHooks = JSON.parse(
   await readFile(join(vendorRoot, "hooks", "hooks.json"), "utf8"),
 )["antigravity-swarm"];
-const antigravityHooks = {
+const antigravityHooks = useInstalledAntigravityScripts({
   "dg-autonomy": {
     ...upstreamHooks,
     Stop: [
@@ -252,7 +270,7 @@ const antigravityHooks = {
       },
     ],
   },
-};
+});
 expected.set(
   join(antigravityRoot, "hooks.json"),
   `${JSON.stringify(antigravityHooks, null, 2)}\n`,
