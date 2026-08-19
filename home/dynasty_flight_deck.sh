@@ -109,7 +109,7 @@ tmux set -g pane-active-border-style 'fg=#7E9CD8'
 # Idempotent via pidfile; dedupe lives in per-run wire receipts.
 mkdir -p "$HOME/.dg-autonomy"
 nohup node "$COCKPIT_DIR/autonomy/core/bin/resume-wire.mjs" --loop 20 \
-  "/Users/davidleess/dynasty-genius/.git/worktrees/dynasty-genius-product/dg-autonomy/run.json" \
+  "$PROJECT_DIR/.agents/dg-autonomy/run.json" \
   >> "$HOME/.dg-autonomy/resume-wire.log" 2>&1 &
 
 # 9. Finalize focus on the engineering window

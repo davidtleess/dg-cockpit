@@ -29,6 +29,12 @@ test("flight deck loads only the approved role adapters", async () => {
   );
 });
 
+test("flight deck resume wire watches the writable worktree run record", async () => {
+  const flightDeck = await readFile(join(repoRoot, "home", "dynasty_flight_deck.sh"), "utf8");
+  assert.match(flightDeck, /"\$PROJECT_DIR\/\.agents\/dg-autonomy\/run\.json"/);
+  assert.doesNotMatch(flightDeck, /\.git\/worktrees\/[^/]+\/dg-autonomy\/run\.json/);
+});
+
 test("bootstrap activates after host setup and backup verifies source only", async () => {
   const bootstrap = await readFile(join(repoRoot, "bootstrap.sh"), "utf8");
   const hostSetup = bootstrap.indexOf("other agent configs");
@@ -43,6 +49,7 @@ test("bootstrap activates after host setup and backup verifies source only", asy
   const ignore = await readFile(join(repoRoot, ".gitignore"), "utf8");
   for (const entry of [
     ".dg-autonomy/",
+    ".agents/dg-autonomy/",
     "autonomy/.state/",
     "autonomy/.smoke/",
     "autonomy/.plugin-cache/",

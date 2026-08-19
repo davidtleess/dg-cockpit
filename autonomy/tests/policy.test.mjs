@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import test from "node:test";
+import { fileURLToPath } from "node:url";
 
 import {
   classifyCommand,
@@ -15,8 +16,64 @@ import {
   createRun,
   finishRun,
   formatStatus,
+  loadRun,
+  readRunSnapshotSync,
   recordCheck,
+  resolveStatePath,
 } from "../core/lib/run-state.mjs";
+
+test("default run state stays inside the authorized worktree", () => {
+  const repositoryRoot = fileURLToPath(new URL("../..", import.meta.url));
+  assert.equal(
+    resolveStatePath({ cwd: repositoryRoot }),
+    join(repositoryRoot, ".agents", "dg-autonomy", "run.json"),
+  );
+});
+
+test("legacy git-directory state remains readable during migration", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "dg-autonomy-legacy-"));
+  const worktree = join(directory, "worktree");
+  const gitDirectory = join(directory, "git-directory");
+  const initialized = spawnSync(
+    "git",
+    ["init", "--separate-git-dir", gitDirectory, worktree],
+    { encoding: "utf8" },
+  );
+  assert.equal(initialized.status, 0, initialized.stderr);
+
+  const legacyPathResult = spawnSync(
+    "git",
+    ["rev-parse", "--git-path", "dg-autonomy/run.json"],
+    { cwd: worktree, encoding: "utf8" },
+  );
+  assert.equal(legacyPathResult.status, 0, legacyPathResult.stderr);
+  const legacyPath = legacyPathResult.stdout.trim();
+  const legacyRun = { id: "legacy-run", checks: [] };
+  await mkdir(dirname(legacyPath), { recursive: true });
+  await writeFile(legacyPath, JSON.stringify(legacyRun));
+
+  assert.deepEqual(await loadRun({ cwd: worktree }), legacyRun);
+  assert.deepEqual(readRunSnapshotSync({ cwd: worktree }), {
+    status: "ok",
+    run: legacyRun,
+    path: legacyPath,
+  });
+
+  const migrated = await recordCheck(
+    legacyRun,
+    { name: "tests", status: "passed", evidence: "migration probe passed" },
+    { cwd: worktree },
+  );
+  assert.deepEqual(
+    JSON.parse(await readFile(resolveStatePath({ cwd: worktree }), "utf8")),
+    migrated,
+  );
+  assert.deepEqual(readRunSnapshotSync({ cwd: worktree }), {
+    status: "ok",
+    run: migrated,
+    path: resolveStatePath({ cwd: worktree }),
+  });
+});
 
 test("contract exposes four commands and two terminal states", async () => {
   const contract = await loadContract();

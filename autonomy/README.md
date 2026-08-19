@@ -25,7 +25,7 @@ Every terminal run ends exactly `READY_FOR_GATE` or `BLOCKED`. `READY_FOR_GATE` 
 
 The layer never authorizes commit, push, merge, release, publication, destructive work, permission escalation, unapproved scope expansion, or external communication. Claude, Codex, and Gemini hooks deny supported tool calls, wrapped hard-gate commands, opaque inline interpreters, and writes outside the authorized worktree. Malformed hook input fails closed. Native host sandboxes and permission engines remain the final boundary: tool hooks are guardrails, not a claim that arbitrary programs can be proven safe by static command inspection. The third failure of the same required verification becomes `BLOCKED`.
 
-Existing user changes, host settings, hooks, and permissions are preserved. Autonomous work belongs in a dedicated worktree. Run state is stored below the worktree's git directory, not in product source.
+Existing user changes, host settings, hooks, and permissions are preserved. Autonomous work belongs in a dedicated worktree. By default, run state is stored at `.agents/dg-autonomy/run.json` inside that worktree's ignored agent-runtime namespace, so a worktree-scoped sandbox can update it. `DG_AUTONOMY_STATE` remains the explicit override. Records at the legacy worktree Git-directory path remain readable and migrate to the new location on their next mutation.
 
 ## ASW compatibility
 

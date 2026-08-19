@@ -184,7 +184,7 @@ test("Codex marketplace and plugin use the native schema", async () => {
     ),
   );
   assert.equal(manifest.name, "dg-autonomy");
-  assert.equal(manifest.version, "0.2.0");
+  assert.match(manifest.version, /^0\.2\.0(?:\+codex\.[0-9A-Za-z.-]+)?$/);
   assert.equal(
     manifest.description,
     "Safe goal-to-gate engineering autonomy for Dynasty Genius",

@@ -13,10 +13,19 @@ export function resolveStatePath({
   if (statePath) {
     return resolve(statePath);
   }
+  const worktreeRoot = execFileSync(
+    "git",
+    ["rev-parse", "--show-toplevel"],
+    { cwd, encoding: "utf8", timeout: 2000, stdio: ["ignore", "pipe", "ignore"] },
+  ).trim();
+  return resolve(worktreeRoot, ".agents", "dg-autonomy", "run.json");
+}
+
+function resolveLegacyStatePath({ cwd = process.cwd() } = {}) {
   const gitPath = execFileSync(
     "git",
     ["rev-parse", "--git-path", "dg-autonomy/run.json"],
-    { cwd, encoding: "utf8" },
+    { cwd, encoding: "utf8", timeout: 2000, stdio: ["ignore", "pipe", "ignore"] },
   ).trim();
   return resolve(cwd, gitPath);
 }
@@ -73,24 +82,26 @@ export function readRunSnapshotSync({
   statePath = process.env.DG_AUTONOMY_STATE,
   cwd = process.cwd(),
 } = {}) {
-  let path = statePath;
-  if (!path) {
-    try {
-      const gitPath = execFileSync(
-        "git",
-        ["rev-parse", "--git-path", "dg-autonomy/run.json"],
-        { cwd, encoding: "utf8", timeout: 2000, stdio: ["ignore", "pipe", "ignore"] },
-      ).trim();
-      path = resolve(cwd, gitPath);
-    } catch {
-      return { status: "missing", run: null };
-    }
+  let path;
+  try {
+    path = statePath ? resolve(statePath) : resolveStatePath({ cwd });
+  } catch {
+    return { status: "missing", run: null };
   }
+
   let raw;
   try {
     raw = readFileSync(path, "utf8");
-  } catch {
-    return { status: "missing", run: null, path };
+  } catch (error) {
+    if (error?.code !== "ENOENT" || statePath) {
+      return { status: "missing", run: null, path };
+    }
+    try {
+      path = resolveLegacyStatePath({ cwd });
+      raw = readFileSync(path, "utf8");
+    } catch {
+      return { status: "missing", run: null, path };
+    }
   }
   try {
     return { status: "ok", run: JSON.parse(raw), path };
@@ -109,7 +120,15 @@ function assertActive(run) {
 }
 
 export async function loadRun(options = {}) {
-  return JSON.parse(await readFile(resolveStatePath(options), "utf8"));
+  const path = resolveStatePath(options);
+  try {
+    return JSON.parse(await readFile(path, "utf8"));
+  } catch (error) {
+    if (error?.code !== "ENOENT" || options.statePath || process.env.DG_AUTONOMY_STATE) {
+      throw error;
+    }
+  }
+  return JSON.parse(await readFile(resolveLegacyStatePath(options), "utf8"));
 }
 
 export async function createRun(

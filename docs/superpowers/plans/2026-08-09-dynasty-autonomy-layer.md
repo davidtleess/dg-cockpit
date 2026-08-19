@@ -18,7 +18,7 @@
 
 - Create `autonomy/core/contract.json` — canonical commands, roles, capabilities, gates, failure limit, and terminal states.
 - Create `autonomy/core/lib/policy.mjs` — pure action classification and policy evaluation.
-- Create `autonomy/core/lib/run-state.mjs` — worktree-local state transitions stored beneath the worktree git directory.
+- Create `autonomy/core/lib/run-state.mjs` — worktree-local state transitions stored beneath the ignored `.agents/` runtime namespace so a sandbox confined to the worktree can write them.
 - Create `autonomy/core/bin/dg-autonomy.mjs` — CLI for init, policy checks, verification receipts, block, finish, and status.
 - Create `autonomy/core/templates/dg-auto.md` — complete goal-to-gate skill template.
 - Create `autonomy/core/templates/dg-plan.md` — plan-only skill template.
@@ -194,7 +194,7 @@ Expected: FAIL because `run-state.mjs` exports do not exist.
 
 - [ ] **Step 3: Implement state transitions**
 
-Store JSON at `DG_AUTONOMY_STATE` when set; otherwise resolve `git rev-parse --git-path dg-autonomy/run.json`. Create parent directories recursively. A run contains `schemaVersion`, `id`, `role`, `goal`, `repository`, `worktree`, `phase`, `checks`, `failureCounts`, `terminalState`, `reason`, `createdAt`, and `updatedAt`. Refuse to mutate a terminal run. The third failed receipt for the same check sets `BLOCKED`. `finishRun()` refuses readiness if any latest check status is `failed`; otherwise it sets `READY_FOR_GATE`. `formatStatus()` prints goal, role, phase, checks, reason, and terminal state without secrets.
+Store JSON at `DG_AUTONOMY_STATE` when set; otherwise resolve `<git-worktree>/.agents/dg-autonomy/run.json`. Keep read compatibility with the legacy `git rev-parse --git-path dg-autonomy/run.json` location so active runs migrate on their next mutation. Create parent directories recursively. A run contains `schemaVersion`, `id`, `role`, `goal`, `repository`, `worktree`, `phase`, `checks`, `failureCounts`, `terminalState`, `reason`, `createdAt`, and `updatedAt`. Refuse to mutate a terminal run. The third failed receipt for the same check sets `BLOCKED`. `finishRun()` refuses readiness if any latest check status is `failed`; otherwise it sets `READY_FOR_GATE`. `formatStatus()` prints goal, role, phase, checks, reason, and terminal state without secrets.
 
 - [ ] **Step 4: Implement the CLI**
 
