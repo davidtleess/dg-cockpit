@@ -1870,3 +1870,204 @@ projection survives and the score dies. MECHANISM CONFIRMED.**
 is MORE, not fewer, than a truncated season would suggest. **Unexamined by anyone.**
 **Status: mechanism confirmed hard; root cause plausible and unfalsified but not yet tested where it
 is weakest.**
+
+## 2026-08-18 22:0x — ⚠⚠⚠ CODEX REFUTED THE DIAGNOSIS. TOWER HAD ENDORSED IT.
+**Codex, 29m43s independent investigation, report at
+`docs/agent-ledger/evidence/2026-08-18/product_substrate_investigation_codex_v1.md`:**
+- **The absent 2024 row is the feature store's DELIBERATE inference partition** —
+  `apply_inference_partition` keeps complete T+1/T+2 training rows plus the latest inference season
+  and drops the in-between by design (`features/feature_assembly.py:272-325`). **NOT a gap.**
+- **2025 is NOT truncated.** All 505 runtime rows matched a source player with exact `games_t`; the
+  source reaches week 22. **Tower's own named weak link (505 vs ~375) was the break point.**
+- **The three 115s were never the same players** — different sets by construction, overlapping at 114.
+- **THE REAL DEFECT — and it is squarely Tower's domain:** in the no-prior branch production writes
+  `dynasty_value_score=None` **together with `dvs_engine="A"` and the caveat "Engine A prospect score
+  used as prior"** — for **114 of 115 rows, 85 of them veterans with 3+ years.** Route assembly reads
+  that as an Engine A route (`universe_pvo_batch.py:26-38`) and the player API returns the row as
+  **`modeled` with `degradation=None` while the score is null.** **The product states a prior was
+  used when none exists.**
+- **A SECOND invisible cohort:** 108 players with 1–3 games are dropped by a four-game floor before
+  inference. "1–7 games" is not one band. None of the four rostered names is on David's roster.
+- Engine B counts postseason; **six players cross the eight-game gate only because of it. David's
+  ruling required** on whether PPG is regular-season-only. **QB-1 does NOT need rerunning.**
+- **⚠ The health provenance shipped yesterday (`62768d0`) can mislabel nonempty participation data as
+  `loaded_empty` and calls an ordinary retry "cache."** **The gate Tower championed may itself be
+  reporting falsely. Do not defend it — verify it.**
+### TOWER ERROR #7 — THE SUBTLE ONE
+**Every measurement Tower made was CORRECT** (2024 absent, 115, 505, 44-vs-115, ff_opportunity
+complete). **The causal conclusion drawn from them was wrong, and Tower put it in David's hands.**
+Earlier errors were stale reads; this one was a sound measurement carrying an unsound inference.
+**Tower's own pre-stated falsifier (21:37: "refuted if either lane shows 2024's absence is
+intentional") FIRED EXACTLY AS WRITTEN — the discipline worked; the endorsement should have waited
+for it.** Prompt verified NOT sent (0 hits in 1.1's buffer), rewritten, re-clipboarded.
+### END-OF-DAY STATE — VERIFIED 22:0x
+Product: **11 commits today**, HEAD `36f7cdf` 22:02 (crew's own closeout, R1 correction included),
+branch `feature/outcome-loop-week1` **PUSHED to origin (0 unpushed)**, 41 uncommitted. **The "local
+only" durability risk is CLOSED.**
+Tower layer: `backup.sh` aborted again on the known `cockpit.test.mjs` $HOME assertion; **coverage
+verified by hand — 3 spot checks IDENTICAL, full-tree diff of Studio's world returns ZERO
+differences.** Manual commit+push per precedent 526cb03.
+Studio: idle, no disk writes after 21:00; its own close-out in progress. Its last finding: *"both
+framings died on measurement tonight — the model is mostly last season restated, and nothing on your
+roster stands out."* **That independently echoes QB-1's result (composite barely beats naive).**
+
+# ============ 2026-08-18 22:2x–22:4x — LAYER 1 → LAYER 2 GATE READ (David's question) ============
+**All VERIFIED lines below were established by Tower running the command in this session.**
+
+## THE GATE IS DAVID'S OWN, AND IT IS COLD
+**VERIFIED 22:3x — `docs/layer-1-data-inventory-catalog.md` mtime 2026-08-09 09:34 (9 days).**
+Opens with David's 2026-08-05 ruling: "the Layer 2 consumption research session does not open until
+this catalog is complete and checked off." **All 10 §1 checkboxes are `[ ]`.**
+§6A closure matrix: 5 rows VERIFIED-inventory-closed · 6 MEASURED-awaiting-independent-review ·
+**1 truly OPEN** = source-publish cadence, 5 member fields / 8 provider clocks (5 PlayerProfiler
+report families + Sleeper N19/N18/N12-13). Public-doc route tried 2026-08-07, negative. Only untried
+route = **direct provider/support/subscriber question — needs David, not an agent.**
+D–G (catalog · Player 360 · semantic layer · schemas) marked "CLOSED until A–C clear" — i.e. the
+layer-2 DATA MODEL is gated behind A–C by the document's own design.
+
+## VERIFIED — the two uninstalled captures (same two as 08-08, unchanged)
+`ops/launchd/` = 12 plists; `launchctl list | grep -i dynasty` = 10 loaded; `ls ~/Library/LaunchAgents/`
+confirms both absent. Missing: `dynasty-league-transaction-capture` (06:30),
+`dynasty-nflverse-usage-capture` (06:15).
+- `league_transactions.db`: max(ingested_at)=2026-08-08T02:34Z, latest txn created_at=2026-08-05.
+  **~11 days of event data uncaptured and NOT backfillable.**
+- `nflverse_usage.db` (843MB): max(ingested_at)=2026-08-05T13:34Z.
+- **Neither store is in `report_freshness.json`** (8 artifacts, none of them these).
+
+## ⭐ VERIFIED — THE DRAFT-CAPITAL DEFECT IS A LAYER-2 JOIN GAP, NOT A LAYER-1 HOLE
+`universe_pvo_runtime.json` (captured 2026-08-18T13:30Z): **12,142 of 12,222 rows have
+`nfl_draft_round` null — including 503 of 503 ENGINE_B rows (100%).** Populated only for the 80
+ENGINE_A prospects (`pvo_assembler.py:514`, from CFBD).
+**The data is already on disk:** `nflverse_usage.db` table `contracts` — 97,022 rows,
+`draft_round` non-null on **41,998**, `draft_year` on 95,220. **Ingested and never joined.**
+⇒ This is the Garrett Wilson defect David found himself 2026-07-28, now located: layer 2, not layer 1.
+
+## VERIFIED — the canonical store has NO TYPES
+`PRAGMA table_info` on `nflverse_usage.db`: every column TEXT, incl. `season`, `week`,
+`pass_attempt`, `rec_attempt`. **Tower made the exact error this invites in this session:**
+`max(week)` returned 9 for every season (lexical); `max(cast(week as int))` returns 22. Recorded as a
+live demonstration, not a hypothetical.
+
+## VERIFIED — the daily feature path retains nothing
+`run_feature_refresh.py:52-58` pulls 5 nflverse streams LIVE via nflreadpy each morning; only NGS
+comes from the local export (`load_nextgen_from_export`). **The 843MB canonical store is not the
+substrate for the model's daily features.** Two parallel layer-1 paths; the one feeding the product
+is unauditable after the fact.
+
+## ⚠ CORRECTION TO TOWER'S OWN 22:2x STATEMENT — participation
+**VERIFIED:** `nflreadpy.load_participation(seasons=[2025])` → **45,184 rows**; `[2024]` → 45,919.
+**The returned frame has NO `season` column.** `run_feature_refresh.py:112` sets `loaded_empty`
+whenever no non-null `season` value is present. ⇒ **the label describes an absent season column, not
+an absent frame.**
+**NOT PROVEN, and Tower initially overstated it:** that THIS run's frame was that 45k frame. The
+report preserves `error_type` only, no row count, and `feature_refresh.err.log` last written Jun 28.
+**Stated as mechanism-confirmed / application-untested.** (Error class from tonight's #7: sound
+measurement, unsound inference. Caught before it hardened.)
+
+## VERIFIED — current health, run in-process 2026-08-19T02:24Z
+`overall_status=degraded`, `worst_affected_tier=core_substrate`.
+Root: `capture_health` degraded — `model_forward_capture` missing 1 of 56 days (**2026-08-12**);
+**independently confirmed** by grouping `model_forward_prediction_snapshot` on capture_date: 08-11 and
+08-13 present, 08-12 absent. Cascades to `tier_readiness` degraded for FIVE surfaces
+(roster_capacity, daily_what_changed, model_trust_console, trade_lab, league_pulse).
+All 8 declared artifacts wrote TODAY — the ~24-day `roster_capacity`/`league_opportunity` staleness
+recorded 08-08 is **CLOSED**; both now have loaded jobs.
+
+## RELAYED — layer-1 inventory agent findings (Tower-dispatched, not independently re-run)
+- **`ftn_charting`: 185,215 rows stored, `rows_canonical_resolved: 0` in ALL THREE seasons**, while
+  the capture marker says `status: ok`. `depth_charts:2025` 123,164 of 554,215 unresolved (22%).
+- **`layer1_daily_control_latest.json`: `exit_code 0` but BOTH controller routes recorded
+  `state="dry_run"`** (`daily_control.py:1099-1106` short-circuits before the runner).
+  **The controller has never executed a capture. Its only report on disk proves a plan, not a run.**
+- MFL rookie ADP — the repo's only ADP source — `mode="blocked"`, adapter returns veterans. Zero data.
+- Market overlay covers **397 of 12,222** players (3.2%); 11,890 UNAVAILABLE.
+- Footballguys: exactly ONE acquisition receipt, `readiness='review_required'` — held, not accepted.
+- Hardcoded constants in `models/engine_b_contract.py`: `TRADE_PARITY_BAND=0.10` (:67, no derivation
+  cited), `ENGINE_*_REPLACEMENT_DVS` ("Frozen at May 2026 … Do NOT refresh dynamically", :72-84),
+  `DVS_BLEND_K` (:97, comment says fit these before changing — shipped values are NOT fitted).
+- Only **1 of 8** health-monitored artifacts (`league_capture`) is a layer-1 raw capture. The other
+  seven are layer-2/3 derivations. **Layer 1 is essentially unmonitored.**
+- No weather ingestion of any kind exists.
+
+## STILL RUNNING at time of writing
+Layer-2 curation inventory (identity graph, schema contracts, bronze/silver/gold). Fold in on return.
+
+## RELAYED — layer-2 curation inventory (Tower-dispatched agent; cited, not independently re-run)
+**HEADLINE: layer 2 is a written blueprint with almost nothing built, and the production path skips it.**
+- `docs/storage-strategy.md:34-44` specifies bronze/silver/gold on a `gen_alpha` Unity Catalog, with
+  the rule "**a direct bronze→gold pipeline is a defect**" (:43) and "This doc is the blueprint.
+  Code follows" (:18). **`gen_alpha` appears in product code ZERO times** — only in agent-coordination
+  SQL. `DYNASTY_GENIUS_SUBSTRATE` has zero occurrences anywhere.
+- **THE IDENTITY GRAPH DOES NOT EXIST.** `docs/identity/identity_contract.md:18` says the canonical
+  player_id is persisted in a Silver `player_identity` table. **No such table in any of the 12
+  databases.** The only artifact of that name is a 28-line Pydantic class
+  (`models/player_identity.py`) used in tests and in-memory API paths.
+- What stands in for it: **`app/data/identity/_runs/ff_playerids_20260516.json` — 7,952 rows, a
+  DOWNLOADED community file, pinned 2026-05-16 (94 days).** Re-parsed by FIVE independent loaders
+  with THREE different conflict policies (hold / raise / drop).
+- `identity_contract.md:44,53` bans fuzzy matching outright; `identity/__init__.py:79,120-130` ships a
+  `difflib.SequenceMatcher` resolver with thresholds 0.95/0.80/0.60. **Mitigation: production-dead** —
+  only `generate_dg_id` is imported elsewhere.
+- **SIX incompatible name normalizers.** "Amon-Ra St. Brown" → `amonra_st_brown` / `amonra st brown` /
+  `amonrastbrown` depending on the file. Two different classes both named `IdentityResolver`.
+- **16.4% of the curated store is unresolved** — `nflverse_usage.ready.json`: 259,861 of 1,588,713
+  (`source_only` 242,940 · `unknown` 16,918 · `conflict` 3). contracts 33.6% · depth_charts 20.9% ·
+  snaps 17.9%. **Reported in a manifest, never gated.**
+- **ALL 501 COLUMNS in the 805MB store are TEXT** (`select sql from sqlite_master | grep -c TEXT` →
+  501/501). The newer joinable stores ARE typed — typing is inconsistent between stores.
+- **NO schema framework:** zero pandera, zero great_expectations, zero dbt. 45 files import pydantic;
+  none validates a dataframe. Contracts are hand-rolled `SCHEMA_VERSION` strings + column tuples
+  (these ARE enforced and do fail closed).
+- **⭐ THE FEATURE LAYER BYPASSES CURATION ENTIRELY.** `run_feature_refresh.py:133-170` pulls all five
+  streams live from nflreadpy; **no `app/data/sources/*` and no `nflverse_usage.db` is touched**
+  except three NGS parquets. Of 15 identity-resolved tables, **3 feed features.**
+  `ff_opportunity` — 47,282 weekly rows 2018-2025 already on disk — is **not read.**
+- **⭐ THE SCORER THROWS AWAY THE CURATED IDENTITY.** `run_realized_outcome_scoring.py:585-595` selects
+  `pfr_player_id` from `player_snap_count` — a table that already carries `dg_player_id` and
+  `identity_status` — then re-resolves pfr→gsis from the stale JSON at :576-582.
+- Curated store holds seasons 2016-2025 incl. 2024; the feature store has 2018-2023 + 2025, **2024
+  absent**, 2,746 rows. Codex ruled 2024's absence DELIBERATE (inference partition) — the two facts
+  must not be conflated.
+- Tank Dell (sleeper_id 9502) is in the market store and has `dg_player_id None` on the model side —
+  **he cannot be graded by the outcome scorer at all.**
+- Gates that DO block: 12 fail-closed feature gates, CFBD raw→curated promotion (incl. a
+  coverage-retention gate), ~40 refuse sites in nflverse capture, PVO zero-join refusal. **Real work.**
+- Gates that only LOG: **drift is report-only by explicit design** (`feature_validation.py:5` — "it
+  never blocks a publish"); unresolved-identity rate; seed age (52.8 days). **Null thresholds cover
+  exactly ONE column of 39** (`snap_share`).
+- `prospect_identity_review.jsonl` — 8,043 lines, **only 10 distinct players**, mostly test fixtures
+  ("Player A", "Test TE Prospect"); nothing consumes it.
+- `fc_snapshots.db` last written **2026-06-24 (55 days)**.
+**Tower's read, offered as a read and not a fact:** what layer 1 still owes layer 2 is small and
+mostly David's signature; **layer 2 itself is the unbuilt thing**, and the product's most visible
+defects (null DVS, Garrett Wilson, Tank Dell ungradeable) all trace to its absence.
+
+# ============ 2026-08-18 ~22:44 — ⭐ DAVID: GOVERNANCE TO NEAR ZERO ============
+**His words, verbatim:** *"and i want the governance turned down to near zero. i still see value in
+the fresh eyes of studio but im ready to let the crew work freely and the judge to have its own free
+thinking. as well as you, tower."*
+
+**This supersedes the process machinery in the v2 charter and every earlier ruling that added
+ceremony.** What it changes:
+- No per-ticket approval gate. Crew works freely. Judge thinks freely. Tower thinks freely.
+- Tower stops labelling every sentence VERIFIED / PROPOSED PRODUCT CHANGE as a ritual. **The
+  underlying honesty stands — do not claim something exists that does not — but as accuracy, not as
+  a compliance format.**
+- The Layer 1 Data Inventory Catalog's 10-checkbox gate on opening Layer 2 is itself governance and
+  no longer blocks. Its CONTENT (measured gaps) stays useful; its GATE does not.
+- `~/dg-build/` rewritten same night from 6 files / 377 lines to 4 files / ~110 lines. Removed:
+  INTAKE.md, DECISIONS.md, the five enforced rules, blocking foundation checks, mandatory falsifiers,
+  verify-lane separation, entry/exit criteria, David-gate field, state logs.
+
+**WHAT DAVID DID NOT TURN OFF, and Tower should not read into it:**
+- **Studio's value and its firewall.** He restated Studio's worth in the same sentence. The
+  inversion rule (Studio never receives our roadmap/backlog/tickets) is what MAKES the fresh eyes
+  work — it is not governance, it is the mechanism.
+- **The layer doctrine ordering** — his own law, a priority ordering, kept in the ticket format.
+- **Citing what you ran.** Tower keeps this as a personal habit, not as a rule imposed on anyone.
+
+**Tower's read, given to him:** the ceremony was the cost; the evidence habit was the value; they
+were tangled and only the first should go.
+
+**NOT DELIVERED BY TOWER:** this directive was not relayed to any crew lane or to the judge. Sender
+owns delivery — Tower does not carry David's words. He was told this explicitly.
