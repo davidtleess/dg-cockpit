@@ -17,3 +17,51 @@ Secrets are NEVER in the cockpit repo — backup.sh strips the settings.json env
 **New-Mac migration:** install brew + git/gh/jq/tmux/node/python3.14/gcloud + the three agent CLIs, auth gh + gcloud, clone dg-cockpit, run bootstrap.sh (restores configs/memory/studio/launchd, clones product repo, rsyncs latest GCS data run), then venv + frontend build + Sleeper env vars by hand, then `dg`.
 
 **How to apply:** if any cockpit file changes location or a new durable artifact class appears (e.g., a new agent lane), add it to backup.sh the same day. Verify pushes actually land — gh repo create claimed success once while the remote stayed empty (http.postBuffer fix). See [[frontend-studio-outsider-agent]].
+
+## VERIFIED AGAINST THE BUCKET 2026-08-22 — the "unreliable backup" reputation is STALE
+
+Copy 2 (GCS data) is **healthy and has been for weeks.** Measured, not inferred:
+- Last run `20260821T141500Z` — **completed, exit 0, `sha256_verified: true`, 642 files / 3.16 GB.**
+- **Files in the run inventory MISSING from GCS: 0.** All **43** manifest `required` entries covered.
+  `league_runtime/runs` (the manager-history snapshots) = **222 files** present.
+- 41 of 50 runs completed. **The last failure was 2026-08-05 — 16 consecutive clean runs since**,
+  growing 577 files/2.63 GB → 642/3.16 GB. **Do NOT re-quote "fails 18% of runs" or "9 runs in 49"
+  as a live condition** (the season build spec still says this at lines 543 and 576). The
+  conclusion those lines support — keep `league_transactions.db` excluded — still holds, but on the
+  better ground that the store is rebuildable from a public API, not because the backup is flaky.
+- 14 run generations retained. One optional file chronically absent:
+  `app/data/footballguys/observations.db` (`missing_optional`, non-fatal).
+- **Freshness:** runs 10:15 daily, so the newest copy is always up to ~24h old. `nflverse_usage.db`
+  and `league_transactions.db` are DELIBERATELY excluded as rebuildable — verified that nflverse
+  still serves the full 2026 depth-chart series back to March.
+
+**Copy 3 (dg-cockpit) IS the stale one.** 2026-08-22: last commit `1cc9836` dated **2026-08-19**,
+**47 files uncommitted**, 0 unpushed. Not a network problem — consistent with the known
+`verify.sh` exit 127 (`node: command not found`) aborting before `git add -A`. See
+[[project_loop_control]]. Untouched; outside the season sprint.
+
+**Verification method worth reusing:** do not trust the local log. Pull
+`runs/<run_id>/run_inventory.json` from the bucket and set-compare its `files[].path` against
+`gcloud storage ls -r`. Note `ls -r` emits `path/:` directory headers that are NOT objects — they
+inflate a naive count (915 vs 642 here) and look exactly like a discrepancy.
+
+## ⚠️ THE FOURTH COPY THAT ISN'T ONE — `~/dg-wt` ticket worktrees, found 2026-08-23
+
+**The three-copy model above does not cover work in progress, and that gap was live for days.**
+Measured at closeout on 2026-08-23: `git ls-remote --heads origin 'refs/heads/ticket/*'` returned
+only DG-031 and DG-035. **Seven other ticket branches had no upstream at all** — DG-014, 015, 020,
+021, 022, 023, 029. `~/dg-wt` appears nowhere in `dg-cockpit/backup.sh`, and it is code, so GCS
+(copy 2) is not its home either. `~/dg-wt/DG-022` alone held **1,579 uncommitted insertions**
+including a new source module, a contract test and a React component; DG-021 held a real
+`pvo_assembler.py` fix; DG-015/023/029 each carried a finished commit that had never left the disk.
+
+All nine are on `origin` as of 2026-08-23. **But nothing prevents this recurring** — `dg-work.sh`
+creates a branch with no upstream, and `dg-land.sh` only pushes at merge time, so every in-flight
+ticket is single-copy by default from creation until it lands.
+
+**How to apply:** treat an unpushed `ticket/DG-NNN` branch as unbacked-up work, not as "in progress".
+When checking backup health, `git ls-remote --heads origin 'refs/heads/ticket/*'` against
+`git branch --list 'ticket/*'` is the check — the three-copy story will otherwise read as green while
+a day of work sits on one disk. **Never advise recreating a worktree (`dg-work.sh` refuses in place,
+so the only repair is remove-and-recreate) until its branch is confirmed pushed** — that sequence is
+how the work would actually be destroyed. See [[dg3-build-system]].

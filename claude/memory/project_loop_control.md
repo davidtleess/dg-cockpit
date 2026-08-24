@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 26f1041e-2e14-44c4-a4a2-12ffeee413bb
-  modified: 2026-08-15T03:27:20.885Z
+  modified: 2026-08-20T00:54:41.693Z
 ---
 
 Loop control (severity budget · 5/10 round caps · diminishing-returns detector · bounded stop hooks · PreToolUse terminal deny) was BUILT and made DURABLE 2026-08-12 (dg-cockpit 033b883 committed+pushed; product-repo docs a6cb629 committed, push gated) on David's word "build it yourself" (Codex lane was frozen), TDD against spec F1–F22. Spec of record + §7 disposition + §8 as-built: `dynasty-genius-product/docs/superpowers/specs/2026-08-12-loop-control-design.md`. Code: `dg-cockpit/autonomy/` (core/lib/loop-control.mjs, run-state v3 w/ revision conflicts, CLI round verbs, Dynasty-bounded Antigravity stop hook, Claude/Codex stop hooks, terminal deny in all three tool policies). Serial suite 50/51 green; the 1 failure is the PRE-EXISTING flight-deck launcher-path test.
@@ -24,6 +24,7 @@ Loop control (severity budget · 5/10 round caps · diminishing-returns detector
 - The dg-cockpit **backup law commits and pushes the whole repo**, including any lane's uncommitted mid-build work — a 13:50 ET backup (5836106) pushed a broken RED-era intermediate during the build. "No commit until David's word" is not protected from the backup daemon in dg-cockpit.
 - Parallel `node --test tests/*.mjs` (verify.sh's invocation) hung once >6 min inside installer-test's `install.sh --status`; standalone/serial deterministic. Root cause not established; recommend `--test-concurrency=1` in verify.sh.
 - verify.sh --isolated aborts at the pre-existing flight-deck test (`set -e`); remaining steps (sync check, scan-tree, all three plugin validations) pass when run individually.
+- **CORRECTION 2026-08-19 (verified): the SCHEDULED backup failure is NOT the flight-deck/`cockpit.test.mjs $HOME` assertion.** `launchctl list` shows `com.davidleess.dg-cockpit-backup` exit **127**, and `/tmp/dg-cockpit-backup.log` holds four × `node: command not found` at `autonomy/verify.sh:13`. `backup.sh:6` sets PATH to only `/usr/local/bin:/opt/homebrew/bin`; node lives under `~/.nvm/versions/node/*/bin`. Under `set -euo pipefail` it aborts **before `git add -A`**, so execution never reaches any test. Last auto-commit 2026-08-09; dead ~10 days, masked by manual pushes. Fix = absolute-path node in verify.sh, not test surgery.
 
 Related: [[project_dynasty_genius]], [[tower_role_v2]]
 

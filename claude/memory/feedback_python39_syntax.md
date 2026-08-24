@@ -5,6 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 38369f00-9dee-487c-8809-f585ebd3dff6
+  modified: 2026-08-20T00:54:37.043Z
 ---
 
 As of 2026-07-14 (verified from pyproject.toml, CI, and the active venv), dynasty-genius-product uses **Python 3.14** (`.venv/bin/python3.14`, Ruff target py314). PEP 604 unions (`str | None`) are fine in project code.
@@ -14,5 +15,11 @@ Historical note: the machine's system Python is 3.9.6, and early project work (A
 The `round` parameter-name shadowing advice still stands as general practice.
 
 **Why:** The project migrated environments; the old memory caused incorrect advice.
+
+**TRAP (verified 2026-08-19):** inside that same venv, `.venv/bin/python` and `.venv/bin/python3` are
+STALE symlinks to the system CommandLineTools **3.9.6** — only `.venv/bin/python3.14` is real 3.14.4.
+"Use the venv" is not enough; the interpreter name matters. Invoking `.venv/bin/python -m pytest`
+fails at import with a pydantic `dlopen` error that looks like a broken install and is not one.
+This is why CLAUDE.md spells out `.venv/bin/python3.14` rather than just `.venv/bin/python`.
 
 **How to apply:** Use `.venv/bin/python3.14` for all project commands; write modern 3.14 syntax. See [[project_dynasty_genius]].
