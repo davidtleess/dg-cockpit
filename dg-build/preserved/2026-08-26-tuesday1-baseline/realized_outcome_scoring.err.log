@@ -1,0 +1,40 @@
+Traceback (most recent call last):
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 111, in _build_outcomes
+  File "/Users/davidleess/dynasty-genius-product/src/dynasty_genius/capture/outcome_forward_capture_store.py", line 303, in read_outcomes
+sqlite3.OperationalError: unable to open database file
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 308, in <module>
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 293, in main
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 153, in run_scoring
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 84, in _build_outcomes
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 971, in __exit__
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 975, in cleanup
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 955, in _rmtree
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 852, in rmtree
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 721, in _rmtree_safe_fd
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 802, in _rmtree_safe_fd_step
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 765, in _rmtree_safe_fd_step
+OSError: [Errno 24] Too many open files: '/var/folders/6c/6jm7snpn7w9_0g5w3c9bdqrw0000gn/T/tmpnu4vh0ap'
+Traceback (most recent call last):
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 111, in _build_outcomes
+  File "/Users/davidleess/dynasty-genius-product/src/dynasty_genius/capture/outcome_forward_capture_store.py", line 303, in read_outcomes
+sqlite3.OperationalError: unable to open database file
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 308, in <module>
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 293, in main
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 153, in run_scoring
+  File "/Users/davidleess/dynasty-genius-product/scripts/run_realized_outcome_scoring.py", line 84, in _build_outcomes
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 971, in __exit__
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 975, in cleanup
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py", line 955, in _rmtree
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 852, in rmtree
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 721, in _rmtree_safe_fd
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 802, in _rmtree_safe_fd_step
+  File "/usr/local/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/shutil.py", line 765, in _rmtree_safe_fd_step
+OSError: [Errno 24] Too many open files: '/var/folders/6c/6jm7snpn7w9_0g5w3c9bdqrw0000gn/T/tmpagja7p35'

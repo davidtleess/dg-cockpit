@@ -1,0 +1,7 @@
+{"status": "noop", "noop_reason": "no_predictions_for_target", "decision_supported": false, "git_commit_performed": false}
+{"status": "noop", "noop_reason": "no_predictions_for_target", "decision_supported": false, "git_commit_performed": false}
+{"status": "noop", "noop_reason": "no_predictions_for_target", "decision_supported": false, "git_commit_performed": false}
+{"status": "noop", "noop_reason": "no_predictions_for_target", "decision_supported": false, "git_commit_performed": false}
+{"status": "noop", "noop_reason": "no_predictions_for_target", "decision_supported": false, "git_commit_performed": false}
+{"status": "failed", "failure_reason": "predictions_load_failed:FrozenPredictionSetUndeclared", "decision_supported": false, "git_commit_performed": false}
+{"status": "noop", "noop_reason": "week_not_finalized", "decision_supported": false, "git_commit_performed": false, "week_status": "not_finalized"}

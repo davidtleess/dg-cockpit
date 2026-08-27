@@ -4,6 +4,13 @@
 set -euo pipefail
 # launchd jobs get a bare PATH (/usr/bin:/bin:...) — add Homebrew/local so jq and git helpers resolve
 export PATH="/usr/local/bin:/opt/homebrew/bin:$PATH"
+# node is nvm-managed and claude lives in ~/.local/bin — neither is on launchd's
+# PATH, so verify.sh (line 80) died 127 and aborted the backup BEFORE git add
+# (stalled silently 08-24→08-27 exactly this way). Newest installed nvm version
+# wins so a node upgrade cannot re-break the backup.
+NVM_BIN="$(ls -d "$HOME"/.nvm/versions/node/*/bin 2>/dev/null | sort -V | tail -1)"
+[ -n "$NVM_BIN" ] && export PATH="$NVM_BIN:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 REPO="$HOME/dg-cockpit"
 cd "$REPO"
 

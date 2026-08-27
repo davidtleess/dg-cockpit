@@ -66,6 +66,26 @@ function fileTargets(args) {
   return targets;
 }
 
+// ⚠ DO NOT REMOVE — regression already happened once, 2026-08-19 16:02.
+// Antigravity emits the shell command as PascalCase `CommandLine`, NOT `command`.
+// Reading `args.command` directly makes EVERY agy shell command fail as
+// "command input is malformed": no tests, no scripts, no git — an agy session
+// cannot build at all. Established from the live hook payload:
+//   tool_arg_keys = ['CommandLine','Cwd','WaitMsBeforeAsync','toolAction','toolSummary']
+// This normalizes key casing ONLY. The command still faces the normal scope and
+// role checks afterwards, so nothing is waved through.
+const COMMAND_KEYS = new Set(["command", "commandline", "command_line", "cmd"]);
+
+function commandString(args) {
+  if (!args || typeof args !== "object") return null;
+  for (const [key, candidate] of Object.entries(args)) {
+    if (typeof candidate === "string" && COMMAND_KEYS.has(key.toLowerCase())) {
+      return candidate;
+    }
+  }
+  return null;
+}
+
 const studioRoot = resolve(homedir(), "frontend-studio");
 const forbiddenRoots = new Set([resolve("/"), resolve(homedir())]);
 
@@ -129,7 +149,7 @@ async function main() {
   const terminalRun = runSnapshot.status === "ok" && runSnapshot.run?.terminalState;
   if (terminalRun) {
     const readOnly =
-      (/^(?:run_command|run_shell_command|Bash)$/i.test(name) && isReadOnlyCommand(args.command ?? "")) ||
+      (/^(?:run_command|run_shell_command|Bash)$/i.test(name) && isReadOnlyCommand(commandString(args) ?? "")) ||
       /^(?:read_file|view_file|list_directory|list_dir|grep_search|search_files|glob|get_errors|get_diagnostics)$/i.test(name);
     if (!readOnly) {
       decision(
@@ -141,7 +161,7 @@ async function main() {
   }
 
   if (/^(?:run_command|run_shell_command|Bash)$/i.test(name)) {
-    const command = args.command;
+    const command = commandString(args);   // NOT args.command — see COMMAND_KEYS above
     if (typeof command !== "string") {
       decision("deny", "Dynasty autonomy command input is malformed");
       return;

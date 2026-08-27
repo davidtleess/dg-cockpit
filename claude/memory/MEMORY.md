@@ -18,9 +18,10 @@
 
 ## Project state
 - [**Season readiness sprint 2026**](project_season_readiness_2026.md) — **kickoff 2026-09-10, freeze 09-04.** Approved architecture plan + amendments Rev 2; **DO NOT edit XVAR_LAMBDA_ENGINE_B (retracted finding)**; git ahead/behind was reported inverted all session.
-- [**David's rulings — DG 3.0**](david_rulings_dg3.md) — verbatim. **PPG = ALL GAMES (2026-08-19)** ·
+- [**David's rulings — DG 3.0**](david_rulings_dg3.md) — verbatim. **LAND ON MAIN + trunk runs main (2026-08-25;
+  merge `d33c9896`, feature/outcome-loop-week1 retired)** · **PPG = ALL GAMES (2026-08-19)** ·
   governance to near zero (2026-08-18) · **dg-build IS backed up as of 2026-08-23** — private remote `github.com/davidtleess/dg-build` created and pushed, all 35 tickets + SEASON-BRIEF.md on `origin/main`. (The 2026-08-22 "backed up NOWHERE" finding was true when measured and is now resolved. The stale dg-cockpit mirror at DG-034 is superseded, not repaired.)
-- [**DG 3.0 build system**](project_dg3_build_system.md) — `~/dg-build/`: the ticket board (DG-001..035),
+- [**DG 3.0 build system**](project_dg3_build_system.md) — `~/dg-build/`: the ticket board (DG-001..081 as of 08-26 evening — DG-049..079 are the David-ratified layer roadmap; NINE tickets landed 08-26 incl. the evening DG-080/SR-15 + DG-081/SR-16 pair; dg-land.sh WORKS unaided; everything lands on `main`),
   the parallel-work protocol, and the worktree tooling. **Governance turned to near zero by David
   2026-08-18.** Its own git repo; **still NOT in backup.sh / `backup_manifest.json`** — its backup copy is GitHub (private remote added 2026-08-23), which is the code copy the three-copy architecture calls for.
 - [Loop-control build](project_loop_control.md) — LIVE all lanes 2026-08-13 (judge pane permanent, Codex+Gemini activated on David's word, drill proven end-to-end); **2026-08-17: QB-1 program EXECUTED (run_status=ok, decision_supported=false held), readout reproduced byte-identical, accepted by David, LANDED and PUSHED (product repo level with origin, closeout commit 6fbe161) — the "product push gated" note is obsolete**; **gotchas: dg-cockpit backup law auto-commits worktrees; installer hash-guards the live flight deck — never hand-edit it; backup.sh verify.sh abort STILL blocks auto commit+push — but the CAUSE was misdiagnosed: verified 2026-08-19 it is exit 127, `node: command not found` at verify.sh:13, aborting before `git add -A`; NOT the cockpit.test.mjs $HOME assertion — Tower completes commit+push manually after byte-for-byte coverage verification (precedent 526cb03, 2026-08-17); the 23-round QB-1 run record f8f7551c was OVERWRITTEN without a .bak (custodial finding on Tower's board)**
@@ -38,6 +39,7 @@
 ## About David
 - [David's profile](user_profile.md) — background, experience level, Sleeper username, working style
 - [Push not pull](feedback_david_workflow.md) — David rejects file/pull workflows; tell him in sentences, never point him at a file
+- [Parallel-session coordination](feedback_parallel_session_coordination.md) — David runs two sessions at once; how to find out what the other one is doing before you push (tmux is gone — use process ancestry + their transcript)
 - [Python environment](feedback_python39_syntax.md) — project venv is Python 3.14 now; old 3.9 constraints obsolete; avoid `round` as param name
 
 ## Other projects

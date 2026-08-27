@@ -1,0 +1,41 @@
+{
+  "plugins": {
+    "chrome-devtools-plugin": {
+      "enabled": true
+    },
+    "dg-autonomy": {
+      "enabled": true
+    },
+    "firebase": {
+      "enabled": true
+    },
+    "google-antigravity-sdk": {
+      "enabled": true
+    },
+    "modern-web-guidance-plugin": {
+      "enabled": true
+    },
+    "science": {
+      "enabled": true
+    }
+  },
+  "userSettings": {
+    "customThemeSeedsDark": {
+      "background": "#272822",
+      "foregroundOverride": "#F8F8F2",
+      "primary": "#F92672"
+    },
+    "customThemeSeedsLight": {
+      "background": "#EEEEEE",
+      "foregroundOverride": "#101010",
+      "primary": "#007acc"
+    },
+    "globalPermissionGrants": {
+      "allow": [
+        "command(git status)",
+        "command(.venv/bin/python3.14)"
+      ]
+    },
+    "remoteControlHostname": "davids-air-localdomain-ultima-sky"
+  }
+}

@@ -2071,3 +2071,665 @@ were tangled and only the first should go.
 
 **NOT DELIVERED BY TOWER:** this directive was not relayed to any crew lane or to the judge. Sender
 owns delivery — Tower does not carry David's words. He was told this explicitly.
+
+---
+## 2026-08-19 07:0x — VERIFIED FINDING: DG-017 cites a non-deployed code path
+
+Verified by Tower from source this morning in ~/dynasty-genius-product:
+
+- `scripts/train_engine_b.py:198` `Ridge(alpha=100.0)` sits inside the function whose docstring at
+  line 182 reads **"Validation artifact only"**, and it stamps `alpha_fixed: 100.0` (line 219).
+- The **shipped** per-position artifacts come from line 276: `RidgeCV(alphas=ALPHA_CANDIDATES, cv=5)`,
+  pickled at line ~292 with `is_validation_only: False`.
+- ⇒ DG-017's "How we know" block quotes lines 194-199 (validation-only). Its claim "it hardcodes the
+  penalty" is FALSE of the deployed path — the deployed path TUNES alpha by RidgeCV.
+- The SCALING defect is real on both paths: `grep -c StandardScaler scripts/train_engine_b.py` = 0,
+  while `src/dynasty_genius/eval/backtest_harness.py:489` scales and `:562` tunes.
+- ⇒ The live defect on the deployed path is **unscaled features + `cv=5` random CV** — which is
+  DG-027, not DG-017 as written. DG-017 and DG-027 are the same defect on the shipped path.
+  DG-017's hypothesis ("fixed alpha=100 annihilated the rate stats") needs restating.
+
+### Artifact lineage — STILL OPEN, and now known to be blocked
+- Served artifacts: `app/data/models/engine_b/runs/20260513T012309Z/{qb,rb,wr,te}_v2.pkl`, mtime
+  **2026-05-12**. Training table holds 505 rows of `feature_season` 2025 → deployed model predates
+  data on disk.
+- **The repo venv cannot unpickle its own deployed models.** `.venv` numpy = 1.26.4; pickles
+  reference `numpy._core` (numpy 2.x). Live API runs Homebrew Python 3.14 (`uvicorn app.main:app`,
+  pid 941), NOT `.venv`. At least two environments; lineage unreadable from the repo one.
+- DG-014's own note already flagged this hole. Nobody has closed it.
+
+### Health at 2026-08-19T11:06:54Z (from /api/health)
+- `overall_status: degraded`, worst tier `core_substrate`.
+- `capture_health` degraded — model_forward_capture missing 1 of 56 days (2026-08-12).
+- `tier_readiness` degraded — 5 surfaces gated off behind capture_health: roster_capacity,
+  daily_what_changed, model_trust_console, trade_lab, league_pulse.
+- `feature_refresh` = `inputs_degraded`: participation EMPTY (ValueError); pbp, player_stats,
+  snap_counts all on **2025 cache**; only rosters LIVE 2026. ← this is DG-023, and it is the
+  amber-forever light.
+
+### Tower self-correction logged
+Nearly reported `/api/health` as not answering (HTTP=000 twice). Cause was a cold `--reload`
+worker, not an outage. Retried → HTTP 200 with body. Logged per Rule 2.
+
+---
+## 2026-08-19 07:20 — FIXED: Gemini lane fully blocked by a broken PreToolUse hook
+
+**Symptom (from dynasty:1.3 pane, 07:15:10-04:00):** every tool call in the Gemini lane denied at
+pre-tool execution.
+```
+JSON hook "jsonhook__dg-autonomy_PreToolUse_0_0" failed: command failed: exit status 1
+stderr: Error: Cannot find module '/scripts/dg-antigravity-tool-policy.mjs'
+```
+Gemini could not run view_file, run_command or list_dir at all, and was reporting operational
+telemetry as "Unreadable / Unavailable" for DG-021/DG-022 as a result. That unavailability report was
+a hook artifact, NOT a real telemetry outage.
+
+**Root cause:** `hooks.json` templated all five hook commands as `node "${PLUGIN_ROOT}/scripts/..."`.
+`agy` does not provide `PLUGIN_ROOT` — `strings ~/.local/bin/agy | grep PLUGIN_ROOT` returns nothing.
+The shell expanded the undefined variable to empty, yielding the absolute path `/scripts/...`.
+All five hooks were affected (PreInvocation x2, PostToolUse, Stop, PreToolUse); only PreToolUse was
+fatal, because it matches `.*` and blocks every tool.
+
+**Likely trigger:** `~/.local/bin/agy` mtime is **2026-08-19 06:49** — rebuilt ~26 min before the
+first failure. Plugin dir mtime is 2026-08-15 00:14. Hypothesis (NOT verified): this morning's agy
+build began honoring `hooks.json` JSON hooks, exposing a defect that had been latent since install.
+
+**Fix applied:** replaced `${PLUGIN_ROOT}` with `${HOME}/.gemini/config/plugins/dg-autonomy` in all
+five commands — `${HOME}` expands in the shell and survives a new-Mac bootstrap. Matches install.sh:16's
+own default (`$HOME/.gemini/config/plugins/dg-autonomy`).
+
+Patched BOTH copies identically, because `install.sh:230` hash-compares live against source and would
+otherwise revert the live fix:
+- source: `~/dg-cockpit/autonomy/antigravity/dg-autonomy/hooks.json`
+- live:   `~/.gemini/config/plugins/dg-autonomy/hooks.json`
+- `diff` → identical; both parse as JSON; installer hash will agree.
+- Originals saved OUTSIDE both plugin trees at `~/.claude/tower/backups/hooks.json.{SRC,LIVE}.bak`
+  (first attempt put them inside the trees, which would have polluted hash_tree — relocated).
+
+**Verified after fix** (real hook command, piped events):
+- read-only view_file → `{"decision":"allow"}` exit 0
+- write inside worktree → allow
+- write outside worktree → deny
+- write into `~/.ssh` → deny
+- write into `~/frontend-studio` → deny  ← Studio wall holds
+- remote browser URL → deny
+- unknown tool → deny
+- two workspacePaths → deny
+⇒ function restored, boundary NOT weakened.
+
+**Left for David:** the running Gemini sessions still hold the broken hooks in memory and need a
+restart to reload — dynasty:1.3 AND the Gemini Consultant on ttys024 (also `agy`). Tower did not send
+keys to either (not Tower's seat). Whether agy re-reads hooks.json per invocation or only at startup
+is NOT verified.
+
+**Also:** `~/dg-cockpit` now carries an uncommitted change to a tracked file. Not committed — not
+Tower's call.
+
+---
+## 2026-08-19 07:30 — "still blocked" resolved: only ONE of three was blocked
+
+Established from disk (no pane access needed; consultants run outside tmux). Method that worked:
+`lsof -p <pid>` to map a process to its own transcript file, then read the transcript tail.
+**Tower initially asked David to paste error text that was already on disk. Do not do that again —
+go to disk first.**
+
+| Consultant | tty | pid | Verdict |
+|---|---|---|---|
+| Claude | ttys021 | 36092 | **NOT blocked — idle, never dispatched** |
+| Codex  | ttys019 | 35152 | **NOT blocked — idle, never dispatched** |
+| Gemini | ttys024 | 41292 | genuinely blocked (hook, see 07:20 entry) |
+
+**Claude Consultant** — `~/.claude/projects/-Users-davidleess/6bb053db-*.jsonl`, aiTitle
+"Outside consultant Claude", 22 lines, last write 06:56:28. Final message:
+> "Understood — outside consultant, not Tower... What do you want me to look at?"
+
+**Codex Consultant** — `~/.codex/sessions/2026/08/19/rollout-2026-08-19T06-51-20-01a019a5-*.jsonl`,
+16 lines, last write 06:56:13, ends `task_complete`. Final message:
+> "Understood. I'll act as an independent outside consultant... What should I assess?"
+
+Both primed ~06:56 and have sat idle since. No hook error, no denial, no rate-limit block
+(codex reports used_percent 20.0, plan pro). They are waiting on David for a task.
+
+**Hook-variable matrix — why only Gemini broke:**
+| Host | Variable in hooks | Host provides it |
+|---|---|---|
+| Claude Code | `${CLAUDE_PLUGIN_ROOT}` | yes, natively |
+| Codex | `${PLUGIN_ROOT}` | yes (2 hits in codex binary) |
+| agy / Antigravity | `${PLUGIN_ROOT}` | **NO** — 0 hits for either var |
+`PLUGIN_ROOT` is a Codex convention; the antigravity plugin was authored with it. That is the whole bug.
+
+**Gemini still needs two things (David's, not Tower's):**
+1. restart to load the patched hooks.json;
+2. an authorized workspace — it was launched from `$HOME`, which is not a git repo, so agy passes no
+   `workspacePaths` and the boundary fails closed with exit 2. Worktrees already exist:
+   `~/dg-wt/DG-021`, `~/dg-wt/DG-022`, `~/dg-wt/DG-023`. `cd ~/dg-wt/DG-0NN && agy`, or set
+   `DG_AUTONOMY_WORKTREE` (verified: returns allow/exit 0).
+
+All three consultants have `cwd=/Users/davidleess`. Per the parallel-work protocol (AGENT-HOOK.md #1)
+none of them should work from the shared trunk or $HOME regardless of whether a hook stops them.
+
+---
+## 2026-08-19 07:40 — Gemini: path fix confirmed post-restart; remaining block is SCOPE, and the
+## ledger's location makes it structural
+
+David restarted the Gemini consultant (new pid 45468, ttys025, started 07:22:18; was 41292/ttys024).
+
+**Path fix confirmed good.** Live brain transcript
+`~/.gemini/antigravity-cli/brain/fb8e0ced-*/.system_generated/logs/transcript.jsonl` contains
+`Cannot find module` **0 times**. The `${PLUGIN_ROOT}` defect is closed.
+
+**Current block:** `jsonhook__dg-autonomy_PreToolUse_0_0 ... exit status 2` — exit 2 is the policy's
+DENY signal, not a crash. Gemini was attempting to write its ballot votes into
+`docs/agent-ledger/2026-08-19.md`.
+
+**Measured, by piping the exact event to the real hook:**
+| Launch dir | write to shared ledger |
+|---|---|
+| `$HOME` (how it was launched) | deny — "requires one explicit authorized workspace" |
+| `~/dynasty-genius-product` (trunk) | **allow** |
+| `~/dg-wt/DG-021` (worktree) | deny — "edit leaves the authorized worktree" |
+
+**STRUCTURAL FINDING — applies to all lanes, not just Gemini:**
+The ledger lives in the shared trunk (`~/dynasty-genius-product/docs/agent-ledger/`). Therefore a
+protocol-correct worktree session **cannot write to the communication channel.** AGENT-HOOK.md §1
+forbids writing in the trunk; the ledger is in the trunk. Voting and ticket work need different
+launch roots:
+ - ledger participation → authorized root must be the trunk
+ - ticket execution     → authorized root must be the worktree
+Additionally today's `2026-08-19.md` is **untracked in git** and absent from all three worktrees, so a
+worktree session writing that path creates a private copy and the message is silently lost.
+**This is a design question for David, not something Tower should paper over.**
+
+**Verified unblock command** (David must type it; ttys025 is outside tmux, no channel from Tower):
+```
+# QUIT agy first (this is a SHELL command, not an agy prompt).
+cd /Users/davidleess/dynasty-genius-product
+DG_AUTONOMY_WORKTREE=/Users/davidleess/dynasty-genius-product agy
+```
+**CORRECTION 2026-08-19 08:15 — the earlier form of this command was WRONG, twice over.**
+Tower first published `cd ~/dynasty-genius-product && DG_AUTONOMY_WORKTREE=~/dynasty-genius-product agy`.
+ 1. **Tilde does not expand.** `dg-antigravity-tool-policy.mjs` calls Node `resolve(roots[0])`, and
+    `path.resolve` does NOT expand `~`. A literal `~` makes authorizedRoot a nonexistent path, so every
+    write denies. MEASURED: `DG_AUTONOMY_WORKTREE='~/dynasty-genius-product'` -> deny; the absolute
+    path -> allow. **Always pass an absolute path.**
+ 2. **Tower gave no launch context**, so the command was pasted INTO the agy prompt (visible in
+    dynasty:1.3 as `● ! cd ...`), which made Gemini spawn nested agy sessions instead of relaunching.
+    Stray nested pids observed: 65815/65816 (07:51:13), 52584/52591/52592 (08:14:24).
+`DG_AUTONOMY_WORKTREE` is read BEFORE `workspacePaths` in
+`dg-antigravity-tool-policy.mjs`, so it does not depend on agy's workspace discovery (which Tower has
+NOT verified sets workspacePaths from cwd). Tested: returns `{"decision":"allow"}` exit 0.
+Boundary unchanged — writes outside the authorized root, `~/.ssh`, `~/frontend-studio`, remote
+browser and unknown tools all still deny.
+
+## Ledger watcher INSTALLED (David-requested)
+`~/.claude/tower/bin/ledger-watch.sh` — detached, pid 9353, 30s interval, alerts to
+`~/.claude/tower/ledger-alerts.md`, heartbeat at `~/.claude/tower/ledger-watch/heartbeat`.
+Reports NEW ENTRY / BALLOT INCOMPLETE / BRIEF UNANSWERED. Read-only on the ledger; never pokes a lane.
+`--once` prints current state.
+Two false-signal traps found and fixed during build, recorded so they are not reintroduced:
+ 1. "newest session file per host" picks Tower's OWN transcript (shared dir) and crew lanes -> every
+    brief looked "read". 2. tty mtime updates on cursor blink -> useless as an activity signal.
+Final design uses ledger-internal evidence only: the ledger IS the read receipt.
+
+---
+## 2026-08-19 08:20 — nested agy killed; scoped launcher installed
+
+**Killed on David's instruction** — the nested agy sessions my defective command created:
+68921 and 65816 (the nested `agy`), plus their `/bin/bash -c cd ~/... agy` wrappers 68920 and 65815.
+Remaining, both legitimate roots: **10416** (ttys006 = dynasty:1.3, Gemini crew, parent `/bin/bash`)
+and **45468** (ttys025 = Gemini Consultant, parent Antigravity IDE bash).
+
+**TRAP — do not repeat:** `ps -Ao pid,command | grep '[a]gy'` matched *Tower's own bash* because the
+command line contained the string "agy" (pids 74293/74296, ppid 27606 = Tower). Killing those would
+have killed Tower's own tool call. **Always confirm the process is really `agy` (`comm`/`$NF`) and
+confirm parentage before killing.**
+
+**ROOT CAUSE of the workspace deny, established:** `strings ~/.local/bin/agy` contains the JSON key
+`"workspacePaths":` (13 hits), so agy DOES build the field — it is simply **empty unless a folder is
+formally opened**. cwd alone does not populate it. That is why even pid 10416, whose cwd IS the trunk,
+was denied. `DG_AUTONOMY_WORKTREE` (read before `workspacePaths`) is the only reliable route.
+
+**Scope choice — MEASURED, narrowest wins.** For ledger participation the authorized root should be
+the ledger directory, NOT the trunk:
+| DG_AUTONOMY_WORKTREE | ballot file | evidence/ | app/ product code | ~/frontend-studio |
+|---|---|---|---|---|
+| `.../docs/agent-ledger` | allow | allow | **deny** | **deny** |
+| `.../dynasty-genius-product` | allow | allow | **allow** (too broad) | deny |
+Ledger-dir scope lets a lane vote while still refusing product-code writes. Prefer it for voting;
+use a worktree root for ticket execution.
+
+**INSTALLED:** `~/.claude/tower/bin/agy-scoped.sh <absolute-path>` — canonicalises the path, exports
+`DG_AUTONOMY_WORKTREE`, execs agy. Refuses a leading `~`, refuses relative paths, refuses a
+non-directory, refuses no argument (all four verified). It exists so Tower's 2026-08-19 tilde bug
+cannot recur.
+
+---
+## 2026-08-19 09:42 — dynasty:1.3 (Gemini crew) UNBLOCKED by Tower, driving the pane directly
+
+First exercise of David's 2026-08-19 pane-driving grant. Sequence, each step verified before the next:
+1. captured 1.3 with `-e` — no ghost text; prompt empty; `signal: terminated` confirmed Tower's
+   earlier kill of the nested agy had landed.
+2. typed `/quit` → a slash-command PICKER opened. Did NOT press Enter blind; captured the menu and
+   confirmed the highlighted row was `/exit (quit)` before submitting. **Blind Enter into an agy picker
+   would select whatever happens to be highlighted — always read the menu first.**
+3. agy exited to `(.venv) bash-3.2$` and printed its resume id — `fb8e0ced-ecb1-404c-9b30-63ebcf1f844e`,
+   the conversation holding Gemini's staged votes. Resuming preserved them; a plain relaunch would
+   have discarded them.
+4. relaunched via `agy-scoped.sh <ledger dir> --conversation=fb8e0ced-...`
+5. answered agy's "Do you trust this folder" modal **Yes**. Basis: `~/.gemini/trustedFolders.json`
+   already contains `{"/users/davidleess": "TRUST_FOLDER"}`, so confirming a subdirectory of $HOME
+   granted no new territory, and abandoning a modal Tower itself opened would have left the pane worse
+   than untouched. Reported to David explicitly rather than done silently.
+
+**VERIFIED RESULT** — pid 73342, `agy --conversation=fb8e0ced-...`, tty ttys006:
+```
+PWD=/Users/davidleess/dynasty-genius-product/docs/agent-ledger
+DG_AUTONOMY_WORKTREE=/Users/davidleess/dynasty-genius-product/docs/agent-ledger
+cwd=/Users/davidleess/dynasty-genius-product/docs/agent-ledger
+```
+Combined with the measured scope matrix (ledger-dir root → ballot allow, evidence allow, app/ deny,
+frontend-studio deny), dynasty:1.3 can now write its vote and cannot write product code. Its staged
+votes (Q1 a, Q2 a, Q3 c) survived the relaunch.
+
+**STILL UNREACHABLE:** the Gemini **Consultant**, pid 45468 on ttys025, cwd still `/Users/davidleess`.
+It is an Antigravity IDE terminal, NOT a tmux pane — the pane-driving grant does not reach it because
+there is no channel, not because of authority. David must run `agy-scoped.sh` there himself.
+
+**TRAP, hit twice now:** `ps ... | grep agy` matches Tower's OWN bash whenever Tower's command line
+contains the string "agy". Filter on the real process (`agy` as the command, sane ppid) before acting.
+
+---
+## 2026-08-19 10:50 — NUDGE HELD. Near-miss: it would have manufactured a tie from a void vote.
+
+David said "send the nudge" (to dynasty:1.3, to write its staged ballot votes). **Tower did not send it.**
+Reason, read from the ledger at the moment of asking rather than from Tower's memory of it:
+
+`docs/agent-ledger/2026-08-19.md` §"Who votes, and why only four" —
+> Not voting... **Gemini (crew)** — `02` §Agent Roles (ratified 2026-07-16), "does not sit on judgment
+> or verdict panels"; **a judgment prompt to it is a process violation and its reply is void.**
+
+dynasty:1.3 **IS Gemini (crew)**. The four eligible voters are Codex (crew), Claude Consultant,
+Codex Consultant, Gemini Consultant. So:
+ 1. 1.3 is barred from voting; its reply is void by the ballot's own rule.
+ 2. Its staged text is headed "**Gemini Consultant** Votes" — a crew lane's words in the Consultant's
+    slot. Writing it would have been impersonation of another agent.
+ 3. Worst of all, the tally as posted has **Q1 and Q2 CLOSED** but **Q3 OPEN at 2 (b) vs 1 (c)**, and
+    1.3's staged Q3 is **c**. Writing it forces **2–2, which escalates to David** — a fabricated
+    decision input on the only open question.
+
+**Tower's own error, owned:** at 09:42 Tower highlighted 1.3's staged votes and offered a nudge
+"to close it to 3 of 4". Tower had not checked voter eligibility. Unblocking 1.3 was correct work but
+could never have advanced this ballot. The ballot reached 3 of 4 on its own when the Claude Consultant
+voted (between 07:49 and 10:50).
+
+**Upstream process violation, not Tower's:** someone put this ballot to Gemini (crew) in the first
+place, which the ballot itself calls a process violation. That is why 1.3 has staged votes at all.
+
+**Answer to "why is gemini still stuck":** two Geminis; the stuck one is not the reachable one.
+| | state | why |
+|---|---|---|
+| Gemini **crew** — dynasty:1.3, pid 73342 | NOT stuck | fixed 09:42, `DG_AUTONOMY_WORKTREE` set to ledger dir. Not a voter, so irrelevant to the ballot. |
+| Gemini **Consultant** — ttys025, pid 45468 | STILL stuck | **nothing has been done to it.** Same process since 07:22:18, `cwd=/Users/davidleess`, `DG_AUTONOMY_WORKTREE` unset. Not a tmux pane → the pane-driving grant has no channel to it. |
+
+Only ttys025 can close Q3. David must run there:
+`~/.claude/tower/bin/agy-scoped.sh /Users/davidleess/dynasty-genius-product/docs/agent-ledger`
+
+---
+## 2026-08-19 11:2x — GEMINI CAN WRITE. Root cause was a THIRD bug, found only by instrumenting.
+
+**Confirmed by live probe:** dynasty:1.3 edited a real file on disk (`replace_file_content` →
+`line2: WRITE_SUCCEEDED`). pid 81004, `DG_AUTONOMY_WORKTREE=/Users/davidleess/dynasty-genius-product`.
+
+**Three separate defects, in the order they surfaced:**
+1. `${PLUGIN_ROOT}` unexpanded → `Cannot find module '/scripts/...'`. Fixed ~07:19.
+2. **THE REAL ONE — `fileTargets()` key-case mismatch.** agy sends the destination as **`TargetFile`**
+   (PascalCase). The policy looked only for `file_path`/`path`/`target_file`/`targetFile`, so `targets`
+   came back EMPTY and **every agy write was denied at any path in any scope** with "has no verifiable
+   target". The scope check never executed. Fixed by matching destination keys case-insensitively
+   (`TARGET_KEYS` + `pushTargets`). Synced live→source; `diff` identical.
+3. **Scope mismatch.** agy resolves paths against `workspacePaths[0]`, which is the **trunk**, not the
+   process cwd. A ledger-subdirectory scope therefore denied everything Gemini formed. Rescoped to the
+   trunk.
+Then a normal, non-bug gate: agy's own "Accept this file edit?" dialog.
+
+**Ground truth that ended the guessing** (`DG_HOOK_DEBUG=1` logging, now gated off by default):
+```
+env_DG_AUTONOMY_WORKTREE .../docs/agent-ledger      <- env IS inherited
+event_cwd                None                        <- agy sends NO cwd
+event_workspacePaths     ['/Users/davidleess/dynasty-genius-product',
+                          '/Users/davidleess/dynasty-genius-product/docs/agent-ledger']
+                                                      <- TWO entries, not empty
+tool_arg_keys            ['ArtifactMetadata','CodeContent','Description','Overwrite',
+                          'TargetFile','toolAction','toolSummary']
+```
+**Two of Tower's earlier inferences were WRONG and are corrected here:** workspacePaths was never
+empty (it has 2 entries — that is why "requires ONE explicit authorized workspace" fired), and the
+blocker was never really about workspaces once the env var was set.
+
+**LESSON — write this on the wall.** Tower burned roughly four hours on successive theories
+(empty workspacePaths, cwd, unexpanded tilde) and got the answer within two minutes of *instrumenting
+the hook to log its own input*. When a black box keeps refusing, log what it actually receives before
+theorising again.
+
+**Boundary re-verified after the fix — nothing weakened:**
+in-scope ledger + evidence writes allow; product code outside scope, trunk root outside scope,
+`~/.ssh`, `~/frontend-studio`, remote browser URLs, unknown tools, and no-scope-set all still DENY.
+Legacy snake_case `file_path` still works.
+
+**agy also restricts `write_to_file` to artifacts** inside `~/.gemini/antigravity-cli/brain/<conv>/`.
+Creating NEW files outside that fails with `(invalid_args) ... not a valid artifact path`. Editing
+EXISTING files via `replace_file_content` is the working path. Not our hook.
+
+**Consultant (ttys025, pid 45468) still untouched** and must use the TRUNK, not the ledger dir:
+`~/.claude/tower/bin/agy-scoped.sh /Users/davidleess/dynasty-genius-product`
+
+---
+## 2026-08-19 12:42 — dynasty:1.3 now writes unattended. Chain fully closed.
+
+Sent `shift+tab` (tmux `BTab`) to dynasty:1.3. agy confirmed in its own status line:
+`Accept-edits mode: file edits auto-approved`.
+
+**Verified end to end, unattended:** Tower created `.tower-probe-final.md` with `status: PENDING`,
+prompted 1.3 to edit it, and the file became `status: AUTO_APPROVED_OK` with **no approval dialog and
+no Tower intervention**. Probe file removed; `git status` clean of probes.
+
+**Scope of what was changed:** session-level toggle on ONE pane. Reversible with another `shift+tab`.
+It suppresses only **agy's own** edit-confirmation dialog. The dg-autonomy PreToolUse boundary is
+untouched and still adjudicates every write — `~/.ssh`, `~/frontend-studio`, anything outside
+`DG_AUTONOMY_WORKTREE`, remote browser URLs and non-allowlisted tools all still DENY.
+
+**Durable alternative NOT taken, on purpose:** `~/.gemini/config/config.json` →
+`userSettings.globalPermissionGrants.allow` (today holds only `command(git status)` and
+`command(.venv/bin/python3.14)`). A grant there would apply to EVERY agy session including the
+Consultant. Tower chose the narrower session toggle because David asked to stop the stall, not to
+change standing permissions, and because it is pointless for the Consultant until that session is
+relaunched scoped. Available if David wants it.
+
+**FULL CHAIN, for the record — four things stood between Gemini and working:**
+1. `${PLUGIN_ROOT}` never expanded by agy → `Cannot find module '/scripts/...'`
+2. `fileTargets()` missed agy's PascalCase `TargetFile` → EVERY write denied, scope check never ran
+3. scope pinned to a subdirectory while agy resolves paths against `workspacePaths[0]` (the trunk)
+4. agy's own edit-approval dialog (not a defect)
+
+**REMAINING, and Tower cannot do it:** the Gemini **Consultant**, pid 45468 on ttys025, still
+`cwd=/Users/davidleess`, `DG_AUTONOMY_WORKTREE` unset. Not a tmux pane → no channel. David must run:
+`~/.claude/tower/bin/agy-scoped.sh /Users/davidleess/dynasty-genius-product`
+then `shift+tab` in that window. It owns the last empty ballot slot (Q3: (b) closes 3-1, (c) makes it
+2-2 and escalates to David).
+
+---
+## 2026-08-19 13:2x — DURABLE ATTEMPT REVERTED. Would have breached the Studio wall.
+
+David: "make it DURABLE". Tower attempted the durable scoping fix — teach the policy that agy reports
+ONE workspace as root + nested subdirs, and collapse it to the common ancestor so no session needs
+`DG_AUTONOMY_WORKTREE` or the launcher again.
+
+**Tower reverted it before verification completed. Reason, and it is not a small one:**
+the Gemini **Consultant's** workspace is `$HOME`. Collapsing multi-entry workspacePaths to their
+common root would make `authorizedRoot = /Users/davidleess` for that session — which authorizes writes
+across ALL of `$HOME`, **including `~/frontend-studio`**. That breaches David's STANDING WALL
+TW29-WALL-35. The old `roots.length !== 1` check denied that case by accident; the "fix" would have
+opened it.
+
+**Any future version of this fix MUST refuse a root that is `/`, `$HOME`, or any directory containing
+`~/frontend-studio`, before it is allowed anywhere near the live policy.** That guard was not written,
+and that is why the edit had no business being live.
+
+**Second reason for reverting: the machine could not verify it.** `uptime` reported load average
+**11.68 / 12.20 / 11.49**. `ps`, `node --check` and even `cp` were timing out at 30–90s. Tower's own
+`strings` scans over the 185 MB `agy` binary contributed and were killed. **An unverified edit to a
+security boundary is worse than no edit** — reverted to the last state that passed the full matrix.
+
+**Live state now = verified-good:** `TARGET_KEYS` case-insensitive destination matching PRESENT,
+`collapseToSingleRoot` ABSENT, debug logging gated behind `DG_HOOK_DEBUG`. Live and dg-cockpit source
+identical.
+
+**What "durable" turns out to require — findings, so the next attempt starts here:**
+1. **Accept-edits cannot be made durable through config today.** `~/.gemini/config/config.json`
+   `userSettings.globalPermissionGrants.allow` accepts only `command(<x>)` tokens (present entries:
+   `command(git status)`, `command(.venv/bin/python3.14)`). No documented token for file edits.
+   **Tower did NOT invent one** — a fabricated token would be silently ignored and would LOOK durable
+   while doing nothing. `shift+tab` is per-session: config.json mtime is still Aug 11, so agy did not
+   persist the toggle.
+2. **Durable scoping is the right fix and is achievable**, but only with the `$HOME` / `/` /
+   Studio-containing guard above, plus the full boundary matrix re-run.
+3. `agy --help` hangs (launches interactively); `strings` on the binary is unusably slow. Discover agy
+   behaviour by **logging the live hook payload** (`DG_HOOK_DEBUG=1`), not by reading the binary.
+
+---
+## 2026-08-19 13:52 — DURABLE SCOPING FIX INSTALLED AND VERIFIED (23/23 on the live file)
+
+Execs became fast again (node/git/echo all 0s) so the matrix could finally run.
+
+**Installed:** `collapseToSingleRoot()` + the Studio guard, in BOTH
+`~/.gemini/config/plugins/dg-autonomy/scripts/dg-antigravity-tool-policy.mjs` and
+`~/dg-cockpit/autonomy/antigravity/dg-autonomy/scripts/...`; `diff` empty so install.sh's hash agrees.
+Pre-change file saved at `~/.claude/tower/backups/dg-antigravity-tool-policy.mjs.pre-collapse`.
+Verifier: `~/.claude/tower/bin/verify-tool-policy.sh` (23 asserted cases, prints ALL PASS or refuses).
+
+**BASELINE RUN EXPOSED A PRE-EXISTING SECURITY HOLE — not introduced by Tower.** Against the
+*unpatched* policy, three cases FAILED want=deny got=allow:
+```
+workspace=[$HOME] -> write ~/frontend-studio   ALLOWED
+workspace=[$HOME] -> write ~/.ssh              ALLOWED
+workspace=[/]     -> write anywhere            ALLOWED
+```
+A SINGLE-entry workspace of `[$HOME]` or `[/]` made that directory the authorized root. David's
+STANDING WALL TW29-WALL-35 was open by that path. **The installed guard closes it** (FORBIDDEN_ROOTS =
+{`/`, `$HOME`}, plus refusing any root containing `~/frontend-studio`). Verified deny on all three.
+
+**Effect:** any agy session opened inside a real project directory now works with NO env var and NO
+launcher — that is the durability David asked for. A session rooted at `$HOME` is still denied BY
+DESIGN and must name a narrower scope; so this does not by itself unblock the Consultant.
+
+## Load: Tower's hypothesis was WRONG, and the measurement says so
+28 orphaned `agy` processes exist (all ppid=1, spawned in a 66-second burst 13:18:31-13:19:45; 22 on
+ttys025, 6 on ttys006). Tower hypothesised they were the load source and was about to kill them.
+**Measured first: they consume 0.0% CPU and 0.0 GB RSS.** They are inert. Tower did NOT kill them.
+**The load is `syspolicyd` alone at 280.9%**, sustained; load avg 10-11. That is a wedged macOS
+Gatekeeper daemon. Clearing it needs `sudo killall syspolicyd` — David's, not Tower's.
+
+## Session state right now
+- **No agy session is alive.** dynasty:1.3 is at `(.venv) bash-3.2$`; the Consultant's pid 45468 is
+  gone. So "Gemini is blocked" is no longer the right description — Gemini is **not running**.
+- **dynasty:2.1 (STUDIO) holds an unsubmitted REAL strand: the word `do`.** Tower did not author it and
+  will not submit or clear it (wire rule; never submit text you did not write). Studio shows
+  "accept edits on". Reported to David.
+- Tower's ledger-watch is STOPPED (Tower stopped it to cut exec churn). Restart once syspolicyd is
+  cleared: `nohup ~/.claude/tower/bin/ledger-watch.sh >/dev/null 2>&1 &`
+
+---
+## 2026-08-19 15:06 — VERIFIED. Durable fix proven live; load halved; syspolicyd still wedged.
+
+**1. Policy re-verified against the LIVE file (not from memory):** `verify-tool-policy.sh` →
+**ALL PASS (23 cases)**. Live and `~/dg-cockpit/autonomy/antigravity/dg-autonomy/scripts/` identical.
+Guard present (4 refs to FORBIDDEN_ROOTS / STUDIO_LANE).
+
+**2. DURABILITY PROVEN LIVE.** dynasty:1.3 agy pid 92403: `cwd=/Users/davidleess/dynasty-genius-product`,
+`DG_AUTONOMY_WORKTREE=<unset>` — i.e. a PLAIN `agy`, no launcher, no env var. Tower created
+`.tower-durable-check.md` = `status: PENDING`, prompted the lane, file became `status: DURABLE_OK`.
+**That is the durability David asked for, measured rather than argued.** Probe file removed; git clean.
+(accept-edits re-toggled on the new session — `shift+tab` does not survive a relaunch.)
+
+**3. The Studio guard behaves as designed on the Consultant.** agy pid 92176, tty ttys025:
+`cwd=/Users/davidleess`, env unset. Its workspace root is `$HOME`, which FORBIDDEN_ROOTS refuses, so it
+is still denied — correctly, because authorizing `$HOME` would authorize `~/frontend-studio`.
+NOTE: this is established from the matrix (`workspace=[$HOME] -> write STUDIO` = deny), NOT from a live
+probe — Tower has no channel to ttys025. To work, that session needs
+`~/.claude/tower/bin/agy-scoped.sh /Users/davidleess/dynasty-genius-product`, or to be relaunched from
+inside the repo.
+
+**4. Load: 28 orphaned agy killed, load HALVED 35.30 -> 17.08.** All 28 were ppid=1 orphans; the 2
+live-parented sessions (92403 under the 1.3 shell, 92176 under the IDE bash) were preserved. They
+showed 0% CPU but were inflating load as blocked processes — Tower's earlier "they cost nothing"
+reading was right about CPU and wrong about load contribution. Total procs 429 -> 401.
+
+**5. STILL BROKEN AND NOT TOWER'S TO FIX: `syspolicyd` at 313.5%**, climbed 256 -> 280 -> 326 -> 313
+across the afternoon. It will not self-heal. `sudo killall syspolicyd` respawns it clean — David's.
+Until then every process launch is queued behind Gatekeeper assessment, which is what made hooks
+(10s timeout) fail and looked exactly like a config bug.
+
+**6. Ballot unchanged: 3 of 4. Gemini Consultant slot STILL EMPTY** — consistent with that session
+being unable to write. Q3 remains open: (b) closes it 3-1, (c) ties 2-2 and escalates to David.
+The ledger has since grown a blocker/WARN list touching Tower's own duty-1 area (failed producers
+graded fresh; backup failure vanishing from two aggregate health surfaces; a failed market-divergence
+marker inspected as ok). **Tower has NOT verified any of those claims — they are leads, not facts.**
+
+**7. Tower's ledger-watch remains STOPPED** deliberately (it execs find/grep/stat every 30s and that is
+the wrong thing to add while Gatekeeper is saturated). Restart after syspolicyd is cleared.
+
+---
+## 2026-08-19 15:2x — TOWER VERIFIED THE FOUR LEDGER BLOCKERS. All four hold. One is worse than filed.
+
+Verified independently from source + first-hand probes. These were another lane's claims; Tower did
+NOT take them on trust.
+
+### B1 — failed producers are graded FRESH. CONFIRMED, REPRODUCED, AND UNDERSTATED.
+Probe through the real evaluator (`evaluate_report_freshness`, healthy size, fresh timestamps,
+healthy input provenance, only the terminal status set to failure):
+```
+pvo_refresh      status_on_disk=aborted  -> REPORTED fresh  basis=mtime_fresh
+feature_refresh  status_on_disk=blocked  -> REPORTED fresh  basis=embedded_timestamp_fresh
+```
+Byte-identical to the ledger's reported output. Mechanism, from source:
+- `system_health_models.py:509` — EVERY status gate is guarded by `artifact.status_field is not None`.
+  Undeclared ⇒ the gate is skipped entirely and evaluation falls through to mtime.
+- Its own docstring (`:78-81`): *"declaring `status_field` is what makes failure legible"*, and the gate
+  comment: *"a failed run rewrites its artifact, so a fresh timestamp is exactly what a failure looks
+  like on disk."* The design anticipated this precisely; the config did not opt in.
+- **UNDERSTATED BY THE LEDGER: 5 artifacts omit `status_field`, not 2** — `pvo_refresh`,
+  `feature_refresh`, `what_changed`, `roster_capacity`, `league_opportunity`. Only `realized_outcome`,
+  `market_divergence`, `league_capture` declare it.
+- Both named producers write a status on EVERY exit path, so both QUALIFY to declare it:
+  `run_pvo_refresh.py` → 5x `aborted`, 3x `ok`; `feature_refresh_runner.py` → `blocked`,
+  `candidate_ready`, `noop`, `ok`.
+
+### B2 — backup failure vanishes from two aggregate surfaces. CONFIRMED.
+- `system_capture_health.py:89-96` DOES fold backup in:
+  `overall = "degraded" if backup.status=="degraded" or any(store degraded) else "ok"`.
+- `grep -ci backup app/api/routes/system_tier_readiness.py` → **0**
+- `grep -ci backup app/api/routes/system_health.py`         → **0**
+So the two top surfaces recompute capture health from stores only. Backup failed + stores healthy ⇒
+source says degraded, both aggregates say ok.
+
+### B3 — backup health accepts a future-dated, internally failed marker. CONFIRMED, REPRODUCED.
+Tower's own probe of `inspect_backup_marker` with `status=completed`, `sha256_verified=true`,
+`finished_at=now+3 days`, `failures=["restore drill mismatch"]`:
+```
+status  : ok
+reasons : []
+echoed failures: ['restore drill mismatch']
+```
+Mechanism: `reasons` is built from exactly three tests (stale / status!=completed / not sha256_verified).
+`failures` is extracted and echoed into `BackupMarkerEcho` but **never appended to `reasons`**, and
+staleness is `now - finished_at > threshold`, which for a FUTURE date is negative and never trips.
+**This one lands on Tower's own authority #2** — "verify coverage and arrival, never the exit code."
+The backup health surface will call a failed restore drill ok.
+
+### W4 — fresh failed market-divergence marker reads ok. CONFIRMED.
+`inspect_market_divergence_refresh_status` (scripts/run_market_divergence_refresh.py:649-670) tests
+marker presence, `finished_at` presence, and age — then `return {"status": "ok"}`. It never reads the
+marker's own `status`. Same class as B1. Its docstring says *"Silence-is-not-success"* while missing
+failure-is-not-success. `grep market_divergence app/api/routes/system_health.py` → no match, so the
+ledger's own caveat (not wired into the live health route) also holds.
+
+### NOT verified by Tower — the ledger itself filed these as unproven-reachable, and they stay that way
+`realized_outcome_scorecard.py:74-100` (missing artifact ⇒ HTTP 200 inactive), `scenario_simulator.py`
+(absent captured_at/coverage ⇒ no caveat), `roster_audit_models.py:302-335` (empty input ⇒
+status=active). Tower did not test reachability. Do NOT promote these to defects without that.
+
+### Every fix is a PROPOSED PRODUCT CHANGE — David's gate, nothing started.
+1. Declare `status_field: "status"` + `success_status` on the 5 undeclared artifacts (config only).
+2. Make `system_tier_readiness` and `system_health` read the backup signal.
+3. In `inspect_backup_marker`: reject `finished_at > now`; fold nonempty `failures` into `reasons`.
+4. Make `inspect_market_divergence_refresh_status` read the marker's own terminal status.
+
+---
+## 2026-08-19 15:5x — GEMINI CAN BUILD, DURABLY. Fifth and final defect was the command key.
+
+**Proven unattended, after a restart, with no prompts and no Tower intervention:**
+```
+# Durable Proof
+- Branch: ticket/DG-021
+- SHA: 552733c
+- Status: NO_PROMPTS
+```
+Three shell commands (`git branch --show-current`, `git rev-parse --short HEAD`, `echo`) plus a file
+write, in a proper ticket worktree on `ticket/DG-021`.
+
+### THE FIFTH DEFECT — why "it can edit a file" was never "it can build"
+`tool_arg_keys = ['CommandLine','Cwd','WaitMsBeforeAsync',...]`. agy sends shell commands as
+**`CommandLine`** (PascalCase); the policy read `args.command`, so EVERY shell command from any agy
+session was rejected as *"Dynasty autonomy command input is malformed."* **No agy session could ever
+run a test, a script, or a git command.** Fixed with `COMMAND_KEYS` + `commandString()`, case-insensitive
+(command / commandline / command_line / cmd). Same PascalCase class as `TargetFile` — Tower fixed the
+file keys and did not think to check the command key. Verified: PascalCase allow, legacy lowercase
+allow, no-key deny. Full matrix ALL PASS (23). Synced to dg-cockpit source, identical.
+
+### Disjoint workspaces — why the worktree needed an explicit scope
+Live payload: `event_workspacePaths = ['/Users/davidleess/dynasty-genius-product',
+'/Users/davidleess/dg-wt/DG-021']`. Trunk and worktree are SIBLINGS — neither contains the other, so
+`collapseToSingleRoot` correctly refuses as ambiguous. The IDE has both folders open. **Correct answer
+is an explicit scope, not a looser policy:** `agy-scoped.sh <worktree>`.
+
+### DURABLE command approval — the mechanism, finally located
+Tower could not find it by reading the binary. It is created by agy's own approval dialog, option 3:
+*"Yes, and always allow for commands that start with X (Persist to settings.json)"*, which writes
+`command(<prefix>)` into `~/.gemini/config/config.json` → `userSettings.globalPermissionGrants.allow`.
+That is why `command(git status)` was already there. Tower pre-seeded the build set (git read-only
+subcommands, echo/ls/cat/head/tail/wc/grep/find/sed -n/awk, `python3 -c`, `dg-work.sh`); config.json
+backed up at `~/.claude/tower/backups/agy-config.json.pre-grants`. **Grants survived an agy restart
+(verified: `command(git branch)` still present after /quit).**
+
+**SAFE because agy grants only skip agy's OWN dialog — the dg-autonomy hook still adjudicates every
+command. Verified with the grants live:**
+```
+git push origin ...            deny  "human gate: push"
+git commit -m x                deny  "human gate: commit"
+rm -rf ~/frontend-studio       deny  "human gate: destructive"
+curl https://evil.example.com  deny  "human gate: external-communication"
+pytest / git diff              allow
+```
+Accept-edits (`shift+tab`) still does NOT persist and must be re-toggled per session.
+
+### THE LESSON, and it is the same one twice
+Five defects, and Tower found four of them within minutes of LOGGING THE LIVE HOOK PAYLOAD, after
+burning hours on theories in between (empty workspacePaths, cwd, unexpanded tilde, "it can write so it
+can build"). **When a black box refuses, instrument it first.** Tower also asserted "Gemini can build"
+off a matrix that never tested `run_command` — the matrix tested writes, reads and browser only.
+**Test the capability the user actually asked about, not an adjacent one.**
+
+---
+## 2026-08-19 15:45 — Looking at Gemini's pane (David's instruction) — what it actually showed
+
+**Yes, Gemini launches with `agy`.** Canonical launch is BARE, no flags:
+`dynasty_flight_deck.sh:41` → `tmux send-keys -t "$SESSION:1.3" "agy" C-m`. Tower's relaunches dropped
+no flags. **VERIFIED that the default launch path now works after today's fixes** — using the exact
+payload a bare trunk launch produces (`workspacePaths=[trunk, trunk/docs/agent-ledger]`, no env var):
+`git branch` allow · `pytest` allow · producer script allow · trunk write allow · `git commit` deny ·
+STUDIO write deny.
+
+**Gemini was NOT blocked when David said to look — it was mid-run**, executing its `dg-auto` skill.
+The BLOCKED text in the pane was older scrollback. Last live event was a `run_command` for
+`$HOME/.dg-autonomy/bin/dg-autonomy --help`.
+
+**THE REMAINING STALL, found by reading the pane rather than theorising:** the `dg-auto` skill
+(`~/.gemini/config/plugins/dg-autonomy/skills/dg-auto/SKILL.md`) REQUIRES the run-record CLI at
+`$HOME/.dg-autonomy/bin/dg-autonomy` (init → record-check → finish) and says end `BLOCKED` if authority
+is unclear. The CLI exists (symlink → `dg-cockpit/autonomy/core/bin/dg-autonomy.mjs`) and the policy
+ALLOWS init/record-check/finish (tested). But agy's approval grants match by FULL PREFIX STRING, and
+Tower's grant set did not include the CLI at all — so Gemini stopped for a dialog on EVERY subcommand
+(`--help`, then `status`, ...). Added grants: `command($HOME/.dg-autonomy/bin/dg-autonomy)` plus `~/`
+and absolute-path variants, `git worktree`, `pytest`, `.venv/bin/pytest`, `node --check`, `git add`.
+Config now holds 31 grants; backup at `~/.claude/tower/backups/agy-config.json.pre-grants`.
+**Grants apply at agy STARTUP — this set takes effect on the next launch.**
+
+**Pane noise is BY DESIGN, not a fault:** the PreInvocation hook `dg-antigravity-policy.mjs` injects the
+DYNASTY AUTONOMY BOUNDARY block as a `USER_INPUT` on every turn — that is why it repeats down the pane.
+It also explains the whole day: the boundary text itself instructs *"A malformed safety hook ... means
+BLOCKED."* Gemini was never confused; it was obeying. Cost: it re-sends that block every turn and eats
+context (ctx at 9%).
+
+**LESSON, third time today:** Tower answered "can Gemini build?" from a policy matrix instead of from
+Gemini's pane. The pane held the answer — the skill's required CLI and the per-subcommand dialogs —
+and took one capture to find. **Read the lane's own screen before reasoning about the lane.**

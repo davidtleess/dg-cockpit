@@ -1,0 +1,1867 @@
+ now ingests curated BYO Sleeper rookie-draft IDs (`resources/sf_ro
+okie_draft_ids.json`, ships **empty** = backward-compatible no-op).
+ Each BYO draft hard-gated **SUPER_FLEX (exact token) + 12-team + c
+ompleted rookie**; PPR/TEP recorded as `format_meta` only. First-36
+ cap (sort by `pick_no`, keep ≤36) with `n_picks_raw/used/excluded`
+ provenance. Fail-closed throughout — every id → accepted board or
+recorded `rejected` entry (reasons: `missing_league_id`, `fetch_fai
+led`, `malformed_picks`, `invalid_draft_class`, `malformed_draft_se
+ttings`, `unsupported_draft_type`, `duplicate_draft_id` within-file
+, `duplicate_existing_draft` cross-source, `rank_map_unavailable` =
+ data-coverage class excluded from the K math). Gate runs **before*
+* the picks fetch (Codex PR #48 MEDIUM fix). **Diagnostic-only:** p
+romotion/K math unchanged, artifact only; **setting `sf_qb_promote_
+slots=K` + curve regen remain GATED on David's explicit later appro
+val** (`draft_pick_valuation.py` / curve / build script untouched).
+ MFL aggregate stays barred from calibration; read-only Sleeper; no
+ model/PVO/frontend change. Spec `docs/superpowers/specs/2026-05-27
+-sf-qb-knob-calibration-corpus-expansion-design.md`; plan `docs/sup
+erpowers/plans/2026-05-27-sf-qb-knob-calibration-corpus-expansion.m
+d`. Frontend HOLD intact (backend only). **Corpus populated (PR #50
+ merge `5b83bce`):** 6 real SF/12-team rookie drafts (classes 2019/
+2025/2026) curated into `resources/sf_rookie_draft_ids.json`, resol
+ved read-only from 5 user-supplied Sleeper league IDs (a 1-QB leagu
+e chain and a league's 7-round rookie drafts were gated out). Calib
+ration over the resulting **12 drafts / 50 matched QBs → K still 0*
+* (median promotion shifted 0.0 → −2.0: QBs go slightly *later* tha
+n NFL-skill order, so no SF QB-promotion is warranted — the curve's
+ FF≈NFL-skill assumption is now validated on real data, not a thin
+sample). Artifact `app/data/backtest/phase24/sf_qb_knob_calibration
+_20260527T221751Z.json`. `sf_qb_promote_slots` + pick-value curve U
+NCHANGED (K application stays separately gated). Coverage note: the
+ `rounds≤6` gate excludes legitimate 7-round SF rookie drafts — a f
+uture widen-the-gate increment could admit more.
+
+Phase 24 Follow-up B Increment A — **SUBSYSTEM 3 PROSPECT IDENTITY
+SUBSTRATE — MERGED** (2026-05-28; PR #55 squash-merged as `0730dcb`
+ + audit-trail ledger commit `a2e7b93` on `main`; full suite at mer
+ge **1376 passed, 11 skipped, 0 failed; +71 net new S3 contract tes
+ts vs prior baseline 1305**). Cockpit TDD build (Codex RED, Claude
+GREEN; 3 pre-execution review rounds + PR-review round-1 fix `dbdb9
+c0` + unanimous TECHNICAL + GOVERNANCE CLEAR on merge; mid-Task-8 c
+ockpit-debate resolved by reverting a deterministic-UUID interpreta
+tion per Codex's binding objection). Lands the fail-closed undrafte
+d-prospect identity substrate per dual-CLEAR spec `docs/superpowers
+/specs/2026-05-28-subsystem-3-prospect-identity-substrate-design.md
+` (SHA `8c20350`) with all Round 2 + Round 3 patches inline. Single
+ new module `src/dynasty_genius/identity/college_prospect_identity.
+py` (~1100 lines after PR round-1 fixes, labeled sections): schema
+(`NormalizedCollegeProspectRow`, `RegistryEntry`, `StatusHistoryEnt
+ry`, `CollegeAliasBridge`/`Entry`), exceptions, `ConfirmedProspectU
+uid` runtime wrapper (no mypy/pyright in v1; signature-introspectio
+n contract test), `normalize_name`/`compute_match_key`, matcher (JW
+ + token-set 0.75/0.25, +0.10 position bonus, +0.05 school bonus, c
+lamp [0,1], draft_class hard-zero, offense-only whitelist `WR↔TE`/`
+WR↔RB`/`FB↔RB` at ≥0.90, hard-block QB↔skill / OL family / K/P/LS /
+ defense↔offense), `atomic_write_registry`/`atomic_write_bridge` (p
+er-file `os.replace`, NOT cross-file), `validate_registry_graph` (s
+ource_record_id uniqueness + bridge target validation per §4.6 cont
+ract 3), `_detect_source_id_conflict` pre-check (§5.5), `mint_or_ma
+tch` (source_id_conflict → idempotent → `surface_review_candidates(
+§5.4 query)` → mint + flag), `ingest_fixture` (writes registry + br
+idge + review_queue + dedicated `college_identity_source_id_conflic
+t_<run_id>.jsonl` + coverage matrix; exit_code != 0 when conflicts
+present; **no-op on missing or zero-byte fixture file per PR round-
+1 fix**), promotion lifecycle (`PromotionDecision.target_kind` Lite
+ral[self,existing]; confirm-self / confirm-existing with bridge wri
+tes mapping `(match_key, source_record_id)→survivor`; merge_into; s
+plit happy-path mints `new_split_uuid` and logs it for deterministi
+c replay; closure marker as third leg of §6.3 three-point logging;
+**event log now carries `source_record_id` + `source_snapshot_id` f
+rom acted-on row per PR round-1 fix — provisional source for confir
+m-existing, not survivor**; pure `_apply_logged_event` applicator n
+ever calls `_now_iso`/`uuid4`; `replay_promotion_log` over snapshot
+ted genesis state). `load_registry`/`load_bridge` also no-op on mis
+sing or zero-byte input per PR round-1 fix. Two CLI scripts: `scrip
+ts/{ingest_college_prospect_fixture,promote_review_candidate}.py` (
+`--target-kind` flag). Cockpit correctness call mid-Task-8: kept `u
+uid4()` + `_now_iso()` for live ingestion (Codex objected to determ
+inistic UUID5 interpretation as spec-amendment-masquerading-as-impl
+); the 2 byte-identical replay tests `shutil.copy` registry+bridge
+from live to genesis immediately after `ingest_fixture` and BEFORE
+any promotions, then replay onto the snapshot — matches spec §6.3 "
+genesis state from most recent fixture ingestion" cleanly. Inviolat
+e paths byte-unchanged vs `main` pre-merge (`prospect_registry.json
+`, `composite_registry.json`, `prospect_alias_bridge.json`, `prospe
+ct_identity_resolver.py`). `validate_governance.py` PASS. Task 10 (
+manual top-100 2027 fixture curation) deferred per plan Choice 4. P
+lan: `docs/superpowers/plans/2026-05-28-subsystem-3-prospect-identi
+ty-substrate.md` (5476 lines; v1 Tasks 6–9 superseded by Round 2 bl
+ocks; Round 3 patches inline in Task 8). Substrate-only, model-blin
+d, frontend HOLD intact, NOISE_BAND lock untouched, `decision_suppo
+rted=False`, banned-language absent, no mock/ADP/market data in ide
+ntity registry or bridge. **Next per reconciliation build order:**
+Subsystem 4 — backtest manual-first.
+
+Phase 24 Follow-up B — **MFL ROOKIE ADP DIVERGENCE REPORT — Increme
+nt B COMPLETE — MERGED** (2026-05-28; PR #52 merge `98a90f8`; full
+suite 1305 passed, 11 skipped). Turns the previously-dormant `MflAd
+pMarketSource` into a **live, inspectable signal**: `scripts/build_
+mfl_rookie_adp_divergence.py` + `src/dynasty_genius/mfl_rookie_adp_
+divergence.py` read MFL rookie ADP (read-only via new `fetch_rookie
+_adp_rows` helper — `MarketSource.fetch()` contract untouched) and
+`prospect_cards.json` (read-only), fail-closed name+position join w
+ithin `draft_class==season`, and write a **separate** artifact `app
+/data/valuation/mfl_rookie_adp_divergence_{latest,<run>}.{json,md}`
+ of `market_adp_rank` vs `xvar_class_rank` (`model_rank`): `rank_ga
+p` + neutral flag (`aligned` / `model_higher_than_market` / `market
+_higher_than_model`, `aligned_band=3`), `dvs_class_rank` emitted al
+ongside, `model_rank_unavailable` when xVAR rank missing, coverage
+block + both unmatched sides + fail-closed ambiguity. Intrinsic ble
+nd caveats propagate to rows + artifact (Codex PR #52 MEDIUM fix);
+banned-language guard scans generated label strings word-boundary (
+not player names). **Read-only state contract test** asserts `prosp
+ect_cards.json` + `universe_pvo_latest.json` byte-identical and wri
+tes confined to the divergence artifact. **Artifact-only — no endpo
+int/frontend; no PVO/team/trade/training feed; `decision_supported=
+False` throughout; MFL barred from calibration/training.** Spec `do
+cs/superpowers/specs/2026-05-27-mfl-rookie-adp-divergence-design.md
+`; plan `docs/superpowers/plans/2026-05-27-mfl-rookie-adp-divergenc
+e.md`. Frontend HOLD intact (backend only).
+
+Phase 22 — **IMPLEMENTATION COMPLETE + CODEX CLEARED** (2026-05-24;
+ 1169 tests, 11 skipped). Trade Lab Roster Reconciler. Spec v0.2 ap
+proved. W1 (12 TDD tests): `src/dynasty_genius/trade_lab/reconciler
+.py` (pure function — `RosterPenaltySummary`, `TradeRosterReconcili
+ation`, `reconcile_trade_roster()`; Forced Cut Penalty = raw xVAR o
+f top-N cut candidates; order-preserving roster mutation); `decisio
+n_supported` coercion-lock validators added to `TradeAsset` and `Tr
+adeEvaluation` in `src/dynasty_genius/trade_lab/evaluator.py`. W2 (
+4 TDD tests): `POST /api/trade/reconcile` endpoint in `app/api/rout
+es/trade.py`; monkeypatchable `_load_reconcile_artifacts()`. No mar
+ket data, no model pkl, no manifest changes. Spec: `docs/strategies
+/2026-05-24-phase22-roster-reconciler-spec.md`.
+
+## Current Sprint Objective
+
+**ACTIVE (2026-05-30): Harness Trust Completion — Engine A/B model-
+vs-market validation.** A SEPARATE initiative from S4 (extends the
+EXISTING Phase 10/11 model-validation harness — `backtest_harness.p
+y`/`backtest_metrics.py`/`market_snapshot_store.py`/`backtest_artif
+act.py`/`model_card.py`/`trust_surface.py`; the S4 merge `95345ea`
+released the §11.1 inviolate lock). **DESIGN SPEC APPROVED** — `doc
+s/superpowers/specs/2026-05-30-harness-trust-completion-design.md`
+(v4), dual-CLEAR sealed (Codex technical CLEAR v4; Gemini governanc
+e CLEAR ×3; 4-round falsification 8→3→1→0). **David Gate B rulings
+LOCKED:** §8.1 R²=DISCLOSE only (R²-as-gate deferred behind the unb
+uilt Step 0.5 composite gate); §8.2 G3 PASS = model ≥ market at pos
+ition-primary k (QB/TE @12, RB/WR @24) in ≥3/4 evaluable folds with
+ NDCG-diff bootstrap CI disclosed (not gated on CI excluding 0); §8
+.3 Gate-4/W2b DEFERRED (~6mo data); §8.4 W1 historical FantasyCalc
+archive APPROVED (overlay-only, point-in-time/provenance per §5). W
+orkstreams: **W3** add R² (OOS-only, disclose) → **W2a** activate `
+snapshot_fantasycalc.py` immutable daily `fc_native` collection (ve
+rify-or-raise, replacing `INSERT OR REPLACE`) → **W1** backfill mar
+ket + run G3 (incl. existing-code under-coverage fix: <3 folds→defe
+rred not failed) → **W4** one QB-reliability caveat field on trust_
+surface. **Ground-truth: G3 producer+consumer already exist (W1=dat
+a+fix); G4 producer absent (W2b builds it later); R² genuinely new.
+** All overlay-only, `decision_supported=False`, frontend HOLD inta
+ct, no Engine A/B feature/training change. R5 (Phase 20 Engine A nu
+ll root-cause) stays separate research-only. **BUILD COMPLETE (2026
+-05-30) — all 4 workstreams committed on `feature/harness-trust-com
+pletion` (15 commits); full suite 1593 passed, 11 skipped, 0 failed
+.** Every task Codex-RED → Claude-GREEN → independent technical CLE
+AR + Gemini governance CLEAR under Falsification Discipline. Commit
+s: W3.1 `82411a6` (compute_r2), W3.2 `4b5f4b3` (FoldResult.r2_oos+m
+etric_caveats), W3.3 `b246a08` (ModelCard nullable R²); S4-audit re
+scope `0616379` (David-ruled, spec §1.1); W2a.1 `6c3be8e` (append_s
+napshots verify-or-raise), W2a.2 `df5a009` (immutable daily script)
+, W2a.3 `4c7645c` (scheduler+Gate-4 clock docs); W1.1 `bf96927` (BC
+a NDCG-diff bootstrap), W1.2 `2a22c28` (primary-k+destinations), W1
+.3 `25abf4f` (G3 under-coverage→deferred + primary-k + complete-pai
+r fix), W1.4 `de0792c` (PIT backfill adapter + producer wiring), W1
+.5 `78f27f7` (leakage wall); W4.1 `885dcc1` (QB reliability stamp).
+ Cockpit caught ~10 real fail-closed/false-confidence defects + 1 s
+trategic-pause (S4 byte-lock conflict, David-ruled rescope). **SHIP
+PED — MERGED to `main`** (PR #58 squash-merged as `05e6985`, 2026-0
+5-30; CI "Python checks" PASS). The `feature/harness-trust-completi
+on` branch is merged (deletable). **Step-5a SOURCE VERIFICATION COM
+PLETE** (`docs/validation/2026-05-30-step5a-dynastyprocess-source-v
+erification.md`). **Step-5b.1 LOADER COMPLETE locally on `main` com
+mit `dd0fac0`** — `scripts/load_dynastyprocess_archive.py` + `tests
+/contract/test_harness_trust_step5b_loader.py`; local gitignored `a
+pp/data/fc_snapshots.db` contains 2185 `dp_archive` rows across the
+ four verified kickoff dates (517/551/604/513); F1 malformed `value
+_2qb` and F2 missing `value_2qb` schema drift are RED-covered and f
+ail closed; focused loader suite 6/6 and ruff pass. **Step-5b.2 G3
+MARKET-JOIN HARDENING — GREEN COMPLETE (2026-05-31).** Recovered th
+e crashed session and completed the G3 trust-fix through the cockpi
+t under Falsification Discipline. Design fork (S-vs-T zero-overlap)
+ routed as a no-anchor team discussion → converged on **Design S**
+(per-fold fail-loud) on three independent evidence sources (Step-5a
+ 99.51–99.64% crosswalk coverage; Codex live DB probe positive ever
+y fold; Claude verification). RED commits: `5fceed2` (falsification
+ RED), `90ae604` (mixed-fold discriminator), `f1b0c4a` (non-numeric
+ lock), `3083316` (non-finite lock). GREEN (`src/dynasty_genius/eva
+l/backtest_harness.py` + `scripts/run_backtest.py`): `_normalize_sl
+eeper_id`→`str|None` skipping blank/non-numeric/non-finite(`math.is
+finite`)/non-zero-fractional ids (never truncate), `_load_gsis_to_s
+leeper_map`/`_load_id_map_csv` skip malformed, **Design S per-fold
+`IdMapUnavailableError("…zero overlap…")`** after `_compute_market_
+ndcg`, honest `dynastyprocess_ecr_2qb` label (from prior `275a007`)
+. Three real defects (fractional truncation / non-numeric leak / no
+n-finite crash) caught in **pre-commit** independent review — the C
+LEAR gate moved ahead of commit after the earlier `275a007` was pus
+hed pre-review. Focused 17 passed; full suite **1622 passed, 11 ski
+pped, 0 failed**; ruff clean. Codex independent TECHNICAL CLEAR + G
+emini GOVERNANCE CLEAR (enumerated, after Claude rejected an initia
+l bare CLEAR). **G3 RUN COMPLETE + RECORDED (2026-05-31).** Ran `ru
+n_backtest.py --all` + `--position TE` over `dp_archive` + `db_play
+erids` id-map (QB/RB/WR/TE; `--all` excludes TE by `ACTIVE_POSITION
+S`). **Verdict: consensus-competitive, EDGE UNPROVEN** — Engine B i
+s statistically *tied* with DynastyProcess expert consensus (`dynas
+typrocess_ecr_2qb`): per-fold model−consensus NDCG-diff at primary-
+k tiny (|diff|≤0.06), **every BCa CI includes 0**; by the point-est
+imate ≥3/4 rule only WR "passes" (3/4) and even that is statistical
+ly unconfirmed (QB 1/4, RB 0/4, TE 2/4). `promotion_gate.g3_market_
+superiority_pass`: WR True (`ACTIVE_B_VALIDATED`), QB/RB/TE False (
+"blocked by G3"). Recorded honestly in **`docs/validation/2026-05-3
+1-step5b2-g3-ecr-validation.md`** (commit `f98bf43`, dual-cleared,
+descriptive/diagnostic, no decision-grade). **Team brainstorm reloc
+ated the edge thesis** (not killed): edge can't beat *rational* exp
+ert consensus, so it lives in (1) decision-context translation for
+David's league + (2) divergence vs the *emotional* trade market (KT
+C/FantasyCalc) — model = verified "rational anchor," divergence = r
+eview-trigger not buy/sell. **Task B (subpopulation / axis-of-edge
+study) — COMPLETE (2026-06-01).** All 9 tasks + spec patches shippe
+d on `main` via the cockpit (Codex RED → Claude GREEN → dual CLEAR
+→ commit; full suite **1686 passed, 11 skipped, 0 failed**). Module
+ `src/dynasty_genius/eval/subpopulation_landscape.py` + CLI `script
+s/run_subpopulation_landscape.py`. **Task 9 Part 2 e2e surfaced + f
+ixed 4 real `db_playerids`/market-artifact data-wiring defects RED-
+first** (A `fc_rank`→consensus_rank CLI normalization; B `NA` draft
+_year null-marker→missing; C `NA` gsis_id keys → 4,484 rows skipped
+; D 9 genuine id→draft_year conflicts → excluded-with-diagnostics,
+refining the Task 2 conflict contract via D1; spec §4/§6/§11 patche
+d `01ce3cf`/`ffe6026`). E2e over the 4 consolidated G3 dirs + real
+`db_playerids.csv` → 100% draft_year coverage (1702/1702). **Descri
+ptive result (dual-CLEARED note `docs/validation/2026-06-01-subpopu
+lation-landscape-note.md`):** the subpopulation landscape CONFIRMS
+the whole-population G3 verdict — Engine B ≈ rational expert consen
+sus across aging-cliff / high-disagreement / early-career cohorts (
+`statistically_indistinguishable` dominates; point leans: early-car
+eer RB→consensus −0.083, high-disagreement WR-bullish→consensus −0.
+063, TE-bearish→model +0.357 but SINGLE-FOLD), and **no powered poc
+ket-of-edge surfaced — none can at ≤4 annual folds** (sign-flip min
+ two-sided p = 0.25 ⇒ `powered_followup_candidate` structurally unr
+eachable; a power limit, not "no signal"). The analytical-superiori
+ty hypothesis is unchanged → decision-context translation + diverge
+nce vs the *emotional* trade market (deferred **Task C**). Build co
+mmits T1 `4a20583` → T8 `92b1572`; aggregate-p fold-signflip ruling
+; orchestration RED `caff797`; A+B+C+D fix `072264e`. **OPEN DEPEND
+ENCIES:** (1) all imputation/centered-MA still banned; (2) Gate-4 c
+lock starts when David `launchctl load`s the W2a scheduler; (3) **T
+ask C trade-market baseline (the *real* mispricing test) — VERIFIED
+ DATA-BLOCKED + SHELVED (2026-06-01;** note `docs/validation/2026-0
+6-01-task-c-emotional-market-sourcing-verification.md`): no obtaina
+ble integrity-passing historical EMOTIONAL-market (FantasyCalc/KTC)
+ archive exists for the 4 dates (Dynasty Daddy = private DB, no exp
+ort; FantasyCalc = current-only API, no verified historical export;
+ community KTC+FC sheet (u/325xi5mt) = located/documented but rejec
+ted/deferred pending integrity verification (community-maintained/u
+nvetted; KTC .5-PPR mismatch); Wayback = deferred low-confidence; D
+ynastyProcess = ECR/rational = redundant). "Not found is valid"; no
+thing fabricated/substituted. **Forward path:** David `launchctl lo
+ad` the W2a `snapshot_fantasycalc.py` daily scheduler to start the
+Gate-4 clock; a real model-vs-emotional-market backtest becomes pos
+sible once ~6mo+ of forward `fc_native` accrues — + more PIT archiv
+e years (to make powered candidates reachable); (4) real nflreadr→`
+NflTruthRow` S4 truth loader **RESOLVED — S4 v2 COMPLETE 2026-06-01
+** (commit chain T1 `e9c88a5`…T9 `eb49917`; see the Subsystem 4 sec
+tion below); (5) S3 Task 10 fixture curation. Full audit trail in `
+docs/agent-ledger/2026-05-31.md` + `2026-06-01.md`.
+
+**Recovery note (2026-05-30 23:37 ET): Step-5b.2 GREEN verified loc
+ally on `main` after crash recovery.** Uncommitted patch hardens G3
+ identity/rank/label behavior: deterministic `--id-map-csv`, clean
+Sleeper IDs, `IdMapUnavailableError` only when market rows exist bu
+t the ID map is unusable, value-derived archive ranks, and explicit
+ `dynastyprocess_ecr_2qb` labeling. Verification: focused ruff pass
+ed; focused Step-5b.2/audit/CLI suite 29 passed; full suite 1616 pa
+ssed, 11 skipped. Next: commit and push tracked Step-5b.2 files onl
+y; leave unrelated untracked strategy docs unstaged.
+
+**Phase 24 quick-wins group is complete and merged.** Historical dr
+aft-pick valuation, future-pick PVO wiring, and Regime A drafted-cl
+ass prospect-board pricing are all on `main` (PR #36 `17f69a0`, PR
+#39 `74d3f6b`; ledger closeout PR #40 `cfeca20`). **Follow-up B Inc
+rements 1 and 2 are also merged** — Increment 1 = MFL rookie ADP ov
+erlay adapter (PR #46 `296f617`); Increment 2 = SF-QB calibration c
+orpus expansion (PR #48 `3cd9e93`). All built via the TDD cockpit (
+Codex test-drove RED, Claude greened); all overlay/diagnostic-only.
+ The MFL overlay is now **wired to a live read-only divergence repo
+rt** (Increment B, PR #52 `98a90f8`) — `market_adp_rank` vs `xvar_c
+lass_rank`, artifact-only, no decision surface. The SF-QB corpus is
+ **populated** with 6 curated real SF rookie drafts (PR #50 `5b83bc
+e`) — calibration over 12 drafts / 50 QBs keeps **K=0** (curve unch
+anged; K application gated). **Remaining Follow-up B:** A = NFL moc
+k aggregation (separately spec'd). Optional: widen the rookie-draft
+ round gate to admit 7-round SF leagues; an eventual thin read-only
+ endpoint over the divergence artifact once frontend HOLD lifts.
+
+**Increment A Subsystem 3 is merged on `main`** (PR #55 → `0730dcb`
+; suite 1376/11/0). Per the Increment A reconciliation (`docs/strat
+egies/2026-05-28-increment-a-reconciliation-and-go-forward.md`) bui
+ld order — S3 first → **S4 backtest manual-first** → S1 design → S2
+ deferred — the next authorized subsystem is **S4 (backtest harness
+, manual-first)**. Task 10 (S3's top-100 2027 fixture curation) rem
+ains David's separate Tier-1 verification workstream and is not blo
+cking S4.
+
+**Current state:** **SUBSYSTEM 4 SHIPPED — MERGED to `main`** (PR #
+57 squash-merged as `95345ea`, 2026-05-30; CI "Python checks" PASS;
+ `validate_governance.py` PASS; full suite **1537 passed, 11 skippe
+d, 0 failed**; inviolate paths byte-unchanged). `main` now carries
+the full manual-first backtest harness (bridge + ingestion + consen
+sus + join + 6 metrics + B-gate + runner/artifact/CLI + B-stub + th
+e 16-test audit suite) plus the Falsification Discipline doctrine (
+PR #56). Substrate/diagnostic-only: `decision_supported=False`, no
+market leakage, frontend HOLD intact. **Follow-up RESOLVED — S4 v2
+truth loader COMPLETE (2026-06-01):** the real nflreadr→`NflTruthRo
+w` truth loader shipped on `main` via the cockpit (9 tasks + 1 Davi
+d-approved guardrail amendment, all RED→GREEN→dual-CLEAR→commit→loo
+p-closed). `load_nflreadr_draft_truth` (in `identity/prospect_nfl_b
+ridge.py`) — synthetic→committed `resources/synthetic_draft_truth/<
+year>.json` fixture; real→fixture or lazy live nflreadpy; fail-clos
+ed throughout (schema gate, season-integrity contamination, per-row
+ skips w/ `type(x) is int` coercion, verbatim `fetched_at`, duplica
+te-gsis preserve, extra-col drop, empty→`NflreadrEmptyTruthError`).
+ The backtest seam returns the full `NflreadrTruthLoadResult` and t
+hreads `truth_load_diagnostics` into `backtest_a_result.json`; the
+old `nflreadr_truth_unavailable` hard-block is gone — **real-mode B
+acktest-A now RUNS** (David ruling: a real-mode truth-load failure
+fails LOUD/propagates, no artifact). Bridge script de-duped onto th
+e shared loader (buggy private copy + broad `except→[]` deleted). S
+pec §3 amended (synthetic fixture relocated to `resources/` to avoi
+d the prod-reads-`tests/` + "mock"-audit collision) + §9 addendum (
+RED 12-16 + `NflreadrEmptyTruthError`); S4 audit `adp` market-fragm
+ent check refined substring→token-membership so lazy `import nflrea
+dpy` is not a false leakage hit. Commits: plan `0ae3966`, addendum
+`1fb78f7`; T1 `e9c88a5`, T2 `400be42`, T3 `078732f`, T4 `b4d0c80`,
+adp-amendment `898f9aa`, T5 `5c7bde5`, T6 `4d68a03`, T7 `3047ca1`,
+T9 capstone `eb49917` (T8 = full-suite verification, no commit). Fu
+ll project suite **1723 passed, 11 skipped, 0 failed**; all guardra
+ils intact (model-blind, leakage wall, `decision_supported=False`,
+frontend HOLD, DVS invariant, no Engine A/B change). Pre-existing o
+bservation: 45 `E712` pandas-mask lints in untouched Engine A/B tra
+ining scripts (separate cleanup lane if desired). **Follow-on RESOL
+VED — confirmed-class selection-bias coverage ACTIVATED (2026-06-01
+; commit `92af58b`, dual-CLEARED):** the S4 v2 §8 deferred `_comput
+e_bridge_coverage` confirmed-class universe is now built (foundatio
+nal S4 spec §11.2a amendment + plan `docs/superpowers/plans/2026-06
+-01-s4-confirmed-class-coverage.md`). `_confirmed_class_selection_b
+ias` computes the real `confirmed_class_unbridged_count` + sorted a
+ctionable `confirmed_class_unbridged_uuids` + `orphan_bridges_detec
+ted` (`list[{prospect_uuid, reason}]`, deduped+sorted, reasons `bri
+dge_wrong_draft_year`/`not_in_registry`/`not_confirmed`/`wrong_draf
+t_class`) from the S3 confirmed-class universe vs the per-class bri
+dge; `run_backtest_a` wires the already-loaded `s3_registry`/`bridg
+e`/`draft_year`. The two previously-dormant arms of the §11.2 hard-
+block (`evaluate_bridge_gates`, unchanged) are now live — a confirm
+ed prospect with no bridge entry or a drift bridge entry nulls metr
+ics and names the blocking ids. Tighten-only; old `list[str]` orpha
+n shape migrated to the dict shape (5 test sites); §11.2 caveat + `
+decision_supported` untouched. Full project suite **1733 passed, 11
+ skipped, 0 failed**. **Session-retrospective REMEDIATION COMPLETE
+(2026-06-01; commits spec/plan `93d8d87` + fix `a3f2441`, dual-CLEA
+RED):** a David-ordered holistic cockpit sweep over the whole sessi
+on arc surfaced 3 findings the per-task CLEARs missed; all fixed (l
+oader spec §4a): (8 HIGH) a non-empty source yielding ZERO usable r
+ows after per-row skips now raises `NflreadrEmptyTruthError` instea
+d of returning a silent empty-success `NflreadrTruthLoadResult(rows
+=[])` — closes the fabricated-empty-truth-universe / false-confiden
+ce hole (no metrics off the stale bridge; bridge script no longer w
+rites `total_nfl_truth_rows=0` discovery assets); (9 MEDIUM) `load_
+nflreadr_draft_truth` validates `data_mode ∈ {real, synthetic}` and
+ raises `ValueError` before any fixture/live dispatch; (LOW) §11.2a
+ heading "Fail-closed edges"→"cases" + the synthetic wrapper now ch
+ains the underlying skip reason. Gemini governance retrospective: C
+LEAN. Full project suite **1739 passed, 11 skipped, 0 failed**. The
+ `feature/subsystem-4-backtest-harness` branch is merged (squash) a
+nd can be deleted at David's discretion. See branch-state list for
+the full build history. **Task 9 GREEN committed `3a1ab1f` (2026-05
+-29)** — bridge join + `RealizedOutcome` + `JoinDiagnostics` + `nor
+malize_team_code` + §11.5 fail-closed precedence, over Codex's 12 R
+ED tests; unanimous pre-commit cockpit CLEAR (Codex technical 6 che
+cks + independent pytest/ruff; Gemini governance 5 checks); full su
+ite **1459 passed, 11 skipped, 0 failed** (+12 vs 1447). **Task 10
+GREEN committed `b67f451` (2026-05-29)** — `evaluate_bridge_gates`
+(§11.2 hard-block helper, canonical tokens no-mapping) + `compute_m
+etrics` (the 6 metrics with explicit §5.4 universes + per-bucket br
+eakdown), over Codex's 13 RED tests in `tests/contract/test_subsyst
+em_4_metrics.py`; unanimous pre-commit cockpit CLEAR (Codex technic
+al 6 checks + independent pytest/ruff; Gemini governance 5 checks);
+ full suite **1472 passed, 11 skipped, 0 failed** (+13 vs 1459). **
+Task 11 GREEN committed `503c38d` (2026-05-29)** — `evaluate_b_gate
+` (synthetic safety hedge applied first → R3/Day3 always-abstain →
+per-bucket §5.5 threshold pass/fail → two-tier metadata), over Code
+x's 9 RED cases in `tests/contract/test_subsystem_4_b_gate.py`; una
+nimous pre-commit + post-commit cockpit CLEAR; full suite **1481 pa
+ssed, 11 skipped, 0 failed** (+9 vs 1472). **Pressure-test hardenin
+g D1-D9 committed `cfc0461` (2026-05-29)** — adversarial pressure t
+est (David-ordered) across Tasks 9-11 surfaced 9 real fail-closed/f
+alse-confidence/crash gaps the routine CLEARs missed; all fixed. ev
+aluate_b_gate now: synthetic hedge truly first + crash-proof (D1),
+real-mode malformed position-stats (D2) / bucket structure (D8) / n
+on-numeric values (D9) all fail-closed, evaluable-only `overall_sta
+tus` rollup excluding structural abstains (D5, + §5.9 `always_absta
+in` enum amendment). compute_metrics/join: `_bucket_from_pick` reje
+cts pick<1 (D3); wrong-year sets `bridge_stale_warning` (D7). D4 `m
+etrics` param kept + Task-12 data-flow note; D6 accepted as plan-lo
+cked. **Unanimous three-way clean/go (Codex+Gemini+Claude) after a
+multi-round falsification re-sweep — D8 found by Claude, D9 found b
+y Codex, both missed by the routine reviews.** Focused 47/47; full
+suite **1494 passed, 11 skipped, 0 failed** (+13 vs 1481). **Govern
+ance: Falsification Discipline merged to main (PR #56, squash `c012
+451`, 2026-05-30) and synced onto this branch (merge `d7abbc3`)** —
+ the Cockpit Process section + 8-rule Falsification Discipline are
+now in `docs/governance/02-agent-operating-loop.md` on BOTH main an
+d S4; all cockpit work now follows them (falsification-default revi
+ews, falsification matrix with ownership, evidence-bound claims, in
+dependent technical clean/go, fresh-artifact review, miss accountin
+g, reviewer lane calibration, robustness boundary). Reviewer Lane C
+alibration in force: Gemini governance-binding; technical assertion
+s non-binding unless cited. Frontend HOLD remains binding.
+
+**S4 branch state (latest commits, oldest → newest):**
+- `1d863d7` Task 5: mock snapshot schema + canonical content_hash (
+§4.1)
+- `be246e0` Task 6: snapshot ingestion + coverage matrix (§4.3, §4.
+5)
+- `91b539a` Task 7: parse_status + draft_date sourcing + audited ov
+erride (§4.3 rule 5, §4.6)
+- `a41e0c6` Task 8 GREEN v1: ProspectConsensus aggregation + absten
+tion tiers (§5.2, §5.3) — 9 RED tests, surfaced 2 MEDIUM bugs in jo
+int cockpit retrospective
+- `a48ba3c` Spec §11 patch — Architecture Decision Note from 2026-0
+5-28 strategic pause (specialization boundary, selection bias hard-
+gate, transitive-laundering bar, pace discipline, Task 9 schema ref
+inements, audit trail)
+- `e780ea3` Plan patch — Tasks 9 + 10 + 12 + 14 hardened per §11 (J
+oinDiagnostics shape, truth-lookup precedence, normalize_team_code
+helper, AST anti-laundering audit, recorded SHA-256 baselines, cano
+nical-owner table)
+- `aa1fb47` Spec + Plan amendments — Task 8 follow-up driven by joi
+nt retrospective (§5.2 float median, §5.4 round_half_up bucket poli
+cy, §5.8 metadata fields, §9 within_source_aggregation_missing hard
+ acceptance blocker, 2 new RED tests, Task 12 metadata test)
+- `a2aee5d` Task 8 follow-up GREEN — float median + 2 new RED tests
+; full suite 1447 passed, 11 skipped, 0 failed (+2 from new tests v
+s prior 1445 baseline)
+- `3a1ab1f` Task 9 GREEN — bridge join + `RealizedOutcome` (14-fiel
+d) + `JoinDiagnostics` (5-field) + `normalize_team_code`/`TEAM_CODE
+_NORMALIZATION_VERSION` + §11.5 fail-closed precedence (duplicate→m
+issing→wrong-year→evidence/divergence); Codex 12 RED + Claude GREEN
+; unanimous pre-commit cockpit CLEAR; full suite 1459 passed, 11 sk
+ipped, 0 failed (+12 vs 1447 baseline)
+- `b67f451` Task 10 GREEN — `evaluate_bridge_gates` (§11.2 hard-blo
+ck helper) + `compute_metrics` (6 metrics w/ explicit §5.4 universe
+s + per-bucket breakdown + `round_half_up`); Codex 13 RED + Claude
+GREEN; unanimous pre-commit cockpit CLEAR; full suite 1472 passed,
+11 skipped, 0 failed (+13 vs 1459 baseline)
+- `503c38d` Task 11 GREEN — `evaluate_b_gate` (`backtest_b_gate_sta
+tus`): synthetic safety hedge first (always_abstain_synthetic_data
+/ not_evaluable_synthetic), R3/Day3 always-abstain, §5.5 per-bucket
+ thresholds, two-tier metadata (§5.7); Codex 9 RED + Claude GREEN;
+unanimous pre-commit + post-commit cockpit CLEAR; full suite 1481 p
+assed, 11 skipped, 0 failed (+9 vs 1472 baseline)
+- `cfc0461` Pressure-test hardening D1-D9 — fail-closed `evaluate_b
+_gate` (synthetic-first crash-proof, position/bucket/non-numeric ma
+lformed → fail-closed), evaluable-only `overall_status` rollup + §5
+.9 `always_abstain` amendment, `_bucket_from_pick` pick<1 guard, wr
+ong-year `bridge_stale_warning`; Codex RED + Claude GREEN; unanimou
+s three-way clean/go after multi-round falsification re-sweep (D8 b
+y Claude, D9 by Codex); full suite 1494 passed, 11 skipped, 0 faile
+d (+13 vs 1481 baseline)
+- `72ff9cf` Task 14 audit suite — `tests/contract/test_subsystem_4_
+audit.py` (16 tests): §11.1 inviolate-path SHA-256 baselines (Phase
+ 10/11/12 + S3) + eval/ allowlist; §11.3 AST anti-laundering scan;
+§8.8 mock/market isolation + banned-language + recursive `decision_
+supported` + §4.5 coverage reconciliation + §6.3 acceptance. Codex
+RED; passes on existing surfaces (no GREEN needed); independent tec
+hnical clean/go + governance CLEAR (both confirmed "real teeth, non
+-tautological"); full suite **1537 passed, 11 skipped, 0 failed** (
++16 vs 1521). **S4 BUILD COMPLETE.**
+- `e88cc76` Task 13 GREEN — B-shaped always-abstain stub + `run_bac
+ktest_b.py` CLI (§6.1): `run_backtest_b` (exact 6-field structured
+abstain, `decision_supported=False`) + `write_backtest_b_abstain_re
+port` (write-isolated single file, contract-locked) + CLI; Backtest
+ B deliberately excluded in v1, lock test forces a future agent to
+explicitly flip it. Codex 6 RED + Claude GREEN; independent technic
+al clean/go (no findings) + governance CLEAR; full suite **1521 pas
+sed, 11 skipped, 0 failed** (+6 vs 1515).
+- `15d1ac2` Task 12 GREEN — Backtest-A runner + artifact writer + `
+run_backtest_a.py` CLI (§5.9): `BacktestAResult`, `build_backtest_a
+_result` (acceptance_criteria_failed aggregation, metrics-null-on-h
+ard-block, selection-bias caveat), `build_b_gate_per_bucket_positio
+n_breakdown` (resolves the compute_metrics↔evaluate_b_gate data-flo
+w), atomic artifact + review-queue writers, `run_backtest_a` valida
+tion gates, CLI. **First task under the Falsification Discipline**
+— Codex's independent technical review found 3 real defects in the
+untested happy path (F1 false-confidence seam, F2 real-mode date cr
+ash, F3 preflight recursion), all fixed RED-first (F1 fail-closed `
+nflreadr_truth_unavailable`, Gemini-governance-confirmed). Codex 21
+ RED + Claude GREEN; independent technical clean/go (Codex) + gover
+nance CLEAR (Gemini); full suite **1515 passed, 11 skipped, 0 faile
+d** (+21 vs 1494 baseline). nflreadr→truth loader is a tracked foll
+ow-up (real mode fails closed until it lands).
+
+**Cockpit next steps (S4 SHIPPED — pick next initiative):**
+1. **S4 is DONE** — merged to `main` (PR #57 `95345ea`). No remaini
+ng S4 build work. Optional housekeeping: delete the merged `feature
+/subsystem-4-backtest-harness` branch (David's discretion); local `
+main` may be pulled to pick up `95345ea`.
+2. **Tracked follow-up (the real S4 v2 increment, its own RED):** t
+he real nflreadr→`NflTruthRow` truth loader + `_compute_bridge_cove
+rage` confirmed-class universe. Until then, real-mode Backtest-A ru
+ns fail closed (`nflreadr_truth_unavailable` → metrics null). This
+is the natural next S4 step when David wants it.
+3. **Subsystem 3 Task 10** (manual top-100 2027 fixture curation) r
+emains David's separate Tier-1 verification workstream.
+4. Other open lanes: Follow-up B Increment A NFL mock aggregation (
+separately spec'd); Phase 23 W5b UI (deferred/browser-tested); wide
+n the rookie-draft rounds gate for 7-round SF leagues.
+
+**Additional active branch — `docs/cockpit-process` (cross-cutting
+governance, pushed 2026-05-29):**
+- Branched off `main`; one commit `e69a515` (`docs(governance): add
+ Cockpit Process section to 02-agent-operating-loop.md` — +124 LOC)
+.
+- PR-create URL: https://github.com/davidtleess/dynasty-genius/pull
+/new/docs/cockpit-process (ready to open at David's discretion).
+- Codifies the multi-agent cockpit working rules (11 subsections):
+when the cockpit applies, roles + escalation, message format, adver
+sarial review pattern, closing the loop, post-fix + post-commit swe
+eps, no-anchor framing, verify-before-alarming, bootstrap-first + d
+iscipline reset, strategic pause, three-point audit trail.
+- Doc was authored using the cockpit process it documents; 3 rounds
+ of adversarial review; unanimous CLEAR.
+- The S4 branch carries a revert of the same commit (`67754ff` add
++ `9341c1f` revert) so net governance-file change on S4 is zero vs
+`main`. When S4 merges to `main` after `docs/cockpit-process` is me
+rged, three-way merge preserves the governance section (verified by
+ Codex via patch-id and `git diff` checks).
+
+**Cockpit process improvements memorized 2026-05-28:** [[feedback_c
+lose_the_loop]] (post-action confirmation discipline) + [[feedback_
+post_fix_sweep]] (grep entire doc for stale references after fixing
+ a concept) — see `~/.claude/projects/-Users-davidleess-dynasty-gen
+ius/memory/`.
+
+**Other lanes (not active this session):** Follow-up B Increment A
+(NFL mock aggregation, separately spec'd); Subsystem 3 Task 10 fixt
+ure curation; widening the rookie-draft rounds gate to admit 7-roun
+d SF leagues; Phase 23 W5b UI (deferred/browser-tested); additional
+ Phase 23/23.5 backend calibration; or another backend/spec lane.
+
+Phase 17 — 17.1 THROUGH 17.5 COMPLETE; REVIEWED / CHECKPOINTED.
+- Workstream 17.0 (Planning) — COMPLETE: Merged research brief fina
+lized with Section 19 Decision Memo.
+- Workstream 17.1 (Universe Snapshot & Coverage) — COMPLETE: `scrip
+ts/build_sleeper_universe_snapshot.py` fetches Sleeper league, rost
+ers, users, traded picks, latest draft, NFL state, and `/players/nf
+l`; writes `sleeper_universe_snapshot_latest.json` and `sleeper_uni
+verse_coverage_latest.json`.
+- Workstream 17.2 (Full PVO Batch) — COMPLETE: `scripts/build_unive
+rse_pvo_batch.py` builds `universe_pvo_latest.json` from the 17.1 s
+napshot, `resources/prospect_cards.json`, Engine B inference scorin
+g, and the governed ff_playerids crosswalk.
+- Workstream 17.3 (Team Value Matrix) — COMPLETE: `scripts/build_te
+am_value_matrix.py` builds `team_value_matrix_latest.json` from the
+ 17.2 PVO artifact and 17.1 Sleeper snapshot.
+- Workstream 17.4 (Market Divergence v2) — COMPLETE: `scripts/build
+_universe_market_divergence.py` builds `universe_market_divergence_
+latest.json` from the 17.2 full-universe PVO artifact plus FantasyC
+alc overlay data.
+- Workstream 17.5 (League Opportunity Map) — COMPLETE: `scripts/bui
+ld_league_opportunity_map.py` builds `league_opportunity_latest.jso
+n` and `league_opportunity_latest.md` from 17.3 team matrix plus 17
+.4 market divergence.
+- Approved Defaults: Automated-only pick reconstruction with valida
+tion/caveat gates; Global Noise band 0.10 as diagnostic/provisional
+; FantasyCalc ppr=1/no TEP.
+- Bench-weighting guardrail: no player-level value decay. Any depth
+ weighting may apply only to team-strength aggregation after comput
+ing the best legal starting lineup from player xVAR/PVO values; act
+ual manager lineup choices must not determine who is decayed.
+- Latest 17.1 coverage: 12,189 Sleeper universe rows classified; 28
+0/280 rostered players present; David roster 28/28 present; 1 unres
+olved Sleeper pseudo-player ID (`0`); PVO scoring not required in 1
+7.1.
+- Latest 17.2 coverage (`phase17-2-20260523T025725Z`): 12,189 rows;
+ route counts `ENGINE_A=80`, `ENGINE_B=373`, `PRE_MODEL=9,605`, `IN
+ACTIVE=2,130`, `UNRESOLVED_IDENTITY=1`; no market overlay rows; `de
+cision_supported_true_count=0`; all rostered skill players have exp
+licit routes; `xvar_percentile_overall_populated_count=399`; non-mo
+del rows remain null.
+- Latest 17.3 coverage (`phase17-3-20260522T110534Z`): all 12 teams
+ emitted; future picks present but unvalued; taxi activation cost r
+epresented; guardrail embedded (`player_level_value_decay_allowed=f
+alse`, lineup selection from raw player xVAR, depth weighting only
+for non-starters after lineup selection).
+- Latest 17.4 coverage (`phase17-4-20260522T115250Z`): 12,189 rows;
+ 398 FantasyCalc market overlays; signals `MODEL_HIGH_MARKET_LOW=10
+7`, `MODEL_LOW_MARKET_HIGH=56`, `INSIDE_BAND=107`, `UNAVAILABLE=11,
+918`, `UNRESOLVED_IDENTITY=1`; `decision_supported_true_count=0`; m
+arket data remains overlay-only; no imperative schema language; TE
+position-only suppression count is 0.
+- Latest 17.5 coverage (`phase17-5-20260522T121830Z`): 20 opportuni
+ty cards capped for the run; card types `WAIVER_CANDIDATE=16`, `ROS
+TER_SURPLUS_DEFICIT_MATCH=3`, `DIVERGENCE_MODEL_HIGH=1`; 11 partner
+ rankings; all cards evidence-backed; `decision_supported_true_coun
+t=0`; automated trade execution disabled; banned language absent.
+- Current caveat: Automated pick reconstruction defers numeric valu
+es and publishes caveats for 2026 traded picks outside the future-p
+ick reconstruction window after draft closeout.
+
+Phase 15 — COMPLETE. Suite: 730 passed, 11 skipped, 0 failed. Board
+ is live-ready.
+- Workstream 15.1 (xVAR) — COMPLETE: xVAR, xvar_lambda, xvar_anchor
+, xvar_ceiling_bound, dvs_pct, dvs_pct_as_of, dvs_blend_weight_b fi
+elds in PVO; xVAR assembled in pvo_assembler for Engine A, Engine B
+, and blend paths.
+- Workstream 15.2 (Bayesian Blend) — COMPLETE FOR V0: dvs_engine="b
+lend" when both Engine A and B inputs present; w_B = n / (n + k_pos
+) shrinkage; Dead Window caveat appended. Blend-k defaults approved
+ for Phase 15 V0 in `docs/validation/phase15-blend-k-validation.md`
+; residual-variance fitting remains a follow-up before changing k_p
+os.
+- Task 2 COMPLETE: Trade Lab evaluator (`src/dynasty_genius/trade_l
+ab/`) — xVAR-sum parity, sub-replacement exclusion, consolidation p
+enalty, draft-pick valuation through Engine A.
+- Task 3 COMPLETE: `POST /api/trade/evaluate` route added while pre
+serving existing `/api/trade/analyze`.
+- Task 4 COMPLETE: `dvs_pct` batch (`scripts/compute_dvs_pct_batch.
+py`) computes within-position percentiles against ACTIVE_B populati
+on only.
+- Task 5 COMPLETE: xVAR/blend contract tests (`tests/contract/test_
+phase15_xvar.py`, `tests/contract/test_phase15_blend.py`) plus Trad
+e Lab and dvs_pct contract tests.
+- Task 6 COMPLETE: ledger/AGENT_SYNC cleanup.
+
+Phase 14 DVS Normalization: COMPLETE. 694 tests.
+- Task 14.1 COMPLETE: Constants injected and identity gate passed.
+- Task 14.2 COMPLETE: DVS formula, Dead Window bridge, and provenan
+ce fields implemented.
+- Task 14.3 COMPLETE: VAR batch calculation and calibration audit f
+inished.
+- Artifacts: `var_batch_20260516_190328.json`, `dvs_calibration_aud
+it_20260516_190356.json`.
+
+
+Phase 13 implementation handoff:
+- Spec APPROVED by David: `docs/superpowers/specs/2026-05-15-phase1
+3-final-spec.md`.
+- Task 13.1.0 COMPLETE: Identity Contract (`docs/identity/identity_
+contract.md`).
+- Task 13.1.1 COMPLETE: Identity Coverage Matrix audit runner (`src
+/dynasty_genius/audit/identity_coverage_matrix.py`).
+- Task 13.1.2 COMPLETE: Review Queue + Override Registry validation
+ (`identity_review_queue.py`, `identity_override_registry.py`).
+- Task 13.1.3 COMPLETE: Identity materialization gate blocks unreso
+lved PFF/college rows (`identity_materialization_gate.py`).
+- Task 13.1 coverage-review gap CLOSED: immutable Identity Snapshot
+ generator (`identity_snapshot_generator.py`) plus schema-compatibl
+e coverage timestamp alias.
+- Task 13.2.0 COMPLETE: Draft-Capital Candidate Manifest (`src/dyna
+sty_genius/eval/draft_capital_manifest.py`).
+- Task 13.2.1 COMPLETE: Draft-Class LOOCV Harness (`src/dynasty_gen
+ius/eval/draft_class_loocv.py`).
+- Task 13.2.2 COMPLETE: Draft-Capital Bake-Off evaluator (`src/dyna
+sty_genius/eval/draft_capital_bakeoff.py`).
+- Task 13.2.3 COMPLETE: Draft-Capital Promotion Decision recorded a
+s VALIDATION_ONLY / NO PRODUCTION CHANGE (`docs/validation/phase13-
+draft-capital-promotion-decision.md`).
+- Task 13.3.0 COMPLETE_WITH_BLOCKERS: PFF Feasibility Memo (`docs/v
+alidation/phase13-pff-feasibility-memo.md`).
+    - Export Checklist READY: `docs/validation/phase13-pff-csv-expo
+rt-checklist.md`.
+    - TE Identity Coverage Run Plan READY: `docs/superpowers/plans/
+2026-05-15-phase13-te-identity-run-plan.md`.
+    - Real CSV schema/sample LOCKED from David's local v10+ PFF Pre
+mium Stats `receiving_summary` exports; raw CSVs stay private/untra
+cked.
+- Task 13.3 TE SOURCE-ID COVERAGE GATE: PASSED — run_id te_2018_202
+5_20260516; 116/116 resolved (0.0% loss rate); 0 duplicate conflict
+s; artifacts promoted to app/data/identity/.
+    - Source-ID coverage is complete for gsis_id + sleeper_id + pff
+_id; all 116 rows resolved via ff_playerids_crosswalk.
+    - Initial identity snapshot intentionally empty (no DG canonica
+l player_ids assigned in ff_playerids). Canonical backfill now comp
+lete in `identity_snapshot_te_2018_2025_20260516_canonical.json`.
+    - Canonical DG player_ids assigned for all 116 TEs via `scripts
+/backfill_te_canonical_ids.py`; `pff_te_eligible_te_2018_2025_20260
+516_canonical.json` has 0 null player_ids.
+- Task 13.3 PFF EXPORT REPORT: COMPLETE — `scripts/build_pff_te_exp
+ort_report.py` + strict parser `src/dynasty_genius/adapters/pff_te_
+export.py`; redacted report at `app/data/identity/pff_te_export_sch
+ema_report_20260516.json`.
+    - v10+ local manifest is ignored under `app/data/pff_exports/`;
+ raw PFF CSVs and absolute local paths are not committed.
+    - Report covers 110/116 drafted TEs after adding David's local
+`receiving_summary (18).csv` as the 2017 final-season export; missi
+ng 6 = 2018 (1), 2020 (2), 2021 (1), 2022 (1), 2023 (1).
+    - David's local `receiving_summary (19).csv` was inspected and
+is a duplicate of an already represented export, so it adds no new
+2020 coverage.
+    - Remaining missing rows are treated as likely PFF collegiate c
+overage gaps (often FCS/small-school). They are excluded from arche
+type labeling; no imputation, fuzzy fill, or model materialization.
+    - All files use snap-alignment fallback (`inline_snaps`, `slot_
+snaps`, `wide_snaps`), not route-alignment fields; grade columns ar
+e detected and stripped from parser output.
+- Task 13.3.1 COMPLETE: TE Archetype Rubric Step 0 artifact generat
+ed at `app/data/identity/te_archetype_rubric_20260516.json`.
+    - Artifact accounts for all 116 drafted TEs: 110 with PFF align
+ment coverage, 6 excluded as PFF coverage gaps.
+    - Labeling result: 105 labeled, 5 low_volume, 6 excluded; arche
+types among all rows: 69 receiving_leaning, 22 ambiguous, 14 blocki
+ng_leaning, 11 null.
+    - Sensitivity result: 14 players move from receiving_leaning to
+ ambiguous when detached threshold changes from 0.40 to 0.45.
+    - Labels are snap-alignment based (`snaps_fallback`), not route
+-alignment. PFF remains context_signal only.
+    - No raw PFF IDs, names, local paths, PFF grades, Engine A/B fe
+ature changes, model training, TE promotion, DVS, or market data.
+- Task 13.3.1 DIAGNOSTIC VALIDATION COMPLETE: aggregate residual le
+ns at `app/data/identity/te_archetype_validation_20260516.json`.
+    - Joined the committed archetype artifact to the existing TE ba
+cktest prediction log: 337 labeled prediction rows, 60 unique draft
+ed TEs.
+    - Receiving vs blocking signal: realized PPG mean +3.6453, resi
+dual mean +1.5922, positive residual rate +0.3662 for receiving_lea
+ning over blocking_leaning.
+    - Output is aggregate-only and redacted; no player-level rows,
+source-native IDs, PFF IDs, local paths, PFF grades, model feature
+changes, TE promotion, DVS, or market data.
+    - Interpretation: useful evidence that TE archetype labels expl
+ain outcome/residual patterns; not proof of incremental model lift
+until a later explicit feature bake-off.
+- Task 13.3 HUMAN CALIBRATION NOTE COMPLETE: `docs/validation/phase
+13-te-human-archetype-review.md`.
+    - David labeled clear receiving specialists, blocking specialis
+ts, and complete TEs.
+    - Key implication: split snap-alignment archetype from fantasy-
+role archetype before any model feature bake-off.
+- Task 13.3.2 COMPLETE: TE Archetype Feature Bake-Off validation ar
+tifact at `app/data/backtest/phase13/te_archetype_bakeoff_20260516.
+json`.
+    - Tested snap-alignment, two-axis fantasy-role taxonomy, comple
+te-TE detector, and role-risk detector candidates.
+    - Result: `role_risk_detector` is the only candidate that passe
+s the conservative acceptance rule (mean RMSE/MAE improvement and R
+MSE improvement in 4/4 folds). Full fantasy-role one-hot improves m
+ean error but only 2/4 RMSE folds.
+    - Validation-only: no Engine A/B production feature changes, pr
+omoted artifacts, TE promotion, market data, PFF grades, raw PFF ro
+ws, source-native IDs, local paths, or player-level committed rows.
+- Task 13.3.3 DECISION APPROVED: `docs/validation/phase13-3-3-te-ro
+le-risk-decision.md`.
+    - Advance only the `role_risk_detector` family to a controlled
+TE-only model-change experiment.
+    - Not production adoption: no Engine B production contract chan
+ge, promoted artifact, TE promotion, PVO scoring change, market dat
+a, PFF grades, or raw/player-level PFF output.
+- Task 13.3.3 PLAN READY: `docs/superpowers/plans/2026-05-16-phase1
+3-3-3-te-role-risk-experiment.md`.
+    - Plan runs a controlled experiment with RMSE/MAE plus Spearman
+/Kendall deltas and explicit no-promotion gates.
+    - Gemini review incorporated: sparse-duo vs unified-penalty can
+didates, negative coefficient gate, per-fold rank floor, alpha sens
+itivity at 100.0, and all-zero candidate drift test.
+    - Claude review incorporated: four-fold unit tests, portable sc
+ipy rank calls, visible rank threshold, eligible-manifest/baseline-
+feature/alpha provenance, rank-gate failure test, and expanded PFF
+grade redaction terms.
+    - Output remains aggregate-only and validation-only.
+- Task 13.3.3 COMPLETE: TE role-risk controlled experiment artifact
+ at `app/data/backtest/phase13/te_role_risk_experiment_20260516.jso
+n`.
+    - Tested `sparse_duo` and `unified_penalty` candidates with fol
+d-level RMSE/MAE plus Spearman/Kendall deltas, negative coefficient
+ gate, and alpha sensitivity.
+    - Primary alpha 1.0 result: both candidates improve RMSE/MAE in
+ 4/4 folds and have negative coefficients, but both fail the rank-d
+egradation gate; no production model-change spec is approved from t
+his artifact.
+    - Sensitivity alpha 100.0: `unified_penalty` passes all gates,
+suggesting stronger TE regularization is worth a separate research/
+spec decision.
+    - Validation-only: no production Engine B contract changes, mod
+el artifact promotion, TE promotion, PVO scoring change, market dat
+a, PFF grades, raw PFF rows, source-native IDs, local paths, or pla
+yer-level committed rows.
+- Task 13.3.4 DECISION APPROVED: `docs/validation/phase13-3-4-te-re
+gularization-decision.md`.
+    - Continue with a validation-only TE regularization bake-off be
+fore any role-risk production model-change spec.
+    - Approved alpha grid: 1.0, 10.0, 50.0, 100.0, 250.0, 500.0.
+    - Candidate scope: baseline TE features only, baseline + unifie
+d penalty, optional baseline + sparse role-risk duo.
+    - No production Engine B contract changes, model artifact promo
+tion, TE promotion, PVO scoring change, market data, PFF grades, ra
+w PFF rows, source-native IDs, local paths, or player-level committ
+ed rows.
+- Task 13.3.4 COMPLETE: TE regularization bake-off artifact at `app
+/data/backtest/phase13/te_regularization_bakeoff_20260516.json`.
+    - Tested alpha grid (1.0–500.0) across baseline_only, unified_p
+enalty, sparse_duo candidates.
+    - unified_penalty at alpha=100.0 passes all gates: 4/4 RMSE fol
+ds, mean RMSE delta −0.0404, rank gate clear, coefficient −0.199.
+    - Validation-only: no production model change, no TE promotion,
+ no market data, no PFF grades.
+- Task 13.3 MODEL-CHANGE SPEC WRITTEN: `docs/superpowers/specs/2026
+-05-16-phase13-3-te-model-change.md` (David approved 2026-05-16).
+    - Authorizes: alpha 1.0 → 100.0, add `te_role_is_risk_profile`
+binary feature, retrain TE as te_v3.pkl.
+    - IMPLEMENTATION COMPLETE: corrected walk-forward gate passed a
+nd TE is promoted to `ACTIVE_B`.
+    - SPEC SEQUENCING CORRECTED: validate first with updated CSV +
+`WalkForwardDriver.FIXED_ALPHA["TE"] = 100.0`; only retrain deploym
+ent pkl and update manifest after harness gate pass.
+    - Harness artifact: `app/data/backtest/runs/eba2c2e4-9742-44ed-
+945a-8b46a0cb670f/backtest_result_TE.json` — `overall_grade: ACTIVE
+_B`, G1/G2 pass, G3 deferred.
+    - Deployment artifact: local ignored run `app/data/models/engin
+e_b/runs/20260516T164503Z/te_v3.pkl`; local `v2_manifest.json` TE p
+ointer updated.
+    - `te_role_is_risk_profile` coefficients are negative in all fo
+ur walk-forward folds; deployment coefficient is `-0.4721918577`.
+    - `ENGINE_B_EXPERIMENTAL_POSITIONS = frozenset()`; TE fallback
+remains experimental only when no TE v2/v3 bundle is loaded.
+    - Verification: focused model-change suite green; full suite gr
+een (`683 passed, 11 skipped`).
+- 13.1 Identity Audit is the first hard gate.
+- 13.2 Engine A Draft-Capital Bake-Off may research candidates, but
+ promotion waits on locked historical identity coverage.
+- 13.3 TE Remodel is Step 0 only and is gated by 13.1 TE cohort cov
+erage.
+- TE remains EXPERIMENTAL; DVS remains out of scope; market-derived
+ data remains overlay-only.
+Research inputs:
+- `docs/strategies/Phase13-round2-research.md`
+- `docs/strategies/Phase13-Round2-Dynasty Genius Framework Review.m
+d`
+- `docs/strategies/phase13-agent-merge-gemini.md`
+- `docs/strategies/phase13-agent-merge-claude.md`
+- `docs/strategies/phase13-agent-merge-codex.md`
+
+Phase 10/11 Backtest Harness: COMPLETE.
+Phase 9.5 Prospect Identity Join: MERGED → main (PR #26, merge comm
+it 845de98). 384 tests. Back-fill complete.
+Spec at `docs/superpowers/specs/2026-05-14-phase9-5-prospect-identi
+ty-join.md`.
+
+Phase 10/11 Backtest Harness: COMPLETE. Spec APPROVED (David, 2026-
+05-14). 479 tests.
+- Task 10.0 COMPLETE: BacktestResult Pydantic schema + 17 contract
+tests.
+- Task 10.1 COMPLETE: MarketSnapshotStore (SQLite) + 6 unit tests.
+fc_snapshots.db gitignored.
+- Task 10.2 COMPLETE: daily FantasyCalc snapshot script + 5 unit te
+sts.
+- Task 10.3 COMPLETE: WalkForwardDriver feature fold builder with t
+emporal isolation + 7 unit tests.
+- Task 10.4 COMPLETE: statistical metric functions (Kendall τ-b, Sp
+earman ρ, NDCG, Precision@k, Wilson CI, HLN-DM) + 17 unit tests.
+- Task 10.5 COMPLETE: WalkForwardDriver.run() — 4-fold loop, Ridge
+refit at fixed alpha, BCa CIs, BacktestResult returned; market fiel
+ds all None + 15 contract tests.
+- Task 10.6 COMPLETE: BacktestResult artifact persistence contract
+tests.
+- Task 10.7 COMPLETE: market comparison integration (join snapshots
+, populate NDCG) + 6 unit tests.
+- Task 10.8 COMPLETE: gate evaluator (evaluate_promotion_gates, ACT
+IVE_B_VALIDATED logic, G3 deferred state) + 6 unit tests.
+- Task 10.9 COMPLETE: Trust Surface route (GET /trust-surface/{posi
+tion}, overall_grade at top level) + scripts/run_backtest.py CLI (-
+-position, --all, --model, --market-store) + 5 contract tests + 2 C
+LI unit tests.
+- Task 10.10 COMPLETE: community CSV ingest script + 4 unit tests.
+- PR #27 MERGED → main `91c91d1`: https://github.com/davidtleess/dy
+nasty-genius/pull/27
+- Next: generate operational backtest artifacts, then start Phase 1
+2 planning/spec.
+Spec at `docs/superpowers/specs/2026-05-14-phase10-11-backtest-harn
+ess.md`.
+
+Research brief at `docs/strategies/Phase 10-11 Backtest Harness Res
+earch - Merged.md`.
+
+Phase 8 COMPLETE (8.1 + 8.2 + 8.3): decision surfaces wired read-on
+ly over PVO. 339 tests.
+Phase 9 COMPLETE (9.0 + 9.1 + 9.2 + 9.3): market overlay divergence
+ engine + surface wiring. 376 tests.
+
+- Phase 9.0 (Adapter Foundation): Fix fantasycalc_adapter.py URL pa
+rams, rewrite field capture, MarketSource abstraction, 3-stage cach
+e, test fixture.
+- Phase 9.1 (Divergence Engine): compute_divergence(), percentile-r
+ank formula, position-specific flags and caveats.
+- Phase 9.2 (PVO Integration): wire into pvo_assembler and all thre
+e surfaces; contract tests.
+- Phase 9.3 (Seasonal Signals + VAR): VAR from model scores, rookie
+_peak_value_window, market_recency_swing.
+
+Phase 7 PVO alignment complete. Engine B v2 is fully wired into the
+ Player Value Object pipeline.
+
+- Stage 6.1 (v1.1 hygiene control): COMPLETE — artifact at `runs/v1
+_1_control/`
+- Stage 6.2 (v2.0 stratified models): COMPLETE — QB/RB/WR promoted,
+ TE not promoted
+- Section 5 (Roster Auditor Hardening): COMPLETE — TE caveat propag
+ation, governance-safe `age_value_context` overlay, market isolatio
+n; 309 tests
+- Phase 7 PVO alignment: COMPLETE — Engine B scoring path, roster a
+udit threading, `age_value_context` in `RosterAuditSignals`, `sourc
+e_season` in PVO, 9 new contract tests; 318 tests total
+- Production artifacts: `qb_v2.pkl`, `rb_v2.pkl`, `wr_v2.pkl` promo
+ted; `engine_b_v1.pkl` fallback for TE
+
+## Merged PRs (complete history)
+
+- PR #13 (`hygiene/pydantic-compat`): MERGED → main `16e3567`.
+- PR #14 (`hygiene/pydantic-v2-upgrade`): MERGED → main `f54ba11`.
+- PR #15 (`hygiene/nflreadpy-migration`): MERGED → main `fa995624`.
+- PR #17 (`engine-a/v2-enrichment-pipeline`): MERGED → main. QB CFB
+D adapter, ID map (95.2%), TDD tests, backtest gate (FAIL 0/3).
+- PR #18 (`infra/adapter-test-gates`): MERGED. 4 adapter gates (RAS
+, manual export, FantasyCalc, leakage).
+- PR #19 (`stage4/qb-professional-context`): MERGED. EPA/CPOE/DAKOT
+A context layer, QB identity bridge, qb_context_cards.
+- PR #20 (`feature/qb-context-annotations`): MERGED. Display-only b
+ust flags, mobility signal, P2S caveats.
+- PR #21 (`docs/phase5-engine-b-plan`): MERGED. Phase 5 planning do
+c.
+- PR #22 (`phase5/engine-b-contracts`): CLOSED, superseded by PR #2
+3.
+- PR #23 (`engine-b/service-integration`): MERGED → main `55f1351`.
+ Engine B v1 dataset, training, service/API integration, roster aud
+itor wiring, and governance decision record.
+- PR #24 (`phase6/engine-b-v2`): MERGED → main `762e50c`. Engine B
+v2 position-stratified models (QB/RB/WR promoted, TE experimental),
+ v2 manifest routing, per-position feature contracts, Stage 6.1 con
+trol, 4 Codex blockers resolved.
+- PR #25 (`feature/phase9-market-overlay`): MERGED → main `c04d9bf`
+. FC adapter (numQbs=2 fix, 3-stage cache, banned-field sanitizatio
+n), divergence engine (percentile-rank, 5 flags, position caveats),
+ VAR computation, surface wiring (Roster Audit, Rookie Board, Trade
+ Lab), 14 contract tests + 25 unit tests; 376 tests total.
+- PR #27 (`feature/phase10-11-backtest-harness`): MERGED → main `91
+c91d1`. Walk-forward backtest harness, statistical metrics, market
+snapshot store/archive ingest, market NDCG comparison, promotion ga
+tes, Trust Surface route, and run_backtest CLI; 479 tests total.
+
+## Merged PRs (phase 19 checkpoint)
+
+- PR #29 (`feature/phase19-w1-head-b-target` → `main`): MERGED → ma
+in `e6ccb58` (2026-05-24). Phase 19 W1/W2/W2b Engine A v3 feature p
+ipeline checkpoint.
+- Commit `2ffbf13` (direct to `main`, 2026-05-24): W3/W4/W5 — TE He
+ad A v3 Ridge promoted; Head B null result accepted; `EngineAV3Scor
+er` + `score_prospect_v3()` wired in Engine A scorer, `pvo_assemble
+r.py`, and `/api/rookies/score` route; 21 TDD tests; 1088 total tes
+ts, 11 skipped.
+- Commit `4cce9f2` (merge to `main`, 2026-05-24): Merge `feature/ph
+ase19-w4-head-b-bakeoff` — consolidates W3/W4/W5 into main history.
+- Commit `ab9f085` (direct to `main`, 2026-05-24): AGENT_SYNC close
+out — Phase 19 marked COMPLETE, stale sprint text retired, feature
+branch reference removed.
+
+## Open PRs / Branches
+
+- Older open hygiene/governance PRs: PR #2, PR #3, PR #9 — do not c
+lose without David's instruction
+
+## Engine B v1 Final State
+
+- **Artifact**: `app/data/models/engine_b/runs/20260512T032635Z/eng
+ine_b_v1.pkl`
+- **Features**: 19 (removed `target_share_nfl`, `air_yards_share` —
+ r=0.95–0.98 collinear with WOPR)
+- **Alpha**: 100.0 (stronger regularisation for collinear feature s
+et)
+- **Holdout**: 2022–2023 seasons (752 rows, 30% — more conservative
+ than Q5 spec of 20%)
+- **Gate**: PASS 3/3 — RMSE 3.346, R² 0.621, Spearman 0.775
+- **TE**: `ENGINE_B_EXPERIMENTAL_POSITIONS = {"TE"}` — does not bea
+t baseline, caveat enforced
+- **Suite**: 261 passed, 11 skipped, 0 failed
+
+## Engine B v2 Final State (Phase 6)
+
+- **Run**: `app/data/models/engine_b/runs/20260513T012309Z/`
+- **Manifest**: `app/data/models/engine_b/v2_manifest.json`
+- **QB**: PROMOTED — `qb_v2.pkl` — RMSE 4.508, R² 0.439, Spearman 0
+.695, alpha=1000.0
+- **RB**: PROMOTED — `rb_v2.pkl` — RMSE 3.582, R² 0.591, Spearman 0
+.783, alpha=500.0
+- **WR**: PROMOTED — `wr_v2.pkl` — RMSE 2.887, R² 0.683, Spearman 0
+.809, alpha=200.0
+- **TE**: NOT PROMOTED — `te_v2.pkl` fails gate (0/3) — alpha=1.0 —
+ `ENGINE_B_EXPERIMENTAL_POSITIONS = {"TE"}` retained
+- **v1.1 control**: `runs/v1_1_control/` — validation artifact only
+, not promoted
+- **Suite**: 293 passed, 11 skipped, 0 failed
+
+## Codex PR #24 Blocking Issues — RESOLVED
+
+1. **Issue 1 (v2_manifest.json tracked)** — FIXED: `git rm --cached
+`; `v2_manifest.json` added to `.gitignore`
+2. **Issue 2 (TE fallback broken)** — FIXED: `_load_v1_bundle()` no
+w searches for dirs containing `engine_b_v1.pkl`
+3. **Issue 3 (missing-required check absent)** — FIXED: `validate_p
+osition_feature_contract()` now checks for missing required feature
+s; `_BASE_FEATURES` → `ENGINE_B_BASE_FEATURES` (public); 2 new test
+s added
+4. **Issue 4 (v1.1 used RidgeCV not Ridge)** — FIXED: `train_v1_1_c
+ontrol()` now uses `Ridge(alpha=100.0)`; Stage 6.1 re-run; clean re
+sult logged above
+
+## Phase 12 Spec
+
+Spec APPROVED (David, 2026-05-15). Committed at `docs/superpowers/s
+pecs/2026-05-15-phase12-operational-artifacts.md`.
+Research brief at `docs/strategies/Phase 12 Research Brief - Merged
+.md`.
+
+- Task 12.0: Operational first run — `run_backtest.py --all` (QB/RB
+/WR; `ACTIVE_POSITIONS` excludes TE) + `run_backtest.py --position
+TE` separately; verify `backtest_result_{QB,RB,WR}.json` and `backt
+est_result_TE.json` exist before proceeding
+- Task 12.1: ModelCard + CalibrationReport schemas + 7 contract tes
+ts ✓ COMPLETE
+- Task 12.2: ECE + subgroup metric functions + 5 tests ✓ COMPLETE
+- Task 12.3: Per-fold prediction log (CSV artifact) + 5 tests ✓ COM
+PLETE
+- Task 12.4: Market-comparison ledger (JSON artifact) + 5 tests ✓ C
+OMPLETE
+- Task 12.5: Model card generation script + 6 tests ✓ COMPLETE
+- Task 12.6: Trust Surface v2 — new `GET /trust-surface/{position}/
+model-card` endpoint + 8 tests ✓ COMPLETE
+- Task 12.7: Divergence ledger v0 + build script + 5 tests ✓ COMPLE
+TE
+- Task 12.8: ARTIFACTS.md + AGENT_SYNC.md update + ledger entry (no
+ tests) ✓ COMPLETE
+
+**Governance**: `dynasty_value_score` stays `None`; TE remains EXPE
+RIMENTAL; no production model artifact is retrained or replaced (ha
+rness in-fold Ridge refits are expected evaluation behavior); all a
+rtifacts immutable once written. Act 2 (DVS) is conditional — requi
+res Act 1 artifact review and David's explicit spec approval.
+
+Phase 12 implementation COMPLETE (Codex/Claude, 2026-05-15): operat
+ional-artifact pipeline, model-card schemas and generator, Trust Su
+rface v2 model-card route, passive divergence ledger, and artifact
+index are in place. Latest verification reported by Task 12.7: 521
+passed, 11 skipped. Artifact index: `docs/ARTIFACTS.md`.
+
+Task 12.0 COMPLETE (Codex, 2026-05-15): first operational artifacts
+ generated.
+- QB: `app/data/backtest/runs/401e7e86-e34a-43d7-a72e-82f18466ab7a/
+backtest_result_QB.json` — ACTIVE_B
+- RB: `app/data/backtest/runs/5fc06017-67cd-486d-80e2-90fd029d4314/
+backtest_result_RB.json` — ACTIVE_B
+- WR: `app/data/backtest/runs/b3a338a3-ec42-4af8-a046-2ca0672e9390/
+backtest_result_WR.json` — ACTIVE_B
+- TE: `app/data/backtest/runs/db90b0cf-04c8-44e2-9c80-b63da685342f/
+backtest_result_TE.json` — EXPERIMENTAL
+- Market source: `unavailable` for all positions (expected; no arch
+ive store passed).
+- TE precondition fix: `WalkForwardDriver.FIXED_ALPHA["TE"] = 1.0`
+added with regression test; no TE promotion logic changed.
+
+## Phase 16 — CLOSED FOR PHASE 17 ENTRY
+
+**Theme:** Engine A Rookie Signal Upgrade.
+
+**Spec input:** `docs/strategies/Phase 16 Rookie Signal Upgrade Res
+earch - Merged.md` (FINAL — Compass spine, Dynasty Rookie supportin
+g, Codex synthesis reviewed; updated 2026-05-17 with fold-consisten
+cy gate, RYPTPA-primary WR framing, RB age de-emphasis governance e
+levation).
+
+**Phase 16.1 implementation:** COMPLETE (2026-05-21). Six PRE_MODEL
+ age blockers now have verified DOBs and all 80 2026 prospects are
+scored. Validation note: `docs/validation/phase16-closeout-2026-05-
+21.md`; refreshed rank report: `docs/validation/phase15-2026-rookie
+-rank-refresh.md`.
+
+**Sub-phase sequencing (David, 2026-05-17):**
+- **Phase 16.1**: COMPLETE — age blockers only; no model semantics
+change.
+- **Phase 16.2**: DEFERRED — validation harness / bake-off infrastr
+ucture (CFBD client wrapper, identity join pipeline, immutable snap
+shot tooling).
+- **Phase 16.3**: DEFERRED — WR feature candidates; RYPTPA first, Y
+PRR conditional on governed route data.
+- **Phase 16.4**: DEFERRED — draft-capital transform bake-off. Prom
+otion gate remains ≥3% aggregate MAE lift AND ≥3 of 4 LOOCV folds p
+assing AND TE MAE not regressing >1%.
+- **Phase 16.5**: DEFERRED — RB age de-emphasis governance decision
+ before any RB feature bake-off.
+
+**Key governance locks for all of Phase 16:**
+- Market data overlay-only; xVAR display/decision only; no producti
+on model change without passing bake-off artifact.
+- Every promotion requires fold-consistency (≥3 of 4 LOOCV folds) A
+ND aggregate MAE gate.
+- All six age-data blockers remain PRE_MODEL until Tier-1 source au
+dit confirms each birth date.
+
+**Prerequisites still pending:**
+- **CLEARED — Post-draft closeout (2026-05-21):** `refresh_draft_st
+ate.py` confirmed `draft_status == "complete"` and `current_pick_no
+ == total_picks == 36`; `resources/draft_state.js` refreshed; valid
+ation note written at `docs/validation/post-draft-closeout-2026-05-
+21.md`.
+- Roster audit with Black on Sleeper roster: COMPLETE — `GET /api/r
+oster/audit` returned HTTP 200 with Kaelon Black (`13414`) present;
+ `decision_supported` remains false.
+- **CLEARED — Age blockers (2026-05-21):** all six formerly PRE_MOD
+EL 2026 rookies now have verified DOBs; `resources/prospect_cards.j
+son` has 80 scored and 0 PRE_MODEL.
+
+## Phase 17 — RESEARCH BRIEF READY
+
+**Theme:** Sleeper Universe Valuation & League Opportunity Map.
+
+**Spec input:** `docs/strategies/Phase 17 Sleeper Universe Valuatio
+n Research - Merged.md` (Codex merge of Phase 17 research reports w
+ith Claude/Gemini review feedback incorporated).
+
+**Recommended gated sub-phases:**
+- **17.1 Universe Snapshot & Coverage** — Sleeper player universe,
+league rosters, users, traded picks, draft state, source hashes, id
+entity coverage, and top-300 unresolved gate.
+- **17.2 Full PVO Batch** — full-universe PVO artifact with explici
+t engine routing (`ENGINE_A`, `ENGINE_B`, `BLEND_AB`, `PRE_MODEL`,
+`MARKET_ONLY`, `INACTIVE`, `UNRESOLVED_IDENTITY`, `CONTEXT_ONLY`).
+- **17.3 Team Value Matrix** — starter-weighted xVAR, capped xVAR,
+positional surplus/deficit, taxi/IR handling, and future-pick owner
+ship context with numeric pick values deferred.
+- **17.4 Market Divergence v2** — FantasyCalc overlay only; percent
+ile divergence; `signal_status` gates; stale TE hardcode cleanup wi
+th temporary `TE_REVIEW=true`; no NOISE_BAND tuning before mid-July
+.
+- **17.5 League Opportunity Map** — neutral evidence cards and part
+ner fit; `decision_supported=false` throughout Phase 17.
+
+**Key governance locks for Phase 17:**
+- Sleeper `player_id` is the Phase 17 universe key, but DG canonica
+l identity remains the long-term mapping layer.
+- Market data is overlay-only and never enters Engine A/B feature i
+nputs.
+- Future picks are reconstructed for ownership, but no numeric xVAR
+/DVS/market value is assigned in Phase 17.
+- Opportunity language must stay neutral: no imperative buy/sell/ta
+rget/fade labels.
+- Divergence gates populate `signal_status`; they do not flip `deci
+sion_supported`.
+- Top-300 identity gate: top-300 by FantasyCalc dynasty Superflex m
+arket value when available, falling back to DG xVAR when market dat
+a is unavailable.
+- FantasyCalc parameter set **CONFIRMED**: `isDynasty=true&numQbs=2
+&numTeams=12&ppr=1`. Verified from `resources/david_league_context.
+json` (`te_premium: 0.0`). Sleeper league-settings check remains a
+Phase 17.1 validation dependency.
+
+**Phase 17 Structural Defaults — David ruling (2026-05-21):**
+- Bench/depth weighting: do not decay player value. Build best poss
+ible legal starting lineup first; apply any depth weighting only to
+ non-starters in team-strength aggregation. Actual manager lineup c
+hoices must not drive decay. Coefficient can start at `0.5` only un
+der that guardrail.
+- Pick reconstruction: automated Sleeper delta only; trust but veri
+fy with validation/caveat gates. No manual override in v1.
+- Divergence noise band: `0.10` global as diagnostic/provisional; r
+evisit after first full-universe flag distribution.
+- FantasyCalc params: confirmed `isDynasty=true&numQbs=2&numTeams=1
+2&ppr=1`; no TEP.
+
+---
+
+## Phase 15 — COMPLETE
+
+Phase 15 spec/plan: `docs/superpowers/plans/2026-05-16-phase15-trad
+e-lab.md`.
+
+**Architecture decisions locked:**
+- xVAR formula: `(DVS - replacement_DVS) × Λ_pos` — WR-equivalent p
+oints above replacement.
+- Engine A Λ applies when `dvs_engine in ("A", "blend")`. Engine B
+Λ only for `dvs_engine == "B"`.
+- `XVAR_LAMBDA_ENGINE_B`: QB=1.386, RB=1.083, WR=1.000, TE=0.648 (P
+90-ratio derived).
+- `XVAR_LAMBDA_ENGINE_A`: QB=1.315, RB=1.150, WR=1.000, TE=0.717.
+- `ENGINE_B_REPLACEMENT_DVS`: QB=64.2, RB=46.4, WR=60.6, TE=95.6.
+- `ENGINE_A_REPLACEMENT_DVS`: QB=77.3, RB=49.9, WR=69.2, TE=98.8.
+- Bayesian blend: `w_B = n / (n + k_pos)`. `DVS_BLEND_K`: QB=6, RB=
+5, WR=5, TE=7. Fires only when both Engine A and B inputs present;
+produces `dvs_engine = "blend"`. Single-engine fallback produces `d
+vs_engine = "A"`.
+- `TRADE_PARITY_BAND = 0.10` — governs trade math. `NOISE_BAND = 0.
+10` — governs veteran divergence flag suppression. **Never aliased.
+**
+- `dvs_pct`: 0–100 within-position percentile vs Engine B active po
+pulation. Populated by batch script.
+- `decision_supported = False` on all surfaces, always.
+
+**Workstream 15.1 — xVAR Cross-Positional Valuation (STRUCTURAL COM
+PLETE)**
+- PVO fields added: `xvar`, `xvar_lambda`, `xvar_anchor`, `xvar_cei
+ling_bound`, `dvs_pct`, `dvs_pct_as_of`, `dvs_blend_weight_b`.
+- xVAR assembled in pvo_assembler.py inside `if engine_b_resolved:`
+ block.
+- Known gap: `xvar_ceiling_bound` not yet populated for pure Engine
+ A (prospect) paths — fix is Task 5.
+- 3 passing contract tests in `tests/contract/test_phase15_valuatio
+n.py` (xvar_rank_preservation, xvar_scarcity_multiplier, bayesian_b
+ridge_monotonicity).
+
+**Workstream 15.2 — Bayesian Dead Window Blend (STRUCTURAL COMPLETE
+)**
+- `dvs_engine = "blend"` when games_t < ENGINE_B_MIN_GAMES_T (8) an
+d both Engine A and B inputs present.
+- Dead Window caveat appended to blend output.
+- blend-k defaults (QB=6, RB=5, WR=5, TE=7) in place but not yet va
+lidated against per-position residual variance.
+- **Gate: `docs/validation/phase15-blend-k-validation.md` stub requ
+ired — PENDING David review (Task 1).**
+
+**Suite state (post-cleanup):** 690 passed, 11 skipped, 0 failed.
+- Note: 4 fewer than Phase 14 peak (694) due to deletion of Gemini'
+s broken `tests/test_trade_lab.py` artifact.
+- 2 pre-existing nflreadpy collection errors excluded via `--ignore
+` (not regressions).
+
+## Phase 14 — IN PLANNING
+
+Phase 14 spec APPROVED by David: `docs/superpowers/specs/2026-05-16
+-phase14-dvs-normalization.md`.
+Execution roadmap: `docs/strategies/Dynasty Genius Phase 14 Executi
+on Roadmap.md`.
+
+**Architecture decisions locked:**
+- DVS normalization: Option C (Engine B P90 constants — QB 20.1, RB
+ 15.7, WR 14.5, TE 9.4).
+- Scale: 0–100 float, one decimal place. 0–1000 deferred to Phase 1
+5.
+- Bridge: Option B — explicit caveat, no Bayesian blending. `ENGINE
+_B_MIN_GAMES_T = 8`.
+- VAR: within-position only in Phase 14. Cross-position is Phase 15
+.
+- NOISE_BAND: veteran divergence flags stay dark until mid-July 202
+6.
+- TE caveat: "TE market superiority gate deferred — projection-qual
+ity score only" (NOT experimental fallback).
+
+**Subphase 14.1 — Constants and Identity Gate (COMPLETE)**
+1. Added `ENGINE_B_P90_PPG`, `ENGINE_B_VAR_THRESHOLDS`, `ENGINE_B_M
+IN_GAMES_T` to `engine_b_contract.py`.
+2. Ran 2024–2025 identity reconciliation report → `docs/validation/
+phase14-identity-reconciliation-2024-2025.md`. **Hard gate PASSED.*
+*
+3. Wrote 11 failing tests (spec sections 5.1–5.11).
+
+**Subphase 14.2 — DVS Assembly and Bridge (COMPLETE)**
+- Added `dvs_engine`, `dvs_p90_ref`, `dvs_clamped` to `PlayerValueO
+bject`.
+- Removed blocking comment at `pvo_assembler.py` line 316.
+- Implemented Engine B DVS formula (clamped 0-100 float), Dead Wind
+ow bridge (Year 1-3 vet fallback to Engine A), and TE G3-deferred c
+aveat.
+- All 11 contract tests (5.1-5.11) implemented and passing.
+- Regression fixed: non-prospects with draft capital no longer prom
+oted to PROSPECT_C model grade.
+
+**Subphase 14.3 — VAR and Calibration Audit (COMPLETE)**
+- Implemented `scripts/compute_var_batch.py`. Generated `app/data/b
+acktest/phase14/var_batch_20260516_190328.json`.
+- Implemented `scripts/audit_dvs_calibration.py`. Generated `app/da
+ta/backtest/phase14/dvs_calibration_audit_20260516_190356.json`.
+- Replacement baselines established (QB25: 13.47, RB33: 8.59, WR53:
+ 8.65, TE13: 9.76 PPG).
+- Calibration audit confirms DVS magnitude validity (WR ECE: 0.046)
+.
+
+## Open Blockers
+
+1. **NOISE_BAND calibration** — Locked at 0.10 until mid-July 2026.
+ Do not tune the divergence band before then.
+2. **TE divergence review period** — Phase 17.4 removed position-on
+ly suppression, but no exit criteria are defined yet; TE divergence
+ must remain non-decision-supported.
+3. **Phase 16.2-16.5 deferred gates** — Validation harness, WR/RB/Q
+B feature candidates, draft-capital bake-off, and RB age de-emphasi
+s remain explicitly deferred until David reopens them.
+
+## Next Recommended Work
+
+**Frontend UI initiative (2026-05-25) — ALIGNMENT ROUND CLOSED; DEC
+ISIONS LOCKED; PR #33 MERGED.** Consensus decisions captured in ADR
+ `docs/validation/2026-05-25-frontend-stack-consensus-decision.md`;
+ state-surfacing audit at `docs/standups/2026-05-25-stack-audit.md`
+; recommendation set in `docs/strategies/UI Research/recommendation
+s/`. Locked: Stack A (Vite + React + TS served by FastAPI) when fro
+ntend work eventually begins; minimal-deps-until-earned (runtime de
+ps require ADR); manual `/codex:review` only; current repo bootstra
+p/governance layout retained; cockpit primitives + Cmd-K first surf
+ace; Hey API codegen path; Ruff canonical for Python / Biome fronte
+nd-only; branch-and-PR reaffirmed; community skills vendored-and-pi
+nned; `rookie_board.html` retained as the live-draft tool; `@total-
+typescript/ts-reset` deferred. **HOLD remains in effect — frontend
+is Phase 12 / "comes last"; no frontend build, no deps installed.**
+
+**Phase 23 / 23.5 status:** Phase 23 W1-W5a is complete and Codex-c
+leared; Phase 23.5 W3b counterparty forced-cut penalty is complete
+and merged (PR #34 `698fa67`). Remaining deferred work is **W5b UI*
+*: a standalone/static Trade Lab page with Model View / Market Snap
+shot, browser-tested, preserving banned-language checks and surfaci
+ng `market_package_requires_manual_review` only where both model an
+d market lanes are visible. Do not start W5b without an explicit Da
+vid go-ahead because frontend/polish remains governed by the HOLD.
+
+**COMPLETE / MERGED — repo lint/type hygiene initiative (2026-05-25
+):** PR #31 merged to `main` (merge commit `afbf91b`); CI green (Py
+thon checks incl. ruff gate, SQL governance, Sovereign Unity). P0–P
+4 shipped; production at zero selected findings; CI + local pre-com
+mit ratchet active; policy doctrine at `docs/governance/03-code-hyg
+iene-policy.md`. 55 legacy tests/scripts findings remain → on-touch
+ ratchet. Codex merge-readiness review clear. Details below.
+- **Strategy**: Option A (Pragmatic Ratchet) approved by David. Cle
+an core production (`src/`, `app/`) to zero; set up pre-commit/CI t
+ouched-file ratchet; keep legacy `tests/` and `scripts/` clean-on-t
+ouch.
+- **Ruleset**: `select = ["E4", "E7", "E9", "F", "I"]` (I001 import
+-sort isolated into dedicated P1b commit). No `--unsafe-fixes`. Man
+ual `noqa` for `E712` vectorized masks.
+- **Branch**: `hygiene/ruff-lint-ratchet`
+- **Roadmap**:
+  - Phase 0: Add `pyproject.toml` base config; record the pinned Ru
+ff version (0.15.12); capture baseline. Enforcing pre-commit hook D
+EFERRED to Phase 3 (a whole-file ratchet now would block the P1/P2
+cleanup commits). **— DONE 2026-05-25** (branch `hygiene/ruff-lint-
+ratchet`): 317 findings (src+app=49; tests+scripts=268); validator
+green; no source/hooks changed; baseline at `docs/validation/phase-
+lint-baseline-2026-05-25.md`. **Checkpoint with David before P1.**
+  - Phase 1a: Safe autofixes only (`F401`, `F541`, `F811`) -> verif
+ied with green test suite. (`F841` and `E731` are NOT safe autofixe
+s — both deferred to Phase 2 manual.) **— DONE 2026-05-25**: split
+into `8a3f120` P1a-prod (14 F401, src/app) + `cf2bcf0` P1a-support
+(116 fixes, tests/scripts). Suite 1200 passed each; side-effect-rev
+iewed.
+  - Phase 1b: Dedicated mechanical import sorting (`I001`) commit -
+> verified with green test suite. **— DONE 2026-05-25**: `ec12e1a`
+(124 fixes, 100 files, repo-wide). Suite 1200 passed; no circular-i
+mport breakage.
+  - Phase 2: Manual clean of remaining production (`src/`, `app/`)
+files, hand-verifying registration/adapter side effects. **— DONE 2
+026-05-25**: `6032608` (4 files; 3 E712 pandas masks → reasoned `#
+noqa: E712`, comparison NOT rewritten; 3 E701 line-splits; 1 E731 l
+ambda→def). Suite 1200 passed; `ruff check src app` CLEAN (0). **`s
+rc`+`app` are now at zero selected findings. Checkpoint with David
+before P3.**
+  - Phase 3: Wire standard pre-commit/CI ratchets (excluding untouc
+hed legacy files). **— DONE 2026-05-25**: `f822a59` — `.pre-commit-
+config.yaml` (remote `astral-sh/ruff-pre-commit` v0.15.12, `ruff-ch
+eck`, check-only) + `ci.yml` (`ruff check src app` gate). **CI is t
+he hard gate**; pre-commit hook activates locally via `pre-commit i
+nstall` (pre-commit not yet installed in `.venv`). 55 tests/scripts
+ findings remain → on-touch ratchet. **Checkpoint with David before
+ governance plumbing.**
+  - Phase 4 (governance plumbing — in scope for Option A; NOT the s
+pec's out-of-scope full zero-drive): Create `docs/governance/03-cod
+e-hygiene-policy.md`, integrate into Required Reading/Authority ord
+er in `02-agent-operating-loop.md`, reference from the 8 bootstrap
+entrypoints, add path-based check to `validate_governance.py`. Then
+ open the PR. **— DONE 2026-05-25**: `4a35d2b` (13 files; validator
+ path-based; all 8 bootstrap refs; PR-template checkbox; `requireme
+nts-dev.txt` for local pre-commit). validate_governance + ruff src
+app green. **Next: activate pre-commit locally, open PR `hygiene/ru
+ff-lint-ratchet` → main (full P0–P4).**
+(.venv) bash-3.2$ codex
+╭────────────────────────────────────────────────╮
+│ >_ OpenAI Codex (v0.147.0)                     │
+│                                                │
+│ model:     gpt-5.6-sol high   /model to change │
+│ directory: ~/dynasty-genius-product            │
+╰────────────────────────────────────────────────╯
+
+  Tip: Try the Desktop app. Run 'codex app' or visit
+  https://chatgpt.com/codex?app-landing-page=true
+
+
+› From Claude (implementer lane, IDE session) - Review request:
+  loop-control + judge lane increment, full after-the-fact
+  adversarial review [w#lc-judge-review-1] [w#3ibw2fbp-1]
+
+  SCOPE UNDER REVIEW (all committed):
+  - dg-cockpit main 033b883 (pushed): autonomy loop-control core
+  (core/lib/loop-control.mjs, run-state v3 schemaVersion 3 +
+  revision guard), severity budget, 5/10 round caps, diminishing-
+  returns detector, Dynasty-bounded Antigravity Stop hook, Claude/
+  Codex Stop hooks, PreToolUse terminal deny + judge SHIP-commit
+  allowance, CLI verbs (round-open|finding|resolve|reviewer-clear|
+  round-close|verdict|refer|adjudicate), flight deck pane 2.3,
+  judge charter (claude/agents/judge.md), backup/bootstrap
+  coverage. NOTE: 5836106 on the same branch is a broken mid-build
+  backup intermediate; review 033b883, not it.
+  - dynasty-genius-product a6cb629 + ratification follow-up
+  (local, unpushed): docs/superpowers/specs/2026-08-12-loop-
+  control-design.md (SS7 disposition, SS8 as-built, SS9 judge
+  lane), docs/governance/02-agent-operating-loop.md SS Loop-
+  control budget (DRAFT pending your CLEAR), today's ledger,
+  AGENT_SYNC sequence block.
+
+  CONTEXT: You (a prior Codex session) co-synthesized the spec and
+  integrated your diff directly; Claude dispositioned it in SS7
+  (10 accepts, 0 rejects, R1+R2 raised for you). David then
+  ordered solo build (your lane was frozen mid-turn), the judge
+  lane addition, and has RATIFIED the SS9 authority transfer. D5
+  (churn-threshold semantics) remains David-flagged - not ours to
+  settle.
+
+  EVIDENCE ALREADY IN HAND: TDD - all seeds RED-verified before
+  GREEN; serial suite 50/50 fast + 9/10 slow (the 1 failure is the
+  PRE-EXISTING flight-deck launcher-path test, predates this
+  work); sync-adapters --check clean; scan-tree clean; all three
+  plugin validations pass; CLI round flow and refer/adjudicate
+  flow smoke-tested end-to-end. Known open items for your
+  judgment: R1 (fingerprint = phase+criterionId+file, summary
+  excluded - reword-evasion vs false-merge tradeoff, SS7/SS8), R2
+  (CLEAR_ELIGIBLE wording), the parallel-suite hang flake
+  (installer install.sh --status, root cause not established,
+  serial deterministic - recommend --test-concurrency=1 in
+  verify.sh), and the SHIP-commit hook allowance surface (pre-
+  tool-use.mjs + codex-tool-policy.mjs).
+
+  PLEASE REPLY with: (a) an explicit evidence-cited CLEAR
+  enumerating the checks you performed, OR (b) concrete findings,
+  each labeled [BLOCKER]/[WARN]/[STYLE] per the new severity
+  budget with criterion, file, and reproducible evidence - only
+  BLOCKERs continue remediation; WARN/STYLE go to the backlog.
+
+
+• I’m treating this as a full adversarial review, not an
+  implementation pass. I’ll use the dg-review workflow and, because
+  this concerns cockpit loop control, I’ll first complete the
+  repository’s mandatory governance bootstrap in the exact
+  prescribed order; then I’ll inspect both committed scopes,
+  independently rerun the relevant checks, and return either an
+  evidence-cited CLEAR or severity-budgeted findings.
+
+• Explored
+  └ Read 02-agent-operating-loop.md, 00-product-
+  constitution.md, 05-
+         layer-doctrine.md, 01-north-star-architecture.md, 03-code-
+         hygiene-policy.md, PRODUCT.md, DESIGN.md, AGENT_SYNC.md
+
+• Ran wc -l docs/agent-ledger/2026-08-12.md
+  └      672 docs/agent-ledger/2026-08-12.md
+
+• Explored
+  └ Read 2026-08-12.md
+
+───────────────────────────────────────────────────────────────────
+
+• Bootstrap is complete. This review serves the governance/cross-
+  layer control plane, so the layers 1–2 dependency check does not
+  apply; the risk center is enforcement correctness and authority
+  containment, not football/model behavior. I’m now applying dg-
+  review to the actual commit diffs and will use the cockpit-
+  messaging protocol only when the verdict is ready, so the
+  implementer receives the same evidence-cited result I return
+  here.
+
+• PreToolUse hook (failed)
+  error: PreToolUse hook exited with code 2 but did not write a
+  blocking reason to stderr
+
+• Explored
+  └ Read SKILL.md (dg-autonomy:dg-review skill), SKILL.md (cockpit-
+         messaging skill)
+
+• Ran git show --stat --oneline --decorate --no-renames a6cb629 &&
+  │ git log --oneline --decorate -5
+  └ a6cb629 docs: loop-control + judge governance drafts, spec of
+    record, ledger, sync board
+    … +14 lines (ctrl + t to view transcript)
+    fa90ced docs(cleanup): night-of-08-11 ticket plan + evidence
+    chain (evidence scripts excluded — hash-referenced)
+
+• Ran git status --short --branch
+  └ ## main...origin/main [ahead 104]
+     M scripts/dg_delivery.py
+    … +14 lines (ctrl + t to view transcript)
+    com.davidleess.dynasty-nflverse-usage-capture.plist
+    ?? tests/contract/test_governed_cadence_inputs_red.py
+
+• Ran git -C /Users/davidleess/dg-cockpit status --short --branch
+  │ && git -C /Users/davidleess/dg-cockpit show --stat --oneline
+  │ --decorate --no-renames 033b883
+  └ ## main...origin/main
+     M delivery.db
+    … +40 lines (ctrl + t to view transcript)
+     home/dynasty_flight_deck.sh                        |  13 +-
+     38 files changed, 1664 insertions(+), 48 deletions(-)
+
+• Ran /Users/davidleess/.dg-autonomy/bin/dg-autonomy status
+  └ Goal: Author and independently gate Footballguys Phase A RED
+    v22 for semantic-evidence integrity and write-operation clock
+    … +13 lines (ctrl + t to view transcript)
+    Reason: none
+    Terminal state: ACTIVE
+
+• Ran date '+%H:%M ET'
+  └ 18:03 ET
+
+• Edited docs/agent-ledger/2026-08-12.md (+20 -0)
+    672    [BLOCKER]/[WARN]/[STYLE] findings per the new severity b
+         udget.
+    673 +
+    674 +## 18:03 ET — Codex: full-increment adversarial review ope
+         ned [w#lc-judge-review-1]
+    675 +
+    676 +- Task: independently review dg-cockpit `033b883` plus pro
+         duct-repo `a6cb629` and ratification
+    677 +  follow-up `e897963`, including loop-control state/CLI/ho
+         oks, Judge authority containment,
+    678 +  R1/R2, the reported parallel-suite hang, and SHIP-commit
+          allowance.
+    679 +- Governance read: `02` v1.5.0, `00` v1.1.0, `05` v1.3.1,
+         `01` v1.0.0, `03` v1.1.0,
+    680 +  `PRODUCT.md`, `DESIGN.md`, `AGENT_SYNC.md` through `END
+         CURRENT BOARD`, and today's ledger.
+    681 +- Layer: governance/cross-layer control plane; layers 1–2
+         dependency check does not apply.
+    682 +- Active phase / surface: after-the-fact independent revie
+         w of the committed loop-control +
+    683 +  Judge increment; no implementation or publication action
+          authorized.
+    684 +- Intended write scope: this ledger entry and, after verdi
+         ct, the minimum durable review record
+    685 +  required by governance. Product code, dg-cockpit code, h
+         ooks, and configuration are read-only.
+    686 +- Validation expected: complete commit-range inspection; c
+         ontract/falsification matrix over
+    687 +  valid, boundary, missing, null, wrong-type, malformed, d
+         uplicate/conflict, empty, cross-adapter,
+    688 +  revision-race, verification-failure, and adjudication st
+         ates; focused and serial full tests;
+    689 +  adapter sync and plugin validators; direct CLI/hook smok
+         e probes; policy/authority audit.
+    690 +- Drift risks: dg-cockpit `delivery.db` and unrelated prod
+         uct-repo dirty paths belong to other
+    691 +  lanes and will be preserved; D5 churn semantics remain D
+         avid-reserved; the active installed
+    692 +  autonomy run status is stale from Footballguys and will
+         not be mutated as evidence for this review.
+
+• Updated Plan
+  └ □ Reconcile reviewed commits, spec authority, and complete
+      changed-file surface
+    □ Adversarially inspect loop-control state machine, CLI, hooks,
+      and Judge authority boundaries
+    □ Run focused, serial full, sync/validation, and direct smoke/
+      falsification checks
+    □ Classify findings, write durable evidence, and deliver
+      verified verdict to Claude
+
+───────────────────────────────────────────────────────────────────
+
+• The first repo-state check exposed one important review boundary:
+  033b883 sits after the known broken backup commit, so reviewing
+  only its single-parent diff would miss part of the shipped
+  increment. I’m expanding the code audit to the full pre-5836106
+  baseline through 033b883, while keeping the ratification follow-
+  up separate in the product repo.
+
+• PreToolUse hook (failed)
+  error: PreToolUse hook exited with code 2 but did not write a
+  blocking reason to stderr
+
+• PreToolUse hook (failed)
+  error: PreToolUse hook exited with code 2 but did not write a
+  blocking reason to stderr
+
+• Ran git show -s --format=fuller a6cb629 && git show -s
+  │ --format=fuller e897963 && git diff --stat a6cb629^..e897963
+  │ && git diff --name-status a6cb629^..e897963
+  └ commit e89796307e476c42e2934d1e872aea7ea43a5de4
+    Author:     David Leess <david.t.leess@gmail.com>
+    … +14 lines (ctrl + t to view transcript)
+    M    docs/governance/02-agent-operating-loop.md
+    A    docs/superpowers/specs/2026-08-12-loop-control-design.md
+
+• Ran file /Users/davidleess/dg-cockpit/autonomy/core/lib/
+  │ loop-control.mjs && LC_ALL=C tr -cd '\000' < /Users/
+  │ davidleess/dg-cockpit/autonomy/core/lib/loop-control.mjs | wc
+  │ … +6 lines
+  └ /Users/davidleess/dg-cockpit/autonomy/core/lib/
+    loop-control.mjs: data
+    … +19 lines (ctrl + t to view transcript)
+    c  /Users/davidleess/dg-cockpit/autonomy/antigravity/
+    dg-autonomy/scripts/lib/loop-control.mjs
+
+• Ran git -C /Users/davidleess/dg-cockpit log --oneline --decorate
+  │ -12 && git -C /Users/davidleess/dg-cockpit show -s
+  │ --format=fuller 5836106 && git -C /Users/davidleess/
+  │ … +1 lines
+  └ 033b883 (HEAD -> main, origin/main) feat: loop control + judge
+    lane — write·review·judge with mechanical gates
+    … +45 lines (ctrl + t to view transcript)
+
+        Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+
+• Ran git -C /Users/davidleess/dg-cockpit diff --stat
+  │ 5836106^..033b883 && git -C /Users/davidleess/dg-cockpit diff
+  │ --name-status 5836106^..033b883
+  └  autonomy/antigravity/dg-autonomy/hooks.json        |     4 +-
+     .../antigravity/dg-autonomy/scripts/contract.json  |    12 +-
+    … +213 lines (ctrl + t to view transcript)
+    M    home/dynasty_flight_deck.sh
+    M    home/tmux.conf
+
+• Ran git diff --check 5836106^..033b883 -- autonomy backup.sh
+  │ bootstrap.sh claude/agents/judge.md home/
+  │ dynasty_flight_deck.sh && git diff --check a6cb629^..e897963
+  └ fatal: bad revision '5836106^..033b883'
+
+• Ran git diff --stat 5836106^..033b883 -- autonomy backup.sh
+  │ bootstrap.sh claude/agents/judge.md home/
+  │ dynasty_flight_deck.sh && git diff --name-status
+  │ … +2 lines
+  └  autonomy/antigravity/dg-autonomy/hooks.json        |   4 +-
+     .../antigravity/dg-autonomy/scripts/contract.json  |  12 +-
+    … +79 lines (ctrl + t to view transcript)
+    A    claude/agents/judge.md
+    M    home/dynasty_flight_deck.sh
+
+• Ran shasum -a 256 autonomy/core/lib/loop-control.mjs autonomy/
+  │ claude/dg-engineering/scripts/lib/loop-control.mjs autonomy/
+  │ codex-marketplace/plugins/dg-autonomy/scripts/lib/
+  │ … +2 lines
+  └ perl: warning: Setting locale failed.
+    perl: warning: Please check that your locale settings:
+    … +13 lines (ctrl + t to view transcript)
+    c  autonomy/antigravity/dg-autonomy/scripts/lib/
+    loop-control.mjs
+
+• Ran xxd -g 1 -l 256 autonomy/core/lib/loop-control.mjs && node
+  │ --check autonomy/core/lib/loop-control.mjs
+  └ 00000000: 2f 2f 20 4c 6f 6f 70 20 63 6f 6e 74 72 6f 6c 20  //
+    Loop control
+    … +22 lines (ctrl + t to view transcript)
+    000000f0: 0a 2f 2f 20 72 75 6e 20 6f 62 6a 65 63 74 3b 20  .//
+    run object;
+
+• Ran git diff a6cb629^..e897963 -- docs/
+  │ governance/02-agent-operating-loop.md AGENT_SYNC.md docs/
+  │ agent-ledger/2026-08-12.md
+  └ diff --git a/AGENT_SYNC.md b/AGENT_SYNC.md
+    index 91a5956..60b5b4f 100644
+    … +166 lines (ctrl + t to view transcript)
+    post-commit confirmation to the independent reviewer (Gemini
+    receives the confirmation for awareness/audit) containing:
+
+• Ran perl -pe 's/\x00/[NUL]/g' autonomy/core/lib/loop-control.mjs
+  │ | nl -ba | sed -n '1,340p'
+  └ perl: warning: Setting locale failed.
+    perl: warning: Please check that your locale settings:
+    … +346 lines (ctrl + t to view transcript)
+    live dispute to the judge
+       340    // before any cap fires (David's word, 2026-08-12).
+
+• Ran perl -pe 's/\x00/[NUL]/g' autonomy/core/lib/loop-control.mjs
+  │ | nl -ba | sed -n '1,180p'
+  └ perl: warning: Setting locale failed.
+    perl: warning: Please check that your locale settings:
+    … +184 lines (ctrl + t to view transcript)
+       179      const last = rounds(run).at(-1);
+       180      if (last && last.closedAt === null) {
+
+• Ran perl -pe 's/\x00/[NUL]/g' autonomy/core/lib/loop-control.mjs
+  │ | nl -ba | sed -n '421,620p'
+  └ perl: warning: Setting locale failed.
+    perl: warning: Please check that your locale settings:
+    … +34 lines (ctrl + t to view transcript)
+       449      );
+       450    }
+
+• Explored
+  └ Read 2026-08-12-loop-control-design.md, run-state.mjs, dg-
+         autonomy.mjs
+
+• Ran perl -pe 's/\x00/[NUL]/g' autonomy/core/lib/loop-control.mjs
+  │ | nl -ba | sed -n '181,420p'
+  └ perl: warning: Setting locale failed.
+    perl: warning: Please check that your locale settings:
+    … +244 lines (ctrl + t to view transcript)
+       420      const window =
+    closedInPhase.slice(-loopControl.diminishingWindow);
+
+• Explored
+  └ Read stop-check.mjs, antigravity-stop-check.mjs, contract.json,
+         judge.md, dynasty_flight_deck.sh, backup.sh, bootstrap.sh,
+         pre-tool-use.mjs, policy.mjs, codex-tool-policy.mjs,
+         antigravity-tool-policy.mjs
+
+───────────────────────────────────────────────────────────────────
+
+• The hook audit has found a concrete authority-containment
+  concern, and I’m reproducing it before classifying it: a Judge
+  SHIP state appears to permit a command classified as “commit”
+  without proving the commit matches the recorded pins. I’m testing
+  compound commands and arbitrary staged content now; if confirmed,
+  this is the kind of enforcement mismatch that can qualify as a
+  BLOCKER even though the nominal J-suite is green.
+
+• Explored
+  └ Read judge-adjudication.test.mjs, loop-control.test.mjs, stop-
+  hook-
+         bounds.test.mjs, policy.mjs, pre-tool-
+         use.mjs, antigravity-
+         tool-policy.mjs, sync-adapters.mjs, antigravity-stop-
+         check.mjs, codex-tool-policy.mjs, stop-check.mjs
+    Search antigravityToolPolicy|codexToolPolicy|core/scripts|
+    scripts/
+           antigravity-tool in tests
+
+• Ran node autonomy/core/scripts/antigravity-tool-policy.mjs
+  └ {"decision":"deny","reason":"Dynasty autonomy tool hook failed
+    closed"}
+
+• PreToolUse hook (failed)
+  error: PreToolUse hook exited with code 2 but did not write a
+  blocking reason to stderr
+
+• Ran node --input-type=module -e 'import {spawnSync} from
+  │ "node:child_process"; import
+  │ {mkdtempSync,mkdirSync,writeFileSync} from "node:fs"; import
+  │ … +20 lines
+  └ {"script":"autonomy/core/scripts/
+    codex-tool-policy.mjs","command":"git commit -am
+    … +14 lines (ctrl + t to view transcript)
+    pre-tool-use.mjs","command":"git commit -m ruled && gh pr
+    create --title x --body y","status":0,"stdout":"","stderr":""}
+
+• Running PreToolUse hook: Checking Dynasty autonomy boundary
+
+• Working (2h 22m 13s • esc to interrupt)
+
+
+› (.venv) bash-3.2$ clear && codex
+terminals database is inaccessible
+(.venv) bash-3.2$ resetdynasty-genius-product
+reset: can't initialize terminal type tmux-256color (error -1)
+Terminal type? codex
+reset: can't initialize terminal type codex (error -1)
+Terminal type? ^[[I
+reset: can't initialize terminal type  (error -1)
+Terminal type?
+Terminal type?
+Terminal type?
+Terminal type?
+Terminal type?
+Terminal type?
+Terminal type? /^C
+< TERM=screen-256color && codex
+bash: /export: No such file or directory
+<3.2$ TERM=screen-256color codex
+╭────────────────────────────────────────────────╮
+│ >_ OpenAI Codex (v0.147.0)                     │
+│                                                │
+│ model:     gpt-5.6-sol high   /model to change │
+│ directory: ~/dynasty-genius-product            │
+╰────────────────────────────────────────────────╯
+
+  Tip: New Use /fast to enable our fastest inference with increased
+  plan usage.
+
+
+› From Claude (implementer lane, IDE session) - Review request:
+  loop-control + judge lane increment, full after-the-fact
+  adversarial review [w#lc-judge-review-2] [w#3h7tlsjc-1]
+
+  SCOPE UNDER REVIEW (all committed):
+  - dg-cockpit main 033b883 + 68b9e8d (both pushed; 68b9e8d locks
+  judge routing to the quantifiable loop - referral surface
+  removed on David's word, J1/J1b pin the absence): autonomy loop-
+  control core (core/lib/loop-control.mjs, run-state v3
+  schemaVersion 3 + revision guard), severity budget, 5/10 round
+  caps, diminishing-returns detector, Dynasty-bounded Antigravity
+  Stop hook, Claude/Codex Stop hooks, PreToolUse terminal deny +
+  judge SHIP-commit allowance, CLI verbs (round-open|finding|
+  resolve|reviewer-clear|round-close|verdict|refer|adjudicate),
+  flight deck pane 2.3, judge charter (claude/agents/judge.md),
+  backup/bootstrap coverage. NOTE: 5836106 on the same branch is a
+  broken mid-build backup intermediate; review 033b883, not it.
+  - dynasty-genius-product a6cb629 + ratification follow-up
+  (local, unpushed): docs/superpowers/specs/2026-08-12-loop-
+  control-design.md (SS7 disposition, SS8 as-built, SS9 judge
+  lane), docs/governance/02-agent-operating-loop.md SS Loop-
+  control budget (DRAFT pending your CLEAR), today's ledger,
+  AGENT_SYNC sequence block.
+
+  CONTEXT: You (a prior Codex session) co-synthesized the spec and
+  integrated your diff directly; Claude dispositioned it in SS7
+  (10 accepts, 0 rejects, R1+R2 raised for you). David then
+  ordered solo build (your lane was frozen mid-turn), the judge
+  lane addition, and has RATIFIED the SS9 authority transfer; he
+  subsequently LOCKED routing to the quantifiable loop (no
+  referral verb - counters only). Product docs now at
+  a6cb629+e897963+84e38c7 (local). D5 (churn-threshold semantics)
+  remains David-flagged - not ours to settle.
+
+  EVIDENCE ALREADY IN HAND: TDD - all seeds RED-verified before
+  GREEN; serial suite 50/50 fast + 9/10 slow (the 1 failure is the
+  PRE-EXISTING flight-deck launcher-path test, predates this
+  work); sync-adapters --check clean; scan-tree clean; all three
+  plugin validations pass; CLI round flow and refer/adjudicate
+  flow smoke-tested end-to-end. Known open items for your
+  judgment: R1 (fingerprint = phase+criterionId+file, summary
+  excluded - reword-evasion vs false-merge tradeoff, SS7/SS8), R2
+  (CLEAR_ELIGIBLE wording), the parallel-suite hang flake
+  (installer install.sh --status, root cause not established,
+  serial deterministic - recommend --test-concurrency=1 in
+  verify.sh), and the SHIP-commit hook allowance surface (pre-
+  tool-use.mjs + codex-tool-policy.mjs).
+
+  NOTE: your prior session began this review and wedged at 2h22m
+  (Codex CLI hook-path freeze, second occurrence today - probe
+  transcripts are in this pane's scrollback history if retained,
+  else disregard). One probe suggested a compound-command finding
+  (git commit && gh pr create passing the SHIP allowance) - verify
+  it independently; do not inherit it as established.
+
+  PLEASE REPLY with: (a) an explicit evidence-cited CLEAR
+  enumerating the checks you performed, OR (b) concrete findings,
+  each labeled [BLOCKER]/[WARN]/[STYLE] per the new severity
+  budget with criterion, file, and reproducible evidence - only
+  BLOCKERs continue remediation; WARN/STYLE go to the backlog.
+
+
+• I’m starting with the mandatory Dynasty Genius bootstrap in the
+  exact prescribed order. After that I’ll use the dg-review
+  workflow because this is an adversarial engineering review,
+  inspect both repositories at the named commits, reproduce the
+  relevant checks, and report only evidence-backed CLEAR or
+  severity-budget findings.
+
+• Explored
+  └ Read 02-agent-operating-loop.md, 00-product-constitution.md,
+05-
+         layer-doctrine.md, 01-north-star-architecture.md, 03-code-
+         hygiene-policy.md, AGENT_SYNC.md
+
+• Working (39s • esc to interrupt)
+
+
+› Run /review on my current changes
+
+  gpt-5.6-sol high · ~/dynasty-genius-product
+
+

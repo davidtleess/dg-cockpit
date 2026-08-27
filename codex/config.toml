@@ -102,6 +102,8 @@ theme = "one-half-dark"
 
 [hooks.state."/Users/davidleess/.codex/hooks.json:permission_request:0:0"]
 trusted_hash = "sha256:b3f49212896322dc2e435a18cc1c154b663a8b01edb3a53541decb0d55448fc3"
+enabled = false
 
 [hooks.state."dg-autonomy@dynasty-autonomy:hooks/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:93215ecb793b3e7067ff370dd92f1b215302ee878cea30d62eff6d6fd74d6e8a"
+enabled = false

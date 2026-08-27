@@ -1,5 +1,5 @@
 {
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "PermissionRequest": [
       {
@@ -39,7 +39,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "'/Users/davidleess/.dg-context/runtime/bin/dg-context-fast' claude",
+    "command": "'/Users/davidleess/.dg-context/runtime/bin/dg-context-statusline' claude",
     "padding": 0,
     "refreshInterval": 5
   },
@@ -103,5 +103,6 @@
       "**routine under <user>/ prefix**: none configured"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "agentPushNotifEnabled": true
 }

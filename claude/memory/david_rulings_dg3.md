@@ -4,6 +4,82 @@
 
 ---
 
+## 2026-08-26 morning — SR-11 day (DG-044)
+
+> **"its now tomorrow morning. check the time and do the set up items if we are ready"** (~05:52)
+> **"you can decide where it's best to build"** (~06:0x — venue delegated; built in-session)
+> **"ok let me know when youre ready"**
+
+**Settled by execution:** after the ready report, David ran the install one-liners himself (symlink
+07:13; bootstrap attempt 07:15, failed with the expected dangling-link error — harmless, re-run
+post-pull). Running the install steps was taken as the go for the land; DG-044 landed `b1b888be`.
+The banner-rendering question (probes 08-25 + 08-26 06:06) was **ANSWERED YES same day** — after
+missing the 10:30 window (*"I missed it...its now 1133"*), David ran bootstrap + kickstart at
+12:00, the alert fired through launchd (runs=1, exit 0, both GAP lines + heartbeat), and he
+confirmed: **"yes i saw the banner"**. SR-11 visible-notification acceptance met.
+
+**~12:40 — "go"** on the three-ask decision batch (presented after a 10-agent adversarial panel
+attacked the afternoon plan itself; all three asks were in one message and "go" answered it):
+1. **The beyond-spec (h) behavior is RATIFIED** — the alert delivering a swallowed 10:30-slot
+   report on its first run after a gap stays.
+2. **DG-035 option (a) is DEFERRED post-season** — the recommendation he accepted: Tier 2 scope
+   six working days before freeze; SR-11's loud gap is the accepted minimum. The
+   producers-need-GUI-session premise is UNVERIFIED — verify before any future YES executes.
+3. **SR-09 steps 1-5 pulled into the 08-26 afternoon** — a sanctioned DEVIATION from the D5-D6
+   calendar (worktree only, nothing lands 08-26, install stays D5/D6; Thu land only if Thu's
+   10:30 alert fire is silent+heartbeat AND DG-041's Thu acceptance is clean, else Fri EOD).
+   Bundled in the same go: Tuesday-1 baseline capture, hygiene sweep (inventory/copy only),
+   clearing the retired Air's stale lane claims on DG-014/015/020.
+
+**~13:45 — "1 yes. 2. pre freeze. 3. yes"** (answering the layer-roadmap decision set):
+1. **DG-046 builds TODAY** — wire the common-cohort divergence rebase into the daily job.
+2. **The ff_playerids crosswalk capture is PRE-FREEZE** — the time-perishable L2 item lands
+   before 09-04, not post-season.
+3. **The layer roadmap is RATIFIED** — convert all 31 drafts to board tickets
+   (`~/dg-build/ROADMAP-LAYERS.md`, commit `1693ad5`). Sequencing criterion stands in his words:
+   *"as we fill the layers my edge should get more real."*
+
+**~16:15 — "fix the marker"** — approved writing the truthful failed-run incident record over the
+killed run's permanent `running` state in the production nflverse status marker (the classifier
+had blocked the unapproved write, correctly). Written, verified via the DG-049 attestation
+channel, incident closed in the DG-048 ticket.
+
+**~15:40 — "retire daily control and do DG-039"**:
+1. **DG-048 RULED: Daily Control is RETIRED** — superseded by SR-11's alert + the capture-health
+   surface. Retire loudly: nothing may read the Aug-8 marker as current health.
+2. **DG-039 goes** — the blocked-audit-writes-nothing fix builds now (sprint slack).
+
+---
+
+## 2026-08-25 evening — the DG-041-first sequencing, then DG-022
+
+> **"go"** (on the recommendation: DG-041 today with the trunk pull held until after DG-023's
+> 08-26 confirmation run, then DG-022)
+> **"ok go"** (proceed to DG-022 — the 08-19 WIP resume)
+> **"ok"** (execute the recommended closeout sequence)
+
+**Settled by execution:** DG-041 landed `b797ee1f`; DG-022 landed `20807368` (real-surface QA
+proven); his parallel session landed DG-042 `c2b11f0a` (PPG guard, closes SR-21) the same
+evening. Trunk pull held at `a61f0fbe` for the single-variable DG-023 morning check — releases
+post-window 08-26. Evening closeout ledger commit `f7a663da`; `origin/main` closed one commit higher at `2bf91d8d`
+(the DG-042→DG-043 ledger correction) — verified via ls-remote 2026-08-25 ~22:00.
+
+---
+
+## 2026-08-25 morning — everything lands on `main`; the merge and the trunk switch
+
+> **"lets do the merge then we can compact in that order"** (early morning)
+> **"land on main. go ahead with 21 and 29. sound good on the sequence."**
+> **"go ahead"** (the deployment: trunk switch + producer regen, post-window)
+
+**Settled:** `feature/outcome-loop-week1` merged to `main` (`d33c9896`) and is retired as a
+landing base; all future tickets land on `main`; the trunk itself runs `main` (switched 10:21 EDT,
+producers confirmed running from it — DG-021's 11:30 scheduled-run proof). The approved sequence —
+recreate worktrees, close DG-029 + DG-004, then DG-021 — executed and closed same day. DG-023 was
+his parallel session's lane the same morning (landed `b4662707`, filed DG-041).
+
+---
+
 ## 2026-08-19 06:32 ET — Engine B PPG counts ALL GAMES
 
 > **"all games"**

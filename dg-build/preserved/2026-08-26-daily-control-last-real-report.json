@@ -1,0 +1,474 @@
+{
+  "by_source": {
+    "campus2canton": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": "unknown",
+      "detail": "",
+      "failed": false,
+      "freshness": "undetermined",
+      "last_success_at": null,
+      "missing": [
+        "missing_drop_location",
+        "missing_importer"
+      ],
+      "source": "campus2canton",
+      "state": "manual_route_incomplete",
+      "streams": {
+        "export": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "campus2canton",
+          "stream": "export",
+          "trigger": null
+        }
+      }
+    },
+    "cfbd": {
+      "age_days": 6.659,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "needs explicit cost enablement",
+      "failed": false,
+      "freshness": "due",
+      "last_success_at": "2026-08-02T02:43:42.156864+00:00",
+      "missing": [],
+      "source": "cfbd",
+      "state": "skipped_paid_gate",
+      "streams": null
+    },
+    "dynasty_data_lab": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "dynasty_data_lab",
+      "state": "not_run_blocked",
+      "streams": null
+    },
+    "dynasty_nerds": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "dynasty_nerds",
+      "state": "not_run_blocked",
+      "streams": null
+    },
+    "fantasycalc": {
+      "age_days": 0.231,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "ops/launchd/com.davidleess.dynasty-fc-snapshot.plist",
+      "failed": false,
+      "freshness": "current",
+      "last_success_at": "2026-08-08T13:00:05.707718+00:00",
+      "missing": [],
+      "source": "fantasycalc",
+      "state": "skipped_external_scheduler",
+      "streams": null
+    },
+    "genius_sports": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "genius_sports",
+      "state": "not_run_prohibited",
+      "streams": null
+    },
+    "ktc": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "ktc",
+      "state": "not_run_prohibited",
+      "streams": null
+    },
+    "mfl_rookie_adp": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "mfl_rookie_adp",
+      "state": "not_run_blocked",
+      "streams": null
+    },
+    "nfl_data_py": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "nfl_data_py",
+      "state": "not_run_blocked",
+      "streams": null
+    },
+    "nflreadpy_qb_validation": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "nflreadpy_qb_validation",
+      "state": "not_run_static",
+      "streams": null
+    },
+    "nflverse_usage_capture": {
+      "age_days": 0.598,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "current",
+      "last_success_at": "2026-08-08T04:12:37.070589+00:00",
+      "missing": [],
+      "source": "nflverse_usage_capture",
+      "state": "dry_run",
+      "streams": null
+    },
+    "pff": {
+      "age_days": 7.215,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": "unknown",
+      "detail": "no governed calendar/inventory artifact exists",
+      "failed": false,
+      "freshness": "undetermined",
+      "last_success_at": "2026-08-01T09:23:59.950822-04:00",
+      "missing": [],
+      "source": "pff",
+      "state": "manual_undetermined",
+      "streams": {
+        "grades": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "grades",
+          "trigger": null
+        },
+        "ncaa_passing_depth": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_passing_depth",
+          "trigger": null
+        },
+        "ncaa_passing_pressure": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_passing_pressure",
+          "trigger": null
+        },
+        "ncaa_passing_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_passing_summary",
+          "trigger": null
+        },
+        "ncaa_receiving_depth": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_receiving_depth",
+          "trigger": null
+        },
+        "ncaa_receiving_scheme": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_receiving_scheme",
+          "trigger": null
+        },
+        "ncaa_receiving_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_receiving_summary",
+          "trigger": null
+        },
+        "ncaa_rushing_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "ncaa_rushing_summary",
+          "trigger": null
+        },
+        "nfl_passing_depth": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_passing_depth",
+          "trigger": null
+        },
+        "nfl_passing_pressure": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_passing_pressure",
+          "trigger": null
+        },
+        "nfl_passing_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_passing_summary",
+          "trigger": null
+        },
+        "nfl_receiving_depth": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_receiving_depth",
+          "trigger": null
+        },
+        "nfl_receiving_scheme": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_receiving_scheme",
+          "trigger": null
+        },
+        "nfl_receiving_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_receiving_summary",
+          "trigger": null
+        },
+        "nfl_rushing_summary": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "pff",
+          "stream": "nfl_rushing_summary",
+          "trigger": null
+        }
+      }
+    },
+    "playerprofiler": {
+      "age_days": 7.615,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": "unknown",
+      "detail": "no governed calendar/inventory artifact exists",
+      "failed": false,
+      "freshness": "undetermined",
+      "last_success_at": "2026-08-01T03:47:35.370993+00:00",
+      "missing": [],
+      "source": "playerprofiler",
+      "state": "manual_undetermined",
+      "streams": {
+        "gamelog": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "playerprofiler",
+          "stream": "gamelog",
+          "trigger": null
+        },
+        "medical": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "playerprofiler",
+          "stream": "medical",
+          "trigger": null
+        },
+        "pbp": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "playerprofiler",
+          "stream": "pbp",
+          "trigger": null
+        },
+        "player_season": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "playerprofiler",
+          "stream": "player_season",
+          "trigger": null
+        },
+        "roster": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "playerprofiler",
+          "stream": "roster",
+          "trigger": null
+        }
+      }
+    },
+    "ras": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "ras",
+      "state": "not_run_blocked",
+      "streams": null
+    },
+    "rolling_insights": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "rolling_insights",
+      "state": "not_run_prohibited",
+      "streams": null
+    },
+    "rotoviz": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": "unknown",
+      "detail": "",
+      "failed": false,
+      "freshness": "undetermined",
+      "last_success_at": null,
+      "missing": [
+        "missing_drop_location",
+        "missing_importer"
+      ],
+      "source": "rotoviz",
+      "state": "manual_route_incomplete",
+      "streams": {
+        "export": {
+          "age_days": null,
+          "cadence": "undetermined",
+          "coverage": "unknown",
+          "missing_seasons": [],
+          "source": "rotoviz",
+          "stream": "export",
+          "trigger": null
+        }
+      }
+    },
+    "sleeper": {
+      "age_days": 0.218,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "ops/launchd/com.davidleess.dynasty-league-capture.plist",
+      "failed": false,
+      "freshness": "current",
+      "last_success_at": "2026-08-08T13:20:05.441059+00:00",
+      "missing": [],
+      "source": "sleeper",
+      "state": "skipped_external_scheduler",
+      "streams": null
+    },
+    "sleeper_transactions": {
+      "age_days": 0.597,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "current",
+      "last_success_at": "2026-08-08T04:13:09.149759+00:00",
+      "missing": [],
+      "source": "sleeper_transactions",
+      "state": "dry_run",
+      "streams": null
+    },
+    "sportradar": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "sportradar",
+      "state": "not_run_prohibited",
+      "streams": null
+    },
+    "stats_perform": {
+      "age_days": null,
+      "checked_at": "2026-08-08T18:33:18.249820+00:00",
+      "coverage": null,
+      "detail": "",
+      "failed": false,
+      "freshness": "unknown",
+      "last_success_at": null,
+      "missing": [],
+      "source": "stats_perform",
+      "state": "not_run_prohibited",
+      "streams": null
+    }
+  },
+  "exit_code": 0,
+  "generated_at": "2026-08-08T18:33:18.249820+00:00"
+}

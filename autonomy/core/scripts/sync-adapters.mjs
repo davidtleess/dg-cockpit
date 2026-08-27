@@ -52,24 +52,6 @@ async function addTree(sourceRoot, destinationRoot) {
   }
 }
 
-function useInstalledAntigravityScripts(value) {
-  if (Array.isArray(value)) return value.map(useInstalledAntigravityScripts);
-  if (value && typeof value === "object") {
-    return Object.fromEntries(
-      Object.entries(value).map(([key, entry]) => [key, useInstalledAntigravityScripts(entry)]),
-    );
-  }
-  if (typeof value === "string") {
-    // Antigravity does not expand PLUGIN_ROOT in hook commands. Its installer
-    // owns this stable per-user destination and does expand HOME.
-    return value.replaceAll(
-      "${PLUGIN_ROOT}/scripts/",
-      "${HOME}/.gemini/config/plugins/dg-autonomy/scripts/",
-    );
-  }
-  return value;
-}
-
 for (const definition of Object.values(hosts)) {
   for (const skillName of skillNames) {
     const template = await readFile(
@@ -121,6 +103,10 @@ const stopCheckSource = (
   .replace('"../lib/docket.mjs"', '"./lib/docket.mjs"');
 expected.set(join(hosts.claude.root, "scripts", "stop-check.mjs"), stopCheckSource);
 expected.set(join(hosts.codex.root, "scripts", "stop-check.mjs"), stopCheckSource);
+expected.set(
+  join(hosts.claude.root, "hooks", "hooks.json"),
+  `${JSON.stringify({ hooks: {} }, null, 2)}\n`,
+);
 
 const codexRoot = hosts.codex.root;
 const codexToolPolicy = await readFile(
@@ -137,33 +123,7 @@ expected.set(
   join(codexRoot, "hooks", "hooks.json"),
   `${JSON.stringify({
     description: "Dynasty autonomy hard-gate checks for Codex tool calls.",
-    hooks: {
-      PreToolUse: [
-        {
-          matcher: "*",
-          hooks: [
-            {
-              type: "command",
-              command: 'node "${PLUGIN_ROOT}/scripts/pre-tool-use.mjs"',
-              timeout: 10,
-              statusMessage: "Checking Dynasty autonomy boundary",
-            },
-          ],
-        },
-      ],
-      Stop: [
-        {
-          hooks: [
-            {
-              type: "command",
-              command: 'node "${PLUGIN_ROOT}/scripts/stop-check.mjs"',
-              timeout: 10,
-              statusMessage: "Dynasty loop control: checking the human gate",
-            },
-          ],
-        },
-      ],
-    },
+    hooks: {},
   }, null, 2)}\n`,
 );
 
@@ -219,7 +179,7 @@ const antigravityManifest = {
     displayName: "Dynasty Autonomy",
     shortDescription: "Goal-to-gate engineering autonomy with pinned ASW workflows.",
     category: "Developer Tools",
-    capabilities: ["Skills", "Hooks", "Subagents", "Workflow"],
+    capabilities: ["Skills", "Subagents", "Workflow"],
     defaultPrompt: [
       "dg-auto complete this bounded engineering goal",
       "dg-plan write a test-first plan",
@@ -233,44 +193,7 @@ expected.set(
   `${JSON.stringify(antigravityManifest, null, 2)}\n`,
 );
 
-const upstreamHooks = JSON.parse(
-  await readFile(join(vendorRoot, "hooks", "hooks.json"), "utf8"),
-)["antigravity-swarm"];
-const antigravityHooks = useInstalledAntigravityScripts({
-  "dg-autonomy": {
-    ...upstreamHooks,
-    Stop: [
-      {
-        type: "command",
-        command: 'node "${PLUGIN_ROOT}/scripts/dg-antigravity-stop.mjs"',
-        timeout: 10,
-        statusMessage: "ASW: checking continuation (Dynasty-bounded)",
-      },
-    ],
-    PreInvocation: [
-      {
-        type: "command",
-        command: 'node "${PLUGIN_ROOT}/scripts/dg-antigravity-policy.mjs"',
-        timeout: 10,
-        statusMessage: "Dynasty: applying autonomy boundary",
-      },
-      ...upstreamHooks.PreInvocation,
-    ],
-    PreToolUse: [
-      {
-        matcher: ".*",
-        hooks: [
-          {
-            type: "command",
-            command: 'node "${PLUGIN_ROOT}/scripts/dg-antigravity-tool-policy.mjs"',
-            timeout: 10,
-            statusMessage: "Dynasty: enforcing tool boundary",
-          },
-        ],
-      },
-    ],
-  },
-});
+const antigravityHooks = { "dg-autonomy": {} };
 expected.set(
   join(antigravityRoot, "hooks.json"),
   `${JSON.stringify(antigravityHooks, null, 2)}\n`,

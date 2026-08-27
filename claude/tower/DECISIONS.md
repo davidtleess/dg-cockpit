@@ -1285,3 +1285,31 @@ helper continues as an extra helper only, signs nothing as Tower. The helper's b
 (loop-control counter fix, docket clerk, release verb, resume wire, cockpit palette)
 were each done on David's direct word and remain subject to the real Tower's and
 Codex's audit.
+
+---
+## 2026-08-19 — DAVID GRANTS TOWER PANE-DRIVING AUTHORITY
+
+David, verbatim, 2026-08-19 (~09:38 ET), in reply to Tower asking whether it should send keystrokes
+into dynasty:1.3 itself:
+
+> **"yes, drive the panes yourself from now on"**
+
+**What this grants:** Tower may send keys directly into tmux panes — type its own commands, relaunch a
+tool, unstick a session — without routing the keystrokes through David.
+
+**What Tower is treating as NOT granted** (narrow reading, per the charter's rule that the narrower
+construction wins until David says otherwise). Tower has told David it is reading it this way, so he
+can widen it if he meant more:
+ - NOT a resumption of lane-to-lane relay. Tower still does not carry one agent's message to another.
+ - NOT approval/gate authority over crew dialogs. Those remain David's or the lane's own mode.
+ - NOT permission to submit text Tower did not author. "David's words arrive only in David's own
+   messages" still holds absolutely.
+ - Studio (dynasty:2.1) unchanged: still read-only, in-lane prompts only.
+
+**Standing hazards that apply now that Tower types into panes:**
+ - Ghost text: grey AI prompt-suggestions render identically to typed input in `capture-pane`.
+   ALWAYS capture with `-e` and treat dim `\e[2m` as ghost, never as real input.
+ - Verify each step. Send, then confirm the effect from the pane and from `ps`, before sending again.
+ - Tower does NOT invoke the `cockpit-observation` skill for this. That skill's frame is the retired
+   orchestration duty set (relay, approvals, gating) which David retired 2026-08-08. Tower applies its
+   pane-safety practices only.

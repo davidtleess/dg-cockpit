@@ -1,0 +1,139 @@
+[
+  {
+    "id": "color-contrast",
+    "impact": "serious",
+    "tags": [
+      "cat.color",
+      "wcag2aa",
+      "wcag143",
+      "TTv5",
+      "TT13.c",
+      "EN-301-549",
+      "EN-9.1.4.3",
+      "ACT",
+      "RGAAv4",
+      "RGAA-3.2.1"
+    ],
+    "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds",
+    "help": "Elements must meet minimum color contrast ratio thresholds",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/color-contrast?application=playwright",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "color-contrast",
+            "data": {
+              "fgColor": "#5c646f",
+              "bgColor": "#0a0e11",
+              "contrastRatio": 3.23,
+              "fontSize": "11.3pt (15px)",
+              "fontWeight": "normal",
+              "messageKey": null,
+              "expectedContrastRatio": "4.5:1"
+            },
+            "relatedNodes": [
+              {
+                "html": "<body>",
+                "target": [
+                  "body"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "Element has insufficient color contrast of 3.23 (foreground color: #5c646f, background color: #0a0e11, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "serious",
+        "html": "<span>Divergence unavailable</span>",
+        "target": [
+          ".dg-two-lane__divergence > span"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.23 (foreground color: #5c646f, background color: #0a0e11, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+      }
+    ]
+  },
+  {
+    "id": "definition-list",
+    "impact": "serious",
+    "tags": [
+      "cat.structure",
+      "wcag2a",
+      "wcag131",
+      "EN-301-549",
+      "EN-9.1.3.1",
+      "RGAAv4",
+      "RGAA-9.3.3"
+    ],
+    "description": "Ensure <dl> elements are structured correctly",
+    "help": "<dl> elements must only directly contain properly-ordered <dt> and <dd> groups, <script>, <template> or <div> elements",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.12/definition-list?application=playwright",
+    "nodes": [
+      {
+        "any": [],
+        "all": [],
+        "none": [
+          {
+            "id": "only-dlitems",
+            "data": {
+              "values": "span"
+            },
+            "relatedNodes": [
+              {
+                "html": "<span>FantasyCalc</span>",
+                "target": [
+                  "dl > span:nth-child(1)"
+                ]
+              },
+              {
+                "html": "<span>1224</span>",
+                "target": [
+                  "dl > span:nth-child(2)"
+                ]
+              },
+              {
+                "html": "<span>Overall 185</span>",
+                "target": [
+                  "dl > span:nth-child(3)"
+                ]
+              },
+              {
+                "html": "<span>Position 71</span>",
+                "target": [
+                  "dl > span:nth-child(4)"
+                ]
+              },
+              {
+                "html": "<span>2026-07-22T13:00:00.967827+00:00</span>",
+                "target": [
+                  "dl > span:nth-child(5)"
+                ]
+              },
+              {
+                "html": "<span>market_overlay_static_caveat</span>",
+                "target": [
+                  "dl > span:nth-child(6)"
+                ]
+              },
+              {
+                "html": "<span>source_timestamp_is_fetch_time_not_publish_time</span>",
+                "target": [
+                  "dl > span:nth-child(7)"
+                ]
+              }
+            ],
+            "impact": "serious",
+            "message": "dl element has direct children that are not allowed: span"
+          }
+        ],
+        "impact": "serious",
+        "html": "<dl class=\"dg-two-lane__facts\"><span>FantasyCalc</span><span>1224</span><span>Overall 185</span><span>Position 71</span><span>2026-07-22T13:00:00.967827+00:00</span><span>market_overlay_static_caveat</span><span>source_timestamp_is_fetch_time_not_publish_time</span></dl>",
+        "target": [
+          "dl"
+        ],
+        "failureSummary": "Fix all of the following:\n  dl element has direct children that are not allowed: span"
+      }
+    ]
+  }
+]

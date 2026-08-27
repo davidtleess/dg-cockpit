@@ -1,0 +1,71 @@
+gui/501/com.davidleess.dynasty-league-opportunity-map = {
+	active count = 0
+	path = /Users/davidleess/Library/LaunchAgents/com.davidleess.dynasty-league-opportunity-map.plist
+	type = LaunchAgent
+	state = not running
+
+	program = /Users/davidleess/dynasty-genius-product/.venv/bin/python3.14
+	arguments = {
+		/Users/davidleess/dynasty-genius-product/.venv/bin/python3.14
+		/Users/davidleess/dynasty-genius-product/scripts/build_league_opportunity_map.py
+	}
+
+	working directory = /Users/davidleess/dynasty-genius-product
+
+	stdout path = /Users/davidleess/dynasty-genius-product/app/data/logs/league_opportunity_map.out.log
+	stderr path = /Users/davidleess/dynasty-genius-product/app/data/logs/league_opportunity_map.err.log
+	inherited environment = {
+		SSH_AUTH_SOCK => /var/run/com.apple.launchd.COSOyA8Dbr/Listeners
+	}
+
+	default environment = {
+		PATH => /usr/bin:/bin:/usr/sbin:/sbin
+	}
+
+	environment = {
+		OSLogRateLimit => 64
+		XPC_SERVICE_NAME => com.davidleess.dynasty-league-opportunity-map
+	}
+
+	domain = gui/501 [100002]
+	asid = 100002
+	minimum runtime = 10
+	exit timeout = 5
+	runs = 0
+	last exit code = (never exited)
+
+	event triggers = {
+		com.davidleess.dynasty-league-opportunity-map.268435476 => {
+			keepalive = 0
+			service = com.davidleess.dynasty-league-opportunity-map
+			stream = com.apple.launchd.calendarinterval
+			monitor = com.apple.UserEventAgent-Aqua
+			descriptor = {
+				"Minute" => 35
+				"Hour" => 9
+				"Weekday" => 2
+			}
+		}
+	}
+
+	event channels = {
+		"com.apple.launchd.calendarinterval" = {
+			port = 0x0
+			active = 0
+			managed = 1
+			reset = 0
+			hide = 0
+			watching = 1
+		}
+	}
+
+	spawn type = daemon (3)
+	jetsam priority = 40
+	jetsam memory limit (active) = (unlimited)
+	jetsam memory limit (inactive) = (unlimited)
+	jetsamproperties category = daemon
+	jetsam thread limit = 32
+	cpumon = default
+
+	properties = inferred program | needs LWCR update | managed LWCR
+}

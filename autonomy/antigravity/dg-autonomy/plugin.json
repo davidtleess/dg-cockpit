@@ -12,7 +12,6 @@
     "category": "Developer Tools",
     "capabilities": [
       "Skills",
-      "Hooks",
       "Subagents",
       "Workflow"
     ],

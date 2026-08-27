@@ -1,0 +1,73 @@
+gui/501/com.davidleess.dynasty-roster-capacity-audit = {
+	active count = 0
+	path = /Users/davidleess/Library/LaunchAgents/com.davidleess.dynasty-roster-capacity-audit.plist
+	type = LaunchAgent
+	state = not running
+
+	program = /Users/davidleess/dynasty-genius-product/.venv/bin/python3.14
+	arguments = {
+		/Users/davidleess/dynasty-genius-product/.venv/bin/python3.14
+		/Users/davidleess/dynasty-genius-product/scripts/run_roster_capacity_audit.py
+		--report-path
+		/Users/davidleess/dynasty-genius-product/app/data/roster_capacity/roster_capacity_latest.json
+	}
+
+	working directory = /Users/davidleess/dynasty-genius-product
+
+	stdout path = /Users/davidleess/dynasty-genius-product/app/data/logs/roster_capacity_audit.out.log
+	stderr path = /Users/davidleess/dynasty-genius-product/app/data/logs/roster_capacity_audit.err.log
+	inherited environment = {
+		SSH_AUTH_SOCK => /var/run/com.apple.launchd.COSOyA8Dbr/Listeners
+	}
+
+	default environment = {
+		PATH => /usr/bin:/bin:/usr/sbin:/sbin
+	}
+
+	environment = {
+		OSLogRateLimit => 64
+		XPC_SERVICE_NAME => com.davidleess.dynasty-roster-capacity-audit
+	}
+
+	domain = gui/501 [100002]
+	asid = 100002
+	minimum runtime = 10
+	exit timeout = 5
+	runs = 0
+	last exit code = (never exited)
+
+	event triggers = {
+		com.davidleess.dynasty-roster-capacity-audit.268435479 => {
+			keepalive = 0
+			service = com.davidleess.dynasty-roster-capacity-audit
+			stream = com.apple.launchd.calendarinterval
+			monitor = com.apple.UserEventAgent-Aqua
+			descriptor = {
+				"Minute" => 0
+				"Hour" => 10
+				"Weekday" => 2
+			}
+		}
+	}
+
+	event channels = {
+		"com.apple.launchd.calendarinterval" = {
+			port = 0x0
+			active = 0
+			managed = 1
+			reset = 0
+			hide = 0
+			watching = 1
+		}
+	}
+
+	spawn type = daemon (3)
+	jetsam priority = 40
+	jetsam memory limit (active) = (unlimited)
+	jetsam memory limit (inactive) = (unlimited)
+	jetsamproperties category = daemon
+	jetsam thread limit = 32
+	cpumon = default
+
+	properties = inferred program | needs LWCR update | managed LWCR
+}

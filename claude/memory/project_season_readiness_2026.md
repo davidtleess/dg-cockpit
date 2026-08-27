@@ -1,9 +1,13 @@
 ---
-name: Season readiness sprint 2026
-description: The 2026-09-10 kickoff deadline, the approved architecture plan, the build spec, and the corrections that bind future work
-metadata:
+name: season-readiness-sprint-2026
+description: "The 2026-09-10 kickoff deadline, the approved architecture plan, the build spec, and the corrections that bind future work"
+metadata: 
+  node_type: memory
   type: project
+  originSessionId: 18235550-1462-4db1-ae6b-104ee4ed28e0
+  modified: 2026-08-27T01:42:35.464Z
 ---
+
 **Hard deadline: NFL kickoff 2026-09-10 20:20 ET.** Build days Fri 2026-08-21 → Fri 2026-09-04
 (11 working days), then a **hard freeze 2026-09-04 EOD** buying six unmodified capture cycles.
 
@@ -34,8 +38,15 @@ Goals in priority order: **nothing is lost · nothing is wrong · something is u
 3. **The divergence impact figure is 131 of 336 / 10.72pp**, not the widely-quoted 10.67pp/127-of-338,
    which the repo's own ledger marks corroboration-only under acknowledged contamination.
 4. A transient macOS `library load mig callout failed` fault can make the whole suite appear dead.
-   It clears. **Retry before reporting a broken test loop.** Healthy state: ~6,258 pass / 17 fail
-   (all in-flight work) / 12 skip.
+   It clears. **Retry before reporting a broken test loop.**
+5. **Healthy state is ZERO failures and zero collection errors on a clean landed tree — never a
+   pinned pass count.** This line previously read *"~6,258 pass / 17 fail (all in-flight work) /
+   12 skip"*, which was measured on a DIRTY trunk carrying other lanes' edits. As a memory it was
+   actively dangerous: it told a fresh agent that seventeen failures are normal, which would mask
+   real breakage — the exact false-reassurance failure DG-023/033/034/036 exist to prevent.
+   Measured on the clean landed tree 2026-08-25 after DG-042: **6,084 passed / 0 failed / 38
+   skipped in ~51s.** The count itself moves every time tests are added (6,067 → 6,084 in one
+   morning), so verify the invariant, not the number. See [[project_dg3_build_system]].
 
 ## Machine state changed 2026-08-20
 - `pmset repeat wakeorpoweron` **6:00 AM daily** (was: sleeps after 1 min on AC, no wake — the likely
@@ -75,10 +86,144 @@ SR-07's verification command **as the spec wrote it** overwrote the live transac
 `success_marker` — `--db-path` redirected the store but not `raw_root` (marker + raw snapshots).
 Repaired; runner fixed; the spec's verification block now carries a ⚠️ note.
 
-### NEXT: SR-11 (D4) — start it FRESH
-Largest remaining ticket, **Tier 2 (touches launchd)**, and the only detection channel that will
-exist. Still open: the `contracts` upstream schema break (fails 06:15 daily, holds the export
-marker at 08-08; no downstream consumer — filed, deliberately unfixed).
+### ✅ SR-11 SHIPPED 2026-08-26 (D4, on schedule) as DG-044 — merge `b1b888be` on `main`
+Built TDD in `~/dg-wt/DG-044` (worktree since removed by the land), hardened by a 23-agent
+adversarial review (17 confirmed findings fixed — headline: crash guard, per-bootstrap reboot
+semantics, day-2 gap-enumeration delivery), landed with SR-10a step 1 beside it (cadence config v2
+registers `market_divergence_history`; optional `SeasonWindows.comment` field added). Suite
+6,177/0. Production dry-run named exactly the `model_forward_capture` 2026-08-12 hole. **DG-035
+option (b) closed by this land** (option (a) LaunchDaemons stays open, David's call). Alert file
+`~/DG-CAPTURE-ALERTS.txt`; state `app/data/ops/capture_gap_alert_state.json`; pin file
+`app/config/capture_gap_accepted_exits.json` ships EMPTY (contracts healthy since DG-040 — a new
+contracts failure is a regression, not an accepted exit). Full record: dg-build BOARD.md 06:57
+note + tickets/DG-044 (both pushed, `c5c2a0c`).
+
+**✅ SR-11 FULLY ACCEPTED 2026-08-26 — install done, live fire seen, banner question ANSWERED YES.**
+The 08-26 sequence executed: DG-023's single-variable confirmation cycle ran green on the pinned
+trunk (fc 09:00, features 09:15, league 09:20, model/pvo 09:30:08, market 09:40:04, what-changed
+09:45 — note the model store's producer is the 09:30 pvo-refresh, not a 09:45 job). Trunk pulled
+`--ff-only` `a61f0fbe → b1b888be` ~10:16 (zero overlap, 25 dirty files untouched). Capture-health
+verified IN-PROCESS via TestClient (no server was on :8000 — nothing to restart; next API start
+serves DG-022's surface): config_version 2 live, `('market_divergence_history', 4)` confirmed
+(4 missing dates 07-10/07-12/07-17/08-12) — SR-10a step 1 accepted. David missed the 10:30
+bootstrap window (bootstrapped ~11:59); recovery: bootstrap + `launchctl kickstart` at 12:00 —
+a REAL launchd-path run (runs=1, exit 0). Alert file + state written exactly as designed, stderr
+empty, no delivery-failure line, and **David: "yes i saw the banner"** — visible-notification
+acceptance met; the 08-25/08-26 probe question is closed. Known holes persisted to state, so
+**tomorrow's scheduled 10:30 run must be SILENT + heartbeat — that's the remaining (passive)
+proof that StartCalendarInterval scheduling works; check heartbeat + logs on 08-27.**
+
+## ⏳ OPEN AT CLOSE (2026-08-26 evening) — THURSDAY 08-27 (D5) RUNBOOK, in order
+**Everything durable is pushed: trunk = origin/main = `08fee647` (after close-out, David re-opened
+~18:55 and pulled BOTH remaining frontend sprint tickets forward, landed same evening — SR-15 as
+DG-080 merge `ab32a605`, SR-16 as DG-081 merge `c606fc53`, plus spec done-marks `e6a5d758` +
+`08fee647` which also added the overlooked SR-20/DG-047 mark. All frontend-only — cannot touch
+any morning check. Calendar now: D9 = SR-13 only, D10 fully freed to buffer; sprint tail after
+SR-09 closes = SR-12+SR-10a (D7), SR-14+SR-19 (D8), SR-13 (D9). The Morning Room hero now counts
+HIS roster's movers — tomorrow it would read 27, largest Chimere Dike — and Trade Lab search can
+no longer show a stale query's players. dg-build `53eff54`; `ticket/DG-045` at `6038d2d6` (steps
+1-7 built + reviewed, deliberately NOT landed — rebases over the four new commits at land,
+disjoint files, trivial).**
+**PRE-FLIGHT VERIFIED ~19:40 Wed, all read-only — do not redo, just execute:** all 13 agents
+loaded exit 0 incl. the gap alert; 6:00 wake set; machine on AC (David told to leave it plugged
+in); ff-playerids correctly NOT installed; alert `--dry-run` prints EXACTLY the two expected
+lines (nflverse incident marker — self-clears at 06:15 — and ff-playerids not_loaded), and the
+new DG-039 `roster_capacity_status` freshness entry stays QUIET on its missing marker until the
+Tue 09-01 audit writes it (two-line false-alarm risk checked and cleared); `git merge-tree`
+proves ticket/DG-045 merges conflict-free onto tonight's main.
+1. **Morning, passive:** 06:15 nflverse run overwrites the incident marker with fresh ok
+   (today's marker deliberately reads `attested status failed` — the closed DG-048 incident);
+   06:45 ff-playerids does NOT fire (plist not installed yet — expected); 09:00 cycle runs the
+   OLD scheduling one last time; DG-041 acceptance: participation timeout GONE from
+   feature_refresh log, one source_hash move, then fallback_used=false; 09:40 serves the second
+   rebased divergence.
+2. **10:30 alert check, AMENDED EXPECTATION:** exactly ONE line — the ff-playerids
+   not_loaded line — plus heartbeat. That exact output = healthy (proves StartCalendarInterval
+   scheduling, completing SR-11's acceptance pair). Any OTHER line = investigate before landing.
+3. **Both checks green → land DG-045** (dg-land; the land is COUPLED to the sitting — three
+   retired plists are live symlinks, never land-then-wait).
+4. **David's ONE launchctl sitting** (hand him one-liners in order): bootout four retiring
+   agents + REMOVE their ~/Library/LaunchAgents entries (league-capture was a symlink; fc,
+   feature-refresh, what-changed were copies); bootout+bootstrap market + model-pvo (pick up
+   edited retry-only 11:30/14:00 schedules); symlink+bootstrap the chain plist; symlink+bootstrap
+   ff-playerids. Verify: `launchctl list | grep -c dynasty` and `pmset -g sched` wake intact.
+5. Trunk pull post-land. Friday 09:00 = chain's first live morning (fail-soft, report at
+   app/data/ops/daily_chain_latest_report.json); Friday 06:45 = crosswalk's first fire.
+   SR-19's D8 rehearsal command (with the new --step-extra) is in the DG-045 ticket.
+Also open: SR-08 remainder small Tier 0 edit (unscheduled); DG-032/DG-017 hygiene; ~~dg-work
+share map lacks league_transactions~~ (FIXED 21:30, `bfed555`); D10 now holds only SR-16 (SR-20 shipped).
+
+**⭐ ~21:45 SECOND EVENING SESSION CLOSE — the runbook steps 2-5 above are SUPERSEDED by the
+D5 SITTING PACK: the final section of the DG-045 ticket (dg-build `c4137b0`), fact-verified
+against the live system and adversarially reviewed (3 refuter lenses, 108 checks, 7 confirmed
+defects fixed). EXECUTE THE PACK, NOT THIS LIST. Amendments a fresh session must not "correct"
+back: (1) /api/health reads `inputs_degraded` on a HEALTHY 08-27 — participation moves to LIVE;
+pbp/player_stats/snap_counts keep `fallback_used: true` (upstream 2026 parquet absent) and that
+is NOT a stop; (2) post-sitting verify count is 11, not 10, and calendarinterval checks need the
+quoted `stream = com.apple.launchd.calendarinterval` grep (expect 1,1,2,2 — bare grep reads N+1);
+(3) rm all FOUR retiring LaunchAgents entries — three are REAL COPIES (only league-capture is a
+symlink), bootout alone leaves them to reload on reboot; (4) after ANY logout/reboot mid-sitting,
+re-run the six bootouts before continuing. Also done: Option 2 housekeeping (`bfed555` share map;
+`17cccd3` mis-truncated DG-049/053 stray ticket files merged into canonicals + removed, BOARD
+supersession bracket, ROADMAP ratification header). Verified at close: ALL ~/dg-wt branches
+pushed (the 08-23 unbacked-worktree warning is clear); trunk untouched at `08fee647` with its 25
+dirty files; dg-build clean, level with GitHub at `c4137b0`; nothing installed, no launchctl run.**
+
+### D4 LATE ADDITIONS: DG-048 (Daily Control RETIRED on David's ruling — runner refuses every
+### mode, module lives on) and DG-039 (always-written roster-capacity status marker) BOTH LANDED.
+### ⚠ INCIDENT during DG-048 (full record in its ticket): a bare RED-probe executed a LIVE
+### daily-control run that reached production through worktree symlinks; killed ~90s in. DB
+### integrity ok, no data loss. Export ready-marker was poisoned with dead worktree paths —
+### REPAIRED (restored from the 06:15 run's own manifest; dg-land's gate caught it). The nflverse
+### STATUS marker still reads `running/null` — self-heals at 06:15 tomorrow; a truthful
+### incident-marker write was drafted but classifier-blocked (David's call, or let it heal).
+### Seven tickets landed 08-26 total. Lessons in the DG-048 ticket + test docstring.
+
+### D4 (08-26) FINAL TALLY — the biggest single day of the sprint. LANDED ON MAIN: DG-044/SR-11
+### (accepted end-to-end, banner seen), DG-046 (rebased divergence, production-accepted 14:00),
+### DG-053 (crosswalk snapshotter, pre-freeze), DG-047 (=SR-20 substance, D10 slot FREED),
+### DG-049 (=SR-10b substance — EVERY capture store now has a detection channel before the chain
+### soaks). Layer roadmap ratified, DG-049..079 filed. Trunk current at `a078f60a`.
+### ⚠ THURSDAY 10:30 CHECK AMENDED: expect exactly ONE line (ff-playerids plist not_loaded —
+### healthy, cleared by the bootstrap) + heartbeat; any OTHER line = investigate before landing.
+### Thursday sitting installs: chain + ff-playerids bootstraps, six bootouts (see DG-045 ticket).
+### Housekeeping noted: dg-work.sh share map lacks league_transactions/ (false marker-absent in
+### worktree dry-runs). Next fillable items need David: DG-048 ruling (retire-vs-schedule Daily
+### Control), DG-039 (slack candidate), or pulling post-freeze roadmap items forward.
+
+### SR-09 = DG-045 — STEPS 1-7 BUILT **AND ADVERSARIALLY REVIEWED** on D4 (08-26). Branch
+### `ticket/DG-045`: `bf5ba8a1` (steps 1-5) → `ab522db7` (6-7 prep) → `6038d2d6` (review fixes),
+### PUSHED, 44 tests green. **NOT LANDED — THE LAND IS COUPLED TO DAVID'S LAUNCHCTL SITTING:**
+three retired plists are LIVE SYMLINKS; landing + reboot before the swap silently kills
+league/market/pvo producers. Thursday = the two morning checks (10:30 scheduled fire
+silent+heartbeat; DG-041 acceptance clean) → land via dg-land → ONE sitting: bootout six
+(fc-snapshot, feature-refresh, league-capture, what-changed, and REMOVE their LaunchAgents
+copies/symlinks; market+model-pvo need bootout+bootstrap to pick up their edited retry-only
+schedules) + bootstrap chain + bootstrap ff-playerids (DG-053's plist, already on main).
+29-agent review: 2 majors fixed — (A) --steps-from now REFUSES without a scratch report
+destination (the spec's own proof commands would overwrite the live alert-read report — amend
+spec when SR-09 closes); (B) new `--step-extra STEP=ARG` so SR-19's D8 rehearsal can force
+--season-end 2026 (command recorded in the ticket). Step 8/SR-19 closes SR-09 on D8, not before.
+Full record: DG-045 ticket file.
+Same-day rulings: (h) amendment RATIFIED; DG-035 option (a) DEFERRED post-season; Tuesday-1
+baseline preserved in dg-build (`preserved/2026-08-26-tuesday1-baseline/`); trunk's 22 untracked
+files copied to dg-build `preserved/2026-08-26-trunk-untracked-copy/` (commit ruling = David's);
+`agent/modeling-backend` pushed; Air lanes cleared; DG-015/031/035 worktrees removed.
+
+### ~~NEXT BUILD TICKET: SR-09 (D5-D6, Thu 08-27 / Fri 08-28)~~ — HARD land-by Fri 08-28 EOD
+So the three Tuesday-only jobs get exercised 09-01 while fixable. b-EXCEPTION binds: FOUR plists
+retire (not six), into `ops/launchd/retired/` (the alert's non-recursive glob already excludes it).
+SR-09-lane notes from DG-044 are in the ticket file: build the chain report against
+`TestChainReportLines`' shape (`steps[].name/exit_code/status`); consider excluding the chain
+runner's own label from the alert's class (b) when the report is readable. Also unscheduled: SR-08's
+re-scoped adjudication remainder; 08-27 DG-041 production acceptance (one source_hash move expected,
+then participation `fallback_used=false` — **/api/health stays `inputs_degraded` on a healthy
+08-27**, participation just moves to LIVE in the basis; the old `inputs_live` expectation was
+verified UNREACHABLE 08-26 ~21:30 — see the D5 SITTING PACK in the DG-045 ticket). ~~Still open: the `contracts` upstream schema break (fails 06:15 daily, holds the export
+marker at 08-08; no downstream consumer — filed, deliberately unfixed).~~ **RESOLVED via DG-040:
+verified 2026-08-25 the nflverse marker reads status=ok / failed_stream=None (06:16 run). This
+also voids SR-11 step 9's premise that nflverse/contracts fails daily — re-measure before writing
+the pin file; it may ship empty.**
 
 ## Day 1 executed 2026-08-20 evening (a day early) — closeout `e622091`
 SR-00 `a977db4` · SR-02 `26788b9` (plists tracked + XML fixed) · SR-04 `00d14fc` (gate green,

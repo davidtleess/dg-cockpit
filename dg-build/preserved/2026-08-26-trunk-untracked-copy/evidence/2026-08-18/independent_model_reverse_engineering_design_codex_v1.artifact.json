@@ -1,0 +1,213 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "CODEX independent recommendation: DG model science and decision advantage",
+    "description": "Prepared by CODEX — Independent Third-Party Consultant. Reverse engineering of active rookie and veteran models, diagnostic technique screen, and gate-ready scientific program.",
+    "generatedAt": "2026-08-18T23:20:00-04:00",
+    "sources": [
+      {
+        "id": "independent_audit",
+        "label": "CODEX — Independent Third-Party Consultant: model artifact and data audit",
+        "path": "docs/agent-ledger/evidence/2026-08-18/independent_model_audit_codex_v1.results.json",
+        "query": {
+          "description": "Read-only reproduction of active artifacts, one-standard-deviation coefficient effects, data-quality profiling, and expanding-time diagnostic technique screen.",
+          "engine": "pandas and scikit-learn over pinned repository artifacts",
+          "language": "python",
+          "executed_at": "2026-08-18T23:20:00-04:00",
+          "sql": "SELECT position, technique, RMSE(y, prediction) FROM expanding_time_predictions WHERE test_feature_season IN (2021, 2022, 2023) GROUP BY position, technique",
+          "tables_used": [
+            "app/data/training/engine_b_features_v2.csv",
+            "app/config/model_registry.json",
+            "app/data/models/latest.json",
+            "active Engine A and Engine B pickle artifacts",
+            "active validation reports"
+          ],
+          "filters": [
+            "training_eligible=true",
+            "QB/RB/WR/TE",
+            "outer train feature_season strictly less than outer test feature_season",
+            "outer test feature seasons 2021-2023"
+          ],
+          "metric_definitions": [
+            "RMSE improvement is 100 × (naive RMSE − candidate RMSE) / naive RMSE.",
+            "One-SD effect is active raw coefficient × training-feature standard deviation.",
+            "Uncertainty intervals are player-cluster bootstrap 5th and 95th percentiles over pooled outer predictions."
+          ]
+        }
+      },
+      {
+        "id": "design_spec",
+        "label": "CODEX independent reverse-engineering and decision-science design",
+        "path": "docs/agent-ledger/evidence/2026-08-18/independent_model_reverse_engineering_design_codex_v1.md",
+        "query": {
+          "description": "Consultant-authored phase sequence derived from the reproduced audit and DG governance constraints.",
+          "engine": "reviewed design synthesis",
+          "language": "sql",
+          "executed_at": "2026-08-18T23:20:00-04:00",
+          "sql": "SELECT * FROM (VALUES ('0 — trust repair'), ('1 — foundation'), ('2 — controlled science'), ('3 — decision validation'), ('4 — shadow/promotion')) AS program(phase)",
+          "tables_used": [
+            "docs/agent-ledger/evidence/2026-08-18/independent_model_audit_codex_v1.results.json",
+            "docs/governance/00-product-constitution.md",
+            "docs/governance/05-layer-doctrine.md"
+          ]
+        }
+      }
+    ],
+    "charts": [
+      {
+        "id": "scaled_ridge_lift",
+        "title": "A standardized linear control beats prior-season PPG in every diagnostic position lane",
+        "subtitle": "Pooled 2021–2023 expanding-time screen; directional only because hyperparameters were fixed.",
+        "type": "bar",
+        "dataset": "scaled_ridge_lift",
+        "sourceId": "independent_audit",
+        "encodings": {
+          "x": {"field": "position", "type": "nominal", "label": "Position"},
+          "y": {"field": "rmse_improvement_pct", "type": "quantitative", "label": "RMSE improvement vs naive (%)", "format": "percent"}
+        },
+        "yAxisTitle": "RMSE improvement versus prior-season PPG (%)",
+        "valueFormat": "percent",
+        "layout": "full"
+      }
+    ],
+    "tables": [
+      {
+        "id": "critical_findings",
+        "title": "Independent findings ranked by decision risk",
+        "subtitle": "These issues determine what DG can safely conclude from current model scores and weights.",
+        "dataset": "critical_findings",
+        "sourceId": "independent_audit",
+        "density": "dense",
+        "layout": "full",
+        "columns": [
+          {"field": "rank", "label": "Rank", "type": "number"},
+          {"field": "severity", "label": "Severity", "type": "text"},
+          {"field": "finding", "label": "Finding", "type": "text"},
+          {"field": "implication", "label": "Implication", "type": "text"}
+        ]
+      },
+      {
+        "id": "active_evidence",
+        "title": "Active Engine B evidence is not comparable across all positions",
+        "subtitle": "QB/RB/WR reproduce a fixed temporal holdout; TE reproduces its all-row in-sample report.",
+        "dataset": "active_evidence",
+        "sourceId": "independent_audit",
+        "density": "comfortable",
+        "layout": "full",
+        "columns": [
+          {"field": "position", "label": "Position", "type": "text"},
+          {"field": "rows", "label": "Rows", "type": "number"},
+          {"field": "model_rmse", "label": "Model RMSE", "type": "number"},
+          {"field": "naive_rmse", "label": "Naive RMSE", "type": "number"},
+          {"field": "regime", "label": "Evidence regime", "type": "text"}
+        ]
+      },
+      {
+        "id": "program_phases",
+        "title": "Recommended program sequence",
+        "subtitle": "Each phase reduces a distinct failure mode before production promotion.",
+        "dataset": "program_phases",
+        "sourceId": "design_spec",
+        "density": "comfortable",
+        "layout": "full",
+        "columns": [
+          {"field": "phase", "label": "Phase", "type": "text"},
+          {"field": "objective", "label": "Objective", "type": "text"},
+          {"field": "exit_gate", "label": "Exit gate", "type": "text"}
+        ]
+      }
+    ],
+    "blocks": [
+      {"id": "title", "type": "markdown", "body": "# CODEX independent recommendation: DG model science and decision advantage\n\n**Prepared by CODEX — Independent Third-Party Consultant**  \n**Recommendation owner: CODEX**"},
+      {
+        "id": "technical_summary",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## Technical summary\n\nDG has genuine forecast signal, but it does not yet have one scientifically comparable model-selection system. The active rookie and veteran heads answer different questions, the active Engine B Ridge penalty depends on feature units, and TE's production evidence is in-sample while QB/RB/WR use a temporal holdout.\n\n**CODEX recommendation:** freeze the current registry, repair target and validation contracts, make standardized linear models the mandatory controls, separate availability from conditional production across H1/H2/H3, and promote only when a model improves calibrated dynasty decisions—not merely one prediction metric. `decision_supported=False` until preregistered gates and human review pass."
+      },
+      {"id": "findings_intro", "type": "markdown", "body": "## Key findings with visual evidence\n\nThe active artifact scores were reproduced from their stored bundles and current pinned dataset. The separate technique screen trains only on seasons earlier than each outer test season."},
+      {"id": "findings", "type": "table", "tableId": "critical_findings", "layout": "full"},
+      {"id": "lift", "type": "chart", "chartId": "scaled_ridge_lift", "layout": "full"},
+      {
+        "id": "lift_interpretation",
+        "type": "markdown",
+        "sourceId": "independent_audit",
+        "body": "The diagnostic screen gives scaled Ridge pooled RMSE improvements of 19.4% QB, 13.0% RB, 17.5% WR, and 7.0% TE over prior-season PPG. Player-cluster 90% intervals remain above zero in all four lanes. This establishes standardized regularized regression as the control to beat; it does not promote it because the screen used fixed hyperparameters and the current two-year-average target."
+      },
+      {"id": "active", "type": "table", "tableId": "active_evidence", "layout": "full"},
+      {
+        "id": "scope",
+        "type": "markdown",
+        "sourceId": "independent_audit",
+        "body": "## Scope, data, and metric definitions\n\nThe Engine B table contains 2,741 rows, 2,236 eligible rows, 959 players, and zero duplicate player-season keys. Eligible rows are QB 264, RB 573, WR 907, and TE 492. The current target averages T+1 and T+2 PPG while retaining partial horizons. The audit used active repository artifacts only; it did not read same-day teammate drafts. Market values are excluded from predictive inputs and reserved for downstream comparison."
+      },
+      {
+        "id": "methodology",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## Methodology and target model specification\n\nReplace the average target with explicit H1/H2/H3 availability, games, conditional PPG, and role labels. Recombine them into unconditional point distributions. Evaluate position-specific standardized Ridge, Elastic Net, continuous-age GAM, shallow boosting, and two-part availability/production models with nested expanding-time folds. Fit every imputer, scaler, transformation, tuner, and calibrator inside the fold. Export every outer prediction, player-cluster interval, calibration result, worst-season cell, feature coverage measure, and artifact hash.\n\nRaw active Engine B coefficients are not feature importance because the production training script did not standardize inputs before RidgeCV. One-standard-deviation effects show current PPG is the dominant conditional effect; they remain associative, not causal."
+      },
+      {
+        "id": "decision_layer",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## How the data creates an advantage\n\nA forecast becomes valuable only after it passes through league settings, replacement, scarcity, roster window, uncertainty, and feasible alternatives. Freeze the football-only forecast first; then compare it with market prices as an overlay. Optimize and report decision regret, action precision and coverage, utility after transaction costs, and confidence calibration. Abstain when the expected edge does not clear uncertainty and liquidity thresholds."
+      },
+      {"id": "phases", "type": "table", "tableId": "program_phases", "layout": "full"},
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## Limitations, uncertainty, and robustness\n\nThe technique screen is diagnostic, not promotion evidence. Active reports lack fully comparable out-of-fold predictions; TE is in-sample; Engine A holdouts are small and lack interval coverage; injury, role, team, and NGS history are incomplete; postseason semantics remain unresolved; and low-game runtime routing can misstate a rookie prior for veterans. The accepted QB-1 finding is restricted to its pinned veteran regular-season PPG ceiling and does not establish dynasty value."
+      },
+      {
+        "id": "next_steps",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## CODEX recommendations — next steps\n\n1. Resolve regular-season versus all-game semantics and repair low-game inference states.\n2. Freeze reproducible active predictions and provenance; add comparable out-of-time TE evidence.\n3. Build H1/H2/H3 labels and nested expanding-time evaluation.\n4. Run controlled feature-block ablations and the narrow technique bakeoff.\n5. Backtest one concrete dynasty decision with abstention and market overlay.\n6. Shadow one position × horizon lane; require Judge review and David approval before registry promotion."
+      },
+      {
+        "id": "questions",
+        "type": "markdown",
+        "sourceId": "design_spec",
+        "body": "## Further questions\n\n- Is the canonical football label regular-season only?\n- What exact participation denominator defines valid PPG by position?\n- Which decision lane should be optimized first?\n- What minimum economic advantage and calibration quality justify an action?\n- Which injury, contract, coaching, and depth-chart sources can be made historically point-in-time correct?\n- What abstention rate is acceptable for higher decision precision?"
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-18T23:20:00-04:00",
+    "status": "ready",
+    "datasets": {
+      "scaled_ridge_lift": [
+        {"position": "QB", "rmse_improvement_pct": 19.43},
+        {"position": "RB", "rmse_improvement_pct": 12.96},
+        {"position": "WR", "rmse_improvement_pct": 17.49},
+        {"position": "TE", "rmse_improvement_pct": 6.98}
+      ],
+      "critical_findings": [
+        {"rank": 1, "severity": "Critical", "finding": "Active model evidence is not fully comparable.", "implication": "TE is scored in sample; QB/RB/WR use a temporal holdout. No cross-position winner or universal promotion claim is licensed."},
+        {"rank": 2, "severity": "High", "finding": "Raw Engine B weights are unit-dependent.", "implication": "Inputs were not standardized before RidgeCV. Use one-SD effects, fold stability, and held-out ablations instead of coefficient magnitude."},
+        {"rank": 3, "severity": "High", "finding": "The target conflates horizons and availability.", "implication": "A partial two-year average mixes active probability, games, role, and conditional scoring, limiting decision usefulness."},
+        {"rank": 4, "severity": "High", "finding": "Current validation and promotion logic is too weak.", "implication": "Random 5-fold tuning is not time-nested, and counting RMSE plus R² can double-count squared-error evidence."},
+        {"rank": 5, "severity": "High", "finding": "Runtime routing can erase model value.", "implication": "Low-game veterans can be described as using a rookie Engine A prior, and 1–3 game players can disappear before inference."},
+        {"rank": 6, "severity": "Medium", "finding": "Complex models have not earned complexity.", "implication": "Scaled Ridge and Elastic Net are consistently strong diagnostic challengers; tree gains are position-dependent."}
+      ],
+      "active_evidence": [
+        {"position": "QB", "rows": 95, "model_rmse": 4.507, "naive_rmse": 5.461, "regime": "2022–2023 temporal holdout"},
+        {"position": "RB", "rows": 186, "model_rmse": 3.583, "naive_rmse": 4.033, "regime": "2022–2023 temporal holdout"},
+        {"position": "WR", "rows": 300, "model_rmse": 2.886, "naive_rmse": 3.470, "regime": "2022–2023 temporal holdout"},
+        {"position": "TE", "rows": 492, "model_rmse": 2.365, "naive_rmse": 2.689, "regime": "all eligible rows; in sample"}
+      ],
+      "program_phases": [
+        {"phase": "0 — trust repair", "objective": "Resolve season semantics, provenance, TE comparability, and low-game routing.", "exit_gate": "Frozen reproducible baselines; no false engine state; human target definitions."},
+        {"phase": "1 — foundation", "objective": "Build H1/H2/H3 labels and nested expanding-time evaluation.", "exit_gate": "Leakage tests, fold-local preprocessing, clustered intervals, calibration."},
+        {"phase": "2 — controlled science", "objective": "Ablate feature blocks and compare narrow model families.", "exit_gate": "All integrity, skill, robustness, and calibration gates pass."},
+        {"phase": "3 — decision validation", "objective": "Backtest a real dynasty action with uncertainty and costs.", "exit_gate": "Positive outer-fold utility and regret improvement at governed coverage."},
+        {"phase": "4 — shadow/promotion", "objective": "Prove monitoring, fallback, and rollback without user impact.", "exit_gate": "Judge review and explicit David approval for one lane."}
+      ]
+    }
+  }
+}

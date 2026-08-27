@@ -1,0 +1,14 @@
+import { chromium } from "../../frontend/node_modules/playwright/index.mjs";
+const browser = await chromium.launch({ channel: "chrome", headless: true });
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+await page.goto("http://127.0.0.1:8122/", { waitUntil: "domcontentloaded" });
+await page.addStyleTag({ content: ".dg-frozen-prediction { display: none !important; }" });
+await page.getByRole("button", { name: "Trade Lab" }).click();
+await page.getByRole("searchbox", { name: "Search tradeable assets" }).fill("Tank Dell");
+await page.getByRole("button", { name: "Tank Dell", exact: true }).click();
+const inspector = page.getByRole("complementary", { name: "Player inspector" });
+await inspector.getByRole("button", { name: "Open full evidence card" }).click();
+await page.getByRole("article", { name: "Player detail for Tank Dell" }).waitFor();
+const m = await page.evaluate(() => ({ body: document.body.scrollWidth, viewport: window.innerWidth }));
+console.log("with .dg-frozen-prediction hidden:", JSON.stringify(m));
+await browser.close();
