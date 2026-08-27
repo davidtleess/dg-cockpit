@@ -280,13 +280,7 @@ test("Antigravity adapter assembles the pinned ASW surface", async () => {
   }
 
   const hookManifest = JSON.parse(await readFile(new URL("hooks.json", pluginRoot), "utf8"))["dg-autonomy"];
-  const toolHook = manifest.hooks && hookManifest.PreToolUse;
-  assert.equal(toolHook[0].matcher, ".*");
-  for (const phase of ["PreInvocation", "PostToolUse", "Stop", "PreToolUse"]) {
-    const serialized = JSON.stringify(hookManifest[phase]);
-    assert.match(serialized, /\$\{HOME\}\/\.gemini\/config\/plugins\/dg-autonomy\/scripts\//);
-    assert.doesNotMatch(serialized, /\$\{PLUGIN_ROOT\}/);
-  }
+  assert.deepEqual(hookManifest, {});
 
   const policyPath = fileURLToPath(new URL("scripts/dg-antigravity-tool-policy.mjs", pluginRoot));
   const baseEvent = {
