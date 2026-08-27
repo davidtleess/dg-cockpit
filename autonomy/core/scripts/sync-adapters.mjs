@@ -247,15 +247,6 @@ const antigravityHooks = useInstalledAntigravityScripts({
         statusMessage: "ASW: checking continuation (Dynasty-bounded)",
       },
     ],
-    PreInvocation: [
-      {
-        type: "command",
-        command: 'node "${PLUGIN_ROOT}/scripts/dg-antigravity-policy.mjs"',
-        timeout: 10,
-        statusMessage: "Dynasty: applying autonomy boundary",
-      },
-      ...upstreamHooks.PreInvocation,
-    ],
     PreToolUse: [
       {
         matcher: ".*",

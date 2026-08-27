@@ -3,12 +3,6 @@
     "PreInvocation": [
       {
         "type": "command",
-        "command": "node \"${HOME}/.gemini/config/plugins/dg-autonomy/scripts/dg-antigravity-policy.mjs\"",
-        "timeout": 10,
-        "statusMessage": "Dynasty: applying autonomy boundary"
-      },
-      {
-        "type": "command",
         "command": "node \"${HOME}/.gemini/config/plugins/dg-autonomy/scripts/asw-hook.mjs\"",
         "timeout": 10,
         "statusMessage": "ASW: checking aliases and workflow hooks"
