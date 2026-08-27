@@ -84,7 +84,13 @@ cp "$HOME"/Library/LaunchAgents/com.davidleess.dg-*.plist      launchagents/ 2>/
 
 # Autonomy source is repository-owned; verify it before backup. Runtime ownership,
 # generated host caches, and run state are deliberately not copied into this repo.
-"$REPO/autonomy/verify.sh" --source-only
+# 2026-08-27: verify no longer BLOCKS preservation. Under set -e it aborted before
+# git add and the tree sat uncommitted 08-24→08-27 (exit 127, node off launchd's
+# PATH) — a red verification must not cost the cockpit its only backup copy. The
+# snapshot commits and pushes first; a verify failure still fails this run LOUDLY
+# at the end, so launchd and the logs say so.
+VERIFY_STATUS=0
+"$REPO/autonomy/verify.sh" --source-only || VERIFY_STATUS=$?
 
 # Commit and push only if something changed
 git add -A
@@ -108,4 +114,9 @@ if ! git diff --cached --quiet; then
   echo "backed up and pushed — verified present on origin/main"
 else
   echo "no changes"
+fi
+
+if [ "$VERIFY_STATUS" -ne 0 ]; then
+  echo "AUTONOMY VERIFY FAILED (exit $VERIFY_STATUS): the snapshot above is preserved, but autonomy source verification is red — fix the autonomy tree." >&2
+  exit "$VERIFY_STATUS"
 fi
