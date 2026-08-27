@@ -13,8 +13,9 @@ import {
 import { readRunSnapshotSync } from "../lib/run-state.mjs";
 
 function decision(value, reason) {
+  // Antigravity reads policy denials from JSON; any nonzero status means the
+  // hook process itself crashed and hides the decision reason from the agent.
   process.stdout.write(`${JSON.stringify({ decision: value, ...(reason ? { reason } : {}) })}\n`);
-  if (value === "deny") process.exitCode = 2;
 }
 
 async function readInput() {
@@ -64,6 +65,18 @@ function fileTargets(args) {
     }
   }
   return targets;
+}
+
+const COMMAND_KEYS = new Set(["command", "commandline", "command_line", "cmd"]);
+
+function commandString(args) {
+  if (!args || typeof args !== "object") return null;
+  for (const [key, candidate] of Object.entries(args)) {
+    if (typeof candidate === "string" && COMMAND_KEYS.has(key.toLowerCase())) {
+      return candidate;
+    }
+  }
+  return null;
 }
 
 const studioRoot = resolve(homedir(), "frontend-studio");
@@ -129,7 +142,7 @@ async function main() {
   const terminalRun = runSnapshot.status === "ok" && runSnapshot.run?.terminalState;
   if (terminalRun) {
     const readOnly =
-      (/^(?:run_command|run_shell_command|Bash)$/i.test(name) && isReadOnlyCommand(args.command ?? "")) ||
+      (/^(?:run_command|run_shell_command|Bash)$/i.test(name) && isReadOnlyCommand(commandString(args) ?? "")) ||
       /^(?:read_file|view_file|list_directory|list_dir|grep_search|search_files|glob|get_errors|get_diagnostics)$/i.test(name);
     if (!readOnly) {
       decision(
@@ -141,7 +154,7 @@ async function main() {
   }
 
   if (/^(?:run_command|run_shell_command|Bash)$/i.test(name)) {
-    const command = args.command;
+    const command = commandString(args);
     if (typeof command !== "string") {
       decision("deny", "Dynasty autonomy command input is malformed");
       return;

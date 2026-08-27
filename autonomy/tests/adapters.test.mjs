@@ -293,48 +293,49 @@ test("Antigravity adapter assembles the pinned ASW surface", async () => {
     workspacePaths: [fileURLToPath(autonomyRoot)],
     cwd: fileURLToPath(autonomyRoot),
   };
-  for (const [toolCall, expectedStatus] of [
-    [{ name: "run_command", args: { command: "npm test" } }, 0],
-    [{ name: "run_command", args: { command: "bash -lc 'git push origin main'" } }, 2],
-    [{ name: "write_file", args: { file_path: "/tmp/outside", content: "x" } }, 2],
-    [{ name: "mcp_remote_send", args: { message: "ship" } }, 2],
+  for (const [toolCall, expectedDecision] of [
+    [{ name: "run_command", args: { command: "npm test" } }, "allow"],
+    [{ name: "run_command", args: { CommandLine: "npm test" } }, "allow"],
+    [{ name: "run_command", args: { command: "bash -lc 'git push origin main'" } }, "deny"],
+    [{ name: "write_file", args: { file_path: "/tmp/outside", content: "x" } }, "deny"],
+    [{ name: "mcp_remote_send", args: { message: "ship" } }, "deny"],
   ]) {
     const result = spawnSync(process.execPath, [policyPath], {
       input: JSON.stringify({ ...baseEvent, toolCall }),
       encoding: "utf8",
     });
-    assert.equal(result.status, expectedStatus, `${toolCall.name}: ${result.stderr}`);
-    assert.equal(JSON.parse(result.stdout).decision, expectedStatus === 0 ? "allow" : "deny");
+    assert.equal(result.status, 0, `${toolCall.name}: ${result.stderr}`);
+    assert.equal(JSON.parse(result.stdout).decision, expectedDecision);
   }
 
-  for (const [workspacePaths, toolCall, expectedStatus] of [
+  for (const [workspacePaths, toolCall, expectedDecision] of [
     [
       [baseEvent.cwd, join(baseEvent.cwd, "docs")],
       { name: "write_file", args: { TargetFile: join(baseEvent.cwd, "safe.txt"), content: "x" } },
-      0,
+      "allow",
     ],
     [
       [baseEvent.cwd, join(baseEvent.cwd, "docs")],
       { name: "write_file", args: { TargetFile: "/tmp/outside", content: "x" } },
-      2,
+      "deny",
     ],
     [
       [baseEvent.cwd, "/tmp/disjoint"],
       { name: "read_file", args: { path: join(baseEvent.cwd, "README.md") } },
-      2,
+      "deny",
     ],
     [
       [process.env.HOME],
       { name: "read_file", args: { path: join(baseEvent.cwd, "README.md") } },
-      2,
+      "deny",
     ],
   ]) {
     const result = spawnSync(process.execPath, [policyPath], {
       input: JSON.stringify({ ...baseEvent, workspacePaths, toolCall }),
       encoding: "utf8",
     });
-    assert.equal(result.status, expectedStatus, `${toolCall.name}: ${result.stderr}`);
-    assert.equal(JSON.parse(result.stdout).decision, expectedStatus === 0 ? "allow" : "deny");
+    assert.equal(result.status, 0, `${toolCall.name}: ${result.stderr}`);
+    assert.equal(JSON.parse(result.stdout).decision, expectedDecision);
   }
 
   const policySource = await readFile(policyPath, "utf8");

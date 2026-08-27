@@ -239,7 +239,7 @@ test("F18: Antigravity PreToolUse denies write tools on a terminal run but permi
     env,
     worktree,
   );
-  assert.equal(write.status, 2);
+  assert.equal(write.status, 0);
   assert.match(write.stdout, /deny/);
 
   const inspect = invoke(
