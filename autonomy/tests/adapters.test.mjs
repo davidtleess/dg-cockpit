@@ -65,6 +65,22 @@ test("generated adapter runtimes contain the same contract", async () => {
   }
 });
 
+test("Dynasty plugins register no lifecycle hooks on any agent host", async () => {
+  const claudeHooks = JSON.parse(
+    await readFile(new URL("claude/dg-engineering/hooks/hooks.json", autonomyRoot), "utf8"),
+  );
+  const codexHooks = JSON.parse(
+    await readFile(new URL("codex-marketplace/plugins/dg-autonomy/hooks/hooks.json", autonomyRoot), "utf8"),
+  );
+  const geminiHooks = JSON.parse(
+    await readFile(new URL("antigravity/dg-autonomy/hooks.json", autonomyRoot), "utf8"),
+  );
+
+  assert.deepEqual(claudeHooks.hooks, {});
+  assert.deepEqual(codexHooks.hooks, {});
+  assert.deepEqual(geminiHooks["dg-autonomy"], {});
+});
+
 test("Studio receives no autonomy adapter", async () => {
   await assert.rejects(
     access(join(new URL(autonomyRoot).pathname, "studio")),
@@ -208,7 +224,7 @@ test("Codex marketplace and plugin use the native schema", async () => {
       "utf8",
     ),
   );
-  assert.equal(hooks.hooks.PreToolUse[0].matcher, "*");
+  assert.deepEqual(hooks.hooks, {});
   const hookPath = fileURLToPath(
     new URL("codex-marketplace/plugins/dg-autonomy/scripts/pre-tool-use.mjs", autonomyRoot),
   );
@@ -280,13 +296,7 @@ test("Antigravity adapter assembles the pinned ASW surface", async () => {
   }
 
   const hookManifest = JSON.parse(await readFile(new URL("hooks.json", pluginRoot), "utf8"))["dg-autonomy"];
-  const toolHook = manifest.hooks && hookManifest.PreToolUse;
-  assert.equal(toolHook[0].matcher, ".*");
-  for (const phase of ["PreInvocation", "PostToolUse", "Stop", "PreToolUse"]) {
-    const serialized = JSON.stringify(hookManifest[phase]);
-    assert.match(serialized, /\$\{HOME\}\/\.gemini\/config\/plugins\/dg-autonomy\/scripts\//);
-    assert.doesNotMatch(serialized, /\$\{PLUGIN_ROOT\}/);
-  }
+  assert.deepEqual(hookManifest, {});
 
   const policyPath = fileURLToPath(new URL("scripts/dg-antigravity-tool-policy.mjs", pluginRoot));
   const baseEvent = {
