@@ -1,6 +1,6 @@
 # DG-045 — SR-09: replace six wall-clock plists with one dependency-ordered, fail-soft chain
 
-**Layer:** 1  ·  **State:** todo  ·  **Lane:** ClaudeFable5-DG045-20260826  ·  **DG 3.0**  ·  **Tier 2**
+**Layer:** 1  ·  **State:** landed + installed (step 8/SR-19 remains, D8)  ·  **Lane:** ClaudeFable5-DG045-20260826  ·  **DG 3.0**  ·  **Tier 2**
 **Source:** season sprint SR-09 (spec `docs/strategies/2026-08-20-dg-SEASON-BUILD-SPEC.md`,
 D5-D6 slot, HARD land-by Fri 08-28 EOD). **Steps 1-5 pulled into the 08-26 afternoon on David's
 "go" (~12:40)** — a sanctioned deviation from the calendar, worktree only, NOTHING LANDS 08-26.
@@ -290,3 +290,68 @@ command would have overwritten the live alert-read report.)
 alert's class (c) gains a chain-report freshness check (compare `chain.started_at` to today)
 riding with SR-09, or waits. Redundancy question, not a hole — the launchd channel covers a
 stopped chain.
+
+---
+
+## D5 SITTING RECORD — 2026-08-27 ~14:25–14:55 ET (EXECUTED)
+
+**Phase 0 gates:** 10:30 alert showed THREE gap lines + heartbeat, not the expected one —
+both extras investigated and benign: (1) nflverse 06:15 slot genuinely dropped (boot 21:23 →
+console login 06:42; the alert told the truth about launchd), but the capture ran at 06:46
+after login, marker status ok, finished 2026-08-27T10:48:34Z — no data hole; (2)
+catchup-guard flagged committed-not-installed — true at 10:30, bootstrapped ~11:00 by the
+guard's own build session, loaded exit 0 by sitting time. DG-041 acceptance CLEAN per the
+corrected criterion: participation fallback_used=false, error_type null, 334,682 rows; health
+feature_refresh `inputs_degraded` with participation under LIVE beside rosters 2026, EARLIER
+SEASON = pbp/player_stats/snap_counts only.
+
+**Phase 1:** first land attempt REFUSED by the gate — 4 failures from the rebase meeting
+`ec7281d9` (catch-up guard, landed this morning). Real find, not test noise: retiring four
+producers + adding the chain broke the guard's coverage contract both ways (daily-chain
+scheduled-but-unexplained; four dead receipt entries) — the six chained producers would have
+silently lost the sleep protection they had that morning. Fixed on the branch (`c10a8b65`):
+daily-chain guarded via its own report (timestamp_fields [] → mtime, its timestamps sit
+nested under "chain"; pvo_refresh precedent); ff-playerids promoted unguarded→guarded per its
+entry's own "then guard it" (installed this sitting); four retired labels removed from
+receipts; scheduler evidence (daily_control.py:247/259, the R6 pin table, DG-033's cadence
+tests) now names the chain plist the producers actually run under. 154 tests green across
+touched files; full suite green on re-land. **LANDED merge `4048f25a`.**
+
+**Phases 2–5:** David authorized remotely (not at the machine); his `!` prompt shell could
+not reach launchd (the Phase-2 line no-opped silently — likely sandboxing). On his word
+in-session, session hands executed the launchctl work he had already issued himself: six
+bootouts (verified gone), four LaunchAgents rms, trunk pull (clean ff to `4048f25a`, known
+dirt only, no overlap), chain + ff-playerids symlink+bootstrap, market/pvo re-bootstrap
+(all RunAtLoad=false, nothing fired).
+
+**Phase 6:** slot counts 1/1/2/2 EXACT (old 09:xx schedules shed). Labels = 12, not the
+sheet's 11 — the sheet's arithmetic started from last night's 13 loaded; the catch-up
+guard's install this morning made the true start 14. 12 = the expected 11 + catchup-guard.
+Plist FILES in LaunchAgents = 12, same amendment (10 symlinks + 2 real). pmset shows
+wakepoweron 6:13AM — David moved it from 6:00 this morning (verified `pmset -g sched`); the
+sheet's "6:00AM intact" predates that authorized move.
+
+**Guard backfill expected post-sitting:** daily-chain (09:00) and ff-playerids (06:45) both
+have already-passed slots today and no receipts, so the guard's next 15-minute pass should
+kick both — first live fires TODAY under observation rather than tomorrow unattended.
+Observed result to be appended below.
+
+**Class (c) chain-report freshness check:** session recommendation DEFER (the guard now
+watches the chain's receipt; a third channel is redundancy, and D7's alert observation is
+the designated review point). Awaiting David's word.
+
+**GUARD BACKFILL OBSERVED ~17:18 (appended as promised):** the guard's own StartInterval
+spawn sat `pended nondemand spawn = interval` in launchd for 66 min while the machine idled
+— NOT the migration-era penalty box (that follows FAILED spawns and resists kickstart);
+`launchctl kickstart` cleared this one instantly. Recorded in the guard memory; candidate
+hardening = `ProcessType=Interactive` in the guard plist, David's call post-trip. On the
+kicked tick (17:18:44, new config live, 11 jobs checked) the guard kicked ff-playerids and
+daily-chain — oldest unserved occurrences (08-26; one fresh run serves all it covers).
+Results: **ff-playerids FIRST-EVER RUN ok** (receipt 2026-08-27T21:18:44Z). **Chain first
+live fire: fail-soft PROVEN in production** — fc_forward_capture failed exit 1, BENIGN:
+"immutable snapshot conflict for player_key 'sleeper:4984' on 2026-08-27" — today's fc
+snapshot was already written by the old world's 09:00 run and the store refused an intraday
+overwrite, exactly as it should; market_divergence correctly `skipped_upstream_failed` on
+its hard edge (today's divergence already captured by the 14:00 retry — NO hole); the other
+four steps ok; report at the fixed path; 48s wall. Friday remains: 06:45 ff-playerids,
+09:00 chain (first-of-day, fc writes clean), 10:30 alert silent + heartbeat.

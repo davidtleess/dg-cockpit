@@ -6,8 +6,10 @@ then "we are building DG 3.0 now".
 
 ## Where it is and what it is
 `~/dg-build/` — **its own git repo as of 2026-08-19 (`dfa7016`), 38 files.**
-**⚠ NOT covered by `~/dg-cockpit/backup.sh`** — verified `grep -n "dg-build" backup.sh` → no match.
-Local git history only. Adding coverage is David's call; the one-line fix is an rsync line.
+**Backup coverage (corrected 2026-08-27):** backup.sh HAS rsynced dg-build CONTENT since
+2026-08-19 (backup.sh:68, added on David's word; `.git` excluded — content mirrors, history
+doesn't). Primary backup is its own GitHub remote (davidtleess/dg-build, added 08-23). The
+old "NOT covered, grep no match" claim predated the 08-19 rsync line.
 
 - `README.md` — the whole system in one page
 - `BOARD.md` — one line per ticket, rebuilt from ticket files, never from itself

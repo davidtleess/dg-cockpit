@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 18235550-1462-4db1-ae6b-104ee4ed28e0
-  modified: 2026-08-27T01:42:35.464Z
+  modified: 2026-08-27T20:51:06.685Z
 ---
 
 **Hard deadline: NFL kickoff 2026-09-10 20:20 ET.** Build days Fri 2026-08-21 → Fri 2026-09-04
@@ -168,6 +168,21 @@ re-run the six bootouts before continuing. Also done: Option 2 housekeeping (`bf
 supersession bracket, ROADMAP ratification header). Verified at close: ALL ~/dg-wt branches
 pushed (the 08-23 unbacked-worktree warning is clear); trunk untouched at `08fee647` with its 25
 dirty files; dg-build clean, level with GitHub at `c4137b0`; nothing installed, no launchctl run.**
+
+**⭐ D5 (08-27) EXECUTED — DG-045/SR-09 LANDED (merge `4048f25a`) + THE SWAP IS DONE, a day
+ahead of the hard Fri land-by.** Full record: D5 SITTING RECORD section of the DG-045 ticket
+(dg-build `2c210e0`). Gates passed per the amended criteria (10:30 had two EXTRA lines, both
+investigated benign: nflverse's dropped 06:15 slot — capture ran ok at 06:46 post-login — and
+the guard's own pre-bootstrap gap). First land attempt REFUSED by the gate: rebase-collision
+with the morning's catch-up guard — the chain was scheduled-but-unguarded and four retired
+labels were dead entries; fixed `c10a8b65` (chain + ff-playerids guarded, retired labels out,
+scheduler evidence renamed). Sitting executed by SESSION hands on David's remote word (he was
+away from the machine; the `!` prompt shell cannot reach launchd — silently no-ops). Verified:
+12 labels (the pack's 11 + catchup-guard, which post-dates the pack), slots 1/1/2/2, wake
+6:13AM (David moved it from 6:00 that morning). REMAINING: step 8 = SR-19 rollover on D8;
+class (c) chain-report freshness check recommended DEFER, awaiting David's word; first
+chain/ff-playerids fires expected same day via guard backfill kicks. David away for days
+from 08-27 — machine on AC (never sleeps), 6:13 wake + guard as battery fallback.
 
 ### D4 LATE ADDITIONS: DG-048 (Daily Control RETIRED on David's ruling — runner refuses every
 ### mode, module lives on) and DG-039 (always-written roster-capacity status marker) BOTH LANDED.
