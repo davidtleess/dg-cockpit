@@ -1,6 +1,6 @@
 # DG-017 — We validate a scaled model and deploy an unscaled one
 
-**Layer:** 3  ·  **State:** todo  ·  **Lane:** —  ·  **DG 3.0**
+**Layer:** 3  ·  **State:** finding CONFIRMED, fix unbuilt (David's word 2026-08-28 — settles the board-vs-ticket marker conflict; the fix stays in the post-freeze L3 chain)  ·  **Lane:** —  ·  **DG 3.0**
 **Source:** crew lane (parallel author), 2026-08-18; verified independently by Tower same night
 
 **Problem:** The evaluation harness standardizes features before fitting Ridge. The training script
@@ -77,3 +77,33 @@ conclude from it.
 that omits StandardScaler" is too broad — `backtest_engine_a_cfbd_only.py`, `backtest_qb_cfbd.py` and
 `run_wr_college_bakeoff.py` also have none. It IS the only Engine B *deployment* trainer without one
 while every Engine B evaluation harness has one, which is the substance.
+
+---
+
+## EXPERIMENT RECORD 2026-08-28 — the falsifier was RUN (report-only lane; fix still unbuilt)
+
+Branch `ticket/DG-017`, commit `69b6c194`, pushed to origin as backup — NOTHING from it lands.
+Full report: `docs/experiments/2026-08-28-dg017-scaled-refit-falsifier.md` on that branch;
+numbers in `runs/20260829T000753Z/dg017_scaled_refit/results.json`. Command:
+`.venv/bin/python scripts/experiments/dg017_scaled_refit_falsifier.py` in the DG-017 worktree.
+
+**The named criterion fired on the "rate stats come up materially" side.** Refit per-position with
+a train-fitted StandardScaler and alpha tuned on a widen-on-pin grid (never boundary-selected):
+usage-family standardized weight goes 8.9→30.4% (QB), 0.3→12.4% (RB), 3.4→31.6% (WR), 1.4→35.1%
+(TE). TE `tprr` 1-SD effect 0.00002→0.116; `weighted_opportunity` becomes the #2 feature at WR
+(1.16 PPG/SD) and TE (1.04). **Holdout metrics stay within noise both ways** (largest move: WR
+RMSE 2.895→2.848 in scaling's favor; QB Spearman 0.696→0.669 against). ppg family remains the
+largest single family everywhere (40–75% scaled vs 50–84% deployed).
+
+⇒ **DG-001 attribution: falls as a fact about football, stands as a description of the shipped
+pkls** (replay-verified same run: all four deployed artifacts reproduce from today's dataset —
+alpha match at all four positions, max |Δcoef| ≤ 0.015, TE bit-exact). On season-averaged rows the
+decomposition is fit-dependent — collinear families trade weight at zero accuracy cost — so no
+coefficient share from this model family should be quoted as what-drives-production. DG-006/DG-025
+(week-level rows) inherit the open question.
+
+**Two sub-corrections:** (1) the QB α=1000 ceiling selection was NOT truncation — on a grid
+extended to 10,000, unscaled QB still selects exactly 1000, now interior; the symptom was benign.
+(2) The 1000× per-position alpha spread does compress to 10× under scaling (3.16–31.6), confirming
+the spread itself was a scale artifact. **Stakes of the unbuilt fix re-priced:** honesty and
+attribution, not RMSE — no accuracy is hiding in the scaling gap.

@@ -336,9 +336,10 @@ have already-passed slots today and no receipts, so the guard's next 15-minute p
 kick both — first live fires TODAY under observation rather than tomorrow unattended.
 Observed result to be appended below.
 
-**Class (c) chain-report freshness check:** session recommendation DEFER (the guard now
-watches the chain's receipt; a third channel is redundancy, and D7's alert observation is
-the designated review point). Awaiting David's word.
+**Class (c) chain-report freshness check: DECIDED — DEFER, David's word 2026-08-28** ("Skip
+it — two checks is enough", decision panel, remote). The guard watches the chain's receipt
+and the alert reads its contents; no third channel. Revisit only if D7+'s alert observation
+shows a miss.
 
 **GUARD BACKFILL OBSERVED ~17:18 (appended as promised):** the guard's own StartInterval
 spawn sat `pended nondemand spawn = interval` in launchd for 66 min while the machine idled

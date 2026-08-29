@@ -205,3 +205,41 @@ decided, deliberately left as its own call.**
 
 He first pushed back on the battery premise and was right to — see
 [[project_season_readiness_2026]] CORRECTION 5 for the measured position.
+
+---
+
+## 2026-08-28 morning — D6 planning (remote decision panel, answered ~08:30)
+
+David, away from the machine, asked to plan the day: **"lets plan the work for the day. ask me
+all the questions I need to make decisions on in Lehmans terms. ill answer."** Four decisions
+put to him as a panel; his selections verbatim:
+
+1. **Today's build queue:** ALL THREE — "Fix the safety net's alarm" (became DG-082),
+   "Register the price-history database (SR-10a)" (became DG-083), "Repair the empty trade
+   column (SR-14)" (became DG-084). All three LANDED the same morning.
+2. **DG-020 market snapshots:** **"Yes, start now"** — RULED INTO THE SPRINT. Landed same
+   morning (4 → 480 dates).
+3. **Class (c) chain-report freshness check:** **"Skip it — two checks is enough"** —
+   DEFERRED. (The DG-045 open decision is settled.)
+4. **DG-017 marker conflict:** **"Mark it: problem confirmed, fix not built"** — settles the
+   08-23 board-hygiene question; the fix stays in the post-freeze L3 chain.
+
+Context that shaped the day: the 08-27 D5 sitting had been executed by session hands on his
+remote word (his `!` prompt shell cannot reach launchd), and 08-28 was the first post-swap
+morning — all green. The launchd pended-interval-spawn finding (guard silent 15h overnight)
+was presented as "the watchdog dozes off"; his pick of the fix is ruling 1 above.
+
+## 2026-08-28 evening — the night shift (remote decision panel, dictated)
+
+Asked what else can run tonight, David (dictating): **"I would like to make sure our data layer
+is fortified. Our identity graph is solid, and the model has plenty of room for experimentation
+as well as … self improvement."** Panel answers:
+1. **ALL FOUR night lanes ruled in:** DG-050 replay-reproducibility harness; DG-054 name
+   normalizer (identity's first brick — the RE-KEYING migration stays post-season, law intact);
+   DG-028 + DG-057 model safety rails; the DG-017 scaled-refit falsifier as a REPORT-ONLY
+   experiment (never lands).
+2. **Land policy: "Land the safe ones tonight"** — guards/enablers land through the full gate +
+   adversarial review overnight; the experiment stays a report.
+Rides-along authorized under lane 1: DG-085 (drift-block freshness qualifier, this morning's
+review minor) built; DG-086 (upstream universe_pvo_batch.py:99 xvar_percentile_position defect)
+ticket-filed only.

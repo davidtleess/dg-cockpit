@@ -20,10 +20,10 @@
 | DG-014 | Deployed models were fit on 2018–2021 only | 3 | todo | — |
 | DG-015 | Model card contradicts the training code | 3 | todo | — |
 | DG-016 | TE "validation report" doesn't say what it validated against | 3 | todo | — |
-| DG-017 | We validate a scaled model and deploy an unscaled one | 3 | **confirmed** | — |
+| DG-017 | We validate a scaled model and deploy an unscaled one | 3 | finding CONFIRMED, fix unbuilt; **FALSIFIER RUN 08-28 night (report-only, `69b6c194` on ticket/DG-017): fired — usage weight 9→30% (QB), 0.3→12% (RB), 3→32% (WR), 1→35% (TE) under scaled+tuned fit, accuracy within noise; DG-001 attribution falls as football-fact, stands as artifact-description; stakes re-priced = honesty, not RMSE** | — (lane retired, branch pushed) |
 | DG-018 | Standing measurement: does the model beat the market? | 3 | todo | — |
 | DG-019 | Market appears to over-disperse by ~2× | 3 | todo | — |
-| DG-020 | Get more than four market snapshots | **1** | todo | — |
+| DG-020 | Get more than four market snapshots | **1** | landed — merge `ac8ac4a4` 08-28: 4 → 480 dates (dp_archive monthly 2021-02→2025-06 commit-anchored + fc_history_api daily 2025-07→08-27); DB install pending ~10:15; adversarially reviewed pre-land (provenance labels fixed) | — |
 | DG-021 | 114 players told an Engine A prior was used when none exists | 3→6 | **done — merge `b291107f` on `main`, DEPLOYED 10:21: live artifact 114→0 false rows, same 114 now honest** | ClaudeFable5-DG021-20260825 |
 | DG-022 | Players with no canonical id can never be graded | **2** | **done — merge `20807368` on `main`: frozen-prediction membership lane, real-surface-QA proven** | ClaudeFable5-DG022-20260825 |
 | DG-023 | Health gate labels good participation data "empty" | **1** | **done — merge `b4662707` on `main`** | Parallel-DG023-20260825 |
@@ -31,7 +31,7 @@
 | DG-025 | Ablate usage features under a scaled, tuned fit — the deciding test | 3 | todo | — |
 | DG-026 | Train and test labels share the 2023 season | 3 | todo | — |
 | DG-027 | Penalty chosen by random CV on repeated-player data | 3 | todo | — |
-| DG-028 | "We changed nothing" check cannot see the artifacts it guards | 3 | todo | — |
+| DG-028 | "We changed nothing" check cannot see the artifacts it guards | 3 | landed 08-28 night — seeing guard hashes all 10 registry artifacts + serving-binding checks (manifest hijack, v1-fallback scan — both review-found BLOCKERS closed RED-first); v1 fallback custodially registered + backup-covered | — |
 | DG-029 | Is feature season 2024 absent by design or by gap? | **2** | **done — BY DESIGN, same mechanism; merge `849f3eaf` on `main`** | ClaudeFable5-DG029-20260825 |
 | DG-030 | Compare model families to each other, not just to naive | 3 | todo | — |
 | DG-031 | Salvage the outcome resolver and Coverage contract | 1 → 3 | **done — merged in PR #159** | CodexCrew20260819 |
@@ -53,14 +53,14 @@
 | DG-047 | Morning report staleness caveat cries wolf — was SR-20 substance; weekly section now cadence-aware | **6** | **done — landed 08-26, SR-20 D10 slot FREED** | ClaudeFable5-DG047-20260826 |
 | DG-048 | Layer 1 Daily Control — RETIRED on David's ruling 08-26; runner refuses every mode, module lives on as library | **1** | **done — landed 08-26 (incident during build: see ticket)** | ClaudeFable5-DG048-20260826 |
 | DG-049 | Extend the capture-gap alert to the two unmonitored event streams (SR-10b) | **1** | **done — landed 08-26; every capture store now has a detection channel** | ClaudeFable5-DG049-20260826 |
-| DG-050 | Replay-reproducibility harness: prove snapshot + parser version reproduces normalized content | **1** | todo (enabler, 3d) | — |
+| DG-050 | Replay-reproducibility harness: prove snapshot + parser version reproduces normalized content | **1** | landed 08-28 night — 16 streams replay live (19 reproduced / 1 named legacy vintage / 0 mismatch); found+fixed a real §6.2 violation (fc int-volatility hash shape); sanctioned verifier in the five ingestion walls; NOT yet scheduled (ops decision) | — |
 | DG-051 | Catalog as single source of truth: generate or mechanically reconcile scheduler, freshness, and backup co | **1** | todo (foundation, 3d) | — |
 | DG-052 | End-to-end restore rehearsal with dated evidence; backup class joins per-store health | **1** | todo (foundation, 2d) | — |
 | DG-053 | Crosswalk vintages: capture ff_playerids on cadence before the season burns identity truth | **2** | **done — merge `34a9a970` on `main` (pre-freeze per David); plist install rides Thu's launchctl sitting** | ClaudeFable5-DG053-20260826 |
-| DG-054 | One versioned name normalizer producing staging keys | **2** | todo (enabler, 2d) | — |
+| DG-054 | One versioned name normalizer producing staging keys | **2** | landed 08-28 night — dg_name_normalizer.v1 frozen (39 tests incl. hypothesis properties; sentinel-string + bytes hardening from review, fold-side so idempotence holds); additive only, consumers migrate later, re-keying stays post-season | — |
 | DG-055 | Typed facts and the storage pilot: retire the 501-TEXT-column store through the seven proofs | **2** | todo (enabler, 6d) | — |
 | DG-056 | Owned bitemporal identity: mint canonical IDs and run the six-step migration | **2** | todo (enabler, 10d) | — |
-| DG-057 | Hashed TrainingSpec with load-time verification — serving that can refuse the wrong artifact | **3** | todo (enabler, 3d) | — |
+| DG-057 | Hashed TrainingSpec with load-time verification — serving that can refuse the wrong artifact | **3** | landed 08-28 night — spec-hash sidecars + verify_artifact (refusal / pre_spec_artifact); 10 deployed artifacts grandfathered by measured sha, list pinned byte-for-byte; engine_b/rookie loaders deliberately deferred to DG-058 | — |
 | DG-058 | The §8.3 promotion chain: safe JSON artifacts, equivalence tests, and a PromotionReceipt | **3** | todo (enabler, 5d) | — |
 | DG-059 | ScoringEnvelope — separate raw inference from PVO assembly | **3** | todo (enabler, 2d) | — |
 | DG-060 | Versioned universe snapshot contract for coverage claims (§8.6) | **3** | todo (enabler, 2d) | — |
@@ -85,6 +85,11 @@
 | DG-079 | Turn release evidence into a gate — goldens, state matrix, CI wiring | **6** | todo (enabler, 1.5d) | — |
 | DG-080 | SR-15: Trade Lab search renders results for the WRONG query (stale-response race) | **6** | done | — |
 | DG-081 | SR-16: Morning Room hero counts a number David does not act on (his roster's movers instead) | **6** | done | — |
+| DG-082 | The catch-up guard's timer dozes off: launchd pends StartInterval during idle | **1** | landed — merge `27ab6af2` 08-28, hybrid schedule (96-slot lattice + interval) + per-label class-(h) lines; guard label swapped same morning; first lattice tick PROVEN 09:02:00 | Davids-MacBook-Pro-20944 |
+| DG-083 | SR-10a (pulled to D6): register market_divergence_history — the schedule-drift block | **1** | landed 08-28 — the only unbuilt SR-10a piece (steps 1/2/4/5 had landed via DG-044); capture-health gains StoreScheduleDrift, config v3 chain_step wirings, OpenAPI additive; adversarially reviewed | ClaudeFable5-DG083-20260828 |
+| DG-084 | SR-14 (pulled to D6): forward-capture NULL xVAR — record honestly, fabricate nothing | **1** | landed 08-28 — driver reads valuation xvar; daily_diff guards ALL THREE delta sites (third found by pre-land review); 468 historical rows stay honest NULLs; proof = tomorrow's 09:00 capture (same-day re-run would hit immutability, correctly); FABRICATION CHECK Wed 09-02 morning | ClaudeFable5-DG084-20260828 |
+| DG-085 | Drift block presents a stale chain report as a current reading (DG-083 review minor) | **1** | landed 08-28 night — chain_report_stale:<date> basis, null drift fields on any not-today report; report-wide staleness by newest stamp | ClaudeFable5-DG085-20260828 |
+| DG-086 | universe_pvo_batch.py never populates xvar_percentile_position — dvs_pct stays NULL downstream | 3 | todo (filed 08-28 night from DG-084's find; blocks real dvs_pct recording) | — |
 
 DG-001 through DG-011 came from the independent consultant brief of 2026-08-18, except DG-004,
 which Tower found while checking evidence for DG-002.
@@ -110,9 +115,9 @@ are the side the tooling reads (`dg-work.sh:39`) and therefore the correct side.
 here while the ticket files named live lanes — a reader picking work off this board could have
 collided with a claimed worktree.
 
-**One conflict NOT resolved, because it is not an agent's to resolve:** DG-017 reads `confirmed` here
-and `todo` in `tickets/DG-017-validation-tests-a-different-model.md`. Both were written by hand and
-neither cites which is current. Someone who knows the work should say.
+**~~One conflict NOT resolved~~ RESOLVED by David's word 2026-08-28:** DG-017's marker now reads
+"finding CONFIRMED, fix unbuilt" in both places — the problem is real (verified 08-18), the fix
+(one pipeline object for eval+deploy) is unbuilt and stays in the post-freeze L3 chain.
 
 All nine `ticket/DG-*` branches are on `origin` as of today. Six worktrees (DG-014/020/021/022/023/029)
 still predate the DG-037 tooling fix and cannot pass `dg-land.sh`'s dirty-tree gate; everything in

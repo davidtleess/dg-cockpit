@@ -281,3 +281,60 @@ Quartz `0 * * * * ?` — that fires **every minute**, not hourly. Deployment/bil
 Nothing in `app/` or `src/` imports Databricks.
 
 See [[david_rulings_dg3]] and [[project_dynasty_genius]].
+
+**⭐ D6 (08-28) — FOUR LANDS IN ONE MORNING, all on David's remote decision panel (~08:30;
+verbatim answers in [[david_rulings_dg3]]).** First post-swap morning fully green first: 06:15
+nflverse / 06:30 league-transaction / 06:45 ff-playerids (first scheduled fire) all on the dot;
+09:00 chain first scheduled fire ALL SIX STEPS OK; 22:00 cockpit backup had auto-committed and
+pushed overnight (first auto-commit since 08-09), exiting 1 loudly on the autonomy lane's red
+verify — the preserve-then-scream design working. Lands, each TDD + adversarially reviewed
+pre-land (3-refuter panel, 9 minor findings, 2 fixed pre-land, 0 blocking):
+- **DG-082** `27ab6af2` — guard's launchd idle-doze fixed: HYBRID schedule (96-slot explicit-hour
+  calendar lattice :02/:17/:32/:47 + kept StartInterval 900 + RunAtLoad) + alert class (h) now
+  one line per LABEL (was per slot). Swapped same morning; first lattice tick proven 09:02:00.
+  Two derive/alert traps documented in the ticket (Hour-default-0; per-slot spam).
+- **DG-083** `SR-10a` — only step 3 was unbuilt (1/2/4/5 had landed via DG-044): capture-health
+  StoreScheduleDrift block, config v3 chain_step wirings, OpenAPI purely additive (regen-trap
+  law observed). Review's minor: drift block presents yesterday's report without a freshness
+  qualifier — follow-up candidate, not held.
+- **DG-084** `SR-14` — driver maps valuation xvar; daily_diff guards ALL THREE delta sites (the
+  third — dynasty_value_score, 115 live NULL rows — found by the review, fixed RED-first
+  pre-land). NO backfill: 468 historical rows stay honest NULLs. dvs_pct stays NULL until the
+  upstream universe_pvo_batch.py:99 defect is fixed (follow-up ticket candidate). **PROOF =
+  Sat 08-29's 09:00 capture (same-day re-run correctly hits immutability); FABRICATION CHECK
+  Wed 09-02 morning: daily.model.deltas must be small, NOT ~468 — if ~468, revert the driver.**
+- **DG-020** `ac8ac4a4` — market history 4 → 480 dates: dp_archive monthly 2021-02→2025-06
+  (commit-date-anchored, delta-0 proven) + fc_history_api daily 2025-07-01→2026-08-27 (FC's own
+  per-player history endpoint; TODAY-anchored universe = survivor bias, disclosed in the label
+  fantasycalc_history_api_survivor_biased). Fixed folds 2020-2023 resolve to byte-identical
+  original rows — QB-1 record cannot shift. Gate caught the STALE-WORKTREE trap: the 08-19
+  worktree's symlinked footballguys dir breaks `git check-ignore` (exit 128) — today's dg-work
+  MUST_BE_REAL fixes it; worktree was rebuilt from origin and re-landed. **DB INSTALL to trunk
+  pending ~10:15** (43MB, sha ad17d82d…, held in session scratchpad fc_snapshots_backfilled.db —
+  copy over app/data/fc_snapshots.db; gitignored, code-only merge).
+Sprint tail now: SR-12 (needs David at the machine), SR-19/D8 rollover + SR-09 close, SR-13
+(D9), D10 buffer. DG-017 marker settled; class (c) settled (skip).
+
+**⭐ D6 NIGHT SHIFT (08-28 evening, David's remote panel: all four lanes + "land the safe ones") —
+FIVE MORE LANDS + THE FALSIFIER VERDICT.** Landed through gate + 5-refuter adversarial review
+(2 BLOCKING findings on DG-028 closed RED-first; ~13 minors, 6 fixed pre-land): **DG-028**
+(seeing no-mutation guard, 10 registry artifacts + serving-binding checks — manifest-key hijack
+and the v1-fallback scan were the blockers; engine_b v1 fallback custodially REGISTERED
+`5c52f811…` + backup-covered when the anti-rot contract fired at the gate), **DG-057**
+(TrainingSpec sidecars + verify_artifact; 10 grandfathered shas PINNED byte-for-byte;
+engine_b/rookie loaders deferred to DG-058 deliberately), **DG-050** (replay harness: 16 streams
+replay live, 19/20 reproduced + 1 named legacy vintage; FOUND+FIXED a real §6.2 violation — fc
+int-volatility hash shape, pre-fix rows classified legacy_content_shape; sanctioned as the five
+ingestion walls' second exemption; NOT scheduled — ops decision open), **DG-054**
+(dg_name_normalizer.v1 frozen, hypothesis-proven; sentinel/bytes hardening fold-side after the
+property suite caught 'ÑA'→'na' idempotence breakage; consumers unmigrated by law), **DG-085**
+(chain_report_stale basis). **DG-086 filed** (universe_pvo_batch xvar_percentile_position, the
+dvs_pct blocker). **DG-017 FALSIFIER (report-only, `69b6c194` on ticket/DG-017, never lands):
+FIRED — usage-family weight 9→30/0.3→12/3→32/1→35% (QB/RB/WR/TE) under scaled+tuned refit,
+accuracy within noise; deployed pkls replay-verified byte-faithful. DG-001's attribution falls
+as football-fact, stands as artifact-description; coefficient shares from this family are
+fit-dependent and must NOT be quoted as what-drives-production; DG-017 fix stakes re-priced =
+honesty, not RMSE. Report: docs/experiments/2026-08-28-dg017-scaled-refit-falsifier.md on the
+branch.** Land-gate lessons recorded: ingestion walls + QB-1 consumer wall both fired on
+legitimate new reference classes (verifier, prose citation) — sanctioned explicitly, never
+dodged; the anti-rot backup contract fired on registration — coverage obligation honored.
