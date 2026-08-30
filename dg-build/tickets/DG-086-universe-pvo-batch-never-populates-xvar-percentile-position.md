@@ -1,6 +1,6 @@
 # DG-086 — The PVO batch never populates xvar_percentile_position: the one computer of dvs_pct has zero callers
 
-**Layer:** 3  ·  **State:** todo  ·  **Lane:** —  ·  **DG 3.0**  ·  **Tier 0**
+**Layer:** 3  ·  **State:** done  ·  **Lane:** ClaudeFable5-DG086-20260829  ·  **DG 3.0**  ·  **Tier 0**
 **Source:** upstream defect found during DG-084 (recorded in that build's step-3 dvs_pct decision);
 filed 2026-08-28. **Unclaimed — do not build without a lane.**
 
@@ -44,3 +44,32 @@ never reaches the artifact, the archive, or any surface.
 
 **Depends on:** DG-084 (landed — the driver now reads the right field). **Rollback:** revert the
 one producer commit; one more null day costs less than a fabricated tape (SR-14's own ruling).
+
+---
+**LANDED 2026-08-29 (merge `c7409cab` on main, trunk pulled 10:16).** David's panel ruling: "Wire
+the existing calculator" — compute_dvs_pct_batch is the one authority; no twin. TDD (RED proven:
+dvs_pct None on every dump), 6-lens adversarial panel pre-land. Key facts:
+- **Acceptance CORRECTED: the honest number is 388, not the ticket's >=400.** Live scored
+  population = 388 ACTIVE_B with non-null DVS (QB 37 / RB 99 / WR 163 / TE 89) + 80 ENGINE_A
+  prospects that stay NULL by spec 5.14 ("computed only against active Engine B players").
+  Tomorrow's store count(dvs_pct) ~= 388 is PASS, not defect.
+- Panel BLOCKING fix folded in: frontend percent() multiplied by 100 (artifact is 0-100) —
+  tomorrow's card would have read "7780%" and inverted bottom players. Fixed + fixture pinned.
+- dvs_pct_as_of (wall-clock) deliberately NEVER enters the artifact — capture vintage excludes
+  only top-level volatile keys; a stamp inside a row would mint a new semantic_output_hash per
+  rerun. Pinned by recursive-key test. Determinism proven: two runs, different hash seeds,
+  identical semantic_output_hash.
+- Coverage observability added (populated/reference counts + dg086 exit criterion) so a silent
+  regression to all-NULL is visible — the 06-24->08-28 defect went unnoticed for lack of this.
+- Ride-along repair: DailyWhatChanged capture-health fixture lacked DG-083's required
+  schedule_drift block — the FRONTEND suite was red on main since 08-28 (dg-land gates pytest
+  only, vitest invisible). Frontend now 307/307; backend 6472/0.
+- **FOR DAVID (tie honesty, needs his ruling, not a defect):** the spec's rank formula splits
+  ties — 11 TEs at identical DVS 100.0 spread percentiles 88.6..100.0 (64 players sit in tie
+  groups today). Tie-pooling would change the ratified phase15 formula — his call. Presented at
+  the 08-29 sitting.
+- Silent v1-fallback observability (panel major): a silent Engine B v2 load failure would
+  reproduce the all-NULL state with EXPERIMENTAL grades and the new criterion would NOT catch it
+  (reference collapses too) — follow-up candidate filed as a board note, post-freeze shaped.
+- Live proof expected TODAY ~11:30: the standalone pvo retry publishes the runtime artifact with
+  388 real percentiles (capture stage then refuses, already captured — benign).

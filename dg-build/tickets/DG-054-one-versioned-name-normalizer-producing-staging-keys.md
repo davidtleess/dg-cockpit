@@ -1,6 +1,6 @@
 # DG-054 — One versioned name normalizer producing staging keys
 
-**Layer:** 2  ·  **State:** doing  ·  **Lane:** Davids-MacBook-Pro-22452  ·  **DG 3.0**
+**Layer:** 2  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-22452  ·  **DG 3.0**
 **Edge distance:** enabler  ·  **Size:** 2d
 **Source:** 2026-08-26 six-layer completion audit → mapping fleet; roadmap RATIFIED by David
 same day ("3. yes"). Full sequence context: `~/dg-build/ROADMAP-LAYERS.md`.

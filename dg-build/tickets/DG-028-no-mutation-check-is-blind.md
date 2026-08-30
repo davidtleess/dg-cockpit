@@ -1,6 +1,6 @@
 # DG-028 — Make the "we changed nothing" check actually able to see
 
-**Layer:** 3  ·  **State:** doing  ·  **Lane:** Davids-MacBook-Pro-21493  ·  **DG 3.0**
+**Layer:** 3  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-21493  ·  **DG 3.0**
 **Source:** Tower, 2026-08-18, adversarial review
 
 **Problem:** Every model-science proposal proves it left production alone with

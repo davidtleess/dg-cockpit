@@ -1,6 +1,6 @@
 # DG-083 — SR-10a: register market_divergence_history — surface the schedule drift SR-09 records
 
-**Layer:** 1  ·  **State:** doing  ·  **Lane:** ClaudeFable5-DG083-20260828  ·  **DG 3.0**  ·  **Tier 0**
+**Layer:** 1  ·  **State:** done  ·  **Lane:** ClaudeFable5-DG083-20260828  ·  **DG 3.0**  ·  **Tier 0**
 **Source:** season sprint SR-10a (`docs/strategies/2026-08-20-dg-SEASON-BUILD-SPEC.md:956-1021`),
 pulled forward to D6 on David's 2026-08-28 word.
 

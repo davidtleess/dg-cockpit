@@ -1,6 +1,6 @@
 # DG-076 — Frontend build manifest — source SHA, OpenAPI hash, build timestamp
 
-**Layer:** 6  ·  **State:** todo  ·  **Lane:** —  ·  **DG 3.0**
+**Layer:** 6  ·  **State:** todo  ·  **Lane:** Davids-MacBook-Pro-60286  ·  **DG 3.0**
 **Edge distance:** enabler  ·  **Size:** 0.5d
 **Source:** 2026-08-26 six-layer completion audit → mapping fleet; roadmap RATIFIED by David
 same day ("3. yes"). Full sequence context: `~/dg-build/ROADMAP-LAYERS.md`.

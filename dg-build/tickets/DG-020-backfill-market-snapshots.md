@@ -1,6 +1,6 @@
 # DG-020 — Get more than four market snapshots
 
-**Layer:** 1  ·  **State:** RULED INTO THE SPRINT by David 2026-08-28 ("Yes, start now" — decision panel, remote) — build today  ·  **Lane:** Davids-MacBook-Pro-31737  ·  **DG 3.0**
+**Layer:** 1  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-31737  ·  **DG 3.0**
 **Source:** crew lane horse race, 2026-08-18 — named as the binding constraint
 
 **Problem:** Four annual snapshots yield exactly two training cohorts. Every market-edge result is

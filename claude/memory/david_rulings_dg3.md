@@ -229,6 +229,42 @@ remote word (his `!` prompt shell cannot reach launchd), and 08-28 was the first
 morning — all green. The launchd pended-interval-spawn finding (guard silent 15h overnight)
 was presented as "the watchdog dozes off"; his pick of the fix is ruling 1 above.
 
+## 2026-08-29 morning — Saturday panel, David AT THE MACHINE ("lets plan a full day of work")
+
+Four panel selections (decision-panel options; labels verbatim):
+1. **Today's queue:** "Fill the empty trade-value column (DG-086)" + "Rehearse the season flip
+   (SR-19)". SR-13 and the SR-08 remainder were offered and NOT selected — they stay D9/unscheduled.
+2. **DG-086 approach:** "Wire the existing calculator" — compute_dvs_pct_batch becomes the one
+   authority; dvs_pct_as_of stamping is the stated reason. No twin implementation.
+3. **The launchctl sitting is TODAY:** "Today — I'm at the machine" — SR-12 (API agent) builds and
+   lands today, David loads it himself; DG-050's plist bundles into the same sitting.
+4. **DG-050 replay harness:** "Weekly scheduled run" — joins the launchd schedule at weekly cadence.
+
+**Midday additions (second panel + prose rulings, ~11:15–14:30):**
+5. **"Yes — build it today"** — front-page movers made clickable (DG-089), after David's own
+   first-user session found the gesture dead ("no cards are displaying"). Landed + live same day.
+6. **"Pool the ties — file a ticket"** — tied dynasty_value_scores must share one percentile;
+   filed DG-088, POST-FREEZE (changes the ratified phase15 formula; his call recorded).
+7. SR-12 visible acceptance, his words: **"ok now i see it"** (Daily What-Changed rendering in
+   his browser, no terminal). Recorded in the DG-087 ticket.
+8. **Evening, closing the session — the first-user verdict, verbatim: "to be honest the front
+   end was not great."** Asked what grated, he selected ALL FOUR offered dimensions: how it
+   looks · too dense/cluttered · confusing words and numbers · hard to find things/clunky.
+   Filed as **DG-091** — a DESIGN mandate, not a bug list: proposal-first (freeze-safe docs,
+   can draft in D10/soak), build post-freeze, candidate window season weeks 1-2 beside League
+   Activity. Venue (crew pass vs Studio fresh-eyes) deliberately left as HIS call — Studio wall
+   respected. Done = his word on a season morning, nothing else.
+
+PAT flag RESOLVED same day: David rotated the GitHub token (~10:46) and **confirmed the old one
+revoked on GitHub** (~11:00) — every stray plaintext copy is now a dead string. New fine-grained
+token in ~/.claude/settings.json (verified: valid JSON, github_pat_ format, no quote damage);
+activates for the github MCP on session restart. Git pushes unaffected (osxkeychain credential is
+separate — all three repos verified AUTH OK post-revocation, so the 22:00 backup push is safe).
+Context: SR-19's close paperwork stays D8; B1 proof recorded in the DG-045 ticket 08-29 (dg-build
+`11bf67d`); morning fully green (chain 6/6, drift 0; both DG-084 proofs passed).
+
+---
+
 ## 2026-08-28 evening — the night shift (remote decision panel, dictated)
 
 Asked what else can run tonight, David (dictating): **"I would like to make sure our data layer
@@ -243,3 +279,62 @@ as well as … self improvement."** Panel answers:
 Rides-along authorized under lane 1: DG-085 (drift-block freshness qualifier, this morning's
 review minor) built; DG-086 (upstream universe_pvo_batch.py:99 xvar_percentile_position defect)
 ticket-filed only.
+
+## 2026-08-29 late night — THE FRONTEND RULING (gap-audit session, verbatim)
+> "I'm having another parallel session work on the front end, and I've given it signal and approval
+> to make the front end world class for a dynasty football front end. I don't care to persist the
+> governance of language and caveats and lack of overall recommendation from the back end into the
+> front end. I'd rather use layman's terms and call a spade a spade, and I've given it the green
+> light to do so."
+
+Effects recorded in dg-build (IN-SEASON-QUEUE amendment + tickets): DG-094/DG-095 DROPPED (they
+enforced the pre-ruling presentation half of Rulings 07/10); DG-104 filed (CI banned-language
+linter must be re-scoped or it blocks the green-lit language); backend evidence-typing
+(fail-closed decision_supported, claim levels, validate_no_prohibited_features) is UNTOUCHED —
+the ruling changed what the product says, not what it measures. The night lane independently
+recorded the same ruling as DG-091's controlling principle ("world-class fantasy front end, not
+a data-science viz"). Same night David also said, mid-turn: "continue working not only on the
+assessment but to start the work" — this session then claimed DG-100.
+
+---
+
+## 2026-08-29 evening/night — the night panel + THE PROSE RULING
+
+Four panel selections (~18:1x, option labels verbatim):
+1. **DG-091 venue: "Studio fresh-eyes"** — the design/build pass routes to Studio THROUGH
+   Tower (wall TW29-WALL-35); the brief itself drafted venue-neutral in dg-build.
+2. **DG-090: "Overflow fix only (Recommended)"** — Problem A pulled to tonight (LANDED
+   `232fc0c1`), Problem B folds into DG-091's visual pass.
+3. **dg-mail-carrier: "Retire — unload it (Recommended)"** — executed: bootout + persistent
+   disable; plist left on disk (it had fired every 30s into a deleted script since the tmux era).
+4. **"Yes — both (Recommended)"** — SR-13 pulled to tonight (LANDED as DG-092 `1d2a5c89`;
+   Wed D9 freed) + the SR-09 finding-A spec amendment pushed (`48fa1e7d`; done-mark stays Tue).
+
+**⭐ ~18:5x — THE PROSE RULING (verbatim, reshapes DG-091 and every future frontend pass):**
+> **"I really don't care for the caveats and the hard wording governance. I prefer to use
+> prose and layman's language with respect to making this a world-class fantasy football
+> dynasty front end. Not a data science, data engineering visualization."**
+
+**He gave the parallel gap-audit session the same ruling in FULLER words the same evening
+(their record, DG-094 ticket, verbatim):**
+> **"I don't care to persist the governance of language and caveats and lack of overall
+> recommendation from the back end into the front end. I'd rather use layman's terms and call
+> a spade a spade, and I've given it the green light to do so."**
+
+**Reconciled reading (both verbatims together — this corrects this file's first draft of
+tonight, which read the narrower message alone as "no-verdict NOT revoked"):**
+1. The governance register (caveat blocks, disclosure stamps, "not decision-grade" legalese)
+   is RETIRED from the screen; truth-bearing content survives as natural prose, once, where it
+   applies; receipts stay one press away.
+2. **The FRONTEND is green-lit to state overall recommendations in layman's terms** — "call a
+   spade a spade." This SUPERSEDES the presentation half of the 08-20 standing consequence
+   ("the product will not say buy/sell in 2026"); the gap-audit session dropped DG-094/095
+   (the Ruling 07/10 enforcement tickets) and filed DG-104 (linter re-scope) on it.
+3. **The BACKEND's evidence machinery is unchanged:** decision_supported, evidence grades,
+   replay verification, never-fabricate, never-stale-as-fresh all stay armed. The frontend's
+   plain voice sits on top of the evidence layer, not instead of it (DG-103's ratification
+   now gates only the backend flag, per the queue's amendment).
+Applied as the CONTROLLING PRINCIPLE of `~/dg-build/DG091-DESIGN-BRIEF.md` (rewritten same
+night, both verbatims quoted). The three locked-copy mechanisms (DISCLOSURE_LINE exact-string
+lock, two byte-locked mitigation paragraphs) protect wording this ruling overrides —
+replacement prose ships in the brief round-trip for his review.

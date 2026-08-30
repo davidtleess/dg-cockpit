@@ -1,6 +1,6 @@
 # DG-084 — Forward-capture archive recorded NULL xVAR for all 57 days; the fix must not fabricate 468 moves
 
-**Layer:** 1  ·  **State:** doing  ·  **Lane:** ClaudeFable5-DG084-20260828  ·  **DG 3.0**  ·  **Tier 0**
+**Layer:** 1  ·  **State:** done  ·  **Lane:** ClaudeFable5-DG084-20260828  ·  **DG 3.0**  ·  **Tier 0**
 **Source:** season sprint SR-14 (SEASON-BUILD-SPEC lines 1059-1133, including the PT-1 amendment —
 David's 2026-08-20 "GUARD BOTH FIELDS" ruling); pulled forward to D6 on David's 2026-08-28 word.
 

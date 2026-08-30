@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 18235550-1462-4db1-ae6b-104ee4ed28e0
-  modified: 2026-08-27T20:51:06.685Z
+  modified: 2026-08-29T18:41:54.749Z
 ---
 
 **Hard deadline: NFL kickoff 2026-09-10 20:20 ET.** Build days Fri 2026-08-21 → Fri 2026-09-04
@@ -300,9 +300,7 @@ pre-land (3-refuter panel, 9 minor findings, 2 fixed pre-land, 0 blocking):
 - **DG-084** `SR-14` — driver maps valuation xvar; daily_diff guards ALL THREE delta sites (the
   third — dynasty_value_score, 115 live NULL rows — found by the review, fixed RED-first
   pre-land). NO backfill: 468 historical rows stay honest NULLs. dvs_pct stays NULL until the
-  upstream universe_pvo_batch.py:99 defect is fixed (follow-up ticket candidate). **PROOF =
-  Sat 08-29's 09:00 capture (same-day re-run correctly hits immutability); FABRICATION CHECK
-  Wed 09-02 morning: daily.model.deltas must be small, NOT ~468 — if ~468, revert the driver.**
+  upstream universe_pvo_batch.py:99 defect is fixed (follow-up ticket candidate). **BOTH PROOFS PASSED Sat 08-29 09:00: 468/583 rows real xVAR (range −101.65..+58.05); the fabrication check passed ON THE ACTUAL TRANSITION MORNING — model.deltas=0, status vintage_changed_no_score_delta. Wed 09-02 glance is a formality.**
 - **DG-020** `ac8ac4a4` — market history 4 → 480 dates: dp_archive monthly 2021-02→2025-06
   (commit-date-anchored, delta-0 proven) + fc_history_api daily 2025-07-01→2026-08-27 (FC's own
   per-player history endpoint; TODAY-anchored universe = survivor bias, disclosed in the label
@@ -314,6 +312,36 @@ pre-land (3-refuter panel, 9 minor findings, 2 fixed pre-land, 0 blocking):
   copy over app/data/fc_snapshots.db; gitignored, code-only merge).
 Sprint tail now: SR-12 (needs David at the machine), SR-19/D8 rollover + SR-09 close, SR-13
 (D9), D10 buffer. DG-017 marker settled; class (c) settled (skip).
+
+**⭐ D7 SATURDAY 08-29 — THE DAY THE PRODUCT GOT ITS FIRST REAL USER. Four lands/executions +
+the sitting + two first-user tickets, David AT the machine all day.** Morning survey: everything
+green (chain 6/6 drift 0, guard lattice 09:02, cockpit+GCS backups clean, repos level).
+- **DG-086 LANDED + LIVE** (merge `c7409cab`): compute_dvs_pct_batch wired as the one authority
+  (David: "wire the existing calculator"). Panel BLOCKING pre-land: frontend percent() ×100 bug
+  would have shown "7780%" — disarmed. **Honest number is 388, not the ticket's ≥400** (80
+  prospects NULL by spec 5.14). LIVE PROOF 14:00 refresh: 388/388 in the serving artifact.
+  dvs_pct_as_of deliberately never enters the artifact (semantic-hash volatility; pinned).
+- **SR-19 REHEARSAL EXECUTED** (pulled forward on his word): outcome (b) clean refusal ("no rows
+  for inference season 2026", exit 1, no lock, no partial), then the refusal proven THROUGH the
+  chain runner (feature_refresh failed, chain carried on; market's scratch-only tracked-pair
+  abort documented as NOT applying live). **SR-09 close = Tuesday paperwork only** (finding-A
+  spec amendment + mark closed). B1 proof was never formally recorded — now recorded in DG-045.
+- **DG-087/SR-12 LANDED + INSTALLED** (merge `39c61ece`): dynasty-api KeepAlive agent (Throttle
+  60, penalty-box remedy corrected) + DG-050 weekly replay-verify (Mon 12:00; first receipt via
+  guard backfill kick minutes after bootstrap: verdict REPRODUCED, 20 checks). Sitting by session
+  hands on his word; **frontend dist was a WEEK stale (built Aug 22, five UI lands unserved) —
+  rebuild-after-pull is now the ritual, in README.** David: **"ok now i see it."**
+- **DG-089 LANDED + LIVE** (merge `e68aac07`): David's OWN first-user find at ~11:10 ("no cards
+  are displaying") — front-page movers weren't clickable. Built TDD same day; panel BLOCKING
+  caught in a REAL browser what jsdom can't (width:100% shattered rows into 105px stacks) —
+  fixed, re-proven in Chromium (43px rows, click→inspector end-to-end). Quiet-day roster rows
+  wired too. visual-smoke harness repaired and ran FOR THE FIRST TIME EVER → exposed pre-existing
+  5px tape overflow + 46-node contrast debt → **DG-090 filed** (post-freeze). DG-088 filed
+  (pool tied percentiles — David's ruling; post-freeze, changes ratified formula).
+- Also: GitHub PAT ROTATED + old revoked (dead strings everywhere); keychain git auth verified
+  intact post-revocation. 10:30 alert = heartbeat + ONE honest line (pvo retry refusal, benign
+  first-capture-wins; may repeat while afternoon content drifts). Sprint tail: **Tue 09-01 =
+  15-min Tuesday check + SR-09 close paperwork; Wed = SR-13; then buffer to the 09-04 freeze.**
 
 **⭐ D6 NIGHT SHIFT (08-28 evening, David's remote panel: all four lanes + "land the safe ones") —
 FIVE MORE LANDS + THE FALSIFIER VERDICT.** Landed through gate + 5-refuter adversarial review
@@ -338,3 +366,46 @@ honesty, not RMSE. Report: docs/experiments/2026-08-28-dg017-scaled-refit-falsif
 branch.** Land-gate lessons recorded: ingestion walls + QB-1 consumer wall both fired on
 legitimate new reference classes (verifier, prose citation) — sanctioned explicitly, never
 dodged; the anti-rot backup contract fired on registration — coverage obligation honored.
+
+**⭐ D7 NIGHT (08-29, second front — the gap-audit session): DAVID DELEGATED THE OPEN DECISIONS
+("u decide") AND ELEVEN TICKETS + THE QUEUE WERE FILED (dg-build `483dac5`, pushed).** A 14-agent
+vision audit ranked the most work: (1) models/edge (7/10, mostly calendar-gated ~Sept/Dec),
+(2) UI/UX (7/10, startable now), then layers (on plan, not behind), inventory, roadmap, board.
+Filed on the delegation — DG-093 League Activity (committed ≤09-17, was ticketless), DG-094
+Ruling-07 fix (delta_status winner verdict, trade_analyzer.py:231), DG-095 Ruling-10 fix (taxi
+sort / cut_priority ordinals / partner_score; sentinels 0 AND -1 preserved), DG-096 RPL-1..4
+replay program (spec :1571-1579 — 21/39 groundable, picks may cut to ~5), DG-097 clock (thin
+slice of DG-078), DG-098 A1a ledgers, DG-099 Engine A rebuild (off-season), DG-100 nflverse
+vintage backup — DECIDED: incremental raw/ channel (1,546 flat files, ~30GB one-time), NOT
+nightly full-upload (4x payload, ~2.5h runs past the 10:30 alert, ~333GB/mo bill growth),
+DG-101 stale-doc banners + Databricks EVIDENCE check (retire/wire ruling stays David's, MASTER
+:814-822/:265), DG-102 dg-land gate is pytest-only (bin/dg-land.sh:92 — blind to frontend),
+DG-103 decision_supported criteria + outcome-finality PROPOSAL (ratification stays David's,
+§8.5). **IN-SEASON-QUEUE.md at dg-build root is the ordered queue** — delegation recorded
+verbatim in its header (it existed nowhere greppable — a verifier finding). The two spec
+"first after kickoff" claims are reconciled there: PERF-1 = first CODE land, CAP-9 = first OPS
+item (first real run Tue 09-15). All filings 3-lens adversarially verified pre-commit (1 major
+false evidence line + DG-096/DG-101 scope errors fixed). Parallel night session coordinated
+live (SendMessage): its four David rulings — DG-091 venue=STUDIO via Tower, DG-090 split,
+mail-carrier retired, DG-092/SR-13 tonight — are untouched; DG-092's board row is theirs.
+**Freeze day 09-04 is a FRIDAY** (a briefing had said Thursday).
+
+**⭐ D7 NIGHT (08-29 evening, second session, David present) — TWO MORE LANDS + THE SPRINT
+TAIL COLLAPSES TO ONE 20-MINUTE TUESDAY.** His four panel picks + THE PROSE RULING are
+verbatim in [[david_rulings_dg3]]. Executed: **DG-092/SR-13 LANDED `1d2a5c89`** (lambda guard;
+spec's three proofs verbatim; constants untouched — Wed D9 FREED) · **DG-090-A LANDED
+`232fc0c1`** (tape overflow; Problem B → DG-091) · **SR-09 finding-A spec amendment pushed
+`48fa1e7d`** (both chain proofs gain scratch --report-path; SR-19 block superseded by the
+--step-extra form; **done-mark stays Tue 09-01 — Tuesday is now the 15-min check + a 5-min
+done-mark, NOTHING else; Wed/Thu/Fri all buffer to the Fri 09-04 freeze**) · trunk pulled to
+`48fa1e7d` + dist REBUILT (ritual) + live :8000 verified serving the new bundle ·
+**dg-mail-carrier zombie RETIRED** (bootout + persistent disable; was firing every 30s into a
+deleted script) · **DG-091 DESIGN BRIEF drafted** (`~/dg-build/DG091-DESIGN-BRIEF.md`, 4-audit
+evidence base) then REWRITTEN around David's prose ruling; venue RULED Studio-via-Tower.
+**⚠ DISCOVERY: the daily-open axe gate (visual-smoke.spec.ts:453) is NONDETERMINISTIC** —
+3 pass/4 fail over 7 same-tree runs; real debt ~39 nodes fg #767a7e = 3.97:1; Playwright is
+not in the land gate, but any lane running it on main coin-flips until DG-091 retires the
+debt; never exclude the color-contrast rule; rendered fg differs from the declared
+--dg-text-muted — find the dimmer before retuning. Parallel session filed DG-093..103 +
+IN-SEASON-QUEUE.md the same night (its DG-091 program order: DG-076 → DG-043+090B → arm gate
+→ restyle; design DG-098's pre-reveal touchpoint INTO the rebuild). Freeze day is FRIDAY.

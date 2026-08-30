@@ -1,6 +1,6 @@
 # DG-085 — The schedule-drift block presents a stale chain report as a current reading
 
-**Layer:** 1  ·  **State:** doing  ·  **Lane:** ClaudeFable5-DG085-20260828  ·  **DG 3.0**  ·  **Tier 0**
+**Layer:** 1  ·  **State:** done  ·  **Lane:** ClaudeFable5-DG085-20260828  ·  **DG 3.0**  ·  **Tier 0**
 **Source:** DG-083 pre-land review minor finding; pulled into D6 night on David's 2026-08-28 word.
 
 **Problem:** the DG-083 drift block anchors every number to the chain report's OWN date and never

@@ -1,6 +1,6 @@
 # DG-057 — Hashed TrainingSpec with load-time verification — serving that can refuse the wrong artifact
 
-**Layer:** 3  ·  **State:** built — awaiting review/land  ·  **Lane:** Davids-MacBook-Pro-22759  ·  **DG 3.0**
+**Layer:** 3  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-22759  ·  **DG 3.0**
 **Edge distance:** enabler  ·  **Size:** 3d
 **Source:** 2026-08-26 six-layer completion audit → mapping fleet; roadmap RATIFIED by David
 same day ("3. yes"). Full sequence context: `~/dg-build/ROADMAP-LAYERS.md`.

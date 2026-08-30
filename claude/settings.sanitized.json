@@ -66,15 +66,17 @@
       }
     }
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
+  "ultracode": true,
   "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipWorkflowUsageWarning": true,
-  "theme": "dark",
+  "theme": "dark-ansi",
   "preferredNotifChannel": "terminal_bell",
+  "agentPushNotifEnabled": true,
   "autoMode": {
     "environment": [
       "### Org-wide",
@@ -103,6 +105,5 @@
       "**routine under <user>/ prefix**: none configured"
     ]
   },
-  "voiceEnabled": true,
-  "agentPushNotifEnabled": true
+  "voiceEnabled": true
 }
