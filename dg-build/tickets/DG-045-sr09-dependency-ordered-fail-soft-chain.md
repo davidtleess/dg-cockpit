@@ -428,6 +428,10 @@ seed (degraded-but-captured, not an outage); market divergence continues from it
 report to show one failed step and CHAIN_EXIT=1 that morning — loud, honest, self-healing when
 the 2026 data lands. NOT an incident unless a second step fails or a lock strands.
 
-**Remaining for the D8 close (Tue 09-01, paperwork only):** apply the finding-A spec amendment
+**✅ SUPERSEDED 2026-08-30 — the amendment ALREADY LANDED as `48fa1e7d` on main (spec:882-888 and
+spec:1171-1178 both carry the amended text; verified ancestor of origin/main). Tuesday's ONLY
+remaining act is the done-mark itself. DO NOT RE-APPLY THE AMENDMENT — you would be redoing
+finished work.** Original instruction kept for provenance:
+~~Remaining for the D8 close (Tue 09-01, paperwork only): apply the finding-A spec amendment
 (scratch --report-path note at spec:~883 AND the SR-19 verification block's outdated command at
-spec:~1169-1173 → this ticket's --step-extra form), then mark SR-09/DG-045 closed.
+spec:~1169-1173 → this ticket's --step-extra form), then mark SR-09/DG-045 closed.~~

@@ -1,6 +1,6 @@
 # DG-043 — The player card's two-lane furniture fails contrast, markup, and mobile width
 
-**Layer:** 6  ·  **State:** todo  ·  **Lane:** Davids-MacBook-Pro-60430  ·  **DG 3.0**
+**Layer:** 6  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-60430  ·  **DG 3.0**
 **Source:** found 2026-08-25 by DG-022's real-surface QA gates (whole-page axe + overflow), which
 the 08-19 WIP wrote but never got to run. All three defects predate DG-022 and are proven
 independent of it.

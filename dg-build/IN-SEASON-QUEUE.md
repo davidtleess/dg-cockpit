@@ -34,6 +34,23 @@ recorded the same ruling as the design brief's controlling principle. Buffer ord
 DG-100 → DG-101 banners → DG-102 (after DG-104). DG-103 now gates only the backend flag.
 Also: DG-090A and DG-092 LANDED tonight (night lane) — Wed 09-02 confirmed freed.
 
+## AMENDMENT 2 — Sunday 2026-08-30, morning: what actually happened overnight
+- **DG-091 BUILD STARTED on David's order** (*"create a sub agent workflow with tower, studio and
+  whoever else is needed - and start building"*) — this supersedes the "post-freeze build" line
+  in the weeks-1-2 section below **for the build's START only**; the land is still ahead of it.
+  All four builds are COMPLETE, COMMITTED and PUSHED but **NOT LANDED** — the frontend lane's
+  workflow died on usage credits mid-panel (12 of 22 agents). Branches: `ticket/DG-104`
+  `c850e7e2`, `ticket/DG-076` `7da3c762`, `ticket/DG-043` `d8189eb9`, `ticket/DG-105` `896db9ea`.
+  Resume = panel → fix blocking → land in order **104 → 076 → 043 → 105** (second lander
+  regenerates the CSS audit baselines); full procedure in the D7 closeout addendum 3. Those four
+  tickets keep their lane claims — do not pick them up. Studio design spec + 42 live screenshots
+  are in dg-build (`68b9241`/`704aac8`).
+- **DG-100 LANDED** (merge `874023ab`) and its backfill was run by hand. **DG-106 filed** from
+  what the backfill measured. My pre-freeze buffer order below is therefore: DG-102 → DG-101,
+  with DG-100 done and DG-094/095 dropped by the frontend ruling.
+- Still true and still David's: the DG-100 plist bootstrap + guard-receipts move (one sitting),
+  DG-101's Databricks retire/wire ruling, DG-103's two ratifications.
+
 ## Pre-freeze (now → Fri 09-04 EOD)
 Fixed points: **Tue 09-01** — 15-min Tuesday check + SR-09/SR-19 close paperwork (the amendment text
 was drafted tonight by the night lane; the DONE-MARK stays Tuesday per DG-045's own law). SR-13

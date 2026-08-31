@@ -1,6 +1,6 @@
 # DG-105 — DG-091 build 1: retire the contrast debt and make the visual evidence gate deterministic
 
-**Layer:** 6  ·  **State:** todo  ·  **Lane:** Davids-MacBook-Pro-60710  ·  **DG 3.0**  ·  **frontend-only · DG-091 program (David: "start building", 2026-08-29 night)**
+**Layer:** 6  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-60710  ·  **DG 3.0**  ·  **frontend-only · DG-091 program (David: "start building", 2026-08-29 night)**
 **Source:** DG-090 Problem B (transferred here via DG-091) + the 08-29 night discovery that the
 daily-open axe assertion (frontend/e2e/visual-smoke.spec.ts:453) is NONDETERMINISTIC — 3 pass /
 4 fail over 7 same-tree runs; failures report ~39 serious color-contrast nodes (measured fg

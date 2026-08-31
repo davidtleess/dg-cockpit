@@ -1,0 +1,95 @@
+diff --git a/.mcp.json b/.mcp.json
+index 31d2ce8f..da39e4ff 100644
+--- a/.mcp.json
++++ b/.mcp.json
+@@ -1,13 +1,3 @@
+ {
+-  "mcpServers": {
+-    "magic": {
+-      "type": "stdio",
+-      "command": "npx",
+-      "args": [
+-        "-y",
+-        "@21st-dev/magic@latest"
+-      ],
+-      "env": {}
+-    }
+-  }
+-}
+\ No newline at end of file
++  "mcpServers": {}
++}
+diff --git a/docs/agent-ledger/2026-08-19.md b/docs/agent-ledger/2026-08-19.md
+index 22368040..5949b701 100644
+--- a/docs/agent-ledger/2026-08-19.md
++++ b/docs/agent-ledger/2026-08-19.md
+@@ -1,5 +1,56 @@
+ # 2026-08-19 — Dynasty Genius Agent Ledger
+ 
++## 23:00 ET — Antigravity (Gemini 3.6 Flash): 6-Layer Target Architecture & Master Proposal 1 Completed `[w#master-proposal-1]`
++
++- **Completed 6-Layer Architecture Review & Synthesis**: Deployed 3 parallel research subagents to inspect data ingestion pipelines, identity resolution, predictive modeling, league context, market divergence rebasing, and frontend decision surfaces.
++- **Synthesized Master Proposal 1**: Combined findings from all three architecture documents into `DYNASTY_GENIUS_MASTER_PROPOSAL_1.md`. Key design patterns established:
++  - *Core Organizing Idea*: **Propagation, not invention** — scaling proven repo patterns (`capture/model_forward_capture_store.py`, `roster_capacity` per-field provenance, banned-vocabulary AST gate, `SpreadBar` / `ValueHero` primitives).
++  - *Dual Core Domain Objects*: Explicit distinction between **Player Value Object (PVO)** (intrinsic valuation) and **Decision Opportunity Object (DOO)** (actionable league/roster utility).
++  - *Point-in-Time Data Plane*: Serverless DuckDB over partitioned Parquet files (`effective_at`, `available_at`) replacing unindexed SQLite for bitemporal queries.
++  - *Canonical Opaque Identity*: Opaque ULID `dg_id` with single versioned name normalizer and bitemporal crosswalk registry.
++  - *Dynamic Cohort Fallback Engine*: Guarantees 100% PVO card coverage for active rostered players (fixing Tank Dell / low-sample veteran states).
++  - *Model Trust Plane*: Train/serve alignment (`StandardScaler` + `Ridge`), immutable `TrainingSpec` hash gates, human-readable JSON artifacts (no pickle), and empirical residual decile $\sigma$ uncertainty bands.
++  - *Manager Behavior & Posture*: Empirical manager propensity matrix (trade activity, pick bias, positional preference) and algorithmic trade partner matchmaking.
++  - *Precomputed Read Model*: Eliminates 9s player-view latency and 110s `/api/health` scans.
++  - *5-Workflow Decision Cockpit*: Streamlines UI navigation into Morning Room, Roster, Trade, League, and Draft, collapsing dev/ops clutter into contextual drawers.
++- **Artifact & Clipboard Status**: Saved as `DYNASTY_GENIUS_MASTER_PROPOSAL_1.md` in artifact storage; absolute file path copied to user's macOS clipboard via `pbcopy`.
++- **Governance**: Read-only session. No production code, models, or data stores modified.
++
++
++## 17:06 ET — Codex Consultant: DG-031 SHIPPED · CI GREEN `[w#DG-031]`
++
++- GitHub Actions run **32301769969** completed green after the 17:03 pending receipt.
++- **Python checks passed in 4m06s**, including full pytest and the storage-policy check.
++- **Frontend checks passed in 58s**, including typecheck, lint, Vitest, banned-language, production
++  build, and SPA-output verification.
++- PR [#159](https://github.com/davidtleess/dynasty-genius/pull/159) remains merged at
++  **`d2c85c2`**. Final status: **SHIPPED / CI GREEN**.
++- DG-031 ticket state and its BOARD row were updated locally in `dg-build`; no shared-data write
++  occurred. The local macOS loader/code-signature failure remains disclosed as an environment
++  defect and was not relabeled as a successful local gate.
++
++## 17:03 ET — Codex Consultant: DG-031 SHIPPED · POST-MERGE CI PENDING `[w#DG-031]`
++
++- Exact approved 14-path commit **`9a38dc7`** was pushed. PR
++  [#159](https://github.com/davidtleess/dynasty-genius/pull/159) merged at 17:02 ET as
++  **`d2c85c2`** because no required-check protection held auto-merge.
++- **Do not read this as a green local mandatory gate.** Full local pytest could not collect because
++  the host macOS native-extension loader/code-signature failure reproduced in both the shared venv
++  and a fresh Python 3.14.7 venv; that check was not falsely marked passed.
++- **Current post-merge CI:** Frontend checks are **SUCCESS**; Python checks are **IN_PROGRESS**.
++  Status is therefore **SHIPPED / POST-MERGE CI PENDING**, not green.
++- No shared-data write occurred. Monitoring continues until the remaining GitHub check is terminal.
++
++## 17:0x ET — Codex (crew): DG-022 SESSION CLOSED `[w#DG-022]`
++
++- Terminal autonomy state: **BLOCKED** only on missing real-surface evidence; tests, static analysis,
++  independent technical review, and cleanup pass. `git diff --check` is clean; port 8122 is clear.
++- Coordination advanced during closeout: DG-031 is committed/pushed at `9a38dc7`, while
++  `git rev-parse main` remains `552733c`. Resume with its mandatory landing, then DG-022
++  rebase/regeneration, browser evidence, and post-rebase review.
++- DG-022 is preserved at `~/dg-wt/DG-022`; durable restart packet is
++  `runs/20260819T185543Z/SESSION_CLOSE_HANDOFF.md`. No rediscovery is required. Session closed.
++
+ ## 17:0x ET — Judge seat: POSTFLIGHT — two increments committed; seat left the bench on David's word `[w#DG-029]` `[w#judge-session]`
+ 
+ - **Seat note, first and plainly.** The Judge charter bars authoring product code. **No ruling was
+diff --git a/tests/test_aging_curves.py b/tests/test_aging_curves.py
+index 6d0eec68..b87e62b9 100644
+--- a/tests/test_aging_curves.py
++++ b/tests/test_aging_curves.py
+@@ -98,7 +98,7 @@ def test_pocket_qb_has_later_onset_than_dual_threat():
+ 
+ # ── Python reader ─────────────────────────────────────────────────────────────
+ 
+-@pytest.mark.parametrize("position", list(REQUIRED_POSITIONS))
++@pytest.mark.parametrize("position", sorted(REQUIRED_POSITIONS))
+ @pytest.mark.parametrize("age", [21, 24, 26, 29, 33, 38])
+ def test_aging_curve_value_returns_0_to_1(position, age):
+     value = aging_curve_value(position, age)

@@ -1,6 +1,7 @@
 # DG-091 — David's first-user verdict: "the front end was not great" — all four dimensions
 
-**Layer:** 6  ·  **State:** todo  ·  **Lane:** —  ·  **DG 3.0**  ·  **frontend-only · POST-FREEZE build, proposal first**
+**Layer:** 6  ·  **State:** IN BUILD — phases 1 + 2A LANDED AND LIVE  ·  **Lane:** —  ·  **DG 3.0**  ·  **frontend-only**
+**⚠ THE "POST-FREEZE build" LINE BELOW IS SUPERSEDED:** David ordered *"create a sub agent workflow with tower, studio and whoever else is needed - and start building"* (2026-08-29) and the program has been building since. Original text kept for provenance.
 **Source:** David, 2026-08-29 evening, closing his first real day using the product. Verbatim:
 **"to be honest the front end was not great."** Asked what grated, he selected ALL FOUR:
 **how it looks · too dense/cluttered · confusing words and numbers · hard to find things/clunky.**
@@ -42,3 +43,40 @@ David's review; hands to Studio through Tower after his word.
 
 **Done looks like:** David opens the product on a season morning and does not say "not great."
 Measured by his word, nothing else.
+
+
+---
+
+## BUILD RECORD (this ticket is the program's controlling document — keep it current)
+
+**Phase 1 — foundations, LANDED 2026-08-30:** DG-104 `67cf9f8b` (banned-language enforcement
+re-scoped to David's ruling — 3 BLOCKING panel defects closed, incl. a prose bypass of the
+surviving field gate) · DG-076 `6bf4a155` (build manifest; **frontend half only — the
+health-endpoint sha-vs-HEAD comparison is DEFERRED and has no ticket**) · DG-043 `555fb7e4`
+(player card labeled pairs; 390px overflow 776→390) · DG-105 `bc065e24` (raw-literal debt on 4
+surfaces; axe flake dead — see its board row for the honest limits).
+
+**Phase 2A — what David's own rulings settle, LANDED + LIVE 2026-08-30:** DG-109 `59bab53e`
+(the copy dictionary + an ENFORCED render rule) · DG-111 `002a26bd` (caveat furniture retired
+across seven surfaces; 16 replacement strings recorded verbatim) · DG-110 `921ec892` (global
+player search; every dead end closed; search no longer mutates the persisted trade draft).
+**Independently audited on the live product: 0 raw pipeline tokens on the front page and player
+card at 1440 AND 390 — true even ignoring the two declared exempt subtrees.** 52 panel findings
+fixed; the honesty lens caught THREE BLOCKING cases where the new prose stated falsehoods the
+raw token never claimed.
+
+**David's design panel, 2026-08-30 (verbatim option labels):** trade voice = *both pricings
+plainly, NO blended take/pass* · parked surfaces *removed from nav entirely* · *green-up /
+red-down* deltas (**reopens the enforced verdict-hue ban — re-point it at genuine buy/sell
+styling, do not delete it**) · *build the phone shell now*.
+
+**PHASE 2B — OPEN.** The structural restyle per `DG091-STUDIO-SPEC.md` plus the defects the
+closeout audit found on the live product: **Trade Lab is visually unbuilt at every width** (bare
+white native inputs/buttons on the dark shell); **Roster Audit scrolls the page sideways 185px
+and Model Trust 665px at 390**; the front page's "Current roster context" is still a debug dump
+wearing prose ("Starting lineup value: 97.39" beside "Weekly lineup strength: 97.39" — same
+number, two names); **"xVAR" survived the dictionary** and the same quantity now has three names
+(the render rule cannot see it — it is not four consecutive capitals); Roster Audit shows
+internal QA language ("RB checked out in testing") and 22 of 26 rows read "Not scored yet";
+21 composited-contrast failures on `.dg-shell__parked-badge`; the visual gate visits only three
+surfaces and none of the broken ones.

@@ -338,3 +338,23 @@ Applied as the CONTROLLING PRINCIPLE of `~/dg-build/DG091-DESIGN-BRIEF.md` (rewr
 night, both verbatims quoted). The three locked-copy mechanisms (DISCLOSURE_LINE exact-string
 lock, two byte-locked mitigation paragraphs) protect wording this ruling overrides —
 replacement prose ships in the brief round-trip for his review.
+
+## 2026-08-30 morning — the DG-091 design panel (four selections, option labels verbatim)
+
+Put to him while phase 2A was building; his picks:
+1. **Trade voice: "Both prices, plainly."** The product states the arithmetic on BOTH pricings
+   ("By market prices you're giving up 1,240 more than you get; by our model it's closer to
+   even") and names the disagreement — but **no blended take/pass imperative**, because that
+   would require him to bless how market and model are weighed against each other. He draws the
+   conclusion; the product does the arithmetic in plain words.
+2. **Parked items: "Remove from nav entirely."** Rookie Board, Waiver Radar, Research Assistant
+   and Project Tracker leave the rail (URL-reachable only). Roadmap is not product.
+3. **Delta colors: "Green up / red down."** ⚠ CONSEQUENCE: red/green were BANNED as verdict hues
+   and the ban is ENFORCED (`frontend/src/styles/tokens.test.js:83-110`, red arc ≤30/≥350, green
+   120-160). His ruling reopens it — the ban gets re-pointed at genuine buy/sell verdict styling;
+   direction/movement color is now legal. The two-lane law (blue = model, amber = market) is
+   UNCHANGED and must not be confused with direction color.
+4. **Phone: "Build the phone shell now."** The 390px app shell (bottom tab bar, 52px rows,
+   essential columns) is IN for this program, not deferred to the season.
+Not asked (only four slots): the front-page naming ("Today" in nav, "Morning read" as overline) —
+Studio's default stands unless he says otherwise.

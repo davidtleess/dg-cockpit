@@ -1,6 +1,6 @@
 # DG-104 — Re-scope the banned-language enforcement to David's frontend ruling
 
-**Layer:** 6  ·  **State:** todo  ·  **Lane:** Davids-MacBook-Pro-60551  ·  **DG 3.0**  ·  **UNBLOCKS the frontend green light — do with/before the first plain-language land**
+**Layer:** 6  ·  **State:** done  ·  **Lane:** Davids-MacBook-Pro-60551  ·  **DG 3.0**  ·  **UNBLOCKS the frontend green light — do with/before the first plain-language land**
 **Source:** David's ruling 2026-08-29 late night, verbatim in the IN-SEASON-QUEUE amendment and in DG-094/DG-095's drop blocks: the frontend speaks layman's terms and may state overall recommendations; backend governance is not persisted into the frontend.
 
 **Problem:** CI carries a banned-language linter built to enforce the no-verdict law on frontend surfaces (`npm run test:governance` — the No-Verdict Line "enforced by a banned-language LINTER in CI"). Under David's ruling it now enforces a repealed presentation law and will mechanically BLOCK the exact language he green-lit. Any dg-land frontend gate (DG-102) would harden the blockade if wired first.

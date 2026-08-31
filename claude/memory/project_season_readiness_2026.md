@@ -275,10 +275,14 @@ yields a LATE capture, not none. The unaddressed worst case is the lid staying s
 no sleep setting fixes. Do not re-quote the spec's "wakes 06:00, sleeps 06:01" as an established
 daily loss.
 
-## Open, needs a network call
-`infrastructure/resources/jobs.yml` declares `refresh_genius_state` `pause_status: UNPAUSED` with
-Quartz `0 * * * * ?` — that fires **every minute**, not hourly. Deployment/billing unconfirmed.
-Nothing in `app/` or `src/` imports Databricks.
+## ~~Open, needs a network call~~ ✅ RESOLVED 2026-08-30 (peer lane, DG-101 `ae2309bf` + DG-112 `d5f4ede4`)
+**DATABRICKS IS FULLY RETIRED on David's ruling** — workspace job destroyed, zero jobs remain,
+`infrastructure/` deleted from the repo, local `.databricks/` cache cleaned.
+**The scare was latent, never real:** `refresh_genius_state` (declared `pause_status: UNPAUSED`,
+Quartz `0 * * * * ?` = every minute) had **ZERO runs, ever, and was PAUSED live the whole time** —
+dev-mode bundles auto-pause, so the repo's UNPAUSED never took effect. The master plan's billing
+alarm never fired a cent. Keep the lesson, not the alarm: **a declared schedule in a bundle is not
+a running schedule — measure the workspace, never infer cost from the YAML.**
 
 See [[david_rulings_dg3]] and [[project_dynasty_genius]].
 
@@ -409,3 +413,134 @@ debt; never exclude the color-contrast rule; rendered fg differs from the declar
 --dg-text-muted — find the dimmer before retuning. Parallel session filed DG-093..103 +
 IN-SEASON-QUEUE.md the same night (its DG-091 program order: DG-076 → DG-043+090B → arm gate
 → restyle; design DG-098's pre-reveal touchpoint INTO the rebuild). Freeze day is FRIDAY.
+
+**⭐ DG-091 PROGRAM PHASE 1 COMPLETE 2026-08-30 early AM (David: "create a sub agent workflow with
+tower, studio and whoever else is needed - and start building").** Structure that worked and is
+worth repeating: Tower seat (read-only preflight, ruled every scope capture-safe) + a FIREWALLED
+Studio fresh-eyes seat (designed from the LIVE :8000 surface only — no tickets, no source, no
+internal vocabulary; ~/frontend-studio never touched) + crew build lanes each through a 3-refuter
+panel. Deliverables: **`~/dg-build/DG091-STUDIO-SPEC.md`** (the design proposal — morning-brief
+direction, rail 11→5, verdict-first front page, player-card rebuild, copy dictionary with the rule
+that no underscore/ALL_CAPS token may reach the DOM) + 42 screenshots in
+`preserved/2026-08-29-studio-shots/`. **ALL FOUR FOUNDATION TICKETS LANDED AND DEPLOYED:** DG-104
+`67cf9f8b` (linter re-scoped — 3 BLOCKING panel defects closed, incl. a prose bypass of the field
+gate and five tier-readiness components that would have reported `pass` for a deleted check),
+DG-076 `6bf4a155` (build manifest; `source_dirty` now required — a dirty tree can no longer stamp a
+false clean sha; frontend half only, health-endpoint half DEFERRED), DG-043 `555fb7e4` (player-card
+labeled pairs LIVE; 390px overflow 776→390 proven in-browser), DG-105 `bc065e24` (raw-literal debt
+retired on 4 surfaces; **the axe flake is DEAD**, 0/10 — but the bundles achieve it under
+`prefers-reduced-motion`, so the default-motion path readers see has NO axe coverage, and the 4
+converted surfaces are visited by no axe scan at all). Trunk `bc065e24`, vitest 343/343, dist
+rebuilt, live serving verified. Filed DG-108 (backend players.py still strips David-facing evidence
+with the repealed vocabulary). **⚠ A 4.6s players-API number was measured and REPORTED, then RETRACTED as contaminated** — this
+session's own DG-105 flake-under-load test orphaned 36 CPU busy-loops (load 63-84 for ~90 min).
+The trap, now known: in a non-interactive `zsh -c`, **`jobs -p` returns no background-subshell
+PIDs**, so `kill $LOADPIDS` kills nothing and the loops orphan to PID 1. Capture `$!` explicitly or
+trap. Re-measured clean 2026-08-30 (load 1.57): **card renders 199ms after click; API 0.135-0.273s;
+/api/health 0.35s. NO latency problem exists — the whole observation was contamination, not just
+its number.** Lesson: a contaminated measurement contaminates the impression formed beside it. A run halted mid-flight on
+usage-credit exhaustion and resumed cleanly: builds were committed+pushed before the halt, which is
+why nothing was lost — push ticket branches early, ~/dg-wt is in no backup.
+
+**⭐ DG-091 PHASE 2A LANDED + LIVE 2026-08-30** — DG-109 `59bab53e` (copy dictionary + ENFORCED
+render rule: no underscore/ALL_CAPS in visible text, aria-label, alt, placeholder; two declared
+exempt subtrees `[data-receipt]`/`[data-user-text]`), DG-111 `002a26bd` (caveat furniture retired
+across all seven surfaces — the six-per-page "Descriptive only — not decision-grade" stamps GONE;
+16 replacement strings recorded verbatim in its ticket), DG-110 `921ec892` (global player search,
+every dead end closed, search no longer mutates the persisted trade draft). Trunk `921ec892`,
+vitest 402, dist rebuilt, **independently verified in-browser: front page + player card 0 raw
+tokens at 1440 AND 390, no overflow.** 52 panel findings fixed.
+**THE LESSON THAT MUST SURVIVE THIS PROGRAM:** the honesty lens caught THREE BLOCKING defects where
+the new prose stated FALSEHOODS the raw token never claimed — `no_market_overlay` rendered as
+"Nobody is quoting a market price for him" on a card printing "Market value 5204"; a rollup `ok`
+rendered as "Nothing needs attention" when the backend explicitly declines that claim. **Replacing
+a token with prose is an act of AUTHORSHIP: confident prose can lie in ways an opaque token cannot,
+so every mapping needs its PRODUCER read, not a plausible reading.** Also learned: axe reports
+COMPOSITED colors (blending ancestor opacity) while getComputedStyle reports the CSS value — axe is
+right; and scanning a surface with no backend yields an error state with zero rows and a small
+clean violation count, i.e. a FALSE a11y receipt. Full record: `closeouts/2026-08-30-D8-phase2a-closeout.md`.
+
+**⭐ D8 SUNDAY 2026-08-30 — BACKEND/OPS LANE: 4 LANDS + DATABRICKS RETIRED + THE VINTAGE RECORD IS
+OFFSITE.** (Frontend lane ran DG-091 in parallel; its record is its own.)
+- **DG-100 LANDED `874023ab` + BACKFILL COMPLETE.** The nflverse vintage record — 31.8GB /
+  1,584 dated snapshot files, previously in NO backup and invisible to the anti-rot scan
+  (*.db only) — is offsite and sha256-verified, every object checked by download-and-compare.
+  New channel `scripts/backup_nflverse_vintages.py`: additive-only to one stable prefix,
+  per-file verify, quiesce gate (the capture writes raw snapshots with plain `write_text`, so a
+  young file may be half-written), `--no-clobber`, fail-closed listing parse. **Daily run
+  measured at 13s / 0 uploads.** Anti-rot extended: any >1GiB app/data tree without a backup
+  decision now fails the contract.
+- **DG-107 LANDED `9c020e5c`** — guard registration; dry-run 13 jobs, 0 unconfigured,
+  **`kicked: []`**. Plist bootstrapped 07:34 on David's "install it" → **15 dynasty labels**.
+- **DG-101 `ae2309bf` + DG-112 `d5f4ede4` — DATABRICKS RETIRED on David's word.** Workspace job
+  destroyed, 0 jobs remain, `infrastructure/` deleted, local `.databricks/` cache cleaned.
+  **⚠ CORRECTION TO THE MASTER PLAN'S "URGENT" ALARM (:814): the job NEVER RAN — 0 runs ever,
+  live schedule PAUSED all along (dev-mode bundles auto-pause, so the repo's UNPAUSED never
+  took effect). Zero compute billed. The risk was LATENT (a `-t prod` deploy would have armed
+  a job firing 60×/hour), never active.** Doc banners on roadmap.md + storage-strategy.md.
+- **DG-106 FILED (post-freeze, needs David's choice):** `contracts` re-dumps the whole table
+  every capture — **19.30GB in 14 files, 61% of the tree**, ~1.6GB each, daily. This falsified
+  my own "~$0.60/mo" figure in DG-100: real growth is ~1.7GB/day ≈ 51GB/month compounding.
+  Remedies: weekly cadence / content-addressed pointers / gzip.
+- **MACHINE RESCUE:** 36 orphaned CPU busy-loops from the frontend lane's flake-under-load test
+  ran ~45% CPU each for 90+ min — **load average 63**, `/api/health` 8.75s. Killed → health
+  0.35s. Root cause: `jobs -p` does NOT return background subshell PIDs under `zsh -c`, so its
+  cleanup `kill` killed nothing.
+- **THREE FALSE SIGNALS IN ONE MORNING, ONE ROOT — a single reading is not evidence until you
+  check the conditions it was taken under:** (1) the 4.6s players-API "defect" was pure load
+  contamination (clean: 0.13-0.27s API, 199ms click-to-render; fully retracted, no ticket);
+  (2) a 62ms response that was a **404** nearly became a false all-clear — check the status
+  code; (3) MY OWN pause-guard falsely reported "backfill still running" because
+  `pgrep -f <pattern>` matches sibling monitors naming the pattern — two watchers matched each
+  other. **Monitor STATE (the receipt a run writes), never process names.** Nothing harmed.
+- **Kill test nobody planned:** a backfill batch killed mid-run left 8 complete verified objects,
+  **ZERO partial objects**, and NO marker — the append-only contract proving itself under
+  abnormal termination.
+- Known, deliberately unfixed pre-freeze: the daily sync sha256s all 31.8GB to learn sizes it
+  could `stat()` (~10s CPU/day); one-line fix, post-freeze.
+
+
+**⛔ SPRINT TAIL — CORRECTED 2026-08-30 by an adversarial closeout audit. The line "the tail is
+only Tuesday 09-01" was FALSE and is retracted.**
+- **MON 08-31: two launchd jobs have NEVER fired** (`launchctl print` → `runs = 0`): 07:00
+  `dynasty-nflverse-vintage-sync` (the peer lane calls it "the last proof needed before the
+  freeze") and 12:00 `dynasty-replay-verify` (DG-050's first scheduled fire).
+- **⛔ THE TUESDAY CHECK IS STRUCTURALLY BLIND — fix it before Tuesday.** The spec (:1035-1037)
+  reads `launchctl list`'s exit-status column expecting 0, **but that column reads 0 for a job
+  that has NEVER RUN** (proven on five labels; all three Tuesday-only jobs show `runs = 0`). Use
+  `launchctl print gui/501/<label> | grep -E 'runs|last exit code'` and require **runs ≥ 1 AND
+  exit 0**. Same failure class as this session's two retractions.
+- **A "15 labels, all exit 0" ops green line is materially misleading**: 5 of 15 have never run.
+- Wed-Fri buffer minus **DG-102** (pre-freeze on its ticket/board/queue, now unblocked).
+- **PLUG THE LAPTOP IN**: battery `sleep 45` vs AC `sleep 0`; macOS never replays
+  StartCalendarInterval jobs it slept through.
+
+**⚠ SELF-CERTIFIED CLOSEOUTS ARE NOT TRUSTWORTHY — this session proved it twice.** A 3-auditor
+read-only sweep over its own closeout found: a FALSE tail claim, a landed ticket (DG-105) with no
+board row at all, the program's controlling ticket (DG-091) still reading "todo · POST-FREEZE ·
+nothing built" after two phases landed, and a resume brief (DG-045) still instructing work that
+had already landed. **Audit the closeout before the user reads it.** Also corrected: do NOT
+generalise the latency retraction to "never slow" — a cold first request measured 10.26s, then
+0.209s; cold-start latency is real and unmeasured.
+
+**⭐⭐ DG-091 FRONTEND PROGRAM COMPLETE 2026-08-30 — TEN TICKETS, ~24 HOURS, ALL LIVE.**
+Full record: `dg-build/closeouts/2026-08-30-DG091-PROGRAM-COMPLETE.md`. Phase 2B lands: DG-115
+`d18c4610` (token foundation + the verdict-hue ban RE-POINTED, not deleted — red/green legal only
+in `--dg-up`/`--dg-down`, still fails on buy/sell styling), DG-117 `ceba40e1` (the 185px/665px
+page-scrolls fixed), DG-116 `d9a89b87` (Trade Lab rebuilt; both pricings plainly, no blended
+verdict), DG-114 `ba2e25a6` (rail 11→5, parked out, **390px bottom-tab phone shell**), DG-113
+`58f5016f` (verdict-first morning read + "Worth a look" recommendation cards), DG-118 `89110a22`
+(the gate: 3 URLs → 23 tests over every destination at both widths under both motion paths, with
+a COVERAGE LOCK). Verified live: 7 surfaces × 2 widths, zero overflow, zero raw tokens; suite
+402→575. **ACCEPTANCE IS DAVID'S WORD ON A SEASON MORNING — NOT YET GIVEN.**
+**THE STRUCTURE THAT MADE IT TRUSTWORTHY (repeat it):** Tower seat (read-only preflight) +
+FIREWALLED Studio seat (designs from the LIVE rendered product only — no tickets, no source, no
+internal vocabulary; ~/frontend-studio never touched) + crew lanes behind a 4-refuter panel with
+an HONESTY lens weighted heaviest. ~160 findings fixed pre-land.
+**THE ONE LESSON ABOVE ALL:** replacing a raw token with prose is an ACT OF AUTHORSHIP — confident
+prose lies in ways an opaque token cannot. DG-113 read the producers and KILLED THREE OF THE
+DESIGN SPEC'S OWN EXAMPLE CLAUSES as unsupported. **Read the producer, never a plausible reading.**
+**AND THE FAILURE MODE THAT RECURRED THREE TIMES IN ONE SESSION** (orphaned busy-loops faking a
+latency defect; a retraction that was itself half-wrong; "the tail is only Tuesday" being false):
+**a reading taken without checking the conditions behind it.** Same shape as the old visual gate
+lying (3 pass/4 fail on one tree) and `launchctl list` reporting exit 0 for a never-run job.

@@ -339,7 +339,17 @@ the gate; make the run deterministic (post-settle / reduced-motion) and retire t
 Note the rendered fg `#767a7e` also differs from the declared `--dg-text-muted` value — the
 build phase should find what dims it before retuning tokens blind.
 
-**Decisions only David can make (surface with the brief, don't bury):**
+**⭐ DAVID'S DESIGN PANEL, 2026-08-30 — four of these are now RULED (verbatim labels):**
+- **Trade voice: "Both prices, plainly"** — state the arithmetic on both pricings and name the
+  disagreement; NO blended take/pass imperative (that would need him to bless the weighting).
+- **Parked items: "Remove from nav entirely"** — Rookie Board / Waiver Radar / Research Assistant /
+  Project Tracker leave the rail, URL-reachable only.
+- **Delta colors: "Green up / red down"** — ⚠ this reopens the enforced verdict-hue ban
+  (`styles/tokens.test.js:83-110`): re-point it at genuine buy/sell styling; direction color is
+  legal. The two-lane law (blue = model, amber = market) is unchanged and must not blur into it.
+- **Phone: "Build the phone shell now"** — the 390px app shell is IN, not deferred.
+
+**Decisions still only David can make:**
 - `?player=` URL addressability (reverses the recorded I3 deferral) — recommended yes.
 - ~~Rewording the byte-locked contracts~~ — **answered by tonight's ruling**; replacement prose
   ships in this brief's round-trip for his review.

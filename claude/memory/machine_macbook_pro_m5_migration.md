@@ -86,3 +86,15 @@ this job on the M5; every prior success was a manual run inheriting Terminal's e
 
 **Claude Code's auto-mode classifier blocks `launchctl bootout/bootstrap` and `git push`.** Not a
 permissions problem to debug — hand David the `!` one-liner and he runs it.
+
+## `jobs -p` orphans background subshells in `zsh -c` (learned the hard way 2026-08-30)
+A load-generation test wrote the obvious thing:
+`zsh -c 'for i in {1..12}; do (while :; do :; done) & done; LOADPIDS=$(jobs -p); ...; kill $LOADPIDS'`
+**In a non-interactive `zsh -c`, `jobs -p` returns NOTHING for those subshells**, so `kill` killed
+nothing and every loop was orphaned to PID 1 when the parent exited. Three invocations left **36
+spinners running 90+ minutes**, load average 63-84, machine-wide degradation — and it silently
+**contaminated every performance number measured in that window** (two sessions each reported a
+latency figure that had to be retracted).
+**Do instead:** capture each PID explicitly — `(while :; do :; done) & LOADPIDS="$LOADPIDS $!"` —
+or install a `trap 'kill $LOADPIDS' EXIT`. **And verify after:** `ps aux | grep -c "while :"`.
+Generating load to test a flake is the right technique; the cleanup is the part that needs proof.
