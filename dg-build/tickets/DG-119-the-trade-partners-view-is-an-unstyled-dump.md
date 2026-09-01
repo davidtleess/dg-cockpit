@@ -1,6 +1,6 @@
 # DG-119 — The trade partners view is an unstyled dump: who to call, buried in 6,401 pixels
 
-**Layer:** 6 · **State:** todo · **Lane:** Davids-MacBook-Pro-66209 · **DG 3.0** · **frontend-only · DG-091 follow-on**
+**Layer:** 6 · **State:** done · **Lane:** Davids-MacBook-Pro-66209 · **DG 3.0** · **frontend-only · DG-091 follow-on**
 **Source:** David, 2026-08-30: *"do the trade partners view and the raw token"*. DG-116 made this
 conspicuous and deliberately did not fix it; DG-114 moved it under Trades. Measured on the LIVE
 product at 1440 (screenshot: session scratchpad `partners/partners-1440.png`).

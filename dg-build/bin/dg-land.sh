@@ -97,6 +97,58 @@ if ! "$PY" -m pytest -q; then
   exit 1
 fi
 
+# --- the frontend gate (DG-102) -----------------------------------------------
+# pytest cannot see UI breakage. The frontend suite sat red on main 08-28→08-29
+# and was only caught inside an unrelated land. Fifteen frontend tickets landed
+# through this gate over the 08-30 weekend without it running once.
+#
+# ALWAYS-ON, not diff-conditional: a backend-only change can break the frontend
+# through OpenAPI drift, which is precisely the case a "did the diff touch
+# frontend/?" test would wave through. Measured cost on main: 5.6s for
+# typecheck + lint + vitest + banned-language + build.
+#
+# SCOPE, stated so nobody trusts it further than it earns: this runs `npm run
+# gate` — typecheck, biome lint, vitest, the banned-language scan and a vite
+# build. It does NOT run Playwright, so it is not visual or a11y coverage; the
+# visual-smoke evidence bundles additionally run under prefers-reduced-motion,
+# so the default-motion path readers actually see has no axe coverage at all.
+if [[ -f frontend/package.json ]]; then
+  echo "→ running frontend gate (typecheck · lint · vitest · banned-language · build)"
+  # npm here is nvm-managed and is NOT on a minimal PATH — `command -v npm`
+  # returns nothing under launchd or a bare `env -i` shell. Same class as the
+  # backup.sh nvm-PATH abort of 08-27 and the gcloud CLOUDSDK_PYTHON miss fixed
+  # on 08-31. Resolve to an absolute path, and REFUSE rather than skip if it is
+  # absent: a gate that silently does not run is worse than no gate, because it
+  # reports success. (That is exactly how the model-resolution gap survived.)
+  NPM_BIN=""
+  if command -v npm >/dev/null 2>&1; then
+    NPM_BIN="$(command -v npm)"
+  else
+    for _c in $(ls -d "$HOME"/.nvm/versions/node/*/bin/npm 2>/dev/null | sort -V) \
+              /opt/homebrew/bin/npm /usr/local/bin/npm; do
+      [[ -x "$_c" ]] && NPM_BIN="$_c"
+    done
+  fi
+  if [[ -z "$NPM_BIN" ]]; then
+    echo >&2
+    echo "error: frontend/package.json exists but npm could not be resolved." >&2
+    echo "       Not merging — refusing to report a gate that never executed." >&2
+    echo "       Looked on PATH, then ~/.nvm/versions/node/*/bin/npm, then Homebrew." >&2
+    exit 1
+  fi
+  # node lives beside npm; npm scripts spawn it by name, so put that bin dir on
+  # PATH for the subshell rather than relying on the caller's environment.
+  if ! ( cd frontend && PATH="$(dirname "$NPM_BIN"):$PATH" "$NPM_BIN" run gate ); then
+    echo >&2
+    echo "error: frontend gate failed after rebase. Not merging." >&2
+    echo "       Same rule as the pytest gate — the failure may be someone else's" >&2
+    echo "       change meeting yours for the first time." >&2
+    exit 1
+  fi
+else
+  echo "→ no frontend/package.json — frontend gate not applicable"
+fi
+
 # --- merge --------------------------------------------------------------------
 # The merge is built on a DETACHED head in a throwaway worktree and pushed as
 # HEAD:$BASE, so the base branch is never checked out here — it may be checked

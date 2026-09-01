@@ -544,3 +544,47 @@ DESIGN SPEC'S OWN EXAMPLE CLAUSES as unsupported. **Read the producer, never a p
 latency defect; a retraction that was itself half-wrong; "the tail is only Tuesday" being false):
 **a reading taken without checking the conditions behind it.** Same shape as the old visual gate
 lying (3 pass/4 fail on one tree) and `launchctl list` reporting exit 0 for a never-run job.
+**⭐ DG-091 FINISHING PASS 2026-08-30 (David: "do the trade partners view and the raw token") — BOTH
+LANDED + LIVE, program now 12 tickets.** DG-119 `6f766032`: partners view → "Who to call", framed
+cards with one producer-entailed sentence each, **6,401px → 1,378px (−79%)**, caveat 11→1.
+DG-120 `b1c532d7`: receipts now split **IDENTIFIERS (stay raw + copyable — they are addresses)**
+from **MESSAGES (must be prose)**; the render rule now FAILS a snake_case message inside
+`[data-receipt]` so the exemption cannot be a hiding place. Suite 575→621.
+**THE FINDING WORTH KEEPING FOREVER:** the partners card printed *"How recently they've traded —
+0.00"* for all eleven teams. `activity_recency_score` is a **literal 0.0** at
+`league_opportunity_map.py:185` — never computed, no input exists. **The product was telling David
+his league had been quiet, from a number that was never measured.** A zero is not a measurement
+until you read its producer; the copy now says the part is not tracked, and a test couples that
+sentence to the producer literal. Same family as the three earlier false-prose catches — **read the
+producer, never a plausible reading** — and the sharpest instance, because this one asserted a
+football fact about his league.
+Also filed, unbuilt: **DG-121** — the served-bundle-drift detector (DG-076's deferred half; the
+week-stale bundle of 08-29 has a README ritual and no detector).
+
+
+**⛔ 2026-08-31 — THE DG-091 CLOSEOUT WAS AUDITED AND WAS WRONG IN NINE PLACES. Corrections:**
+- **FIFTEEN tickets landed, not ten or twelve** (both numbers appeared, in four different
+  artifacts). **EIGHT nav surfaces, not seven.** The gate is **25 tests, not 23**, and its
+  determinism was **4 consecutive runs on the 23-test version**, not 8/8 — the 25-test gate has
+  never been shown stable. **"~160 findings fixed" is UNSUPPORTED** — 13 of 15 tickets carry no
+  acceptance record at all.
+- **"Zero raw pipeline tokens on screen" is FALSE as plain English.** `renderRule.ts:140` audits
+  aria-label/alt/placeholder but **NOT `title`**, by design (`:35`) — and raw keys are actively
+  placed in `title=` on visible prose (`model_multi_vintage_ambiguous`,
+  `thin_unrostered_pool_below_min_4`, …). → **DG-123**
+- **LEAGUE IS UNBUILT AND WAS REPORTED CLEAN: 35,475px at 1440** (26× the partners view the
+  closeout celebrated cutting 79%), 8 cards none naming a team, one sentence rendered 16×,
+  "Unknown team" ×6 while the payload carries the names. **The visual gate passes it — it has no
+  page-length or repetition assertion.** → **DG-122**
+- **A SECOND saturated scoring term** one line above the one DG-119 caught
+  (`divergence_density_score` = 1.0 for all 11 partners). → **DG-124**. Wider rule earned:
+  **never describe a component as a reason for a ranking without first proving it VARIES across
+  the rows being ranked.**
+- **THE LATENCY RETRACTION WAS OVER-CORRECTED — third error on one issue.** `/api/health` measures
+  **4.577s COLD**, 0.34-0.40s warm. The original 4.6s was real as a cold-first-hit; "no latency
+  problem exists" is as wrong as the original claim. **A correction is a NEW CLAIM that needs its
+  own evidence, not a licence to generalise in the opposite direction.**
+- **"Nothing can be silently slept through" is a power READING dressed as a guarantee** — AC
+  `sleep 0` kills idle sleep only; lid-close still sleeps; unplugging restores `sleep 45`.
+**THE STANDING PRACTICE THIS EARNS: audit the closeout with independent read-only agents BEFORE
+the user reads it. It has now caught serious errors twice running.**

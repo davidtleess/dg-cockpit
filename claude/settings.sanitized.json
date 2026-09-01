@@ -105,5 +105,10 @@
       "**routine under <user>/ prefix**: none configured"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "permissions": {
+    "allow": [
+      "Bash(git push *)"
+    ]
+  }
 }

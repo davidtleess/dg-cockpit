@@ -115,8 +115,63 @@ check "ticket worktree survives the failure"     test -d "$SB3/wt/DG-999"
 check "ticket branch survives the failure"       git -C "$SB3/trunk" show-ref --verify --quiet refs/heads/ticket/DG-999
 check "ticket State still todo"                  grep -q '\*\*State:\*\* todo' "$SB3/build/tickets/DG-999-test-ticket.md"
 
+# --- DG-102: the frontend gate ------------------------------------------------
+# Scenarios 1-3 above already prove the SKIP path: their sandboxes carry no
+# frontend/package.json and land fine. What follows proves the gate actually
+# FIRES — the thing a gate is worth nothing without, and the exact property that
+# was missing when 15 frontend tickets landed through a pytest-only gate.
+add_frontend() { # add_frontend <sandbox>
+  mkdir -p "$1/wt/DG-999/frontend"
+  printf '{"name":"fe","private":true,"scripts":{"gate":"exit 0"}}\n' \
+    > "$1/wt/DG-999/frontend/package.json"
+  git -C "$1/wt/DG-999" add frontend/package.json
+  git -C "$1/wt/DG-999" commit --quiet -m "DG-999 adds a frontend"
+}
+fake_npm() { # fake_npm <sandbox> <exit-code> — a stand-in for nvm's npm
+  mkdir -p "$1/fakebin"
+  printf '#!/bin/sh\nexit %s\n' "$2" > "$1/fakebin/npm"
+  chmod +x "$1/fakebin/npm"
+}
+out_has() { # out_has <pattern> — grep the captured $OUT without quoting hell
+  printf '%s' "$OUT" | grep -q "$1"
+}
+run_land_env() { # run_land_env <sandbox> <PATH> <HOME> [args...]
+  local sb="$1" p="$2" h="$3"; shift 3
+  set +e
+  OUT="$(DG_REPO="$sb/trunk" DG_BUILD="$sb/build" DG_WT_ROOT="$sb/wt" \
+        PATH="$p" HOME="$h" "$DG_LAND" DG-999 --from base "$@" 2>&1)"
+  RC=$?
+  set -e
+}
+
+echo "scenario 4: a RED frontend gate refuses the land"
+make_sandbox; SB4="$SB"; add_frontend "$SB4"; fake_npm "$SB4" 1
+run_land_env "$SB4" "$SB4/fakebin:/usr/bin:/bin:/usr/sbin:/sbin" "$SB4"
+check "exits nonzero"                            test "$RC" -ne 0
+check "says the FRONTEND gate failed"            out_has "frontend gate failed"
+check "origin/base did NOT advance"              sh -c "git -C '$SB4/origin.git' log -1 --format=%s base | grep -qx 'base commit'"
+check "ticket State still todo"                  grep -q '\*\*State:\*\* todo' "$SB4/build/tickets/DG-999-test-ticket.md"
+
+echo "scenario 5: a GREEN frontend gate lets the land through"
+make_sandbox; SB5="$SB"; add_frontend "$SB5"; fake_npm "$SB5" 0
+run_land_env "$SB5" "$SB5/fakebin:/usr/bin:/bin:/usr/sbin:/sbin" "$SB5"
+check "exits 0"                                  test "$RC" -eq 0
+check "the frontend gate actually RAN"           out_has "running frontend gate"
+check "origin/base got the merge commit"         sh -c "git -C '$SB5/origin.git' log -1 --format=%s base | grep -q '^DG-999: '"
+
+echo "scenario 6: frontend present but npm unresolvable REFUSES (never silently skips)"
+# The failure mode this exists to prevent: a gate that cannot run, reports
+# success, and is trusted. Same shape as the model-resolution gap and the
+# launchd runs-counter — absence read as fine.
+make_sandbox; SB6="$SB"; add_frontend "$SB6"
+run_land_env "$SB6" "/usr/bin:/bin:/usr/sbin:/sbin" "$SB6"
+check "exits nonzero"                            test "$RC" -ne 0
+check "names npm as the reason"                  out_has "npm could not be resolved"
+check "refuses rather than reporting a pass"     out_has "never executed"
+check "origin/base did NOT advance"              sh -c "git -C '$SB6/origin.git' log -1 --format=%s base | grep -qx 'base commit'"
+
 # --- verdict ------------------------------------------------------------------
-rm -rf "$SB1" "$SB2" "$SB3"
+rm -rf "$SB1" "$SB2" "$SB3" "$SB4" "$SB5" "$SB6"
 echo
 if [[ "$FAILURES" -gt 0 ]]; then
   echo "✗ $FAILURES check(s) failed"

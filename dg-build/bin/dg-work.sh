@@ -80,6 +80,21 @@ SHARE_PATHS=(
   # 190 MB, gitignored, and NOT optional: three contract tests shell out to a
   # node scanner and die with ERR_MODULE_NOT_FOUND without it (DG-037 §3).
   "frontend/node_modules"
+  # The DEPLOYED models. Measured 2026-08-31: without this, a land worktree has
+  # only the TRACKED v1 pickles -- v2_manifest.json and every served run dir are
+  # gitignored -- so engine_b_service's manifest read fails, logs an error nobody
+  # sees, and `_v2_bundles.get(position) or self._v1_bundle` (engine_b_service.py
+  # :137) silently scored EVERY position with engine_b_v1 while production served
+  # v2/v3. The gate was validating a different model than the one that ships.
+  # It also left the 7 QB-1 frozen-boundary contract tests skipping on every
+  # land ("F25 frozen product set absent"), which is how DG-028's registry drift
+  # went unnoticed for three days.
+  # share_path handles the mixed tracked/ignored tree correctly on its own:
+  # tracked dirs are made real and recursed, ignored children symlinked -- so
+  # this needs no run-id list and survives a retrain.
+  # Proven: worktree went 177 passed/7 skipped -> 184 passed, and bundles went
+  # NONE -> QB engine_b_v2_qb, RB engine_b_v2_rb, WR engine_b_v2_wr, TE engine_b_v3_te.
+  "app/data/models"
 )
 
 # Directories that must exist as REAL directories in the worktree even though

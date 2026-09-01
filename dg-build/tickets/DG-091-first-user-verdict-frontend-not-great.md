@@ -1,6 +1,6 @@
 # DG-091 — David's first-user verdict: "the front end was not great" — all four dimensions
 
-**Layer:** 6  ·  **State:** IN BUILD — phases 1 + 2A LANDED AND LIVE  ·  **Lane:** —  ·  **DG 3.0**  ·  **frontend-only**
+**Layer:** 6  ·  **State:** ALL PHASES LANDED (15 tickets) — acceptance pending David's word  ·  **Lane:** —  ·  **DG 3.0**  ·  **frontend-only**
 **⚠ THE "POST-FREEZE build" LINE BELOW IS SUPERSEDED:** David ordered *"create a sub agent workflow with tower, studio and whoever else is needed - and start building"* (2026-08-29) and the program has been building since. Original text kept for provenance.
 **Source:** David, 2026-08-29 evening, closing his first real day using the product. Verbatim:
 **"to be honest the front end was not great."** Asked what grated, he selected ALL FOUR:
@@ -70,8 +70,10 @@ plainly, NO blended take/pass* · parked surfaces *removed from nav entirely* ·
 red-down* deltas (**reopens the enforced verdict-hue ban — re-point it at genuine buy/sell
 styling, do not delete it**) · *build the phone shell now*.
 
-**PHASE 2B — OPEN.** The structural restyle per `DG091-STUDIO-SPEC.md` plus the defects the
-closeout audit found on the live product: **Trade Lab is visually unbuilt at every width** (bare
+**~~PHASE 2B — OPEN~~ PHASE 2B LANDED 2026-08-30** (DG-115 `d18c4610` · DG-117 `ceba40e1` ·
+DG-116 `d9a89b87` · DG-114 `ba2e25a6` · DG-113 `58f5016f` · DG-118 `89110a22`), plus the
+finishing pass DG-120 `b1c532d7` + DG-119 `6f766032`. **FIFTEEN tickets total.** The defects
+listed below were the phase-2B input and are FIXED — kept for provenance, do not re-file: **Trade Lab is visually unbuilt at every width** (bare
 white native inputs/buttons on the dark shell); **Roster Audit scrolls the page sideways 185px
 and Model Trust 665px at 390**; the front page's "Current roster context" is still a debug dump
 wearing prose ("Starting lineup value: 97.39" beside "Weekly lineup strength: 97.39" — same
@@ -80,3 +82,23 @@ number, two names); **"xVAR" survived the dictionary** and the same quantity now
 internal QA language ("RB checked out in testing") and 22 of 26 rows read "Not scored yet";
 21 composited-contrast failures on `.dg-shell__parked-badge`; the visual gate visits only three
 surfaces and none of the broken ones.
+
+
+---
+
+## ⛔ WHAT THE 2026-08-31 AUDIT FOUND STILL OPEN — read this before believing any closeout
+The program's own closeout was audited by three read-only auditors before David read it. It
+contained five wrong numbers and two false claims; all are corrected in
+`closeouts/2026-08-30-DG091-PROGRAM-COMPLETE.md` (see its CORRECTIONS section). What that audit
+found STILL BROKEN, now ticketed:
+- **DG-122 — League is unbuilt.** 35,475px at 1440 / 44,020px at 390; 8 cards none naming a team;
+  "Something here is worth a look." ×16; "Unknown team" ×6 while the payload carries the names.
+  **The closeout called this surface clean. The visual gate passes it** — it has no assertion about
+  page length or repetition.
+- **DG-123 — `title=` is an unaudited channel** (`renderRule.ts:35,:140`) and raw keys are actively
+  placed there on visible prose. **"Zero raw pipeline tokens" is therefore true only under the
+  checker's own definition.**
+- **DG-124 — a second saturated scoring term** (`divergence_density_score` = 1.0 for all eleven
+  partners) one line above the one DG-119 caught.
+**Acceptance remains David's word on a season morning. It has not been given.** Thirteen of the
+fifteen landed tickets carry no acceptance record; only DG-111 and DG-118 do.
