@@ -289,7 +289,21 @@ else
 fi
 
 # --- claim the ticket ---------------------------------------------------------
-SESSION="${DG_SESSION:-$(hostname -s)-$$}"
+# Stamp the long-lived agent process, not this script. `$$` is dg-work.sh's own PID and dies at
+# exit, so a Lane PID stamped that way could never be checked with `ps -p` (found 2026-09-01: every
+# claim on the board was dead by construction). Walk up to the nearest `claude` ancestor; fall back
+# to `$$` only when there is none (a human at a terminal).
+owner_pid() {
+  local p=$$ c i
+  for i in 1 2 3 4 5 6; do
+    c="$(ps -o comm= -p "$p" 2>/dev/null || true)"
+    case "$(basename "${c:-}")" in claude) echo "$p"; return;; esac
+    p="$(ps -o ppid= -p "$p" 2>/dev/null | tr -d ' ')"
+    [ -n "$p" ] && [ "$p" != 1 ] || break
+  done
+  echo "$$"
+}
+SESSION="${DG_SESSION:-$(hostname -s)-$(owner_pid)}"
 python3 - "$TICKET_FILE" "$SESSION" <<'PY'
 import re,sys
 path,session=sys.argv[1],sys.argv[2]

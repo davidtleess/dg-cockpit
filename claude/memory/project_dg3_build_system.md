@@ -15,7 +15,7 @@ old "NOT covered, grep no match" claim predated the 08-19 rsync line.
 - `BOARD.md` — one line per ticket, rebuilt from ticket files, never from itself
 - `AGENT-HOOK.md` — the parallel-work protocol, written to be prepended to the product repo's
   `AGENTS.md`. **Tower does not commit to the product repo; David was given the exact command.**
-- `bin/dg-work.sh` — one worktree + branch per ticket, claims the ticket, guards tested
+- `bin/dg-work.sh` — one worktree + branch per ticket, claims the ticket, guards tested. **⚠ Lane PIDs: before 2026-09-01 (`c2b0b89`) the stamp was `$(hostname -s)-$$` — the SCRIPT's own PID, dead at exit — so no Lane PID on the board from before that date can be checked with `ps -p`; a dead PID proves nothing. Now stamps the nearest `claude` ancestor PID (alive for the session). Also: running dg-work.sh just to INSPECT a ticket stamps a claim on it — Tower did this to DG-128 at 12:32 on 09-01 and then misattributed the stamp to a peer. Inspect with `git worktree`/`git show` instead, or clear the Lane field after.**
 - `bin/dg-land.sh` — rebase, test, merge, push, clean up, under an exclusive lock.
   **✅ WORKS UNAIDED as of 2026-08-24 (DG-038 done, dg-build `16e75a8`).** The merge now builds
   on a DETACHED head and pushes `HEAD:$BASE`, so a base checked out in the trunk no longer kills

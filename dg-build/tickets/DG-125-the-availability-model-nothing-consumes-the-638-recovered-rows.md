@@ -1,6 +1,6 @@
 # DG-125 — The availability model: nothing consumes the 638 recovered rows
 
-**Layer:** 2 · **State:** todo · **Lane:** Davids-MacBook-Pro-84273 · **DG 3.0** · **backend / model**
+**Layer:** 2 · **State:** done (2026-09-01) · **Lane:** Greg · **DG 3.0** · **backend / model**
 **Source:** the 2026-08-31 attrition work (`58d3b20c`). That commit un-deleted 638 attrition
 player-seasons and labelled them `outcome_returned`, and its own HONEST LIMIT section says the
 job is half done: **the age coefficients did not move** (QB −0.0841 → −0.0850, RB −0.2162 →
@@ -51,3 +51,30 @@ described as predicting whether a player's career ended.
 **Done:** `P(returns)` estimated on the 2,879 complete-window rows; walk-forward-by-season
 performance reported per position with its calibration, not just AUC; the pipeline-event caveat
 recorded in the artifact; and the value composition left un-wired pending David's ruling.
+
+---
+
+## CLOSED 2026-09-01 — landed on origin/main
+
+- `4f05dff1` availability model. Walk-forward by season, expanding window, pooled **AUC 0.811**,
+  beats the base rate on every fold (Brier 0.1385 vs 0.1758). QB 0.833 / RB 0.824 / WR 0.825 /
+  TE 0.789. Calibration sound where the mass is (0.9-1.0 bin, n=767: predicted 0.953, observed
+  0.956); mildly OVERCONFIDENT in the middle bands, which is where the marginal players are.
+- `ee57d802` **the hurdle is LIVE**. Served value = `P(plays) x E[points | plays]`.
+  Live age effect **-0.2593 -> -0.4028** (market -0.3855). Ceiling population **fell 21 -> 18**.
+- `cd4a6234` publish sentinel producer (DG-126's consumer was inert without it).
+- `0ed368a5` TE college features tested and NOT promoted, recorded with lineage.
+
+All three constraints in this ticket were honoured: walk-forward not GroupKFold; the event is
+named as this pipeline's qualification filter (`EVENT_DEFINITION`); calibration reported, not
+just AUC. The composition was deliberately NOT wired in the same change as the estimate —
+David gave that word separately and directly.
+
+⚠ **`-0.4028` is ALIGNMENT WITH THE MARKET, NOT PROOF OF PROFIT.** It says the model stopped
+disagreeing with the market for a reason we know was wrong. Nothing in this product has ever
+graded a prediction against a real football outcome. Do not quote it as an edge.
+
+**FOLLOW-UPS THIS OPENED** (see the DG-127..DG-130 block): the availability model still fits at
+scoring time from the training CSV rather than a published artifact; and the coverage gap is
+untouched at 468/12,226.
+
