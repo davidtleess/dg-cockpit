@@ -20,7 +20,18 @@ morning. A representative pair:
 present" and "the survey said it was absent" really do imply staleness — unless the code is a minute
 old. The inference feels like knowledge, so the cheap confirming lookup never gets run.
 
+**2026-09-02 evening, my own work this time:** I wrote "Built 15:40–16:20" in a closeout for work whose
+worktree git created at 20:32 and whose commit is stamped 20:39. No source — I never ran `date`; the
+window was invented from a feeling of how long it had taken. Two independent auditors caught it
+(the branch reflog, the .venv birth time, the machine clock all agreed). The same draft called a
+writable symlink into the live 1.4 GB capture DB "read-only" because a rule said *don't write* — a
+rule about me became a property of the file.
+
 **How to apply:**
+- **Before writing ANY time about your own work, run `date` and `git log -1 --date=iso`.** Your sense
+  of when you did something is not a clock. A board row's timestamp is what later sessions sequence
+  events by.
+- A constraint you are under ("read-only for me") is not a property of the thing ("read-only").
 - Before reporting that something already exists, was already fixed, or is stale: `git log -S "<the
   symbol>"` or `stat`. **Five seconds.** Do it before speaking, not after being contradicted.
 - Distinguish *sequence* from *evidence*. "My command ran and the state is now correct" does not

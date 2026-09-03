@@ -1,6 +1,6 @@
 ---
 name: david_rulings_dg128_2026-09-01
-description: David's 2026-09-01 evening rulings on DG-128 (rank-everyone gate): no hypothesis slot, pre-committed taper, band ships with the number, wait for the 09:00 regen; plus the verified scope (115 not 498, Dell is censored out)
+description: David's 2026-09-01 evening rulings on DG-128 (rank-everyone gate): no hypothesis slot, pre-committed taper, band ships with the number, wait for the 09:00 regen; plus the verified scope (115 not 498; Dell has no 2025 row at all — not a floor case)
 metadata:
   type: project
   originSessionId: 63ad1fbb-22bf-497c-99a3-041ec8887667
@@ -39,9 +39,12 @@ self-identifies as Bob). "outsource some work to Bob" was a REAL queued human co
 - `_dvs_a` = Engine A = the PROSPECT model; needs `features["pick"]`+`["round"]` (+age) at :357-370. Draft
   capital is populated for exactly 80 players (all ENGINE_A prospects) and None for all 11,758 unranked.
   Zero `dvs_engine == "blend"` ever. "Starved, not missing" is CORRECT.
-- Garrett Wilson (WR) + Braelon Allen (RB) are in the 115. **Tank Dell is PRE_MODEL: no 2025 feature row
-  because `MIN_GAMES_THRESHOLD=4` (feature_assembly.py:177) drops sub-4-game seasons BEFORE a row exists** —
-  same censoring, one level up; lifting it changes the training population → not a no-slot fix.
+- Garrett Wilson (WR) + Braelon Allen (RB) are in the 115. **Tank Dell is PRE_MODEL because he has NO
+  2025 row at all — `player_snap_count` shows 2023 (11 games), 2024 (14), 2025 NONE; the runtime table's
+  only Dell row is 2023 (games_t 10); he is Sleeper-Inactive.** CORRECTED 2026-09-02 (verified in sqlite;
+  Greg `davidleess-0b` had it right): this line used to say the 4-game floor censored him, which was
+  wrong — there is no sub-4-game 2025 season to censor. No threshold change reaches him; see
+  [[project_lou_audit_verified_2026-09-02]].
 - Durability reproduces: Spearman **0.371** (n=1,733 pairs); prev≤8 → 10.3 games, prev≥14 → 14.0 → **26%**
   penalty where the gate applies 100%.
 - Trap 2 real at **`scripts/train_engine_b.py:206/308/386`** (NOT `src/.../models/train_engine_b.py`) — no

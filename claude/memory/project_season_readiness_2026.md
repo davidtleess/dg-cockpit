@@ -588,3 +588,5 @@ week-stale bundle of 08-29 has a README ritual and no detector).
   `sleep 0` kills idle sleep only; lid-close still sleeps; unplugging restores `sleep 45`.
 **THE STANDING PRACTICE THIS EARNS: audit the closeout with independent read-only agents BEFORE
 the user reads it. It has now caught serious errors twice running.**
+
+**⭐ FREEZE IS SOFT — David 2026-09-02 ~06:00 ET, verbatim: "im not so worried about freezing on 9.4 if the product isnt ready."** Readiness outranks the 09-04 date. Kickoff 09-10 is still the NFL's date, not his. Do not present "before Friday" as a constraint that forces a lower-quality option (e.g. the draft-card fill); present the quality option with its real duration. Tower relayed this to Fred (davidleess-45) and a0 verbatim. The three decisions still waiting on his word as of 09-02 06:00: DG-133 trunk pull + API restart; push of the unbacked ticket/DG-128 branch (12 commits, laptop only); prospect-card regen permission.

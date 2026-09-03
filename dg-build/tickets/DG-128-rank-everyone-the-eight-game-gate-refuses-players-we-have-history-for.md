@@ -1,6 +1,6 @@
 # DG-128 — Rank everyone: the 8-game gate refuses 115 players we already have history for
 
-**Layer:** 3 · **State:** todo · **Lane:** Davids-MacBook-Pro-77417 · **DG 3.0** · **backend / model · CHANGES PUBLISHED VALUES**
+**Layer:** 3 · **State:** done · **Lane:** Davids-MacBook-Pro-77417 · **DG 3.0** · **backend / model · CHANGES PUBLISHED VALUES**
 **Source:** David's ruling 2026-08-31 — *"rank everyone, always; confidence is a WIDTH, never an
 ABSENCE. Abstention as a product behaviour is over."* It is the ONLY one of his ranking rulings
 still unsatisfied, and it is the question he originally asked.
@@ -257,3 +257,395 @@ origin with the API up since 08-31 08:18 — pull + restart are sequenced after 
 **Still to do in this lane:** measurement (baseline vs branch, same table, per-player diff — the
 size in front of David before anything lands) · ultracode review workflow · land · closeout
 audited by independent agents before he reads it.
+
+## Build log 2026-09-01 late — the σ pin fails closed; one proposed candidate registered
+
+**`f2341aad` — the band refuses runs the served models did not come from.** Answering the DG-132
+lane's question (were σ_B/σ_A computed against the bundles `v2_manifest.json` points at, not
+`backtest_result_*.json`?) verified: manifest → `20260831T204458Z` for all four positions =
+`ENGINE_B_SIGMA_RUN`; tracked `latest.json` `model_version` → `20260502T153931Z` =
+`ENGINE_A_SIGMA_RUN`; `dvs_band.py` reads no backtest file. But only the A pin was checked, and
+only at test time — the B pin was a sentence in a docstring. `assert_band_sigma_runs_match_served_models()`
+now reads the two pointers the scorers load and stops `_active_pvos_from_engine_b` before it
+scores a row: `dvs_band_sigma_run_stale:<pos>:<run>` · `dvs_band_sigma_run_stale:A:<run>` ·
+`dvs_band_sigma_pointer_missing`. A position the manifest leaves at `None` is skipped (no B score,
+no band). Seven tests, red first; backend 6683 passed / 32 skipped. Consequence for a future
+retrain: promoting a manifest without moving the pin AND the σ constants halts the 09:00 chain at
+`run_pvo_refresh` with a bare token — loud by design.
+
+**Correction 3 — the partition fix is DG-133, not lane a0.** `tickets/DG-133-the-inference-
+partition-is-selected-by-the-wrong-flag.md` exists on the board (filed by the DG-132 lane,
+`davidleess-0b`); the "lane davidleess-a0" attribution in the section above was wrong. DG-128 does
+not touch `build_universe_pvo_batch.py:190` or `roster_auditor.py:636`; it rebases onto DG-133
+before the measurement. Awaiting David's confirmation of the owner.
+
+**Registered as PROPOSED, not built, not compared:** *n counts the last three seasons' games*
+(the taper's n reads `games_t + games_t_minus_1 + games_t_minus_2` instead of this season only).
+It would stop an injured veteran with two full prior seasons from shrinking toward the draft-day
+picture. It is a different pre-committed form, so it is a hypothesis slot under David's ruling —
+listed here so the candidate exists on paper with a date before anyone is tempted to try it
+against a ranking. Nothing in this lane has computed it.
+
+**Housekeeping:** `frontend/openapi.json` regenerated both times via `npm --prefix frontend run
+openapi-gen`, never edited by hand. Branch head `f2341aad`, 11 commits over `origin/main`
+`3bc9ecd2`.
+
+## Build log 2026-09-02 — rebased onto DG-133, the measurement re-run through the real selector, and what its audit corrected
+
+**Rebase.** `ticket/DG-128` rebased onto `origin/main` `f8995d3d` (DG-133, `davidleess-0b`) —
+head `fde9a5ca`, 12 commits, no conflicts. Worktree suite: 6759 passed / 33 skipped / 1 failed;
+the one failure is the intentional RED test below. No reader file carries the spelling DG-133's
+contract test scans for.
+
+**Measurement, run twice, identical.** The harness (scratchpad `dg128-measure/harness.py`,
+`harness2.py`) calls the producer's own `_active_pvos_from_engine_b` in two trees against the same
+feature table, availability fit and σ pins — read-only, and `find -newer` confirms nothing under
+either tree's `app/data` was written. Run 1 (09-01 late): baseline `3bc9ecd2` vs `e1eda9b5`, the
+feature slice pre-filtered to `feature_season == 2025` (505 rows). Run 2 (09-02, after the rebase):
+baseline `f8995d3d` vs `fde9a5ca`, the FULL 3,384-row runtime table, each tree's own DG-133
+selector picking. Both runs: 505 selected → 503 PVOs — the two the identity join orphans
+(`sleeper_id_missing`) are Nick Kallerup TE and Ke'Shawn Williams WR, 2025 UDFAs, orphaned in both
+trees, nothing to do with this ticket. Run 2 vs run 1 per player: 0 value, 0 percentile, 0 band
+differences in either tree.
+
+- Coverage: **388 → 463** of 503 with a number. 75 filled, every one `blend` basis; `games_t`
+  4:22 · 5:18 · 6:22 · 7:13; WR 25 · RB 22 · QB 19 · TE 9; draft round 1:11 · 2:8 · 3:12 ·
+  4:12 · 5:10 · 6:17 · 7:5; w_B 0.36–0.58, median 0.50. 40 stay blank: 39 with no draft-capital
+  row (undrafted) + Bo Melton (13 games, crosswalk says CB).
+- Already-ranked VALUES: **0 of 388 moved.**
+- Within-position percentile (`xvar_percentile_position` = `dvs_pct`, the player card): 384 of
+  388 moved; 325 up, 59 down; max +19.4 (Brissett 33.3 → 52.7), min −2.6. By position: QB n=36
+  mean **+12.5**, RB +1.2, TE +2.0, WR +1.3. Population QB 37→56 · RB 99→121 · WR 163→188 ·
+  TE 89→98.
+- Overall percentile (`xvar_percentile_overall`, the 468 denominator in David's ruling 4): the
+  harness never reached it (it stops before `build_universe_pvo_batch`). Recomputed with the served
+  rule (`universe_pvo_batch.py:120-133`) by the audit and reproduced by me: population **468 →
+  543** (not 583 — the fill is 75, not 115); 464 of 468 move, 461 up / 3 down (Taylor −0.4,
+  St. Brown −0.2, Achane −0.1), max +4.1, mean +2.8; 77 of the 80 Engine-A rookies move, mean +2.9.
+- Bands: 463 of 463 Engine-B numbers carry one. Measured players get ONE width per position —
+  WR 40.0 / QB 44.8 / RB 45.6 / TE 47.2 (± one RMSE in DVS points; no per-player information).
+  Blends: median width 65.2, min 33.4; five span the whole scale, 0–100 (Trubisky, Zach Wilson,
+  Trey Lance, Andy Dalton, Cam Akers). 220 of 463 touch a clamp edge (157 measured + 63 blend) —
+  truncated, not narrower.
+
+**The audit** (ultracode workflow `wf_33759416-71e` — 11 findings, each adversarially judged;
+6 survived, 5 refuted). Verified figures, wrong paragraph, again: my readout draft was wrong six
+times and was amended before David read it. What it corrected, on the record:
+
+1. The overall percentile above was unmeasured in the draft.
+2. **The 80 Engine-A rookies carry NO band.** `resources/prospect_cards.json` (82 cards, 80 with
+   a sleeper_id, static since `e1139c7d` 2026-06-07) is read verbatim by `_load_prospect_pvos`
+   (`build_universe_pvo_batch.py:54`); 0 cards carry `dvs_band_low`; `universe_pvo_batch.py`
+   copies the null; the frontend's `likelyRange()` returns null on null. On David's roster the
+   range would render under 22 veterans and under none of his 4 rookies (Mendoza, Cooper Jr.,
+   Bell, Black) — his ruling 3 unmet on his own screen. Fix chosen: regenerate the cards through
+   `scripts/refresh_prospect_cards.py`, the assembler's own path (`assemble_pvo(..., is_prospect=
+   True)`, DVS-invariance tolerance 0.01 with exit 1 on drift, identity/age/grade/CFBD fields
+   preserved) — one band producer, no load-time shim. RED first:
+   `tests/contract/test_dg128_prospect_cards_carry_the_band.py` fails naming all 80 scored cards
+   (untracked until it is GREEN). **The regeneration has NOT run: the auto-mode permission
+   classifier refused the command. It writes three tracked files inside the worktree
+   (`resources/prospect_cards.json`, `resources/prospect_cards.js`, `docs/validation/phase15-2026-
+   rookie-rank-refresh.md`), nothing under `app/data`, nothing on trunk. David's word asked for;
+   the peer correctly declined to run it in my stead.**
+3. "Range only" is a code split, not a toggle. `load_draft_capital` is called unconditionally at
+   `scripts/build_universe_pvo_batch.py:266` and raises `draft_capital_snapshot_missing`; the band
+   (`d7e97e03`) and the draft-capital injection (`fbbefa36`) are one commit series. Range without
+   the fill = land without `fbbefa36` and re-cut `70fb424b` + `f2341aad` + their tests. Not cut,
+   not tested.
+4. "~380 have no 2025 row, under the 4-game floor" was FALSE — subtraction on an overwritten 08-31
+   census, with Dell's case generalised to the group. This morning's artifact: 904 addressable /
+   453 unranked = 107 ENGINE_B-gated + 346 PRE_MODEL. Of the 346, measured against 2025 offensive
+   snaps in `nflverse_usage.db` (± counts, snap-games ≠ `games_t`): **~49** played 1–3 games (the
+   floor's actual cases), **~270** took no 2025 offensive snap at all (104 are 2026 rookies),
+   **~27** played 4+ but have no row (identity / stat-line). Lowering the floor reaches ~49; the
+   ~300 with no NFL production need a prior — a different fix from this ticket.
+5. **Dell is a no-2025-row case, not a floor case** (Greg, `davidleess-0b`; verified read-only by
+   me): `player_snap_count` has Dell (DellNa00 / 00-0038977) 2023 11 games, 2024 14 games, 2025
+   NONE; the runtime table holds only his 2023 row (`games_t` 10); 2024 rows survive the keep mask
+   at `feature_assembly.py:127` only when window-complete and the table carries no 2024
+   `feature_season` rows at all. The audit's own amended line ("played 1–3 games") was wrong on
+   him. No threshold change ranks him; a carried-forward row would. Sleeper-Inactive today, so
+   outside the 904.
+6. The fill closes **72** addressable blanks, not 75: Trey Benson, Robbie Ouzts and Cedrick
+   Wilson are Sleeper-Inactive.
+7. **The percentile move is a floor of rank-everyone, not a cost of this prior.** 69 of the 75
+   have their measured half BELOW the prior, so any form that corrects veteran staleness lands
+   them lower and moves incumbents MORE. Arithmetic on the same formula, no fit and no comparison:
+   the 75 at their measured half → QB +15.8 (served +12.2) · RB +6.0 (+1.2) · WR +4.3 (+1.3) ·
+   TE +4.1 (+2.0); all 75 at the bottom → +17.3 / +9.1 / +6.6 / +4.6. Holding the fill defers
+   the move; it does not shrink it.
+8. Band claims scoped. σ_B is one RMSE of the pre-hurdle `E[points | plays]` on the promotion
+   holdout seasons [2022, 2023] (`train_engine_b.py:158`), ≥4-game rows, n = `test_rows`
+   95/185/303/161 — reproduced by me, RMSE to 4 dp. Coverage at ±1 RMSE on that holdout:
+   **QB 73.7 / RB 71.9 / WR 68.3 / TE 70.2 %** (clamped to the DVS scale 74.7 / 77.3 / 71.9 /
+   76.4). "Likely range" means about two in three. It is not an error of the served P×E number,
+   and no served range has been graded against a real outcome. "min 20" is the clamp, not a
+   tight band.
+9. Denominators bridged: 505 selected → 503 PVOs (2 orphans) → 388 / 463 Engine B; + 80 Engine A
+   = 468 served / 543 after. The 583 above assumed all 115 gated rows fill. 498 / 954 was the
+   08-31 census, since overwritten — today 453 / 904.
+10. "Aged prior" was never registered as a candidate; struck from my draft.
+
+**Context recorded, NOT acted on** (from Greg, `davidleess-0b`, 09-02): Codex (Lou) reports a
+shrinkage `w = games_t / (games_t + 6)` toward the player's own games-weighted career PPG —
+career-state test −0.058 RMSE, CI [−0.102, −0.014]; the 4–7-game group −0.164 [−0.319, −0.016];
+QB/RB gain, ~0 for WR/TE. Same functional form as this ticket's taper with a DIFFERENT ANCHOR
+(own history instead of draft capital). Under David's ruling that is a candidate-prior comparison
+— a hypothesis slot — so nothing in this lane computes it, compares it or ranks with it. From the
+same message, a benchmark: Garrett Wilson with the gate bypassed measures 68.5 → WR33 of 199 /
+overall 86; the blend serves 72.9 / 88.2, pulled up by his 79.1 draft prior.
+
+**Open with David** (asked 09-02 morning; Greg is counselling him directly, not through me):
+(a) permission to run the prospect-card regeneration; (b) the fill — ship blend + range as built,
+range-only via the code split, or hold both; (c) push of dg-build.
+
+**Still to do in this lane:** regeneration on his word → GREEN the RED test → field-by-field diff
+of the 82 cards (only `dvs_band_low/high` and `assembled_at` may change; exit 0 and "DVS
+invariance: OK" required) → suite → commit · ultracode review workflow · land · closeout audited
+by independent agents before he reads it.
+
+**Feasibility, asked of this lane 09-02 05:40 (Greg's counsel to David, not a ruling — he put
+"own-history anchor by Thursday, else range only" to David and asked me whether it fits):**
+- *Own-history anchor by Thursday — NO at the quality bar.* (i) The games lags DG-127 added
+  (`738b7525`, in trunk `0def485d`) are in no served table yet — the runtime CSV is still the
+  09-01 09:00 file with zero `games_t_minus` columns; today's 09:00 regen is the first that could
+  carry them, and they are LEFT-CENSORED at the 4-game floor (`feature_assembly.py:318`): a 1–3-game
+  prior season reads as no season. "Career" from the table is two lagged seasons with short ones
+  invisible. (ii) It shrinks the INPUT `ppg_t` before Engine B scores, where this ticket blends
+  OUTPUTS after; σ_B was measured on unshrunk inputs, so the band needs a new pre-committed form.
+  (iii) w = g/(g+6) is 0.57 at g=8: ungated it moves the 388; gated to n<8 it reintroduces a
+  step at 8. (iv) The form was chosen by comparing it against the holdout — the thing David's
+  ruling says to stop at and register. It is a slot; only he registers it. Not built.
+- *Range-only this week — YES, feasible today.* Post-rebase hashes: injection `6c68492b`
+  (batch + its test only); sigma pin `848a3241` and fail-closed `60e86f4b` add hunks to the same
+  file and tests to the injection's test file. Split = drop `6c68492b`, re-cut those two hunks and
+  move their tests, drop the then-dormant snapshot/module `937e1109` and draft-age `b67a873d` so
+  no dead code lands, re-measure (expect 388/388 identical, bands only, ZERO percentile moves —
+  nothing for his gate), prospect bands on his permission, review, land. Half a day plus audit.
+- Either way the measurement is re-taken on the 09:00 table before landing — it was taken on
+  the 09-01 file, and `score_rows` fits at scoring time from the CSV.
+
+## Build log 2026-09-02 (cont.) — the range-only cut, built and measured
+
+David, 2026-09-02 (verbatim): "push the branch, run the regen, range-only this week."
+
+**Branches.** `ticket/DG-128-fill-held` = `fde9a5ca` holds the as-built 12-commit fill series
+untouched (unpushed until David runs the push). `ticket/DG-128` was reset onto `origin/main`
+(`f8995d3d`, DG-133) and rebuilt as the range-only series — ten commits, head `902bb788`:
+
+| commit | from | what |
+|---|---|---|
+| 25abd74c | 0aadf97b | train fix — all-NaN fit column kept |
+| d48f3f78 | f112279b | blend's Engine B component pays the hurdle |
+| 8ac643cf | da99c7f5 | band on the PVO (`dvs_band_low/high`) — fixture fixed, see below |
+| 973873e2 | b59bc2d2 | band reaches every surface; roster index admits the blend |
+| 64723ba4 | 848a3241 | **re-cut**: sigma-run pins only; the draft-capital `source_versions` lines went with the injection |
+| 4009c0d3 | 0133bffc | blend caveat token — fixture fixed, see below |
+| 363b073a | 2acc94bc | frontend range |
+| c121bbcd | 60e86f4b | **re-cut**: fail-closed `assert_band_sigma_runs_match_served_models()` now at the head of `_active_pvos_from_engine_b` |
+| 5915d1ae | fde9a5ca | no greying |
+| 902bb788 | new | the 80 rookie cards regenerated with the band |
+
+Dropped, not landed this week: `6c68492b` (injection), `937e1109` (draft-capital snapshot),
+`b67a873d` (Engine A reads draft-season age). `grep` over src/scripts/app/tests/frontend/resources
+finds no reference on the branch to anything those three introduced.
+
+**One fixture leaned on a dropped commit.** `test_dg128_assembler_ships_the_band.py` fed the
+blend fixture `age_at_nfl_entry` without `age`, which only reaches Engine A under `b67a873d`.
+On trunk's semantics Engine A v2 reads `age`; the fixture now states `"age": 22.0` (a rookie
+in his first season — the two ages coincide). Folded into the two commits that introduced it
+(`git rebase --autosquash`, non-interactive) so every commit is green on its own:
+per-commit run of the DG-128 + phase14/15 contract tests → 40 / 49 / 50 / 51 / 51 / 58 / 58.
+
+**Suite.** Python 6,741 passed / 33 skipped, serial (trunk archive: 6,695). Frontend 90 files /
+629 tests. Ruff: the branch's files pass; the tree's 11 errors are trunk's own (same 11 on the
+`f8995d3d` archive). `npm --prefix frontend run openapi-gen` on this tree reproduces the
+committed `openapi.json`, `types.gen.ts`, `zod.gen.ts` byte-for-byte.
+
+**Regen (David: "run the regen").** `scripts/refresh_prospect_cards.py` on this tree: exit 0,
+"DVS invariance: OK — all 74 scored players match baseline exactly". Field-by-field over all
+82 cards vs. the committed copy: `dvs_band_low/high` ADDED on the 80 scored, `assembled_at`
+moved on those 80, no other field changed, 2 watchlist cards carry the keys as null. All 80
+are Engine A → one σ_A a side, clamped to [0,100]; unclamped widths QB 80.0 (×3), WR 64.8
+(×17), TE 47.2 (×18), RB 40.8 (×8); the rest touch an edge. The validation doc's only diff is
+its `Generated:` stamp. `.js` mirrors `.json` (test pins it).
+
+**Re-measurement — range-only head `902bb788` vs. trunk `f8995d3d`, same table** (trunk's
+`app/data/features_runtime/engine_b_features_runtime.csv`, mtime Sep 1 09:00, 3,384 rows —
+the 09:00 chain had not fired at 06:01 EDT; the DG-133 selector picks 505 → 503 PVOs after
+the 2 crosswalk orphans). Harness `harness2.py`, output `out/branch3.json`:
+- 503 players, same set. **Every served field other than the band identical to trunk on all
+  503** (values, `dvs_pct`, engine, availability_p, caveats, decision_supported…).
+- 388 ranked before → 388 after; **0 filled, 0 lost, 0 value moves, 0 percentile moves**;
+  percentile population per position unchanged (QB 37 / RB 99 / WR 163 / TE 89).
+- **388/388 carry a band, 115/115 blank carry null.** All 388 are engine B, no blend fires
+  (no Engine A input for veterans without the injection — by construction).
+- Unclamped width = 2σ_B per position: WR 40.0 (103), QB 44.8 (25), RB 45.6 (58), TE 47.2
+  (45); **157 of 388 bands touch 0 or 100** (QB 12 / RB 41 / TE 44 / WR 60). That is the
+  form — σ_B is 20–23.6 points a side on a 0–100 scale — not a defect; worth David seeing.
+- Band contains the score and sits inside [0,100] for every one of the 388.
+- The fail-closed check ran for real against the worktree's served model pointers on this
+  measurement (it is the first thing `_active_pvos_from_engine_b` does) and passed.
+
+**Context for the registered slot, not this cut** (Greg `davidleess-0b`, verified twice with
+a0, read-only on `app/data/training/engine_b_features_v2.csv`, n=2,879 rows with
+`outcome_returned`, `feature_season<=2023`) — raw "posted a qualifying season at t+1 or t+2"
+rate by `games_t`: 4→46.3% (164) · 5→48.8 (166) · 6→56.3 (158) · 7→60.1 (163) · 8→59.9 (162)
+· 9→74.3 (148) · 10→73.1 (171) · 11→80.0 (165) · 12→80.2 (177) · 13→85.7 (182) · 14→89.7
+(194) · 15→86.1 (209) · 16→95.9 (339) · 17→92.5 (255) · 18→96.1 (127) · 19→98.4 (62) ·
+20–21→100 (37). No discontinuity at 8 (7 games 60.1%, 8 games 59.9%): a monotone ramp, and
+the 8→9 step (+14.4pp) is the max of 17 adjacent comparisons at per-point SE ≈ 3.8pp — do not
+read it as "the cliff is 9". Relevance: this is the empirical curve the pre-committed
+`w_B = n/(n+k)` approximates, so the form can be checked against it rather than assumed —
+when the slot is registered. Nothing here changes the range-only cut. Credit a0 for the
+caution and the framing.
+
+**Open.** Review (ultracode) → `dg-land.sh DG-128 --dry-run` → land. Pushes are David's
+(`git push` is classifier-blocked in this session; the `!` one-liners are in his hand).
+
+## Build log 2026-09-02 (late morning) — the pre-land review's findings, and an AMENDMENT to the pre-committed form
+
+The ultracode review of the range-only series confirmed six findings. All six are fixed on
+`ticket/DG-128`, series now ELEVEN commits on `f8995d3d`, head `d72f27dc`; the as-built
+`ticket/DG-128-fill-held` = `fde9a5ca` is untouched. Safety ref `backup/DG-128-pre-fold` =
+`902bb788` (the old head) is local.
+
+**1. AMENDMENT — Engine A is two heads, and the pre-commitment named one.** The 23:55Z form
+pinned σ_A from the v2 ridge's 2021 holdout (`20260502T153931Z`). The assembler tries the v3
+TE head first (`EngineAV3Scorer`, Head A Ridge over draft slot + college features, promoted
+`20260524T140748Z`, `engine_used = engine_a_v3_head_a_ridge`), and 22 of the 80 rookie cards
+are scored by it. Their bands carried the v2 ridge's error (23.6) around a number the v2
+ridge did not produce. Fix, in a separate dated commit (`c8cf0931`) rather than folded into
+the 09-01 commit that claims the pre-commitment — a pre-commitment amended is a visible
+event:
+- `DVS_SIGMA_A_V3 = {"TE": 29.7}` = the promotion's out-of-fold RMSE 2.7051 PPG (4-fold
+  leave-one-class-out over the 2018–21 classes, target best3of4_ppg) / P90 9.1 × 100. The
+  head's `te_v3_metadata.json` is unrecoverable; `scripts/promote_head_a_te_v3.py:136`
+  carries the RMSE it recorded as a constant, and the provenance test reads it from there.
+  ~~This is the ONLY surviving record~~ — CORRECTED 09-02 07:15 by the closeout audit: the
+  bakeoff artifact the constant was copied from survives, gitignored, in trunk's
+  `app/data/backtest/phase19/head_a_bakeoff_20260524T134221Z_826e5156.json`
+  (`positions/TE/ridge/candidate/oof_rmse = 2.7051`, plus `oof_logs/oof_TE_…826e5156.csv`).
+  Only the metadata JSON is gone. A re-run of the bakeoff is still a slot and still not needed.
+- `dvs_band(..., prior_head=)` selects it for a v3-scored prior and for a blend's unresolved
+  share; a v3 head for a position with no pinned error is refused, never defaulted to v2's.
+- The served effect: the 22 v3 TE cards widen by 6.1 a side (Sadiq 60.7→54.6 low; four
+  highs already clamped at 100). No veteran PVO changes — the universe batch never scores
+  through Engine A. Re-measured (`out/branch4.json` vs `baseline2`): still the band on 388
+  and nothing else; identical to `branch3` on every field.
+- The form is unchanged. The CONSTANT SET was incomplete. Not a candidate comparison.
+
+**2. The fail-closed assert had a hole: `manifest[pos] = None` was skipped** as "no B score,
+nothing to be stale." False — `EngineBService` falls back to its v1 bundle there
+(`engine_b_service.py:177`, `... or self._v1_bundle`), the number serves as `dvs_engine B`,
+and no error is pinned for v1. Now refused: `dvs_band_sigma_run_unpromoted:<pos>`. The
+test that pinned the skip is flipped. Today's manifest names all four positions at
+`20260831T204458Z`, so this changes nothing served; it changes what a failed retrain gate
+can do silently.
+
+**3. The v3 pointer is now pinned too.** `assert_band_sigma_runs_match_served_models` reads
+`app/data/models/head_a/v3_manifest.json` (gitignored like the B manifest; absent ⇒ the v2
+ridge serves every prospect and there is nothing to pin) and refuses a head at another run
+(`dvs_band_sigma_run_stale:A_v3:TE:<run>`) or a promoted position with no pinned error.
+**And the card regen now runs the assert** — it never did; it was the one path where the v3
+head actually serves. `ENGINE_A_V3_SIGMA_RUN` rides in `source_versions` on every veteran PVO
+and, new, on every scored card (cards had `source_versions: {}` — nothing was ever recorded
+there).
+
+**4. The roster band read 2.78:1.** `.dg-roster__band` used `--dg-text-muted`; the band
+prints mostly on rows whose model status does not apply (every prior-scored or blended
+player), and those rows carry opacity 0.55. The same defect the model-status toggle's CSS
+already documents for itself. The smoke fixture predated the band, so axe never had a band
+to measure: I gave its three prior-scored rows their σ_A band (six-line fixture diff), watched
+axe name exactly those three `.dg-roster__band` nodes at both widths (2.78 on #0a0e11),
+switched to `--dg-text`, watched it pass. The band is quieter than the number through size.
+
+**5. The label was spelled twice** — `range` hard-coded in the roster row, `Likely range` in
+the dictionary and on the player card. The roster now reads `fieldLabel("dvs_band_low")`:
+"Likely range 41 to 82" under the number. 390px overflow re-checked.
+
+**6. Prose describing the dropped fill** in five places (a test docstring that said this cut
+"arms" the imputer fix by consuming `games_t_minus_*`; "the first blend rows ever served";
+"keep David's blanks blank after the fix"; a commit message with the same claim; "carry the
+band keys as null" — the watchlist cards have NO band keys). All reworded to say what this
+cut does and what the held fill would.
+
+**Verification.** Python 6754 passed / 32 skipped at the tip; the full suite green at each of
+the first ten commits (an accidental full-suite-per-commit run — zsh did not split my file
+list — which is stronger than the per-commit file check I meant to run; the eleventh is the
+tip). Frontend gate 629 (was 621; 7 lint warnings pre-exist at the same count). OpenAPI
+regen: no drift. Roster smoke 4/4 green after the CSS fix; full smoke run in progress at
+time of writing. `dg-land.sh DG-128 --dry-run`: rebase no-op on `f8995d3d`, both gates,
+merge builds, `push --dry-run` accepted, nothing pushed.
+
+**What David should know before he reads a screen.** Ranges like "Likely range 46 to 100"
+are expected — σ_B is 20–23.6 a side, 157 of 388 veteran bands touch an edge. The TE rookie
+cards are wider than yesterday's by 6.1 a side and that is a correction, not a change of
+mind. The stale-run refusal is a NEW failure mode for the 09:00 chain and the card regen: a
+retrain or re-promotion that moves a manifest stops the refresh with a named error until
+`dvs_band.py`'s pins move with it — the re-pin is one constant per head, and the provenance
+tests will refuse a pin that does not match the artifact. DG-128 reaches his screen only
+after a second pull + restart (trunk is `f8995d3d` in the running API).
+
+## Closeout audit 2026-09-02 07:15 — what the three independent auditors corrected
+
+The closeout draft was audited (figures / prose / screen-path) before David read it. Corrections
+to claims made ABOVE in this ticket, so the ticket does not carry them forward:
+- "ONLY surviving record" for the 29.7 — FALSE, see the strikethrough above.
+- "the full suite passes at every commit" — NOT ESTABLISHED at the time it was written: after
+  the 06:33 fold every hash was rewritten and only the tip had been run in full. A detached
+  per-commit run (full pytest + vitest at each of the 11) was started 07:09 and finished 07:21:
+  ALL ELEVEN GREEN — Python 6696 → 6754 passed (32 skipped throughout), frontend 623 → 629,
+  monotonic, no failure at any commit (log: scratchpad `percommit/log.txt`). The claim is now true.
+- Second-pass audit (07:22): the batch also copies the 80 rookie cards' bands into their
+  ENGINE_A rows, so the served runtime will carry 468 non-null bands (388 vets + 80 rookies;
+  34 rookie bands touch an edge) — `grep -c dvs_band_low` would count 12,226 (nulls are
+  written), the proof is `grep -c '"dvs_band_low": [0-9]'`. Four refresh windows failed on
+  the DG-133 bug (09:00 on 08-31 and 09-01; 11:30 and 14:00 on 09-01), not two.
+- "wider than yesterday's" — both card regens were this morning (05:59 and 06:30); trunk's cards
+  carry no band. The low side widened 6.1 on 21 of 22 (Royer 6.0); the high side only where not
+  already clamped at 100 (four were).
+- "frontend 621 → 629" — trunk is 623 (vitest on a `git archive` of f8995d3d); the series adds 6.
+- "the accessibility gate" — there is none in the land path (`dg-land.sh` says so in its own
+  comment); axe runs only inside the hand-run Playwright smoke, which passed 25/25 at 06:48.
+- "stops the refresh with a named error" — true of the assert, but the chain is FAIL-SOFT from
+  David's seat: `run_pvo_refresh.py` records `status: aborted`, keeps yesterday's runtime pair
+  serving, and the chain continues; the token is only in `pvo_refresh.err.log` (the report's
+  `aborted_reason` is the CalledProcessError string). The check answered the DG-132 lane's
+  question; it is this lane's design, not a David ruling.
+- "reaches his screen after a second pull + restart" — INCOMPLETE. The band lives in the batch
+  artifact `universe_pvo_runtime.json` (live copy has 0 band keys) and the served frontend is a
+  gitignored `frontend/dist` built Aug 31 10:04 that nothing in the repo rebuilds. Pull + restart
+  + `npm run build` in trunk + the next PVO refresh from trunk (09:00 chain, or the 11:30/14:00
+  `dynasty-model-pvo-refresh` slots, which rebuild unconditionally) — one restart suffices, the
+  artifact and bundle are read per request. The running API process started Aug 31 08:18, so
+  DG-133 is not on his screen either until that restart. The trunk-bundle build gap deserves its
+  own ticket.
+- Player cards render "Likely range —" (a dash) for the 115 gated players; the roster row omits
+  the line. Neither is a fault.
+
+## LANDED 2026-09-02 07:43 — range-only cut on `main` at `1dff211f`
+
+Acceptance output (dg-land.sh DG-128, run by David from his own prompt after reading the audited
+closeout — typing it was his yes on the 29.7 amendment):
+
+    → rebasing ticket/DG-128 onto origin/main — Current branch ticket/DG-128 is up to date.
+    → running tests — Python gate green; frontend gate green
+    34 files changed, 2367 insertions(+), 201 deletions(-)
+    To https://github.com/davidtleess/dynasty-genius.git   f8995d3d..1dff211f  HEAD -> main
+    ✔ DG-128 landed on main and pushed. Worktree and branch removed.
+
+Also pushed beforehand by David: `origin/ticket/DG-128` (d72f27dc). The held fill remains on
+`ticket/DG-128-fill-held` (fde9a5ca) — **PUSHED by David 2026-09-02 ~11:45: `origin/ticket/DG-128-fill-held` = fde9a5ca (ls-remote verified).** The ⚠ below is history.
+
+Post-land, on David's "go" (07:44): `git pull --ff-only` → trunk `1dff211f`; `npm --prefix
+frontend run build` → `frontend/dist` 07:44, bundle `index-BZ1jEJNN.js` contains "Likely range";
+`launchctl kickstart -k` → API pid 4070 started 07:44:16, `/api/roster/audit` 200 with
+`dvs_band_low` present (null) on 27/27 roster rows. Bands arrive with the next
+`run_pvo_refresh` from trunk (09:00 chain; 11:30/14:00 slots rebuild unconditionally).
+Greg (davidleess-0b) told the head sha at 07:45; his DG-137 rebases onto `1dff211f`.
+
+⚠ `ticket/DG-128-fill-held` was a LOCAL branch in the product repo. dg-land removed the
+worktree, not the branch — verify with `git -C ~/dynasty-genius-product branch --list
+'ticket/DG-128*'` and push it on David's word before anything recreates a worktree over it.

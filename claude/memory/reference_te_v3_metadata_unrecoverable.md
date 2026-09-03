@@ -54,3 +54,11 @@ of touching disk. A required production artifact vanished with a green suite. Th
 test that a required-provenance artifact EXISTS on the real filesystem.
 
 See [[project_gate_integrity_and_te_validation]] and [[reference_symlink_write_through]].
+
+**What DOES survive (added 2026-09-02 by the DG-128 lane).** The head's out-of-fold error is
+not lost with the metadata: `app/data/backtest/phase19/head_a_bakeoff_20260524T134221Z_826e5156.json`
+(gitignored, in trunk's `app/data`; `positions/TE/ridge/candidate/oof_rmse = 2.7051`) and
+`oof_logs/oof_TE_…826e5156.csv` are the artifacts the promotion script's constant
+(`scripts/promote_head_a_te_v3.py:136`) was copied from. DG-128's σ_A_v3[TE] = 29.7 =
+2.7051 / P90 9.1 × 100 rests on them. A DG-128 closeout draft and ticket line called the
+script constant "the ONLY surviving record" — that was FALSE; corrected 09-02 07:15.

@@ -1,5 +1,9 @@
 {
-  "model": "opus[1m]",
+  "permissions": {
+    "allow": [
+      "Bash(git push *)"
+    ]
+  },
   "hooks": {
     "PermissionRequest": [
       {
@@ -105,10 +109,5 @@
       "**routine under <user>/ prefix**: none configured"
     ]
   },
-  "voiceEnabled": true,
-  "permissions": {
-    "allow": [
-      "Bash(git push *)"
-    ]
-  }
+  "voiceEnabled": true
 }
