@@ -20,7 +20,8 @@ metadata:
 - Both launchers (09:00 chain, 11:30/14:00 standalone label) run the script from trunk's checkout, so
   the pull alone made THIS ticket live; the restart was for DG-135's client.
 - dg-build local commits (closeout + board row + acceptance + live record `077fc54`) unpushed, ahead 3;
-  push only on David's word.
+  I held the push for David's word. **Provenance corrected 2026-09-02: that is MY convention, not a
+  rule David issued** — see [[feedback_my_conventions_are_not_davids_rules]].
 
 Related: [[project_dg135_landed_dg130_scoped_2026-09-02]], [[reference_sleep_catchup_guard]],
 [[feedback_check_when_not_just_what]], [[reference_symlink_write_through]].

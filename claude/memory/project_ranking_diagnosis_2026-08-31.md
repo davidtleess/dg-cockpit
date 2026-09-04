@@ -84,7 +84,11 @@ entirely; DG-092 guards it. See [[david_rulings_dg3]] and [[project_season_readi
   RB 0.593/0.788, WR 0.682/0.809, TE 0.641/0.789. TE moved OFF the never-gated te_v3 head
   onto te_v2, **dropping its two CFBD college features** (implicit, flagged, not a win).
 - **NGS reached deployed coefficients for the first time** — efficiency share RB 0.1%→2.5%,
-  TE 1.3%→16.6%, WR 3.0%→4.2%. So "premium data reaches ZERO coefficients" is NO LONGER
+  TE 1.3%→16.6%, WR 3.0%→4.2%. ⚠ **THOSE THREE PERCENTAGES DO NOT REPRODUCE (2026-09-03) — retired.
+  A verifier swept sixteen definitions and could not recover them; the measured raw |coef| share on the
+  served run 20260831T204458Z is QB 2.42% / RB 9.74% / WR 6.00% / TE 23.51%. The CLAIM they supported —
+  that NGS is in all four served pickles — stands on that independent measurement.** So "premium data
+  reaches ZERO coefficients" is NO LONGER
   TRUE. What survives: lagged PPG is still 51–83% of effect everywhere.
 
 ## ⚠ WHAT IS *NOT* FIXED — do not let the green chain imply otherwise

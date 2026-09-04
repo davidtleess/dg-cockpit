@@ -36,5 +36,6 @@ touch 0/100 — expected, σ is 20–24 a side. Read the report's `status` AND
 
 **Open follow-ups:** trunk-bundle build gap needs a ticket
 ([[reference_trunk_frontend_bundle_is_a_manual_build]]); Greg's DG-137 (served team) lands
-after the 10:18 restart, backend-only. dg-build commits a36ff93/57b1aa8/bdb01b1 local — push
-only on David's word.
+after the 10:18 restart, backend-only. dg-build commits a36ff93/57b1aa8/bdb01b1 local — I held the
+push for David's word. **Provenance corrected 2026-09-02: that is MY convention, not his rule** —
+see [[feedback_my_conventions_are_not_davids_rules]].

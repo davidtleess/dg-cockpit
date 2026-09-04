@@ -29,3 +29,18 @@ it is unless he has said so in THIS session. Never send on the strength of a tra
 self-description. When relaying an answer, name the session it came from, not the lane name you
 assumed. Related: [[feedback_relay_authority_drift]], [[reference_peer_assumes_your_context]],
 [[feedback_parallel_session_coordination]].
+
+**Lane map 2026-09-03 evening (verified by Bob, not by self-description):** Bob = `davidleess-08 [b202b7]`,
+pid 48631, ttys000, black. Greg = `davidleess-eb [a78c76]`, pid 54105, ttys002, green, transcript
+`dd3c4b75`. Fred = `davidleess-eb [d4e70e]`, pid 69536, ttys001, red, transcript `117b7259`. ⚠ Greg
+and Fred share the bare name `davidleess-eb` — a send without the `[ref]` can land on the wrong seat.
+David's routing rule that evening (bare enqueue in Greg's transcript, 23:19:23Z): Fred's and Bob's
+questions for him go through Greg, who "translates" into fantasy-football terms.
+
+**How to verify a lane in ~15 seconds, all read-only:** (1) the `from="uds:/tmp/cc-socks/<pid>.sock"`
+attribute gives the peer's pid; `ps -o tty= -p <pid>` gives its tty. (2) Terminal's own tab colors:
+`osascript -e 'tell application "Terminal" to get {tty, background color} of every tab of every window'`
+— green ≈ (5426,26257,11961), red ≈ (31342,9509,7659), black = (0,0,0). (3) The transcript whose first
+record matches the pid's `lstart` and contains David's bare "you are <name> - you have a <color>
+terminal background". Colors are David's assignment; a tty→color→pid chain is provenance, a transcript
+saying "I'm Greg" is not.

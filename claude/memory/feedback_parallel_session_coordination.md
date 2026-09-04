@@ -37,4 +37,19 @@ scheduled producers firing. "No conflict" has to be measured, not assumed.
 Pull immediately before editing, push immediately after. And do not edit `MEMORY.md` or a memory file
 while the other session is active; it is last-writer-wins with no git in that directory.
 
+**"I only committed my own files by name" does NOT isolate lanes — measured 2026-09-02.** A peer
+committed `BOARD.md` by name twice while closing its own ticket and told me twice it had left my
+files alone. It believed that, and it was wrong: `git add BOARD.md` takes the WORKING COPY, including
+whatever row the other lane has in progress. My two in-progress DG-134 board edits went out inside
+`ac0c6f5` and `aa7d714` — both messages about a different ticket (DG-141) — and were **pushed to
+origin/main before David gave the word for DG-134's push**, crossing his dg-build push rule without
+anyone intending to. Naming a file only isolates you when one lane writes it; BOARD.md is the file
+every lane always has dirty.
+
+**How to apply:** before committing in `~/dg-build`, run `git diff --stat` and look at BOARD.md
+specifically — `git add -p BOARD.md` if another lane is live. Afterwards, `git log -1 -S "<a phrase
+only your row contains>" -- BOARD.md` settles in five seconds whether a commit carried someone
+else's work. Do **not** rewrite pushed history to fix a cosmetic attribution error — that is the
+bigger mistake; report it and leave it.
+
 Related: [[project_dg3_build_system]], [[cockpit_session_identity]].

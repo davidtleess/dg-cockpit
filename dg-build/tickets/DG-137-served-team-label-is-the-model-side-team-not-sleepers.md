@@ -56,8 +56,12 @@ next artifact; Demercado's card shows Sleeper's team.
   the artifact half only changes when `run_pvo_refresh` next runs TRUNK's
   `build_universe_pvo_batch.py` green (09:00 chain, or the standalone label at 11:30/14:00) —
   every scheduled refresh 09-01 06:02 → 14:00 aborted on DG-133. `player.team` is in the capture's
-  semantic projection, so that first rebuild flips `vintage_changed=true` ONCE; nothing gates on it
-  (`daily_diff` reports `vintage_changed_no_score_delta`, an OK status).
+  semantic projection, so that rebuild moves `semantic_output_hash`; nothing gates on it
+  (`daily_diff` reports `vintage_changed_no_score_delta`, an OK status). **RETRACTED 2026-09-02: the word ONCE
+  was wrong — `vintage_changed` is true EVERY morning by construction (9 of 9 consecutive date pairs), because
+  `source_snapshot_captured_at` is hashed into `provenance_hash` at `model_forward_capture_driver.py:158`. See
+  DG-141. The 14:50 rerun recorded here is the clean counter-example: same `provenance_hash 9b8fd7bfae`, moved
+  `semantic_output_hash` — that is what actually detected the team change.**
 - Not pinned, by choice: `get_my_roster`'s `or "FA"` (`roster_auditor.py:481`) — pre-existing,
   needs three Sleeper mocks, and with the key-presence rule it is no longer load-bearing.
 

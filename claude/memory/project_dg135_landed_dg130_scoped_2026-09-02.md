@@ -1,37 +1,45 @@
 ---
 name: project_dg135_landed_dg130_scoped_2026-09-02
-description: DG-135 landed 60f6940f 09-02 15:29 and LIVE 21:34 (Fred pulled trunk to a1f1023f, rebuilt bundle, API pid 90590), DG-138/DG-139 filed, DG-130 scoped awaiting David's 4 decisions after the 09-03 morning read
+description: DG-135 LIVE and DG-139 landed c62783b1 09-02 22:18 (age fix, NOT live — needs pull+restart and the 09:00 rebuild); DG-140 filed and URGENT before the 09:00 chain; DG-130 scoped awaiting David's 4 decisions
 metadata:
   type: project
 ---
 
-**DG-135 landed on main `60f6940f` 2026-09-02 15:29 ET by Tower** (on DG-137's `862a1afb`). **LIVE 2026-09-02 21:34** —
-Fred pulled trunk `862a1afb → a1f1023f` (with DG-136) at 21:33 on David's "go", rebuilt the bundle
-(`index-C6XzDCYI.js`) because the generated client `frontend/src/lib/api/*.gen.ts` changed (DG-076
-openapi_sha256 stamp), and kickstarted the API → **pid 90590** (was 95078); the served `/api/engine-b/scores`
-contract lists 200 + 503. (Earlier text: NOT LIVE as of 15:34, trunk `862a1afb`/pid 95078 — superseded.)
-The ticket's premise was FALSE (regen-only = zero diff; the 503 was raised at runtime and never declared);
-fix = `responses={503: …}` with envelope models in `app/api/routes/dependency_unavailable_models.py`.
-Reviewed by 3 lenses + skeptics (10 agents, 0 died — spend limit did not bite); 3 findings fixed pre-landing.
+**DG-135 LIVE 2026-09-02 21:34** (landed `60f6940f` 15:29). Fred pulled trunk `862a1afb → a1f1023f`, rebuilt the
+bundle (`index-C6XzDCYI.js`) because the generated client changed, API **pid 90590**; served
+`/api/engine-b/scores` lists 200 + 503. Verified by Tower on the machine, not from the relay.
 
-**Filed from it:** DG-138 (three routes — roster_capacity/model_scoreboard/realized_outcome_scorecard — declare a
-FLAT 503 model but raise HTTPException so the wire carries `{"detail":…}`; also the never-declared roster 422;
-no live symptom, post-freeze). DG-139 (served AGE is the feature-season age: `universe_pvo_batch.py:198` +
-`roster_auditor.py:240`; 324 rows a year young, 255 scored; Wilson's row says 25 and "2 years to the 28 cliff";
-DG-137's rule for age, plain `or` is right here).
+**DG-139 LANDED `c62783b1` 2026-09-02 22:18 — NOT LIVE.** `served_age()` in `universe_pvo_batch.py` +
+`roster_auditor.py:242`: Sleeper's current age wins, the model's feature-season age is only the fallback
+(fires on ONE scored row). 324 of 10,977 rows were a year young, 255 of the 468 valued. **Two halves:** the
+roster audit row needs trunk pull + API restart (NO bundle rebuild — backend-only); the card, League Pulse's
+age profile, team posture and the roster cut report only move at the next green refresh from trunk (09:00
+chain). **Do NOT say it flips `vintage_changed` once — that flag is true EVERY morning by construction
+(9 of 9 consecutive date pairs; `source_snapshot_captured_at` is hashed at
+`model_forward_capture_driver.py:158`). Filed as DG-141. Verify DG-139 by COUNTING served ages, not by the flag.** Reviewed by 10 agents (3 lenses + 7 skeptics).
 
-**DG-130 scoped on the ticket 15:33, awaiting David's 4 decisions** (gate sentence wording; completeness cell on a
-blank row; `dvs_pct` populate vs remove; DG-130 before/after DG-139). Verified mechanics: Wilson `games_t=7`,
-Allen `4` → gate → `pvo_assembler.py:497-507` nulls the score; the reason is ON the artifact row and
-`roster_auditor.py:210` drops it, then `:531-537` stamps the FALSE `no_usage_signal` on a 100%-complete row;
-Dell has NO 2025 row → PRE_MODEL, and `copy.ts:641-646` maps him to a wrong sentence. 114 of 115 unscored
-ENGINE_B rows are `games_t` 4–7. DG-130 is the honest sentence, NOT the coverage fix — do not report it as
-satisfying "rank everyone, always".
+**⭐ DG-140 IS THE URGENT ONE — land it BEFORE the 09:00 chain.** The artifact's age DRIVERS
+(`top_drivers`/`risk_flags`) are computed at the feature age in `pvo_assembler.py:226-240` and copied verbatim
+by the batch, so **97 rows carry a cliff verdict that is false at the player's real age (46 rostered, Wilson
+among them; 33 are past their cliff with NO `age_past_position_cliff` flag)**. This PREDATES DG-139 — those
+sentences are false today; DG-139 removed the stale number that hid it. The card serves the artifact, so if
+DG-140 lands before the rebuild the card goes coherent-and-false → coherent-and-true with no bad window.
+**Circular-import trap: `roster_auditor` imports `served_age` FROM `universe_pvo_batch`, so importing
+`audit_player` back will not work** — lift `CLIFF_AGES` + the banding (`roster_auditor.py:62,515-531`) or pass
+signals in. The roster audit row is already correct (`:198,217` recomputes drivers from the live Sleeper row).
 
-**Tomorrow 09:10 ET duty:** read the 09:00 chain receipts before David's ~09:15 read — `daily_chain_latest_report.json`
-step statuses + `pvo_refresh_latest_report.json` `capture_report.status` + raw_rows (~12,227) + bands (468) +
-served≠Sleeper team (0). No cron is armed (session crons die with the session).
+**Also corrected 09-02:** DG-102's board row said "todo" while the ticket and `dg-land.sh:100` have said done
+since `10562f9` (08-31) — the frontend gate DOES run in dg-land. Board fixed.
 
-**Why:** the next session must not report DG-135 as live, must not re-scope DG-130, and must not re-file DG-138/139.
-**How to apply:** check `git -C ~/dynasty-genius-product log -1` before saying what is live; read
-[[project_dg137_served_team_landed]] for the live baseline; [[reference_trunk_frontend_bundle_is_a_manual_build]].
+**DG-130 still scoped, awaiting David's 4 decisions** (gate sentence wording; completeness cell on a blank row;
+`dvs_pct` populate vs remove; order vs DG-139 — DG-139 is now moot, it landed).
+
+**Tomorrow 09:10 ET duty:** read the 09:00 receipts before David's ~09:15 read — `daily_chain_latest_report.json`
+step statuses, `pvo_refresh_latest_report.json` status + `capture_report.status` + raw_rows (~12,227), bands 468,
+served≠Sleeper team 0, **and now served≠Sleeper age 324 → 0 — that count, never `vintage_changed`, is DG-139's proof**. No cron armed.
+
+**Why:** the next session must not report DG-139 as live, must not re-file DG-140, and must not let the 09:00
+rebuild ship 97 false cliff sentences. **How to apply:** check `git -C ~/dynasty-genius-product log -1` before
+saying what is live; [[reference_trunk_frontend_bundle_is_a_manual_build]];
+[[feedback_workflows_die_on_spend_limit]] — the first DG-139 review lost all 3 lenses (2 spend limit, 1 machine
+sleep at 21:45:52) and the relaunch returned 10/10.
