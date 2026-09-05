@@ -39,3 +39,29 @@ that settles it was on disk the whole time and takes about twenty seconds to rea
 
 Related: [[feedback_parallel_session_coordination]], [[david_rulings_ranking_2026-08-31]],
 [[cockpit_session_identity]].
+
+
+## It applies to COMMITS, not just to relays — 2026-09-04
+
+The same lane that had spent a session verifying every peer claim about David at source then
+**deduced a commit's intent from the absence of a consumer.** DG-162 §5 declared four columns an
+unfinished feature because nothing read them. The commit BODY said **CARRIED NOT CONSUMED,
+"Deliberate, and each reason measured"**, the ticket was `done`, and David had personally ruled
+*"wait, do not force"* on it. Only the commit SUBJECT had been read.
+
+**Why this one is dangerous, in Greg's words (09-04, sharper than the original):** the absence of a
+consumer *feels* like a lookup. It is observable, it is in the code, you can point at it. **It is a
+deduction wearing a lookup's clothes** — and that disguise is what let it through a session that was
+otherwise verifying everything at source.
+
+**"No consumer" is evidence about the code, never about the intent.** Before calling anything
+half-landed, orphaned or forgotten, run the two lookups that settle it:
+
+```
+git log -1 --format=%B <sha>          # the body, not the subject
+grep -n "^| DG-NNN" ~/dg-build/BOARD.md
+```
+
+Five seconds each. A deliberate carry and a forgotten one are byte-identical in the tree — the
+difference exists only in the message and the board, which is exactly why they must be read.
+Related: [[feedback_check_when_not_just_what]], [[feedback_the_failure_path_returns_the_success_signal]].

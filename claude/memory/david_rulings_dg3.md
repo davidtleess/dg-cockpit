@@ -170,9 +170,21 @@ SR-09 was going to retire the two plists SR-00 had just added retries to. Applie
 
 **Also his own action:** set `pmset` scheduled wake to **6:00 AM daily** via System Settings.
 
-**Standing consequence:** the product **will not say buy/sell in 2026**. Not as a rule being argued
-around — as an evidence decision. The measured position is that the model carries *no measurable
-information beyond `dynastyprocess_ecr_2qb`*, a free source the repo already ingests.
+⛔ **RETRACTED AS A RULING 2026-09-04 — THIS WAS NEVER DAVID'S, AND HIS ONLY TYPED WORDS ON IT POINT THE
+OTHER WAY.** It used to read: *"Standing consequence: the product **will not say buy/sell in 2026**. Not as a
+rule being argued around — as an evidence decision."* Presented as his; it is a LANE'S conclusion drawn from a
+measurement. Audited against every transcript on this machine: the only thing David has ever typed containing
+"buy" or "sell" is the 2026-08-20 **12:00 EDT** `/goal` (transcript stamp 16:00:01**Z**), and it says the opposite —
+***"if the ban[ned] vocabulary, that is bu[y] a player or sell a player or suggested trade a player, should in
+fact not be banned, that is on the table. everything is on the table."*** (transcribed from voice; "band"→
+banned, "by"→buy.) He put the ban UP for removal on the same day this file recorded him as strengthening it.
+Nine days later he green-lit the frontend to "call a spade a spade", which is the same direction again.
+
+**What survives, and it is worth keeping — as a MEASUREMENT, with the lane's name on it, not his:** the model
+was measured to carry *no information beyond `dynastyprocess_ecr_2qb`*, a free source the repo already ingests.
+That is a finding about the model's strength and it is a reason to be careful about verdict language. It is not
+a ruling, it does not bind, and it must never again be cited to David as his own decision. If the product's
+vocabulary is to be constrained in 2026, that needs a fresh ruling from him.
 
 ## 2026-08-20 ~21:00 ET — the freeze is adopted
 

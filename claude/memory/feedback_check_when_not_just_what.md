@@ -44,3 +44,28 @@ rule about me became a property of the file.
 
 Related: [[reference_midturn_messages_invisible]], [[feedback_relay_authority_drift]],
 [[reference_nflverse_unchanged_trap]].
+
+---
+
+## ⭐ 2026-09-04 — THE MECHANISM BEHIND THE CLOCK ERRORS IS NAMED, AND IT IS ONE CHARACTER
+
+Five times now a lane has stamped a time roughly four hours off, always in the same direction, always with the
+substance right. Bob found the cause on 09-04: **transcript `timestamp` fields are UTC (`...Z`), and they were
+being read as local and re-labelled "ET".** In EDT that is a four-hour forward error, which is exactly enough to
+move a morning ruling into the afternoon and quietly rewrite the order of a day's events.
+
+Four fresh instances were introduced and corrected within the same hour on 09-04 — a ruling recorded at
+"14:19 ET" was made at 10:19, a `/goal` at "16:00 ET" was typed at 12:00. The narrative built on top of one of
+them ("he ruled it that afternoon") was already wrong before anyone read it.
+
+**How to apply — mechanical, no judgement required:**
+1. A stamp ending in `Z` is **UTC**. Never label it ET, EDT or "local" without subtracting.
+2. **Calibrate rather than assume the offset.** Bob's method: take the newest stamp anywhere in the transcripts
+   and compare it to `date` on the wall clock. He measured 2026-09-05T00:33:50Z against 20:33:58 EDT. That
+   survives daylight saving, a travelling laptop and a machine with a wrong timezone — arithmetic on a
+   remembered offset does not.
+3. When quoting a time to David, prefer **"that morning" / "the same day"** over a precise hour unless the hour
+   is doing work. Most of the time it is not, and a wrong hour discredits a paragraph that is otherwise correct.
+
+Note the shape: five errors, substance right every time, only the hour wrong. That is the signature of a
+systematic conversion fault rather than carelessness, and systematic faults are fixed by a rule, not by care.

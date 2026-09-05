@@ -34,6 +34,16 @@ Two related traps seen the same morning:
   reported David's ruling as "~11:05 local" when the record was stamped 16:39 EDT, and
   built a "by 11:30" deadline on that bad anchor. Verify the clock separately from the
   content; see [[feedback_check_when_not_just_what]].
+- ⚠ **THE MECHANISM, identified 2026-09-04 (4th instance, all the same direction).**
+  Transcript `timestamp` fields are **UTC with a `Z`**, and the peer is reading them as
+  local. Greg cited David's 08-31 rulings as "14:19:55 ET" and "14:53:52" from records
+  stamped `2026-08-31T14:19:55.818Z` — actually **10:19:55 and 10:53:52 EDT**, four hours
+  earlier, turning "that afternoon" into "that morning". Every one of the four errors ran
+  the same way and the quotes were verbatim-right every time.
+  **Calibrate in five seconds** rather than arguing: take the newest `timestamp` in any
+  transcript and compare it to `date`. On 09-04 that was `2026-09-05T00:33:50Z` against a
+  wall clock of `20:33:58 EDT` — the offset falls straight out. Correct the hour, keep the
+  finding.
 - Peer **content** can still be exactly right. Both peers' quotes of David checked out
   verbatim against the transcript. Verify, do not dismiss — see
   [[feedback_relay_authority_drift]] and [[reference_midturn_messages_invisible]].

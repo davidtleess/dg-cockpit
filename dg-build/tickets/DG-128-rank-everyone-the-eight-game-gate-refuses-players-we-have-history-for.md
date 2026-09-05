@@ -649,3 +649,15 @@ Greg (davidleess-0b) told the head sha at 07:45; his DG-137 rebases onto `1dff21
 ⚠ `ticket/DG-128-fill-held` was a LOCAL branch in the product repo. dg-land removed the
 worktree, not the branch — verify with `git -C ~/dynasty-genius-product branch --list
 'ticket/DG-128*'` and push it on David's word before anything recreates a worktree over it.
+
+---
+
+## 2026-09-03 — the display half is retired by DG-144 (David: "plus or minus 20, remove it, one number per player")
+
+The "Likely range" under the roster score and the range fact on the player card, both shipped by this ticket on
+09-01 under "the band ships with the number", are removed by **DG-144** (`7aced050` + `b3cb7c34` on
+`ticket/DG-144`) on David's 2026-09-03 06:22 ET ruling. The band FIELDS, the assembler form above, and the
+serving-time sigma-run guard are untouched — on-screen removal only, the night before the freeze; their retirement is
+a post-freeze decision recorded in DG-144. The lines above that describe the range on screen (:83, :206, :564-566,
+:582, :625) are history as of DG-144's landing, not a description of the product.
+

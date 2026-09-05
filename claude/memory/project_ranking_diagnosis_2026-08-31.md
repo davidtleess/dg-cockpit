@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: daab5375-6c9f-478d-8739-b758480b06a7
-  modified: 2026-09-01T10:08:26.006Z
+  modified: 2026-09-04T23:31:37.032Z
 ---
 
 The 2026-08-31 brainstorm (lane "Greg") measured why so little of the product carries a model
@@ -134,7 +134,14 @@ replaced). New TE model is a strict superset: 14 features → 16. And
 populated; the gate measures whether there is enough SEASON. Garrett Wilson reads 1.0
 complete over 7 games and gets no score, with no caveat explaining it.
 
-## ⭐ 2026-09-01 — THE CHEAPEST COVERAGE FIX (David's catch, verified)
+## ⭐ 2026-09-01 — THE CHEAPEST COVERAGE FIX (David's OBSERVATION, a lane's diagnosis, verified)
+
+⚠ **PROVENANCE, corrected 2026-09-04.** What David actually typed, at **2026-09-01 06:00:43 EDT** (transcript stamp 10:00:43**Z**), was one sentence:
+***"Garrett Wilson has played more than seven games."*** That is the whole of his contribution and it was
+enough — he pointed at a player on his own roster the product was refusing and said the refusal was false.
+The sentence below it is a LANE'S diagnosis of why, not his words and not his technical claim. Do not quote
+"`games_t` is ONE SEASON, not the player" as David's. See [[david_rulings_ranking_2026-08-31]] for the same
+failure shape and [[feedback_relay_authority_drift]] for the rule.
 
 `games_t` is ONE SEASON, not the player. Reading the 8-game gate as a judgement about a
 PLAYER is wrong and makes it look defensible. Measured on the runtime CSV:
@@ -169,6 +176,16 @@ to build lagged features — it built three — and the one signal the gate depe
 one left at a single season. The gate asks "is this player durable?" and is handed exactly one
 season to answer with. That is a MISSING COLUMN, not a coverage shortfall: it says what to
 BUILD (`games_t_minus_1` / `games_t_minus_2`, then let the dead-window path consider them).
+
+⚠ **PROVENANCE CORRECTION 2026-09-04 (Greg, from the ruling audit): THIS PROHIBITION IS A LANE'S,
+NOT DAVID'S, AND IT STANDS ON TOP OF A DIRECTIVE OF HIS THAT IT REFUSES.** David said, in his own
+words: *"That seems like a major hole in our data. We need to get 2024 into every single player's
+model."* A lane pushed back with the measurement below, and the PUSHBACK is what got recorded — as a
+hard ⛔ in this file and in MEMORY.md — **with no record that David ever assented.** His next message
+was on a different subject. The measurement below is sound and reproduces; the ⛔ is a lane's
+recommendation wearing the authority of a ruling. Treat it as: *the measured answer to his concern*,
+which he has not accepted or rejected. If it ever blocks work, it is his call to make, not a settled
+prohibition. See [[feedback_relay_authority_drift]], [[feedback_my_conventions_are_not_davids_rules]].
 
 **⛔ DO NOT BACKFILL 2024 FEATURE ROWS AS THE COVERAGE FIX — it moves Wilson ZERO.** The gate
 reads `games_t` off the *2025* row; adding a 2024 row does not touch that row. This is the
