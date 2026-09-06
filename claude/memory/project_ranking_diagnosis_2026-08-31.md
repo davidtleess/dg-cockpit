@@ -8,6 +8,24 @@ metadata:
   modified: 2026-09-04T23:31:37.032Z
 ---
 
+⛔ **COVERAGE DENOMINATOR CORRECTED 2026-09-05 — the "468 of 12,227 / 4% coverage" alarm this file spawned
+was measured against the wrong population and it distorted priorities for days.** Verified on the live
+artifact: **8,185 of the 12,227 rows are players nobody in his league can start** — 7,944 carrying real but
+unstartable positions (LB 1,163 · CB 1,035 · DB 862 · DE 691 · DT 646 · OL 607 · K 192 · P 152 …) plus 241
+with no position at all. The honest figures:
+- **David's own roster: 26 of 27 scored.** The one blank is **Tank Dell** — 0 games in 2025, so no feature row
+  exists. An IDENTITY failure, not a ranking failure; **no threshold fixes him.**
+- **His league: 263 of 274 rostered players scored = 96%.**
+- Every skill-position row in the database: 582 of 4,042 = 14.4%.
+- Roster blanks went **3 → 1** via DG-143 (gate 8→4) and DG-147. The work landed and worked.
+
+**Why it matters beyond the arithmetic:** a lane quoting "4%" at itself and at David describes a product that
+covers his league almost completely as if it were broken, and that framing pulled effort toward coverage work
+that was already done. Found by Bob 09-05; the denominator, not the numerator, was the defect.
+⚠ He described the 8,185 as "no position at all" — only 241 are; the other 7,944 have positions that are simply
+unstartable in his format. The conclusion is unaffected.
+
+
 The 2026-08-31 brainstorm (lane "Greg") measured why so little of the product carries a model
 rank. Every number below was measured on live artifacts and survived adversarial verification
 (22-agent census + 14 verifiers, 0 refuted; then 4 refuters on the headline claim, unanimous

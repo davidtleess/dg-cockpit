@@ -114,3 +114,72 @@ That question is now the second-highest-yield check we have, after *"if this wer
 print?"* — and it catches a case the first one misses, because the honest answer to "what would it print" is
 "nothing", and **an empty panel does not look broken; it looks like a quiet day.** A fixture is a claim about the
 producer, and nothing verifies that claim unless you make it. Pin the path, not just the shape.
+
+**A COUSIN, NOT A MEMBER — THE ANTI-TEST (2026-09-05, DG-164).** Distinguish it, because the standing question
+does not catch it. In this family a check CAN fail and does so invisibly. In the anti-test the check **cannot
+fail at all**, and it ships a green tick that makes the error *harder* to find than no test would have.
+
+Four shipped constants (`12.91 / 7.29 / 8.79 / 8.99`) had no source: inline comments cited an artifact holding
+different numbers, and the guard test carried the only other copy — so test and code agreed while neither agreed
+with anything measured. **The sharpened rule, after the obvious version proved wrong:** a test that DUPLICATES a
+production constant is merely redundant; the dangerous shape is a test whose expected values appear **NOWHERE in
+the code they guard**, because then there is nothing for them to disagree with.
+
+> **Ask: if this constant were wrong, which test goes red — and where did THAT test get its number?**
+> An expected value comes from the code, an artifact, or a computation. Never from the test file.
+
+Swept 09-05 across 419 test files at `96dad300`: **a single instance, not a pattern.** ✅ The detector was
+validated to FIRE on an older commit before its clean result was believed — otherwise the sweep itself would
+have been this family's next member. ⛔ And the first run scanned a working tree **17 commits behind** and read a
+stale hit as live: **"the working tree" is a claim about a commit.** Read `git show <ref>:<path>`.
+
+**The tell, worth grepping:** a test comment along the lines of *"there is no such constant, so it is restated
+here."* It returns exactly one hit in this repo — the offender — and it had been announcing the defect in plain
+English the whole time.
+
+**THE TAUTOLOGICAL CHECK — a third cousin, found by independent reproduction 2026-09-05, and the two instances
+were built BY the lane that named this whole family.** Distinct again: here the check runs, reports success, and
+its success condition is **definitionally satisfied** — it is not that failure is invisible, it is that failure
+is impossible.
+
+1. **`rows_in == rows_out`**, built as the structural fix for absent-by-construction. It counted a **post-filter**
+   list against itself: 4,042 skill rows entered, 582 were kept, 3,460 dropped *before the counter ran*. **If the
+   filter dropped everyone it would still pass** — and ten players rostered in David's own league were in fact
+   dropped rather than blanked, which is the exact thing it was built to prevent.
+2. **The d→0 limit test.** `V(d=0) = A × avail`, and the baseline compared against IS `A × avail`. It returned
+   30/30 exact order and would do so whatever the pipeline computed. **Greg relayed it to David as the strongest
+   evidence of the day.** He had asked for a check grounding the new number in a verified artifact and never
+   asked what it would print if the assembly were broken — the family's own question, unasked about its answer.
+
+**The diagnostic:** for any passing check, write down the algebra of the success condition. **If the two sides
+share a definition, the check is decoration.** A check must be falsifiable by some reachable state of the system;
+if you cannot name that state, you do not have a check. The permutation null in the same suite IS falsifiable —
+shuffle the inputs and the output must degrade — and it is the only one of the three that carried information.
+
+**⛔ AND THE PRODUCER'S WARNINGS WERE IN THE FILE, UNREAD.** `retention_R_FIXED.json` carried `WARNING_zero_floor`
+stating that the margin<1.0 test the consumer used is wrong (margin is a RATE ratio, qualifying is on season
+TOTALS, and 100% of qualifying player-seasons below that line have POSITIVE value). **72% of the priced board was
+zeroed by a rule its own input refuted in writing**, and 49% of David's league read as worthless or missing. Every
+cell file also carried `WARNING_double_count`; the assembly double-counted anyway. **A warning string inside a data
+file is invisible to a consumer who loads it with `json.load` and reads only the keys they expected.** If a
+producer must warn a consumer, the warning belongs in a shape that FAILS — a version bump, a renamed key, a
+required acknowledgement field — not in prose the loader never touches.
+
+**✅ THE FIX, IMPLEMENTED SAME DAY AND WORTH COPYING — the producer's prose warnings became the consumer's
+assertions.** Each `WARNING_` string was turned into a test in the code that reads the file: *zero-floor
+consistency* (no player above the bar may be zeroed, none at or below it may carry a positive value) and
+*no double count* (perturb every survival value in a copy of the cells and require V to be unchanged — it fires
+the instant anything multiplies R by S again). **A warning read only during a post-mortem is a warning that
+failed.** The producer states the hazard; the consumer must assert it, because the consumer is where it bites.
+
+**AND THE GATE WAS PROVEN TO FAIL BEFORE ITS PASS WAS BELIEVED.** The proportionality check reports a worst
+discrepancy of 8.9e-16 across 172 same-cell pairs; deliberately corrupting 24 pairs' cell assignment produces
+discrepancies up to 2.9. **It separates 1e-15 from 1e+0**, so the green means something. Never accept a new
+check's first pass without watching it go red on purpose — the three checks that failed us today had never been
+seen to fail.
+
+**⭐ AND THE RULE THAT UNIFIES THE REPETITION FAILURES: PRINT THE THING THE SENTENCE ASSERTS, NOT THE VERDICT
+ABOUT IT.** All three carried-forward false claims on 2026-09-05 share one property — the claim was never on
+screen. A script emitted a match COUNT and never the ranks ("McCaffrey is 2nd" — he was 1st); another emitted a
+fragility VERDICT from a check that had been deleted. A verdict is a claim about a computation; only the
+computation's output can contradict you. See [[feedback_a_rebuild_invalidates_every_claim_from_the_old_build]].

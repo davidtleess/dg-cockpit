@@ -53,6 +53,41 @@ The argument that carried it was positional, not statistical: at 14.5 roughly 22
 tight end already has. He took the 28% knowingly. It is a change of UNIT, not of meaning: every order, ratio and
 sign preserved.
 
+## ⭐ RULING 3 — RE-ASKED AND RE-APPROVED AT THE TRUE MAGNITUDE (2026-09-05 ~00:0x EDT)
+
+⛔ **THE FIGURES IN RULING 1 ABOVE ARE THE ONES HE WAS FIRST SHOWN AND THEY WERE UNDERSTATED.** Fred found
+mid-build that the four replacement ppg constants had **no source at all** (see DG-164), re-derived them, and
+brought the corrected numbers back BEFORE landing on David's screen rather than shipping on the signature he
+already held. **That is the correct reading of an approval: it is given for a MAGNITUDE, not only a direction.**
+
+**What actually happens, and what he re-approved:**
+- Jeanty **29.67 → 12.40** (he was first told 19.49). Henderson → **2.70**. Kaelon Black → **−0.49**.
+  Backs fall **13–17**, not ~10.
+- **QBs do NOT rise — they slip.** Dart 16.91 → 15.40, Mendoza 10.31 → 9.73. Kraft rises ~2.15, not 4–5.
+  **Dart still takes the top spot from Jeanty**, so the headline held.
+- **21 of 26 change place**, not 18.
+- ⛔ **FOUR cards change their replacement verdict, not one.** Barner −3.63 → +0.30 (up, and a HAIR over — the
+  honest reading is "level with replacement", not "clearly above"). **Kaelon Black, Omar Cooper Jr. and Luther
+  Burden all cross DOWN.** Black is the sharp one: comfortably above replacement to below it, seven places.
+- Decomposed on Jeanty: 29.67 → 21.37 (unit alone) → 14.06 (replacement re-derived at the shipped rank) →
+  12.40 (corrected rank). **The stale constants were worth 7.31 points; the rank correction 1.64.**
+
+**He chose "Yes — same decision, I know the size now."**
+
+⛔ **HE DECLINED A MORNING NOTICE.** A third option offered to ship it PLUS a one-morning line naming the scale
+change and the four flipped verdicts. He did not take it. **Build no banner and no new copy.** The DG-158
+units-change refusal stays — that is a correctness guard against a false fallers list, not a notice.
+
+**RULING 4 — JORDYN TYSON IS COUNTED.** The RB/WR ranks turn on a 0.175 ppg margin with exactly one player
+across it: Tyson, marked Inactive in Sleeper, at 10.94. He took Fred's call — **count him, RB 29 / WR 45** —
+on the stated reasoning that *availability is already inside every served score, so filtering on status again
+counts the same risk twice.* He was shown the alternative (RB 30 / WR 44, worth +1.10 to every receiver he owns,
+four adjacent pairs swapping) and chose against it. **The comment in the constant is now a recorded ruling, not
+a rationale.** Reversible in one line if he changes his mind.
+
+**⚠ Also corrected here:** the RB threshold was **four** ranks too deep (33 vs 29), not ten — the ten was POINTS.
+Receiver was the large rank move at eight (53 → 45).
+
 ## HOW THEY SHIP
 
 Greg's standing instruction to Fred: **one coupled change, one morning, one explanation, reversible in one

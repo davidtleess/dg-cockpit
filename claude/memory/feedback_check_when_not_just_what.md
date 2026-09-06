@@ -69,3 +69,32 @@ them ("he ruled it that afternoon") was already wrong before anyone read it.
 
 Note the shape: five errors, substance right every time, only the hour wrong. That is the signature of a
 systematic conversion fault rather than carelessness, and systematic faults are fixed by a rule, not by care.
+
+---
+
+## ⭐ 2026-09-05 — THE GENERAL FORM: one source cannot separate the states you care about
+
+Fred's wording, and it subsumes everything above: **a claim about state needs two sources whenever one of them
+cannot distinguish the states you care about.**
+
+The instance that produced it: he reported "the 09:00 chain has not run, and if anything goes wrong it will
+consume the morning" **at 06:50** — the job was not due for another two hours. The runtime artifacts were stamped
+the previous day at 14:00, which is exactly correct at that hour. **A not-yet-due scheduled job and a failed one
+are byte-identical in the artifact.** Only the schedule against the wall clock separates them, and that is one
+`date` call. He had in fact checked the clock and then described it in risk language anyway — which is worse than
+not checking, because it launders a known-fine state into a live concern and spends someone else's attention.
+
+Same shape, other costumes, all already in the record:
+- **stale log read as live evidence** — the "grading harness crash" that was a 2026-07-07 pre-migration trace
+  (frame paths, line numbers and a later fix commit all separated them; the log alone could not).
+- **working tree vs ref** — the artifact said one thing, `git log` said another.
+- **a deliberate carry vs a forgotten one** — byte-identical in the tree; only the commit body and the board row
+  separate them ([[feedback_relay_authority_drift]]).
+- **"no consumer" vs "unfinished"** — the code cannot tell you which.
+
+**How to apply:** before asserting a state, ask *what else would produce exactly this observation?* If a benign
+cause and an alarming one produce the same bytes, you do not have a finding — you have one source. Name the second
+source that separates them and run it. It is almost always `date`, `git log -1 --format=%B`, `stat`, or the board.
+
+And the corollary about tone: **do not describe a state in risk language when you have already established it is
+fine.** Attach the reassuring fact in the same sentence as the observation, or leave the observation out.
