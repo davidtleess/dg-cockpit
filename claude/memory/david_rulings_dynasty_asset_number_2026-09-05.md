@@ -96,6 +96,43 @@ free agency." Blank = "we cannot price him."** They must not render alike.
 production × longevity × preference; Bob's correction folded survival into the trajectory term, and preference
 sits at a default. Greg reported survival dropping out without reporting that consequence.
 
+## ⭐⭐ RULING 6 — A THIRD-PARTY PROJECTION IS A MARKET PRICE (2026-09-06, TYPED — his words)
+
+> ***"market price is 3rd party points projection or ranking of a player — projection and price are very similar
+> its a main variable in price. you have to replace those points and or value."***
+
+**This EXTENDS 08-31 ruling 8 rather than restating it.** The question was put to him because all four sources he
+sent blend third-party projection providers (Dynasty Nerds a median of five; FantasyFootballAnalytics named as
+most accurate in a r/fantasyfootball thread; the Reddit dynasty author uses Sleeper per-stat projections). **Greg
+argued a projection is a football forecast rather than a price and RECOMMENDED ALLOWING IT. David refused.**
+
+His reasoning is the ruling: a projection is *a main variable in price* — trade a player away and you must replace
+those points, so projection and price are the same object from two sides.
+
+⛔ **CONSEQUENCE: we do not get to buy our way out of DG-162.** The model reads three columns and a free consensus
+beats it; the remedy is a better model on football data, not a borrowed forecast. **Do not re-propose ensembling
+external projections.** Tracked as DG-173: the existing `PROHIBITED_COLUMNS` ban four named value/rank columns and
+would NOT catch `sleeper_projection` or `fantasypros_ecr` — ban the CLASS and assert it.
+⚠ Translating market values into his league settings on the COMPARISON lane remains allowed (DG-169).
+
+## ⭐ THE FOUR SOURCES HE SENT, 2026-09-06 — what they settled
+
+**⛔ NOBODY IN THE FIELD MODELS CAREER LENGTH FROM DATA.** Dynasty Nerds: *"I am unaware of any data source that
+projects past the current year"* — he substitutes FantasyPros consensus and a fixed cliff age per position (RB 28,
+WR 30, TE 30, QB 34, eyeballed from Pro Bowl appearances). The Reddit author borrows crowd trade values and does
+not model longevity at all. **Our measured survival curves are the one thing here nobody else has.**
+
+⭐ **THE PROVENANCE OF THE UNSOURCED CONSTANTS IS SOLVED.** The Reddit post's "Standard League" table — 12-team
+SuperFlex **0.5 PPR**, 0 TEP, **THREE starting WRs** — reads **QB 25 · WR 53 · RB 33 · TE 13**, which is our old
+shipped `ENGINE_B_VAR_THRESHOLDS` exactly, all four. Somebody took that row. **His league is FULL PPR with TWO
+starting WRs** (verified 09-06 from Sleeper: `rec: 1.0`, no TEP, `[QB,RB,RB,WR,WR,TE,FLEX,FLEX,SUPER_FLEX]`).
+Fred's independent re-derivation (QB 25 · RB 29 · WR 45 · TE 13) lands within a rank or two of the post's own
+full-PPR row once TEP is removed — strong outside corroboration. See DG-166, DG-169.
+
+⚠ **THE BASELINE DEPTH QUESTION IS OPEN IN THE FIELD, NOT SETTLED AGAINST US.** Four published discussions, no
+resolution; a commenter raises David's exact deep-bench objection and is never answered. Our bar sits BETWEEN
+Dynasty Nerds' starter and reserve lines. Resolution filed as DG-171: compute both.
+
 **How to apply:** he answered "go with your recommendations" on 3 and 4 only after being shown the cost in his own
 currency. That is the pattern that works — recommendation plus the concrete cost, never a menu. He rejected two
 `AskUserQuestion` screens in a row when they carried point values.

@@ -65,3 +65,40 @@ When checking backup health, `git ls-remote --heads origin 'refs/heads/ticket/*'
 a day of work sits on one disk. **Never advise recreating a worktree (`dg-work.sh` refuses in place,
 so the only repair is remove-and-recreate) until its branch is confirmed pushed** — that sequence is
 how the work would actually be destroyed. See [[dg3-build-system]].
+
+---
+
+## ⛔ 2026-09-06 — A FULL DAY'S WORK WAS ONE REBOOT FROM GONE, AND NOTHING DISTINGUISHED THE TWO DIRECTORIES
+
+The entire dynasty-asset assembly — `v2.py`, the built board (4,041 rows), both isolation baselines, and the
+**predictions recorded in advance**, which were the only evidence that two findings were predicted rather than
+rationalised — lived in **`/tmp`**, uncommitted, untouched by the repo. Not the session scratchpad. `/tmp` is the
+system temp directory and clears on reboot.
+
+**Why it went unnoticed for a whole day: nothing rebooted.** The scratchpad and `/tmp` behave identically right up
+until they do not — the same shape as every green check thrown out this week, where the failure path and the
+success path were indistinguishable until someone asked.
+
+⚠ **THE INPUT LOOKED GONE AND WAS NOT — ✅ RECOVERED, and this is the more useful half.** The board was built against the served artifact
+`2026-09-05T13:00:48Z`; the 14:00 refresh had already overwritten it with `18:00:02Z`. **The runtime artifact is
+rewritten at 09:00 / 11:30 / 14:00, so anything built from the live file has a shelf life measured in hours.**
+The rows looked like an output nobody could reproduce — precisely the state we had spent two days refusing to
+accept from anyone else.
+
+✅ **BUT `app/data/model_forward_capture.db` HAD IT.** It carries `artifact_vintage` across two tables — served
+scores in the joinable table, projections in `model_forward_prediction_snapshot` — and all 583 rows of the
+overwritten `13:00:48Z` vintage were there, with every one of the 490 projections matching the built board
+exactly. **Ten minutes of looking turned an orphan into an artifact of record.** ⛔ So do NOT declare a runtime
+vintage lost without querying that store first; unlike
+[[reference_te_v3_metadata_unrecoverable]], this one is genuinely recoverable.
+
+**How to apply:**
+1. **Never `/tmp`.** Use the session scratchpad named in the environment block, and move anything that matters
+   into a ticket branch in the repo the moment it is worth keeping.
+2. **Preserve the INPUT, not only the output.** Snapshot the artifact rows a result consumed, beside the code that
+   consumed them. Otherwise the next refresh makes your own work unreproducible.
+3. **Before declaring a vintage lost, check `app/data/model_forward_capture.db`** (`model_forward_prediction_snapshot`,
+   keyed by `capture_date`) — it holds dated rows and may reconstruct an overwritten vintage.
+4. **An output you cannot regenerate is not evidence.** If it cannot be re-derived, label it a superseded snapshot
+   and re-derive fresh. No exception because the work is ours.
+See [[reference_measuring_the_live_pvo_artifact]], [[feedback_a_rebuild_invalidates_every_claim_from_the_old_build]].

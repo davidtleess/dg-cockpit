@@ -183,3 +183,61 @@ ABOUT IT.** All three carried-forward false claims on 2026-09-05 share one prope
 screen. A script emitted a match COUNT and never the ranks ("McCaffrey is 2nd" — he was 1st); another emitted a
 fragility VERDICT from a check that had been deleted. A verdict is a claim about a computation; only the
 computation's output can contradict you. See [[feedback_a_rebuild_invalidates_every_claim_from_the_old_build]].
+
+**THE EXPIRING TEST — a fourth cousin, found 2026-09-06 when it turned `main` RED and blocked every lane.**
+`test_dg159_one_scale.py::test_an_ordinary_morning_is_still_not_mistaken_for_a_change_of_units` walks every
+consecutive pair of capture dates **in the live database** and asserts the units-change detector never fires.
+DG-159's rescale landed on 09-04, so **09-04 → 09-05 genuinely IS a change of units.** The detector was right and
+the test had expired.
+
+> **A test written against unbounded live data will eventually assert that a real event never happens.**
+
+Distinct from the other shapes here: it does not fail to catch a defect, it **manufactures** one, and it does so
+at exactly the moment the system did something correct and important. Bound such a test to a fixed window, a
+fixture, or an explicit allowlist of known real events — never to "all history, forever."
+
+**AND THE SAME DAY, THE FALSE-ALARM TWIN OF THE STALE-TREE FAMILY.** A lane built a worktree with raw
+`git worktree add` instead of `bin/dg-work.sh` (whose own header warns of this in its second sentence): no
+`.venv`, no per-worktree output directories. **The gate returned 21 failures. Every one was provisioning** — the
+same tests pass 115/115 once rebuilt with the tool. His framing is the one to keep: *the failure mode is not only
+false comfort, it is **false alarm**, which costs the same hour and looks like diligence while it does it.*
+
+⛔ **Aggravating it: `dg-land.sh` runs the gate with `.venv/bin/python3.14` if present and falls back to bare
+`python3`.** In an unprovisioned tree that fallback ran a python with no pytest, and *"No module named pytest"*
+was reported as a TEST FAILURE. **A gate that cannot run its tests must not report the same thing as a gate whose
+tests failed.** Filed as DG-174.
+
+**THE ONE A DAY OF READING AND RUNNING NEVER FOUND, AND ONE TEST CAUGHT IN A SECOND (2026-09-06, DG-168).**
+This family's standing note is that these defects are *found by reading, never by running.* **This one was found
+by neither.** `format_explains` — the refuter that discards pairs whose price gap the league-format difference
+already explains — tested whether the translation preserved the **SIGN of the price difference.** But the pairs
+the screen exists to find are priced **within 10% of each other**, so that difference is near zero and its sign is
+meaningless. **For two players at the same price it returned "explained" every time and threw them away** — it
+discarded exactly the contradictions it was built to surface. Reported 111 pairs; the true count was **146.**
+
+⛔ **Second time the same function was wrong, in OPPOSITE directions.** v1 used translated prices to decide who the
+market prices alike, which MANUFACTURED four tight ends in the top six. v2 silently DELETED the clearest findings.
+**Both survived a full day of the author running it by hand and reporting its output.** Manual exercise confirms a
+program runs; it cannot confirm the program answers the question it was written for.
+
+**What found it: writing the test the author's own handoff had named as the gap** — two players, same position,
+same price, one clearly ahead on both axes. It failed on the first assertion. And writing the fixture corrected
+the author's reasoning: his first version of the fixture asserted the wrong answer.
+
+> **A test is not a check on the code. It is the first time anyone has been forced to state what the right answer
+> is.** That is why it finds things reading and running both miss.
+
+The corrected form is football rather than arithmetic: **the format explains a gap when the DOMINANT player's
+position carries the larger correction.** A quarterback beating a back at the same price is half explained before
+you start; **a back beating a tight end is a LARGER contradiction in his league, not a smaller one.**
+
+**2026-09-06 (DG-165 transition audit, found by root's read-only probe, not by me):** `thin_history = games_t <= 4`
+turned a MISSING `games_t` (NaN) into "not thin" because `NaN <= 4` is False — the missing measurement wore the
+healthy label; and a NaN forecast passed the join to die as a cryptic SVD error inside the metrics. Same family:
+a comparison against NaN silently returns the reassuring branch. Fix was the usual inversion — assert finite at
+the boundary and refuse; pin negative-but-valid values so the guard cannot over-reach.
+
+**2026-09-06 (DG-165, my own slip):** `pytest … | tail -1 && git commit … && git push` — the PIPE swallowed pytest's
+exit code, so the `&&` chain committed and pushed with one test red. Run the test command bare (or `set -o pipefail`)
+when a commit is gated on it; a summary line is not a gate.
+
