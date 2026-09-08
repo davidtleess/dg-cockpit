@@ -1,0 +1,27 @@
+# Workspace snapshot archive — DG-189
+
+Built locally from published main `a85f726f` in `/Users/davidleess/dg-wt/DG-189`, branch `ticket/DG-189`. David’s “lets build” authorized the previously recommended track-record foundation. This is a manual archive, not an automatic capture schedule or a performance result. No commit, push, merge, model promotion or production deployment.
+
+## What David gets
+In What changed, Save this snapshot preserves the current forecasts, independent valuations, FantasyCalc prices, league context and evaluation declaration. The same control is available in source Details. Saved entries distinguish original forecast dates, actual artifact creation times and first archive time. An unchanged forecast/source set keeps its original saved reading and evaluation plan. Repeated saves do not create another observation. The archive survives API restarts and remains explicitly Not graded yet.
+
+Preview: http://127.0.0.1:8792/?surface=workspace&view=history
+Current preview PID91328, worktreeDG189; reverify identity before touching. Earlier previews8787–8790 preserved. The first real capture is retained under `runs/20260908T014624Z/archive`; it is a September8 archive of September6/7 artifacts, never a backdated freeze claim.
+
+## What the evidence establishes
+Root loaded the accepted report/catalog/market/league into one verified byte buffer per file and compared all seven archived raw files and both complete derived payloads byte-for-byte/equality against those sources. Original825 forecasts unchanged;399 market players +24 picks;388 paired;27 roster;433 relevant available with360 numbered/73 missing;7 labelled starting estimates. All510 available catalog rows remain archived. No forecast or valuation number was changed.
+
+97 focused backend tests passed;310 ranking/source/OpenAPI regression tests passed with1skip. Frontend full gate passed859 tests, types, lint, language checks and production build. Scoped Ruff and git diff --check passed. Browser delivery checks at1440×1000 and390×844: keyboard first save, duplicate and original time retention, reload, API restart retention, stale-source409 without new write, ambiguous network failure wording, unreadable archive, correct counts and9 zero-axe states. Root visually inspected actual screenshots. A real phone CSS collision was fixed by scoping the old market-history list styles; a renderer passing axe alone had not established a readable layout.
+
+Two actual Claude builders supplied storage/CLI (DG190, session245fd3a2) and UI (DG191, sessionfa00374f); root reviewed and integrated their bounded changes. Actual Claude376f54b0 independently reviewed specification/science/loader/API/store/CLI and ran source/count/corruption probes. UI builder independently inspected integrated desktop/phone without writes. Root fixed all material findings, including false negative-save wording, malformed archive refusals, genuine row-derived counts, pick-count verification, exact target scoring for evaluation and accessible save reach after first capture.
+
+## Scientific limits
+No football, market-movement or decision-quality advantage is established. This increment registers production-evaluation rules and stores current inputs; it does not grade outcomes or capture baseline values. Future baseline reconstruction must be labelled retrospective. The current forecasts target the archived research PPR preset over NFLweeks1–17; they are not David’s exact Sleeper points. The evaluation declaration keeps that distinction and separates single-season football error from five-year valuation, market-price prediction and actual decision gains. Dirty-preview capture code identity correctly says unknown rather than claiming the published base contains these changes.
+
+## Isolation and operation
+`DG_WORKSPACE_ARCHIVE_ROOT` must explicitly name a private real directory; no implicit shared store. GET never captures. Unsafe symlink paths, corrupt archives, mismatched browser/server sources and incomplete sources refuse. Archive read health gates saving; crash-left temporary directories are ignored, never displayed as saves. This controlled local archive is not an external notarization service.
+
+Private cache copied intoDG189. ExistingSept6–7 market history copied into run-scoped preview inputs and served via a local read-only leaf symlink; sourcefile hash eec4292fbc03fdc7cde408cf57941ac9b4d7391d62347fad230973925b82d4ac. Runtime symlink, data, archive and evidence must never enter the public commit. Headshots may use the existing initials fallback in this isolated preview. No dependency installation or shared data/trunk edit.
+
+## Evidence
+`/Users/davidleess/dg-wt/DG-189/runs/20260908T014624Z/`: actual-source-replay.json, restart-replay.json, cli-first/second.json, browser initial/failed/fixed/delivery screenshots and receipts, delivery-evidence logs/reviews/code-file hashes. Earlier failed QA captures are retained as evidence, not current dispositions. Code includes the source/API, archive/CLI, existing-workspace integration, evaluation JSON, focused tests, generated OpenAPI additions and exact CSS census additions.

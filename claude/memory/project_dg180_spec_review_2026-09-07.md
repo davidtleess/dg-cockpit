@@ -1,0 +1,28 @@
+---
+name: project_dg180_spec_review_2026-09-07
+description: "DG-180 roster-spot comparison (David \"yes\" 09-07 09:37Z) — independent read-only spec review written 09-07 09:54Z; the two reference-path traps and the bit-exactness caveat a code reviewer must carry."
+metadata: 
+  node_type: memory
+  type: project
+  originSessionId: 376f54b0-2909-46df-837c-ace5852eb144
+  modified: 2026-09-07T10:54:04.985Z
+---
+
+**State 2026-09-07 09:54Z.** David approved Codex's "roster-spot comparison" proposal with "yes" (Codex rollout line 168). Brief: `~/dg-build/ROSTER-SPOT-COMPARISON-2026-09-07.md`. Lanes: DG-180 root integration (Codex), DG-181 frontend (Claude 54331), DG-182 backend route (Claude 54410), this session = read-only reviewer. Review + scripts: `/private/tmp/dg180-spec-review.md`, `/private/tmp/dg180-review-*.py`. Codex is NOT reachable by SendMessage; it reads `/private/tmp/dg18x-status.md` files.
+
+**What the review established (all measured on report 214512Z / catalog 013635Z):**
+- Roster values must be reconstructed as `expected_margin[i] + union_replacement.replacement[pos][i].rate_ppg` (per-season series, `season: None`, misnamed — it is season points). ⛔ The row-level `reference_expected_points` scalar is the 2026 value ONLY (series declines QB 115→17.6); using it breaks 2,174 of 2,515 cells. ⛔ top-level `replacement` is the served-rate scenario, wrong too.
+- Reconstruction matches producer CSVs to ≤ 2.84e-14 but is NOT bit-exact: 3 of David's 27 (Dell, Mendoza, Kaelon Black) differ at the last ulp. Any "exact" test against producers needs a tolerance; ties are equality of SERVED floats.
+- Five of the 27 have non-GSIS `player_id` in the report (Dell = "9502", four rookie slugs); key only on `sleeper_id`; census `nfl_gsis_id` resolves them.
+- Report `team` (LAR) and catalog `nfl_team` (LA) use different vocabularies; recommended one source (catalog) for both sides.
+- 6 of 27 are taxi/IR (report field `excluded_taxi_or_reserve` == snapshot taxi ∪ reserve); proposed a flag, root's call.
+- All 73 missing rows share ONE reason string; no incomplete paths, no roster-vs-available exact tie in real data → those UI cases are fixture-only.
+
+**10:09Z backend review DONE, NO BLOCKER** (`/private/tmp/dg180-backend-review.md`): DG-182's `roster_comparison.py` + route reviewed; 29 owner tests pass; my oracle (`dg180-review-backend-oracle.py`) found roster bit-equal to margin+union series, producer worst 2.84e-14, 27 missing-vs-malformed probes all correct. **~10:25Z FINAL FRONTEND REVIEW DONE — PASS** (`/private/tmp/dg180-final-review.md`): DG-181's Compare tab verified in DG-180 (tsc/biome/84 tests/CSS audits; my harness ran the real helpers over all 27,540 real pair-periods with 0 malformed sentences; root's HTTP payload == adapter output). One P0 (phone first fold: second player's numbers under the bottom nav) was found by root's screenshot, fixed by the owner (choosers leave once both chosen; per-card Change; one-line lede), re-integrated and verified on a fresh 390×844 Chromium shot. Whole increment READY for root's handoff to David on preview 8788; nothing landed, nothing live. ⚠ The `impeccable` skill's `context.mjs` polls impeccable.style and writes `~/.impeccable/update-check.json`; its `critique` flow wants sub-agents + writes into the worktree — run it degraded/inline when a lane forbids those.
+
+**10:54Z NEXT DIRECTION — rank vs FantasyCalc (David 10:44Z: "apples vs oranges… if we had an overall rank I could compare; otherwise a value on the FantasyCalc scale").** Assessment `/private/tmp/dg-next-rank-assessment.md` (+ `dg-next-rank-join2.py`, `dg-next-rank-alternatives.py`). Facts: the card pairs DVS (served 2-season engine, 0–100, position percentile only) with FC value + FC overall rank; NO model overall rank is served. FC forward capture 09-06 (`app/data/fc_forward_capture.db`, his settings) = 399 players + 24 picks with published ranks; common cohort with the accepted h5 board = 388 (David 26/27, Ali unpriced); **571 of 825 h5 rows are exactly 0** (clipped advantage) → rank distinct to ~#254 then tied; rho vs FC 0.755 (served xVAR 0.866 — market-like, do NOT use as the rank). Recommended: ordinal rank pair on the common cohort from the ACCEPTED board with ties stated; FC-scale value only as a labelled same-day quantile conversion, not now. Board exists at d=1.0 only; contend posture unbuilt on h5 — root's default choice.
+
+**11:54Z DG-183 implementation review — VERDICT: payload sound, integration NOT.** `/private/tmp/dg183-final-review.md`; my oracle + probes at `/private/tmp/dg183-oracle/`. Independent oracle matches all 836 rows on every field; 38/38 tamper probes refuse; 752 frontend + 324 backend tests green. But a 5-lens adversarial fan-out (9 raised, 6 refuted, 3 survived, all re-verified) found: **BLOCKER** a routine 503 collapses every player card to one sentence (`PlayerDetailPage` gates on `!== not_configured`); non-union players (118 of 784) lose identity entirely; the only rank-checking test skips itself (inputs untracked); `league_ownership` mints prose in Python, duplicating `copy.ts:1882`, dropping the manager handle for 247 rows and the "FA" label for 562. See [[feedback_a_correct_payload_is_not_a_correct_product]].
+
+**Why:** two lanes independently hit the reference trap within an hour; a code reviewer who only reads the route will not see the scalar-vs-series distinction.
+**How to apply:** at final code review, check the route reads the union series by index with length asserts, tests use tolerance vs producers, and no `player_id` keying. Related: [[feedback_a_placeholder_hardens_into_a_fact]], [[reference_a_worktree_serves_committed_data_not_live_data]].

@@ -1,0 +1,45 @@
+David asks for the actual other Claude sessions' own opinions on this independent review. This is the review he supplied, not a build authorization:
+
+My overall assessment: Dynasty Genius has a strong core idea worth continuing to build. The next milestone should be demonstrating better decisions—not adding more models or screens.
+
+These recommendations summarize the assessment in our chat. I have not run the app or independently reproduced its model results, so the concerns below should not be confused with a completed performance audit.
+
+Biggest weakness: the decision-making edge remains unverified
+The most important gap is evidence that the app’s independent valuations help you make better decisions than simpler alternatives. A disagreement between the model and the market is not, by itself, proof that the market is wrong. It may reflect different time horizons, assumptions, or objectives.
+
+Three claims need separate validation: predicting football production, anticipating market-value changes, and improving roster or trade decisions. Success at one does not automatically establish the others. My review did not establish a repeatable advantage across these claims; that is an unverified benefit, not proof that no advantage exists.
+
+The fix: Create a dated, versioned track record of forecasts and recommendations, using only information available at the time. Compare them with credible simple baselines and contemporaneous market rankings. Report misses and uncertainty alongside successes. Evaluate each model and valuation method separately; results for a two-year production model should not be presented as validation of a five-year valuation framework.
+
+1. Prioritize a defensible validation program
+Freeze point-in-time forecasts, market snapshots, league settings, and model versions. Evaluate later production and later market movement separately, broken out by position and forecast horizon. Use the same eligible player population for comparisons and avoid historical datasets that exclude players who subsequently disappeared.
+
+Where reliable historical snapshots are unavailable, start a prospective record now rather than treating reconstructed history as equivalent evidence. For actual decisions, record the available alternative—including doing nothing—not just whether a recommended player performed well.
+
+Success criterion: A track-record view that clearly identifies where the system adds information, where it does not, and how much evidence supports each conclusion.
+
+2. Make the daily experience operationally trustworthy
+Address the refresh concern raised in the review: an open tab should not silently keep yesterday’s rankings after newer data becomes available. Add an explicit refresh control and appropriate refresh-on-return behavior, while preserving intentionally pinned research snapshots.
+
+Display the data’s as-of time and model version. Test the complete path from data capture through model execution, API response, and browser display. Verify that deployments rebuild the frontend and restart the API when required. Never silently substitute an older scoring system when the intended comparison fails.
+
+Success criterion: You can tell immediately what data and model you are viewing, and an end-to-end check confirms that the browser is serving the intended output.
+
+3. Pressure-test the valuation assumptions and finish the trade framework
+Test how conclusions change under shorter versus longer horizons, equal versus discounted future-season weighting, and alternative replacement assumptions. Treat these as assumptions to evaluate—not automatically as defects. Separate contender and rebuild perspectives rather than implying one ranking answers both equally well.
+
+Distinguish projected production value from trade-market price. Before positioning the framework as a complete dynasty trade tool, reconcile players and draft picks onto a defensible, consistent basis and make unsupported league settings explicit.
+
+Success criterion: The app shows which recommendations remain attractive under reasonable alternative assumptions and which depend heavily on a particular modeling choice.
+
+4. Perfect one actionable decision workflow
+Focus on one complete journey: identify a player or trade, explain the model–market disagreement, show the strongest counterargument, compare the concrete alternative, and record the decision for later evaluation.
+
+Keep the explanation direct. A manager should leave knowing what action is worth exploring, why, and what could make it wrong—not simply that two rankings differ.
+
+Success criterion: The app helps you evaluate a specific roster or trade decision without requiring you to interpret a collection of technical reports.
+
+What to preserve
+Protect the separation between independent model value and market price, the comparison safeguards, and the willingness to show uncertainty. Those are more valuable than making the product sound certain.
+
+Bottom line: Prove the signal, ensure the live app faithfully delivers it, pressure-test the assumptions, and make it actionable. The biggest risk is building an increasingly sophisticated system before establishing which parts actually make you a better dynasty manager.

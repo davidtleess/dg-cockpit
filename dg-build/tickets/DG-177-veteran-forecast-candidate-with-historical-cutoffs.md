@@ -579,3 +579,9 @@ files byte-for-byte; corrected companion `acd4cf3f…` accepted with the source-
 Product conclusion of record: the broader ordering improves retrospectively, no demonstrated two-slot pickup edge, no
 historical league-ownership backtest. No tuning, refit, promotion or production. Lane idle; no new experiment
 authorized.
+
+**CLOSED OUT 2026-09-07 (David: "close out").** Worktree `~/dg-wt/DG-177` on `ticket/DG-177` at `89a36364`, identical on
+origin; tracked tree clean (untracked run outputs retained); no background jobs. Accepted producers on this branch:
+championship-window forecasts `195728Z` (corrected companion `b73027d0…`), league scoring audit `220010Z`
+(manifest `2ff1b531…`), stash-selection evaluation `010712Z` (companion `acd4cf3f…`). Nothing merged, promoted, served
+or restarted; the accepted preview pin and all prior runs are preserved. Open, reported-not-built: none blocking.

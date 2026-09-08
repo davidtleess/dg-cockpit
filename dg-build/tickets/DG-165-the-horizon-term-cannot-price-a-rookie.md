@@ -1374,3 +1374,14 @@ from this lane. **Lane idle.**
 **Correction (lane 25057, clock-checked 2026-09-06 21:43 EDT):** the 360 breakdown above double-counted the four recoveries. Counted from
 catalog `013635Z` rows: **349 original accepted + 4 recovered = 353 frozen, + 7 starting estimates = 360 with a forecast; 73
 without; 433 total.** Everything else in that record stands; root's final acceptance remains GREEN.
+
+### SESSION CLOSE-OUT (clock-checked 2026-09-07 05:21 EDT)
+
+Independent refutation pass (four verifiers, read-only) found no defect in the closure: worktree clean, HEAD `f712188f` == origin
+after a fresh fetch (0 ahead / 0 behind); every file declared in the three final manifests (`215655Z` transition audit,
+`010020Z` coverage, `012231Z` candidate) hashes to its declaration; `SUPERSEDED.md` present in all three superseded runs;
+sidecar 7 rows, unresolved 73 + recovered 4, manifest partition 7 / 4 / 73 of 84, REPORT states the partition and never "77";
+ticket and memory carry the acceptance, the consumption record, the 349 + 4 + 7 = 360 correction and the verify-then-reread
+advisory. Open items carried, not hidden: (1) the verify-then-reread gap in `cold_start_model.py` before any live reuse;
+(2) 73 unowned pickup-eligible players still have no number, each with a named next experiment; (3) `MEMORY.md` index
+exceeds its load limit (housekeeping, not lane work). Nothing merged, promoted or in production. **Lane closed; idle.**

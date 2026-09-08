@@ -1,0 +1,23 @@
+> **Accepted and completed September7:** David approved this direction; see [final implementation and verification](MODEL-MARKET-RANKS-REVIEW-2026-09-07.md). Historical proposal below is superseded by that handoff.
+
+# Model versus market: recommended next bounded product change, 2026-09-07
+
+State: PROPOSED; no implementation dispatched. David asked for an independent overall rank beside FantasyCalc or a value on the same market scale. The roster configuration/vintage bug is separately fixed (final roster-spot handoff).
+
+Recommendation: make an explicit rank comparison the main comparison on player and roster pages in a new isolated LOCAL preview. Use the accepted five-year league-impact forecast basis consistently on those surfaces, rather than adding a research rank beside the unrelated older 0–100 score. Market values remain independent comparison data. This replaces the primary valuation display/basis and is the meaningful product choice for David to agree before builder dispatch, per his original direction boundary.
+
+The five-second answer: Our rank 24 · Market rank 51 · We rank him 27 places higher. These are illustrative numbers, not a claim about any real player. Both ranks must use the SAME pool of covered players, matching dynasty/12-team/Superflex/PPR settings and captured dates. Rank disagreement states a model preference, not demonstrated trade profit or a price to pay.
+
+Existing usable inputs: accepted DG178 report214512Z has825 five-year forecasts; latest verified September6 FantasyCalc forward capture has399 players+24picks. Stable-ID overlap388, including26 ofDavid's27 (RasheenAli unpriced). Use this matched population for the PRIMARY comparison, clearly labelled. Keep original full-model rank and FC's actual published native rank in details with their populations; never silently present the common-population market rank as FC's published number. Do not join names or the July worktree marketseed. Exact source receipts and independently measured counts in DG180/runs/20260907T105828Z/league-market-preview-copy/dg-next-rank-assessment.md.
+
+Model basis: summed2026–2030 expected points above the available replacement, equal season weights, source-defined clipping/replace-or-retain semantics unchanged. No raw-points ordering acrosspositions and no sorting by the old DVS instead. No new features, refit, replacement policy, market blend or player valuation promotion. This is a research-qualified general-asset ranking, not David's immediate lineup gain or a complete option/trade valuation.
+
+Tie requirement:571/825 modelrows havezeroimpact;159 of388 commonplayers sharezero. They must share a rank/tie interval. Do not break ties byname/marketvalue or claim a precise rank gap inside overlapping tie ranges. Preserve missing model forecasts and missing FCprices as different states. Forecast-only and market-only players remain visible without invented comparator ranks. Draftpicks are excluded from player-only common ranks and disclosed in native FC details. Starting estimates and recovered available-player additions do not enter the accepted825 ranking without a separate compatible valuation calculation.
+
+Primary implementation scope if agreed: one source-bound comparison adapter/API; common rank/gap/tie/missing presentation on actual player+roster surfaces; neutral model/market columns and search; understandable phone layout. Existing research Available/Compare behavior retained. Freeze input bytes/metadata once in an isolated ticket run; no sharedSQLitewrites or dailyproducerinvocations. Verify rankings fromindependent source calculations, invalidsource refusals, data coverage, tiedrange directions, actualdesktop/phone playerdrawer and roster behavior. Do not add extra metrics, correlation dashboard, traderobot or synthetic dollar/FC-equivalent fairprice.
+
+Market-scale conversion is deferred. A rank-to-FC-price quantile map would borrow marketshape, force top-player equivalence and create unstable tie prices; it would not establish an independently calibrated fair value. No such conversion is approved or described as a prediction. Showing rank preference addresses David's explicit minimum need first.
+
+Football preference: equal five-season weighting is the EXISTING accepted research scenario, not a claim about David's current contender/rebuilder posture. If he wants near-termweighting instead, settle that meaningful footballchoice beforechangingvalues. Keep rosterfit separate.
+
+Next: obtain agreement to make this consistent rank comparison the main player/roster comparison, then own implementation through independent source/browser review in new tickets/worktrees. No merge/deployment or production source change authorized.
