@@ -17,3 +17,23 @@ metadata:
 **Why:** correctness of the number and correctness of the product are different questions. An oracle answers "is the payload right"; it cannot answer "what does the screen do when this is unavailable", "who can reach a page this does not cover", or "does the green signal mean anything on another machine". All three defects sat outside the oracle's frame, and being deep in a numeric verification made the frame feel complete.
 
 **How to apply:** after the numbers check out, deliberately ask the three the oracle cannot: (a) walk every non-success state to what actually renders, not to whether a rule was obeyed; (b) enumerate who can reach the surface from *other* surfaces and whether it covers them; (c) check the acceptance test's inputs are tracked, and ask what still passes if the code were wrong. And fan out adversarial lenses even when a solo pass feels conclusive — 6 of the 9 raised were refuted, but the 3 that survived were the ones that mattered. Related: [[feedback_the_failure_path_returns_the_success_signal]], [[feedback_a_test_carrying_its_own_copy_is_an_antitest]], [[feedback_a_rebuild_invalidates_every_claim_from_the_old_build]].
+
+## ⭐ 2026-09-08 — 30 green tests that could not see the wiring
+
+Porting the Lovable UI (DG-203), I wrote 30 passing tests over my ten files and handed them off. Root found
+two blockers before copying anything: `AppShell` **requires a `title` prop** and **already mounts the
+drawer globally**. My five routes passed no title and mounted a second one, so every page would have failed
+to type-check and rendered two dialogs.
+
+**Why every test missed it:** each read MY OWN file's source text and asserted it said the right words. Not
+one read the component the routes actually consume. A test that mirrors the file it guards can only ever
+confirm the file matches itself.
+
+**The fix shape, which generalises:** derive the guard from the OTHER file. The replacement parses
+`AppShell`'s signature, extracts its required props, and asserts every route supplies them — so a new
+required prop over there fails my routes here. Same for "AppShell owns the drawer and the `h1`, therefore no
+route may render either".
+
+⚠ **And say what green does not cover.** These are still source-text guards: no JSX was rendered,
+type-checked or mounted, because Node strips types but cannot transform JSX and installs were unauthorised.
+Reporting "30 pass" without that sentence would have implied integration proof that did not exist.

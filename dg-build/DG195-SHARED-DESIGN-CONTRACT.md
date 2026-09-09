@@ -1,0 +1,23 @@
+# DG195 shared implementation contract — prior to choosing main composition
+
+David requested implementing the imported Directions design. The file has three explicit alternatives; root asked which should become the main workspace. No choice has been assumed. Work below is common to all three and independently authorized within implementation.
+
+## DG196 — shared rank comparison scale
+
+Owner Claude54410, own isolated DG196 from origin/main. Only frontend/src/workspace/WorkspaceRankScale.tsx, WorkspaceRankScale.css, WorkspaceRankScale.test.tsx and own native plan. Root owns integration and CSS census registration. No other product edits.
+
+Faithfully adapt RankScale.dc.html from /private/tmp/dg-design-import-20260908-directions/source and its scale() logic in main HTML. Public props: {ourRank: {start:number,end:number,total:number}|null; marketRank: same|null; playerName:string}. Export WorkspaceRankScale. Component does not fetch, read storage, infer player rank, use hardcoded388, or write data.
+
+Render a shared best-to-worst axis, blue Ours marker/range above, amber Market marker/range below, neutral connecting span, endpoint/intermediate ticks, exact numeric labels and caption declaring shared population/lower-is-higher. Support interval/ties on BOTH sides, unlike sample artifact which draws market as a single mark. Never replace a tie with its midpoint; a midpoint may anchor text only, while whole true interval remains drawn. Use ranks1..total (denominator total-1); total1 is valid singleton. Refuse incompatible totals, inverted/out-of-range/nonfinite/noninteger intervals with honest no-comparable-scale text rather than clipping invented coordinates. One missing side: no fake axis/0 marker; retain readable present-rank label and missing explanation. Ties are rank ties, not confidence intervals.
+
+Source includes zoomed local inset: preserve it where useful for distinct close ranks, label its actual rank extent, derive bounds/ticks from supplied intervals and total, prevent visual label collisions at ends/overlap and retain textual labels. Accessible text is complete without color/graphics; decorative axis aria-hidden permissible. Responsive within narrowphone innerwidth~260px and normaldesktop. Existingdesign tokens/fonts only. No arbitrary new dependencies, no globalCSS changes. No SVG raster/mockimage assets required.
+
+Tests first: exact ranks/endpoints, modeltie andmarkettie, overlappingranges, missingone/both, total1, non388population, mismatchedtotals/out-of-range, accessibletext and zoomextent. Do not add tests that merely mirror implementation. Scopedtests/typecheck/lint only; root handles fullgate/renderedQA. Handoff /private/tmp/dg196-handoff.md plus ownedpath list and precise remaining limits. No publication, installs, shared-data writes, frontend-studio access, root mutations or subagents.
+
+## DG197 — common workspace frame
+
+Owner actualClaude54331, own isolatedDG197 from origin/main. Only frontend/src/workspace/WorkspaceFrame.tsx, WorkspaceFrame.css, WorkspaceFrame.test.tsx and own nativeplan. Existing WorkspaceFrameProps remain unchanged. Root handles composition, types, board, panel, integration/fullgate.
+
+Adapt shared frame in A/B/C source artboards: compact48px desktop header with title-case Archivo wordmark, one search input in header (same label Find a player, same placeholder and controlled callbacks), top watchlist shortcut with real count. Preserve all six existing routes, counts, skip link, source dates/disclosure and sourceActions including saved snapshots. Do not rename Today or choose initial route; main direction pending. Do not invent branding/league names or current data. Desktop neutral rail188px total, sourcebar compact/readable, content flexible. Root will handle any sticky offsets outside ownedfiles. Header watchlist shortcut accessible name Open watchlist; nav original labels preserved. If showing CmdK hint, implement Ctrl/Cmd+K to focus existing input with cleanup; native typing remains intact. Phone header can wrap/search secondrow, navigation touchfriendly, all controls>=44px phone, no overflow at320/390px. Existing tokens/fonts only, no newdeps, globals, fakefacts, external editor runtime or new screenshot-code tools.
+
+Test first meaningful behavior: one search remains controlled in header; shortcut navigates watchlist; keyboard search shortcut only correct modifiers, cleans up listener; existing nav/missingcounts/source/snapshot children regressions. Preserve existing tests unless intentional UI change requires a precise update. Scoped tests/typecheck/lint; root owns fullgate/realbrowser. Handoff /private/tmp/dg197-handoff.md with ownedfiles, commands/results/limits.

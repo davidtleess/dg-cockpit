@@ -5,13 +5,13 @@ approvals_reviewer = "user"
 # (notify-only script at hooks/notify-permission.sh). The old `notify` banner
 # fired on agent-turn-complete — the wrong signal — and was removed 2026-07-16.
 
+notify = ["/Users/davidleess/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+
 [marketplaces.openai-bundled]
-last_updated = "2026-06-06T23:30:55Z"
 source_type = "local"
 source = "/Users/davidleess/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-05-05T23:42:04Z"
 source_type = "local"
 source = "/Users/davidleess/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -35,9 +35,6 @@ enabled = true
 enabled = true
 
 [plugins."github@openai-curated"]
-enabled = true
-
-[plugins."browser-use@openai-bundled"]
 enabled = true
 
 [plugins."superpowers@openai-curated"]
@@ -65,6 +62,30 @@ enabled = true
 enabled = true
 
 [plugins."dg-autonomy@dynasty-autonomy"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
 [projects."/Users/davidleess/Documents/New project"]
@@ -107,4 +128,43 @@ enabled = false
 
 [hooks.state."dg-autonomy@dynasty-autonomy:hooks/hooks.json:pre_tool_use:0:0"]
 trusted_hash = "sha256:93215ecb793b3e7067ff370dd92f1b215302ee878cea30d62eff6d6fd74d6e8a"
+enabled = false
+
+[desktop]
+ambient-suggestions-enabled = true
+conversationDetailMode = "STEPS_COMMANDS"
+followUpQueueMode = "queue"
+
+[desktop.open-in-target-preferences]
+global = "terminal"
+
+[desktop.open-in-target-preferences.perPath]
+"/Users/davidleess/dynasty-genius-product" = "terminal"
+
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/davidleess/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/davidleess/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.901.51231"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/davidleess/.codex/plugins/cache/openai-bundled/browser/26.901.51231/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_SERVICE_PATH = "/Users/davidleess/.codex/computer-use/Codex Computer Use.app"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
 enabled = false

@@ -10,12 +10,15 @@
 - [**MacBook Pro M5 (migrated from INTEL Air)**](machine_macbook_pro_m5_migration.md) — no Rosetta, migrated binaries cannot exec; zsh `log` shadow, launchd penalty box, gcloud/Gatekeeper traps.
 
 ## Project state — current
+- [**⛔ TWO market lanes — the /api/players overlay is 6 weeks stale**](reference_two_market_lanes_one_is_stale.md) — prices and market ranks ONLY from /api/research/market-ranks.
+- [**⭐⭐ 09-08 LOVABLE IS THE INTERFACE (David); its "worth" is the MARKET'S price curve at our rank, not our model; project 9cc0d744, no GitHub sync**](project_lovable_adoption_2026-09-08.md)
 - [**DG-187 Workspace frame + compare BUILT 09-07 14:31Z in ~/dg-wt/DG-187 from `2a4bcb8e` — David's Claude Design import; sample team/league names + "ppg" label deliberately NOT copied; reuse landed rankText/comparisonText/periodsFor; not committed**](project_dg187_workspace_frame_compare_2026-09-07.md)
 - [**DG-185 us-vs-market rank API BUILT 09-07 (not landed) — ⛔ the h2/h5 boards are schema-identical: wrong one = 384/388 ranks change, zero symptoms**](project_dg185_market_ranks_2026-09-07.md)
 - [**⭐ DG-184 Us-vs-market rank comparison BUILT 09-07 11:53Z in ~/dg-wt/DG-184 — David's new direction (rank v rank REPLACES the 0-100 score on roster+player card); 388 common/159 zero-tie; provider-in-App.tsx seam kept legacy untouched; not committed**](project_dg184_market_ranks_frontend_2026-09-07.md)
 - [**DG-181 Compare players tab COMPLETE/READY_FOR_GATE 09-07 (root review PASS, preview 8788) in ~/dg-wt/DG-181 — not committed; handoff /private/tmp/dg181-handoff.md; root copy rulings + 3 traps (CSS census rows, biome-ignore placement, no "FA" for null team)**](project_dg181_roster_comparison_frontend_2026-09-07.md)
 - [**DG-182 roster-comparison backend BUILT + CLOSED 09-07, increment READY_FOR_GATE (not landed); reconstruction traps + root-via-tmp-files**](project_dg182_roster_comparison_2026-09-07.md)
 - [**DG-180 spec review 09-07 09:54Z — no blocker; reference is a per-season SERIES (row scalar = 2026 only); margin+ref ≠ bit-exact vs producer (3 of 27)**](project_dg180_spec_review_2026-09-07.md) — review + scripts in /private/tmp/dg180-review-*; Codex reads tmp status files, not SendMessage.
+- [**DG-192 headshots — 950 of 954 resolve to an espn_id from TWO LOCAL files (no Sleeper call); seed cache is a clean 261-hash zero-duplicate baseline**](project_dg192_headshot_sources_2026-09-08.md)
 - [**⭐ DG-178 Available Players tab BUILT 09-07 — HEAD `8960e0ec`, catalog 013635Z (433 = 360: 349 original + 4 recovered + 7 starting, + 73), root final acceptance GREEN 09-07 01:42Z; awaiting David's gate**](project_dg178_available_players_2026-09-07.md)
 - [**⭐ DG-177 closed out 09-07 at `89a36364` — 3 accepted producers (forecasts 195728Z, scoring audit 220010Z, stash screen 010712Z); label closure + git_head-at-finish traps**](project_dg177_round1_state_2026-09-06.md)
 - [**DG-178 — three-track build READY_FOR_GATE 09-06 22:08Z (code `219a88d6`, pin `3688e542`, 8787 preview 214512Z; NOT landed)**](project_dg178_ranking_contract_2026-09-06.md) — comparison board + census binding accepted locally; own-reference grading; one term set behind both horizons; Codex via the ticket file.
@@ -57,6 +60,10 @@
 - [Frontend Studio outsider agent](project_frontend_studio.md) — Tower's only structural monopoly; other lanes may not read or touch `~/frontend-studio`.
 
 ## Traps that have already cost a session
+- [**⛔ An inference about unread code is not a finding**](feedback_an_inference_about_unread_code_is_not_a_finding.md) — the arithmetic matched and the claim was still wrong; state the constraint, not the mechanism.
+- [**⭐ David's May 2026 product-shape rulings**](david_rulings_product_shape_2026-05.md) — "full read on the players in the Sleeper universe"; "not obvious to other managers"; optimal-lineup-first bench decay; his league is 12-team superflex PPR no TE premium.
+- [**⭐ David's frontend guidance 2026-07-05/06 — the prose ruling is JULY, not August**](david_rulings_frontend_2026-07-05.md) — "everything should be prose. football language"; "you can call him a stud"; "do not lose this guidance". ⛔ the commissioned UI research doc argues the opposite.
+- [**Frontend CSS census + copy rule — the 4 footguns**](reference_frontend_css_census_and_copy_rule.md) — a new .css breaks both baselines; `var(--dg-*)` is stripped so an all-zero row is reachable; 4+ capitals are banned from the DOM.
 - [**⛔ A visibility floor can erase the data**](feedback_a_visibility_floor_can_erase_the_data.md) — a 0.5 meant as 0.5% was a 50% floor; every rank interval drew half the axis. Minimums belong in CSS, not in the number. Imported design prose can be false about your product.
 - [**⛔ A correct payload is not a correct product**](feedback_a_correct_payload_is_not_a_correct_product.md) — 836/836 rows + 38/38 guards + green suites still missed a 503 that blanks every player card, a self-skipping acceptance test, and a ruling broken by a right-valued field.
 - [**⛔ Declare the policy before the outer loop**](feedback_declare_the_policy_before_the_outer_loop.md) — picking an arm on the outer walk-forward years and quoting those years is retrospective selection; fix the policy ex ante, report alternatives as exploratory paired differences.

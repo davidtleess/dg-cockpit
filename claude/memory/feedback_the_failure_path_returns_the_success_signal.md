@@ -241,3 +241,27 @@ the boundary and refuse; pin negative-but-valid values so the guard cannot over-
 exit code, so the `&&` chain committed and pushed with one test red. Run the test command bare (or `set -o pipefail`)
 when a commit is gated on it; a summary line is not a gate.
 
+
+**2026-09-08 (DG-197, my own slip):** a Vitest spec asserted a CSS rule via
+`import css from "./X.css?raw"`. Under Vitest that import resolves to the **EMPTY STRING** — measured
+`css.length === 0`. So `indexOf` returned -1, `slice` returned "", and `.not.toContain(...)` passed
+while reading nothing. I had cited it as evidence in a handoff. A 42px control then sat inside a 48px
+header with the suite green, until root measured the browser. **Any `.css?raw` import in a Vitest
+spec is reading "".** Read CSS text with `node:fs` from a `.js` spec, the way `rawCssAudit.test.js`
+already does — or accept that only a browser measures layout.
+
+**⭐ 2026-09-08, a REPEAT of the clean-result-from-a-broken-command shape, committed by the reviewer who
+had just flagged it in two other lanes.** Asked whether a workspace snapshot archive existed, I ran
+`find -type d -name 'workspace_snapshots'` and `find -name snapshot.json -path '*workspace*'`. The real
+archive sits at `dg-wt/DG-189/runs/<ts>/archive/<content-sha>/` — directory named `archive`, no `workspace`
+segment on the path — so **both patterns excluded the target by construction**. Empty output read as proof
+of absence. I compounded it by treating an **unset `DG_WORKSPACE_ARCHIVE_ROOT`** as evidence: an unset env
+var says only that THIS SHELL has no configured root, never that nothing exists. I then built a plan on the
+false premise and told root that 2026 could yield no clean production grade — the freeze was actually
+2026-09-08T01:48Z, BEFORE the 09-10 kickoff, so the declared window was intact and the pessimistic
+conclusion was backwards.
+
+**How to apply:** a negative from a search is only as good as the instrument. **Verify the pattern against a
+known-present case before trusting its silence**, and when a handoff names an exact path, `ls` the path
+before grepping for a guess at its shape. Absence of evidence from a filter you wrote is not evidence of
+absence.

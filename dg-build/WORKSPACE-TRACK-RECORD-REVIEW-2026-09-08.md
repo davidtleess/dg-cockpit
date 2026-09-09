@@ -1,5 +1,7 @@
 # Workspace snapshot archive — DG-189
 
+**Publication 2026-09-08: MERGED AND BUILT.** David authorized bringing GitHub up to date (“fix it”). Candidate1503831c, merge6f0315d2, official dg-land.sh successful. Exact reviewed27-file code export; no private data/evidence or runtime symlink. Full local gate7586 backend passed/37skipped and859 frontend passed. Clean exact merged build `/Users/davidleess/dg-wt/DG-189-merged`, build source_dirty=false. Preview/evidence retained in originalDG189 now branchpreview/DG-189-retained-20260908. Shared trunk46 dirty files byte-preserved. GitHub run34213932607 completed: frontend passed; backend7541passed/61skipped and the exact same21 failing test IDs as parent34175461387, zero introduced. No checks were weakened. Historical gate-only statements below describe the pre-publication handoff.
+
 Built locally from published main `a85f726f` in `/Users/davidleess/dg-wt/DG-189`, branch `ticket/DG-189`. David’s “lets build” authorized the previously recommended track-record foundation. This is a manual archive, not an automatic capture schedule or a performance result. No commit, push, merge, model promotion or production deployment.
 
 ## What David gets

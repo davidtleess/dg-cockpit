@@ -1,0 +1,59 @@
+{
+  "verified_at": "2026-09-08T23:42:35.220993+00:00",
+  "base": "4ad796c223d9b55bf18c3497cd3f69ba35cb7a6d",
+  "mode": "planning_only",
+  "claude": [
+    {
+      "pid": 54331,
+      "sessionId": "fa00374f-ec34-45ea-9ec0-926acc034407",
+      "name": "davidleess-17",
+      "status": "idle",
+      "cwd": "/Users/davidleess",
+      "startedAt": 1788773181718,
+      "procStart": "Mon Sep  7 09:26:18 2026",
+      "preserved_worktree": "/Users/davidleess/dg-wt/DG-201",
+      "reserved_ticket": "DG-206",
+      "planned_role": "baseline inputs and immutable store",
+      "future_worktree": "/Users/davidleess/dg-wt/DG-206",
+      "future_worktree_created": false
+    },
+    {
+      "pid": 54281,
+      "sessionId": "376f54b0-2909-46df-837c-ace5852eb144",
+      "name": "davidleess-c8",
+      "status": "idle",
+      "cwd": "/Users/davidleess",
+      "startedAt": 1788773173877,
+      "procStart": "Mon Sep  7 09:26:11 2026",
+      "preserved_worktree": "/Users/davidleess/dg-wt/DG-202",
+      "reserved_ticket": "DG-207",
+      "planned_role": "separate scientific evaluation",
+      "future_worktree": "/Users/davidleess/dg-wt/DG-207",
+      "future_worktree_created": false
+    },
+    {
+      "pid": 54410,
+      "sessionId": "245fd3a2-d8ac-4908-9aad-b156da509998",
+      "name": "davidleess-68",
+      "status": "idle",
+      "cwd": "/Users/davidleess",
+      "startedAt": 1788773195437,
+      "procStart": "Mon Sep  7 09:26:31 2026",
+      "preserved_worktree": "/Users/davidleess/dg-wt/DG-203",
+      "reserved_ticket": "DG-208",
+      "planned_role": "Lovable track record experience",
+      "future_worktree": "/Users/davidleess/dg-wt/DG-208",
+      "future_worktree_created": false
+    }
+  ],
+  "gemini": {
+    "pid": 94406,
+    "tty": "/dev/ttys004",
+    "process_started": "Tue Sep 8 19:27:22 2026",
+    "model": "Gemini 3.8 Flash (High)",
+    "cli": "Antigravity 1.1.24",
+    "cwd": "/Users/davidleess/dynasty-genius-product",
+    "role": "DG209 product brainstormer; shared trunk read only",
+    "conversation_id": "not exposed by inspected terminal UI"
+  }
+}
