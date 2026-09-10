@@ -60,6 +60,8 @@
 - [Frontend Studio outsider agent](project_frontend_studio.md) — Tower's only structural monopoly; other lanes may not read or touch `~/frontend-studio`.
 
 ## Traps that have already cost a session
+- [Node --test needs .ts on value imports](reference_node_ts_test_import_extensions.md) — one extensionless import silently took the Lovable suite from 68 tests to 39; a green run on a shrunken suite is a lie.
+- [**⛔ I shipped the defect I had just fixed**](feedback_i_shipped_the_defect_i_had_just_fixed.md) — twice in one day: the dropped URL key I had guarded in a peer's file, and a date-only string rendered a day early. ⛔ `new Date("2026-09-06T00:00:00Z").toLocaleDateString()` returns Sep 5 west of UTC.
 - [**⛔ An inference about unread code is not a finding**](feedback_an_inference_about_unread_code_is_not_a_finding.md) — the arithmetic matched and the claim was still wrong; state the constraint, not the mechanism.
 - [**⭐ David's May 2026 product-shape rulings**](david_rulings_product_shape_2026-05.md) — "full read on the players in the Sleeper universe"; "not obvious to other managers"; optimal-lineup-first bench decay; his league is 12-team superflex PPR no TE premium.
 - [**⭐ David's frontend guidance 2026-07-05/06 — the prose ruling is JULY, not August**](david_rulings_frontend_2026-07-05.md) — "everything should be prose. football language"; "you can call him a stud"; "do not lose this guidance". ⛔ the commissioned UI research doc argues the opposite.

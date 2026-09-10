@@ -1,7 +1,7 @@
 # DG-209 — track record product review
 
-**Lane:** —
-**Status:** PLANNING_REVIEW_COMPLETE — final product review reserved
+**Lane:** actual AGY Gemini
+**Status:** PRODUCT_REVIEW_COMPLETE — root local engineering gate separately accepted
 **Reserved owner:** actual agy Gemini
 **Worktree:** No product worktree; review-only role
 
@@ -28,4 +28,7 @@ Planning contribution complete. Final product review waits for root’s verified
 
 Read [the reconciled implementation plan](../TRACK-RECORD-IMPLEMENTATION-2026-09-08.md) before work. It contains exact schemas, source rules, file ownership, test commands and integration order. Raw planning reviews are evidence, not overriding instructions. Base verified main: `4ad796c223d9b55bf18c3497cd3f69ba35cb7a6d`; reverify before dispatch. This review-only role creates no product worktree. Preserve all DG200–204 work and evidence. No shared trunk/data/environment edits, no frontend-studio access, dependencies, model changes, historical outcome grading, scheduling, hosted data exposure or publication.
 
-Planning is complete; product implementation has not been dispatched. This ticket is reserved to the stated role, not already running. Root will verify session identity/activity before execution.
+Planning and final product review are complete. Actual AGY supplied critique; root separately accepted local engineering and source safeguards. No scientific efficacy or release approval is implied. See the [final handoff](../TRACK-RECORD-HANDOFF-2026-09-09.md).
+
+
+Final actualAGY review: /private/tmp/dg-agy-final-product-review-20260909.md. It supports usability direction using source/screenshots and one liveHTTPread; it is not a scientific audit. Root corrects stale /compare route (actualpath/trades), existingrankchart attribution, and claims of livebrowser coverage beyond whatAGY actuallyinspected. IndependentactualClaude browser review and rootplaywright/axe/sourcechecks supply engineering evidence.

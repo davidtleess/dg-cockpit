@@ -265,3 +265,20 @@ conclusion was backwards.
 known-present case before trusting its silence**, and when a handoff names an exact path, `ls` the path
 before grepping for a guess at its shape. Absence of evidence from a filter you wrote is not evidence of
 absence.
+
+## Instance 10 — a privacy guard that read an OPTIONAL file (2026-09-09, DG-213)
+
+I wrote a test asserting no private filesystem path survives into a published bundle. It opened with
+a read that fell back to null and returned early when the file was absent, so **in any tree without
+that optional file it passed by returning**. It was green for its whole first life. I found it only by
+noticing the tree had no bundle, copying a real one in, and watching it fail for the first time --
+which is when it caught 5 real leaked paths across 2 fields that the agreed strip list had missed.
+
+The missed fields are the second half of the lesson: the strip list named each field once, but the
+same two field names existed under a SECOND parent. Stripping by fixed path removed one copy each.
+
+- **A guard whose subject may be absent must fail, skip loudly, or run on a fixture that is always
+  present.** "Nothing to check" reported as success is this failure mode wearing test clothes.
+- **Strip by field name wherever it occurs, not by fixed path**, and keep unknown-field rejection as
+  the backstop.
+

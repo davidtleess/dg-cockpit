@@ -1,9 +1,9 @@
 # DG-206 — track record baselines
 
-**Lane:** —
-**Status:** PLANNED — reserved; implementation not dispatched
+**Lane:** Claude54331
+**Status:** READY_FOR_GATE — local implementation independently verified September 9
 **Reserved owner:** actual Claude54331
-**Worktree:** /Users/davidleess/dg-wt/DG-206 (not created)
+**Worktree:** /Users/davidleess/dg-wt/DG-206
 
 ## Outcome
 
@@ -29,4 +29,11 @@ Root contract first; existing DG189 archive. Outputs feed DG207 and root API. Ca
 
 Read [the reconciled implementation plan](../TRACK-RECORD-IMPLEMENTATION-2026-09-08.md) before work. It contains exact schemas, source rules, file ownership, test commands and integration order. Raw planning reviews are evidence, not overriding instructions. Base verified main: `4ad796c223d9b55bf18c3497cd3f69ba35cb7a6d`; reverify before dispatch. Create a fresh isolated worktree using `dg-work.sh` while Lane is unclaimed, then claim it. Preserve all DG200–204 work and evidence. No shared trunk/data/environment edits, no frontend-studio access, dependencies, model changes, historical outcome grading, scheduling, hosted data exposure or publication.
 
-Planning is complete; product implementation has not been dispatched. This ticket is reserved to the stated role, not already running. Root will verify session identity/activity before execution.
+David said “continue” on September 9 after the completed plan. Root verified identities and isolated worktrees; implementation is now authorized within this ticket.
+
+
+## Final disposition — September 9
+
+Final source/store candidate independently passed raw positions, baseline population, schedule and synthetic file-backed market-history replay. Exact reviewed hashes are integrated into DG205. Actual market history remains unavailable in the real local enrollment.
+
+[Integrated handoff](../TRACK-RECORD-HANDOFF-2026-09-09.md). Local only; no new commit, push, merge or publication. Original evidence and worktrees preserved.
