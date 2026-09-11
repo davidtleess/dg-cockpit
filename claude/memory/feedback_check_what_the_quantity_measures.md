@@ -47,3 +47,31 @@ condition on, and one of them silently contains the other term of the product.
 **Ask of every published quantity: what is it conditional on, and what does its denominator do near zero?**
 Related: [[feedback_a_null_needs_a_sample_that_spans_the_effect]],
 [[feedback_indistinguishable_is_not_equal_bound_the_difference]], [[feedback_check_when_not_just_what]].
+
+---
+
+### 3. A tolerance must match what the quantity IS — 2026-09-10, DG-218/219
+
+Validating a rank breakdown, the natural instinct is one comparison style throughout: floats need a
+tolerance, so compare everything with `Math.abs(a - b) <= 1e-8`. **That is a category error for a
+rank, and DG-218 named exactly why:**
+
+> Two saved values 1e-10 apart pass every closeness check and still rank **1 and 2**, while their
+> re-added advantages tie **1–2**. The tolerance that lets the sums match is precisely what hides the
+> reordering.
+
+**A magnitude is continuous and needs a tolerance. An ordering is discrete and must be identical.**
+Same data, same validator, two different comparison rules — and using the lenient one on both makes
+the strict property unverifiable. The rule that came out of it:
+
+> **Sums tolerant, ranks exact.** Compare a quantity the way its own semantics require, not the way
+> the surrounding code happens to compare things.
+
+Also worth keeping: a rank interval's `end` widening into a tie is a **change in the claim**, not a
+rounding difference — `{start:10,end:10}` → `{start:10,end:11}` says something new about the world.
+The test that locks this asserts all three: a 1e-10 sum difference **accepted**, a rank one place away
+**refused**, a widened tie **refused**. It exists because the code was *already* exact, and "already
+correct" is one well-meaning "let's make this consistent" refactor from broken.
+
+**And the general form, which is this file's point:** before choosing how to compare two values, say
+what kind of thing they are. Continuous or discrete, magnitude or order, conditional or not.

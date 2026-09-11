@@ -57,3 +57,24 @@ documentation.
 
 Related: [[feedback_the_failure_path_returns_the_success_signal]],
 [[feedback_check_when_not_just_what]], [[project_dg159_one_scale_landed_2026-09-04]].
+
+## The question that generalises this (2026-09-10, three instances in one session)
+
+⭐ **Ask of any guard's test: what would have to be true for this to FAIL?** If the answer is not
+the property in the test's name, the test is decoration — or worse, it asserts the wrong contract in
+words a future reader will trust.
+
+Three instances the same day, two mine and one a peer's:
+
+* a privacy guard that read an OPTIONAL file and returned early — it passed by having nothing to
+  check, and was green for its whole first life;
+* a paired-bootstrap fixture with a CONSTANT loss difference — zero-width interval whether you
+  resampled clusters, rows, or arms independently, so it could not have failed if the clustering
+  were wrong;
+* a peer's test that set a stored row's hash to a literal and **asserted the row belonged in the
+  "unavailable" list** — a green test positively asserting that corruption should be filed among
+  ordinary absences.
+
+The third is the worst shape: not a weak test but a **confident statement of the wrong contract**.
+It was findable only by reading the ASSERTION rather than the result. When reviewing tests, read
+what they claim, not whether they pass.

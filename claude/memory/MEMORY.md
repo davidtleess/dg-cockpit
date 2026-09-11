@@ -60,6 +60,9 @@
 - [Frontend Studio outsider agent](project_frontend_studio.md) — Tower's only structural monopoly; other lanes may not read or touch `~/frontend-studio`.
 
 ## Traps that have already cost a session
+- [**⛔ Reading the producer is not checking the output**](feedback_reading_the_producer_is_not_checking_the_output.md) — two reviewers read the pack builder; neither diffed it against the frozen reference. Self-consistent code can be wrong.
+- [**⛔ Sums tolerant, ranks exact — and a count with no baseline is not evidence**](feedback_compare_a_quantity_by_its_own_semantics.md) — 1e-10 apart ranks 1/2 but ties re-summed; a clean first mutation sweep means the mutations missed.
+- [**⛔ Every test injected it, so production never did**](feedback_every_test_injected_it_so_production_never_did.md) — 40 green tests all supplied the provider the CLI never passed; the feature was inert in production. Test the real entrypoint once.
 - [Node --test needs .ts on value imports](reference_node_ts_test_import_extensions.md) — one extensionless import silently took the Lovable suite from 68 tests to 39; a green run on a shrunken suite is a lie.
 - [**⛔ I shipped the defect I had just fixed**](feedback_i_shipped_the_defect_i_had_just_fixed.md) — twice in one day: the dropped URL key I had guarded in a peer's file, and a date-only string rendered a day early. ⛔ `new Date("2026-09-06T00:00:00Z").toLocaleDateString()` returns Sep 5 west of UTC.
 - [**⛔ An inference about unread code is not a finding**](feedback_an_inference_about_unread_code_is_not_a_finding.md) — the arithmetic matched and the claim was still wrong; state the constraint, not the mechanism.

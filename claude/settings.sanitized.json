@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "mcp__claude_ai_Lovable__get_file_upload_url",
+      "mcp__claude_ai_Lovable__query_database",
+      "mcp__claude_ai_Lovable__send_message"
     ]
   },
   "model": "opus[1m]",

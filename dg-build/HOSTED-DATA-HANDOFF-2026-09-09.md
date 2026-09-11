@@ -1,10 +1,36 @@
-# DG-213 — hosted data connection prepared; platform permission blocked
+# DG-213 — COMPLETE · MERGED, PUBLISHED AND LIVE-VERIFIED
+
+The [published Lovable app](https://dynasty-genius.lovable.app/) now loads the verified September 6 saved reading, including David's 27-player roster, 433 relevant available players, comparisons, saved-reading view and player photos. The phone navigation clears the actual Lovable badge. **No DG-213 release blocker remains.** Earlier permission denials, empty-bucket reports, null configuration and uncommitted-source statements are historical; they are not instructions to resume or redispatch this completed work.
+
+- **Source and publication:** implementation `3c63e4e7eddbfc27168999ed3d4f7f1033bc6914`; official merged/pushed main `024b4ed2a86a79da3cc8cf99a454b02611eb52ab`; platform `bc6ca4655554802259a197f71502ad1e37e9f561`. All 14 transferred paths were verified byte-exact, with no unexpected changes. The two previously accepted generated Supabase differences from the earlier platform probe remain documented; this is not a claim that every platform file equals local source.
+- **Deployment:** `53bb4df9-b3a4-4aaa-8d3a-4c7111ed8f82`, native call **2026-09-10 15:49:14 UTC**, result **15:49:16 UTC**. Root verified those native timestamps; the platform owner's prose rounds the call to 15:50. Public bundle changed to `index-CQhRykvw.js`, and actual live checks completed at **15:50:54.993 UTC**.
+- **Assets:** all **957 public objects** independently verified for SHA-256, byte length, MIME and CORS, including **954 headshots**. Manifest pin `2e3027eaeebb0b85c3ee6c6d1ab771fa24721e7362ac09d3f21497effd808f42`. Runtime verifies the manifest and JSON documents; photographs were verified at delivery, not hashed by browser image elements on every load.
+- **Acceptance:** official local landing gate **7,895 Python tests passed / 37 skipped**, plus **975 legacy frontend tests passed**. Configured Lovable **84 tests**, typecheck, lint (zero errors; seven existing warnings), default build and local server build passed. Actual published browser verification passed **15 pages at 1440/390/320 pixels** and **39 document hash checks**: all 27 roster identities, photos, search/player drawer, disabled hosted Save, missing pinned-reading refusal and all five phone navigation targets with the real badge. Root inspected screenshots. No JavaScript errors, overflow or local-data fallback. The 20 recorded `ERR_ABORTED` image requests were navigation cancellations, not a claim of zero network errors.
+- **Separate GitHub CI result:** run `34497304288` frontend passed; Python reported the same **21 failed node IDs and short error summaries** as parent `da096297` / run `34345771160`, with zero new failures. This existing CI failure is distinct from the passing official local gate; do not describe all CI as green.
+
+This is a **fixed saved reading as of September 6**, not activated daily ingestion. Hosted Save remains unavailable; reload keeps the selected release. Original forecasts, values, missing entries and scientific labels remain intact. Reconstructed/pending/unavailable evaluation states remain visible; delivery proves no football or trading edge. **DG-214–216 remain COMPLETE · READY_FOR_GATE and are not activated by this release.** David's no-sign-in preference is settled. His own tool grants remain user-owned; the earlier root-added temporary settings had already been reverted.
+
+The original review checkout/branch, immutable evidence and local preview on 8798 are retained. Shared local main was deliberately left untouched and behind remote main to preserve other work; that is not a missing merge.
+
+## Final evidence
+
+Evidence root: `/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume`.
+
+- [Official landing and push](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/official-land.log), [implementation commit](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/commit-receipt.json), [14-file platform reconciliation](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/source-verification-bc6ca465.json).
+- [All 957 public asset checks](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/public-assets-combined-20260910T152828712769Z.json), [configured validation](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/review-qa-complete.txt), [runtime integrity scope](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/review-integrity-scope-correction.md).
+- [Publication receipt](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/platform-publication.md) (use the corrected native timestamps above), [actual published browser report](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/published-browser/report.json), [published desktop/phone screenshots](/Users/davidleess/dg-wt/DG-213/runs/20260910T151911Z-hosted-permission-resume/published-browser).
+
+## Historical progress — superseded by the final disposition above
+
+The following entries preserve the sequence of earlier findings and corrections. Words such as “current”, “blocked”, “pending”, “empty” and “uncommitted” below apply only to the dated observation, not the completed release. Do not repeat old permission requests or upload/merge/publish work from this history.
+
+### Historical snapshot — permanent assets verified; interface release in progress
 
 David's September9 publication is live at https://dynasty-genius.lovable.app. The interface renders, but the deployed source still returns404 for the board bundle and503 for saved readings. Local8798 remains the working reviewed preview. No new upload, database/storage mutation, merge or deployment occurred during DG213.
 
 The existing no-sign-in preference is settled: David directly told Lovable “no sign in page” on September8. Root honors that together with the authorized backend/interface adoption and publication. Do not reopen this choice.
 
-## Ready locally
+### Ready locally
 
 - Isolated worktree `/Users/davidleess/dg-wt/DG-213`, branch `ticket/DG-213`, base `da096297afdb16d02b8691589358ccbbfd2c0c36`; source remains uncommitted pending the real destination/configuration.
 - Explicit hosted/local data selection, immutable manifest and document verification, correct hosted photo URLs, clear refusals for unsupported saved-reading links, and honest disabled hosted Save. No model or rank changes.
@@ -13,16 +39,35 @@ The existing no-sign-in preference is settled: David directly told Lovable “no
 - Root browser:15route/viewport combinations at1440/390/320; real reviewed data, all27roster identities, search/details/photos, five reachable nav tabs, selected reading and disabled Save. Temporary manifest failure recovers via existing Reload; changed data and missing pinned reading refuse correctly. No JS errors or overflow. Actual screenshots inspected. This is local hosted-mode fixture proof, not proof of a storage upload or live delivery.
 - Independent Claude54331 approved all956payload assets. Root used the accepted adapter to confirm all954mapped rows and every roster alternative comparison identical;433available remain visible. Original exports and research evidence untouched.
 
-## Exact reviewed package
+### Exact reviewed package
 
 `runs/20260910T001646Z-release-exporter/delivery-assets-v4` contains only dg-bundle.json, track-record.json,954original headshots and asset-manifest.json. Manifest SHA256 `2e3027eaeebb0b85c3ee6c6d1ab771fa24721e7362ac09d3f21497effd808f42`. Only three absolute-path metadata families were removed from the exported board copy; view changes only Save capability. Relative provenance labels and all football values/hashes/nulls remain.
 
 Prepared ZIP: `runs/20260910T001048Z/hosted-delivery/dg-release-2e3027eaeebb0b85.zip`,56,553,725bytes, SHA256 `ce4b0d49228a1d0dbe649b503c7df2e487025a96617208693e8aff5f8961add7`.957files exactly; every extracted byte reconciled. Upload only this reviewed package, not neighboring evidence directories. Image MIME must follow manifest (953PNG,1WebP despite .jpg filenames).
 
-## Actual blocker and resume
+### Actual blocker and resume
 
 Claude54281's native `mcp__claude_ai_Lovable__get_file_upload_url` and `mcp__claude_ai_Lovable__query_database` were denied by automatic review: “Blocked by classifier.” No retry/rewording/peer reroute. Root asked David whether to temporarily enable exactly those tools. **No answer yet and permission files remain unchanged.** Concrete proposed additive change and its scope/cleanup are in `runs/20260910T001048Z/hosted-delivery/permission-change-proposal.md` and JSON; it enables whole named tools, not project-scoped SQL. Do not apply without explicit approval.
 
 After grant: original tool checks; harmless generic attachment probe; verify existing platform-managed credential capability without exposing secrets; review immutable public-read/no-anonymous-write storage target; transport reviewed archive; independently fetch/check assets and MIME/CORS; fill two-field release.config.ts; final targeted checks and official isolated landing/source transfer; preview and actual live desktop/phone verification. Existing commit/push/merge/publish authorization remains. No new service, dependency, provider data or scoring work.
 
 Evidence root: `runs/20260910T001048Z/hosted-delivery/`. `root-local-handoff-receipt.json` binds final local source; `root-browser-v2/report.json` is final browser proof. v1 ended on an overly exact test selector, corrected in v2, with no product change. Original8798 and other previews retained; root-only fixture8893 stopped. Actual session identities must be rechecked before next dispatch.
+
+### September10 follow-up: Gemini review checked
+
+Fresh browser check at 2026-09-10T12:04:00.772Z on1440and390width confirms hosted shell200 with `/data/dg-bundle.json`404 and visible saved-data failure. Direct localhost8798 connection is currently refused; earlier local QA remains valid historical evidence, not an active-preview availability claim. Evidence: `/Users/davidleess/dg-wt/DG-213/runs/20260910T120335259485Z-gemini-review-check`. No upload, permission change, deploy, or preview restart performed.
+
+The frontend review describes real improvements but overstates readiness. Hosted mode intentionally disables Save; `release.config.ts` remains null pending verified hosted assets. The953eligible track-record rows include117withoutforecasts and zero scored outcomes; production enrollment is reconstructed and the market starting observation is unavailable. The274league-directory entries comprise27David+247other rostered players, not12complete team/standings pages. The388paired ranks share a population; DGfive-year points above replacement and FantasyCalc price remain different units. Finishing hosted delivery still requires source configuration, approved landing/publication and actual browser verification after asset transport. The existing two-tool approval proposal remains unanswered.
+
+Fresh390and320browser hit tests also confirm the currently deployed Lovable badge still intercepts the center taps of Compare and Track. The reviewed DG213 clearance fix is local, not deployed. See `DG-213/runs/20260910T120335259485Z-gemini-review-check/current-nav-hit-test.json` and `hosted-390.png`. Existing DG213 scope already covers this; no new ticket or duplicate fix dispatched.
+
+### September10 08:30 ET: unblock approved and verified
+David's12:29:54UTC “ok go” authorizes the exact previously proposed temporary two-tool permission change and existing hosted delivery. Root verified the direct user record, applied only those two allow entries with a private backup, and actual Claude54281 successfully called both original native tools. Storage query found no existing buckets; harmless signed-upload-slot probe succeeded. Upload destination/configuration and actual delivery remain in progress. No repeated approval question; no model or DG214ingestion activation. Root owns removing only these temporary additions on completion or another block. Resume evidence: `DG-213/runs/20260910T123046679562Z-hosted-resume/`.
+
+September 10, 12:41 UTC correction: hosted delivery remains authorized, but root interpreted “ok go” too broadly as permission to edit Claude tool settings. Platform owner halted over permission provenance. Root removed only the two temporary allow entries and restored the exact original settings SHA; see DG-213/runs/20260910T123046679562Z-hosted-resume/permission-cleanup-receipt.json. Read-only storage checks and a 206-byte harmless test attachment completed; no player-data upload, bucket creation, source landing or deployment occurred. Direct user tool approval is now pending; no alternate-agent route. Existing reviewed source and assets remain ready. This supersedes the preceding resumed/unblocked status.
+
+September 10 latest disposition (2026-09-10T13:04:25.368323+00:00): David directly used /permissions in Claude54281 at12:53:51UTC, adding the two exact upload-slot/database tools to USER ~/.claude/settings.json, then instructed Continue DG213 hosted delivery at12:53:55; root verified his direct command record and left these user-owned grants unchanged. Bucket dg-reading-2e3027eaeebb0b85 exists (publicread,10MiB,JSON/PNG/WebP,zero writepolicies); exact56,553,725-byte ZIP uploaded to ephemeraltransport withHTTP200. Native mcp__claude_ai_Lovable__send_message for materializing957objects was newly rejected12:57:30UTC with Blocked by classifier. No retry/reroute; bucket remains empty and publishedsiteunchanged. The exactblockedpayload is retained by54281 for user-approvedresume. Nextuseraction: allow this exact send_message tool using /permissions, then Continue DG213 hosted delivery. User-owned existing permissions must remain; root-owned localallows were already reverted.
+
+Independent review resolved testconfiguration assumptions: fiveownedtestfiles explicitlypinlocal/hosted fixtures;84tests pass underdefaultlocal and syntheticdefault-hosted, meaningfulmutation receipts showpinsareloadbearing;typecheckpassed;rootlint0errors/7existingwarnings. Evidence runs/20260910T125748Z-dg213-test-isolation; independentapproval in runs/20260910T123046679562Z-hosted-resume/. No productionRELEASEchange (stillnull). Rootacceptedonlydocumentedtwo-filegeneratedplatformdelta fromc37bab2d afterfullrawdiffreview; localgeneratedsourceunchanged, exactbytesremainrequiredforallotherpaths. Details source-drift-disposition-final.md; do notclaimall49platformfilesremainbyteequal. Sourceuncommitted; no merge/deploy/modelingest orDG214activation.
+
+September10 15:30UTC current: David directly granted send_message and continued. All957 publicobjects independently matchacceptedSHA/bytes/MIME/CORS; permanentURLinconfiguredrelease.config.ts. 84frontendtests/typecheck/lint/defaultbuild/nodebuild passed. Rootnowverifies1440/390/320localappusingrealpublicassets, thenofficialmerge/exactsourcetransfer/publish. Publishedsiteunchangeduntilrelease. Allpastpermissionblockstatusesabovearehistorical. Evidence DG213/runs/20260910T151911Z-hosted-permission-resume/.

@@ -1,0 +1,9 @@
+# September10 morning game-ingestion check
+
+Read-only check following David's question. NE–SEA on September9 is not present as player/game facts in inspected shared stores: all10 nflverse usage fact tables and PlayerProfiler game logs have zero2026rows; PFF latestNFL payload2025. The scheduled06:15ET capture failed at snap_counts2026 with404 after three2026NGS responses markedok but containing0rows. Its receipt is app/data/nflverse_usage/nflverse_usage_status_latest.json on sharedtrunk. Stored Aug9schedule knows2026_01_NE_SEA but bothscoresnull. No producer, shared-data write, model refresh or promotion was run during investigation.
+
+Provider availability checked directly: nflverse pbp release contains166plays for2026_01_NE_SEA dated2026-09-09; updated04:40UTC. Correct installed nflreadpy player-stats endpoint is stats_player/stats_player_week_2026, available04:41:53UTC. The older player_stats release tag is not the installed loader's endpoint and must not be used to claim player statistics unavailable. snap_counts release has no2026asset atchecktime.
+
+Current main refresh is scheduled09:00ET and has not run today atthischeck; lastfeature reportSept9 13:00UTC uses2025statistical basis. DG154 season-basis protection means new2026sourceavailability must not be treated as authorization to replace full-season modelinputs with onegame. Collectingnewgame data, updatingforecasts, and gradinga finalizedevaluation window are separate. Existing productreading remainsSept6 and hostedconnection remainsDG213's separatepermissionblock.
+
+Actualstore proof: SQLite URI mode=ro, grouped count/maxseason checks; agentgame_ingestion_check independently reviewed usage/PlayerProfiler/PFF/schedules. Source code and scheduledplist inspected read-only. No featurework dispatched. Next response should distinguish the failed06:15advanced-feed capture, availablebasic stats, not-yet-run09:00refresh, and deliberate modelbasis/completeweek gates.
