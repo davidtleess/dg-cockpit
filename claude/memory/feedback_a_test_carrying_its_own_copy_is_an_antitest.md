@@ -78,3 +78,26 @@ Three instances the same day, two mine and one a peer's:
 The third is the worst shape: not a weak test but a **confident statement of the wrong contract**.
 It was findable only by reading the ASSERTION rather than the result. When reviewing tests, read
 what they claim, not whether they pass.
+
+## Instance · the assertion matched the label, not the data (DG-229, 2026-09-11)
+
+I asserted that per-season rows rendered:
+
+```js
+ok("annual seasons are listed by year", /2026/.test(body) && /2030/.test(body));
+```
+
+It passed. **No annual rows existed at all.** The strings "2026" and "2030" also appear in the
+headline row LABELS — `2026 points`, `2027–2030 total` — which `forecastLabels` builds from the
+data's own years. The published export carries no per-season rows for rostered players, so the
+section rendered nothing, and my check read the labels sitting a few lines above it.
+
+I only found it because a *different* assertion failed for an unrelated reason and made me read the
+drawer's actual DOM.
+
+**The fix:** scope the match to the section under test — `body.split("Season by season")[1]` — so
+the strings the check depends on can only come from the thing it names.
+
+⚠ The general trap: **a label generated from the same data as the value will contain the value.**
+Any regex over a whole page body can match the caption instead of the content. Anchor to the
+element, not the page.
